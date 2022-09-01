@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(DateTimeUtc))
             {
                 writer.WritePropertyName("dateTimeUTC");
-                writer.WriteStringValue(DateTimeUtc);
+                writer.WriteStringValue(DateTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(Value))
             {
@@ -30,13 +31,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static TimeseriesDataPoint DeserializeTimeseriesDataPoint(JsonElement element)
         {
-            Optional<string> dateTimeUtc = default;
+            Optional<DateTimeOffset> dateTimeUtc = default;
             Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeUTC"))
                 {
-                    dateTimeUtc = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dateTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("value"))
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new TimeseriesDataPoint(dateTimeUtc.Value, Optional.ToNullable(value));
+            return new TimeseriesDataPoint(Optional.ToNullable(dateTimeUtc), Optional.ToNullable(value));
         }
     }
 }

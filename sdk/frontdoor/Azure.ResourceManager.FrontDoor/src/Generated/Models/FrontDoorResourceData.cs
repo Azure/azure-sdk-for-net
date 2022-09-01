@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        internal FrontDoorResourceData(ResourceIdentifier id, string name, Core.ResourceType? resourceType)
+        internal FrontDoorResourceData(ResourceIdentifier id, string name, ResourceType? resourceType)
         {
             Id = id;
             Name = name;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Resource name. </summary>
         public string Name { get; set; }
         /// <summary> Resource type. </summary>
-        public Core.ResourceType? ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

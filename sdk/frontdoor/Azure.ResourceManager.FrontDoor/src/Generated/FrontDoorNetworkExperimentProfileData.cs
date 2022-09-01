@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="enabledState"> The state of the Experiment. </param>
-        internal FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, NetworkExperimentResourceState? resourceState, FrontDoorExperimentState? enabledState) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, NetworkExperimentResourceState? resourceState, FrontDoorExperimentState? enabledState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ResourceState = resourceState;

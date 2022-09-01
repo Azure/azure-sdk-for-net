@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="customBlockResponseStatusCode"> If the action type is block, customer can override the response status code. </param>
         /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="requestBodyCheck"> Describes if policy managed rules will inspect the request body content. </param>
-        internal FrontDoorWebApplicationFirewallPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck)
+        internal FrontDoorWebApplicationFirewallPolicySettings(PolicyEnabledState? enabledState, FrontDoorWebApplicationFirewallPolicyMode? mode, Uri redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck)
         {
             EnabledState = enabledState;
             Mode = mode;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
         public PolicyEnabledState? EnabledState { get; set; }
         /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
-        public PolicyMode? Mode { get; set; }
+        public FrontDoorWebApplicationFirewallPolicyMode? Mode { get; set; }
         /// <summary> If action type is redirect, this field represents redirect URL for the client. </summary>
         public Uri RedirectUri { get; set; }
         /// <summary> If the action type is block, customer can override the response status code. </summary>

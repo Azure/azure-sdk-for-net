@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="healthProbeMethod"> Configures which HTTP method to use to probe the backends defined under backendPools. </param>
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, Core.ResourceType? resourceType, string path, FrontDoorProtocol? protocol, int? intervalInSeconds, FrontDoorHealthProbeMethod? healthProbeMethod, HealthProbeEnabled? enabledState, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, string path, FrontDoorProtocol? protocol, int? intervalInSeconds, FrontDoorHealthProbeMethod? healthProbeMethod, HealthProbeEnabled? enabledState, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
         {
             Path = path;
             Protocol = protocol;

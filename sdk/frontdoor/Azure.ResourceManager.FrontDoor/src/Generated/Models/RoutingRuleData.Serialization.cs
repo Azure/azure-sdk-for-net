@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<Core.ResourceType> type = default;
+            Optional<ResourceType> type = default;
             Optional<IList<WritableSubResource>> frontendEndpoints = default;
             Optional<IList<FrontDoorProtocol>> acceptedProtocols = default;
             Optional<IList<string>> patternsToMatch = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

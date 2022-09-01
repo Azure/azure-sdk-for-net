@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IList<RulesEngineRule>> rules = default;
             Optional<FrontDoorResourceState> resourceState = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

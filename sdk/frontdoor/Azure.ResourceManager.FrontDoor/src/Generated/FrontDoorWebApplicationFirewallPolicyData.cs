@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="securityPolicyLinks"> Describes Security Policy associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSku sku, FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSku sku, FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Sku = sku;

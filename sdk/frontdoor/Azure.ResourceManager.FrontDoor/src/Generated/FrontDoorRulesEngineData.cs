@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rules"> A list of rules that define a particular Rules Engine Configuration. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IList<RulesEngineRule> rules, FrontDoorResourceState? resourceState) : base(id, name, resourceType, systemData)
+        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<RulesEngineRule> rules, FrontDoorResourceState? resourceState) : base(id, name, resourceType, systemData)
         {
             Rules = rules;
             ResourceState = resourceState;

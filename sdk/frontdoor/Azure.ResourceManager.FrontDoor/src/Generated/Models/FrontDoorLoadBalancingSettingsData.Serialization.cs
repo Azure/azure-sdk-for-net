@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<Core.ResourceType> type = default;
+            Optional<ResourceType> type = default;
             Optional<int> sampleSize = default;
             Optional<int> successfulSamplesRequired = default;
             Optional<int> additionalLatencyMilliseconds = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

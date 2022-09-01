@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
         private const string TrimValue = "Trim";
-        private const string UrlDecodeValue = "UrlDecode";
-        private const string UrlEncodeValue = "UrlEncode";
+        private const string UriDecodeValue = "UrlDecode";
+        private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
         /// <summary> Lowercase. </summary>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Trim. </summary>
         public static WebApplicationRuleMatchTransformType Trim { get; } = new WebApplicationRuleMatchTransformType(TrimValue);
         /// <summary> UrlDecode. </summary>
-        public static WebApplicationRuleMatchTransformType UrlDecode { get; } = new WebApplicationRuleMatchTransformType(UrlDecodeValue);
+        public static WebApplicationRuleMatchTransformType UriDecode { get; } = new WebApplicationRuleMatchTransformType(UriDecodeValue);
         /// <summary> UrlEncode. </summary>
-        public static WebApplicationRuleMatchTransformType UrlEncode { get; } = new WebApplicationRuleMatchTransformType(UrlEncodeValue);
+        public static WebApplicationRuleMatchTransformType UriEncode { get; } = new WebApplicationRuleMatchTransformType(UriEncodeValue);
         /// <summary> RemoveNulls. </summary>
         public static WebApplicationRuleMatchTransformType RemoveNulls { get; } = new WebApplicationRuleMatchTransformType(RemoveNullsValue);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchTransformType"/> values are the same. </summary>

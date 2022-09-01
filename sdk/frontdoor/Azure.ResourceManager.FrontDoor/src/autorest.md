@@ -32,6 +32,7 @@ rename-mapping:
   PurgeParameters: FrontDoorEndpointPurgeContent
   ValidateCustomDomainInput: FrontDoorValidateCustomDomainContent
   ValidateCustomDomainOutput: FrontDoorValidateCustomDomainResult
+  ValidateCustomDomainOutput.customDomainValidated: IsCustomDomainValidated
   CustomHttpsProvisioningState: FrontendEndpointCustomHttpsProvisioningState
   CustomHttpsProvisioningSubstate: FrontendEndpointCustomHttpsProvisioningSubstate
   Profile: FrontDoorNetworkExperimentProfile
@@ -58,13 +59,22 @@ rename-mapping:
   MatchCondition.negateCondition: IsNegateCondition
   MatchVariable: WebApplicationRuleMatchVariable
   Operator: WebApplicationRuleMatchOperator
+  Operator.RegEx: RegEX
   TransformType: WebApplicationRuleMatchTransformType
+  TransformType.UrlDecode: UriDecode
+  TransformType.UrlEncode: UriEncode
   RuleType: WebApplicationRuleType
   FrontDoorHealthProbeMethod.GET: Get
   HeaderAction: RulesEngineHeaderAction
   HeaderActionType: RulesEngineHeaderActionType
   LatencyScorecard.properties.id: LatencyScorecardId
   LatencyScorecard.properties.name: LatencyScorecardName
+  PolicyMode: FrontDoorWebApplicationFirewallPolicyMode
+  RulesEngineMatchCondition.negateCondition: IsNegateCondition
+  Transform: RulesEngineMatchTransform
+  Transform.UrlDecode: UriDecode
+  Transform.UrlEncode: UriEncode
+  ResourceType: FrontDoorResourceType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -111,6 +121,7 @@ directive:
     transform: >
       $.TimeseriesProperties.properties.startDateTimeUTC['format'] = 'date-time';
       $.TimeseriesProperties.properties.endDateTimeUTC['format'] = 'date-time';
+      $.TimeseriesDataPoint.properties.dateTimeUTC['format'] = 'date-time';
       $.LatencyMetric.properties.endDateTimeUTC['format'] = 'date-time';
   - from: network.json
     where: $.definitions

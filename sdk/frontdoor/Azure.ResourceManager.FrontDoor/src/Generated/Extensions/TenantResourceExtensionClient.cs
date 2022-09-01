@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor
         private ClientDiagnostics FrontDoorNameAvailabilityClientDiagnostics => _frontDoorNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private FrontDoorNameAvailabilityRestOperations FrontDoorNameAvailabilityRestClient => _frontDoorNameAvailabilityRestClient ??= new FrontDoorNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

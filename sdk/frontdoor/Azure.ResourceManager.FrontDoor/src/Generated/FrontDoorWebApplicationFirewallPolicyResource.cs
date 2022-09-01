@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

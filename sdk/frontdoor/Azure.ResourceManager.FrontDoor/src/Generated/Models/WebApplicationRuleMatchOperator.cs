@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string BeginsWithValue = "BeginsWith";
         private const string EndsWithValue = "EndsWith";
-        private const string RegExValue = "RegEx";
+        private const string RegEXValue = "RegEx";
 
         /// <summary> Any. </summary>
         public static WebApplicationRuleMatchOperator Any { get; } = new WebApplicationRuleMatchOperator(AnyValue);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> EndsWith. </summary>
         public static WebApplicationRuleMatchOperator EndsWith { get; } = new WebApplicationRuleMatchOperator(EndsWithValue);
         /// <summary> RegEx. </summary>
-        public static WebApplicationRuleMatchOperator RegEx { get; } = new WebApplicationRuleMatchOperator(RegExValue);
+        public static WebApplicationRuleMatchOperator RegEX { get; } = new WebApplicationRuleMatchOperator(RegEXValue);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchOperator"/> values are the same. </summary>
         public static bool operator ==(WebApplicationRuleMatchOperator left, WebApplicationRuleMatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchOperator"/> values are not the same. </summary>

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Network/frontDoors/frontendEndpoints";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/frontendEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

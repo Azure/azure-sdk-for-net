@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngine"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal RoutingRuleData(ResourceIdentifier id, string name, Core.ResourceType? resourceType, IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, WritableSubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, WritableSubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;

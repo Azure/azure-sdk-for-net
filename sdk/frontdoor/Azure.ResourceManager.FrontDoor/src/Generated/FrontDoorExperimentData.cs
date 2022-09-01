@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="status"> The description of Experiment status from the server side. </param>
         /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
-        internal FrontDoorExperimentData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, EndpointProperties experimentEndpointA, EndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, EndpointProperties experimentEndpointA, EndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             ExperimentEndpointA = experimentEndpointA;

@@ -22,13 +22,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string One0Value = "1.0";
-        private const string One2Value = "1.2";
-
-        /// <summary> 1.0. </summary>
-        public static MinimumTlsVersion One0 { get; } = new MinimumTlsVersion(One0Value);
-        /// <summary> 1.2. </summary>
-        public static MinimumTlsVersion One2 { get; } = new MinimumTlsVersion(One2Value);
+        private const string Tls1_0Value = "1.0";
+        private const string Tls1_2Value = "1.2";
         /// <summary> Determines if two <see cref="MinimumTlsVersion"/> values are the same. </summary>
         public static bool operator ==(MinimumTlsVersion left, MinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MinimumTlsVersion"/> values are not the same. </summary>

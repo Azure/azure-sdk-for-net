@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, Core.ResourceType? resourceType, int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyMilliseconds, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyMilliseconds, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
         {
             SampleSize = sampleSize;
             SuccessfulSamplesRequired = successfulSamplesRequired;

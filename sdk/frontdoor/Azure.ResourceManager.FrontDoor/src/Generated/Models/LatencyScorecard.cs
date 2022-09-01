@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="endDateTimeUtc"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, string endpointA, string endpointB, DateTimeOffset? startDateTimeUtc, DateTimeOffset? endDateTimeUtc, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
+        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, string endpointA, string endpointB, DateTimeOffset? startDateTimeUtc, DateTimeOffset? endDateTimeUtc, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
         {
             LatencyScorecardId = latencyScorecardId;
             LatencyScorecardName = latencyScorecardName;

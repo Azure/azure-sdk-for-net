@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Type of Front Door resource used in CheckNameAvailability. </summary>
-    public enum ResourceType
+    public enum FrontDoorResourceType
     {
         /// <summary> Microsoft.Network/frontDoors. </summary>
         MicrosoftNetworkFrontDoors,

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element)
         {
             Optional<PolicyEnabledState> enabledState = default;
-            Optional<PolicyMode> mode = default;
+            Optional<FrontDoorWebApplicationFirewallPolicyMode> mode = default;
             Optional<Uri> redirectUrl = default;
             Optional<int> customBlockResponseStatusCode = default;
             Optional<string> customBlockResponseBody = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = new PolicyMode(property.Value.GetString());
+                    mode = new FrontDoorWebApplicationFirewallPolicyMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("redirectUrl"))

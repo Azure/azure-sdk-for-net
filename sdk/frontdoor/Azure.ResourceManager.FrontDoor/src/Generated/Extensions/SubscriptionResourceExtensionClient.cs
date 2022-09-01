@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor
         private ClientDiagnostics FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorNetworkExperimentProfileResource.ResourceType.Namespace, Diagnostics);
         private NetworkExperimentProfilesRestOperations FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient ??= new NetworkExperimentProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FrontDoorNetworkExperimentProfileResource.ResourceType));
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

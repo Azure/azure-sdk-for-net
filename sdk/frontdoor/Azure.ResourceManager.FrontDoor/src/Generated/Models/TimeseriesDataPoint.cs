@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines a timeseries datapoint used in a timeseries. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of TimeseriesDataPoint. </summary>
         /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
         /// <param name="value"> The Value of the Timeseries data point. </param>
-        internal TimeseriesDataPoint(string dateTimeUtc, float? value)
+        internal TimeseriesDataPoint(DateTimeOffset? dateTimeUtc, float? value)
         {
             DateTimeUtc = dateTimeUtc;
             Value = value;
         }
 
         /// <summary> The DateTime of the Timeseries data point in UTC. </summary>
-        public string DateTimeUtc { get; set; }
+        public DateTimeOffset? DateTimeUtc { get; set; }
         /// <summary> The Value of the Timeseries data point. </summary>
         public float? Value { get; set; }
     }

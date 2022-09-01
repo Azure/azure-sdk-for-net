@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="timeseriesType"> The type of Timeseries. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="timeseriesData"> The set of data points for the timeseries. </param>
-        internal TimeseriesInfo(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string endpoint, DateTimeOffset? startDateTimeUtc, DateTimeOffset? endDateTimeUtc, AggregationInterval? aggregationInterval, TimeseriesType? timeseriesType, string country, IList<TimeseriesDataPoint> timeseriesData) : base(id, name, resourceType, systemData, tags, location)
+        internal TimeseriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string endpoint, DateTimeOffset? startDateTimeUtc, DateTimeOffset? endDateTimeUtc, AggregationInterval? aggregationInterval, TimeseriesType? timeseriesType, string country, IList<TimeseriesDataPoint> timeseriesData) : base(id, name, resourceType, systemData, tags, location)
         {
             Endpoint = endpoint;
             StartDateTimeUtc = startDateTimeUtc;

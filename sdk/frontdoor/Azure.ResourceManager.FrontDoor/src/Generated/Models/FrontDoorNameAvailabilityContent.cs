@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="name"> The resource name to validate. </param>
         /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FrontDoorNameAvailabilityContent(string name, ResourceType resourceType)
+        public FrontDoorNameAvailabilityContent(string name, FrontDoorResourceType resourceType)
         {
             if (name == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The resource name to validate. </summary>
         public string Name { get; }
         /// <summary> The type of the resource whose name is to be validated. </summary>
-        public ResourceType ResourceType { get; }
+        public FrontDoorResourceType ResourceType { get; }
     }
 }

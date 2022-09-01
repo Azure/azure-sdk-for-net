@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> L7 health probe settings for a backend pool. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorBackendPool(ResourceIdentifier id, string name, Core.ResourceType? resourceType, IList<FrontDoorBackend> backends, WritableSubResource loadBalancingSettings, WritableSubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IList<FrontDoorBackend> backends, WritableSubResource loadBalancingSettings, WritableSubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
         {
             Backends = backends;
             LoadBalancingSettings = loadBalancingSettings;

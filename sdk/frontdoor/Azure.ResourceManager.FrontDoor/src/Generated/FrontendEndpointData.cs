@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="customHttpsProvisioningState"> Provisioning status of Custom Https of the frontendEndpoint. </param>
         /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
-        internal FrontendEndpointData(ResourceIdentifier id, string name, Core.ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType)
+        internal FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType)
         {
             HostName = hostName;
             SessionAffinityEnabledState = sessionAffinityEnabledState;
