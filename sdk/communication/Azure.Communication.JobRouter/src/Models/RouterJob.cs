@@ -78,14 +78,14 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Notes != null
-                    ? Notes?.ToDictionary(x => x.Key.ToString("O", CultureInfo.InvariantCulture),
+                    ? Notes?.ToDictionary(x => x.Key.ToUniversalTime().ToString(CultureInfo.InvariantCulture),
                         x => x.Value)
                     : new ChangeTrackingDictionary<string, string>();
             }
             set
             {
                 Notes = new SortedDictionary<DateTimeOffset, string>(
-                    value.ToDictionary(x => DateTimeOffset.ParseExact(x.Key, "O", CultureInfo.InvariantCulture), x => x.Value));
+                    value.ToDictionary(x => DateTimeOffsetParser.ParseAndGetDateTimeOffset(x.Key), x => x.Value));
             }
         }
 
