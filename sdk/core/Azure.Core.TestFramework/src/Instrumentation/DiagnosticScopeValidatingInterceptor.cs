@@ -88,6 +88,33 @@ namespace Azure.Core.TestFramework
                 async ValueTask<T> Await()
                 {
                     invocation.Proceed();
+                    var tType = typeof(T);
+                    if (tType.IsGenericType && tType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                    {
+                        //guaranteed only one generic arg with Response<T>
+                        var tGenericType = tType.GetGenericArguments()[0];
+                        var returnType = invocation.ReturnValue.GetType();
+                        Type returnGenericType = null;
+                        if (returnType.IsGenericType && returnType.GetGenericTypeDefinition().Equals(typeof(Task<>)))
+                        {
+                            var returnInnerType = returnType.GetGenericArguments()[0];
+                            if (returnInnerType.IsGenericType && returnInnerType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                            {
+                                returnGenericType = returnInnerType.GetGenericArguments()[0];
+                            }
+                        }
+                        if (returnGenericType is not null && returnGenericType.IsSubclassOf(tGenericType))
+                        {
+                            //get the object
+                            var responseObject = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
+                            var rawResponse = responseObject.GetType().GetMethod("GetRawResponse", BindingFlags.Instance | BindingFlags.Public).Invoke(responseObject, null);
+                            var obj = responseObject.GetType().GetProperty("Value", BindingFlags.Public | BindingFlags.Instance).GetValue(responseObject);
+                            //reconstruct
+                            var genericFromMethod = typeof(Response).GetMethod("FromValue", BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(tGenericType);
+                            var newResponseObject = genericFromMethod.Invoke(null, new object[] { obj, rawResponse });
+                            return (T)newResponseObject;
+                        }
+                    }
                     return await (Task<T>)invocation.ReturnValue;
                 }
 
