@@ -12,10 +12,19 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentModelOperationSummary
+    public partial class OperationDetails
     {
-        internal static DocumentModelOperationSummary DeserializeDocumentModelOperationSummary(JsonElement element)
+        internal static OperationDetails DeserializeOperationDetails(JsonElement element)
         {
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element);
+                    case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element);
+                    case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element);
+                }
+            }
             string operationId = default;
             DocumentOperationStatus status = default;
             Optional<int> percentCompleted = default;
@@ -25,6 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Uri resourceLocation = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"))
@@ -87,8 +97,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("error"))
+                {
+                    error = property.Value.Clone();
+                    continue;
+                }
             }
-            return new DocumentModelOperationSummary(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags));
+            return new OperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error);
         }
     }
 }

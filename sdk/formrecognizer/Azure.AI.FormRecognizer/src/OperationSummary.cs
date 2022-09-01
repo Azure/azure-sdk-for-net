@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("OperationSummary")]
-    public partial class DocumentModelOperationSummary
+    public partial class OperationSummary
     {
         /// <summary>
         /// Date and time (UTC) when the operation was created.

@@ -16,8 +16,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Int64);
 
-            Assert.AreEqual(DocumentFieldType.Int64, field.ValueType);
-            Assert.Throws<InvalidOperationException>(() => field.AsInt64());
+            Assert.AreEqual(DocumentFieldType.Int64, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsInt64());
         }
 
         [Test]
@@ -25,8 +25,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Double);
 
-            Assert.AreEqual(DocumentFieldType.Double, field.ValueType);
-            Assert.Throws<InvalidOperationException>(() => field.AsDouble());
+            Assert.AreEqual(DocumentFieldType.Double, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsDouble());
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Date);
 
-            Assert.AreEqual(DocumentFieldType.Date, field.ValueType);
-            Assert.Throws<InvalidOperationException>(() => field.AsDate());
+            Assert.AreEqual(DocumentFieldType.Date, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsDate());
         }
 
         [Test]
@@ -43,8 +43,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Time);
 
-            Assert.AreEqual(DocumentFieldType.Time, field.ValueType);
-            Assert.Throws<InvalidOperationException>(() => field.AsTime());
+            Assert.AreEqual(DocumentFieldType.Time, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsTime());
         }
 
         [Test]
@@ -52,8 +52,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.SelectionMark);
 
-            Assert.AreEqual(DocumentFieldType.SelectionMark, field.ValueType);
-            Assert.Throws<InvalidOperationException>(() => field.AsSelectionMarkState());
+            Assert.AreEqual(DocumentFieldType.SelectionMark, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsSelectionMarkState());
         }
 
         [Test]
@@ -61,8 +61,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Signature);
 
-            Assert.AreEqual(DocumentFieldType.Signature, field.ValueType);
-            Assert.Throws<InvalidOperationException>(() => field.AsSignatureType());
+            Assert.AreEqual(DocumentFieldType.Signature, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsSignatureType());
         }
     }
 }

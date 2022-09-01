@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<TimeSpan> valueTime = default;
             Optional<string> valuePhoneNumber = default;
             Optional<double> valueNumber = default;
-            Optional<int> valueInteger = default;
+            Optional<long> valueInteger = default;
             Optional<V3SelectionMarkState> valueSelectionMark = default;
             Optional<DocumentSignatureType> valueSignature = default;
             Optional<string> valueCountryRegion = default;
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueInteger = property.Value.GetInt32();
+                    valueInteger = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("valueSelectionMark"))

@@ -9,13 +9,13 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("OperationDetails")]
-    public partial class DocumentModelOperationDetails
+    public partial class OperationDetails
     {
         /// <summary>
         /// Initializes a new instance of DocumentModelOperationDetails. Used by the <see cref="DocumentAnalysisModelFactory"/>
         /// for mocking.
         /// </summary>
-        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error)
+        internal OperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error)
         {
             OperationId = operationId;
             Status = status;
