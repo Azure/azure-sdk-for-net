@@ -61,6 +61,7 @@ rename-mapping:
   Desktop: VirtualDesktop
   DesktopGroup: VirtualDesktopGroup
   Workspace: VirtualWorkspace
+  HostPool.properties.cloudPcResource: IsCloudPcResource
   HostPool.properties.ssoadfsAuthority: SsoAdfsAuthority
   HostPool.properties.validationEnvironment: IsValidationEnvironment
   HostPoolPatch.properties.ssoadfsAuthority: SsoAdfsAuthority
