@@ -584,6 +584,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string CustomRdpProperty { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
+        public bool? IsValidationEnvironment { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType? LoadBalancerType { get { throw null; } set { } }
         public int? MaxSessionLimit { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get { throw null; } set { } }
@@ -596,7 +597,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? SsoSecretType { get { throw null; } set { } }
         public bool? StartVmOnConnect { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public bool? ValidationEnvironment { get { throw null; } set { } }
         public string VmTemplate { get { throw null; } set { } }
     }
     public partial class HostPoolRegistrationInfo
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public HostPoolType(string value) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType BYODesktop { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType BringYourOwnDesktop { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType Personal { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType Pooled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType other) { throw null; }
