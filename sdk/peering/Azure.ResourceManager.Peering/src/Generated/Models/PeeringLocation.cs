@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringLocationValue"> The name of the peering location. </param>
         /// <param name="country"> The country in which the peering location exists. </param>
         /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
-        internal PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeeringKind? kind, DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string peeringLocationValue, string country, string azureRegion) : base(id, name, resourceType, systemData)
+        internal PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeeringKind? kind, DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string peeringLocationValue, string country, AzureLocation? azureRegion) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Direct = direct;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> The country in which the peering location exists. </summary>
         public string Country { get; set; }
         /// <summary> The Azure region associated with the peering location. </summary>
-        public string AzureRegion { get; set; }
+        public AzureLocation? AzureRegion { get; set; }
     }
 }
