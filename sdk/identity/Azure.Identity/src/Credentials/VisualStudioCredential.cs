@@ -33,6 +33,8 @@ namespace Azure.Identity
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
 
+        internal TimeSpan VisualStudioProcessTimeout { get; private set; }
+
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
         /// </summary>
@@ -54,6 +56,7 @@ namespace Azure.Identity
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            VisualStudioProcessTimeout = options?.VisualStudioProcessTimeout ?? TimeSpan.FromSeconds(30);
         }
 
         /// <inheritdoc />
@@ -120,7 +123,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), _logPII, cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), VisualStudioProcessTimeout, _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
