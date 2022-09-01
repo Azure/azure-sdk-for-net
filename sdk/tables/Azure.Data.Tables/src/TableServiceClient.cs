@@ -674,16 +674,23 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
+                var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
+                context.AddClassifier((int)HttpStatusCode.Conflict, false);
                 var response = _tableOperations.Create(
-                    new TableProperties() { TableName = tableName },
-                    null,
-                    queryOptions: _defaultQueryOptions,
-                    cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
-            {
-                return default;
+                    RequestContent.Create(new { TableName = tableName }),
+                    TableConstants.Odata.MinimalMetadata,
+                    TableConstants.ReturnNoContent,
+                    context);
+
+                if (response.IsError || response.Status == (int)HttpStatusCode.Conflict)
+                {
+                    RequestFailedException rfe = new(response);
+                    if (rfe.Status != (int)HttpStatusCode.Conflict || rfe.ErrorCode == TableErrorCode.TableBeingDeleted)
+                    {
+                        throw rfe;
+                    }
+                }
+                return Response.FromValue(new TableItem(tableName), response);
             }
             catch (Exception ex)
             {
@@ -706,17 +713,23 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
+                var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
+                context.AddClassifier((int)HttpStatusCode.Conflict, false);
                 var response = await _tableOperations.CreateAsync(
-                        new TableProperties() { TableName = tableName },
-                        null,
-                        queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
-            {
-                return default;
+                    RequestContent.Create(new { TableName = tableName }),
+                    TableConstants.Odata.MinimalMetadata,
+                    TableConstants.ReturnNoContent,
+                    context).ConfigureAwait(false);
+
+                if (response.IsError || response.Status == (int)HttpStatusCode.Conflict)
+                {
+                    RequestFailedException rfe = new(response);
+                    if (rfe.Status != (int)HttpStatusCode.Conflict || rfe.ErrorCode == TableErrorCode.TableBeingDeleted)
+                    {
+                        throw rfe;
+                    }
+                }
+                return Response.FromValue(new TableItem(tableName), response);
             }
             catch (Exception ex)
             {
@@ -739,17 +752,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using var message = _tableOperations.CreateDeleteRequest(tableName);
-                _pipeline.Send(message, cancellationToken);
-
-                switch (message.Response.Status)
-                {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
-                }
+                return _tableOperations.Delete(tableName, CreateContextForDelete(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -772,17 +775,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using var message = _tableOperations.CreateDeleteRequest(tableName);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-
-                switch (message.Response.Status)
-                {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
-                }
+                return await _tableOperations.DeleteAsync(tableName, CreateContextForDelete(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -979,6 +972,13 @@ namespace Azure.Data.Tables
         /// <param name="filter">An interpolated filter string.</param>
         /// <returns>A valid OData filter expression.</returns>
         public static string CreateQueryFilter(FormattableString filter) => TableOdataFilter.Create(filter);
+
+        internal static RequestContext CreateContextForDelete(CancellationToken cancellationToken)
+        {
+            var context = new RequestContext() { CancellationToken = cancellationToken };
+            context.AddClassifier((int)HttpStatusCode.NotFound, false);
+            return context;
+        }
 
         private void ValidateServiceUriDoesNotContainTableName(Exception ex, string tableName = null)
         {

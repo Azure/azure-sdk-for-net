@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(ConnectionIdentifier))
             {
                 writer.WritePropertyName("connectionIdentifier");
-                writer.WriteStringValue(ConnectionIdentifier);
+                writer.WriteStringValue(ConnectionIdentifier.Value);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<int> peeringDBFacilityId = default;
             Optional<PeeringConnectionState> connectionState = default;
             Optional<PeeringBgpSession> bgpSession = default;
-            Optional<string> connectionIdentifier = default;
+            Optional<Guid> connectionIdentifier = default;
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,7 +75,12 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("connectionIdentifier"))
                 {
-                    connectionIdentifier = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    connectionIdentifier = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("errorMessage"))
@@ -83,7 +89,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringExchangeConnection(Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value);
+            return new PeeringExchangeConnection(Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, Optional.ToNullable(connectionIdentifier), errorMessage.Value);
         }
     }
 }

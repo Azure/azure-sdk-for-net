@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiIssueAttachmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attachmentId, ApiIssueAttachmentData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiIssueAttachmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attachmentId, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
             Argument.AssertNotNull(data, nameof(data));
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiIssueAttachmentResource> CreateOrUpdate(WaitUntil waitUntil, string attachmentId, ApiIssueAttachmentData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiIssueAttachmentResource> CreateOrUpdate(WaitUntil waitUntil, string attachmentId, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
             Argument.AssertNotNull(data, nameof(data));

@@ -1493,7 +1493,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class FlowEndpointIPAddress
     {
         public FlowEndpointIPAddress() { }
-        public System.Net.IPAddress Address { get { throw null; } set { } }
+        public string CidrAddress { get { throw null; } set { } }
     }
     public partial class FlowEndpoints
     {

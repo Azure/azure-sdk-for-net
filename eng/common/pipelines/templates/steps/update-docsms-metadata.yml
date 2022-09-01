@@ -34,7 +34,6 @@ parameters:
     default: ''
 steps:
   - ${{ if eq(length(parameters.PackageInfoLocations), 0) }}:
-    - checkout: none
     - pwsh: |
         Write-Host "Skipping DocsMS Update because package list was empty."
       displayName: Skip DocsMS Update
