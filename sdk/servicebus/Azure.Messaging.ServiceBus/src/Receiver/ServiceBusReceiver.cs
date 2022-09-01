@@ -745,7 +745,7 @@ namespace Azure.Messaging.ServiceBus
             bool containsReasonHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterReasonHeader, out object reasonHeaderProperty);
             bool containsDescriptionHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out object descriptionHeaderProperty);
 
-            if ((containsReasonHeader && deadLetterReason != null) && (reasonHeaderProperty.ToString() != deadLetterReason))
+            if (containsReasonHeader && deadLetterReason != null && reasonHeaderProperty != deadLetterReason)
             {
                 throw new InvalidOperationException("Differing deadletter reasons cannot be specified for both the 'propertiesToModify' and 'deadLetterReason' parameters. The values should either be identical or only be specified in one of the parameters.");
             }
