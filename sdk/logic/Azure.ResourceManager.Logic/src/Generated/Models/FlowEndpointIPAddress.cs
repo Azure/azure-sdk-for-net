@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of FlowEndpointIPAddress. </summary>
-        /// <param name="address"> The address. </param>
-        internal FlowEndpointIPAddress(string address)
+        /// <param name="cidrAddress"> The address. </param>
+        internal FlowEndpointIPAddress(string cidrAddress)
         {
-            Address = address;
+            CidrAddress = cidrAddress;
         }
 
         /// <summary> The address. </summary>
-        public string Address { get; set; }
+        public string CidrAddress { get; set; }
     }
 }

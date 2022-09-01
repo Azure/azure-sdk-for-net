@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Optional.IsDefined(CidrAddress))
             {
                 writer.WritePropertyName("address");
-                writer.WriteStringValue(Address);
+                writer.WriteStringValue(CidrAddress);
             }
             writer.WriteEndObject();
         }

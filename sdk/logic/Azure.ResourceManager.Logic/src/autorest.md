@@ -221,6 +221,7 @@ directive:
       $.OpenAuthenticationAccessPolicies.properties.policies['x-ms-client-name'] = 'AccessPolicies';
       $.ResourceReference.properties.id['x-ms-format'] = 'arm-id';
       $.ResourceReference.properties.type['x-ms-format'] = 'resource-type';
+      $.IpAddress.properties.address['x-ms-client-name'] = 'CidrAddress';
       $.IntegrationServiceEnvironmentSkuDefinition.properties.resourceType['x-ms-format'] = 'resource-type';
       $.KeyVaultKeyReference.properties.keyVault['x-ms-client-flatten'] = true;
       $.KeyVaultKeyReference.properties.keyVault.properties.id['x-ms-format'] = 'arm-id';
