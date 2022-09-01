@@ -270,18 +270,18 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}
         /// Operation Id: PeeringServices_Update
         /// </summary>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<PeeringServiceResource>> UpdateAsync(ResourceTags tags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PeeringServiceResource>> UpdateAsync(PeeringServicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceResource.Update");
             scope.Start();
             try
             {
-                var response = await _peeringServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _peeringServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PeeringServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,18 +296,18 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}
         /// Operation Id: PeeringServices_Update
         /// </summary>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<PeeringServiceResource> Update(ResourceTags tags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PeeringServiceResource> Update(PeeringServicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceResource.Update");
             scope.Start();
             try
             {
-                var response = _peeringServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _peeringServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new PeeringServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

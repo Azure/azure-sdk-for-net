@@ -139,7 +139,7 @@ rename-mapping:
   HostInfo: HDInsightClusterHostInfo
   GatewaySettings: HDInsightClusterGatewaySettings
   IPConfiguration.id: -|arm-id
-  IPConfiguration.type: -|arm-id
+  IPConfiguration.type: -|resource-type
   IPConfiguration.properties.primary: IsPrimary
   NameAvailabilityCheckRequestParameters.type: -|resource-type
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable

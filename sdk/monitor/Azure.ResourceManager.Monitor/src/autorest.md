@@ -21,18 +21,6 @@ format-by-name-rules:
   'locations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'ResourceId': 'arm-id'
-  'TargetResourceId': 'arm-id'
-  'TargetResourceLocation': 'azure-location'
-  'StorageAccountId': 'arm-id'
-  'ServiceBusRuleId': 'arm-id'
-  'EventHubAuthorizationRuleId': 'arm-id'
-  'WorkspaceResourceId': 'arm-id'
-  'MetricResourceId': 'arm-id'
-  'MetricResourceLocation': 'azure-location'
-  'DataCollectionRuleId': 'arm-id'
-  'DataCollectionEndpointId': 'arm-id'
-  'MarketplacePartnerId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -91,15 +79,16 @@ override-operation-name:
   ActionGroups_CreateNotificationsAtActionGroupResourceLevel: CreateNotifications
 
 rename-mapping:
-  MetricTrigger.metricResourceUri: metricResourceId
   AutoscaleSetting: AutoscaleSettingProperties
   AutoscaleSettingResource: AutoscaleSetting
-  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId
+  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId|arm-id
   AutoscaleSettingResource.properties.enabled: IsEnabled
   AutoscaleSettingResource.properties.name: AutoscaleSettingName
-  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId
+  AutoscaleSettingResource.properties.targetResourceLocation: -|azure-location
+  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId|arm-id
   AutoscaleSettingResourcePatch.properties.enabled: IsEnabled
   AutoscaleSettingResourcePatch.properties.name: AutoscaleSettingName
+  AutoscaleSettingResourcePatch.properties.targetResourceLocation: -|azure-location
   AzureMonitorPrivateLinkScope: MonitorPrivateLinkScope
   AccessModeSettings: MonitorPrivateLinkAccessModeSettings
   AccessModeSettingsExclusion: MonitorPrivateLinkAccessModeSettingsExclusion
@@ -109,6 +98,14 @@ rename-mapping:
   ActivityLogAlertActionGroup.actionGroupId: -|arm-id
   DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
   DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionRuleId: -|arm-id
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionEndpointId: -|arm-id
+  LogProfileResource.properties.storageAccountId: -|arm-id
+  LogProfileResource.properties.serviceBusRuleId: -|arm-id
+  LogProfileResourcePatch.properties.storageAccountId: -|arm-id
+  LogProfileResourcePatch.properties.serviceBusRuleId: -|arm-id
+  AzNsActionGroup: NotificationDetails
+  AlertingAction.aznsAction: notificationDetails
   ActionGroup: ActionGroupProperties
   ActionGroupResource: ActionGroup
   ActionGroupResource.properties.enabled: IsEnabled
@@ -121,7 +118,10 @@ rename-mapping:
   DiagnosticSettings: DiagnosticSettingsProperties
   DiagnosticSettingsResource: DiagnosticSettings
   DiagnosticSettingsResource.properties.workspaceId: -|arm-id
-  PrivateLinkResource.properties.groupId: -|arm-id
+  DiagnosticSettingsResource.properties.storageAccountId: -|arm-id
+  DiagnosticSettingsResource.properties.serviceBusRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.eventHubAuthorizationRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.marketplacePartnerId: -|arm-id
   ActivityLogAlert: ActivityLogAlertProperties
   ActivityLogAlertResource: ActivityLogAlert
   ActivityLogAlertResource.properties.enabled: IsEnabled
@@ -133,21 +133,24 @@ rename-mapping:
   DataCollectionEndpoint: DataCollectionEndpointProperties
   DataCollectionEndpointResource: DataCollectionEndpoint
   DataCollectionRule: DataCollectionRuleProperties
+  DataCollectionRuleResource.properties.dataCollectionEndpointId: -|arm-id
   DataCollectionRuleResource: DataCollectionRule
   DiagnosticSettingsCategory: DiagnosticSettingsCategoryProperties
   DiagnosticSettingsCategoryResource: DiagnosticSettingsCategory
   LogProfileResource: LogProfile
   LogSearchRule: LogSearchRuleProperties
   LogSearchRuleResource: LogSearchRule
-  RuleDataSource.resourceUri: resourceId
-  RuleMetricDataSource.resourceUri: resourceId
-  RuleManagementEventDataSource.resourceUri: resourceId
+  LogAnalyticsDestination.workspaceResourceId: -|arm-id
+  RuleDataSource.resourceUri: resourceId|arm-id
   MetricAlertResource.properties.autoMitigate: IsAutoMitigateEnabled
   MetricAlertResource.properties.enabled: IsEnabled
   MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigateEnabled
   MetricAlertResourcePatch.properties.enabled: IsEnabled
   MetricSettings.enabled: IsEnabled
   EventData: EventDataInfo
+  EventData.resourceId: -|arm-id
+  PredictiveResponse: AutoscaleSettingPredicativeResult
+  PredictiveResponse.targetResourceId: -|arm-id
   LogSettings.enabled: IsEnabled
   RetentionPolicy.enabled: IsEnabled
   TimeWindow.start: StartOn
@@ -159,7 +162,6 @@ rename-mapping:
   KnownDataCollectionEndpointProvisioningState: DataCollectionEndpointProvisioningState
   KnownDataCollectionRuleAssociationProvisioningState: DataCollectionRuleAssociationProvisioningState
   KnownDataCollectionRuleProvisioningState: DataCollectionRuleProvisioningState
-  ProvisioningState: MonitorProvisioningState
   KnownDataFlowStreams: DataFlowStreams
   KnownExtensionDataSourceStreams: ExtensionDataSourceStreams
   KnownPerfCounterDataSourceStreams: PerfCounterDataSourceStreams
@@ -167,7 +169,12 @@ rename-mapping:
   KnownSyslogDataSourceLogLevels: SyslogDataSourceLogLevels
   KnownSyslogDataSourceStreams: SyslogDataSourceStreams
   KnownWindowsEventLogDataSourceStreams: WindowsEventLogDataSourceStreams
+  KnownDataCollectionEndpointResourceKind: DataCollectionEndpointResourceKind
+  KnownDataCollectionRuleResourceKind: DataCollectionRuleResourceKind
+  ProvisioningState: MonitorProvisioningState
   LocalizableString: MonitorLocalizableString
+  MetricTrigger.metricResourceUri: metricResourceId|arm-id
+  MetricTrigger.metricResourceLocation: -|azure-location
   MetricTrigger.dividePerInstance: IsDividedPerInstance
   AggregationTypeEnum: MonitorAggregationType
   NotificationRequestBody: NotificationContent
@@ -187,6 +194,7 @@ rename-mapping:
   EventHubReceiver: MonitorEventHubReceiver
   ItsmReceiver: MonitorItsmReceiver
   LogicAppReceiver: MonitorLogicAppReceiver
+  LogicAppReceiver.resourceId: -|arm-id
   SmsReceiver: MonitorSmsReceiver
   VoiceReceiver: MonitorVoiceReceiver
   WebhookReceiver: MonitorWebhookReceiver
@@ -221,9 +229,7 @@ rename-mapping:
   KnownColumnDefinitionType: DataColumnDefinitionType
   KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
   KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
-
-generate-arm-resource-extensions:
-  - /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+  VMInsightsOnboardingStatus.properties.resourceId: -|arm-id
 
 directive:
   # nullable issue resolution
@@ -281,14 +287,6 @@ directive:
   # remove unnecessary property for resources in action groups. Both of these are not used, and identity has an incorrect type.
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource.properties
-    transform: >
-      $["kind"] = undefined;
-  - from: dataCollectionEndpoints_API.json
-    where: $.definitions.DataCollectionEndpointResource.properties
-    transform: >
-      $["kind"] = undefined;
-  - from: dataCollectionRules_API.json
-    where: $.definitions.DataCollectionRuleResource.properties
     transform: >
       $["kind"] = undefined;
 ```

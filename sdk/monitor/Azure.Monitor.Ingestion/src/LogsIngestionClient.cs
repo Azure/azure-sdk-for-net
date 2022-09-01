@@ -3,13 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -91,7 +86,6 @@ namespace Azure.Monitor.Ingestion
             {
                 BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
                 var memory = entry.ToMemory();
-
                 if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
                 {
                     MemoryStream tempStream = new MemoryStream(); // create tempStream for individual log
@@ -146,7 +140,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="cancellationToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logEntries"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-Success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call Upload with required parameters and request content.
@@ -183,7 +177,7 @@ namespace Azure.Monitor.Ingestion
                     //TODO: catch errors and correlate with Batch.start
                     using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, "gzip", requestContext);
                     response = _pipeline.ProcessMessage(message, requestContext, cancellationToken);
-                    if (response.IsError)
+                    if (response.Status != 204) // if any error is thrown log it
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
@@ -209,7 +203,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="cancellationToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logEntries"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-Success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call Upload with required parameters and request content.
@@ -246,7 +240,7 @@ namespace Azure.Monitor.Ingestion
                     //TODO: catch errors and correlate with Batch.start
                     using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, "gzip", requestContext);
                     response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
-                    if (response.IsError)
+                    if (response.Status != 204) // if any error is thrown log it
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
@@ -281,15 +275,15 @@ namespace Azure.Monitor.Ingestion
             UploadLogsStatus status;
             if (errors.Count == 0)
             {
-                status = UploadLogsStatus.SUCCESS;
+                status = UploadLogsStatus.Success;
             }
             else if (errors.Count > logEntries.Count())
             {
-                status = UploadLogsStatus.PARTIALFAILURE;
+                status = UploadLogsStatus.PartialFailure;
             }
             else
             {
-                status = UploadLogsStatus.FAILURE;
+                status = UploadLogsStatus.Failure;
             }
 
             return status;
