@@ -6,7 +6,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
-  <PropertyGroup>
-    <NoWarn>$(NoWarn);NU1504</NoWarn>
-  </PropertyGroup>
 </Project>
