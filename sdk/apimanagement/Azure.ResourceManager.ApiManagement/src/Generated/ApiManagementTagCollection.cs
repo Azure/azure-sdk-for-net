@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementTagResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementTagResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tagId, ApiManagementTagCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
             Argument.AssertNotNull(content, nameof(content));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementTagResource> CreateOrUpdate(WaitUntil waitUntil, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementTagResource> CreateOrUpdate(WaitUntil waitUntil, string tagId, ApiManagementTagCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
             Argument.AssertNotNull(content, nameof(content));

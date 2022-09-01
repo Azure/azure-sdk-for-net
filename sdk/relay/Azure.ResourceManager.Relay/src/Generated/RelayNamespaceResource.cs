@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Relay
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the RelayNamespace. </summary>
-        /// <returns> An object representing collection of NamespaceAuthorizationRuleResources and their operations over a NamespaceAuthorizationRuleResource. </returns>
-        public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
+        /// <summary> Gets a collection of RelayNamespaceAuthorizationRuleResources in the RelayNamespace. </summary>
+        /// <returns> An object representing collection of RelayNamespaceAuthorizationRuleResources and their operations over a RelayNamespaceAuthorizationRuleResource. </returns>
+        public virtual RelayNamespaceAuthorizationRuleCollection GetRelayNamespaceAuthorizationRules()
         {
-            return GetCachedClient(Client => new NamespaceAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(Client => new RelayNamespaceAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NamespaceAuthorizationRuleResource>> GetNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetRelayNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetRelayNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,38 +121,23 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NamespaceAuthorizationRuleResource> GetNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<RelayNamespaceAuthorizationRuleResource> GetRelayNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetRelayNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it in the RelayNamespace. </summary>
-        /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
-        public virtual NetworkRuleSetResource GetNetworkRuleSet()
+        /// <summary> Gets an object representing a RelayNetworkRuleSetResource along with the instance operations that can be performed on it in the RelayNamespace. </summary>
+        /// <returns> Returns a <see cref="RelayNetworkRuleSetResource" /> object. </returns>
+        public virtual RelayNetworkRuleSetResource GetRelayNetworkRuleSet()
         {
-            return new NetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
+            return new RelayNetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
 
-        /// <summary> Gets a collection of HybridConnectionResources in the RelayNamespace. </summary>
-        /// <returns> An object representing collection of HybridConnectionResources and their operations over a HybridConnectionResource. </returns>
-        public virtual HybridConnectionCollection GetHybridConnections()
+        /// <summary> Gets a collection of RelayHybridConnectionResources in the RelayNamespace. </summary>
+        /// <returns> An object representing collection of RelayHybridConnectionResources and their operations over a RelayHybridConnectionResource. </returns>
+        public virtual RelayHybridConnectionCollection GetRelayHybridConnections()
         {
-            return GetCachedClient(Client => new HybridConnectionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Returns the description for the specified hybrid connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}
-        /// Operation Id: HybridConnections_Get
-        /// </summary>
-        /// <param name="hybridConnectionName"> The hybrid connection name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridConnectionResource>> GetHybridConnectionAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetHybridConnections().GetAsync(hybridConnectionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new RelayHybridConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -165,9 +150,24 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HybridConnectionResource> GetHybridConnection(string hybridConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelayHybridConnectionResource>> GetRelayHybridConnectionAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetHybridConnections().Get(hybridConnectionName, cancellationToken);
+            return await GetRelayHybridConnections().GetAsync(hybridConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the description for the specified hybrid connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}
+        /// Operation Id: HybridConnections_Get
+        /// </summary>
+        /// <param name="hybridConnectionName"> The hybrid connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RelayHybridConnectionResource> GetRelayHybridConnection(string hybridConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetRelayHybridConnections().Get(hybridConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WcfRelayResources in the RelayNamespace. </summary>

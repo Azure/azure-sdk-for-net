@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppVolumeQuotaRules().Get(volumeQuotaRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetAppSubvolumeResources in the NetAppVolume. </summary>
-        /// <returns> An object representing collection of NetAppSubvolumeResources and their operations over a NetAppSubvolumeResource. </returns>
-        public virtual NetAppSubvolumeCollection GetNetAppSubvolumes()
+        /// <summary> Gets a collection of NetAppSubvolumeInfoResources in the NetAppVolume. </summary>
+        /// <returns> An object representing collection of NetAppSubvolumeInfoResources and their operations over a NetAppSubvolumeInfoResource. </returns>
+        public virtual NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos()
         {
-            return GetCachedClient(Client => new NetAppSubvolumeCollection(Client, Id));
+            return GetCachedClient(Client => new NetAppSubvolumeInfoCollection(Client, Id));
         }
 
         /// <summary>
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetAppSubvolumeResource>> GetNetAppSubvolumeAsync(string subvolumeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubvolumes().GetAsync(subvolumeName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubvolumeInfos().GetAsync(subvolumeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetAppSubvolumeResource> GetNetAppSubvolume(string subvolumeName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubvolumes().Get(subvolumeName, cancellationToken);
+            return GetNetAppSubvolumeInfos().Get(subvolumeName, cancellationToken);
         }
 
         /// <summary>

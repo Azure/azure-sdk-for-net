@@ -87,7 +87,7 @@
 /sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
 
 # ServiceLabel: %Automation %Service Attention
-/sdk/automation/Microsoft.Azure.Management.Automation/            @jaspkaur28
+/sdk/automation/Microsoft.Azure.Management.Automation/            @jaspkaur28 @omairabdullah
 
 # ServiceLabel: %AVS %Service Attention
 /sdk/avs/Microsoft.Azure.Management.Avs/           @divka78 @amitchat @aishu

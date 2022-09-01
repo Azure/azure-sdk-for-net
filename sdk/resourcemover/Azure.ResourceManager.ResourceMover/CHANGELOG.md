@@ -1,5 +1,18 @@
 # Release History
 
+## 1.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+- Change the property name `IsValidateOnly` to `ValidateOnly` for all input only models.
+- Fix the name `NicIpConfigurationResourceSettings.IsValidateOnly` to `NicIpConfigurationResourceSettings.IsPrimary`.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.2 (2022-08-29)
 
 Polishing since last public beta release:
