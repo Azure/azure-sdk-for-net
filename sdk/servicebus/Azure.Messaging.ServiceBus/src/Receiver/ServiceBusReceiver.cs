@@ -747,7 +747,7 @@ namespace Azure.Messaging.ServiceBus
 
             if ((containsReasonHeader && deadLetterReason != null) && (reasonHeaderProperty.ToString() != deadLetterReason))
             {
-                throw new InvalidOperationException("Differing deadletter reasons cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
+                throw new InvalidOperationException("Differing deadletter reasons cannot be specified for both the 'propertiesToModify' and 'deadLetterReason' parameters. The values should either be identical or only be specified in one of the parameters.");
             }
 
             if (containsDescriptionHeader && deadLetterErrorDescription != null && descriptionHeaderProperty != deadLetterErrorDescription)
