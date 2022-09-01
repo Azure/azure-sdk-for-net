@@ -8,11 +8,10 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementContentTypeData : IUtf8JsonSerializable
+    public partial class ApiManagementContentType : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,12 +51,11 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementContentTypeData DeserializeApiManagementContentTypeData(JsonElement element)
+        internal static ApiManagementContentType DeserializeApiManagementContentType(JsonElement element)
         {
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
             Optional<string> id0 = default;
             Optional<string> name0 = default;
             Optional<string> description = default;
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (property.NameEquals("id"))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -78,16 +76,6 @@ namespace Azure.ResourceManager.ApiManagement
                 if (property.NameEquals("type"))
                 {
                     type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -133,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementContentTypeData(id, name, type, systemData.Value, id0.Value, name0.Value, description.Value, schema.Value, version.Value);
+            return new ApiManagementContentType(id, name, type, id0.Value, name0.Value, description.Value, schema.Value, version.Value);
         }
     }
 }
