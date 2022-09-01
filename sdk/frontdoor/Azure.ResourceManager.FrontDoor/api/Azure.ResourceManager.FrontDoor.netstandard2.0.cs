@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DeployingCertificate { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestApproved { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestRejected { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestTimedout { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestTimedOut { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate IssuingCertificate { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate PendingDomainControlValidationRequestApproval { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate SubmittingDomainControlValidationRequest { get { throw null; } }
@@ -984,11 +984,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Country { get { throw null; } }
         public string Description { get { throw null; } }
         public System.DateTimeOffset? EndDateTimeUtc { get { throw null; } }
-        public string EndpointA { get { throw null; } }
-        public string EndpointB { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.LatencyMetric> LatencyMetrics { get { throw null; } }
         public string LatencyScorecardId { get { throw null; } }
         public string LatencyScorecardName { get { throw null; } }
+        public string ScorecardEndpointA { get { throw null; } }
+        public string ScorecardEndpointB { get { throw null; } }
         public System.DateTimeOffset? StartDateTimeUtc { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

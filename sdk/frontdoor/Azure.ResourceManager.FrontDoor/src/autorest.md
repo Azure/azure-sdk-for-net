@@ -53,7 +53,6 @@ rename-mapping:
   BackendPool: FrontDoorBackendPool
   BackendPoolsSettings.sendRecvTimeoutSeconds: SendRecvTimeoutInSeconds
   FrontDoorCertificateType: FrontDoorEndpointConnectionCertificateType
-  CustomHttpsProvisioningSubstate.DomainControlValidationRequestTimedOut: DomainControlValidationRequestTimedout
   CustomHttpsProvisioningSubstate.PendingDomainControlValidationREquestApproval: PendingDomainControlValidationRequestApproval
   MatchCondition: WebApplicationRuleMatchCondition
   MatchCondition.negateCondition: IsNegateCondition
@@ -69,6 +68,8 @@ rename-mapping:
   HeaderActionType: RulesEngineHeaderActionType
   LatencyScorecard.properties.id: LatencyScorecardId
   LatencyScorecard.properties.name: LatencyScorecardName
+  LatencyScorecard.properties.endpointA: ScorecardEndpointA
+  LatencyScorecard.properties.endpointB: ScorecardEndpointB
   PolicyMode: FrontDoorWebApplicationFirewallPolicyMode
   RulesEngineMatchCondition.negateCondition: IsNegateCondition
   Transform: RulesEngineMatchTransform

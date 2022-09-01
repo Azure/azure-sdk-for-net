@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string PendingDomainControlValidationRequestApprovalValue = "PendingDomainControlValidationREquestApproval";
         private const string DomainControlValidationRequestApprovedValue = "DomainControlValidationRequestApproved";
         private const string DomainControlValidationRequestRejectedValue = "DomainControlValidationRequestRejected";
-        private const string DomainControlValidationRequestTimedoutValue = "DomainControlValidationRequestTimedOut";
+        private const string DomainControlValidationRequestTimedOutValue = "DomainControlValidationRequestTimedOut";
         private const string IssuingCertificateValue = "IssuingCertificate";
         private const string DeployingCertificateValue = "DeployingCertificate";
         private const string CertificateDeployedValue = "CertificateDeployed";
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> DomainControlValidationRequestRejected. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestRejected { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DomainControlValidationRequestRejectedValue);
         /// <summary> DomainControlValidationRequestTimedOut. </summary>
-        public static FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestTimedout { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DomainControlValidationRequestTimedoutValue);
+        public static FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestTimedOut { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(DomainControlValidationRequestTimedOutValue);
         /// <summary> IssuingCertificate. </summary>
         public static FrontendEndpointCustomHttpsProvisioningSubstate IssuingCertificate { get; } = new FrontendEndpointCustomHttpsProvisioningSubstate(IssuingCertificateValue);
         /// <summary> DeployingCertificate. </summary>
