@@ -71,8 +71,8 @@ rename-rules:
   CaaRecord: CaaRecordInfo
 
 override-operation-name:
-  RecordSets_ListByDnsZone: GetRecordSets
-  RecordSets_ListAllByDnsZone: GetAllRecordSets
+  RecordSets_ListByDnsZone: GetRecords
+  RecordSets_ListAllByDnsZone: GetAllRecords
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: ARecord
@@ -85,7 +85,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: SoaRecord
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: SrvRecord
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: TxtRecord
-  
+
 directive:
   - from: swagger-document
     where: $.definitions
@@ -96,6 +96,9 @@ directive:
       $.RecordSetProperties.properties.TTL["x-ms-client-name"] = "TtlInSeconds";
       $.TxtRecord.properties.value["x-ms-client-name"] = "values";
       $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
+      $.ZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
+      $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-ms-client-name"] = "maxNumberOfRecordsPerRecord";
+      $.ZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
 
 # FooTime => FooTimeInSeconds
   - from: swagger-document
