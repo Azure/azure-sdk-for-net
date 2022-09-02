@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- `TableClient.CreateIfNotExists` and `TableServiceClient.CreateTableIfNotExists` no longer log an error or exception to telemetry when the table already exists (response status 409). ([#28084](https://github.com/Azure/azure-sdk-for-net/issues/28084))
+- `TableClient.CreateIfNotExists` and `TableServiceClient.CreateTableIfNotExists` no longer return null when the table already exists. ([#27821](https://github.com/Azure/azure-sdk-for-net/issues/27821))
 
 ### Other Changes
 
@@ -35,7 +37,7 @@
 ## 12.4.0 (2022-01-12)
 
 ### Bugs Fixed
-- Fixed a an issue when using `TableEntity.GetDateTime` that resulted in an `InvalidOperationException` exception. ([#25323](https://github.com/Azure/azure-sdk-for-net/issues/25323)) 
+- Fixed a an issue when using `TableEntity.GetDateTime` that resulted in an `InvalidOperationException` exception. ([#25323](https://github.com/Azure/azure-sdk-for-net/issues/25323))
 - `TableClient.GenerateSasUri(...)` does not throw if the client was constructed via `TableServiceClient.GetTableClient(string tableName)` ([#25881](https://github.com/Azure/azure-sdk-for-net/issues/25881))
 - `TableClient.GenerateSasUri(...)` now generates a Uri with the table name in the path. ([#26155](https://github.com/Azure/azure-sdk-for-net/issues/26155))
 - `TableClient` and `TableServiceClient` constructors taking a connection string now properly parse Cosmos emulator connection strings. ([#26326](https://github.com/Azure/azure-sdk-for-net/issues/26326))
@@ -48,10 +50,10 @@
 ### Breaking Changes
 - The fix to escape`PartitionKey` and `RoKey` property values containing single quote characters are not properly escaped on `GetEntity` calls  may causes a breaking change for deployed applications that work around the previous behavior. For these situations, the new behavior can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity" to `true` or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY" to "true". Note: AppContext switches can also be configured via configuration like below:
 
-```xml  
+```xml
 <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity" Value="true" />
-</ItemGroup> 
+</ItemGroup>
   ```
 
 ## 12.2.1 (2021-10-14)
@@ -109,17 +111,17 @@ Thank you to our developer community members who helped to make Azure Tables bet
 - `TableClient.SubmitTransaction` and `TableClient.SubmitTransactionAsync` now return `Response<IReadOnlyList<Response>>` rather than `TableBatchResponse`.
     - `TableBatchResponse.GetResponseForEntity` is no longer necessary as the responses can now be correlated directly between the `Response<IReadOnlyList<Response>>`
     and the list of `TableTransactionAction`s provided to the submit method.
- - The following renames have occurred: 
+ - The following renames have occurred:
     - `TableServiceClient` methods `GetTables` and `GetTablesAsync` have been renamed to `Query` and `QueryAsync`
     - `TableServiceClient` methods `GetAccessPolicy` and `GetAccessPolicyAsync` have been renamed to `GetAccessPolicies` and `GetAccessPoliciesAsync`
     - `TableClientOptions` has been renamed to `TablesClientOptions`
     - `RetentionPolicy` has been renamed to `TableRetentionPolicy`
     - `SignedIdentifier` has been renamed to `TableSignedIdentifier`
-    
+
 ### Changed
-- Failed batch transaction operations now throw `TableTransactionFailedException` which contains a `FailedTransactionActionIndex` property to indicate which 
+- Failed batch transaction operations now throw `TableTransactionFailedException` which contains a `FailedTransactionActionIndex` property to indicate which
 `TableTransactionAction` caused the failure.
-  
+
 ### Added
 
 - Added `TableOdataFilter` to assist with odata string filter quoting and escaping.
@@ -200,5 +202,5 @@ Thank you to our developer community members who helped to make Azure Tables bet
 
 This is the first beta of the `Azure.Data.Tables` client library. The Azure Tables client library can seamlessly target either Azure Table storage or Azure Cosmos DB table service endpoints with no code changes.
 
-This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md) 
+This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md)
 and [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/samples) demonstrate the new API.

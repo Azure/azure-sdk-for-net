@@ -1,0 +1,461 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Seattle",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fd49aa61e803aebda098cedcbc402f3c-f55eee327b3d92e9-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "888d90eb17fec04c3b3e5d0d1641ae69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "6912",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 05:39:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: AE494C120ABB48DD93016C3AC040A073 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:49Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "seattle",
+          "queryType": "NON_NEAR",
+          "queryTime": 7,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 271,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/45325",
+            "score": 2.5829555988,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "municipality": "Seattle",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle, WA"
+            },
+            "position": {
+              "lat": 47.60323,
+              "lon": -122.33028
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.7364,
+                "lon": -122.4594
+              },
+              "btmRightPoint": {
+                "lat": 47.35069,
+                "lon": -122.21866
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.7364,
+                "lon": -122.4594
+              },
+              "btmRightPoint": {
+                "lat": 47.35069,
+                "lon": -122.21866
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-3c00-0000-0000596ae44e"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/14890",
+            "score": 2.1768069267,
+            "entityType": "MunicipalitySubdivision",
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "municipalitySubdivision": "Seattle",
+              "municipality": "Zapopan",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Seattle, Zapopan, Jalisco"
+            },
+            "position": {
+              "lat": 20.71994,
+              "lon": -103.37196
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.72179,
+                "lon": -103.37451
+              },
+              "btmRightPoint": {
+                "lat": 20.71809,
+                "lon": -103.36918
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.72179,
+                "lon": -103.37451
+              },
+              "btmRightPoint": {
+                "lat": 20.71809,
+                "lon": -103.36918
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005858-5800-1200-0000-00007d2ba4b6"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/113535",
+            "score": 2.1554658413,
+            "entityType": "MunicipalitySubdivision",
+            "matchConfidence": {
+              "score": 0.8917948522063038
+            },
+            "address": {
+              "municipalitySubdivision": "Condominio Seattle",
+              "municipality": "Zapopan",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Condominio Seattle, Zapopan, Jalisco"
+            },
+            "position": {
+              "lat": 20.72218,
+              "lon": -103.36971
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.72276,
+                "lon": -103.37041
+              },
+              "btmRightPoint": {
+                "lat": 20.72161,
+                "lon": -103.36898
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.72276,
+                "lon": -103.37041
+              },
+              "btmRightPoint": {
+                "lat": 20.72161,
+                "lon": -103.36898
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "b2905ab3-f207-4a66-bb14-67a3900f16d2"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/10607",
+            "score": 2.1345388889,
+            "entityType": "MunicipalitySubdivision",
+            "matchConfidence": {
+              "score": 0.8594335987362781
+            },
+            "address": {
+              "municipalitySubdivision": "Ecol\u00F3gica El Seattle",
+              "municipality": "Zapopan",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Ecol\u00F3gica El Seattle, Zapopan, Jalisco"
+            },
+            "position": {
+              "lat": 20.71985,
+              "lon": -103.37826
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.7222,
+                "lon": -103.3809
+              },
+              "btmRightPoint": {
+                "lat": 20.71853,
+                "lon": -103.37426
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.7222,
+                "lon": -103.3809
+              },
+              "btmRightPoint": {
+                "lat": 20.71853,
+                "lon": -103.37426
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005858-5800-1200-0000-00007d2b9469"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/15544",
+            "score": 2.1345388889,
+            "entityType": "MunicipalitySubdivision",
+            "matchConfidence": {
+              "score": 0.8707489790577205
+            },
+            "address": {
+              "municipalitySubdivision": "Jardines Seattle Unidad",
+              "municipality": "Zapopan",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Jardines Seattle Unidad, Zapopan, Jalisco"
+            },
+            "position": {
+              "lat": 20.72466,
+              "lon": -103.36982
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.72538,
+                "lon": -103.37112
+              },
+              "btmRightPoint": {
+                "lat": 20.72394,
+                "lon": -103.36858
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.72538,
+                "lon": -103.37112
+              },
+              "btmRightPoint": {
+                "lat": 20.72394,
+                "lon": -103.36858
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005858-5800-1200-0000-00007d2b9fc4"
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "MX/STR/p0/1551813",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Calle Seattle",
+              "municipalitySubdivision": "Plan de Ayala",
+              "municipality": "Hermosillo",
+              "countrySubdivision": "Sonora",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Calle Seattle, Plan de Ayala, Hermosillo, Sonora",
+              "localName": "Hermosillo"
+            },
+            "position": {
+              "lat": 28.8494,
+              "lon": -111.98321
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 28.85031,
+                "lon": -111.98321
+              },
+              "btmRightPoint": {
+                "lat": 28.84715,
+                "lon": -111.97879
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/944320",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Street",
+              "municipalitySubdivision": "Cooper Young",
+              "municipality": "Memphis",
+              "countrySecondarySubdivision": "Shelby",
+              "countrySubdivision": "TN",
+              "countrySubdivisionName": "Tennessee",
+              "postalCode": "38114",
+              "extendedPostalCode": "38114-1729, 38114-1730, 38114-1731, 38114-1732, 38114-1826, 38114-1827",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Street, Memphis, TN 38114",
+              "localName": "Memphis"
+            },
+            "position": {
+              "lat": 35.11933,
+              "lon": -90.00257
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 35.12126,
+                "lon": -90.00312
+              },
+              "btmRightPoint": {
+                "lat": 35.1165,
+                "lon": -90.00246
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/1144048",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Avenue",
+              "municipality": "Wenatchee",
+              "countrySecondarySubdivision": "Chelan",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98801",
+              "extendedPostalCode": "98801-1440, 98801-1441, 98801-7538",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Avenue, Wenatchee, WA 98801",
+              "localName": "Wenatchee"
+            },
+            "position": {
+              "lat": 47.43879,
+              "lon": -120.33607
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.43879,
+                "lon": -120.33851
+              },
+              "btmRightPoint": {
+                "lat": 47.43861,
+                "lon": -120.33226
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/1144056",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Avenue",
+              "municipality": "Shelton",
+              "countrySecondarySubdivision": "Mason",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Avenue, Shelton, WA",
+              "localName": "Shelton"
+            },
+            "position": {
+              "lat": 47.20241,
+              "lon": -123.10465
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.20256,
+                "lon": -123.10844
+              },
+              "btmRightPoint": {
+                "lat": 47.20231,
+                "lon": -123.10155
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/1144060",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Avenue",
+              "municipality": "Port Orchard",
+              "countrySecondarySubdivision": "Kitsap",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98366",
+              "extendedPostalCode": "98366-4538, 98366-4539, 98366-5223, 98366-5247, 98366-5248, 98366-5271",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Avenue, Port Orchard, WA 98366",
+              "localName": "Port Orchard"
+            },
+            "position": {
+              "lat": 47.53996,
+              "lon": -122.63266
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.54237,
+                "lon": -122.63348
+              },
+              "btmRightPoint": {
+                "lat": 47.53801,
+                "lon": -122.63261
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "986055412"
+  }
+}

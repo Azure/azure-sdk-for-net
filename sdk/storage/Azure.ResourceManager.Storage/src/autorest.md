@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/storage/resource-manager/readme.md
-tag: package-2021-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/20b212e1ef41b1d49b83ba82b4cd2d3330e44742/specification/storage/resource-manager/readme.md
+tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -162,7 +162,7 @@ rename-mapping:
   BlobInventoryPolicyRule.enabled: IsEnabled
   BlobInventoryPolicySchema.enabled: IsEnabled
   ActiveDirectoryProperties: StorageActiveDirectoryProperties
-  ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
+  AccountType: ActiveDirectoryAccountType
   StorageAccount.properties.failoverInProgress: IsFailoverInProgress
   StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
   StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
@@ -179,7 +179,7 @@ rename-mapping:
   ManagementPolicy: StorageAccountManagementPolicy
   AzureFilesIdentityBasedAuthentication: FilesIdentityBasedAuthentication
   BlobInventoryPolicyFilter.prefixMatch: IncludePrefix
-  CorsRuleAllowedMethodsItem: CorsRuleAllowedMethod
+  AllowedMethods: CorsRuleAllowedMethod
   DefaultSharePermission.StorageFileDataSmbShareReader: Reader
   DefaultSharePermission.StorageFileDataSmbShareContributor: Contributor
   DefaultSharePermission.StorageFileDataSmbShareElevatedContributor: ElevatedContributor

@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element)
         {
-            Optional<HealthCheckName> healthCheckName = default;
-            Optional<HealthCheckResult> healthCheckResult = default;
+            Optional<SessionHostHealthCheckName> healthCheckName = default;
+            Optional<SessionHostHealthCheckResult> healthCheckResult = default;
             Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    healthCheckName = new HealthCheckName(property.Value.GetString());
+                    healthCheckName = new SessionHostHealthCheckName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("healthCheckResult"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    healthCheckResult = new HealthCheckResult(property.Value.GetString());
+                    healthCheckResult = new SessionHostHealthCheckResult(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("additionalFailureDetails"))

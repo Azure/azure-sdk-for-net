@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="sendMessage"> Object containing message includes title and message body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SendMessageAsync(SendMessage sendMessage = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendMessageAsync(UserSessionMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionResource.SendMessage");
             scope.Start();
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="sendMessage"> Object containing message includes title and message body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SendMessage(SendMessage sendMessage = null, CancellationToken cancellationToken = default)
+        public virtual Response SendMessage(UserSessionMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionResource.SendMessage");
             scope.Start();

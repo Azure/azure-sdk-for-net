@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ClipTime(odataType);
+            return new UnknownClipTime(odataType);
         }
     }
 }

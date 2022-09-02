@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Authorization to copy a model to the specified target resource and modelId. </summary>
+    /// <summary> Authorization to copy a document model to the specified target resource and modelId. </summary>
     public partial class CopyAuthorization
     {
     }
