@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,24 +18,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the datasource. </param>
         /// <param name="description"> The description of the datasource. </param>
         /// <param name="type"> The type of the datasource. </param>
-        /// <param name="credentialsInternal"> Credentials for the datasource. </param>
+        /// <param name="credentials"> Credentials for the datasource. </param>
         /// <param name="container"> The data container for the datasource. </param>
         /// <param name="identity"> An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If &quot;none&quot; is specified, the value of this property is cleared. </param>
         /// <param name="dataChangeDetectionPolicy"> The data change detection policy for the datasource. </param>
         /// <param name="dataDeletionDetectionPolicy"> The data deletion detection policy for the datasource. </param>
-        /// <param name="etag"> The ETag of the data source. </param>
+        /// <param name="eTag"> The ETag of the data source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition in Azure Cognitive Search. Once you have encrypted your data source definition, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        internal SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType type, DataSourceCredentials credentialsInternal, SearchIndexerDataContainer container, SearchIndexerDataIdentity identity, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string etag, SearchResourceEncryptionKey encryptionKey)
+        internal SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType type, DataSourceCredentials credentials, SearchIndexerDataContainer container, SearchIndexerDataIdentity identity, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
         {
             Name = name;
             Description = description;
             Type = type;
-            CredentialsInternal = credentialsInternal;
+            Credentials = credentials;
             Container = container;
             Identity = identity;
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
-            _etag = etag;
+            ETag = eTag;
             EncryptionKey = encryptionKey;
         }
 
@@ -44,6 +45,8 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get; set; }
         /// <summary> The type of the datasource. </summary>
         public SearchIndexerDataSourceType Type { get; set; }
+        /// <summary> Credentials for the datasource. </summary>
+        public DataSourceCredentials Credentials { get; set; }
         /// <summary> The data container for the datasource. </summary>
         public SearchIndexerDataContainer Container { get; set; }
         /// <summary> An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If &quot;none&quot; is specified, the value of this property is cleared. </summary>

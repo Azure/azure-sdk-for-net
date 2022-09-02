@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -20,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("fields");
             writer.WriteStartArray();
-            foreach (var item in _fields)
+            foreach (var item in Fields)
             {
                 writer.WriteObjectValue(item);
             }
@@ -141,10 +142,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("semantic");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(_etag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -165,7 +166,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             Optional<SimilarityAlgorithm> similarity = default;
             Optional<SemanticSettings> semantic = default;
-            Optional<string> odataEtag = default;
+            Optional<ETag> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -335,11 +336,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    odataEtag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    odataEtag = new ETag(property.Value.GetString());
                     continue;
                 }
             }
-            return new SearchIndex(name, fields, Optional.ToList(scoringProfiles), defaultScoringProfile.Value, corsOptions.Value, Optional.ToList(suggesters), Optional.ToList(analyzers), Optional.ToList(tokenizers), Optional.ToList(tokenFilters), Optional.ToList(charFilters), Optional.ToList(normalizers), encryptionKey.Value, similarity.Value, semantic.Value, odataEtag.Value);
+            return new SearchIndex(name, fields, Optional.ToList(scoringProfiles), defaultScoringProfile.Value, corsOptions.Value, Optional.ToList(suggesters), Optional.ToList(analyzers), Optional.ToList(tokenizers), Optional.ToList(tokenFilters), Optional.ToList(charFilters), Optional.ToList(normalizers), encryptionKey.Value, similarity.Value, semantic.Value, Optional.ToNullable(odataEtag));
         }
     }
 }

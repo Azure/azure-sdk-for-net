@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -17,8 +18,8 @@ namespace Azure.Monitor.Query.Models
         {
             IReadOnlyList<LogsTable> tables = default;
             Optional<JsonElement> statistics = default;
-            Optional<JsonElement> render = default;
-            Optional<JsonElement> error = default;
+            Optional<object> render = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"))
@@ -38,16 +39,26 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("render"))
                 {
-                    render = property.Value.Clone();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    render = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
-                    error = property.Value.Clone();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = property.Value.();
                     continue;
                 }
             }
-            return new LogsQueryResult(tables, statistics, render, error);
+            return new LogsQueryResult(tables, statistics, render.Value, error.Value);
         }
     }
 }

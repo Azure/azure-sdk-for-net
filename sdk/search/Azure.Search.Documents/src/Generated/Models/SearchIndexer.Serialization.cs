@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -88,10 +89,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("disabled");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(_etag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(EncryptionKey))
             {
@@ -132,7 +133,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<FieldMapping>> fieldMappings = default;
             Optional<IList<FieldMapping>> outputFieldMappings = default;
             Optional<bool?> disabled = default;
-            Optional<string> odataEtag = default;
+            Optional<ETag> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             Optional<SearchIndexerCache> cache = default;
             foreach (var property in element.EnumerateObject())
@@ -224,7 +225,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    odataEtag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    odataEtag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("encryptionKey"))
@@ -248,7 +254,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
+            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), Optional.ToNullable(odataEtag), encryptionKey.Value, cache.Value);
         }
     }
 }

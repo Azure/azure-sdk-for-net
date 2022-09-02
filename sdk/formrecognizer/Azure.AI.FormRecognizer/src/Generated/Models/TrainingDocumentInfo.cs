@@ -16,40 +16,45 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class TrainingDocumentInfo
     {
         /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
-        /// <param name="name"> Training document name. </param>
-        /// <param name="pageCount"> Total number of pages trained. </param>
+        /// <param name="documentName"> Training document name. </param>
+        /// <param name="pages"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
         /// <param name="status"> Status of the training operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="errors"/> is null. </exception>
-        internal TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
+        /// <exception cref="ArgumentNullException"> <paramref name="documentName"/> or <paramref name="errors"/> is null. </exception>
+        internal TrainingDocumentInfo(string documentName, int pages, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
         {
-            if (name == null)
+            if (documentName == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(nameof(documentName));
             }
             if (errors == null)
             {
                 throw new ArgumentNullException(nameof(errors));
             }
 
-            Name = name;
-            PageCount = pageCount;
+            DocumentName = documentName;
+            Pages = pages;
             Errors = errors.ToList();
             Status = status;
         }
 
         /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
-        /// <param name="name"> Training document name. </param>
-        /// <param name="pageCount"> Total number of pages trained. </param>
+        /// <param name="documentName"> Training document name. </param>
+        /// <param name="pages"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
         /// <param name="status"> Status of the training operation. </param>
-        internal TrainingDocumentInfo(string name, int pageCount, IReadOnlyList<FormRecognizerError> errors, TrainingStatus status)
+        internal TrainingDocumentInfo(string documentName, int pages, IReadOnlyList<FormRecognizerError> errors, TrainingStatus status)
         {
-            Name = name;
-            PageCount = pageCount;
+            DocumentName = documentName;
+            Pages = pages;
             Errors = errors;
             Status = status;
         }
+
+        /// <summary> Training document name. </summary>
+        public string DocumentName { get; }
+        /// <summary> Total number of pages trained. </summary>
+        public int Pages { get; }
         /// <summary> List of errors. </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
         /// <summary> Status of the training operation. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,10 +21,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(FlagsInternal))
+            if (Optional.IsCollectionDefined(Flags))
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(FlagsInternal);
+                writer.(Flags);
             }
             if (Optional.IsDefined(Group))
             {
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static PatternTokenizer DeserializePatternTokenizer(JsonElement element)
         {
             Optional<string> pattern = default;
-            Optional<string> flags = default;
+            Optional<IList<RegexFlag>> flags = default;
             Optional<int> group = default;
             string odataType = default;
             string name = default;
@@ -53,7 +54,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("flags"))
                 {
-                    flags = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    flags = property.Value.();
                     continue;
                 }
                 if (property.NameEquals("group"))
@@ -77,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternTokenizer(odataType, name, pattern.Value, flags.Value, Optional.ToNullable(group));
+            return new PatternTokenizer(odataType, name, pattern.Value, Optional.ToList(flags), Optional.ToNullable(group));
         }
     }
 }

@@ -20,89 +20,89 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(IsKey))
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key");
-                writer.WriteBooleanValue(IsKey.Value);
+                writer.WriteBooleanValue(Key.Value);
             }
-            if (Optional.IsDefined(IsRetrievable))
+            if (Optional.IsDefined(Retrievable))
             {
                 writer.WritePropertyName("retrievable");
-                writer.WriteBooleanValue(IsRetrievable.Value);
+                writer.WriteBooleanValue(Retrievable.Value);
             }
-            if (Optional.IsDefined(IsSearchable))
+            if (Optional.IsDefined(Searchable))
             {
                 writer.WritePropertyName("searchable");
-                writer.WriteBooleanValue(IsSearchable.Value);
+                writer.WriteBooleanValue(Searchable.Value);
             }
-            if (Optional.IsDefined(IsFilterable))
+            if (Optional.IsDefined(Filterable))
             {
                 writer.WritePropertyName("filterable");
-                writer.WriteBooleanValue(IsFilterable.Value);
+                writer.WriteBooleanValue(Filterable.Value);
             }
-            if (Optional.IsDefined(IsSortable))
+            if (Optional.IsDefined(Sortable))
             {
                 writer.WritePropertyName("sortable");
-                writer.WriteBooleanValue(IsSortable.Value);
+                writer.WriteBooleanValue(Sortable.Value);
             }
-            if (Optional.IsDefined(IsFacetable))
+            if (Optional.IsDefined(Facetable))
             {
                 writer.WritePropertyName("facetable");
-                writer.WriteBooleanValue(IsFacetable.Value);
+                writer.WriteBooleanValue(Facetable.Value);
             }
-            if (Optional.IsDefined(AnalyzerName))
+            if (Optional.IsDefined(Analyzer))
             {
-                if (AnalyzerName != null)
+                if (Analyzer != null)
                 {
                     writer.WritePropertyName("analyzer");
-                    writer.WriteStringValue(AnalyzerName.Value.ToString());
+                    writer.WriteStringValue(Analyzer.Value.ToString());
                 }
                 else
                 {
                     writer.WriteNull("analyzer");
                 }
             }
-            if (Optional.IsDefined(SearchAnalyzerName))
+            if (Optional.IsDefined(SearchAnalyzer))
             {
-                if (SearchAnalyzerName != null)
+                if (SearchAnalyzer != null)
                 {
                     writer.WritePropertyName("searchAnalyzer");
-                    writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
+                    writer.WriteStringValue(SearchAnalyzer.Value.ToString());
                 }
                 else
                 {
                     writer.WriteNull("searchAnalyzer");
                 }
             }
-            if (Optional.IsDefined(IndexAnalyzerName))
+            if (Optional.IsDefined(IndexAnalyzer))
             {
-                if (IndexAnalyzerName != null)
+                if (IndexAnalyzer != null)
                 {
                     writer.WritePropertyName("indexAnalyzer");
-                    writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
+                    writer.WriteStringValue(IndexAnalyzer.Value.ToString());
                 }
                 else
                 {
                     writer.WriteNull("indexAnalyzer");
                 }
             }
-            if (Optional.IsDefined(NormalizerName))
+            if (Optional.IsDefined(Normalizer))
             {
-                if (NormalizerName != null)
+                if (Normalizer != null)
                 {
                     writer.WritePropertyName("normalizer");
-                    writer.WriteStringValue(NormalizerName.Value.ToString());
+                    writer.WriteStringValue(Normalizer.Value.ToString());
                 }
                 else
                 {
                     writer.WriteNull("normalizer");
                 }
             }
-            if (Optional.IsCollectionDefined(SynonymMapNames))
+            if (Optional.IsCollectionDefined(SynonymMaps))
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
-                foreach (var item in SynonymMapNames)
+                foreach (var item in SynonymMaps)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
+    // Data plane generated client. The ConversationAuthoring service client.
     /// <summary> The ConversationAuthoring service client. </summary>
     public partial class ConversationAuthoringClient
     {

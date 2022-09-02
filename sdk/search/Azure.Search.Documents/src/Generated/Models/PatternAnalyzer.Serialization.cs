@@ -26,10 +26,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(FlagsInternal))
+            if (Optional.IsCollectionDefined(Flags))
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(FlagsInternal);
+                writer.(Flags);
             }
             if (Optional.IsCollectionDefined(Stopwords))
             {
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Optional<bool> lowercase = default;
             Optional<string> pattern = default;
-            Optional<string> flags = default;
+            Optional<IList<RegexFlag>> flags = default;
             Optional<IList<string>> stopwords = default;
             string odataType = default;
             string name = default;
@@ -75,7 +75,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("flags"))
                 {
-                    flags = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    flags = property.Value.();
                     continue;
                 }
                 if (property.NameEquals("stopwords"))
@@ -104,7 +109,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, Optional.ToList(stopwords));
+            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, Optional.ToList(flags), Optional.ToList(stopwords));
         }
     }
 }

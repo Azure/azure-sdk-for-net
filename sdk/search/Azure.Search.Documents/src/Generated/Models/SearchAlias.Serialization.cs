@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -25,10 +26,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(_etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(_etag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -37,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             string name = default;
             IList<string> indexes = default;
-            Optional<string> odataEtag = default;
+            Optional<ETag> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -57,11 +58,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    odataEtag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    odataEtag = new ETag(property.Value.GetString());
                     continue;
                 }
             }
-            return new SearchAlias(name, indexes, odataEtag.Value);
+            return new SearchAlias(name, indexes, Optional.ToNullable(odataEtag));
         }
     }
 }

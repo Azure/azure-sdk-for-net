@@ -18,10 +18,10 @@ namespace Azure.Search.Documents
             writer.WriteStartObject();
             writer.WritePropertyName("search");
             writer.WriteStringValue(SearchText);
-            if (Optional.IsDefined(Mode))
+            if (Optional.IsDefined(AutocompleteMode))
             {
                 writer.WritePropertyName("autocompleteMode");
-                writer.WriteStringValue(Mode.Value.ToSerialString());
+                writer.WriteStringValue(AutocompleteMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(Filter))
             {
@@ -48,17 +48,17 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (Optional.IsDefined(SearchFieldsRaw))
+            if (Optional.IsCollectionDefined(SearchFields))
             {
                 writer.WritePropertyName("searchFields");
-                writer.WriteStringValue(SearchFieldsRaw);
+                writer.(SearchFields);
             }
             writer.WritePropertyName("suggesterName");
             writer.WriteStringValue(SuggesterName);
-            if (Optional.IsDefined(Size))
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top");
-                writer.WriteNumberValue(Size.Value);
+                writer.WriteNumberValue(Top.Value);
             }
             writer.WriteEndObject();
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -36,12 +37,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of SearchAlias. </summary>
         /// <param name="name"> The name of the alias. </param>
         /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
-        /// <param name="etag"> The ETag of the alias. </param>
-        internal SearchAlias(string name, IList<string> indexes, string etag)
+        /// <param name="eTag"> The ETag of the alias. </param>
+        internal SearchAlias(string name, IList<string> indexes, ETag? eTag)
         {
             Name = name;
             Indexes = indexes;
-            _etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> The name of the alias. </summary>
