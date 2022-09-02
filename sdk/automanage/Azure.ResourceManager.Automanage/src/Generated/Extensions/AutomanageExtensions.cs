@@ -272,6 +272,15 @@ namespace Azure.ResourceManager.Automanage
             return GetExtensionClient(resourceGroupResource).GetHCIReportsByConfigurationProfileAssignments(clusterName, configurationProfileAssignmentName, cancellationToken);
         }
 
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -282,11 +291,12 @@ namespace Azure.ResourceManager.Automanage
         }
 
         /// <summary> Gets a collection of ConfigurationProfileAssignmentResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ConfigurationProfileAssignmentResources and their operations over a ConfigurationProfileAssignmentResource. </returns>
-        public static ConfigurationProfileAssignmentCollection GetConfigurationProfileAssignments(this ArmResource armResource)
+        public static ConfigurationProfileAssignmentCollection GetConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetConfigurationProfileAssignments();
+            return GetExtensionClient(client, scope).GetConfigurationProfileAssignments();
         }
 
         /// <summary>
@@ -294,15 +304,16 @@ namespace Azure.ResourceManager.Automanage
         /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationProfileAssignmentResource>> GetConfigurationProfileAssignmentAsync(this ArmResource armResource, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfigurationProfileAssignmentResource>> GetConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetConfigurationProfileAssignments().GetAsync(configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await client.GetConfigurationProfileAssignments(scope).GetAsync(configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -310,15 +321,16 @@ namespace Azure.ResourceManager.Automanage
         /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignment(this ArmResource armResource, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetConfigurationProfileAssignments().Get(configurationProfileAssignmentName, cancellationToken);
+            return client.GetConfigurationProfileAssignments(scope).Get(configurationProfileAssignmentName, cancellationToken);
         }
 
         #region BestPracticeResource
