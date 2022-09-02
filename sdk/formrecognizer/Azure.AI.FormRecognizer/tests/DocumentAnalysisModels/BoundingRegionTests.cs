@@ -65,6 +65,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public void EqualsObjectReturnsTrueIfBoundingPolygonIsShifted()
+        {
+            BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f, 90f, 100f);
+            object objRegion = GetBoundingRegion(10, 90f, 100f, 50f, 60f, 70f, 80f);
+
+            Assert.True(region.Equals(objRegion));
+        }
+
+        [Test]
         public void EqualsReturnsFalseIfPageNumberDiffers()
         {
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
@@ -96,6 +105,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             BoundingRegion region2 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
+
+            Assert.True(region1.Equals(region2));
+        }
+
+        [Test]
+        public void EqualsReturnsTrueIfBoundingPolygonIsShifted()
+        {
+            BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f, 90f, 100f);
+            BoundingRegion region2 = GetBoundingRegion(10, 90f, 100f, 50f, 60f, 70f, 80f);
 
             Assert.True(region1.Equals(region2));
         }
@@ -137,6 +155,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public void GetHashCodeReturnsSameHashCodeIfBoundingPolygonIsShifted()
+        {
+            BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f, 90f, 100f);
+            BoundingRegion region2 = GetBoundingRegion(10, 90f, 100f, 50f, 60f, 70f, 80f);
+
+            Assert.AreEqual(region1.GetHashCode(), region2.GetHashCode());
+        }
+
+        [Test]
         public void ToStringConvertsToExpectedFormat()
         {
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
@@ -160,6 +187,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             {
                 new PointF(p1x, p1y),
                 new PointF(p2x, p2y)
+            };
+
+            return new BoundingRegion(pageNumber, points);
+        }
+
+        public BoundingRegion GetBoundingRegion(int pageNumber, float p1x, float p1y, float p2x, float p2y, float p3x, float p3y)
+        {
+            var points = new List<PointF>()
+            {
+                new PointF(p1x, p1y),
+                new PointF(p2x, p2y),
+                new PointF(p3x, p3y)
             };
 
             return new BoundingRegion(pageNumber, points);

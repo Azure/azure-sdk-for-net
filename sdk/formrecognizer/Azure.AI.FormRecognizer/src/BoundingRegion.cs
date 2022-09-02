@@ -80,11 +80,30 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             // Since points in a polygon are cyclical, two polygons could still be considered the same
             // if points were shifted. For example, [(1,2),(3,4),(5,6),(7,8)] and [(7,8),(1,2),(3,4),(5,6)]
-            // represent the same polygon. This, however, is not expected to happen since points returned
-            // by the service are sorted in a deterministic order, so we're ignoring this scenario.
-            for (int i = 0; i < BoundingPolygon.Count; i++)
+            // represent the same polygon.
+
+            int j;
+
+            // Search for the first point in 'other.BoundingPolygon', storing the index in 'j'.
+            for (j = 0; j < other.BoundingPolygon.Count; j++)
             {
-                if (BoundingPolygon[i] != other.BoundingPolygon[i])
+                if (BoundingPolygon[0] == other.BoundingPolygon[j])
+                {
+                    break;
+                }
+            }
+
+            if (j >= other.BoundingPolygon.Count)
+            {
+                return false;
+            }
+
+            for (int i = 1; i < BoundingPolygon.Count; i++)
+            {
+                // Cycles back to index 0 after the last element.
+                j = (j + 1) % other.BoundingPolygon.Count;
+
+                if (BoundingPolygon[i] != other.BoundingPolygon[j])
                 {
                     return false;
                 }
@@ -101,7 +120,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             builder.Add(PageNumber);
 
-            foreach (PointF point in BoundingPolygon)
+            // Since points in a polygon are cyclical, two polygons could still be considered the same
+            // if points were shifted. For example, [(1,2),(3,4),(5,6),(7,8)] and [(7,8),(1,2),(3,4),(5,6)]
+            // represent the same polygon. For this reason, sort the points to ensure we have a consistent
+            // order for the same set of points.
+            IOrderedEnumerable<PointF> orderedPoints = BoundingPolygon.OrderBy(p => p, PointFComparer.Instance);
+
+            foreach (PointF point in orderedPoints)
             {
                 builder.Add(point.GetHashCode());
             }
@@ -118,6 +143,31 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string points = string.Join(",", BoundingPolygon.Select(p => p.ToString()));
 
             return $"Page: {PageNumber}, Polygon: {points}";
+        }
+
+        /// <summary>
+        /// Helper comparer used by the <see cref="GetHashCode"/> method. Implemented with the singleton
+        /// pattern to avoid unnecessary allocations.
+        /// </summary>
+        private class PointFComparer : IComparer<PointF>
+        {
+            public static readonly PointFComparer Instance = new PointFComparer();
+
+            private PointFComparer()
+            {
+            }
+
+            public int Compare(PointF p1, PointF p2)
+            {
+                int x = p1.X.CompareTo(p2.X);
+
+                if (x != 0)
+                {
+                    return x;
+                }
+
+                return p1.Y.CompareTo(p2.Y);
+            }
         }
     }
 }
