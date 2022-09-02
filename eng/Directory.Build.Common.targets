@@ -225,8 +225,8 @@
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->
-  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'">
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  <ItemGroup Condition="('$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true') or '$(IsStorageTest)' == 'true'">
+    <ProjectReference Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" Include="$(AzureCoreTestFramework)" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

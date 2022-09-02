@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementNamedValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namedValueId, ApiManagementNamedValueCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementNamedValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namedValueId, ApiManagementNamedValueCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
             Argument.AssertNotNull(content, nameof(content));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementNamedValueResource> CreateOrUpdate(WaitUntil waitUntil, string namedValueId, ApiManagementNamedValueCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementNamedValueResource> CreateOrUpdate(WaitUntil waitUntil, string namedValueId, ApiManagementNamedValueCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
             Argument.AssertNotNull(content, nameof(content));

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> snapshotId = default;
+            Optional<Guid> snapshotId = default;
             Optional<DateTimeOffset> created = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -78,7 +78,12 @@ namespace Azure.ResourceManager.NetApp
                     {
                         if (property0.NameEquals("snapshotId"))
                         {
-                            snapshotId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            snapshotId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("created"))
@@ -100,7 +105,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppVolumeSnapshotData(id, name, type, systemData.Value, location, snapshotId.Value, Optional.ToNullable(created), provisioningState.Value);
+            return new NetAppVolumeSnapshotData(id, name, type, systemData.Value, location, Optional.ToNullable(snapshotId), Optional.ToNullable(created), provisioningState.Value);
         }
     }
 }
