@@ -26,7 +26,7 @@ FileInfo payload = new FileInfo(payloadFilePath);
 FileInfo manifest = new FileInfo(manifestFilePath);
 SHA256 sha256 = SHA256.Create();
 string manifestHash;
-using (FileStream fileStream = File.OpenRead(filePath))
+using (FileStream fileStream = File.OpenRead(manifestFilePath))
 {
   byte[] hash = sha256.ComputeHash(fileStream);
   manifestHash = Convert.ToBase64String(hash);
@@ -61,7 +61,8 @@ var content = new[]
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-Operation<BinaryData> response = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(content));
-JsonDocument doc = JsonDocument.Parse(response.Value.ToMemory());
-Console.WriteLine(doc.RootElement.GetProperty("status").ToString());
+Operation response = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(content));
+
+JsonDocument doc = JsonDocument.Parse(response.GetRawResponse().Content.ToMemory());
+Console.WriteLine($"Imported update resource location: {doc.RootElement.GetProperty("resourceLocation").GetString()}");
 ```

@@ -20,7 +20,5 @@ DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credent
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-Operation<BinaryData> response = client.DeleteUpdate(WaitUntil.Completed, provider, name, version);
-JsonDocument doc = JsonDocument.Parse(response.Value.ToMemory());
-Console.WriteLine(doc.RootElement.GetProperty("status").ToString());
+Operation response = client.DeleteUpdate(WaitUntil.Completed, provider, name, version);
 ```
