@@ -92,7 +92,7 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
-It's also possible to create a Communication Identity access token by customizing the expiration time. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
+It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
 
 ```C# Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
 TimeSpan tokenExpiresAfter = TimeSpan.FromMinutes(60);
@@ -111,7 +111,7 @@ Console.WriteLine($"User id: {user.Id}");
 Console.WriteLine($"Token: {token.Token}");
 ```
 
-Here it's also possible to specify the expiration time for the Communication Identity access token. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
+It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
 
 ```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
 TimeSpan tokenExpiresAfter = TimeSpan.FromMinutes(60);

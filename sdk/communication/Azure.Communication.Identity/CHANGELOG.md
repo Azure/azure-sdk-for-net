@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0
+## 1.2.0 (Unreleased)
 
 ### Features Added
 - Added support to customize the Communication Identity access token’s validity period:
@@ -10,22 +10,6 @@
         - `GetToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresAfter, CancellationToken cancellationToken = default)`
         - `GetTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresAfter, CancellationToken cancellationToken = default)`
 - Added a new API version `ServiceVersion.V2022_10_01` that is now the default API version.
-
-## 1.2.0-beta.1 (Unreleased)
-
-## 1.1.0 (Unreleased)
-
-### Features Added
-- Added support to build a custom Teams endpoint using Microsoft 365 Teams identities:
-    - Added `GetTokenForTeamsUser(GetTokenForTeamsUserOptions options, CancellationToken cancellationToken = default)` method that provides the ability to exchange an Azure AD access token of a Teams user for a Communication Identity access token to `CommunicationIdentityClient`.
-- Removed `ServiceVersion.V2021_10_31_preview`
-- Added a new API version `ServiceVersion.V2022_06_01` that is now the default API version
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2022-07-19)
 
