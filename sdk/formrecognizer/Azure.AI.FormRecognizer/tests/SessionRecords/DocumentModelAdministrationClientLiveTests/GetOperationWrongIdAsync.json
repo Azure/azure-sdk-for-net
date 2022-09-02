@@ -1,26 +1,26 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/0000000000000000?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/0000000000000000?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e52beaa7ed98e822562d16af663ea10a-a112cc1c31c1fe39-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "4579a9de2dfd75768cf07e83ed7837fe",
+        "traceparent": "00-7965e8e1ee305f725c29dc10feaf9448-110e6d6ffa8fa5a2-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6a7db90755143603e5f1c140185f0a91",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "006b79aa-a1d5-4b7f-a817-268c908eca9c",
+        "apim-request-id": "4deec6e2-4ec6-4e11-b729-08bb6374e41a",
         "Content-Type": "application/json",
-        "Date": "Fri, 20 May 2022 22:44:17 GMT",
+        "Date": "Tue, 16 Aug 2022 06:34:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "13"
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "error": {
@@ -36,7 +36,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
-    "RandomSeed": "976181162"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "1216121609"
   }
 }

@@ -1311,9 +1311,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.AppPlatform.Models.KPackBuildStageProvisioningState? Status { get { throw null; } }
     }
-    public partial class CertificateProperties
+    public abstract partial class CertificateProperties
     {
-        public CertificateProperties() { }
+        protected CertificateProperties() { }
         public string ActivateDate { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DnsNames { get { throw null; } }
         public string ExpirationDate { get { throw null; } }
@@ -1510,9 +1510,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public Azure.ResourceManager.AppPlatform.Models.CustomPersistentDiskProperties CustomPersistentDiskProperties { get { throw null; } set { } }
         public string StorageId { get { throw null; } set { } }
     }
-    public partial class CustomPersistentDiskProperties
+    public abstract partial class CustomPersistentDiskProperties
     {
-        public CustomPersistentDiskProperties(string mountPath) { }
+        protected CustomPersistentDiskProperties(string mountPath) { }
         public System.Collections.Generic.IList<string> MountOptions { get { throw null; } }
         public string MountPath { get { throw null; } set { } }
         public bool? ReadOnly { get { throw null; } set { } }
@@ -2008,9 +2008,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string AccountKey { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
     }
-    public partial class StorageProperties
+    public abstract partial class StorageProperties
     {
-        public StorageProperties() { }
+        protected StorageProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SupportedRuntimePlatform : System.IEquatable<Azure.ResourceManager.AppPlatform.Models.SupportedRuntimePlatform>
@@ -2119,9 +2119,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public UploadedUserSourceInfo() { }
         public string RelativePath { get { throw null; } set { } }
     }
-    public partial class UserSourceInfo
+    public abstract partial class UserSourceInfo
     {
-        public UserSourceInfo() { }
+        protected UserSourceInfo() { }
         public string Version { get { throw null; } set { } }
     }
     public partial class ValidationMessages

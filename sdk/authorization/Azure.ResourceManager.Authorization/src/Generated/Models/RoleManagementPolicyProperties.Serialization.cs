@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<ResourceIdentifier> id = default;
             Optional<string> displayName = default;
-            Optional<string> type = default;
+            Optional<RoleManagementScopeType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
@@ -45,14 +45,19 @@ namespace Azure.ResourceManager.Authorization.Models
                         }
                         if (property0.NameEquals("type"))
                         {
-                            type = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            type = new RoleManagementScopeType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RoleManagementPolicyProperties(id.Value, displayName.Value, type.Value);
+            return new RoleManagementPolicyProperties(id.Value, displayName.Value, Optional.ToNullable(type));
         }
     }
 }

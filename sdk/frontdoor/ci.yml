@@ -1,0 +1,31 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/frontdoor/
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/frontdoor/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: frontdoor
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.ResourceManager.FrontDoor
+      safeName: AzureResourceManagerFrontDoor

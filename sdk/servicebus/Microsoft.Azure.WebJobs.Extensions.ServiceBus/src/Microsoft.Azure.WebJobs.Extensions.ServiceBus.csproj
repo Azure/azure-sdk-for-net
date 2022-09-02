@@ -16,8 +16,14 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <!--<PackageReference Include="Azure.Messaging.ServiceBus" /> TEMP -->
   </ItemGroup>
+
+  <!--TEMP-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
+  </ItemGroup>
+  <!--TEMP-->
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />

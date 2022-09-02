@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             TimeAggregation = timeAggregation;
             Operator = @operator;
             Threshold = threshold;
-            Dimensions = new ChangeTrackingList<ScaleRuleMetricDimension>();
+            Dimensions = new ChangeTrackingList<AutoscaleRuleMetricDimension>();
         }
 
         /// <summary> Initializes a new instance of MetricTrigger. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <param name="dimensions"> List of dimension conditions. For example: [{&quot;DimensionName&quot;:&quot;AppName&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;App1&quot;]},{&quot;DimensionName&quot;:&quot;Deployment&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;default&quot;]}]. </param>
         /// <param name="isDividedPerInstance"> a value indicating whether metric should divide per instance. </param>
-        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MonitorTimeAggregationType timeAggregation, ComparisonOperationType @operator, double threshold, IList<ScaleRuleMetricDimension> dimensions, bool? isDividedPerInstance)
+        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MonitorTimeAggregationType timeAggregation, ComparisonOperationType @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance)
         {
             MetricName = metricName;
             MetricNamespace = metricNamespace;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the threshold of the metric that triggers the scale action. </summary>
         public double Threshold { get; set; }
         /// <summary> List of dimension conditions. For example: [{&quot;DimensionName&quot;:&quot;AppName&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;App1&quot;]},{&quot;DimensionName&quot;:&quot;Deployment&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;default&quot;]}]. </summary>
-        public IList<ScaleRuleMetricDimension> Dimensions { get; set; }
+        public IList<AutoscaleRuleMetricDimension> Dimensions { get; set; }
         /// <summary> a value indicating whether metric should divide per instance. </summary>
         public bool? IsDividedPerInstance { get; set; }
     }

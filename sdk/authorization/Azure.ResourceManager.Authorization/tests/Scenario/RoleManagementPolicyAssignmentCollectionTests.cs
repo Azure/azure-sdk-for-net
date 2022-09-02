@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var policyAssignmentCollection = resourceGroup.GetRoleManagementPolicyAssignments();
-            var definitionCollection = resourceGroup.GetRoleDefinitions();
+            var definitionCollection = resourceGroup.GetAuthorizationRoleDefinitions();
             var policyCollection = resourceGroup.GetRoleManagementPolicies();
             var definition = (await definitionCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
             var policy = (await policyCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();

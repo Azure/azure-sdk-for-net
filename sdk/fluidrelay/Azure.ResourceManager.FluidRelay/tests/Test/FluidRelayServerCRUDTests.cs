@@ -57,20 +57,23 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
             // Get Keys
             Response<FluidRelayServerKeys> getKeyFluidRelayResponse = await fluidRelayServerResource.GetKeysAsync();
             FluidRelayServerKeys fluidRelayServerKeys = getKeyFluidRelayResponse.Value;
-            Assert.IsNotNull(fluidRelayServerKeys.Key2);
-            Assert.IsNotNull(fluidRelayServerKeys.Key1);
+            Assert.IsNotNull(fluidRelayServerKeys.SecondaryKey);
+            Assert.IsNotNull(fluidRelayServerKeys.PrimaryKey);
 
             //list by subscription
             AsyncPageable<FluidRelayServerResource> fluidRelayServerResourceCollection2 = GetFluidRelayServerCollectionBySubscriptionAsync();
-            Assert.IsNotNull(fluidRelayServerResourceCollection2.GetAsyncEnumerator().Current);
+            await foreach (FluidRelayServerResource server in fluidRelayServerResourceCollection2)
+            {
+                Assert.IsNotNull(server.Data.Name);
+            }
             Assert.IsTrue(await fluidRelayServerResourceCollection2.GetAsyncEnumerator().MoveNextAsync());
 
             //Regenerate Keys
-            RegenerateKeyContent key1 = new RegenerateKeyContent(KeyName.Key1);
-            Response<FluidRelayServerKeys> regenerateKeyFluidRelayResponse = await fluidRelayServerResource.RegenerateKeyAsync(key1);
+            RegenerateKeyContent key1 = new RegenerateKeyContent(FluidRelayKeyName.PrimaryKey);
+            Response<FluidRelayServerKeys> regenerateKeyFluidRelayResponse = await fluidRelayServerResource.RegenerateKeysAsync(key1);
             FluidRelayServerKeys NewFluidRelayServerKeys = regenerateKeyFluidRelayResponse.Value;
-            Assert.IsTrue(NewFluidRelayServerKeys.Key2.Equals(fluidRelayServerKeys.Key2));
-            Assert.IsFalse(NewFluidRelayServerKeys.Key1.Equals(fluidRelayServerKeys.Key1));
+            Assert.IsTrue(NewFluidRelayServerKeys.SecondaryKey.Equals(fluidRelayServerKeys.SecondaryKey));
+            Assert.IsFalse(NewFluidRelayServerKeys.PrimaryKey.Equals(fluidRelayServerKeys.PrimaryKey));
 
             // Delete
             var deleteFluidRelayServerOperation = await fluidRelayServerResource.DeleteAsync(WaitUntil.Completed);

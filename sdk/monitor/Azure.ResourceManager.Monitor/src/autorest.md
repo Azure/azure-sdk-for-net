@@ -7,9 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d1b0569d8adbd342a1111d6a69764d099f5f717c/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
-tag: package-monitor-track2
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -22,18 +21,6 @@ format-by-name-rules:
   'locations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'ResourceId': 'arm-id'
-  'TargetResourceId': 'arm-id'
-  'TargetResourceLocation': 'azure-location'
-  'StorageAccountId': 'arm-id'
-  'ServiceBusRuleId': 'arm-id'
-  'EventHubAuthorizationRuleId': 'arm-id'
-  'WorkspaceResourceId': 'arm-id'
-  'MetricResourceId': 'arm-id'
-  'MetricResourceLocation': 'azure-location'
-  'DataCollectionRuleId': 'arm-id'
-  'DataCollectionEndpointId': 'arm-id'
-  'MarketplacePartnerId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -58,6 +45,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Odatatype: OdataType
+  AutoScale: Autoscale
+  MMM: Mmm
+  MM: Mm
+  HH: Hh
+  DD: Dd
+  SS: Ss
 
 irregular-plural-words:
   status: status
@@ -79,56 +72,85 @@ prepend-rp-prefix:
 
 override-operation-name:
   ActionGroups_GetTestNotifications: GetNotificationStatus
+  ActionGroups_GetTestNotificationsAtResourceGroupLevel: GetNotificationStatus
+  ActionGroups_GetTestNotificationsAtActionGroupResourceLevel: GetNotificationStatus
   ActionGroups_PostTestNotifications: CreateNotifications
   ActionGroups_CreateNotificationsAtResourceGroupLevel: CreateNotifications
   ActionGroups_CreateNotificationsAtActionGroupResourceLevel: CreateNotifications
 
 rename-mapping:
-  MetricTrigger.metricResourceUri: metricResourceId
   AutoscaleSetting: AutoscaleSettingProperties
   AutoscaleSettingResource: AutoscaleSetting
-  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId
+  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId|arm-id
   AutoscaleSettingResource.properties.enabled: IsEnabled
   AutoscaleSettingResource.properties.name: AutoscaleSettingName
-  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId
+  AutoscaleSettingResource.properties.targetResourceLocation: -|azure-location
+  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId|arm-id
   AutoscaleSettingResourcePatch.properties.enabled: IsEnabled
   AutoscaleSettingResourcePatch.properties.name: AutoscaleSettingName
-  AzureMonitorPrivateLinkScope: PrivateLinkScope
-  ScopedResource: PrivateLinkScopedResource
+  AutoscaleSettingResourcePatch.properties.targetResourceLocation: -|azure-location
+  AzureMonitorPrivateLinkScope: MonitorPrivateLinkScope
+  AccessModeSettings: MonitorPrivateLinkAccessModeSettings
+  AccessModeSettingsExclusion: MonitorPrivateLinkAccessModeSettingsExclusion
+  AccessMode: MonitorPrivateLinkAccessMode
+  ScopedResource: MonitorPrivateLinkScopedResource
+  ScopedResource.properties.linkedResourceId: -|arm-id
+  ActivityLogAlertActionGroup.actionGroupId: -|arm-id
   DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
   DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionRuleId: -|arm-id
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionEndpointId: -|arm-id
+  LogProfileResource.properties.storageAccountId: -|arm-id
+  LogProfileResource.properties.serviceBusRuleId: -|arm-id
+  LogProfileResourcePatch.properties.storageAccountId: -|arm-id
+  LogProfileResourcePatch.properties.serviceBusRuleId: -|arm-id
+  AzNsActionGroup: NotificationDetails
+  AlertingAction.aznsAction: notificationDetails
   ActionGroup: ActionGroupProperties
   ActionGroupResource: ActionGroup
   ActionGroupResource.properties.enabled: IsEnabled
+  ActionGroupPatchBody.properties.enabled: IsEnabled
   MetricAlertResource: MetricAlert
+  MetricAlertResource.properties.targetResourceType: -|resource-type
+  MetricAlertResource.properties.targetResourceRegion: -|azure-location
+  MetricAlertResourcePatch.properties.targetResourceType: -|resource-type
+  MetricAlertResourcePatch.properties.targetResourceRegion: -|azure-location
   DiagnosticSettings: DiagnosticSettingsProperties
   DiagnosticSettingsResource: DiagnosticSettings
+  DiagnosticSettingsResource.properties.workspaceId: -|arm-id
+  DiagnosticSettingsResource.properties.storageAccountId: -|arm-id
+  DiagnosticSettingsResource.properties.serviceBusRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.eventHubAuthorizationRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.marketplacePartnerId: -|arm-id
   ActivityLogAlert: ActivityLogAlertProperties
   ActivityLogAlertResource: ActivityLogAlert
   ActivityLogAlertResource.properties.enabled: IsEnabled
   ActivityLogAlertResourcePatch.properties.enabled: IsEnabled
+  AlertRulePatchObject.properties.enabled: IsEnabled
   AlertRule: AlertRuleProperties
   AlertRuleResource: AlertRule
   AlertRuleResource.properties.name: AlertRuleName
   DataCollectionEndpoint: DataCollectionEndpointProperties
   DataCollectionEndpointResource: DataCollectionEndpoint
   DataCollectionRule: DataCollectionRuleProperties
+  DataCollectionRuleResource.properties.dataCollectionEndpointId: -|arm-id
   DataCollectionRuleResource: DataCollectionRule
   DiagnosticSettingsCategory: DiagnosticSettingsCategoryProperties
   DiagnosticSettingsCategoryResource: DiagnosticSettingsCategory
   LogProfileResource: LogProfile
   LogSearchRule: LogSearchRuleProperties
   LogSearchRuleResource: LogSearchRule
-  RuleDataSource.resourceUri: resourceId
-  RuleMetricDataSource.resourceUri: resourceId
-  RuleManagementEventDataSource.resourceUri: resourceId
-  LogSearchRule.autoMitigate: IsAutoMitigate
-  MetricAlertResource.properties.autoMitigate: IsAutoMitigate
+  LogAnalyticsDestination.workspaceResourceId: -|arm-id
+  RuleDataSource.resourceUri: resourceId|arm-id
+  MetricAlertResource.properties.autoMitigate: IsAutoMitigateEnabled
   MetricAlertResource.properties.enabled: IsEnabled
-  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigate
+  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigateEnabled
   MetricAlertResourcePatch.properties.enabled: IsEnabled
   MetricSettings.enabled: IsEnabled
   EventData: EventDataInfo
+  EventData.resourceId: -|arm-id
+  PredictiveResponse: AutoscaleSettingPredicativeResult
+  PredictiveResponse.targetResourceId: -|arm-id
   LogSettings.enabled: IsEnabled
   RetentionPolicy.enabled: IsEnabled
   TimeWindow.start: StartOn
@@ -140,7 +162,6 @@ rename-mapping:
   KnownDataCollectionEndpointProvisioningState: DataCollectionEndpointProvisioningState
   KnownDataCollectionRuleAssociationProvisioningState: DataCollectionRuleAssociationProvisioningState
   KnownDataCollectionRuleProvisioningState: DataCollectionRuleProvisioningState
-  ProvisioningState: MonitorProvisioningState
   KnownDataFlowStreams: DataFlowStreams
   KnownExtensionDataSourceStreams: ExtensionDataSourceStreams
   KnownPerfCounterDataSourceStreams: PerfCounterDataSourceStreams
@@ -148,7 +169,12 @@ rename-mapping:
   KnownSyslogDataSourceLogLevels: SyslogDataSourceLogLevels
   KnownSyslogDataSourceStreams: SyslogDataSourceStreams
   KnownWindowsEventLogDataSourceStreams: WindowsEventLogDataSourceStreams
+  KnownDataCollectionEndpointResourceKind: DataCollectionEndpointResourceKind
+  KnownDataCollectionRuleResourceKind: DataCollectionRuleResourceKind
+  ProvisioningState: MonitorProvisioningState
   LocalizableString: MonitorLocalizableString
+  MetricTrigger.metricResourceUri: metricResourceId|arm-id
+  MetricTrigger.metricResourceLocation: -|azure-location
   MetricTrigger.dividePerInstance: IsDividedPerInstance
   AggregationTypeEnum: MonitorAggregationType
   NotificationRequestBody: NotificationContent
@@ -158,16 +184,23 @@ rename-mapping:
   TimeWindow: MonitorTimeWindow
   ArmRoleReceiver: MonitorArmRoleReceiver
   AutomationRunbookReceiver: MonitorAutomationRunbookReceiver
+  AutomationRunbookReceiver.automationAccountId: -|arm-id
+  AutomationRunbookReceiver.webhookResourceId: -|arm-id
   AzureAppPushReceiver: MonitorAzureAppPushReceiver
   AzureFunctionReceiver: MonitorAzureFunctionReceiver
+  AzureFunctionReceiver.functionAppResourceId: -|arm-id
+  Source.dataSourceId: -|arm-id
   EmailReceiver: MonitorEmailReceiver
   EventHubReceiver: MonitorEventHubReceiver
   ItsmReceiver: MonitorItsmReceiver
+  ItsmReceiver.region: -|azure-location
   LogicAppReceiver: MonitorLogicAppReceiver
+  LogicAppReceiver.resourceId: -|arm-id
   SmsReceiver: MonitorSmsReceiver
   VoiceReceiver: MonitorVoiceReceiver
   WebhookReceiver: MonitorWebhookReceiver
   WorkspaceInfo: DataContainerWorkspace
+  WorkspaceInfo.id: -|arm-id
   CategoryType: MonitorCategoryType
   ConditionOperator: MonitorConditionOperator
   EventLevel: MonitorEventLevel
@@ -181,8 +214,30 @@ rename-mapping:
   EnableRequest: ActionGroupEnableContent
   OperationStatus: MonitorPrivateLinkScopeOperationStatus
   QueryType: MonitorSourceQueryType
+  RuleDataSource.legacyResourceId: -|arm-id
+  LogSearchRuleResource.properties.autoMitigate: IsAutoMitigateEnabled
+  ScaleRule: AutoscaleRule
+  ScaleRuleMetricDimension: AutoscaleRuleMetricDimension
+  TestNotificationDetailsResponse.completedTime: -|datetime
+  TestNotificationDetailsResponse.createdTime: -|datetime
+  HttpRequestInfo: EventDataHttpRequestInfo
+  HttpRequestInfo.clientIpAddress: -|ip-address
+  MetricAlertAction.actionGroupId: -|arm-id
+  WebtestLocationAvailabilityCriteria.webTestId: -|arm-id
+  WebtestLocationAvailabilityCriteria.componentId: -|arm-id
+  ColumnDefinition: DataColumnDefinition
+  StreamDeclaration: DataStreamDeclaration
+  KnownColumnDefinitionType: DataColumnDefinitionType
+  KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
+  KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
+  VMInsightsOnboardingStatus.properties.resourceId: -|arm-id
+  LogSearchRuleResourcePatch.properties.enabled: IsEnabled
 
 directive:
+  # fixing the format since rename-mapping has bugs on this
+  - from: swagger-document
+    where: $.definitions.ActionDetail.properties.SendTime
+    transform: $["format"] = "date-time";
   # nullable issue resolution
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
@@ -227,43 +282,6 @@ directive:
   - from: types.json
     where: $.definitions.ProxyResource
     transform: $["x-ms-client-name"] = "CommonProxyResource"
-  # some format changes
-  - from: swagger-document
-    where: $.definitions.DiagnosticSettings.properties.workspaceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.ScopedResourceProperties.properties.linkedResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: activityLogAlerts_API.json
-    where: $.definitions.ActionGroup.properties.actionGroupId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.AutomationRunbookReceiver.properties.automationAccountId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.AutomationRunbookReceiver.properties.webhookResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.AzureFunctionReceiver.properties.functionAppResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.MetricAlertAction.properties.actionGroupId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.Source.properties.dataSourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.WebtestLocationAvailabilityCriteria.properties.webTestId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.WebtestLocationAvailabilityCriteria.properties.componentId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.WorkspaceInfo.properties.id
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.PrivateLinkResourceProperties.properties.groupId
-    transform: $["x-ms-format"] = "arm-id"
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
     where: $.definitions.ErrorResponseCommon.properties
@@ -272,17 +290,9 @@ directive:
         "readOnly": true,
         "type": "string"
       }
-  # remove unnecessary property for resources in action groups. Both of these are not used, and identity has an incorrect type.
+  # remove unnecessary property for resources in action groups
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource.properties
-    transform: >
-      $["kind"] = undefined;
-  - from: dataCollectionEndpoints_API.json
-    where: $.definitions.DataCollectionEndpointResource.properties
-    transform: >
-      $["kind"] = undefined;
-  - from: dataCollectionRules_API.json
-    where: $.definitions.DataCollectionRuleResource.properties
     transform: >
       $["kind"] = undefined;
 ```
