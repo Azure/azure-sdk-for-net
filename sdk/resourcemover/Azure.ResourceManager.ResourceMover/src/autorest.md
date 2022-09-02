@@ -66,6 +66,8 @@ rename-mapping:
   LoadBalancerBackendAddressPoolReference: LoadBalancerBackendAddressPoolReferenceInfo
   LoadBalancerNatRuleReference: LoadBalancerNatRuleReferenceInfo
   MoveCollection: MoverResourceSet
+  MoveCollectionProperties.sourceRegion: -|azure-location
+  MoveCollectionProperties.targetRegion: -|azure-location
   MoveCollectionProperties: MoverResourceSetProperties
   MoveResource: MoverResource
   MoveResourceCollection: MoverResourceList

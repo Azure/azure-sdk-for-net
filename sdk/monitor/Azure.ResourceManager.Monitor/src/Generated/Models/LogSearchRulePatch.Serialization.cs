@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteStringValue(Enabled.Value.ToString());
+                writer.WriteStringValue(IsEnabled.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

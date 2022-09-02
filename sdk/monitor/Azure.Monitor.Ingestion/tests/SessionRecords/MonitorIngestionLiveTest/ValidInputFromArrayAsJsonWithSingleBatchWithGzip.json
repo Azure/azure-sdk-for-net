@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://nibhati-dce-final-vhac.westus2-1.ingest.monitor.azure.com/dataCollectionRules/dcr-981bcfe0506f41f5b5168f3368499cfa/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "282",
+        "Content-Type": "application/json",
+        "traceparent": "00-d7eab3da7de9074180f69723e6f57835-1fc1853c5c3d0d41-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20220829.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2f53972db13a1676b62485385d80dbc5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u001F\uFFFD\b\u0000\u0000\u0000\u0000\u0000\u0000\n",
+        "\uFFFD\uFFFD;\n",
+        "\uFFFD0\u0010E\u047DLm\uFFFD\uFFFDH\uFFFD\u003E]\uFFFD\u0016\uFFFD\u0019\u0015\u0001\uFFFD\u0010\uFFFDV\b\n",
+        "\u0004\uFFFD\uFFFDn\uFFFDH7\uFFFDt\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\u000F\uFFFD\uFFFDf\uFFFD@H\u0523\uFD5A\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\u0060\uFFFD\u000B\uFFFDA\u0007c]_\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD?\uFFFD\uFFFD\uFFFDe)\uFFFD\uFFFD\uFFFD\uFFFD\u001C\uFFFD\uFFFD\uFFFDA\uFFFD=u\u0002U\uD969\uDCA9\u012B$S5\uFFFDj\uFFFDjx\uFFFD\uFFFDT\u02EBV\uFFFD\u000E\uFFFD:\uFFFD\uFFFD\u002B3\uFFFD\uFFFD\uFFFD\uFFFDW\uFFFDL\r",
+        "\uFFFD\u001A\uFFFD\uFFFD\u000E\u0000\u0000\u0000\uFFFD\uFFFD"
+      ],
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Wed, 31 Aug 2022 22:03:59 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "2f53972d-b13a-1676-b624-85385d80dbc5",
+        "x-ms-request-id": "5040909b-dc4b-4386-bced-38d8bc672ec4"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "https://nibhati-dce-final-vhac.westus2-1.ingest.monitor.azure.com",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "dcr-981bcfe0506f41f5b5168f3368499cfa",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Custom-MyTableRawData",
+    "DateTimeOffsetNow": "2022-08-31T15:03:58.9547977-07:00",
+    "RandomSeed": "1237712489"
+  }
+}

@@ -193,6 +193,7 @@ rename-mapping:
   EmailReceiver: MonitorEmailReceiver
   EventHubReceiver: MonitorEventHubReceiver
   ItsmReceiver: MonitorItsmReceiver
+  ItsmReceiver.region: -|azure-location
   LogicAppReceiver: MonitorLogicAppReceiver
   LogicAppReceiver.resourceId: -|arm-id
   SmsReceiver: MonitorSmsReceiver
@@ -230,8 +231,13 @@ rename-mapping:
   KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
   KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
   VMInsightsOnboardingStatus.properties.resourceId: -|arm-id
+  LogSearchRuleResourcePatch.properties.enabled: IsEnabled
 
 directive:
+  # fixing the format since rename-mapping has bugs on this
+  - from: swagger-document
+    where: $.definitions.ActionDetail.properties.SendTime
+    transform: $["format"] = "date-time";
   # nullable issue resolution
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
@@ -284,7 +290,7 @@ directive:
         "readOnly": true,
         "type": "string"
       }
-  # remove unnecessary property for resources in action groups. Both of these are not used, and identity has an incorrect type.
+  # remove unnecessary property for resources in action groups
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource.properties
     transform: >
