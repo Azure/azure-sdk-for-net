@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class CheckRestrictionsRequest : IUtf8JsonSerializable
+    public partial class CheckPolicyRestrictionsContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

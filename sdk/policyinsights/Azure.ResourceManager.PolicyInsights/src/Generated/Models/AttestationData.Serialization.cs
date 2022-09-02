@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("complianceState");
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiresOn");
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Owner))
             {
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.PolicyInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string policyAssignmentId = default;
+            ResourceIdentifier policyAssignmentId = default;
             Optional<string> policyDefinitionReferenceId = default;
-            Optional<ComplianceState> complianceState = default;
+            Optional<PolicyComplianceState> complianceState = default;
             Optional<DateTimeOffset> expiresOn = default;
             Optional<string> owner = default;
             Optional<string> comments = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     {
                         if (property0.NameEquals("policyAssignmentId"))
                         {
-                            policyAssignmentId = property0.Value.GetString();
+                            policyAssignmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("policyDefinitionReferenceId"))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PolicyInsights
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            complianceState = new ComplianceState(property0.Value.GetString());
+                            complianceState = new PolicyComplianceState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("expiresOn"))

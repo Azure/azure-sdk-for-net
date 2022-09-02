@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class Summary
+    public partial class PolicySummary
     {
-        internal static Summary DeserializeSummary(JsonElement element)
+        internal static PolicySummary DeserializePolicySummary(JsonElement element)
         {
             Optional<string> odataId = default;
             Optional<string> odataContext = default;
-            Optional<SummaryResults> results = default;
+            Optional<PolicySummaryResults> results = default;
             Optional<IReadOnlyList<PolicyAssignmentSummary>> policyAssignments = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = SummaryResults.DeserializeSummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policyAssignments"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new Summary(odataId.Value, odataContext.Value, results.Value, Optional.ToList(policyAssignments));
+            return new PolicySummary(odataId.Value, odataContext.Value, results.Value, Optional.ToList(policyAssignments));
         }
     }
 }

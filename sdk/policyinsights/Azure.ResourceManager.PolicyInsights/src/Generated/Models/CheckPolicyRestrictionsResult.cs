@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> The result of a check policy restrictions evaluation on a resource. </summary>
-    public partial class CheckRestrictionsResult
+    public partial class CheckPolicyRestrictionsResult
     {
-        /// <summary> Initializes a new instance of CheckRestrictionsResult. </summary>
-        internal CheckRestrictionsResult()
+        /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
+        internal CheckPolicyRestrictionsResult()
         {
             FieldRestrictions = new ChangeTrackingList<FieldRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of CheckRestrictionsResult. </summary>
+        /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
         /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
         /// <param name="contentEvaluationResult"> Evaluation results for the provided partial resource content. </param>
-        internal CheckRestrictionsResult(IReadOnlyList<FieldRestrictions> fieldRestrictions, CheckRestrictionsResultContentEvaluationResult contentEvaluationResult)
+        internal CheckPolicyRestrictionsResult(IReadOnlyList<FieldRestrictions> fieldRestrictions, CheckRestrictionsResultContentEvaluationResult contentEvaluationResult)
         {
             FieldRestrictions = fieldRestrictions;
             ContentEvaluationResult = contentEvaluationResult;

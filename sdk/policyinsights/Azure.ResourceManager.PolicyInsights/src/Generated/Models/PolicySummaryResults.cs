@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Compliance summary on a particular summary level. </summary>
-    public partial class SummaryResults
+    public partial class PolicySummaryResults
     {
-        /// <summary> Initializes a new instance of SummaryResults. </summary>
-        internal SummaryResults()
+        /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
+        internal PolicySummaryResults()
         {
             ResourceDetails = new ChangeTrackingList<ComplianceDetail>();
             PolicyDetails = new ChangeTrackingList<ComplianceDetail>();
             PolicyGroupDetails = new ChangeTrackingList<ComplianceDetail>();
         }
 
-        /// <summary> Initializes a new instance of SummaryResults. </summary>
+        /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
         /// <param name="queryResultsUri"> HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly. </param>
         /// <param name="nonCompliantResources"> Number of non-compliant resources. </param>
         /// <param name="nonCompliantPolicies"> Number of non-compliant policies. </param>
         /// <param name="resourceDetails"> The resources summary at this level. </param>
         /// <param name="policyDetails"> The policy artifact summary at this level. For query scope level, it represents policy assignment summary. For policy assignment level, it represents policy definitions summary. </param>
         /// <param name="policyGroupDetails"> The policy definition group summary at this level. </param>
-        internal SummaryResults(Uri queryResultsUri, int? nonCompliantResources, int? nonCompliantPolicies, IReadOnlyList<ComplianceDetail> resourceDetails, IReadOnlyList<ComplianceDetail> policyDetails, IReadOnlyList<ComplianceDetail> policyGroupDetails)
+        internal PolicySummaryResults(Uri queryResultsUri, int? nonCompliantResources, int? nonCompliantPolicies, IReadOnlyList<ComplianceDetail> resourceDetails, IReadOnlyList<ComplianceDetail> policyDetails, IReadOnlyList<ComplianceDetail> policyGroupDetails)
         {
             QueryResultsUri = queryResultsUri;
             NonCompliantResources = nonCompliantResources;

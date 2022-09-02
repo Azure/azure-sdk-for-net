@@ -5,31 +5,22 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
-    public partial class CheckRestrictionsRequest
+    public partial class CheckManagementGroupPolicyRestrictionsContent
     {
-        /// <summary> Initializes a new instance of CheckRestrictionsRequest. </summary>
-        /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> is null. </exception>
-        public CheckRestrictionsRequest(CheckRestrictionsResourceDetails resourceDetails)
+        /// <summary> Initializes a new instance of CheckManagementGroupPolicyRestrictionsContent. </summary>
+        public CheckManagementGroupPolicyRestrictionsContent()
         {
-            if (resourceDetails == null)
-            {
-                throw new ArgumentNullException(nameof(resourceDetails));
-            }
-
-            ResourceDetails = resourceDetails;
             PendingFields = new ChangeTrackingList<PendingField>();
         }
 
         /// <summary> The information about the resource that will be evaluated. </summary>
-        public CheckRestrictionsResourceDetails ResourceDetails { get; }
+        public CheckRestrictionsResourceDetails ResourceDetails { get; set; }
         /// <summary> The list of fields and values that should be evaluated for potential restrictions. </summary>
         public IList<PendingField> PendingFields { get; }
     }

@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Summary results. </summary>
-    public partial class Summary
+    public partial class PolicySummary
     {
-        /// <summary> Initializes a new instance of Summary. </summary>
-        internal Summary()
+        /// <summary> Initializes a new instance of PolicySummary. </summary>
+        internal PolicySummary()
         {
             PolicyAssignments = new ChangeTrackingList<PolicyAssignmentSummary>();
         }
 
-        /// <summary> Initializes a new instance of Summary. </summary>
+        /// <summary> Initializes a new instance of PolicySummary. </summary>
         /// <param name="odataId"> OData entity ID; always set to null since summaries do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="results"> Compliance summary for all policy assignments. </param>
         /// <param name="policyAssignments"> Policy assignments summary. </param>
-        internal Summary(string odataId, string odataContext, SummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments)
+        internal PolicySummary(string odataId, string odataContext, PolicySummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments)
         {
             OdataId = odataId;
             OdataContext = odataContext;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
         public string OdataContext { get; }
         /// <summary> Compliance summary for all policy assignments. </summary>
-        public SummaryResults Results { get; }
+        public PolicySummaryResults Results { get; }
         /// <summary> Policy assignments summary. </summary>
         public IReadOnlyList<PolicyAssignmentSummary> PolicyAssignments { get; }
     }
