@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("subnet");
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(IsValidateOnly))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary");
-                writer.WriteBooleanValue(IsValidateOnly.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {

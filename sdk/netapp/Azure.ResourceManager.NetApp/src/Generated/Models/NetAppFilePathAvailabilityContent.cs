@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> File path to verify. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
-        public NetAppFilePathAvailabilityContent(string name, string subnetId)
+        public NetAppFilePathAvailabilityContent(string name, ResourceIdentifier subnetId)
         {
             if (name == null)
             {
@@ -34,6 +35,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> File path to verify. </summary>
         public string Name { get; }
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
-        public string SubnetId { get; }
+        public ResourceIdentifier SubnetId { get; }
     }
 }

@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Peering
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> prefix = default;
-            Optional<PrefixValidationState> prefixValidationState = default;
+            Optional<PeeringPrefixValidationState> prefixValidationState = default;
             Optional<string> peeringServicePrefixKey = default;
             Optional<string> errorMessage = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            prefixValidationState = new PrefixValidationState(property0.Value.GetString());
+                            prefixValidationState = new PeeringPrefixValidationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("peeringServicePrefixKey"))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new PeeringProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

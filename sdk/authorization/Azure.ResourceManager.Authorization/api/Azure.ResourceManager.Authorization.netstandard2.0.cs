@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Authorization
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties ExpandedProperties { get { throw null; } }
-        public System.Guid? LinkedRoleEligibilityScheduleId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LinkedRoleEligibilityScheduleId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType? MemberType { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? PrincipalType { get { throw null; } }
@@ -295,8 +295,8 @@ namespace Azure.ResourceManager.Authorization
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties ExpandedProperties { get { throw null; } }
-        public System.Guid? LinkedRoleEligibilityScheduleId { get { throw null; } }
-        public System.Guid? LinkedRoleEligibilityScheduleInstanceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LinkedRoleEligibilityScheduleId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LinkedRoleEligibilityScheduleInstanceId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType? MemberType { get { throw null; } }
         public Azure.Core.ResourceIdentifier OriginRoleAssignmentId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Authorization
         public Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties ExpandedProperties { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType? ExpirationType { get { throw null; } set { } }
         public string Justification { get { throw null; } set { } }
-        public System.Guid? LinkedRoleEligibilityScheduleId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LinkedRoleEligibilityScheduleId { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? PrincipalType { get { throw null; } }
         public System.Guid? RequestorId { get { throw null; } }
@@ -353,8 +353,8 @@ namespace Azure.ResourceManager.Authorization
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? Status { get { throw null; } }
-        public System.Guid? TargetRoleAssignmentScheduleId { get { throw null; } set { } }
-        public System.Guid? TargetRoleAssignmentScheduleInstanceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetRoleAssignmentScheduleId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetRoleAssignmentScheduleInstanceId { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleTicketInfo TicketInfo { get { throw null; } set { } }
     }
     public partial class RoleAssignmentScheduleRequestResource : Azure.ResourceManager.ArmResource
@@ -489,8 +489,8 @@ namespace Azure.ResourceManager.Authorization
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? Status { get { throw null; } }
-        public System.Guid? TargetRoleEligibilityScheduleId { get { throw null; } set { } }
-        public System.Guid? TargetRoleEligibilityScheduleInstanceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetRoleEligibilityScheduleId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetRoleEligibilityScheduleInstanceId { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesTicketInfo TicketInfo { get { throw null; } set { } }
     }
     public partial class RoleEligibilityScheduleRequestResource : Azure.ResourceManager.ArmResource

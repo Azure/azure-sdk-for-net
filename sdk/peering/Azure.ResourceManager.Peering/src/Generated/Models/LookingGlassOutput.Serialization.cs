@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static LookingGlassOutput DeserializeLookingGlassOutput(JsonElement element)
         {
-            Optional<Command> command = default;
+            Optional<LookingGlassCommand> command = default;
             Optional<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Peering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    command = new Command(property.Value.GetString());
+                    command = new LookingGlassCommand(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("output"))

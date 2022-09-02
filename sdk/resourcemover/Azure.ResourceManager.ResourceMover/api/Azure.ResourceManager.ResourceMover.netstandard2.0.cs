@@ -166,16 +166,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverBulkRemoveContent
     {
         public MoverBulkRemoveContent() { }
-        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType? MoverResourceInputType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoverResources { get { throw null; } }
+        public bool? ValidateOnly { get { throw null; } set { } }
     }
     public partial class MoverCommitContent
     {
         public MoverCommitContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moverResources) { }
-        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType? MoverResourceInputType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoverResources { get { throw null; } }
+        public bool? ValidateOnly { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MoverDependencyLevel : System.IEquatable<Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel>
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverDiscardContent
     {
         public MoverDiscardContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moverResources) { }
-        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType? MoverResourceInputType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoverResources { get { throw null; } }
+        public bool? ValidateOnly { get { throw null; } set { } }
     }
     public partial class MoverDisplayInfo
     {
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverPrepareContent
     {
         public MoverPrepareContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moverResources) { }
-        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType? MoverResourceInputType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoverResources { get { throw null; } }
+        public bool? ValidateOnly { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MoverProvisioningState : System.IEquatable<Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState>
@@ -350,9 +350,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverResourceMoveContent
     {
         public MoverResourceMoveContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moverResources) { }
-        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType? MoverResourceInputType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoverResources { get { throw null; } }
+        public bool? ValidateOnly { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MoverResourceMoveState : System.IEquatable<Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState>
@@ -435,11 +435,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
     }
     public partial class MoverResourceSetProperties
     {
-        public MoverResourceSetProperties(string sourceRegion, string targetRegion) { }
+        public MoverResourceSetProperties(Azure.Core.AzureLocation sourceRegion, Azure.Core.AzureLocation targetRegion) { }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
-        public string SourceRegion { get { throw null; } set { } }
-        public string TargetRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation SourceRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation TargetRegion { get { throw null; } set { } }
     }
     public abstract partial class MoverResourceSettings
     {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class NicIPConfigurationResourceSettings
     {
         public NicIPConfigurationResourceSettings() { }
-        public bool? IsValidateOnly { get { throw null; } set { } }
+        public bool? IsPrimary { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerBackendAddressPoolReferenceInfo> LoadBalancerBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerNatRuleReferenceInfo> LoadBalancerNatRules { get { throw null; } }
         public string Name { get { throw null; } set { } }

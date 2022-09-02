@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        }
+    },
+    "variables": {
+       "mapsAccountName": "[guid(resourceGroup().id, deployment().name, parameters('baseName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Maps/accounts",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[variables('mapsAccountName')]",
+            "location": "eastus",
+            "sku": {
+                "name": "G2",
+                "tier": "Standard"
+            },
+            "kind": "Gen2",
+            "identity": {
+                "type": "None"
+            },
+            "properties": {
+                "disableLocalAuth": false,
+                "cors": {
+                    "corsRules": [
+                        {
+                            "allowedOrigins": [
+                                "*"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "SUBSCRIPTION_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Maps/accounts',variables('mapsAccountName')), '2021-12-01-preview').primaryKey]"
+        },
+        "RESOURCE_GROUP_NAME": {
+            "type": "string",
+            "value": "[resourceGroup().Name]"
+        }
+    }
+}

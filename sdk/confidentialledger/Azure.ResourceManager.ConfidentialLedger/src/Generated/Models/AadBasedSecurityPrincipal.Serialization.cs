@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         {
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
-            Optional<LedgerRoleName> ledgerRoleName = default;
+            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ledgerRoleName = new LedgerRoleName(property.Value.GetString());
+                    ledgerRoleName = new ConfidentialLedgerRoleName(property.Value.GetString());
                     continue;
                 }
             }

@@ -671,7 +671,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <remarks> Gets operation info. </remarks>
-        public async Task<Response<DocumentModelOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -684,9 +684,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        DocumentModelOperationDetails value = default;
+                        OperationDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DocumentModelOperationDetails.DeserializeDocumentModelOperationDetails(document.RootElement);
+                        value = OperationDetails.DeserializeOperationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -699,7 +699,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <remarks> Gets operation info. </remarks>
-        public Response<DocumentModelOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        public Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -712,9 +712,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        DocumentModelOperationDetails value = default;
+                        OperationDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DocumentModelOperationDetails.DeserializeDocumentModelOperationDetails(document.RootElement);
+                        value = OperationDetails.DeserializeOperationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

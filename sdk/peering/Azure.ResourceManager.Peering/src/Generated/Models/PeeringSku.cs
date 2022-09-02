@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="tier"> The tier of the peering SKU. </param>
         /// <param name="family"> The family of the peering SKU. </param>
         /// <param name="size"> The size of the peering SKU. </param>
-        internal PeeringSku(string name, Tier? tier, Family? family, Size? size)
+        internal PeeringSku(string name, PeeringTier? tier, PeeringFamily? family, PeeringSize? size)
         {
             Name = name;
             Tier = tier;
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> The name of the peering SKU. </summary>
         public string Name { get; set; }
         /// <summary> The tier of the peering SKU. </summary>
-        public Tier? Tier { get; }
+        public PeeringTier? Tier { get; }
         /// <summary> The family of the peering SKU. </summary>
-        public Family? Family { get; }
+        public PeeringFamily? Family { get; }
         /// <summary> The size of the peering SKU. </summary>
-        public Size? Size { get; }
+        public PeeringSize? Size { get; }
     }
 }
