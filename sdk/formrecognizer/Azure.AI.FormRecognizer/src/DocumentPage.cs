@@ -52,6 +52,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Words = words;
             SelectionMarks = selectionMarks;
             Lines = lines;
+
+            foreach (DocumentLine line in Lines)
+            {
+                line.ContainingPage = this;
+            }
         }
 
         /// <summary>

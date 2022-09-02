@@ -1488,6 +1488,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion
 
+        #region Other
+        [RecordedTest]
+        public async Task DocumentLineGetWordsExtractsAllWords()
+        {
+            var client = CreateDocumentAnalysisClient();
+            AnalyzeDocumentOperation operation;
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
+            }
+
+            Assert.IsTrue(operation.HasValue);
+
+            AnalyzeResult result = operation.Value;
+
+            DocumentLine line = result.Pages[0].Lines[45];
+            IReadOnlyList<DocumentWord> words = line.GetWords();
+
+            Assert.AreEqual("Do not Jostle Box. Unpack carefully. Enjoy.", line.Content);
+            Assert.AreEqual(7, words.Count);
+            Assert.AreEqual("Do", words[0].Content);
+            Assert.AreEqual("not", words[1].Content);
+            Assert.AreEqual("Jostle", words[2].Content);
+            Assert.AreEqual("Box.", words[3].Content);
+            Assert.AreEqual("Unpack", words[4].Content);
+            Assert.AreEqual("carefully.", words[5].Content);
+            Assert.AreEqual("Enjoy.", words[6].Content);
+
+            line = result.Pages[0].Lines[46];
+            words = line.GetWords();
+
+            Assert.AreEqual("Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and", line.Content);
+            Assert.AreEqual(17, words.Count);
+            Assert.AreEqual("Jupiter", words[0].Content);
+            Assert.AreEqual("Book", words[1].Content);
+            Assert.AreEqual("Supply", words[2].Content);
+            Assert.AreEqual("will", words[3].Content);
+            Assert.AreEqual("refund", words[4].Content);
+            Assert.AreEqual("you", words[5].Content);
+            Assert.AreEqual("50%", words[6].Content);
+            Assert.AreEqual("per", words[7].Content);
+            Assert.AreEqual("book", words[8].Content);
+            Assert.AreEqual("if", words[9].Content);
+            Assert.AreEqual("returned", words[10].Content);
+            Assert.AreEqual("within", words[11].Content);
+            Assert.AreEqual("60", words[12].Content);
+            Assert.AreEqual("days", words[13].Content);
+            Assert.AreEqual("of", words[14].Content);
+            Assert.AreEqual("reading", words[15].Content);
+            Assert.AreEqual("and", words[16].Content);
+        }
+        #endregion
+
         #region Common
 
         [RecordedTest]
