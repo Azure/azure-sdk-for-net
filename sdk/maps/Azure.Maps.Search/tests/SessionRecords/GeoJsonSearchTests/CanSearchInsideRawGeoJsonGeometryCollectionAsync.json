@@ -1,0 +1,824 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/geometry/json?api-version=1.0\u0026query=coffee\u0026language=en",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "365",
+        "Content-Type": "application/json",
+        "traceparent": "00-51eb13440efc7c071a94435d0f5edb74-727ebe3d403bfa29-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "fa1ffcf57ad299304e16162df53b1a0e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "geometry": {
+          "geometries": [
+            {
+              "coordinates": [
+                [
+                  [
+                    -122.43576049804686,
+                    37.7524152343544
+                  ],
+                  [
+                    -122.4330139159,
+                    37.70660472542312
+                  ],
+                  [
+                    -122.36434936523438,
+                    37.712059855877314
+                  ],
+                  [
+                    -122.43576049804686,
+                    37.7524152343544
+                  ]
+                ]
+              ],
+              "type": "Polygon"
+            },
+            {
+              "coordinates": [
+                [
+                  [
+                    121.56,
+                    25.04
+                  ],
+                  [
+                    121.565,
+                    25.04
+                  ],
+                  [
+                    121.565,
+                    25.045
+                  ],
+                  [
+                    121.56,
+                    25.045
+                  ],
+                  [
+                    121.56,
+                    25.04
+                  ]
+                ]
+              ],
+              "type": "Polygon"
+            }
+          ],
+          "type": "GeometryCollection"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "9998",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 05:39:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": [
+          "Accept-Encoding",
+          "X-HTTP-Method-Override"
+        ],
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 889FA50C0B0A45639E0E8B62A356EAAC Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:40Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "coffee",
+          "queryType": "NON_NEAR",
+          "queryTime": 50,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 156,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "POI",
+            "id": "158007000117506",
+            "score": 2.1455521584,
+            "info": "search:ta:158007000117506-TW",
+            "poi": {
+              "name": "TenRens Tea",
+              "phone": "\u002B886 2 6638 5206",
+              "categorySet": [
+                {
+                  "id": 9376005
+                }
+              ],
+              "url": "www.chafortea.com.tw",
+              "categories": [
+                "caf\u00E9/pub",
+                "tea house"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "tea house"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Yanchang Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Yanchang Road, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04428,
+              "lon": 121.56121
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04518,
+                "lon": 121.56022
+              },
+              "btmRightPoint": {
+                "lat": 25.04338,
+                "lon": 121.5622
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04502,
+                  "lon": 121.56035
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009002020463",
+            "score": 2.145544529,
+            "info": "search:ta:158009002020463-TW",
+            "poi": {
+              "name": "\u74F7\u79A7\u8336\u574A",
+              "phone": "\u002B886 2 2765 0696",
+              "categorySet": [
+                {
+                  "id": 9376005
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "tea house"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "tea house"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Zhongxiao East Road Section 4 Lane 559 Alley 16",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Zhongxiao East Road Section 4 Lane 559 Alley 16, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04218,
+              "lon": 121.56355
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04308,
+                "lon": 121.56256
+              },
+              "btmRightPoint": {
+                "lat": 25.04128,
+                "lon": 121.56454
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04226,
+                  "lon": 121.56365
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840061001925567",
+            "score": 2.1455433369,
+            "info": "search:ta:840061001925567-US",
+            "poi": {
+              "name": "Stray Bar",
+              "phone": "\u002B1 415-821-9263",
+              "categorySet": [
+                {
+                  "id": 9376003
+                }
+              ],
+              "url": "www.straybarsf.com",
+              "categories": [
+                "caf\u00E9/pub",
+                "pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "309",
+              "streetName": "Cortland Avenue",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5535",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "309 Cortland Avenue, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.73942,
+              "lon": -122.41824
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74032,
+                "lon": -122.41938
+              },
+              "btmRightPoint": {
+                "lat": 37.73852,
+                "lon": -122.4171
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.73923,
+                  "lon": -122.41824
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009001710824",
+            "score": 2.1455402374,
+            "info": "search:ta:158009001710824-TW",
+            "poi": {
+              "name": "yi ke yi xian dian",
+              "phone": "\u002B886 2 2345 0714",
+              "brands": [
+                {
+                  "name": "Ikari Coffee"
+                }
+              ],
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "12",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "12, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04045,
+              "lon": 121.56245
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04135,
+                "lon": 121.56146
+              },
+              "btmRightPoint": {
+                "lat": 25.03955,
+                "lon": 121.56344
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.56246
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009001318221",
+            "score": 2.1455249786,
+            "info": "search:ta:158009001318221-TW",
+            "poi": {
+              "name": "bu lu ri ka fei fang",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "188-2",
+              "streetName": "Keelung Road Section 1",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11006",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "188-2, Keelung Road Section 1, Xinyi District, Taipei City 11006",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04201,
+              "lon": 121.5647
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04291,
+                "lon": 121.56371
+              },
+              "btmRightPoint": {
+                "lat": 25.04111,
+                "lon": 121.56569
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04197,
+                  "lon": 121.56479
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009000853995",
+            "score": 2.1455233097,
+            "info": "search:ta:158009000853995-TW",
+            "poi": {
+              "name": "hui liu song yan",
+              "phone": "\u002B886 2 6636 5888",
+              "categorySet": [
+                {
+                  "id": 9376005
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "tea house"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "tea house"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "88",
+              "streetName": "Yanchang Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11072",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "88, Yanchang Road, Xinyi District, Taipei City 11072",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04474,
+              "lon": 121.56111
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04564,
+                "lon": 121.56012
+              },
+              "btmRightPoint": {
+                "lat": 25.04384,
+                "lon": 121.5621
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04496,
+                  "lon": 121.56112
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158007000135953",
+            "score": 2.145522356,
+            "info": "search:ta:158007000135953-TW",
+            "poi": {
+              "name": "Fortune Caffe",
+              "phone": "\u002B886 2 6639 0080",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "www.illy.com.tw",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04435,
+              "lon": 121.56133
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04525,
+                "lon": 121.56034
+              },
+              "btmRightPoint": {
+                "lat": 25.04345,
+                "lon": 121.56232
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04471,
+                  "lon": 121.56173
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069002766840",
+            "score": 2.1455183029,
+            "info": "search:ta:840069002766840-US",
+            "poi": {
+              "name": "La Paloma Cafe",
+              "phone": "\u002B1 415-654-5147",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "257",
+              "streetName": "Randall Street",
+              "municipalitySubdivision": "Glen Park",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94131",
+              "extendedPostalCode": "94131-2738",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "257 Randall Street, San Francisco, CA 94131",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.74004,
+              "lon": -122.42905
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74094,
+                "lon": -122.43019
+              },
+              "btmRightPoint": {
+                "lat": 37.73914,
+                "lon": -122.42791
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.74022,
+                  "lon": -122.42889
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069019610692",
+            "score": 2.1455101967,
+            "info": "search:ta:840069019610692-US",
+            "poi": {
+              "name": "Martha \u0026 Bros. Coffee",
+              "phone": "\u002B1 415-642-7585",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "url": "www.marthabros.com",
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "745",
+              "streetName": "Cortland Avenue",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5628",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "745 Cortland Avenue, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.73901,
+              "lon": -122.41478
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.73991,
+                "lon": -122.41592
+              },
+              "btmRightPoint": {
+                "lat": 37.73811,
+                "lon": -122.41364
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.73891,
+                  "lon": -122.41478
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158007000164879",
+            "score": 2.1454994678,
+            "info": "search:ta:158007000164879-TW",
+            "poi": {
+              "name": "\u65E5\u51FA\u5370\u8C61\u5496\u5561\u9928",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Yanchang Road",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Yanchang Road, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04434,
+              "lon": 121.56019
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04524,
+                "lon": 121.5592
+              },
+              "btmRightPoint": {
+                "lat": 25.04344,
+                "lon": 121.56118
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04504,
+                  "lon": 121.56006
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "2119735269"
+  }
+}

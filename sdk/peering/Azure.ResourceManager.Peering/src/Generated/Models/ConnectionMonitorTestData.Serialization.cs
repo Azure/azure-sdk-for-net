@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Peering
             Optional<int> testFrequencyInSec = default;
             Optional<bool> isTestSuccessful = default;
             Optional<IReadOnlyList<string>> path = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new PeeringProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume Snapshot Properties. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of VolumeSnapshotProperties. </summary>
         /// <param name="snapshotPolicyId"> Snapshot Policy ResourceId. </param>
-        internal VolumeSnapshotProperties(string snapshotPolicyId)
+        internal VolumeSnapshotProperties(ResourceIdentifier snapshotPolicyId)
         {
             SnapshotPolicyId = snapshotPolicyId;
         }
 
         /// <summary> Snapshot Policy ResourceId. </summary>
-        public string SnapshotPolicyId { get; set; }
+        public ResourceIdentifier SnapshotPolicyId { get; set; }
     }
 }

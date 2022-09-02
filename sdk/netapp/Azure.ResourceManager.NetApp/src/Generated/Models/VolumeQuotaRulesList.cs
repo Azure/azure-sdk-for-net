@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VolumeQuotaRulesList. </summary>
         internal VolumeQuotaRulesList()
         {
-            Value = new ChangeTrackingList<VolumeQuotaRuleData>();
+            Value = new ChangeTrackingList<NetAppVolumeQuotaRuleData>();
         }
 
         /// <summary> Initializes a new instance of VolumeQuotaRulesList. </summary>
         /// <param name="value"> A list of Volume Quota Rules. </param>
-        internal VolumeQuotaRulesList(IReadOnlyList<VolumeQuotaRuleData> value)
+        internal VolumeQuotaRulesList(IReadOnlyList<NetAppVolumeQuotaRuleData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of Volume Quota Rules. </summary>
-        public IReadOnlyList<VolumeQuotaRuleData> Value { get; }
+        public IReadOnlyList<NetAppVolumeQuotaRuleData> Value { get; }
     }
 }

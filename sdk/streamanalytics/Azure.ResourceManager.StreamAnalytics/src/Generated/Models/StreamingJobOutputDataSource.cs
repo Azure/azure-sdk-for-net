@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// Please note <see cref="StreamingJobOutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="FunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="DataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="SynapseOutputDataSource"/>, <see cref="SqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="TableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
     /// </summary>
-    public partial class StreamingJobOutputDataSource
+    public abstract partial class StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of StreamingJobOutputDataSource. </summary>
-        public StreamingJobOutputDataSource()
+        protected StreamingJobOutputDataSource()
         {
         }
 

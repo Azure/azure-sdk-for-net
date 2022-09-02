@@ -14,22 +14,32 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataLocationToServiceLocationMap DeserializeDataLocationToServiceLocationMap(JsonElement element)
         {
-            Optional<string> dataLocation = default;
-            Optional<string> serviceLocation = default;
+            Optional<AzureLocation> dataLocation = default;
+            Optional<AzureLocation> serviceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataLocation"))
                 {
-                    dataLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceLocation"))
                 {
-                    serviceLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    serviceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new DataLocationToServiceLocationMap(dataLocation.Value, serviceLocation.Value);
+            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation));
         }
     }
 }

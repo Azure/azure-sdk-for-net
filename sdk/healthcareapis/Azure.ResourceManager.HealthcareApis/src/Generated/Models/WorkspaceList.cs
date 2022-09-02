@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         internal WorkspaceList()
         {
-            Value = new ChangeTrackingList<WorkspaceData>();
+            Value = new ChangeTrackingList<HealthcareApisWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         /// <param name="nextLink"> The link used to get the next page. </param>
         /// <param name="value"> Collection of resources. </param>
-        internal WorkspaceList(string nextLink, IReadOnlyList<WorkspaceData> value)
+        internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspaceData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The link used to get the next page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<WorkspaceData> Value { get; }
+        public IReadOnlyList<HealthcareApisWorkspaceData> Value { get; }
     }
 }

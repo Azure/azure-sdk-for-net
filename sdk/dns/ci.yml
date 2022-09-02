@@ -21,7 +21,6 @@ pr:
   paths:
     include:
     - sdk/dns/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

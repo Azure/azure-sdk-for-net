@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaPrivateEndpointConnectionListResult DeserializeMediaPrivateEndpointConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MediaPrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MediaPrivateEndpointConnectionData> array = new List<MediaPrivateEndpointConnectionData>();
+                    List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaPrivateEndpointConnectionData.DeserializeMediaPrivateEndpointConnectionData(item));
+                        array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

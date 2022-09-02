@@ -12,5 +12,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class AuthBaseInfo
     {
+        /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
+        public AuthBaseInfo()
+        {
+        }
     }
 }

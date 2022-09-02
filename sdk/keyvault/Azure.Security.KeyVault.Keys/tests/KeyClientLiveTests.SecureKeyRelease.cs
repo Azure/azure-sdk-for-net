@@ -58,16 +58,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey key = await Client.CreateRsaKeyAsync(options);
             RegisterForCleanup(key.Name);
 
-            // Managed HSM and Key Vault return different values by default.
-            if (IsManagedHSM)
-            {
-                Assert.IsFalse(key.Properties.Exportable);
-            }
-            else
-            {
-                Assert.IsNull(key.Properties.Exportable);
-            }
-
             KeyProperties keyProperties = new(key.Id)
             {
                 Exportable = true,

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SubvolumesList. </summary>
         internal SubvolumesList()
         {
-            Value = new ChangeTrackingList<SubvolumeInfoData>();
+            Value = new ChangeTrackingList<NetAppSubvolumeInfoData>();
         }
 
         /// <summary> Initializes a new instance of SubvolumesList. </summary>
         /// <param name="value"> A list of Subvolumes. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal SubvolumesList(IReadOnlyList<SubvolumeInfoData> value, string nextLink)
+        internal SubvolumesList(IReadOnlyList<NetAppSubvolumeInfoData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of Subvolumes. </summary>
-        public IReadOnlyList<SubvolumeInfoData> Value { get; }
+        public IReadOnlyList<NetAppSubvolumeInfoData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

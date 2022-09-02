@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Peering
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<PeeringPropertiesDirect> direct = default;
-            Optional<PeeringPropertiesExchange> exchange = default;
+            Optional<DirectPeeringProperties> direct = default;
+            Optional<ExchangePeeringProperties> exchange = default;
             Optional<string> peeringLocation = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            direct = PeeringPropertiesDirect.DeserializePeeringPropertiesDirect(property0.Value);
+                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exchange"))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            exchange = PeeringPropertiesExchange.DeserializePeeringPropertiesExchange(property0.Value);
+                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new PeeringProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

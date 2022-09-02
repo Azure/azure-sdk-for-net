@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataboxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
     /// </summary>
-    public partial class JobSecrets
+    public abstract partial class JobSecrets
     {
         /// <summary> Initializes a new instance of JobSecrets. </summary>
-        internal JobSecrets()
+        protected JobSecrets()
         {
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        internal JobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, ResponseError error)
+        internal JobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error)
         {
             JobSecretsType = jobSecretsType;
             DcAccessSecurityCode = dcAccessSecurityCode;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Used to indicate what type of job secrets object. </summary>
-        internal ClassDiscriminator JobSecretsType { get; set; }
+        internal DataBoxOrderType JobSecretsType { get; set; }
         /// <summary> Dc Access Security Code for Customer Managed Shipping. </summary>
-        public DcAccessSecurityCode DcAccessSecurityCode { get; }
+        public DataCenterAccessSecurityCode DcAccessSecurityCode { get; }
         /// <summary> Error while fetching the secrets. </summary>
         public ResponseError Error { get; }
     }

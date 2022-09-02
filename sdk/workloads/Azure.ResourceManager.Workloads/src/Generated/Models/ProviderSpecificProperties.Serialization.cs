@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new ProviderSpecificProperties(providerType);
+            return new UnknownProviderSpecificProperties(providerType);
         }
     }
 }

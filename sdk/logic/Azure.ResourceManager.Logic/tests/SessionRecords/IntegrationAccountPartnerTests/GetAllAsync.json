@@ -1,0 +1,236 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-af7eb95daeadf441baec8939995b683d-35d897020ea3a747-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f4dcf2d4862ff309d70e581f81b70d10",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 07:40:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "00dcd497-7980-4545-8161-0ca2d4e6ae00",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "centralus:8367dc68-0dde-4de2-b74f-0a9ec1e85383",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T074041Z:00dcd497-7980-4545-8161-0ca2d4e6ae00"
+      },
+      "ResponseBody": {
+        "properties": {
+          "state": "Enabled"
+        },
+        "sku": {
+          "name": "Standard"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183",
+        "name": "intergrationAccount5183",
+        "type": "Microsoft.Logic/integrationAccounts",
+        "location": "centralus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183/partners/partner797?api-version=2019-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "144",
+        "Content-Type": "application/json",
+        "traceparent": "00-05e0a455d0f6244894c6d210c810ef78-b4f5dab34851de4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "47e4e177cb881a621e382c210723451b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "centralus",
+        "properties": {
+          "partnerType": "B2B",
+          "content": {
+            "b2b": {
+              "businessIdentities": [
+                {
+                  "qualifier": "AA",
+                  "value": "ZZ"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "494",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 07:40:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f59041f7-09e2-41c2-bbed-97ff9c177a1d",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "centralus:7f12e437-47ee-4b39-a79a-1f8b270404a9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T074043Z:f59041f7-09e2-41c2-bbed-97ff9c177a1d"
+      },
+      "ResponseBody": {
+        "properties": {
+          "partnerType": "B2B",
+          "content": {
+            "b2b": {
+              "businessIdentities": [
+                {
+                  "qualifier": "AA",
+                  "value": "ZZ"
+                }
+              ],
+              "partnerClassification": "NotSpecified"
+            }
+          },
+          "createdTime": "2022-08-24T07:40:42.9571815Z",
+          "changedTime": "2022-08-24T07:40:42.9575637Z"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183/partners/partner797",
+        "name": "partner797",
+        "type": "Microsoft.Logic/integrationAccounts/partners"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183/partners?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a38724296b0a5f4f87bdce7011f42ce7-eeac9d2228080449-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "136be795645212be5efceddbec2ede07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1995",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 07:40:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "60de8f11-e125-4f6f-ad09-8ffffe295fc0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "centralus:bf2248ff-f0c1-416d-81e8-663797760486",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T074043Z:60de8f11-e125-4f6f-ad09-8ffffe295fc0"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "partnerType": "B2B",
+              "content": {
+                "b2b": {
+                  "businessIdentities": [
+                    {
+                      "qualifier": "AA",
+                      "value": "ZZ"
+                    }
+                  ],
+                  "partnerClassification": "NotSpecified"
+                }
+              },
+              "createdTime": "2022-08-24T07:40:40.4579219Z",
+              "changedTime": "2022-08-24T07:40:40.4582505Z"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183/partners/partner2595",
+            "name": "partner2595",
+            "type": "Microsoft.Logic/integrationAccounts/partners"
+          },
+          {
+            "properties": {
+              "partnerType": "B2B",
+              "content": {
+                "b2b": {
+                  "businessIdentities": [
+                    {
+                      "qualifier": "AA",
+                      "value": "ZZ"
+                    }
+                  ],
+                  "partnerClassification": "NotSpecified"
+                }
+              },
+              "createdTime": "2022-08-24T07:40:29.418883Z",
+              "changedTime": "2022-08-24T07:40:29.423291Z"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183/partners/partner7662",
+            "name": "partner7662",
+            "type": "Microsoft.Logic/integrationAccounts/partners"
+          },
+          {
+            "properties": {
+              "partnerType": "B2B",
+              "content": {
+                "b2b": {
+                  "businessIdentities": [
+                    {
+                      "qualifier": "AA",
+                      "value": "ZZ"
+                    }
+                  ],
+                  "partnerClassification": "NotSpecified"
+                }
+              },
+              "createdTime": "2022-08-24T07:40:42.9571815Z",
+              "changedTime": "2022-08-24T07:40:42.9575637Z"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183/partners/partner797",
+            "name": "partner797",
+            "type": "Microsoft.Logic/integrationAccounts/partners"
+          },
+          {
+            "properties": {
+              "partnerType": "B2B",
+              "content": {
+                "b2b": {
+                  "businessIdentities": [
+                    {
+                      "qualifier": "AA",
+                      "value": "ZZ"
+                    }
+                  ],
+                  "partnerClassification": "NotSpecified"
+                }
+              },
+              "createdTime": "2022-08-24T07:40:36.0981541Z",
+              "changedTime": "2022-08-24T07:40:36.0988891Z"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2614/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5183/partners/partner8608",
+            "name": "partner8608",
+            "type": "Microsoft.Logic/integrationAccounts/partners"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1227736937",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
