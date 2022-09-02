@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary>
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The policy definition reference ID within the policy set definition.
         /// Serialized Name: PolicyDetails.policyDefinitionReferenceId
         /// </param>
-        internal PolicyDetails(string policyDefinitionId, string policyAssignmentId, string policyAssignmentDisplayName, string policyAssignmentScope, string policySetDefinitionId, string policyDefinitionReferenceId)
+        internal PolicyDetails(ResourceIdentifier policyDefinitionId, ResourceIdentifier policyAssignmentId, string policyAssignmentDisplayName, string policyAssignmentScope, ResourceIdentifier policySetDefinitionId, string policyDefinitionReferenceId)
         {
             PolicyDefinitionId = policyDefinitionId;
             PolicyAssignmentId = policyAssignmentId;
@@ -57,12 +59,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The ID of the policy definition.
         /// Serialized Name: PolicyDetails.policyDefinitionId
         /// </summary>
-        public string PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary>
         /// The ID of the policy assignment.
         /// Serialized Name: PolicyDetails.policyAssignmentId
         /// </summary>
-        public string PolicyAssignmentId { get; }
+        public ResourceIdentifier PolicyAssignmentId { get; }
         /// <summary>
         /// The display name of the policy assignment.
         /// Serialized Name: PolicyDetails.policyAssignmentDisplayName
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The ID of the policy set definition.
         /// Serialized Name: PolicyDetails.policySetDefinitionId
         /// </summary>
-        public string PolicySetDefinitionId { get; }
+        public ResourceIdentifier PolicySetDefinitionId { get; }
         /// <summary>
         /// The policy definition reference ID within the policy set definition.
         /// Serialized Name: PolicyDetails.policyDefinitionReferenceId

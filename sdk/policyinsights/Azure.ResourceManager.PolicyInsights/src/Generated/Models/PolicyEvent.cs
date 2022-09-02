@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Serialized Name: PolicyEvent.components
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PolicyEvent(string odataId, string odataContext, DateTimeOffset? timestamp, string resourceId, string policyAssignmentId, string policyDefinitionId, string effectiveParameters, bool? isCompliant, string subscriptionId, string resourceType, string resourceLocation, string resourceGroup, string resourceTags, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, string policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string managementGroupIds, string policyDefinitionReferenceId, string complianceState, Guid? tenantId, string principalOid, IReadOnlyList<ComponentEventDetails> components, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal PolicyEvent(string odataId, string odataContext, DateTimeOffset? timestamp, ResourceIdentifier resourceId, ResourceIdentifier policyAssignmentId, ResourceIdentifier policyDefinitionId, string effectiveParameters, bool? isCompliant, string subscriptionId, string resourceType, AzureLocation? resourceLocation, string resourceGroup, string resourceTags, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, ResourceIdentifier policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string managementGroupIds, string policyDefinitionReferenceId, string complianceState, Guid? tenantId, string principalOid, IReadOnlyList<ComponentEventDetails> components, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             OdataId = odataId;
             OdataContext = odataContext;
@@ -205,17 +205,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Resource ID.
         /// Serialized Name: PolicyEvent.resourceId
         /// </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary>
         /// Policy assignment ID.
         /// Serialized Name: PolicyEvent.policyAssignmentId
         /// </summary>
-        public string PolicyAssignmentId { get; }
+        public ResourceIdentifier PolicyAssignmentId { get; }
         /// <summary>
         /// Policy definition ID.
         /// Serialized Name: PolicyEvent.policyDefinitionId
         /// </summary>
-        public string PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary>
         /// Effective parameters for the policy assignment.
         /// Serialized Name: PolicyEvent.effectiveParameters
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Resource location.
         /// Serialized Name: PolicyEvent.resourceLocation
         /// </summary>
-        public string ResourceLocation { get; }
+        public AzureLocation? ResourceLocation { get; }
         /// <summary>
         /// Resource group name.
         /// Serialized Name: PolicyEvent.resourceGroup
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Policy set definition ID, if the policy assignment is for a policy set.
         /// Serialized Name: PolicyEvent.policySetDefinitionId
         /// </summary>
-        public string PolicySetDefinitionId { get; }
+        public ResourceIdentifier PolicySetDefinitionId { get; }
         /// <summary>
         /// Policy set definition name, if the policy assignment is for a policy set.
         /// Serialized Name: PolicyEvent.policySetDefinitionName

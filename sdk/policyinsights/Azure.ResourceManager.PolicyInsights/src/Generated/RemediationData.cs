@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// The time at which the remediation was last updated.
         /// Serialized Name: Remediation.properties.lastUpdatedOn
         /// </param>
-        /// <param name="filters">
+        /// <param name="filter">
         /// The filters that will be applied to determine which resources to remediate.
         /// Serialized Name: Remediation.properties.filters
         /// </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// The remediation failure threshold settings
         /// Serialized Name: Remediation.properties.failureThreshold
         /// </param>
-        internal RemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, RemediationFilters filters, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, RemediationPropertiesFailureThreshold failureThreshold) : base(id, name, resourceType, systemData)
+        internal RemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, RemediationFilters filter, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, RemediationPropertiesFailureThreshold failureThreshold) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PolicyInsights
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            Filters = filters;
+            Filter = filter;
             DeploymentStatus = deploymentStatus;
             StatusMessage = statusMessage;
             CorrelationId = correlationId;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// The resource ID of the policy assignment that should be remediated.
         /// Serialized Name: Remediation.properties.policyAssignmentId
         /// </summary>
-        public string PolicyAssignmentId { get; set; }
+        public ResourceIdentifier PolicyAssignmentId { get; set; }
         /// <summary>
         /// The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition.
         /// Serialized Name: Remediation.properties.policyDefinitionReferenceId
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// The filters that will be applied to determine which resources to remediate.
         /// Serialized Name: Remediation.properties.filters
         /// </summary>
-        internal RemediationFilters Filters { get; set; }
+        internal RemediationFilters Filter { get; set; }
         /// <summary>
         /// The resource locations that will be remediated.
         /// Serialized Name: RemediationFilters.locations
         /// </summary>
-        public IList<string> FiltersLocations
+        public IList<AzureLocation> FilterLocations
         {
             get
             {
-                if (Filters is null)
-                    Filters = new RemediationFilters();
-                return Filters.Locations;
+                if (Filter is null)
+                    Filter = new RemediationFilters();
+                return Filter.Locations;
             }
         }
 

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Policy definition group summary.
         /// Serialized Name: PolicyAssignmentSummary.policyGroups
         /// </param>
-        internal PolicyAssignmentSummary(string policyAssignmentId, string policySetDefinitionId, SummaryResults results, IReadOnlyList<PolicyDefinitionSummary> policyDefinitions, IReadOnlyList<PolicyGroupSummary> policyGroups)
+        internal PolicyAssignmentSummary(ResourceIdentifier policyAssignmentId, ResourceIdentifier policySetDefinitionId, PolicySummaryResults results, IReadOnlyList<PolicyDefinitionSummary> policyDefinitions, IReadOnlyList<PolicyGroupSummary> policyGroups)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicySetDefinitionId = policySetDefinitionId;
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Policy assignment ID.
         /// Serialized Name: PolicyAssignmentSummary.policyAssignmentId
         /// </summary>
-        public string PolicyAssignmentId { get; }
+        public ResourceIdentifier PolicyAssignmentId { get; }
         /// <summary>
         /// Policy set definition ID, if the policy assignment is for a policy set.
         /// Serialized Name: PolicyAssignmentSummary.policySetDefinitionId
         /// </summary>
-        public string PolicySetDefinitionId { get; }
+        public ResourceIdentifier PolicySetDefinitionId { get; }
         /// <summary>
         /// Compliance summary for the policy assignment.
         /// Serialized Name: PolicyAssignmentSummary.results
         /// </summary>
-        public SummaryResults Results { get; }
+        public PolicySummaryResults Results { get; }
         /// <summary>
         /// Policy definitions summary.
         /// Serialized Name: PolicyAssignmentSummary.policyDefinitions

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class SummaryResults
+    public partial class PolicySummaryResults
     {
-        internal static SummaryResults DeserializeSummaryResults(JsonElement element)
+        internal static PolicySummaryResults DeserializePolicySummaryResults(JsonElement element)
         {
             Optional<Uri> queryResultsUri = default;
             Optional<int> nonCompliantResources = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new SummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails));
+            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails));
         }
     }
 }

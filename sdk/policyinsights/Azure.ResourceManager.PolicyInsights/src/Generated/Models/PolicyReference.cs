@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The resource identifier of the policy assignment.
         /// Serialized Name: PolicyReference.policyAssignmentId
         /// </param>
-        internal PolicyReference(string policyDefinitionId, string policySetDefinitionId, string policyDefinitionReferenceId, string policyAssignmentId)
+        internal PolicyReference(ResourceIdentifier policyDefinitionId, ResourceIdentifier policySetDefinitionId, string policyDefinitionReferenceId, ResourceIdentifier policyAssignmentId)
         {
             PolicyDefinitionId = policyDefinitionId;
             PolicySetDefinitionId = policySetDefinitionId;
@@ -47,12 +49,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The resource identifier of the policy definition.
         /// Serialized Name: PolicyReference.policyDefinitionId
         /// </summary>
-        public string PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary>
         /// The resource identifier of the policy set definition.
         /// Serialized Name: PolicyReference.policySetDefinitionId
         /// </summary>
-        public string PolicySetDefinitionId { get; }
+        public ResourceIdentifier PolicySetDefinitionId { get; }
         /// <summary>
         /// The reference identifier of a specific policy definition within a policy set definition.
         /// Serialized Name: PolicyReference.policyDefinitionReferenceId
@@ -62,6 +64,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The resource identifier of the policy assignment.
         /// Serialized Name: PolicyReference.policyAssignmentId
         /// </summary>
-        public string PolicyAssignmentId { get; }
+        public ResourceIdentifier PolicyAssignmentId { get; }
     }
 }

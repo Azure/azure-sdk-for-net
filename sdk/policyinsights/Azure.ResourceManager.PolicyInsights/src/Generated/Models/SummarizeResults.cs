@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of SummarizeResults. </summary>
         internal SummarizeResults()
         {
-            Value = new ChangeTrackingList<Summary>();
+            Value = new ChangeTrackingList<PolicySummary>();
         }
 
         /// <summary> Initializes a new instance of SummarizeResults. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Summarize action results.
         /// Serialized Name: SummarizeResults.value
         /// </param>
-        internal SummarizeResults(string odataContext, int? odataCount, IReadOnlyList<Summary> value)
+        internal SummarizeResults(string odataContext, int? odataCount, IReadOnlyList<PolicySummary> value)
         {
             OdataContext = odataContext;
             OdataCount = odataCount;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Summarize action results.
         /// Serialized Name: SummarizeResults.value
         /// </summary>
-        public IReadOnlyList<Summary> Value { get; }
+        public IReadOnlyList<PolicySummary> Value { get; }
     }
 }

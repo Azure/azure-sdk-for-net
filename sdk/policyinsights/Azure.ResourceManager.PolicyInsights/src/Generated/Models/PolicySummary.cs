@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// Summary results.
     /// Serialized Name: Summary
     /// </summary>
-    public partial class Summary
+    public partial class PolicySummary
     {
-        /// <summary> Initializes a new instance of Summary. </summary>
-        internal Summary()
+        /// <summary> Initializes a new instance of PolicySummary. </summary>
+        internal PolicySummary()
         {
             PolicyAssignments = new ChangeTrackingList<PolicyAssignmentSummary>();
         }
 
-        /// <summary> Initializes a new instance of Summary. </summary>
+        /// <summary> Initializes a new instance of PolicySummary. </summary>
         /// <param name="odataId">
         /// OData entity ID; always set to null since summaries do not have an entity ID.
         /// Serialized Name: Summary.@odata.id
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Policy assignments summary.
         /// Serialized Name: Summary.policyAssignments
         /// </param>
-        internal Summary(string odataId, string odataContext, SummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments)
+        internal PolicySummary(string odataId, string odataContext, PolicySummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments)
         {
             OdataId = odataId;
             OdataContext = odataContext;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Compliance summary for all policy assignments.
         /// Serialized Name: Summary.results
         /// </summary>
-        public SummaryResults Results { get; }
+        public PolicySummaryResults Results { get; }
         /// <summary>
         /// Policy assignments summary.
         /// Serialized Name: Summary.policyAssignments

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Compliance summary for the policy definition group.
         /// Serialized Name: PolicyGroupSummary.results
         /// </param>
-        internal PolicyGroupSummary(string policyGroupName, SummaryResults results)
+        internal PolicyGroupSummary(string policyGroupName, PolicySummaryResults results)
         {
             PolicyGroupName = policyGroupName;
             Results = results;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Compliance summary for the policy definition group.
         /// Serialized Name: PolicyGroupSummary.results
         /// </summary>
-        public SummaryResults Results { get; }
+        public PolicySummaryResults Results { get; }
     }
 }

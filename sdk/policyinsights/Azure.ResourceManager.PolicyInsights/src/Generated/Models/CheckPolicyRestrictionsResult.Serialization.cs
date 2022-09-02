@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class CheckRestrictionsResult
+    public partial class CheckPolicyRestrictionsResult
     {
-        internal static CheckRestrictionsResult DeserializeCheckRestrictionsResult(JsonElement element)
+        internal static CheckPolicyRestrictionsResult DeserializeCheckPolicyRestrictionsResult(JsonElement element)
         {
             Optional<IReadOnlyList<FieldRestrictions>> fieldRestrictions = default;
             Optional<CheckRestrictionsResultContentEvaluationResult> contentEvaluationResult = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new CheckRestrictionsResult(Optional.ToList(fieldRestrictions), contentEvaluationResult.Value);
+            return new CheckPolicyRestrictionsResult(Optional.ToList(fieldRestrictions), contentEvaluationResult.Value);
         }
     }
 }

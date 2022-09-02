@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// The compliance state that should be set on the resource.
     /// Serialized Name: ComplianceState
     /// </summary>
-    public readonly partial struct ComplianceState : IEquatable<ComplianceState>
+    public readonly partial struct PolicyComplianceState : IEquatable<PolicyComplianceState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ComplianceState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyComplianceState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComplianceState(string value)
+        public PolicyComplianceState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -33,29 +33,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The resource is in compliance with the policy.
         /// Serialized Name: ComplianceState.Compliant
         /// </summary>
-        public static ComplianceState Compliant { get; } = new ComplianceState(CompliantValue);
+        public static PolicyComplianceState Compliant { get; } = new PolicyComplianceState(CompliantValue);
         /// <summary>
         /// The resource is not in compliance with the policy.
         /// Serialized Name: ComplianceState.NonCompliant
         /// </summary>
-        public static ComplianceState NonCompliant { get; } = new ComplianceState(NonCompliantValue);
+        public static PolicyComplianceState NonCompliant { get; } = new PolicyComplianceState(NonCompliantValue);
         /// <summary>
         /// The compliance state of the resource is not known.
         /// Serialized Name: ComplianceState.Unknown
         /// </summary>
-        public static ComplianceState Unknown { get; } = new ComplianceState(UnknownValue);
-        /// <summary> Determines if two <see cref="ComplianceState"/> values are the same. </summary>
-        public static bool operator ==(ComplianceState left, ComplianceState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ComplianceState"/> values are not the same. </summary>
-        public static bool operator !=(ComplianceState left, ComplianceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComplianceState"/>. </summary>
-        public static implicit operator ComplianceState(string value) => new ComplianceState(value);
+        public static PolicyComplianceState Unknown { get; } = new PolicyComplianceState(UnknownValue);
+        /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are the same. </summary>
+        public static bool operator ==(PolicyComplianceState left, PolicyComplianceState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are not the same. </summary>
+        public static bool operator !=(PolicyComplianceState left, PolicyComplianceState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="PolicyComplianceState"/>. </summary>
+        public static implicit operator PolicyComplianceState(string value) => new PolicyComplianceState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComplianceState other && Equals(other);
+        public override bool Equals(object obj) => obj is PolicyComplianceState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ComplianceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PolicyComplianceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

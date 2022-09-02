@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of RemediationFilters. </summary>
         public RemediationFilters()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of RemediationFilters. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The resource locations that will be remediated.
         /// Serialized Name: RemediationFilters.locations
         /// </param>
-        internal RemediationFilters(IList<string> locations)
+        internal RemediationFilters(IList<AzureLocation> locations)
         {
             Locations = locations;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The resource locations that will be remediated.
         /// Serialized Name: RemediationFilters.locations
         /// </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
     }
 }

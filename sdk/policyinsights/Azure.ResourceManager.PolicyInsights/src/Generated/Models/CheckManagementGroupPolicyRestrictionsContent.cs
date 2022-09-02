@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// The check policy restrictions parameters describing the resource that is being evaluated.
     /// Serialized Name: CheckManagementGroupRestrictionsRequest
     /// </summary>
-    public partial class CheckManagementGroupRestrictionsContent
+    public partial class CheckManagementGroupPolicyRestrictionsContent
     {
-        /// <summary> Initializes a new instance of CheckManagementGroupRestrictionsContent. </summary>
-        public CheckManagementGroupRestrictionsContent()
+        /// <summary> Initializes a new instance of CheckManagementGroupPolicyRestrictionsContent. </summary>
+        public CheckManagementGroupPolicyRestrictionsContent()
         {
             PendingFields = new ChangeTrackingList<PendingField>();
         }

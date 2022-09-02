@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// Compliance summary on a particular summary level.
     /// Serialized Name: SummaryResults
     /// </summary>
-    public partial class SummaryResults
+    public partial class PolicySummaryResults
     {
-        /// <summary> Initializes a new instance of SummaryResults. </summary>
-        internal SummaryResults()
+        /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
+        internal PolicySummaryResults()
         {
             ResourceDetails = new ChangeTrackingList<ComplianceDetail>();
             PolicyDetails = new ChangeTrackingList<ComplianceDetail>();
             PolicyGroupDetails = new ChangeTrackingList<ComplianceDetail>();
         }
 
-        /// <summary> Initializes a new instance of SummaryResults. </summary>
+        /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
         /// <param name="queryResultsUri">
         /// HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly.
         /// Serialized Name: SummaryResults.queryResultsUri
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// The policy definition group summary at this level.
         /// Serialized Name: SummaryResults.policyGroupDetails
         /// </param>
-        internal SummaryResults(Uri queryResultsUri, int? nonCompliantResources, int? nonCompliantPolicies, IReadOnlyList<ComplianceDetail> resourceDetails, IReadOnlyList<ComplianceDetail> policyDetails, IReadOnlyList<ComplianceDetail> policyGroupDetails)
+        internal PolicySummaryResults(Uri queryResultsUri, int? nonCompliantResources, int? nonCompliantPolicies, IReadOnlyList<ComplianceDetail> resourceDetails, IReadOnlyList<ComplianceDetail> policyDetails, IReadOnlyList<ComplianceDetail> policyGroupDetails)
         {
             QueryResultsUri = queryResultsUri;
             NonCompliantResources = nonCompliantResources;

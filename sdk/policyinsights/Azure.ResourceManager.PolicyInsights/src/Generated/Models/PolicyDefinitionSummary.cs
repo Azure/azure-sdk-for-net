@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Compliance summary for the policy definition.
         /// Serialized Name: PolicyDefinitionSummary.results
         /// </param>
-        internal PolicyDefinitionSummary(string policyDefinitionId, string policyDefinitionReferenceId, IReadOnlyList<string> policyDefinitionGroupNames, string effect, SummaryResults results)
+        internal PolicyDefinitionSummary(string policyDefinitionId, string policyDefinitionReferenceId, IReadOnlyList<string> policyDefinitionGroupNames, string effect, PolicySummaryResults results)
         {
             PolicyDefinitionId = policyDefinitionId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// Compliance summary for the policy definition.
         /// Serialized Name: PolicyDefinitionSummary.results
         /// </summary>
-        public SummaryResults Results { get; }
+        public PolicySummaryResults Results { get; }
     }
 }
