@@ -16,7 +16,7 @@ using Azure.Storage.Blobs.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
-    internal class ParallelPartitionedDownloader
+    internal class ParallelPartitionedDownloader<TCompleteDownloadReturn>
     {
         /// <summary>
         /// The client used to download the blob.

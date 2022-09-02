@@ -287,7 +287,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 progressIncrementer = new PartitionedProgressIncrementer(new Progress<long>());
             }
 
-            var downloader = new ParallelPartitionedDownloader(
+            var downloader = new ParallelPartitionedDownloader<BlobSingleDownloadOptions>(
                 //TODO: replace with job
                 client: SourceBlobClient,
                 options: Options);
