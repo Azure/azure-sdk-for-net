@@ -8,7 +8,6 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 {
     internal class BestPracticeTests : BestPracticeTestBase
     {
-        //private TenantResource tenant;
         public BestPracticeTests(bool async) : base(async) { }
 
         [TestCase]
@@ -21,12 +20,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await collection.GetAsync(profileName);
 
             // assert
-            Assert.NotNull(profile);
-            Assert.True(profile.Value.HasData);
-            Assert.AreEqual(profileName, profile.Value.Id.Name);
-            Assert.NotNull(profile.Value.Id);
-            Assert.NotNull(profile.Value.Data);
-            Assert.NotNull(profile.Value.Data.Configuration);
+            AssertValues(profile, profileName);
         }
 
         [TestCase]
@@ -39,12 +33,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await collection.GetAsync(profileName);
 
             // assert
-            Assert.NotNull(profile);
-            Assert.True(profile.Value.HasData);
-            Assert.AreEqual(profileName, profile.Value.Id.Name);
-            Assert.NotNull(profile.Value.Id);
-            Assert.NotNull(profile.Value.Data);
-            Assert.NotNull(profile.Value.Data.Configuration);
+            AssertValues(profile, profileName);
         }
 
         [TestCase]
