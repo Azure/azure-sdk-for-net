@@ -1832,6 +1832,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.AreEqual(4, line.BoundingPolygon.Count);
             }
 
+            ValidateSpanListsAreSortedAndDontOverlap(page.Lines.Select(l => l.Spans).ToList());
+
             Assert.NotNull(page.Words);
 
             foreach (DocumentWord word in page.Words)
@@ -1842,6 +1844,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(word.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }
+
+            ValidateSpansAreSortedAndDontOverlap(page.Words.Select(w => w.Span).ToList());
 
             Assert.NotNull(page.SelectionMarks);
 
@@ -1877,6 +1881,36 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(cell.ColumnSpan, 1);
                 Assert.GreaterOrEqual(cell.RowSpan, 1);
                 Assert.NotNull(cell.Content);
+            }
+        }
+
+        private void ValidateSpansAreSortedAndDontOverlap(IReadOnlyList<DocumentSpan> spans)
+        {
+            for (int i = 0; i < spans.Count - 1; i++)
+            {
+                Assert.GreaterOrEqual(spans[i + 1].Index, spans[i].Index + spans[i].Length);
+            }
+        }
+
+        private void ValidateSpanListsAreSortedAndDontOverlap(IReadOnlyList<IReadOnlyList<DocumentSpan>> spanLists)
+        {
+            for (int i = 0; i < spanLists.Count - 1; i++)
+            {
+                IReadOnlyList<DocumentSpan> currentSpans = spanLists[i];
+                IReadOnlyList<DocumentSpan> nextSpans = spanLists[i + 1];
+
+                ValidateSpansAreSortedAndDontOverlap(currentSpans);
+
+                DocumentSpan lastCurrentSpan = currentSpans.Last();
+                DocumentSpan firstNextSpan = nextSpans.First();
+
+                Assert.GreaterOrEqual(firstNextSpan.Index, lastCurrentSpan.Index + lastCurrentSpan.Length);
+            }
+
+            // Could be empty if document page contained no lines, for example.
+            if (spanLists.Count > 0)
+            {
+                ValidateSpansAreSortedAndDontOverlap(spanLists.Last());
             }
         }
 
