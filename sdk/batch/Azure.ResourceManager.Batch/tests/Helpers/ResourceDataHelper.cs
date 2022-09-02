@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             {
                 Format = BatchAccountCertificateFormat.Pfx,
                 ThumbprintAlgorithm = "sha1",
-                Thumbprint = new BinaryData("cff2ab63c8c955aaf71989efa641b906558d9fb7"),
+                Thumbprint = BinaryData.FromObjectAsJson("cff2ab63c8c955aaf71989efa641b906558d9fb7"),
                 Password = "nodesdk"
         };
             return data;
@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         #region Account
         public static BatchAccountCreateOrUpdateContent GetBatchAccountData()
         {
-            var data = new BatchAccountCreateOrUpdateContent(AzureLocation.WestUS);
+            var data = new BatchAccountCreateOrUpdateContent(AzureLocation.WestUS)
+            {
+                AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AutoRestResources2/providers/Microsoft.Storage/storageAccounts/20220725datafactory"))
+            };
             return data;
         }
         public static void AssertAccount(BatchAccountData account1, BatchAccountData account2)
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
                 VmSize = "small",
                 DeploymentConfiguration = new BatchDeploymentConfiguration()
                 {
-                    CloudServiceConfiguration = new BatchCloudServiceConfiguration("s")
+                    CloudServiceConfiguration = new BatchCloudServiceConfiguration("2")
                 },
                 StartTask = new BatchAccountPoolStartTask()
                 {
@@ -100,6 +103,9 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
                             HttpUri = new Uri("https://blobsource.com"),
                             FilePath = "filename.txt",
                             Identity = new ComputeNodeIdentityReference()
+                            {
+                                ResourceId = new ResourceIdentifier("refUserId123")
+                            }
                         }
                     },
                     EnvironmentSettings =
@@ -119,7 +125,8 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
                 },
                 UserAccounts =
                 {
-                    new BatchUserAccount("username", "randompasswd")
+                    //new BatchUserAccount("adminUser", "xyz123"),
+                    new BatchUserAccount("testaccount", "randompasswd")
                 },
                 ScaleSettings = new BatchAccountPoolScaleSettings()
                 {
@@ -130,7 +137,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
                     }
                 }
             };
-            return (BatchAccountPoolData)data;
+            return data;
         }
         public static void AssertPoolData(BatchAccountPoolData poolData1, BatchAccountPoolData poolData2)
         {
@@ -168,21 +175,6 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             AssertResourceData(packageData1, packageData2);
             Assert.AreEqual(packageData1.ETag, packageData2.ETag);
-        }
-        #endregion
-
-        #region PrivateLink
-        public static BatchPrivateLinkResourceData GetBatchPrivateLinkResourceData()
-        {
-            var privateLinkData = new BatchPrivateLinkResourceData()
-            {
-            };
-            return privateLinkData;
-        }
-        public static void AssertLinkData(BatchPrivateLinkResourceData batchPrivateLinkResourceData1, BatchPrivateLinkResourceData batchPrivateLinkResourceData2)
-        {
-            AssertResourceData(batchPrivateLinkResourceData2, batchPrivateLinkResourceData1);
-            Assert.AreEqual(batchPrivateLinkResourceData2.ETag, batchPrivateLinkResourceData2.ETag);
         }
         #endregion
     }

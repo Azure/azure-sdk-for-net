@@ -18,5 +18,26 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             : base(isAsync, RecordedTestMode.Record)
         {
         }
+
+        private async Task<BatchAccountResource> CreateAccountResourceAsync(string accountName)
+        {
+            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var input = ResourceDataHelper.GetBatchAccountData();
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
+            return lro.Value;
+        }
+
+        [TestCase]
+        public async Task AccountResourceApiTests()
+        {
+            //1.Get
+            var accountName = Recording.GenerateAssetName("testaccount");
+            var account1 = await CreateAccountResourceAsync(accountName);
+            BatchAccountResource account2 = await account1.GetAsync();
+
+            ResourceDataHelper.AssertAccount(account1.Data, account2.Data);
+            //2.Delete
+            await account1.DeleteAsync(WaitUntil.Completed);
+        }
     }
 }

@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         {
             //1.CreateOrUpdate
             var container = await GetAccountCollectionAsync();
-            var name = Recording.GenerateAssetName("Account-");
+            var name = Recording.GenerateAssetName("account");
             var input = ResourceDataHelper.GetBatchAccountData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            CognitiveServicesAccountResource account1 = lro.Value;
+            BatchAccountResource account1 = lro.Value;
             Assert.AreEqual(name, account1.Data.Name);
             //2.Get
-            CognitiveServicesAccountResource account2 = await container.GetAsync(name);
+            BatchAccountResource account2 = await container.GetAsync(name);
             ResourceDataHelper.AssertAccount(account1.Data, account2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);

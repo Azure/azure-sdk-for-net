@@ -18,5 +18,30 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             : base(isAsync, RecordedTestMode.Record)
         {
         }
+
+        private async Task<BatchAccountCertificateResource> CreateAccountResourceAsync(string accountName)
+        {
+            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var input = ResourceDataHelper.GetBatchAccountData();
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
+            var account = lro.Value;
+            var certificateContainer  = account.GetBatchAccountCertificates();
+            var certificateInput = ResourceDataHelper.GetBatchAccountCertificateData();
+            var lroc = await certificateContainer.CreateOrUpdateAsync(WaitUntil.Completed, accountName, certificateInput);
+            return lroc.Value;
+        }
+
+        [TestCase]
+        public async Task CertificateResourceApiTests()
+        {
+            //1.Get
+            var certificateName = Recording.GenerateAssetName("testCertificate-");
+            var certificate1 = await CreateAccountResourceAsync(certificateName);
+            BatchAccountCertificateResource certificate2 = await certificate1.GetAsync();
+
+            ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
+            //2.Delete
+            await certificate1.DeleteAsync(WaitUntil.Completed);
+        }
     }
 }

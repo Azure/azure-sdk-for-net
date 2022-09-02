@@ -17,5 +17,30 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             : base(isAsync, RecordedTestMode.Record)
         {
         }
+
+        private async Task<BatchApplicationResource> CreateAccountResourceAsync(string accountName)
+        {
+            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var input = ResourceDataHelper.GetBatchAccountData();
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
+            var account = lro.Value;
+            var applicationContainer = account.GetBatchApplications();
+            var applicationInput = ResourceDataHelper.GetBatchApplicationData();
+            var lroc = await applicationContainer.CreateOrUpdateAsync(WaitUntil.Completed, accountName, applicationInput);
+            return lroc.Value;
+        }
+
+        [TestCase]
+        public async Task ApplicationResourceApiTests()
+        {
+            //1.Get
+            var applicationName = Recording.GenerateAssetName("testApplication-");
+            var application1 = await CreateAccountResourceAsync(applicationName);
+            BatchApplicationResource application2 = await application1.GetAsync();
+
+            ResourceDataHelper.AssertApplicationData(application1.Data, application2.Data);
+            //2.Delete
+            await application1.DeleteAsync(WaitUntil.Completed);
+        }
     }
 }

@@ -19,25 +19,28 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         {
         }
 
-        private async Task<BatchAccountCollection> GetAccountCollectionAsync()
+        private async Task<BatchAccountCertificateCollection> GetAccountCollectionAsync()
         {
-            var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetBatchAccounts();
+            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var input = ResourceDataHelper.GetBatchAccountData();
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
+            var account = lro.Value;
+            return account.GetBatchAccountCertificates();
         }
 
         [TestCase]
-        public async Task AccountCollectionApiTests()
+        public async Task CertificateCollectionApiTests()
         {
             //1.CreateOrUpdate
             var container = await GetAccountCollectionAsync();
-            var name = Recording.GenerateAssetName("Account-");
-            var input = ResourceDataHelper.GetBatchAccountData();
+            var name = Recording.GenerateAssetName("testCertificate-");
+            var input = ResourceDataHelper.GetBatchAccountCertificateData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            BatchAccountResource account1 = lro.Value;
-            Assert.AreEqual(name, account1.Data.Name);
+            BatchAccountCertificateResource certificate1 = lro.Value;
+            Assert.AreEqual(name, certificate1.Data.Name);
             //2.Get
-            BatchAccountResource account2 = await container.GetAsync(name);
-            ResourceDataHelper.AssertAccount(account1.Data, account2.Data);
+            BatchAccountCertificateResource ertificate2 = await container.GetAsync(name);
+            ResourceDataHelper.AssertCertificate(certificate1.Data, ertificate2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             int count = 0;

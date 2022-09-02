@@ -18,5 +18,46 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             : base(isAsync, RecordedTestMode.Record)
         {
         }
+
+        private async Task<BatchApplicationPackageCollection> GetApplicationCollectionAsync()
+        {
+            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var input = ResourceDataHelper.GetBatchAccountData();
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
+            var account = lro.Value;
+            var applicationContainer = account.GetBatchApplications();
+            var applicationInput = ResourceDataHelper.GetBatchApplicationData();
+            var lroc = await applicationContainer.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testapplication-"), applicationInput);
+            var applicationResource = lroc.Value;
+            return applicationResource.GetBatchApplicationPackages();
+        }
+
+        [TestCase]
+        public async Task ApplicationPackageCollectionApiTests()
+        {
+            //1.CreateOrUpdate
+            var container = await GetApplicationCollectionAsync();
+            var name = Recording.GenerateAssetName("ApplicationPackage-");
+            var input = ResourceDataHelper.GetBatchApplicationPackageData();
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            BatchApplicationPackageResource applicationPackage1 = lro.Value;
+            Assert.AreEqual(name, applicationPackage1.Data.Name);
+            //2.Get
+            BatchApplicationPackageResource applicationPackage2 = await container.GetAsync(name);
+            ResourceDataHelper.AssertApplicationPckageData(applicationPackage1.Data, applicationPackage2.Data);
+            //3.GetAll
+            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            int count = 0;
+            await foreach (var account in container.GetAllAsync())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
+            //4Exists
+            Assert.IsTrue(await container.ExistsAsync(name));
+            Assert.IsFalse(await container.ExistsAsync(name + "1"));
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
+        }
     }
 }
