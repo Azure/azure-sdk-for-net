@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
         public ManagedClusterAadProfile()
         {
-            AdminGroupObjectIds = new ChangeTrackingList<string>();
+            AdminGroupObjectIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<string> adminGroupObjectIds, string clientAppId, string serverAppId, string serverAppSecret, Guid? tenantId)
+        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId)
         {
             IsManagedAadEnabled = isManagedAadEnabled;
             IsAzureRbacEnabled = isAzureRbacEnabled;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether to enable Azure RBAC for Kubernetes authorization. </summary>
         public bool? IsAzureRbacEnabled { get; set; }
         /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>
-        public IList<string> AdminGroupObjectIds { get; }
+        public IList<Guid> AdminGroupObjectIds { get; }
         /// <summary> The client AAD application ID. </summary>
-        public string ClientAppId { get; set; }
+        public Guid? ClientAppId { get; set; }
         /// <summary> The server AAD application ID. </summary>
-        public string ServerAppId { get; set; }
+        public Guid? ServerAppId { get; set; }
         /// <summary> The server AAD application secret. </summary>
         public string ServerAppSecret { get; set; }
         /// <summary> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </summary>

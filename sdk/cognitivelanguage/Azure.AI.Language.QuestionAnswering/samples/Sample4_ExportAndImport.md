@@ -38,13 +38,10 @@ RequestContent importRequestContent = RequestContent.Create(new
     {
     Metadata = new
     {
-        ProjectName = "NewProjectForExport",
         Description = "This is the description for a test project",
         Language = "en",
         DefaultAnswer = "No answer found for your question.",
         MultilingualResource = false,
-        CreatedDateTime = "2021-11-25T09=35=33Z",
-        LastModifiedDateTime = "2021-11-25T09=35=33Z",
         Settings = new
         {
             DefaultAnswer = "No answer found for your question."
@@ -53,7 +50,6 @@ RequestContent importRequestContent = RequestContent.Create(new
 });
 
 Operation<BinaryData> importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
-
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
 ```
 
@@ -88,13 +84,10 @@ RequestContent importRequestContent = RequestContent.Create(new
 {
     Metadata = new
     {
-        ProjectName = "NewProjectForExport",
         Description = "This is the description for a test project",
         Language = "en",
         DefaultAnswer = "No answer found for your question.",
         MultilingualResource = false,
-        CreatedDateTime = "2021-11-25T09=35=33Z",
-        LastModifiedDateTime = "2021-11-25T09=35=33Z",
         Settings = new
         {
             DefaultAnswer = "No answer found for your question."

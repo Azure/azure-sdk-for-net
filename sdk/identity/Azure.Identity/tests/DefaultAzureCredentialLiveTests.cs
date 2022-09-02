@@ -221,7 +221,7 @@ namespace Azure.Identity.Tests
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;

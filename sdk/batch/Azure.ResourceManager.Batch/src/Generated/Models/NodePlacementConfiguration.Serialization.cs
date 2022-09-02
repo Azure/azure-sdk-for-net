@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static NodePlacementConfiguration DeserializeNodePlacementConfiguration(JsonElement element)
         {
-            Optional<NodePlacementPolicyType> policy = default;
+            Optional<BatchNodePlacementPolicyType> policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policy"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policy = property.Value.GetString().ToNodePlacementPolicyType();
+                    policy = property.Value.GetString().ToBatchNodePlacementPolicyType();
                     continue;
                 }
             }

@@ -248,6 +248,23 @@ namespace Azure.ResourceManager.HDInsight
 }
 namespace Azure.ResourceManager.HDInsight.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AuthenticationDirectoryType : System.IEquatable<Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AuthenticationDirectoryType(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType ActiveDirectory { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType left, Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType left, Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ClientGroupInfo
     {
         public ClientGroupInfo() { }
@@ -257,51 +274,11 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class ConnectivityEndpoint
     {
         public ConnectivityEndpoint() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string EndpointLocation { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string Protocol { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DaysOfWeek : System.IEquatable<Azure.ResourceManager.HDInsight.Models.DaysOfWeek>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DaysOfWeek(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.DaysOfWeek Friday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.DaysOfWeek Monday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.DaysOfWeek Saturday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.DaysOfWeek Sunday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.DaysOfWeek Thursday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.DaysOfWeek Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.DaysOfWeek Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Models.DaysOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Models.DaysOfWeek left, Azure.ResourceManager.HDInsight.Models.DaysOfWeek right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Models.DaysOfWeek (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Models.DaysOfWeek left, Azure.ResourceManager.HDInsight.Models.DaysOfWeek right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DirectoryType : System.IEquatable<Azure.ResourceManager.HDInsight.Models.DirectoryType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DirectoryType(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.DirectoryType ActiveDirectory { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Models.DirectoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Models.DirectoryType left, Azure.ResourceManager.HDInsight.Models.DirectoryType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Models.DirectoryType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Models.DirectoryType left, Azure.ResourceManager.HDInsight.Models.DirectoryType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ExcludedServicesConfig
     {
@@ -319,8 +296,8 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightApplicationEndpoint() { }
         public int? DestinationPort { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public string EndpointLocation { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } set { } }
     }
     public partial class HDInsightApplicationHttpsEndpoint
@@ -329,8 +306,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IList<string> AccessModes { get { throw null; } }
         public int? DestinationPort { get { throw null; } set { } }
         public bool? DisableGatewayAuth { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public string EndpointLocation { get { throw null; } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } }
         public string SubDomainSuffix { get { throw null; } set { } }
     }
@@ -401,7 +378,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightAutoScaleSchedule
     {
         public HDInsightAutoScaleSchedule() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.DaysOfWeek> Days { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek> Days { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity TimeAndCapacity { get { throw null; } set { } }
     }
     public partial class HDInsightAutoScaleTimeAndCapacity
@@ -449,7 +426,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightBillingResources() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters> BillingMeters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters> DiskBillingMeters { get { throw null; } }
-        public string Region { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
     }
     public partial class HDInsightBillingSpecsListResult
     {
@@ -475,8 +452,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         public bool? IsInitialSyncComplete { get { throw null; } }
         public bool? IsLdapsEnabled { get { throw null; } }
         public string LdapsPublicCertificateInBase64 { get { throw null; } }
-        public string ResourceId { get { throw null; } }
-        public string SubnetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
     }
     public partial class HDInsightClusterConfigurations
@@ -570,7 +547,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterGatewaySettings
     {
         internal HDInsightClusterGatewaySettings() { }
-        public string IsCredentialEnabled { get { throw null; } }
+        public bool? IsCredentialEnabled { get { throw null; } }
         public string Password { get { throw null; } }
         public string UserName { get { throw null; } }
     }
@@ -689,6 +666,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         public bool? EnableComputeIsolation { get { throw null; } set { } }
         public string HostSku { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightDayOfWeek : System.IEquatable<Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightDayOfWeek(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek Friday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek Monday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek Saturday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek Sunday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek Thursday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek left, Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek left, Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HDInsightDiskBillingMeters
     {
         internal HDInsightDiskBillingMeters() { }
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightDiskEncryptionProperties() { }
         public Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm? EncryptionAlgorithm { get { throw null; } set { } }
-        public bool? EncryptionAtHost { get { throw null; } set { } }
+        public bool? IsEncryptionAtHostEnabled { get { throw null; } set { } }
         public string KeyName { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
@@ -732,10 +732,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public bool? IsPrimary { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateIPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class HDInsightLinuxOSProfile
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HDInsightPrivateLinkConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState>
@@ -936,9 +936,9 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightSecurityProfile
     {
         public HDInsightSecurityProfile() { }
-        public string AaddsResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AaddsResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ClusterUsersGroupDNs { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.DirectoryType? DirectoryType { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType? DirectoryType { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }
         public string DomainUsername { get { throw null; } set { } }
         public string DomainUserPassword { get { throw null; } set { } }
@@ -1014,9 +1014,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightVmSizeCompatibilityFilterV2() { }
         public System.Collections.Generic.IReadOnlyList<string> ClusterFlavors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ClusterVersions { get { throw null; } }
-        public string ComputeIsolationSupported { get { throw null; } }
         public string EspApplied { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightFilterMode? FilterMode { get { throw null; } }
+        public string IsComputeIsolationSupported { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NodeTypes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightOSType> OSType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Regions { get { throw null; } }
@@ -1027,12 +1027,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightVmSizeProperty() { }
         public int? Cores { get { throw null; } }
         public string DataDiskStorageTier { get { throw null; } }
+        public bool? IsSupportedByVirtualMachines { get { throw null; } }
+        public bool? IsSupportedByWebWorkerRoles { get { throw null; } }
         public string Label { get { throw null; } }
         public long? MaxDataDiskCount { get { throw null; } }
         public long? MemoryInMB { get { throw null; } }
         public string Name { get { throw null; } }
-        public bool? SupportedByVirtualMachines { get { throw null; } }
-        public bool? SupportedByWebWorkerRoles { get { throw null; } }
         public long? VirtualMachineResourceDiskSizeInMB { get { throw null; } }
         public long? WebWorkerResourceDiskSizeInMB { get { throw null; } }
     }
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal RegionalQuotaCapability() { }
         public long? CoresAvailable { get { throw null; } }
         public long? CoresUsed { get { throw null; } }
-        public string RegionName { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
     }
     public partial class RegionsCapability
     {

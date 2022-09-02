@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The disk encryption properties
-    /// Serialized Name: DiskEncryptionProperties
-    /// </summary>
+    /// <summary> The disk encryption properties. </summary>
     public partial class HDInsightDiskEncryptionProperties
     {
         /// <summary> Initializes a new instance of HDInsightDiskEncryptionProperties. </summary>
@@ -22,69 +19,33 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightDiskEncryptionProperties. </summary>
-        /// <param name="vaultUri">
-        /// Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net
-        /// Serialized Name: DiskEncryptionProperties.vaultUri
-        /// </param>
-        /// <param name="keyName">
-        /// Key name that is used for enabling disk encryption.
-        /// Serialized Name: DiskEncryptionProperties.keyName
-        /// </param>
-        /// <param name="keyVersion">
-        /// Specific key version that is used for enabling disk encryption.
-        /// Serialized Name: DiskEncryptionProperties.keyVersion
-        /// </param>
-        /// <param name="encryptionAlgorithm">
-        /// Algorithm identifier for encryption, default RSA-OAEP.
-        /// Serialized Name: DiskEncryptionProperties.encryptionAlgorithm
-        /// </param>
-        /// <param name="msiResourceId">
-        /// Resource ID of Managed Identity that is used to access the key vault.
-        /// Serialized Name: DiskEncryptionProperties.msiResourceId
-        /// </param>
-        /// <param name="encryptionAtHost">
-        /// Indicates whether or not resource disk encryption is enabled.
-        /// Serialized Name: DiskEncryptionProperties.encryptionAtHost
-        /// </param>
-        internal HDInsightDiskEncryptionProperties(Uri vaultUri, string keyName, string keyVersion, JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm, ResourceIdentifier msiResourceId, bool? encryptionAtHost)
+        /// <param name="vaultUri"> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </param>
+        /// <param name="keyName"> Key name that is used for enabling disk encryption. </param>
+        /// <param name="keyVersion"> Specific key version that is used for enabling disk encryption. </param>
+        /// <param name="encryptionAlgorithm"> Algorithm identifier for encryption, default RSA-OAEP. </param>
+        /// <param name="msiResourceId"> Resource ID of Managed Identity that is used to access the key vault. </param>
+        /// <param name="isEncryptionAtHostEnabled"> Indicates whether or not resource disk encryption is enabled. </param>
+        internal HDInsightDiskEncryptionProperties(Uri vaultUri, string keyName, string keyVersion, JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm, ResourceIdentifier msiResourceId, bool? isEncryptionAtHostEnabled)
         {
             VaultUri = vaultUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
             EncryptionAlgorithm = encryptionAlgorithm;
             MsiResourceId = msiResourceId;
-            EncryptionAtHost = encryptionAtHost;
+            IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
         }
 
-        /// <summary>
-        /// Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net
-        /// Serialized Name: DiskEncryptionProperties.vaultUri
-        /// </summary>
+        /// <summary> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </summary>
         public Uri VaultUri { get; set; }
-        /// <summary>
-        /// Key name that is used for enabling disk encryption.
-        /// Serialized Name: DiskEncryptionProperties.keyName
-        /// </summary>
+        /// <summary> Key name that is used for enabling disk encryption. </summary>
         public string KeyName { get; set; }
-        /// <summary>
-        /// Specific key version that is used for enabling disk encryption.
-        /// Serialized Name: DiskEncryptionProperties.keyVersion
-        /// </summary>
+        /// <summary> Specific key version that is used for enabling disk encryption. </summary>
         public string KeyVersion { get; set; }
-        /// <summary>
-        /// Algorithm identifier for encryption, default RSA-OAEP.
-        /// Serialized Name: DiskEncryptionProperties.encryptionAlgorithm
-        /// </summary>
+        /// <summary> Algorithm identifier for encryption, default RSA-OAEP. </summary>
         public JsonWebKeyEncryptionAlgorithm? EncryptionAlgorithm { get; set; }
-        /// <summary>
-        /// Resource ID of Managed Identity that is used to access the key vault.
-        /// Serialized Name: DiskEncryptionProperties.msiResourceId
-        /// </summary>
+        /// <summary> Resource ID of Managed Identity that is used to access the key vault. </summary>
         public ResourceIdentifier MsiResourceId { get; set; }
-        /// <summary>
-        /// Indicates whether or not resource disk encryption is enabled.
-        /// Serialized Name: DiskEncryptionProperties.encryptionAtHost
-        /// </summary>
-        public bool? EncryptionAtHost { get; set; }
+        /// <summary> Indicates whether or not resource disk encryption is enabled. </summary>
+        public bool? IsEncryptionAtHostEnabled { get; set; }
     }
 }

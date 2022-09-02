@@ -1,8 +1,8 @@
-## Interop with `WindowsAzure.ServiceBus`
+# Interop with `WindowsAzure.ServiceBus`
 
 This sample demonstrates how to interoperate with messages that are sent or received using the `WindowsAzure.ServiceBus` library. The `WindowsAzure.ServiceBus` library uses the `DataContractSerializer` to serialize the `BrokeredMessage` body. Because of this, when attempting to interoperate with this library, there a few additional steps that are needed.
 
-### Sending a message using `Azure.Messaging.ServiceBus` that will be received with `WindowsAzure.ServiceBus`
+## Sending a message using `Azure.Messaging.ServiceBus` that will be received with `WindowsAzure.ServiceBus`
 
 ```C# Snippet:ServiceBusInteropSend
 ServiceBusSender sender = client.CreateSender(queueName);
@@ -26,7 +26,7 @@ var message = new ServiceBusMessage(stream.ToArray());
 await sender.SendMessageAsync(message);
 ```
 
-### Receiving a message using `Azure.Messaging.Service` that was sent with `WindowsAzure.ServiceBus`
+## Receiving a message using `Azure.Messaging.Service` that was sent with `WindowsAzure.ServiceBus`
 
 ```C# Snippet:ServiceBusInteropReceive
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);

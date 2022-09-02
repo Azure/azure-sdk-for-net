@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set.
-    /// Serialized Name: FilterMode
-    /// </summary>
+    /// <summary> The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set. </summary>
     public readonly partial struct HDInsightFilterMode : IEquatable<HDInsightFilterMode>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string RecommendValue = "Recommend";
         private const string DefaultValue = "Default";
 
-        /// <summary>
-        /// Exclude
-        /// Serialized Name: FilterMode.Exclude
-        /// </summary>
+        /// <summary> Exclude. </summary>
         public static HDInsightFilterMode Exclude { get; } = new HDInsightFilterMode(ExcludeValue);
-        /// <summary>
-        /// Include
-        /// Serialized Name: FilterMode.Include
-        /// </summary>
+        /// <summary> Include. </summary>
         public static HDInsightFilterMode Include { get; } = new HDInsightFilterMode(IncludeValue);
-        /// <summary>
-        /// Recommend
-        /// Serialized Name: FilterMode.Recommend
-        /// </summary>
+        /// <summary> Recommend. </summary>
         public static HDInsightFilterMode Recommend { get; } = new HDInsightFilterMode(RecommendValue);
-        /// <summary>
-        /// Default
-        /// Serialized Name: FilterMode.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static HDInsightFilterMode Default { get; } = new HDInsightFilterMode(DefaultValue);
         /// <summary> Determines if two <see cref="HDInsightFilterMode"/> values are the same. </summary>
         public static bool operator ==(HDInsightFilterMode left, HDInsightFilterMode right) => left.Equals(right);

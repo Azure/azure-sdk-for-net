@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location");
-                writer.WriteObjectValue(Location);
+                writer.WriteObjectValue(DataLocation);
             }
             if (Optional.IsDefined(ColumnDelimiter))
             {

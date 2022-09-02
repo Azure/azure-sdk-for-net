@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal MonitorPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        internal MonitorPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The private link resource group id. </summary>
-        public ResourceIdentifier GroupId { get; }
+        public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>

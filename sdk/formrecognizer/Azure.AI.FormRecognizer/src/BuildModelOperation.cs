@@ -167,7 +167,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         async ValueTask<OperationState<DocumentModelDetails>> IOperation<DocumentModelDetails>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            Response<DocumentModelOperationDetails> response = async
+            Response<OperationDetails> response = async
                 ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
                 : _serviceClient.GetOperation(Id, cancellationToken);
 
@@ -177,7 +177,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (status == DocumentOperationStatus.Succeeded)
             {
-                return OperationState<DocumentModelDetails>.Success(rawResponse, response.Value.Result);
+                var buildOperation = response.Value as DocumentModelBuildOperationDetails;
+                return OperationState<DocumentModelDetails>.Success(rawResponse, buildOperation.Result);
             }
             else if (status == DocumentOperationStatus.Failed)
             {

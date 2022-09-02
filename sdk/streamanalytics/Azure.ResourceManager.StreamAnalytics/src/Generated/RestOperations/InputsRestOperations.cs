@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InputListResult>> ListByStreamingJobAsync(string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobInputListResult>> ListByStreamingJobAsync(string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        InputListResult value = default;
+                        StreamingJobInputListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = InputListResult.DeserializeInputListResult(document.RootElement);
+                        value = StreamingJobInputListResult.DeserializeStreamingJobInputListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InputListResult> ListByStreamingJob(string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
+        public Response<StreamingJobInputListResult> ListByStreamingJob(string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        InputListResult value = default;
+                        StreamingJobInputListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = InputListResult.DeserializeInputListResult(document.RootElement);
+                        value = StreamingJobInputListResult.DeserializeStreamingJobInputListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InputListResult>> ListByStreamingJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobInputListResult>> ListByStreamingJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -612,9 +612,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        InputListResult value = default;
+                        StreamingJobInputListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = InputListResult.DeserializeInputListResult(document.RootElement);
+                        value = StreamingJobInputListResult.DeserializeStreamingJobInputListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InputListResult> ListByStreamingJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
+        public Response<StreamingJobInputListResult> ListByStreamingJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -644,9 +644,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        InputListResult value = default;
+                        StreamingJobInputListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = InputListResult.DeserializeInputListResult(document.RootElement);
+                        value = StreamingJobInputListResult.DeserializeStreamingJobInputListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

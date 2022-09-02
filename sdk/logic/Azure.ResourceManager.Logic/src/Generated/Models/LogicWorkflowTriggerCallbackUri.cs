@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="relativePath"> Gets the workflow trigger callback URL relative path. </param>
         /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
         /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
-        internal LogicWorkflowTriggerCallbackUri(string value, string method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, LogicWorkflowTriggerCallbackQueryParameterInfo queries)
+        internal LogicWorkflowTriggerCallbackUri(string value, RequestMethod? method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, LogicWorkflowTriggerCallbackQueryParameterInfo queries)
         {
             Value = value;
             Method = method;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Gets the workflow trigger callback URL. </summary>
         public string Value { get; }
         /// <summary> Gets the workflow trigger callback URL HTTP method. </summary>
-        public string Method { get; }
+        public RequestMethod? Method { get; }
         /// <summary> Gets the workflow trigger callback URL base path. </summary>
         public string BasePath { get; }
         /// <summary> Gets the workflow trigger callback URL relative path. </summary>

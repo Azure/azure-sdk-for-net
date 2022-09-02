@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(Pwd))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("pwd");
-                writer.WriteObjectValue(Pwd);
+                writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> pwd = default;
+            Optional<AzureKeyVaultSecretReference> password = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            pwd = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            password = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GreenplumLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, pwd.Value, encryptedCredential.Value);
+            return new GreenplumLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, password.Value, encryptedCredential.Value);
         }
     }
 }

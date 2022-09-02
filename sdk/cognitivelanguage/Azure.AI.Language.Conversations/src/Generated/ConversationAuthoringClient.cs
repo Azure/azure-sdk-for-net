@@ -17,13 +17,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
+    // Data plane generated client. The ConversationAuthoring service client.
     /// <summary> The ConversationAuthoring service client. </summary>
     public partial class ConversationAuthoringClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationHeader0 = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential0;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -103,6 +102,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/create-project
         /// 
         /// Request Body:
         /// 
@@ -222,6 +223,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/create-project
         /// 
         /// Request Body:
         /// 
@@ -308,6 +311,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project
         /// 
         /// Response Body:
         /// 
@@ -378,6 +383,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project
         /// 
         /// Response Body:
         /// 
@@ -445,6 +452,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment
         /// 
         /// Response Body:
         /// 
@@ -507,6 +516,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment
         /// 
         /// Response Body:
         /// 
@@ -585,6 +596,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-status
         /// 
         /// Response Body:
         /// 
@@ -684,6 +697,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-status
         /// 
         /// Response Body:
         /// 
@@ -782,6 +797,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-swap-deployments-status
         /// 
         /// Response Body:
         /// 
@@ -879,6 +896,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-swap-deployments-status
         /// 
         /// Response Body:
         /// 
@@ -977,6 +996,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-export-status
         /// 
         /// Response Body:
         /// 
@@ -1076,6 +1097,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-export-status
         /// 
         /// Response Body:
         /// 
@@ -1174,6 +1197,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-import-status
         /// 
         /// Response Body:
         /// 
@@ -1271,6 +1296,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-import-status
         /// 
         /// Response Body:
         /// 
@@ -1353,6 +1380,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-trained-model
         /// 
         /// Response Body:
         /// 
@@ -1415,6 +1444,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-trained-model
         /// 
         /// Response Body:
         /// 
@@ -1580,6 +1611,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-summary
         /// 
         /// Response Body:
         /// 
@@ -1688,6 +1721,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-summary
         /// 
         /// Response Body:
         /// 
@@ -1796,6 +1831,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-training-status
         /// 
         /// Response Body:
         /// 
@@ -1918,6 +1955,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-training-status
         /// 
         /// Response Body:
         /// 
@@ -2027,6 +2066,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project-deletion-status
         /// 
         /// Response Body:
         /// 
@@ -2122,6 +2163,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project-deletion-status
         /// 
         /// Response Body:
         /// 
@@ -2204,6 +2247,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-projects
         /// 
         /// Response Body:
         /// 
@@ -2276,6 +2321,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-projects
         /// 
         /// Response Body:
         /// 
@@ -2347,6 +2394,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployments
         /// 
         /// Response Body:
         /// 
@@ -2414,6 +2463,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployments
         /// 
         /// Response Body:
         /// 
@@ -2481,6 +2532,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-trained-models
         /// 
         /// Response Body:
         /// 
@@ -2548,6 +2601,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-trained-models
         /// 
         /// Response Body:
         /// 
@@ -2642,6 +2697,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-results
         /// 
         /// Response Body:
         /// 
@@ -2748,6 +2805,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-results
         /// 
         /// Response Body:
         /// 
@@ -2854,6 +2913,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-jobs
         /// 
         /// Response Body:
         /// 
@@ -2981,6 +3042,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-jobs
         /// 
         /// Response Body:
         /// 
@@ -3076,6 +3139,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-languages
         /// 
         /// Response Body:
         /// 
@@ -3134,6 +3199,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-languages
         /// 
         /// Response Body:
         /// 
@@ -3207,6 +3274,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-prebuilt-entities
         /// 
         /// Response Body:
         /// 
@@ -3279,6 +3348,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-prebuilt-entities
         /// 
         /// Response Body:
         /// 
@@ -3336,6 +3407,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-config-versions
         /// 
         /// Response Body:
         /// 
@@ -3394,6 +3467,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-config-versions
         /// 
         /// Response Body:
         /// 
@@ -3473,6 +3548,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-project
         /// 
         /// Response Body:
         /// 
@@ -3570,6 +3647,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-project
         /// 
         /// Response Body:
         /// 
@@ -3683,6 +3762,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
         /// 
         /// Response Body:
         /// 
@@ -3798,6 +3879,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
         /// 
         /// Response Body:
         /// 
@@ -3988,6 +4071,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/import
         /// 
         /// Request Body:
         /// 
@@ -4199,6 +4284,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/import
         /// 
         /// Request Body:
         /// 
@@ -4367,6 +4454,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/train
         /// 
         /// Request Body:
         /// 
@@ -4541,6 +4630,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/train
         /// 
         /// Request Body:
         /// 
@@ -4673,6 +4764,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/swap-deployments
         /// 
         /// Request Body:
         /// 
@@ -4786,6 +4879,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/swap-deployments
         /// 
         /// Request Body:
         /// 
@@ -4884,6 +4979,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/deploy-project
         /// 
         /// Request Body:
         /// 
@@ -4962,6 +5059,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/deploy-project
         /// 
         /// Request Body:
         /// 
@@ -5050,6 +5149,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment
         /// 
         /// Response Body:
         /// 
@@ -5149,6 +5250,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment
         /// 
         /// Response Body:
         /// 
@@ -5260,6 +5363,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/cancel-training-job
         /// 
         /// Response Body:
         /// 
@@ -5384,6 +5489,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/cancel-training-job
         /// 
         /// Response Body:
         /// 

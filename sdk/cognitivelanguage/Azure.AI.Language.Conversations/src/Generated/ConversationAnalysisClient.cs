@@ -13,13 +13,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations
 {
+    // Data plane generated client. The ConversationAnalysis service client.
     /// <summary> The ConversationAnalysis service client. </summary>
     public partial class ConversationAnalysisClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationHeader0 = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential0;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -119,6 +118,8 @@ namespace Azure.AI.Language.Conversations
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/analyze-conversation
         /// 
         /// Request Body:
         /// 
@@ -267,6 +268,8 @@ namespace Azure.AI.Language.Conversations
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/analyze-conversation
         /// 
         /// Request Body:
         /// 
@@ -388,6 +391,8 @@ namespace Azure.AI.Language.Conversations
         /// Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task.
         /// 
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ob-status
         /// 
         /// Response Body:
         /// 
@@ -492,6 +497,8 @@ namespace Azure.AI.Language.Conversations
         /// Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task.
         /// 
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ob-status
         /// 
         /// Response Body:
         /// 
@@ -662,6 +669,8 @@ namespace Azure.AI.Language.Conversations
         /// Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed.
         /// 
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ubmit-job
         /// 
         /// Request Body:
         /// 
@@ -858,6 +867,8 @@ namespace Azure.AI.Language.Conversations
         /// Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed.
         /// 
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ubmit-job
         /// 
         /// Request Body:
         /// 

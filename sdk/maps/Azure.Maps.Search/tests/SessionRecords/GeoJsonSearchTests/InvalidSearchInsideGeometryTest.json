@@ -1,0 +1,67 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/geometry/json?api-version=1.0\u0026query=",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "204",
+        "Content-Type": "application/json",
+        "traceparent": "00-6ad38608734debbf674269e189335bfa-d53ba6b8a401d6d7-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "0fe81601a6717490e1032e60cf9a3b30",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -122.43576049804686,
+                37.7524152343544
+              ],
+              [
+                -122.4330139159,
+                37.70660472542312
+              ],
+              [
+                -122.36434936523438,
+                37.712059855877314
+              ],
+              [
+                -122.43576049804686,
+                37.7524152343544
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "73",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 05:39:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 5612F39D1392423D9BF9DD53F7EB8356 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:38Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "query is missing or empty"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "629150920"
+  }
+}

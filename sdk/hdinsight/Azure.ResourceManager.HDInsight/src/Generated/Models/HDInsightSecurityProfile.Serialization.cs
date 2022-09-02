@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightSecurityProfile DeserializeHDInsightSecurityProfile(JsonElement element)
         {
-            Optional<DirectoryType> directoryType = default;
+            Optional<AuthenticationDirectoryType> directoryType = default;
             Optional<string> domain = default;
             Optional<string> organizationalUnitDN = default;
             Optional<IList<string>> ldapsUrls = default;
             Optional<string> domainUsername = default;
             Optional<string> domainUserPassword = default;
             Optional<IList<string>> clusterUsersGroupDNs = default;
-            Optional<string> aaddsResourceId = default;
+            Optional<ResourceIdentifier> aaddsResourceId = default;
             Optional<ResourceIdentifier> msiResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    directoryType = new DirectoryType(property.Value.GetString());
+                    directoryType = new AuthenticationDirectoryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("domain"))
@@ -149,7 +149,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("aaddsResourceId"))
                 {
-                    aaddsResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aaddsResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("msiResourceId"))

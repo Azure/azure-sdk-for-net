@@ -355,57 +355,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26528")]
-        public async Task AnalyzeHealthcareEntitiesBatchWithCancellation()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |";
-
-            var batchDocuments = new List<string>();
-
-            for (var i = 0; i < 10; i++)
-            {
-                batchDocuments.Add(document);
-            }
-
-            AnalyzeHealthcareEntitiesOperation operation = default;
-
-            await TestRetryHelper.RetryAsync(async () =>
-            {
-                try
-                {
-                    operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
-                    await operation.CancelAsync();
-                    await operation.WaitForCompletionAsync();
-                }
-                catch (Exception e)
-                {
-                    Assert.AreEqual(typeof(RequestFailedException), e.GetType());
-                    Assert.IsTrue(e.Message.Contains("The operation was canceled so no value is available."));
-                    return (Response)null;
-                }
-
-                // If we get here, that means that the operation completed successfully and didn't cancel.
-                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync operation did not get cancelled.");
-            },
-            maxIterations: 15, delay: TimeSpan.FromSeconds(1));
-
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
-            Assert.AreEqual(200, operation.GetRawResponse().Status);
-            Assert.AreEqual(TextAnalyticsOperationStatus.Cancelled, operation.Status);
-
-            try
-            {
-                Assert.IsNull(operation.Value);
-            }
-            catch (RequestFailedException exception)
-            {
-                Assert.IsTrue(exception.Message.Contains("The operation was canceled so no value is available."));
-            }
-        }
-
-        [RecordedTest]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();

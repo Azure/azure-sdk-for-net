@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new OverlayBasicProperties(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel));
+            return new UnknownOverlayBasicProperties(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel));
         }
     }
 }

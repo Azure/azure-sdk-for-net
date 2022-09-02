@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MySqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             async Task<Page<MySqlFlexibleServerCapabilityProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MySqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(string locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Page<MySqlFlexibleServerCapabilityProperties> FirstPageFunc(int? pageSizeHint)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(string locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             using var scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckVirtualNetworkSubnetUsage");
             scope.Start();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(string locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             using var scope = CheckVirtualNetworkSubnetUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckVirtualNetworkSubnetUsage");
             scope.Start();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityAsync(string locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityAsync(AzureLocation locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlFlexibleServerNameAvailability");
             scope.Start();
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(string locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(AzureLocation locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlFlexibleServerNameAvailability");
             scope.Start();

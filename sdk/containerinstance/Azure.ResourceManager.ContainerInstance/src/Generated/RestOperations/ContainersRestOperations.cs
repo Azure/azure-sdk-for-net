@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerInstanceLogs>> ListLogsAsync(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerLogs>> ListLogsAsync(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        ContainerInstanceLogs value = default;
+                        ContainerLogs value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContainerInstanceLogs.DeserializeContainerInstanceLogs(document.RootElement);
+                        value = ContainerLogs.DeserializeContainerLogs(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerInstanceLogs> ListLogs(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
+        public Response<ContainerLogs> ListLogs(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case 200:
                     {
-                        ContainerInstanceLogs value = default;
+                        ContainerLogs value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContainerInstanceLogs.DeserializeContainerInstanceLogs(document.RootElement);
+                        value = ContainerLogs.DeserializeContainerLogs(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

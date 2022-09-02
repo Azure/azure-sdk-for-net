@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Time and capacity request parameters
-    /// Serialized Name: AutoscaleTimeAndCapacity
-    /// </summary>
+    /// <summary> Time and capacity request parameters. </summary>
     public partial class HDInsightAutoScaleTimeAndCapacity
     {
         /// <summary> Initializes a new instance of HDInsightAutoScaleTimeAndCapacity. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleTimeAndCapacity. </summary>
-        /// <param name="time">
-        /// 24-hour time in the form xx:xx
-        /// Serialized Name: AutoscaleTimeAndCapacity.time
-        /// </param>
-        /// <param name="minInstanceCount">
-        /// The minimum instance count of the cluster
-        /// Serialized Name: AutoscaleTimeAndCapacity.minInstanceCount
-        /// </param>
-        /// <param name="maxInstanceCount">
-        /// The maximum instance count of the cluster
-        /// Serialized Name: AutoscaleTimeAndCapacity.maxInstanceCount
-        /// </param>
+        /// <param name="time"> 24-hour time in the form xx:xx. </param>
+        /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
+        /// <param name="maxInstanceCount"> The maximum instance count of the cluster. </param>
         internal HDInsightAutoScaleTimeAndCapacity(string time, int? minInstanceCount, int? maxInstanceCount)
         {
             Time = time;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             MaxInstanceCount = maxInstanceCount;
         }
 
-        /// <summary>
-        /// 24-hour time in the form xx:xx
-        /// Serialized Name: AutoscaleTimeAndCapacity.time
-        /// </summary>
+        /// <summary> 24-hour time in the form xx:xx. </summary>
         public string Time { get; set; }
-        /// <summary>
-        /// The minimum instance count of the cluster
-        /// Serialized Name: AutoscaleTimeAndCapacity.minInstanceCount
-        /// </summary>
+        /// <summary> The minimum instance count of the cluster. </summary>
         public int? MinInstanceCount { get; set; }
-        /// <summary>
-        /// The maximum instance count of the cluster
-        /// Serialized Name: AutoscaleTimeAndCapacity.maxInstanceCount
-        /// </summary>
+        /// <summary> The maximum instance count of the cluster. </summary>
         public int? MaxInstanceCount { get; set; }
     }
 }

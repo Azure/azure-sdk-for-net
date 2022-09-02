@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -47,26 +49,34 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Start recording of the call.
         /// </summary>
-        /// <param name="callLocator"> The callLocator. </param>
-        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
-        /// <param name="options">Optional parameters</param>
+        /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<RecordingStatusResult> StartRecording(CallLocator callLocator, Uri recordingStateCallbackUri, StartRecordingOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<RecordingStateResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal(CallLocatorSerializer.Serialize(callLocator))
+                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
-                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri,
+                    RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
+                    RecordingChannelType = options.RecordingChannel,
+                    RecordingContentType = options.RecordingContent,
+                    RecordingFormatType = options.RecordingFormat
                 };
 
-                if (options != null)
+                if (options.ChannelAffinity != null)
                 {
-                    request.RecordingChannelType = options.RecordingChannel;
-                    request.RecordingContentType = options.RecordingContent;
-                    request.RecordingFormatType = options.RecordingFormat;
+                    foreach (var c in options.ChannelAffinity)
+                    {
+                        request.ChannelAffinity.Add(new ChannelAffinityInternal
+                        {
+                            Channel = c.Channel,
+                            Participant = CommunicationIdentifierSerializer.Serialize(c.Participant)
+                        });
+                    }
                 };
 
                 return contentRestClient.Recording(request, cancellationToken);
@@ -81,27 +91,36 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Start recording of the call.
         /// </summary>
-        /// <param name="callLocator"> The callLocator. </param>
-        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
-        /// <param name="options">Optional parameters</param>
+        /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<RecordingStatusResult>> StartRecordingAsync(CallLocator callLocator, Uri recordingStateCallbackUri, StartRecordingOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordingStateResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal(CallLocatorSerializer.Serialize(callLocator))
+                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
-                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri,
+                    RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
+                    RecordingChannelType = options.RecordingChannel,
+                    RecordingContentType = options.RecordingContent,
+                    RecordingFormatType = options.RecordingFormat
                 };
 
-                if (options != null)
+                if (options.ChannelAffinity != null)
                 {
-                    request.RecordingChannelType = options.RecordingChannel;
-                    request.RecordingContentType = options.RecordingContent;
-                    request.RecordingFormatType = options.RecordingFormat;
+                    foreach (var c in options.ChannelAffinity)
+                    {
+                        request.ChannelAffinity.Add(new ChannelAffinityInternal
+                        {
+                            Channel = c.Channel,
+                            Participant = CommunicationIdentifierSerializer.Serialize(c.Participant)
+                        });
+                    }
                 };
+
                 return await contentRestClient.RecordingAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -116,7 +135,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<RecordingStatusResult> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response<RecordingStateResult> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecordingState)}");
             scope.Start();
@@ -139,7 +158,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<RecordingStatusResult>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordingStateResult>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecordingState)}");
             scope.Start();

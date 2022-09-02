@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory
         public Azure.ResourceManager.DataFactory.Models.FactoryEncryptionConfiguration Encryption { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.FactoryGlobalParameterSpecification> GlobalParameters { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.FactoryIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PurviewResourceId { get { throw null; } set { } }
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataFactory
     }
     public static partial class DataFactoryExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> ConfigureFactoryRepoInformation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> ConfigureFactoryRepoInformation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryCollection GetDataFactories(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataFactory.DataFactoryResource> GetDataFactories(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataFactory.DataFactoryResource> GetDataFactoriesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.DataFactory
         public static Azure.ResourceManager.DataFactory.FactoryPrivateEndpointResource GetFactoryPrivateEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataFactory.FactoryTriggerResource GetFactoryTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataFactory.FactoryVirtualNetworkResource GetFactoryVirtualNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult> GetFeatureValueExposureControl(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>> GetFeatureValueExposureControlAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult> GetFeatureValueExposureControl(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>> GetFeatureValueExposureControlAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataFactoryResource : Azure.ResourceManager.ArmResource
     {
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AvroDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData AvroCompressionCodec { get { throw null; } set { } }
         public int? AvroCompressionLevel { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
     }
     public partial class AvroSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
@@ -1245,7 +1245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzureMariaDBLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
     public partial class AzureMariaDBSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
@@ -1521,7 +1521,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public BinaryDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
     }
     public partial class BinaryReadSettings : Azure.ResourceManager.DataFactory.Models.FormatReadSettings
     {
@@ -1883,9 +1883,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string SubjectBeginsWith { get { throw null; } set { } }
         public string SubjectEndsWith { get { throw null; } set { } }
     }
-    public partial class CustomSetupBase
+    public abstract partial class CustomSetupBase
     {
-        public CustomSetupBase() { }
+        protected CustomSetupBase() { }
     }
     public partial class DatabricksNotebookActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
@@ -1911,7 +1911,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryPatch
     {
         public DataFactoryPatch() { }
-        public Azure.ResourceManager.DataFactory.Models.FactoryIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -2154,16 +2154,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         Friday = 5,
         Saturday = 6,
     }
-    public enum DaysOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Db2AuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType>
     {
@@ -2227,10 +2217,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData ColumnDelimiter { get { throw null; } set { } }
         public System.BinaryData CompressionCodec { get { throw null; } set { } }
         public System.BinaryData CompressionLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
         public System.BinaryData EncodingName { get { throw null; } set { } }
         public System.BinaryData EscapeChar { get { throw null; } set { } }
         public System.BinaryData FirstRowAsHeader { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
         public System.BinaryData NullValue { get { throw null; } set { } }
         public System.BinaryData QuoteChar { get { throw null; } set { } }
         public System.BinaryData RowDelimiter { get { throw null; } set { } }
@@ -2282,9 +2272,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DependencyCondition left, Azure.ResourceManager.DataFactory.Models.DependencyCondition right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DependencyReference
+    public abstract partial class DependencyReference
     {
-        public DependencyReference() { }
+        protected DependencyReference() { }
     }
     public partial class DistcpSettings
     {
@@ -2317,7 +2307,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DrillLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
     public partial class DrillSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
@@ -2537,8 +2527,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public ExcelDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
         public System.BinaryData FirstRowAsHeader { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
         public System.BinaryData NullValue { get { throw null; } set { } }
         public System.BinaryData Range { get { throw null; } set { } }
         public System.BinaryData SheetIndex { get { throw null; } set { } }
@@ -2707,9 +2697,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.FactoryIntegrationRuntimeDebugInfo IntegrationRuntime { get { throw null; } set { } }
         public int? TimeToLiveInMinutes { get { throw null; } set { } }
     }
-    public partial class FactoryDataFlowDefinition
+    public abstract partial class FactoryDataFlowDefinition
     {
-        public FactoryDataFlowDefinition() { }
+        protected FactoryDataFlowDefinition() { }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string FolderName { get { throw null; } set { } }
@@ -2751,6 +2741,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.EntityParameterSpecification> Parameters { get { throw null; } }
         public System.BinaryData Schema { get { throw null; } set { } }
         public System.BinaryData Structure { get { throw null; } set { } }
+    }
+    public enum FactoryDayOfWeek
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
     }
     public partial class FactoryDebugInfo
     {
@@ -2830,33 +2830,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryGlobalParameterType left, Azure.ResourceManager.DataFactory.Models.FactoryGlobalParameterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryGlobalParameterType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryGlobalParameterType left, Azure.ResourceManager.DataFactory.Models.FactoryGlobalParameterType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class FactoryIdentity
-    {
-        public FactoryIdentity(Azure.ResourceManager.DataFactory.Models.FactoryIdentityType identityType) { }
-        public Azure.ResourceManager.DataFactory.Models.FactoryIdentityType IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> UserAssignedIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FactoryIdentityType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FactoryIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.FactoryIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.FactoryIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.FactoryIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.FactoryIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryIdentityType left, Azure.ResourceManager.DataFactory.Models.FactoryIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryIdentityType left, Azure.ResourceManager.DataFactory.Models.FactoryIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class FactoryIntegrationRuntimeDebugInfo : Azure.ResourceManager.DataFactory.Models.FactoryDebugInfo
@@ -3018,9 +2991,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess left, Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FactoryRepoConfiguration
+    public abstract partial class FactoryRepoConfiguration
     {
-        public FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) { }
+        protected FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) { }
         public string AccountName { get { throw null; } set { } }
         public string CollaborationBranch { get { throw null; } set { } }
         public string LastCommitId { get { throw null; } set { } }
@@ -3033,9 +3006,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.ResourceIdentifier FactoryResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryRepoConfiguration RepoConfiguration { get { throw null; } set { } }
     }
-    public partial class FactorySecretBaseDefinition
+    public abstract partial class FactorySecretBaseDefinition
     {
-        public FactorySecretBaseDefinition() { }
+        protected FactorySecretBaseDefinition() { }
     }
     public partial class FactorySecretString : Azure.ResourceManager.DataFactory.Models.FactorySecretBaseDefinition
     {
@@ -3429,7 +3402,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public GreenplumLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
     public partial class GreenplumSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
@@ -3984,9 +3957,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public IntegrationRuntimeDataFlowProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public bool? Cleanup { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DataFlowComputeType? ComputeType { get { throw null; } set { } }
         public int? CoreCount { get { throw null; } set { } }
+        public bool? ShouldCleanupAfterTtl { get { throw null; } set { } }
         public int? TimeToLiveInMinutes { get { throw null; } set { } }
     }
     public partial class IntegrationRuntimeDataProxyProperties
@@ -4287,8 +4260,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public JsonDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
         public System.BinaryData EncodingName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
     }
     public partial class JsonReadSettings : Azure.ResourceManager.DataFactory.Models.FormatReadSettings
     {
@@ -4338,9 +4311,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.FactoryCredentialReference Credential { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
     }
-    public partial class LinkedIntegrationRuntimeType
+    public abstract partial class LinkedIntegrationRuntimeType
     {
-        public LinkedIntegrationRuntimeType() { }
+        protected LinkedIntegrationRuntimeType() { }
     }
     public partial class LogLocationSettings
     {
@@ -4502,7 +4475,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public MariaDBLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
     public partial class MariaDBSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
@@ -4690,7 +4663,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public NetezzaLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
     public partial class NetezzaPartitionSettings
     {
@@ -4920,7 +4893,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OrcDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
         public OrcDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
         public System.BinaryData OrcCompressionCodec { get { throw null; } set { } }
     }
     public partial class OrcSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -4945,7 +4918,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public ParquetDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData CompressionCodec { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
     }
     public partial class ParquetSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
@@ -5256,7 +5229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
         public System.Collections.Generic.IList<int> MonthDays { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.RecurrenceScheduleOccurrence> MonthlyOccurrences { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DaysOfWeek> WeekDays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryDayOfWeek> WeekDays { get { throw null; } }
     }
     public partial class RecurrenceScheduleOccurrence
     {
@@ -6607,9 +6580,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.SsisLogLocationType left, Azure.ResourceManager.DataFactory.Models.SsisLogLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SsisObjectMetadata
+    public abstract partial class SsisObjectMetadata
     {
-        internal SsisObjectMetadata() { }
+        protected SsisObjectMetadata() { }
         public string Description { get { throw null; } }
         public long? Id { get { throw null; } }
         public string Name { get { throw null; } }
@@ -6653,7 +6626,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType File { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType InlinePackage { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType PackageStore { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType Ssisdb { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType SsisDB { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -6815,9 +6788,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData AdditionalColumns { get { throw null; } set { } }
         public System.BinaryData QueryTimeout { get { throw null; } set { } }
     }
-    public partial class TarGZipReadSettings : Azure.ResourceManager.DataFactory.Models.CompressionReadSettings
+    public partial class TarGzipReadSettings : Azure.ResourceManager.DataFactory.Models.CompressionReadSettings
     {
-        public TarGZipReadSettings() { }
+        public TarGzipReadSettings() { }
         public System.BinaryData PreserveCompressionFileNameAsFolder { get { throw null; } set { } }
     }
     public partial class TarReadSettings : Azure.ResourceManager.DataFactory.Models.CompressionReadSettings
@@ -6988,7 +6961,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public VerticaLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
     public partial class VerticaSource : Azure.ResourceManager.DataFactory.Models.TabularSource
     {
@@ -7100,9 +7073,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public WebLinkedService(Azure.ResourceManager.DataFactory.Models.WebLinkedServiceTypeProperties typeProperties) { }
         public Azure.ResourceManager.DataFactory.Models.WebLinkedServiceTypeProperties TypeProperties { get { throw null; } set { } }
     }
-    public partial class WebLinkedServiceTypeProperties
+    public abstract partial class WebLinkedServiceTypeProperties
     {
-        public WebLinkedServiceTypeProperties(System.BinaryData uri) { }
+        protected WebLinkedServiceTypeProperties(System.BinaryData uri) { }
         public System.BinaryData Uri { get { throw null; } set { } }
     }
     public partial class WebSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
@@ -7142,8 +7115,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public XmlDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
         public System.BinaryData EncodingName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
         public System.BinaryData NullValue { get { throw null; } set { } }
     }
     public partial class XmlReadSettings : Azure.ResourceManager.DataFactory.Models.FormatReadSettings

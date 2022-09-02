@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="AssetTrackInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
     /// </summary>
-    public partial class AssetTrackInfo
+    public abstract partial class AssetTrackInfo
     {
         /// <summary> Initializes a new instance of AssetTrackInfo. </summary>
-        public AssetTrackInfo()
+        protected AssetTrackInfo()
         {
         }
 

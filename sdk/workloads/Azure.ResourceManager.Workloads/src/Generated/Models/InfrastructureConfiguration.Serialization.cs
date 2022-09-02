@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new InfrastructureConfiguration(deploymentType, appResourceGroup);
+            return new UnknownInfrastructureConfiguration(deploymentType, appResourceGroup);
         }
     }
 }

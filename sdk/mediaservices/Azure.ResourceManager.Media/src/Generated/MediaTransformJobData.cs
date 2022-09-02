@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of MediaTransformJobData. </summary>
         public MediaTransformJobData()
         {
-            Outputs = new ChangeTrackingList<JobOutput>();
+            Outputs = new ChangeTrackingList<MediaTransformJobOutput>();
             CorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.Media
         /// <param name="description"> Optional customer supplied description of the Job. </param>
         /// <param name="input">
         /// The inputs for the Job.
-        /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobInputAsset"/>, <see cref="JobInputClip"/>, <see cref="JobInputHttp"/>, <see cref="JobInputSequence"/> and <see cref="JobInputs"/>.
+        /// Please note <see cref="MediaTransformJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaTransformJobInputAsset"/>, <see cref="MediaTransformJobInputClip"/>, <see cref="MediaTransformJobInputHttp"/>, <see cref="MediaTransformJobInputSequence"/> and <see cref="MediaTransformJobInputs"/>.
         /// </param>
         /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
         /// <param name="outputs">
         /// The outputs for the Job.
-        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobOutputAsset"/>.
+        /// Please note <see cref="MediaTransformJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaTransformJobOutputAsset"/>.
         /// </param>
         /// <param name="priority"> Priority with which the job should be processed. Higher priority jobs are processed before lower priority jobs. If not set, the default is normal. </param>
         /// <param name="correlationData"> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </param>
-        /// <param name="startOn"> The UTC date and time at which this Job began processing. </param>
-        /// <param name="endOn"> The UTC date and time at which this Job finished processing. </param>
-        internal MediaTransformJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, JobState? state, string description, JobInput input, DateTimeOffset? lastModifiedOn, IList<JobOutput> outputs, TransformOutputsPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(id, name, resourceType, systemData)
+        /// <param name="startsOn"> The UTC date and time at which this Job began processing. </param>
+        /// <param name="endsOn"> The UTC date and time at which this Job finished processing. </param>
+        internal MediaTransformJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, JobState? state, string description, MediaTransformJobInputBasicProperties input, DateTimeOffset? lastModifiedOn, IList<MediaTransformJobOutput> outputs, TransformOutputsPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startsOn, DateTimeOffset? endsOn) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Media
             Outputs = outputs;
             Priority = priority;
             CorrelationData = correlationData;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
         /// <summary> The UTC date and time when the customer has created the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
@@ -68,25 +68,25 @@ namespace Azure.ResourceManager.Media
         public string Description { get; set; }
         /// <summary>
         /// The inputs for the Job.
-        /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobInputAsset"/>, <see cref="JobInputClip"/>, <see cref="JobInputHttp"/>, <see cref="JobInputSequence"/> and <see cref="JobInputs"/>.
+        /// Please note <see cref="MediaTransformJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaTransformJobInputAsset"/>, <see cref="MediaTransformJobInputClip"/>, <see cref="MediaTransformJobInputHttp"/>, <see cref="MediaTransformJobInputSequence"/> and <see cref="MediaTransformJobInputs"/>.
         /// </summary>
-        public JobInput Input { get; set; }
+        public MediaTransformJobInputBasicProperties Input { get; set; }
         /// <summary> The UTC date and time when the customer has last updated the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>
         /// The outputs for the Job.
-        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobOutputAsset"/>.
+        /// Please note <see cref="MediaTransformJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MediaTransformJobOutputAsset"/>.
         /// </summary>
-        public IList<JobOutput> Outputs { get; }
+        public IList<MediaTransformJobOutput> Outputs { get; }
         /// <summary> Priority with which the job should be processed. Higher priority jobs are processed before lower priority jobs. If not set, the default is normal. </summary>
         public TransformOutputsPriority? Priority { get; set; }
         /// <summary> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </summary>
         public IDictionary<string, string> CorrelationData { get; }
         /// <summary> The UTC date and time at which this Job began processing. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
         /// <summary> The UTC date and time at which this Job finished processing. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

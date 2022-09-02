@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address");
-                writer.WriteStringValue(Address);
+                writer.WriteStringValue(Address.ToString());
             }
             if (Optional.IsDefined(SubnetPrefixLength))
             {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static IPRange DeserializeIPRange(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> address = default;
+            Optional<IPAddress> address = default;
             Optional<int> subnetPrefixLength = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +48,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("address"))
                 {
-                    address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetPrefixLength"))

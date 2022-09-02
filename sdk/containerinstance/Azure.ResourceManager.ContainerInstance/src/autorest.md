@@ -52,20 +52,22 @@ override-operation-name:
   Containers_ExecuteCommand: ExecuteContainerCommand
   Containers_ListLogs: GetContainerLogs
 
+# If the model is generally used across the RP or we need to avoid duplication, prepend the RP name.
+# If the model is used by a single container instance, simply use Container prefix in the rename-mapping section as it's simpler and consistent with the original pattern in swagger.
 prepend-rp-prefix:
-  - Volume
-  - VolumeMount
-  - Capabilities
-  - CapabilitiesListResult
-  - Scheme
+  - UsageListResult
+  - UsageName
+  - OperatingSystemTypes
+  - AzureFileVolume
+  - GitRepoVolume
+  - Container
 
 rename-mapping:
-  Container: ContainerInstance
-  Logs: ContainerInstanceLogs
+  Logs: ContainerLogs
   Event: ContainerEvent
   AzureFileVolume.readOnly: IsReadOnly
   VolumeMount.readOnly: IsReadOnly
-  CapabilitiesCapabilities: ContainerInstanceSupportedCapabilities
+  CapabilitiesCapabilities: ContainerSupportedCapabilities
   ContainerProbe.timeoutSeconds: TimeoutInSeconds
   ContainerProbe.initialDelaySeconds: InitialDelayInSeconds
   ContainerProbe.periodSeconds: PeriodInSeconds
@@ -73,7 +75,7 @@ rename-mapping:
   Port: ContainerGroupPort
   IpAddress.ip: -|ip-address
   IpAddress: ContainerGroupIPAddress
-  GpuResource: GpuResourceInfo
+  GpuResource: ContainerGpuResourceInfo
   ContainerGroupPropertiesInstanceView: ContainerGroupInstanceView
   ContainerPropertiesInstanceView: ContainerInstanceView
   ContainerAttachResponse: ContainerAttachResult
@@ -81,4 +83,19 @@ rename-mapping:
   ContainerGroupSubnetId.id: -|arm-id
   InitContainerDefinition: InitContainerDefinitionContent
   LogAnalytics.workspaceResourceId: -|arm-id
+  ResourceRequests: ContainerResourceRequestsContent
+  DnsConfiguration: ContainerGroupDnsConfiguration
+  EncryptionProperties: ContainerGroupEncryptionProperties
+  HttpHeader: ContainerHttpHeader
+  ImageRegistryCredential: ContainerGroupImageRegistryCredential
+  Volume: ContainerVolume
+  VolumeMount: ContainerVolumeMount
+  Capabilities: ContainerCapabilities
+  CapabilitiesListResult: ContainerCapabilitiesListResult
+  ResourceLimits: ContainerResourceLimits
+  ResourceRequirements: ContainerResourceRequirements
+  EnvironmentVariable: ContainerEnvironmentVariable
+  GpuSku: ContainerGpuSku
+  LogAnalytics: ContainerGroupLogAnalytics
+  LogAnalyticsLogType: ContainerGroupLogAnalyticsLogType
 ```

@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// The call transfer failed event.
     /// </summary>
     [CodeGenModel("CallTransferFailedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallTransferFailed : CallingServerEventBase
+    public partial class CallTransferFailed : CallAutomationEventBase
     {
         /// <summary>
         /// Deserialize <see cref="CallTransferFailed"/> event.
