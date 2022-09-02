@@ -552,7 +552,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
@@ -631,7 +631,7 @@ await foreach (DocumentModelSummary modelSummary in models)
 
 // Create a new model to store in the account
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-BuildModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
@@ -676,7 +676,7 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 // Create a new model to store in the account
 
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-BuildModelOperation operation = client.BuildDocumentModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildDocumentModelOperation operation = client.BuildDocumentModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created

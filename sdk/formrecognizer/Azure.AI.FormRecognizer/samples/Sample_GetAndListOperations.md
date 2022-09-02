@@ -28,7 +28,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 
 // Make sure there is at least one operation, so we are going to build a custom model.
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-BuildModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 
 // List the first ten or fewer operations that have been executed in the last 24h.
 AsyncPageable<OperationSummary> operationSummaries = client.GetOperationsAsync();
