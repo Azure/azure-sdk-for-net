@@ -3,12 +3,13 @@
 
 using System;
 using System.Diagnostics;
-using Azure.Core.TestFramework;
-using Azure.Maps.Search.Models;
-using Azure.Maps.Search;
-using NUnit.Framework;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
+using Azure.Maps.Search;
+using Azure.Maps.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -34,7 +35,7 @@ namespace Azure.Maps.Search.Tests
         }
 
         [Test]
-        public async void GetPolygons()
+        public async Task GetPolygons()
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
@@ -47,7 +48,7 @@ namespace Azure.Maps.Search.Tests
         }
 
         [Test]
-        public async void FuzzySearch()
+        public async Task FuzzySearch()
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
@@ -59,7 +60,7 @@ namespace Azure.Maps.Search.Tests
         }
 
         [Test]
-        public async void ReverseSearchCrossStreetAddress()
+        public async Task ReverseSearchCrossStreetAddress()
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
@@ -71,7 +72,7 @@ namespace Azure.Maps.Search.Tests
         }
 
         [Test]
-        public async void SearchStructuredAddress()
+        public async Task SearchStructuredAddress()
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
@@ -88,7 +89,7 @@ namespace Azure.Maps.Search.Tests
         }
 
         [Test]
-        public async void SearchInsideGeometry()
+        public async Task SearchInsideGeometry()
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
