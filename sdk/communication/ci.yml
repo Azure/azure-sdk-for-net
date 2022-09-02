@@ -55,3 +55,6 @@ extends:
     - name: Azure.Communication.ShortCodes
       safeName: AzureCommunicationShortCodes
       skipReleaseStage: true
+    - name: Azure.Communication.AlphaIds
+      safeName: AzureCommunicationAlphaIds
+      skipReleaseStage: true

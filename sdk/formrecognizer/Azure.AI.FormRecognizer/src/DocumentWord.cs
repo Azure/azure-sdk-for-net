@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentWord. Use for the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentWord(string content, BoundingPolygon boundingPolygon, DocumentSpan span, float confidence)
+        internal DocumentWord(string content, IReadOnlyList<PointF> boundingPolygon, DocumentSpan span, float confidence)
         {
             Content = content;
             BoundingPolygon = boundingPolygon;
@@ -27,14 +29,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// orientation. Units are in pixels for images and inches for PDF. The <see cref="LengthUnit"/>
         /// type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
-        public BoundingPolygon BoundingPolygon { get; private set; }
+        public IReadOnlyList<PointF> BoundingPolygon { get; private set; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyList<float> Polygon
         {
             get => throw new InvalidOperationException();
             set
             {
-                BoundingPolygon = new BoundingPolygon(value);
+                BoundingPolygon = ClientCommon.CovertToListOfPointF(value);
             }
         }
     }

@@ -31,11 +31,11 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 
 // List the first ten or fewer operations that have been executed in the last 24h.
-AsyncPageable<DocumentModelOperationSummary> operationSummaries = client.GetOperationsAsync();
+AsyncPageable<OperationSummary> operationSummaries = client.GetOperationsAsync();
 
 string operationId = string.Empty;
 int count = 0;
-await foreach (DocumentModelOperationSummary operationSummary in operationSummaries)
+await foreach (OperationSummary operationSummary in operationSummaries)
 {
     Console.WriteLine($"Model operation summary:");
     Console.WriteLine($"  Id: {operationSummary.OperationId}");
@@ -54,7 +54,7 @@ await foreach (DocumentModelOperationSummary operationSummary in operationSummar
 }
 
 // Get an operation by ID
-DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operationId);
+OperationDetails operationDetails = await client.GetOperationAsync(operationId);
 
 if (operationDetails.Status == DocumentOperationStatus.Succeeded)
 {

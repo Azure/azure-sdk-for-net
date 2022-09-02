@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 
         /// <summary> Initializes a new instance of ChangeProperties. </summary>
         /// <param name="resourceId"> The resource id that the change is attached to. </param>
-        /// <param name="timeStamp"> The time when the change is detected. </param>
+        /// <param name="changeDetectedOn"> The time when the change is detected. </param>
         /// <param name="initiatedByList">
         /// The list of identities who might initiated the change.
         /// The identity could be user name (email address) or the object ID of the Service Principal.
         /// </param>
         /// <param name="changeType"> The type of the change. </param>
         /// <param name="propertyChanges"> The list of detailed changes at json property level. </param>
-        internal ChangeProperties(string resourceId, DateTimeOffset? timeStamp, IReadOnlyList<string> initiatedByList, ChangeType? changeType, IReadOnlyList<PropertyChange> propertyChanges)
+        internal ChangeProperties(ResourceIdentifier resourceId, DateTimeOffset? changeDetectedOn, IReadOnlyList<string> initiatedByList, ChangeType? changeType, IReadOnlyList<PropertyChange> propertyChanges)
         {
             ResourceId = resourceId;
-            TimeStamp = timeStamp;
+            ChangeDetectedOn = changeDetectedOn;
             InitiatedByList = initiatedByList;
             ChangeType = changeType;
             PropertyChanges = propertyChanges;
         }
 
         /// <summary> The resource id that the change is attached to. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> The time when the change is detected. </summary>
-        public DateTimeOffset? TimeStamp { get; }
+        public DateTimeOffset? ChangeDetectedOn { get; }
         /// <summary>
         /// The list of identities who might initiated the change.
         /// The identity could be user name (email address) or the object ID of the Service Principal.

@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToTableClient_BindsAndCreatesTable()
         {
             // Act
