@@ -7,26 +7,56 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Reason for the modification. </summary>
+    /// <summary>
+    /// Reason for the modification
+    /// Serialized Name: ServiceAlertModificationEvent
+    /// </summary>
     public enum ServiceAlertModificationEvent
     {
-        /// <summary> AlertCreated. </summary>
+        /// <summary>
+        /// AlertCreated
+        /// Serialized Name: ServiceAlertModificationEvent.AlertCreated
+        /// </summary>
         AlertCreated,
-        /// <summary> StateChange. </summary>
+        /// <summary>
+        /// StateChange
+        /// Serialized Name: ServiceAlertModificationEvent.StateChange
+        /// </summary>
         StateChange,
-        /// <summary> MonitorConditionChange. </summary>
+        /// <summary>
+        /// MonitorConditionChange
+        /// Serialized Name: ServiceAlertModificationEvent.MonitorConditionChange
+        /// </summary>
         MonitorConditionChange,
-        /// <summary> SeverityChange. </summary>
+        /// <summary>
+        /// SeverityChange
+        /// Serialized Name: ServiceAlertModificationEvent.SeverityChange
+        /// </summary>
         SeverityChange,
-        /// <summary> ActionRuleTriggered. </summary>
+        /// <summary>
+        /// ActionRuleTriggered
+        /// Serialized Name: ServiceAlertModificationEvent.ActionRuleTriggered
+        /// </summary>
         ActionRuleTriggered,
-        /// <summary> ActionRuleSuppressed. </summary>
+        /// <summary>
+        /// ActionRuleSuppressed
+        /// Serialized Name: ServiceAlertModificationEvent.ActionRuleSuppressed
+        /// </summary>
         ActionRuleSuppressed,
-        /// <summary> ActionsTriggered. </summary>
+        /// <summary>
+        /// ActionsTriggered
+        /// Serialized Name: ServiceAlertModificationEvent.ActionsTriggered
+        /// </summary>
         ActionsTriggered,
-        /// <summary> ActionsSuppressed. </summary>
+        /// <summary>
+        /// ActionsSuppressed
+        /// Serialized Name: ServiceAlertModificationEvent.ActionsSuppressed
+        /// </summary>
         ActionsSuppressed,
-        /// <summary> ActionsFailed. </summary>
+        /// <summary>
+        /// ActionsFailed
+        /// Serialized Name: ServiceAlertModificationEvent.ActionsFailed
+        /// </summary>
         ActionsFailed
     }
 }

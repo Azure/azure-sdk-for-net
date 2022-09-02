@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Field for a given condition. </summary>
+    /// <summary>
+    /// Field for a given condition.
+    /// Serialized Name: AlertProcessingRuleField
+    /// </summary>
     public readonly partial struct AlertProcessingRuleField : IEquatable<AlertProcessingRuleField>
     {
         private readonly string _value;
@@ -34,27 +37,60 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string DescriptionValue = "Description";
         private const string AlertContextValue = "AlertContext";
 
-        /// <summary> Severity. </summary>
+        /// <summary>
+        /// Severity
+        /// Serialized Name: AlertProcessingRuleField.Severity
+        /// </summary>
         public static AlertProcessingRuleField Severity { get; } = new AlertProcessingRuleField(SeverityValue);
-        /// <summary> MonitorService. </summary>
+        /// <summary>
+        /// MonitorService
+        /// Serialized Name: AlertProcessingRuleField.MonitorService
+        /// </summary>
         public static AlertProcessingRuleField MonitorService { get; } = new AlertProcessingRuleField(MonitorServiceValue);
-        /// <summary> MonitorCondition. </summary>
+        /// <summary>
+        /// MonitorCondition
+        /// Serialized Name: AlertProcessingRuleField.MonitorCondition
+        /// </summary>
         public static AlertProcessingRuleField MonitorCondition { get; } = new AlertProcessingRuleField(MonitorConditionValue);
-        /// <summary> SignalType. </summary>
+        /// <summary>
+        /// SignalType
+        /// Serialized Name: AlertProcessingRuleField.SignalType
+        /// </summary>
         public static AlertProcessingRuleField SignalType { get; } = new AlertProcessingRuleField(SignalTypeValue);
-        /// <summary> TargetResourceType. </summary>
+        /// <summary>
+        /// TargetResourceType
+        /// Serialized Name: AlertProcessingRuleField.TargetResourceType
+        /// </summary>
         public static AlertProcessingRuleField TargetResourceType { get; } = new AlertProcessingRuleField(TargetResourceTypeValue);
-        /// <summary> TargetResource. </summary>
+        /// <summary>
+        /// TargetResource
+        /// Serialized Name: AlertProcessingRuleField.TargetResource
+        /// </summary>
         public static AlertProcessingRuleField TargetResource { get; } = new AlertProcessingRuleField(TargetResourceValue);
-        /// <summary> TargetResourceGroup. </summary>
+        /// <summary>
+        /// TargetResourceGroup
+        /// Serialized Name: AlertProcessingRuleField.TargetResourceGroup
+        /// </summary>
         public static AlertProcessingRuleField TargetResourceGroup { get; } = new AlertProcessingRuleField(TargetResourceGroupValue);
-        /// <summary> AlertRuleId. </summary>
+        /// <summary>
+        /// AlertRuleId
+        /// Serialized Name: AlertProcessingRuleField.AlertRuleId
+        /// </summary>
         public static AlertProcessingRuleField AlertRuleId { get; } = new AlertProcessingRuleField(AlertRuleIdValue);
-        /// <summary> AlertRuleName. </summary>
+        /// <summary>
+        /// AlertRuleName
+        /// Serialized Name: AlertProcessingRuleField.AlertRuleName
+        /// </summary>
         public static AlertProcessingRuleField AlertRuleName { get; } = new AlertProcessingRuleField(AlertRuleNameValue);
-        /// <summary> Description. </summary>
+        /// <summary>
+        /// Description
+        /// Serialized Name: AlertProcessingRuleField.Description
+        /// </summary>
         public static AlertProcessingRuleField Description { get; } = new AlertProcessingRuleField(DescriptionValue);
-        /// <summary> AlertContext. </summary>
+        /// <summary>
+        /// AlertContext
+        /// Serialized Name: AlertProcessingRuleField.AlertContext
+        /// </summary>
         public static AlertProcessingRuleField AlertContext { get; } = new AlertProcessingRuleField(AlertContextValue);
         /// <summary> Determines if two <see cref="AlertProcessingRuleField"/> values are the same. </summary>
         public static bool operator ==(AlertProcessingRuleField left, AlertProcessingRuleField right) => left.Equals(right);

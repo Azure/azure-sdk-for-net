@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> alert meta data information. </summary>
+    /// <summary>
+    /// alert meta data information.
+    /// Serialized Name: ServiceAlertsMetaData
+    /// </summary>
     public partial class ServiceAlertsMetaData
     {
         /// <summary> Initializes a new instance of ServiceAlertsMetaData. </summary>
@@ -18,6 +21,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertsMetaData. </summary>
         /// <param name="properties">
         /// alert meta data property bag
+        /// Serialized Name: ServiceAlertsMetaData.properties
         /// Please note <see cref="ServiceAlertsMetaDataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MonitorServiceList"/>.
         /// </param>
@@ -28,6 +32,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// alert meta data property bag
+        /// Serialized Name: ServiceAlertsMetaData.properties
         /// Please note <see cref="ServiceAlertsMetaDataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MonitorServiceList"/>.
         /// </summary>

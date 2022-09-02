@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The TimeRangeFilter. </summary>
+    /// <summary>
+    /// The TimeRangeFilter.
+    /// Serialized Name: TimeRange
+    /// </summary>
     public readonly partial struct TimeRangeFilter : IEquatable<TimeRangeFilter>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string SevenDValue = "7d";
         private const string ThirtyDValue = "30d";
 
-        /// <summary> 1h. </summary>
+        /// <summary>
+        /// 1h
+        /// Serialized Name: TimeRange.1h
+        /// </summary>
         public static TimeRangeFilter OneH { get; } = new TimeRangeFilter(OneHValue);
-        /// <summary> 1d. </summary>
+        /// <summary>
+        /// 1d
+        /// Serialized Name: TimeRange.1d
+        /// </summary>
         public static TimeRangeFilter OneD { get; } = new TimeRangeFilter(OneDValue);
-        /// <summary> 7d. </summary>
+        /// <summary>
+        /// 7d
+        /// Serialized Name: TimeRange.7d
+        /// </summary>
         public static TimeRangeFilter SevenD { get; } = new TimeRangeFilter(SevenDValue);
-        /// <summary> 30d. </summary>
+        /// <summary>
+        /// 30d
+        /// Serialized Name: TimeRange.30d
+        /// </summary>
         public static TimeRangeFilter ThirtyD { get; } = new TimeRangeFilter(ThirtyDValue);
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are the same. </summary>
         public static bool operator ==(TimeRangeFilter left, TimeRangeFilter right) => left.Equals(right);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> alertId = default;
+            Optional<Guid> alertId = default;
             Optional<IList<ServiceAlertModificationItemData>> modifications = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,7 +80,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         if (property0.NameEquals("alertId"))
                         {
-                            alertId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            alertId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("modifications"))
@@ -101,7 +107,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertModification(id, name, type, systemData.Value, alertId.Value, Optional.ToList(modifications));
+            return new ServiceAlertModification(id, name, type, systemData.Value, Optional.ToNullable(alertId), Optional.ToList(modifications));
         }
     }
 }

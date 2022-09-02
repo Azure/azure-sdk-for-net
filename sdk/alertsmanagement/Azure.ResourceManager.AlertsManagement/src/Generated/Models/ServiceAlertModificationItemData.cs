@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Alert modification item. </summary>
+    /// <summary>
+    /// Alert modification item.
+    /// Serialized Name: ServiceAlertModificationItemData
+    /// </summary>
     public partial class ServiceAlertModificationItemData
     {
         /// <summary> Initializes a new instance of ServiceAlertModificationItemData. </summary>
@@ -18,13 +21,34 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of ServiceAlertModificationItemData. </summary>
-        /// <param name="modificationEvent"> Reason for the modification. </param>
-        /// <param name="oldValue"> Old value. </param>
-        /// <param name="newValue"> New value. </param>
-        /// <param name="modifiedOn"> Modified date and time. </param>
-        /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
-        /// <param name="comments"> Modification comments. </param>
-        /// <param name="description"> Description of the modification. </param>
+        /// <param name="modificationEvent">
+        /// Reason for the modification
+        /// Serialized Name: ServiceAlertModificationItemData.modificationEvent
+        /// </param>
+        /// <param name="oldValue">
+        /// Old value
+        /// Serialized Name: ServiceAlertModificationItemData.oldValue
+        /// </param>
+        /// <param name="newValue">
+        /// New value
+        /// Serialized Name: ServiceAlertModificationItemData.newValue
+        /// </param>
+        /// <param name="modifiedOn">
+        /// Modified date and time
+        /// Serialized Name: ServiceAlertModificationItemData.modifiedAt
+        /// </param>
+        /// <param name="modifiedBy">
+        /// Modified user details (Principal client name)
+        /// Serialized Name: ServiceAlertModificationItemData.modifiedBy
+        /// </param>
+        /// <param name="comments">
+        /// Modification comments
+        /// Serialized Name: ServiceAlertModificationItemData.comments
+        /// </param>
+        /// <param name="description">
+        /// Description of the modification
+        /// Serialized Name: ServiceAlertModificationItemData.description
+        /// </param>
         internal ServiceAlertModificationItemData(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, DateTimeOffset? modifiedOn, string modifiedBy, string comments, string description)
         {
             ModificationEvent = modificationEvent;
@@ -36,19 +60,40 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Description = description;
         }
 
-        /// <summary> Reason for the modification. </summary>
+        /// <summary>
+        /// Reason for the modification
+        /// Serialized Name: ServiceAlertModificationItemData.modificationEvent
+        /// </summary>
         public ServiceAlertModificationEvent? ModificationEvent { get; set; }
-        /// <summary> Old value. </summary>
+        /// <summary>
+        /// Old value
+        /// Serialized Name: ServiceAlertModificationItemData.oldValue
+        /// </summary>
         public string OldValue { get; set; }
-        /// <summary> New value. </summary>
+        /// <summary>
+        /// New value
+        /// Serialized Name: ServiceAlertModificationItemData.newValue
+        /// </summary>
         public string NewValue { get; set; }
-        /// <summary> Modified date and time. </summary>
+        /// <summary>
+        /// Modified date and time
+        /// Serialized Name: ServiceAlertModificationItemData.modifiedAt
+        /// </summary>
         public DateTimeOffset? ModifiedOn { get; set; }
-        /// <summary> Modified user details (Principal client name). </summary>
+        /// <summary>
+        /// Modified user details (Principal client name)
+        /// Serialized Name: ServiceAlertModificationItemData.modifiedBy
+        /// </summary>
         public string ModifiedBy { get; set; }
-        /// <summary> Modification comments. </summary>
+        /// <summary>
+        /// Modification comments
+        /// Serialized Name: ServiceAlertModificationItemData.comments
+        /// </summary>
         public string Comments { get; set; }
-        /// <summary> Description of the modification. </summary>
+        /// <summary>
+        /// Description of the modification
+        /// Serialized Name: ServiceAlertModificationItemData.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

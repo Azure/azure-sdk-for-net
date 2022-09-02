@@ -8,16 +8,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Add action groups to alert processing rule. </summary>
-    public partial class AddActionGroups : AlertProcessingRuleAction
+    /// <summary>
+    /// Add action groups to alert processing rule.
+    /// Serialized Name: AddActionGroups
+    /// </summary>
+    public partial class AddActionGroups : AlertProcessingAction
     {
         /// <summary> Initializes a new instance of AddActionGroups. </summary>
-        /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
+        /// <param name="actionGroupIds">
+        /// List of action group Ids to add to alert processing rule.
+        /// Serialized Name: AddActionGroups.actionGroupIds
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupIds"/> is null. </exception>
-        public AddActionGroups(IEnumerable<string> actionGroupIds)
+        public AddActionGroups(IEnumerable<ResourceIdentifier> actionGroupIds)
         {
             if (actionGroupIds == null)
             {
@@ -25,19 +32,28 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             ActionGroupIds = actionGroupIds.ToList();
-            ActionType = AlertProcessingRuleActionType.AddActionGroups;
+            ActionType = AlertProcessingActionType.AddActionGroups;
         }
 
         /// <summary> Initializes a new instance of AddActionGroups. </summary>
-        /// <param name="actionType"> Action that should be applied. </param>
-        /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
-        internal AddActionGroups(AlertProcessingRuleActionType actionType, IList<string> actionGroupIds) : base(actionType)
+        /// <param name="actionType">
+        /// Action that should be applied.
+        /// Serialized Name: Action.actionType
+        /// </param>
+        /// <param name="actionGroupIds">
+        /// List of action group Ids to add to alert processing rule.
+        /// Serialized Name: AddActionGroups.actionGroupIds
+        /// </param>
+        internal AddActionGroups(AlertProcessingActionType actionType, IList<ResourceIdentifier> actionGroupIds) : base(actionType)
         {
             ActionGroupIds = actionGroupIds;
             ActionType = actionType;
         }
 
-        /// <summary> List of action group Ids to add to alert processing rule. </summary>
-        public IList<string> ActionGroupIds { get; }
+        /// <summary>
+        /// List of action group Ids to add to alert processing rule.
+        /// Serialized Name: AddActionGroups.actionGroupIds
+        /// </summary>
+        public IList<ResourceIdentifier> ActionGroupIds { get; }
     }
 }

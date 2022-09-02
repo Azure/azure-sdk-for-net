@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 switch (discriminator.GetString())
                 {
                     case "Daily": return DailyRecurrence.DeserializeDailyRecurrence(element);
-                    case "Monthly": return MonthlyRecurrence.DeserializeMonthlyRecurrence(element);
-                    case "Weekly": return WeeklyRecurrence.DeserializeWeeklyRecurrence(element);
+                    case "Monthly": return AlertProcessingMonthlyRecurrence.DeserializeAlertProcessingMonthlyRecurrence(element);
+                    case "Weekly": return AlertProcessingWeeklyRecurrence.DeserializeAlertProcessingWeeklyRecurrence(element);
                 }
             }
             RecurrenceType recurrenceType = default;

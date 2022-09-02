@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The MonitorCondition. </summary>
+    /// <summary>
+    /// The MonitorCondition.
+    /// Serialized Name: MonitorCondition
+    /// </summary>
     public readonly partial struct MonitorCondition : IEquatable<MonitorCondition>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string FiredValue = "Fired";
         private const string ResolvedValue = "Resolved";
 
-        /// <summary> Fired. </summary>
+        /// <summary>
+        /// Fired
+        /// Serialized Name: MonitorCondition.Fired
+        /// </summary>
         public static MonitorCondition Fired { get; } = new MonitorCondition(FiredValue);
-        /// <summary> Resolved. </summary>
+        /// <summary>
+        /// Resolved
+        /// Serialized Name: MonitorCondition.Resolved
+        /// </summary>
         public static MonitorCondition Resolved { get; } = new MonitorCondition(ResolvedValue);
         /// <summary> Determines if two <see cref="MonitorCondition"/> values are the same. </summary>
         public static bool operator ==(MonitorCondition left, MonitorCondition right) => left.Equals(right);

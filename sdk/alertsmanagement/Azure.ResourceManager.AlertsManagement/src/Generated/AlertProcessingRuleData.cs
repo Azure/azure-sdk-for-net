@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             Scopes = new ChangeTrackingList<string>();
             Conditions = new ChangeTrackingList<AlertProcessingRuleCondition>();
-            Actions = new ChangeTrackingList<AlertProcessingRuleAction>();
+            Actions = new ChangeTrackingList<AlertProcessingAction>();
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleData. </summary>
@@ -31,41 +31,73 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
-        /// <param name="conditions"> Conditions on which alerts will be filtered. </param>
-        /// <param name="schedule"> Scheduling for alert processing rule. </param>
+        /// <param name="scopes">
+        /// Scopes on which alert processing rule will apply.
+        /// Serialized Name: AlertProcessingRule.properties.scopes
+        /// </param>
+        /// <param name="conditions">
+        /// Conditions on which alerts will be filtered.
+        /// Serialized Name: AlertProcessingRule.properties.conditions
+        /// </param>
+        /// <param name="schedule">
+        /// Scheduling for alert processing rule.
+        /// Serialized Name: AlertProcessingRule.properties.schedule
+        /// </param>
         /// <param name="actions">
         /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: AlertProcessingRule.properties.actions
+        /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
         /// </param>
-        /// <param name="description"> Description of alert processing rule. </param>
-        /// <param name="enabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
-        internal AlertProcessingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? enabled) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="description">
+        /// Description of alert processing rule.
+        /// Serialized Name: AlertProcessingRule.properties.description
+        /// </param>
+        /// <param name="isEnabled">
+        /// Indicates if the given alert processing rule is enabled or disabled.
+        /// Serialized Name: AlertProcessingRule.properties.enabled
+        /// </param>
+        internal AlertProcessingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingAction> actions, string description, bool? isEnabled) : base(id, name, resourceType, systemData, tags, location)
         {
             Scopes = scopes;
             Conditions = conditions;
             Schedule = schedule;
             Actions = actions;
             Description = description;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
-        /// <summary> Scopes on which alert processing rule will apply. </summary>
+        /// <summary>
+        /// Scopes on which alert processing rule will apply.
+        /// Serialized Name: AlertProcessingRule.properties.scopes
+        /// </summary>
         public IList<string> Scopes { get; }
-        /// <summary> Conditions on which alerts will be filtered. </summary>
+        /// <summary>
+        /// Conditions on which alerts will be filtered.
+        /// Serialized Name: AlertProcessingRule.properties.conditions
+        /// </summary>
         public IList<AlertProcessingRuleCondition> Conditions { get; }
-        /// <summary> Scheduling for alert processing rule. </summary>
+        /// <summary>
+        /// Scheduling for alert processing rule.
+        /// Serialized Name: AlertProcessingRule.properties.schedule
+        /// </summary>
         public AlertProcessingRuleSchedule Schedule { get; set; }
         /// <summary>
         /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: AlertProcessingRule.properties.actions
+        /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
         /// </summary>
-        public IList<AlertProcessingRuleAction> Actions { get; }
-        /// <summary> Description of alert processing rule. </summary>
+        public IList<AlertProcessingAction> Actions { get; }
+        /// <summary>
+        /// Description of alert processing rule.
+        /// Serialized Name: AlertProcessingRule.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        /// <summary>
+        /// Indicates if the given alert processing rule is enabled or disabled.
+        /// Serialized Name: AlertProcessingRule.properties.enabled
+        /// </summary>
+        public bool? IsEnabled { get; set; }
     }
 }

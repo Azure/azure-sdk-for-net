@@ -16,14 +16,31 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+mgmt-debug: 
+  show-serialized-names: true
+
+rename-mapping:
+  AlertProcessingRule.properties.enabled: IsEnabled
+  Severity: ServiceAlertSeverity
+  Identifier: InformationIdentifier
+  TimeRange: TimeRangeFilter
+  DaysOfWeek: AlertsManagementDayOfWeek
+  MonitorService: MonitorServiceSourceForAlert
+  MonthlyRecurrence: AlertProcessingMonthlyRecurrence
+  WeeklyRecurrence:  AlertProcessingWeeklyRecurrence
+  SortOrder: AlertsManagementQuerySortOrder
+  Action: AlertProcessingAction
+  ActionType: AlertProcessingActionType
 
 format-by-name-rules:
   'tenantId': 'uuid'
+  'alertId': 'uuid'
+  'smartGroupId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'actionGroupIds': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -77,8 +94,6 @@ directive:
       $.Recurrence.properties.endTime['format'] = 'date-time';
       $.Recurrence['x-ms-client-name'] = 'AlertProcessingRuleRecurrence';
       $.AlertProcessingRule.properties.properties['x-ms-client-flatten'] = true;
-      $.Action.properties.actionType['x-ms-enum']['name'] = 'AlertProcessingRuleActionType';
-      $.Action['x-ms-client-name'] = 'AlertProcessingRuleAction';
       $.PatchProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
   - from: AlertsManagement.json
     where: $.definitions
@@ -112,17 +127,14 @@ directive:
   - from: SmartGroups.json
     where: $.parameters
     transform: >
-      $.severity['x-ms-enum']['name'] = 'ServiceAlertSeverity';
-      $.timeRange['x-ms-enum']['name'] = 'TimeRangeFilter';
+      $.smartGroupId['format'] = 'uuid';
 #      $.newState['x-ms-enum']['name'] = 'ServiceAlertState';
 #      $.smartGroupState['x-ms-enum']['name'] = 'ServiceAlertState';
 #      $.monitorCondition['x-ms-enum']['name'] = 'ServiceAlertMonitorCondition';
   - from: AlertsManagement.json
     where: $.parameters
     transform: >
-      $.severity['x-ms-enum']['name'] = 'ServiceAlertSeverity';
-      $.timeRange['x-ms-enum']['name'] = 'TimeRangeFilter';
-      $.identifier['x-ms-enum']['name'] = 'InformationIdentifier';
+      $.alertId['format'] = 'uuid';
 #      $.alertState['x-ms-enum']['name'] = 'ServiceAlertState';
 #      $.newState['x-ms-enum']['name'] = 'ServiceAlertState';
 #      $.monitorCondition['x-ms-enum']['name'] = 'ServiceAlertMonitorCondition';

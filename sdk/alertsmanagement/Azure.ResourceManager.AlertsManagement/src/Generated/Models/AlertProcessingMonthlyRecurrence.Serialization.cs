@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class WeeklyRecurrence : IUtf8JsonSerializable
+    public partial class AlertProcessingMonthlyRecurrence : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("daysOfWeek");
+            writer.WritePropertyName("daysOfMonth");
             writer.WriteStartArray();
-            foreach (var item in DaysOfWeek)
+            foreach (var item in DaysOfMonth)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("recurrenceType");
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static WeeklyRecurrence DeserializeWeeklyRecurrence(JsonElement element)
+        internal static AlertProcessingMonthlyRecurrence DeserializeAlertProcessingMonthlyRecurrence(JsonElement element)
         {
-            IList<DaysOfWeek> daysOfWeek = default;
+            IList<int> daysOfMonth = default;
             RecurrenceType recurrenceType = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("daysOfWeek"))
+                if (property.NameEquals("daysOfMonth"))
                 {
-                    List<DaysOfWeek> array = new List<DaysOfWeek>();
+                    List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new DaysOfWeek(item.GetString()));
+                        array.Add(item.GetInt32());
                     }
-                    daysOfWeek = array;
+                    daysOfMonth = array;
                     continue;
                 }
                 if (property.NameEquals("recurrenceType"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new WeeklyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfWeek);
+            return new AlertProcessingMonthlyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfMonth);
         }
     }
 }

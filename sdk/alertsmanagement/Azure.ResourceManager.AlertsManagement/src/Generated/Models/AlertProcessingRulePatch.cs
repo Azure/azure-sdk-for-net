@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Data contract for patch. </summary>
+    /// <summary>
+    /// Data contract for patch.
+    /// Serialized Name: PatchObject
+    /// </summary>
     public partial class AlertProcessingRulePatch
     {
         /// <summary> Initializes a new instance of AlertProcessingRulePatch. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Tags to be updated. </summary>
+        /// <summary>
+        /// Tags to be updated.
+        /// Serialized Name: PatchObject.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
+        /// <summary>
+        /// Indicates if the given alert processing rule is enabled or disabled.
+        /// Serialized Name: PatchObject.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
     }
 }

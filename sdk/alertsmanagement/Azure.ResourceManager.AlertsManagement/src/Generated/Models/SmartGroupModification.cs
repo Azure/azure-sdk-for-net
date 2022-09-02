@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Alert Modification details. </summary>
+    /// <summary>
+    /// Alert Modification details
+    /// Serialized Name: SmartGroupModification
+    /// </summary>
     public partial class SmartGroupModification : ResourceData
     {
         /// <summary> Initializes a new instance of SmartGroupModification. </summary>
@@ -25,21 +29,39 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="smartGroupId"> Unique Id of the smartGroup for which the history is being retrieved. </param>
-        /// <param name="modifications"> Modification details. </param>
-        /// <param name="nextLink"> URL to fetch the next set of results. </param>
-        internal SmartGroupModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string smartGroupId, IList<SmartGroupModificationItemData> modifications, string nextLink) : base(id, name, resourceType, systemData)
+        /// <param name="smartGroupId">
+        /// Unique Id of the smartGroup for which the history is being retrieved
+        /// Serialized Name: SmartGroupModification.properties.smartGroupId
+        /// </param>
+        /// <param name="modifications">
+        /// Modification details
+        /// Serialized Name: SmartGroupModification.properties.modifications
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of results.
+        /// Serialized Name: SmartGroupModification.properties.nextLink
+        /// </param>
+        internal SmartGroupModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? smartGroupId, IList<SmartGroupModificationItemData> modifications, string nextLink) : base(id, name, resourceType, systemData)
         {
             SmartGroupId = smartGroupId;
             Modifications = modifications;
             NextLink = nextLink;
         }
 
-        /// <summary> Unique Id of the smartGroup for which the history is being retrieved. </summary>
-        public string SmartGroupId { get; }
-        /// <summary> Modification details. </summary>
+        /// <summary>
+        /// Unique Id of the smartGroup for which the history is being retrieved
+        /// Serialized Name: SmartGroupModification.properties.smartGroupId
+        /// </summary>
+        public Guid? SmartGroupId { get; }
+        /// <summary>
+        /// Modification details
+        /// Serialized Name: SmartGroupModification.properties.modifications
+        /// </summary>
         public IList<SmartGroupModificationItemData> Modifications { get; }
-        /// <summary> URL to fetch the next set of results. </summary>
+        /// <summary>
+        /// URL to fetch the next set of results.
+        /// Serialized Name: SmartGroupModification.properties.nextLink
+        /// </summary>
         public string NextLink { get; set; }
     }
 }

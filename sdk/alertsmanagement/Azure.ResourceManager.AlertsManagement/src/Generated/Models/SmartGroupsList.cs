@@ -11,7 +11,10 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> List the alerts. </summary>
+    /// <summary>
+    /// List the alerts.
+    /// Serialized Name: SmartGroupsList
+    /// </summary>
     internal partial class SmartGroupsList
     {
         /// <summary> Initializes a new instance of SmartGroupsList. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of SmartGroupsList. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of alerts. </param>
-        /// <param name="value"> List of alerts. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of alerts.
+        /// Serialized Name: SmartGroupsList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// List of alerts
+        /// Serialized Name: SmartGroupsList.value
+        /// </param>
         internal SmartGroupsList(string nextLink, IReadOnlyList<SmartGroupData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> URL to fetch the next set of alerts. </summary>
+        /// <summary>
+        /// URL to fetch the next set of alerts.
+        /// Serialized Name: SmartGroupsList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> List of alerts. </summary>
+        /// <summary>
+        /// List of alerts
+        /// Serialized Name: SmartGroupsList.value
+        /// </summary>
         public IReadOnlyList<SmartGroupData> Value { get; }
     }
 }

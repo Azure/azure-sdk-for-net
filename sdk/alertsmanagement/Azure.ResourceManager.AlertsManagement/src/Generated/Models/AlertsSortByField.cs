@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The AlertsSortByField. </summary>
+    /// <summary>
+    /// The AlertsSortByField.
+    /// Serialized Name: AlertsSortByFields
+    /// </summary>
     public readonly partial struct AlertsSortByField : IEquatable<AlertsSortByField>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string StartDateTimeValue = "startDateTime";
         private const string LastModifiedDateTimeValue = "lastModifiedDateTime";
 
-        /// <summary> name. </summary>
+        /// <summary>
+        /// name
+        /// Serialized Name: AlertsSortByFields.name
+        /// </summary>
         public static AlertsSortByField Name { get; } = new AlertsSortByField(NameValue);
-        /// <summary> severity. </summary>
+        /// <summary>
+        /// severity
+        /// Serialized Name: AlertsSortByFields.severity
+        /// </summary>
         public static AlertsSortByField Severity { get; } = new AlertsSortByField(SeverityValue);
-        /// <summary> alertState. </summary>
+        /// <summary>
+        /// alertState
+        /// Serialized Name: AlertsSortByFields.alertState
+        /// </summary>
         public static AlertsSortByField AlertState { get; } = new AlertsSortByField(AlertStateValue);
-        /// <summary> monitorCondition. </summary>
+        /// <summary>
+        /// monitorCondition
+        /// Serialized Name: AlertsSortByFields.monitorCondition
+        /// </summary>
         public static AlertsSortByField MonitorCondition { get; } = new AlertsSortByField(MonitorConditionValue);
-        /// <summary> targetResource. </summary>
+        /// <summary>
+        /// targetResource
+        /// Serialized Name: AlertsSortByFields.targetResource
+        /// </summary>
         public static AlertsSortByField TargetResource { get; } = new AlertsSortByField(TargetResourceValue);
-        /// <summary> targetResourceName. </summary>
+        /// <summary>
+        /// targetResourceName
+        /// Serialized Name: AlertsSortByFields.targetResourceName
+        /// </summary>
         public static AlertsSortByField TargetResourceName { get; } = new AlertsSortByField(TargetResourceNameValue);
-        /// <summary> targetResourceGroup. </summary>
+        /// <summary>
+        /// targetResourceGroup
+        /// Serialized Name: AlertsSortByFields.targetResourceGroup
+        /// </summary>
         public static AlertsSortByField TargetResourceGroup { get; } = new AlertsSortByField(TargetResourceGroupValue);
-        /// <summary> targetResourceType. </summary>
+        /// <summary>
+        /// targetResourceType
+        /// Serialized Name: AlertsSortByFields.targetResourceType
+        /// </summary>
         public static AlertsSortByField TargetResourceType { get; } = new AlertsSortByField(TargetResourceTypeValue);
-        /// <summary> startDateTime. </summary>
+        /// <summary>
+        /// startDateTime
+        /// Serialized Name: AlertsSortByFields.startDateTime
+        /// </summary>
         public static AlertsSortByField StartDateTime { get; } = new AlertsSortByField(StartDateTimeValue);
-        /// <summary> lastModifiedDateTime. </summary>
+        /// <summary>
+        /// lastModifiedDateTime
+        /// Serialized Name: AlertsSortByFields.lastModifiedDateTime
+        /// </summary>
         public static AlertsSortByField LastModifiedDateTime { get; } = new AlertsSortByField(LastModifiedDateTimeValue);
         /// <summary> Determines if two <see cref="AlertsSortByField"/> values are the same. </summary>
         public static bool operator ==(AlertsSortByField left, AlertsSortByField right) => left.Equals(right);

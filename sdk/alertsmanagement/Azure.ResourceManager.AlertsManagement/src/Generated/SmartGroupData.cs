@@ -33,20 +33,62 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertsCount"> Total number of alerts in smart group. </param>
-        /// <param name="smartGroupState"> Smart group state. </param>
-        /// <param name="severity"> Severity of smart group is the highest(Sev0 &gt;... &gt; Sev4) severity of all the alerts in the group. </param>
-        /// <param name="startOn"> Creation time of smart group. Date-Time in ISO-8601 format. </param>
-        /// <param name="lastModifiedOn"> Last updated time of smart group. Date-Time in ISO-8601 format. </param>
-        /// <param name="lastModifiedBy"> Last modified by user name. </param>
-        /// <param name="resources"> Summary of target resources in the smart group. </param>
-        /// <param name="resourceTypes"> Summary of target resource types in the smart group. </param>
-        /// <param name="resourceGroups"> Summary of target resource groups in the smart group. </param>
-        /// <param name="monitorServices"> Summary of monitorServices in the smart group. </param>
-        /// <param name="monitorConditions"> Summary of monitorConditions in the smart group. </param>
-        /// <param name="alertStates"> Summary of alertStates in the smart group. </param>
-        /// <param name="alertSeverities"> Summary of alertSeverities in the smart group. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts. </param>
+        /// <param name="alertsCount">
+        /// Total number of alerts in smart group
+        /// Serialized Name: SmartGroup.properties.alertsCount
+        /// </param>
+        /// <param name="smartGroupState">
+        /// Smart group state
+        /// Serialized Name: SmartGroup.properties.smartGroupState
+        /// </param>
+        /// <param name="severity">
+        /// Severity of smart group is the highest(Sev0 &gt;... &gt; Sev4) severity of all the alerts in the group.
+        /// Serialized Name: SmartGroup.properties.severity
+        /// </param>
+        /// <param name="startOn">
+        /// Creation time of smart group. Date-Time in ISO-8601 format.
+        /// Serialized Name: SmartGroup.properties.startDateTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Last updated time of smart group. Date-Time in ISO-8601 format.
+        /// Serialized Name: SmartGroup.properties.lastModifiedDateTime
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// Last modified by user name.
+        /// Serialized Name: SmartGroup.properties.lastModifiedUserName
+        /// </param>
+        /// <param name="resources">
+        /// Summary of target resources in the smart group
+        /// Serialized Name: SmartGroup.properties.resources
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Summary of target resource types in the smart group
+        /// Serialized Name: SmartGroup.properties.resourceTypes
+        /// </param>
+        /// <param name="resourceGroups">
+        /// Summary of target resource groups in the smart group
+        /// Serialized Name: SmartGroup.properties.resourceGroups
+        /// </param>
+        /// <param name="monitorServices">
+        /// Summary of monitorServices in the smart group
+        /// Serialized Name: SmartGroup.properties.monitorServices
+        /// </param>
+        /// <param name="monitorConditions">
+        /// Summary of monitorConditions in the smart group
+        /// Serialized Name: SmartGroup.properties.monitorConditions
+        /// </param>
+        /// <param name="alertStates">
+        /// Summary of alertStates in the smart group
+        /// Serialized Name: SmartGroup.properties.alertStates
+        /// </param>
+        /// <param name="alertSeverities">
+        /// Summary of alertSeverities in the smart group
+        /// Serialized Name: SmartGroup.properties.alertSeverities
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts.
+        /// Serialized Name: SmartGroup.properties.nextLink
+        /// </param>
         internal SmartGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? alertsCount, SmartGroupState? smartGroupState, ServiceAlertSeverity? severity, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IList<SmartGroupAggregatedProperty> resources, IList<SmartGroupAggregatedProperty> resourceTypes, IList<SmartGroupAggregatedProperty> resourceGroups, IList<SmartGroupAggregatedProperty> monitorServices, IList<SmartGroupAggregatedProperty> monitorConditions, IList<SmartGroupAggregatedProperty> alertStates, IList<SmartGroupAggregatedProperty> alertSeverities, string nextLink) : base(id, name, resourceType, systemData)
         {
             AlertsCount = alertsCount;
@@ -65,33 +107,75 @@ namespace Azure.ResourceManager.AlertsManagement
             NextLink = nextLink;
         }
 
-        /// <summary> Total number of alerts in smart group. </summary>
+        /// <summary>
+        /// Total number of alerts in smart group
+        /// Serialized Name: SmartGroup.properties.alertsCount
+        /// </summary>
         public long? AlertsCount { get; set; }
-        /// <summary> Smart group state. </summary>
+        /// <summary>
+        /// Smart group state
+        /// Serialized Name: SmartGroup.properties.smartGroupState
+        /// </summary>
         public SmartGroupState? SmartGroupState { get; }
-        /// <summary> Severity of smart group is the highest(Sev0 &gt;... &gt; Sev4) severity of all the alerts in the group. </summary>
+        /// <summary>
+        /// Severity of smart group is the highest(Sev0 &gt;... &gt; Sev4) severity of all the alerts in the group.
+        /// Serialized Name: SmartGroup.properties.severity
+        /// </summary>
         public ServiceAlertSeverity? Severity { get; }
-        /// <summary> Creation time of smart group. Date-Time in ISO-8601 format. </summary>
+        /// <summary>
+        /// Creation time of smart group. Date-Time in ISO-8601 format.
+        /// Serialized Name: SmartGroup.properties.startDateTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Last updated time of smart group. Date-Time in ISO-8601 format. </summary>
+        /// <summary>
+        /// Last updated time of smart group. Date-Time in ISO-8601 format.
+        /// Serialized Name: SmartGroup.properties.lastModifiedDateTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Last modified by user name. </summary>
+        /// <summary>
+        /// Last modified by user name.
+        /// Serialized Name: SmartGroup.properties.lastModifiedUserName
+        /// </summary>
         public string LastModifiedBy { get; }
-        /// <summary> Summary of target resources in the smart group. </summary>
+        /// <summary>
+        /// Summary of target resources in the smart group
+        /// Serialized Name: SmartGroup.properties.resources
+        /// </summary>
         public IList<SmartGroupAggregatedProperty> Resources { get; }
-        /// <summary> Summary of target resource types in the smart group. </summary>
+        /// <summary>
+        /// Summary of target resource types in the smart group
+        /// Serialized Name: SmartGroup.properties.resourceTypes
+        /// </summary>
         public IList<SmartGroupAggregatedProperty> ResourceTypes { get; }
-        /// <summary> Summary of target resource groups in the smart group. </summary>
+        /// <summary>
+        /// Summary of target resource groups in the smart group
+        /// Serialized Name: SmartGroup.properties.resourceGroups
+        /// </summary>
         public IList<SmartGroupAggregatedProperty> ResourceGroups { get; }
-        /// <summary> Summary of monitorServices in the smart group. </summary>
+        /// <summary>
+        /// Summary of monitorServices in the smart group
+        /// Serialized Name: SmartGroup.properties.monitorServices
+        /// </summary>
         public IList<SmartGroupAggregatedProperty> MonitorServices { get; }
-        /// <summary> Summary of monitorConditions in the smart group. </summary>
+        /// <summary>
+        /// Summary of monitorConditions in the smart group
+        /// Serialized Name: SmartGroup.properties.monitorConditions
+        /// </summary>
         public IList<SmartGroupAggregatedProperty> MonitorConditions { get; }
-        /// <summary> Summary of alertStates in the smart group. </summary>
+        /// <summary>
+        /// Summary of alertStates in the smart group
+        /// Serialized Name: SmartGroup.properties.alertStates
+        /// </summary>
         public IList<SmartGroupAggregatedProperty> AlertStates { get; }
-        /// <summary> Summary of alertSeverities in the smart group. </summary>
+        /// <summary>
+        /// Summary of alertSeverities in the smart group
+        /// Serialized Name: SmartGroup.properties.alertSeverities
+        /// </summary>
         public IList<SmartGroupAggregatedProperty> AlertSeverities { get; }
-        /// <summary> The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts. </summary>
+        /// <summary>
+        /// The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts.
+        /// Serialized Name: SmartGroup.properties.nextLink
+        /// </summary>
         public string NextLink { get; set; }
     }
 }

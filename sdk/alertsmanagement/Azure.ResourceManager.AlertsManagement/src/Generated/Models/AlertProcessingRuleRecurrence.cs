@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Recurrence object.
+    /// Serialized Name: AlertProcessingRuleRecurrence
     /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="MonthlyRecurrence"/> and <see cref="WeeklyRecurrence"/>.
+    /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingMonthlyRecurrence"/> and <see cref="AlertProcessingWeeklyRecurrence"/>.
     /// </summary>
     public abstract partial class AlertProcessingRuleRecurrence
     {
@@ -22,9 +23,18 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
-        /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
+        /// <param name="recurrenceType">
+        /// Specifies when the recurrence should be applied.
+        /// Serialized Name: AlertProcessingRuleRecurrence.recurrenceType
+        /// </param>
+        /// <param name="startOn">
+        /// Start time for recurrence.
+        /// Serialized Name: AlertProcessingRuleRecurrence.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time for recurrence.
+        /// Serialized Name: AlertProcessingRuleRecurrence.endTime
+        /// </param>
         internal AlertProcessingRuleRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
             RecurrenceType = recurrenceType;
@@ -32,11 +42,20 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             EndOn = endOn;
         }
 
-        /// <summary> Specifies when the recurrence should be applied. </summary>
+        /// <summary>
+        /// Specifies when the recurrence should be applied.
+        /// Serialized Name: AlertProcessingRuleRecurrence.recurrenceType
+        /// </summary>
         internal RecurrenceType RecurrenceType { get; set; }
-        /// <summary> Start time for recurrence. </summary>
+        /// <summary>
+        /// Start time for recurrence.
+        /// Serialized Name: AlertProcessingRuleRecurrence.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time for recurrence. </summary>
+        /// <summary>
+        /// End time for recurrence.
+        /// Serialized Name: AlertProcessingRuleRecurrence.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
     }
 }

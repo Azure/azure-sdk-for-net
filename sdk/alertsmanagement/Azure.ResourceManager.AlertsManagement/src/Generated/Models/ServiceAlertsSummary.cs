@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Summary of alerts based on the input filters and &apos;groupby&apos; parameters. </summary>
+    /// <summary>
+    /// Summary of alerts based on the input filters and &apos;groupby&apos; parameters.
+    /// Serialized Name: ServiceAlertsSummary
+    /// </summary>
     public partial class ServiceAlertsSummary : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceAlertsSummary. </summary>
@@ -25,10 +28,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="total"> Total count of the result set. </param>
-        /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
-        /// <param name="groupedBy"> Name of the field aggregated. </param>
-        /// <param name="values"> List of the items. </param>
+        /// <param name="total">
+        /// Total count of the result set.
+        /// Serialized Name: ServiceAlertsSummary.properties.total
+        /// </param>
+        /// <param name="smartGroupsCount">
+        /// Total count of the smart groups.
+        /// Serialized Name: ServiceAlertsSummary.properties.smartGroupsCount
+        /// </param>
+        /// <param name="groupedBy">
+        /// Name of the field aggregated
+        /// Serialized Name: ServiceAlertsSummary.properties.groupedby
+        /// </param>
+        /// <param name="values">
+        /// List of the items
+        /// Serialized Name: ServiceAlertsSummary.properties.values
+        /// </param>
         internal ServiceAlertsSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertsSummaryGroupItemData> values) : base(id, name, resourceType, systemData)
         {
             Total = total;
@@ -37,13 +52,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Values = values;
         }
 
-        /// <summary> Total count of the result set. </summary>
+        /// <summary>
+        /// Total count of the result set.
+        /// Serialized Name: ServiceAlertsSummary.properties.total
+        /// </summary>
         public long? Total { get; set; }
-        /// <summary> Total count of the smart groups. </summary>
+        /// <summary>
+        /// Total count of the smart groups.
+        /// Serialized Name: ServiceAlertsSummary.properties.smartGroupsCount
+        /// </summary>
         public long? SmartGroupsCount { get; set; }
-        /// <summary> Name of the field aggregated. </summary>
+        /// <summary>
+        /// Name of the field aggregated
+        /// Serialized Name: ServiceAlertsSummary.properties.groupedby
+        /// </summary>
         public string GroupedBy { get; set; }
-        /// <summary> List of the items. </summary>
+        /// <summary>
+        /// List of the items
+        /// Serialized Name: ServiceAlertsSummary.properties.values
+        /// </summary>
         public IList<ServiceAlertsSummaryGroupItemData> Values { get; }
     }
 }

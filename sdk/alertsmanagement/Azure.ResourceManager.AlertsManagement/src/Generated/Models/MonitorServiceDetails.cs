@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Details of a monitor service. </summary>
+    /// <summary>
+    /// Details of a monitor service
+    /// Serialized Name: MonitorServiceDetails
+    /// </summary>
     public partial class MonitorServiceDetails
     {
         /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>
-        /// <param name="name"> Monitor service name. </param>
-        /// <param name="displayName"> Monitor service display name. </param>
+        /// <param name="name">
+        /// Monitor service name
+        /// Serialized Name: MonitorServiceDetails.name
+        /// </param>
+        /// <param name="displayName">
+        /// Monitor service display name
+        /// Serialized Name: MonitorServiceDetails.displayName
+        /// </param>
         internal MonitorServiceDetails(string name, string displayName)
         {
             Name = name;
             DisplayName = displayName;
         }
 
-        /// <summary> Monitor service name. </summary>
+        /// <summary>
+        /// Monitor service name
+        /// Serialized Name: MonitorServiceDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Monitor service display name. </summary>
+        /// <summary>
+        /// Monitor service display name
+        /// Serialized Name: MonitorServiceDetails.displayName
+        /// </summary>
         public string DisplayName { get; }
     }
 }

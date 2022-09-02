@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleAction : IUtf8JsonSerializable
+    public partial class AlertProcessingAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingRuleAction DeserializeAlertProcessingRuleAction(JsonElement element)
+        internal static AlertProcessingAction DeserializeAlertProcessingAction(JsonElement element)
         {
             if (element.TryGetProperty("actionType", out JsonElement discriminator))
             {
@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     case "RemoveAllActionGroups": return RemoveAllActionGroups.DeserializeRemoveAllActionGroups(element);
                 }
             }
-            AlertProcessingRuleActionType actionType = default;
+            AlertProcessingActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"))
                 {
-                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
+                    actionType = new AlertProcessingActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownAlertProcessingRuleAction(actionType);
+            return new UnknownAlertProcessingAction(actionType);
         }
     }
 }

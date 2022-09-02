@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Reason for the modification. </summary>
+    /// <summary>
+    /// Reason for the modification
+    /// Serialized Name: SmartGroupModificationEvent
+    /// </summary>
     public enum SmartGroupModificationEvent
     {
-        /// <summary> SmartGroupCreated. </summary>
+        /// <summary>
+        /// SmartGroupCreated
+        /// Serialized Name: SmartGroupModificationEvent.SmartGroupCreated
+        /// </summary>
         SmartGroupCreated,
-        /// <summary> StateChange. </summary>
+        /// <summary>
+        /// StateChange
+        /// Serialized Name: SmartGroupModificationEvent.StateChange
+        /// </summary>
         StateChange,
-        /// <summary> AlertAdded. </summary>
+        /// <summary>
+        /// AlertAdded
+        /// Serialized Name: SmartGroupModificationEvent.AlertAdded
+        /// </summary>
         AlertAdded,
-        /// <summary> AlertRemoved. </summary>
+        /// <summary>
+        /// AlertRemoved
+        /// Serialized Name: SmartGroupModificationEvent.AlertRemoved
+        /// </summary>
         AlertRemoved
     }
 }

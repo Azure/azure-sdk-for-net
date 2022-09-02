@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Smart group state. </summary>
+    /// <summary>
+    /// Smart group state
+    /// Serialized Name: SmartGroupState
+    /// </summary>
     public readonly partial struct SmartGroupState : IEquatable<SmartGroupState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string AcknowledgedValue = "Acknowledged";
         private const string ClosedValue = "Closed";
 
-        /// <summary> New. </summary>
+        /// <summary>
+        /// New
+        /// Serialized Name: SmartGroupState.New
+        /// </summary>
         public static SmartGroupState New { get; } = new SmartGroupState(NewValue);
-        /// <summary> Acknowledged. </summary>
+        /// <summary>
+        /// Acknowledged
+        /// Serialized Name: SmartGroupState.Acknowledged
+        /// </summary>
         public static SmartGroupState Acknowledged { get; } = new SmartGroupState(AcknowledgedValue);
-        /// <summary> Closed. </summary>
+        /// <summary>
+        /// Closed
+        /// Serialized Name: SmartGroupState.Closed
+        /// </summary>
         public static SmartGroupState Closed { get; } = new SmartGroupState(ClosedValue);
         /// <summary> Determines if two <see cref="SmartGroupState"/> values are the same. </summary>
         public static bool operator ==(SmartGroupState left, SmartGroupState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The SmartGroupsSortByField. </summary>
+    /// <summary>
+    /// The SmartGroupsSortByField.
+    /// Serialized Name: SmartGroupsSortByFields
+    /// </summary>
     public readonly partial struct SmartGroupsSortByField : IEquatable<SmartGroupsSortByField>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string StartDateTimeValue = "startDateTime";
         private const string LastModifiedDateTimeValue = "lastModifiedDateTime";
 
-        /// <summary> alertsCount. </summary>
+        /// <summary>
+        /// alertsCount
+        /// Serialized Name: SmartGroupsSortByFields.alertsCount
+        /// </summary>
         public static SmartGroupsSortByField AlertsCount { get; } = new SmartGroupsSortByField(AlertsCountValue);
-        /// <summary> state. </summary>
+        /// <summary>
+        /// state
+        /// Serialized Name: SmartGroupsSortByFields.state
+        /// </summary>
         public static SmartGroupsSortByField State { get; } = new SmartGroupsSortByField(StateValue);
-        /// <summary> severity. </summary>
+        /// <summary>
+        /// severity
+        /// Serialized Name: SmartGroupsSortByFields.severity
+        /// </summary>
         public static SmartGroupsSortByField Severity { get; } = new SmartGroupsSortByField(SeverityValue);
-        /// <summary> startDateTime. </summary>
+        /// <summary>
+        /// startDateTime
+        /// Serialized Name: SmartGroupsSortByFields.startDateTime
+        /// </summary>
         public static SmartGroupsSortByField StartDateTime { get; } = new SmartGroupsSortByField(StartDateTimeValue);
-        /// <summary> lastModifiedDateTime. </summary>
+        /// <summary>
+        /// lastModifiedDateTime
+        /// Serialized Name: SmartGroupsSortByFields.lastModifiedDateTime
+        /// </summary>
         public static SmartGroupsSortByField LastModifiedDateTime { get; } = new SmartGroupsSortByField(LastModifiedDateTimeValue);
         /// <summary> Determines if two <see cref="SmartGroupsSortByField"/> values are the same. </summary>
         public static bool operator ==(SmartGroupsSortByField left, SmartGroupsSortByField right) => left.Equals(right);

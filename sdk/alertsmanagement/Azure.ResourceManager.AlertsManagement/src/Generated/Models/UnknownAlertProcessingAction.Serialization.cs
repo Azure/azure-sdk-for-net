@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownAlertProcessingRuleAction : IUtf8JsonSerializable
+    internal partial class UnknownAlertProcessingAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownAlertProcessingRuleAction DeserializeUnknownAlertProcessingRuleAction(JsonElement element)
+        internal static UnknownAlertProcessingAction DeserializeUnknownAlertProcessingAction(JsonElement element)
         {
-            AlertProcessingRuleActionType actionType = default;
+            AlertProcessingActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"))
                 {
-                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
+                    actionType = new AlertProcessingActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownAlertProcessingRuleAction(actionType);
+            return new UnknownAlertProcessingAction(actionType);
         }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Operator for a given condition. </summary>
+    /// <summary>
+    /// Operator for a given condition.
+    /// Serialized Name: AlertProcessingRuleOperator
+    /// </summary>
     public readonly partial struct AlertProcessingRuleOperator : IEquatable<AlertProcessingRuleOperator>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string ContainsValue = "Contains";
         private const string DoesNotContainValue = "DoesNotContain";
 
-        /// <summary> Equals. </summary>
+        /// <summary>
+        /// Equals
+        /// Serialized Name: AlertProcessingRuleOperator.Equals
+        /// </summary>
         public static AlertProcessingRuleOperator EqualsValue { get; } = new AlertProcessingRuleOperator(EqualsValueValue);
-        /// <summary> NotEquals. </summary>
+        /// <summary>
+        /// NotEquals
+        /// Serialized Name: AlertProcessingRuleOperator.NotEquals
+        /// </summary>
         public static AlertProcessingRuleOperator NotEquals { get; } = new AlertProcessingRuleOperator(NotEqualsValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: AlertProcessingRuleOperator.Contains
+        /// </summary>
         public static AlertProcessingRuleOperator Contains { get; } = new AlertProcessingRuleOperator(ContainsValue);
-        /// <summary> DoesNotContain. </summary>
+        /// <summary>
+        /// DoesNotContain
+        /// Serialized Name: AlertProcessingRuleOperator.DoesNotContain
+        /// </summary>
         public static AlertProcessingRuleOperator DoesNotContain { get; } = new AlertProcessingRuleOperator(DoesNotContainValue);
         /// <summary> Determines if two <see cref="AlertProcessingRuleOperator"/> values are the same. </summary>
         public static bool operator ==(AlertProcessingRuleOperator left, AlertProcessingRuleOperator right) => left.Equals(right);

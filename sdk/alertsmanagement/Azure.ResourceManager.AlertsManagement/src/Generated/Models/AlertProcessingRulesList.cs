@@ -11,7 +11,10 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> List of alert processing rules. </summary>
+    /// <summary>
+    /// List of alert processing rules.
+    /// Serialized Name: AlertProcessingRulesList
+    /// </summary>
     internal partial class AlertProcessingRulesList
     {
         /// <summary> Initializes a new instance of AlertProcessingRulesList. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRulesList. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of alert processing rules. </param>
-        /// <param name="value"> List of alert processing rules. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of alert processing rules.
+        /// Serialized Name: AlertProcessingRulesList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// List of alert processing rules.
+        /// Serialized Name: AlertProcessingRulesList.value
+        /// </param>
         internal AlertProcessingRulesList(string nextLink, IReadOnlyList<AlertProcessingRuleData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> URL to fetch the next set of alert processing rules. </summary>
+        /// <summary>
+        /// URL to fetch the next set of alert processing rules.
+        /// Serialized Name: AlertProcessingRulesList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> List of alert processing rules. </summary>
+        /// <summary>
+        /// List of alert processing rules.
+        /// Serialized Name: AlertProcessingRulesList.value
+        /// </summary>
         public IReadOnlyList<AlertProcessingRuleData> Value { get; }
     }
 }

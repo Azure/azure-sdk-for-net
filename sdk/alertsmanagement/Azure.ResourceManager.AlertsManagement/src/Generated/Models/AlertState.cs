@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The AlertState. </summary>
+    /// <summary>
+    /// The AlertState.
+    /// Serialized Name: AlertState
+    /// </summary>
     public readonly partial struct AlertState : IEquatable<AlertState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string AcknowledgedValue = "Acknowledged";
         private const string ClosedValue = "Closed";
 
-        /// <summary> New. </summary>
+        /// <summary>
+        /// New
+        /// Serialized Name: AlertState.New
+        /// </summary>
         public static AlertState New { get; } = new AlertState(NewValue);
-        /// <summary> Acknowledged. </summary>
+        /// <summary>
+        /// Acknowledged
+        /// Serialized Name: AlertState.Acknowledged
+        /// </summary>
         public static AlertState Acknowledged { get; } = new AlertState(AcknowledgedValue);
-        /// <summary> Closed. </summary>
+        /// <summary>
+        /// Closed
+        /// Serialized Name: AlertState.Closed
+        /// </summary>
         public static AlertState Closed { get; } = new AlertState(ClosedValue);
         /// <summary> Determines if two <see cref="AlertState"/> values are the same. </summary>
         public static bool operator ==(AlertState left, AlertState right) => left.Equals(right);

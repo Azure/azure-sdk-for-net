@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The AlertsSummaryGroupByField. </summary>
+    /// <summary>
+    /// The AlertsSummaryGroupByField.
+    /// Serialized Name: AlertsSummaryGroupByFields
+    /// </summary>
     public readonly partial struct AlertsSummaryGroupByField : IEquatable<AlertsSummaryGroupByField>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string SignalTypeValue = "signalType";
         private const string AlertRuleValue = "alertRule";
 
-        /// <summary> severity. </summary>
+        /// <summary>
+        /// severity
+        /// Serialized Name: AlertsSummaryGroupByFields.severity
+        /// </summary>
         public static AlertsSummaryGroupByField Severity { get; } = new AlertsSummaryGroupByField(SeverityValue);
-        /// <summary> alertState. </summary>
+        /// <summary>
+        /// alertState
+        /// Serialized Name: AlertsSummaryGroupByFields.alertState
+        /// </summary>
         public static AlertsSummaryGroupByField AlertState { get; } = new AlertsSummaryGroupByField(AlertStateValue);
-        /// <summary> monitorCondition. </summary>
+        /// <summary>
+        /// monitorCondition
+        /// Serialized Name: AlertsSummaryGroupByFields.monitorCondition
+        /// </summary>
         public static AlertsSummaryGroupByField MonitorCondition { get; } = new AlertsSummaryGroupByField(MonitorConditionValue);
-        /// <summary> monitorService. </summary>
+        /// <summary>
+        /// monitorService
+        /// Serialized Name: AlertsSummaryGroupByFields.monitorService
+        /// </summary>
         public static AlertsSummaryGroupByField MonitorService { get; } = new AlertsSummaryGroupByField(MonitorServiceValue);
-        /// <summary> signalType. </summary>
+        /// <summary>
+        /// signalType
+        /// Serialized Name: AlertsSummaryGroupByFields.signalType
+        /// </summary>
         public static AlertsSummaryGroupByField SignalType { get; } = new AlertsSummaryGroupByField(SignalTypeValue);
-        /// <summary> alertRule. </summary>
+        /// <summary>
+        /// alertRule
+        /// Serialized Name: AlertsSummaryGroupByFields.alertRule
+        /// </summary>
         public static AlertsSummaryGroupByField AlertRule { get; } = new AlertsSummaryGroupByField(AlertRuleValue);
         /// <summary> Determines if two <see cref="AlertsSummaryGroupByField"/> values are the same. </summary>
         public static bool operator ==(AlertsSummaryGroupByField left, AlertsSummaryGroupByField right) => left.Equals(right);

@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Monitor service details. </summary>
+    /// <summary>
+    /// Monitor service details
+    /// Serialized Name: MonitorServiceList
+    /// </summary>
     public partial class MonitorServiceList : ServiceAlertsMetaDataProperties
     {
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
-        /// <param name="data"> Array of operations. </param>
+        /// <param name="data">
+        /// Array of operations
+        /// Serialized Name: MonitorServiceList.data
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data)
         {
@@ -29,15 +35,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
-        /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
-        /// <param name="data"> Array of operations. </param>
+        /// <param name="metadataIdentifier">
+        /// Identification of the information to be retrieved by API call
+        /// Serialized Name: ServiceAlertsMetaDataProperties.metadataIdentifier
+        /// </param>
+        /// <param name="data">
+        /// Array of operations
+        /// Serialized Name: MonitorServiceList.data
+        /// </param>
         internal MonitorServiceList(ServiceAlertMetadataIdentifier metadataIdentifier, IReadOnlyList<MonitorServiceDetails> data) : base(metadataIdentifier)
         {
             Data = data;
             MetadataIdentifier = metadataIdentifier;
         }
 
-        /// <summary> Array of operations. </summary>
+        /// <summary>
+        /// Array of operations
+        /// Serialized Name: MonitorServiceList.data
+        /// </summary>
         public IReadOnlyList<MonitorServiceDetails> Data { get; }
     }
 }

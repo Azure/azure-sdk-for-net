@@ -13,9 +13,18 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     internal partial class UnknownAlertProcessingRuleRecurrence : AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of UnknownAlertProcessingRuleRecurrence. </summary>
-        /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
+        /// <param name="recurrenceType">
+        /// Specifies when the recurrence should be applied.
+        /// Serialized Name: AlertProcessingRuleRecurrence.recurrenceType
+        /// </param>
+        /// <param name="startOn">
+        /// Start time for recurrence.
+        /// Serialized Name: AlertProcessingRuleRecurrence.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time for recurrence.
+        /// Serialized Name: AlertProcessingRuleRecurrence.endTime
+        /// </param>
         internal UnknownAlertProcessingRuleRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(recurrenceType, startOn, endOn)
         {
             RecurrenceType = recurrenceType;
