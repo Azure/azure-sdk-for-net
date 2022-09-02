@@ -39,7 +39,7 @@ namespace Azure.Maps.Search.Tests
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+            var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
             var searchResult = await client.SearchAddressAsync("Seattle");
             var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
             var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
@@ -52,7 +52,7 @@ namespace Azure.Maps.Search.Tests
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+            var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
             var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
                 Coordinates = new GeoPosition(121.56, 25.04),
                 Language = "en"
@@ -64,7 +64,7 @@ namespace Azure.Maps.Search.Tests
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+            var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
             var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
                 coordinates = new GeoPosition(121.0, 24.0),
                 Language = "en"
@@ -76,7 +76,7 @@ namespace Azure.Maps.Search.Tests
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+            var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
             var address = new StructuredAddress {
                 CountryCode = "US",
                 StreetNumber = "15127",
@@ -93,7 +93,7 @@ namespace Azure.Maps.Search.Tests
         {
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+            var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
            var sfPolygon = new GeoPolygon(new[]
             {
                 new GeoPosition(-122.43576049804686, 37.752415234354402),
@@ -123,7 +123,7 @@ namespace Azure.Maps.Search.Tests
             var clientId = TestEnvironment.MapAccountClientId;
 
             // #region Snippet:SearchingAnAddress
-            var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+            var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
             SearchAddressResult searchResponse = client.SearchAddress("Seattle");
 
             var primaryResult = searchResponse.Results.First();
