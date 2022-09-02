@@ -3,12 +3,18 @@
 ## 4.0.0-beta.6 (Unreleased)
 
 ### Features Added
+- Added `GetWords` method to `DocumentLine`. It can be used to split the line into separate `DocumentWord` instances.
 - Added derived classes to `DocumentModelOperationDetails` for each kind of operation: `DocumentModelBuildOperationDetails`, `DocumentModelCopyToOperationDetails`, and `DocumentModelComposeOperationDetails`.
+- Added `DocumentField.ExpectedFieldType` property.
 
 ### Breaking Changes
 - The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
+- Renamed `DocumentModelAdministrationClient` methods to use the term `DocumentModel` instead of `Model` only. For example, `BuildModel` and `GetModels` became `BuildDocumentModel` and `GetDocumentModels`.
+  - Similarly, `Operation` types have been renamed to reflect this change. For example, `ComposeModelOperation` became `ComposeDocumentModelOperation`.
+  - As a consequence, `BuildModelOperation` has been renamed to `BuildDocumentModelOperation`.
 - Removed the `BoundingPolygon` type. All `BoundingPolygon` properties are now of type `IReadOnlyList<PointF>`.
 - Moved all `DocumentField` conversion methods, such as `AsDate` and `AsString`, to the new `DocumentFieldValue` class. They can be accessed from the `DocumentField.Value` property.
+- `DocumentField.ValueType` (now called `FieldType`) can now be `Unknown` when the field value couldn't be parsed by the service. In this case, `DocumentField.Content` can be used to get a textual representation of the field.
 - Updated `DocumentField.AsDate` to return a `DateTimeOffset` instead of a `DateTime`.
 - Renamed classes `DocumentModelOperationDetails` and `DocumentModelOperationSummary` to `OperationDetails` and `OperationSummary`, respectively.
 - Moved property `Result` in `DocumentModelOperationDetails` (now called `OperationDetails`) to each of its new derived classes. The property can't be accessed from the base class anymore.
@@ -24,6 +30,9 @@
 - Overrode `BoundingRegion.ToString` to include information about its page number and its bounding polygon in its string representation.
 - `DocumentSpan` now implements the `IEquatable<DocumentSpan>` interface.
 - Overrode `DocumentSpan.ToString` to include information about its index and its length in its string representation.
+- Renamed `LengthUnit` to `DocumentPageLengthUnit`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+- Renamed `SelectionMarkState` to `DocumentSelectionMarkState`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+- Renamed `CopyAuthorization` to `DocumentModelCopyAuthorization`. This change only affects the type defined in the `DocumentAnalysis` namespace.
 
 ### Bugs Fixed
 
