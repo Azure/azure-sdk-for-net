@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableMongoDBResourcesListResult. </summary>
         internal RestorableMongoDBResourcesListResult()
         {
-            Value = new ChangeTrackingList<DatabaseRestoreResourceInfo>();
+            Value = new ChangeTrackingList<RestorableMongoDBResourcesGetResult>();
         }
 
         /// <summary> Initializes a new instance of RestorableMongoDBResourcesListResult. </summary>
         /// <param name="value"> List of restorable MongoDB resources, including the database and collection names. </param>
-        internal RestorableMongoDBResourcesListResult(IReadOnlyList<DatabaseRestoreResourceInfo> value)
+        internal RestorableMongoDBResourcesListResult(IReadOnlyList<RestorableMongoDBResourcesGetResult> value)
         {
             Value = value;
         }
 
         /// <summary> List of restorable MongoDB resources, including the database and collection names. </summary>
-        public IReadOnlyList<DatabaseRestoreResourceInfo> Value { get; }
+        public IReadOnlyList<RestorableMongoDBResourcesGetResult> Value { get; }
     }
 }

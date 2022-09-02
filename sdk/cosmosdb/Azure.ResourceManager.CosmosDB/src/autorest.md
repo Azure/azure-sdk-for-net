@@ -10,7 +10,7 @@ csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
 require: https://github.com/Azure/azure-rest-api-specs/blob/9918d83b021f4abe956ca3be5df358482f50433a/specification/cosmos-db/resource-manager/readme.md
-tag: package-2021-10
+tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -108,6 +108,7 @@ rename-rules:
   Etag: ETag|etag
   Mongodb: MongoDB
   VNet: Vnet
+  API: Api
 
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
@@ -244,6 +245,16 @@ rename-mapping:
   MongoIndexOptions: MongoDBIndexConfig
   BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
   PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
+  RegionalServiceResource: CosmosDBRegionalServiceInfo
+  SqlDedicatedGatewayRegionalServiceResource: CosmosDBSqlDedicatedGatewayRegionalServiceInfo
+  SqlDedicatedGatewayServiceResourceProperties: CosmosDBSqlDedicatedGatewayServiceProperties
+  GraphAPIComputeRegionalServiceResource: CosmosDBGraphAPIComputeRegionalServiceInfo
+  GraphAPIComputeServiceResourceProperties: CosmosDBGraphAPIComputeServiceceProperties
+  DataTransferRegionalServiceResource: CosmosDBDataTransferRegionalServiceInfo
+  DataTransferServiceResourceProperties: CosmosDBDataTransferServiceProperties
+  MaterializedViewsBuilderRegionalServiceResource: CosmosDBMaterializedViewsBuilderRegionalServiceInfo
+  MaterializedViewsBuilderServiceResourceProperties: CosmosDBMaterializedViewsBuilderServiceProperties
+  ServiceResourceListResult: CosmosDBServiceListResult
 
 prepend-rp-prefix:
 - UniqueKey
@@ -278,6 +289,10 @@ prepend-rp-prefix:
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
+- ServiceSize
+- ServiceStatus
+- ServiceResourceProperties
+- ServiceResource
 
 directive:
 # The notebook is offline due to security issues
