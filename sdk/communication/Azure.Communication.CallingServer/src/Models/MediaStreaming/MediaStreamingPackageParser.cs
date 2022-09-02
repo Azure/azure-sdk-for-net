@@ -6,7 +6,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Communication.CallingServer.Models.MediaStreaming;
 using Azure.Core;
-using Azure.Messaging;
 
 namespace Azure.Communication.CallingServer
 {
@@ -27,9 +26,9 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Parsing a MediaStreaming package from a decoded byte array.
+        /// Parsing a MediaStreaming package from a byte array.
         /// </summary>
-        /// <param name="receivedBytes">a base64 decoded UTF8 byte array.</param>
+        /// <param name="receivedBytes">a UTF8 byte array.</param>
         /// <returns></returns>
         public static MediaStreamingPackageBase Parse(byte[] receivedBytes)
         {

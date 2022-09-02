@@ -443,6 +443,7 @@ namespace Azure.Communication.CallingServer
     public static partial class MediaStreamingPackageParser
     {
         public static Azure.Communication.CallingServer.MediaStreamingPackageBase Parse(System.BinaryData json) { throw null; }
+        public static Azure.Communication.CallingServer.MediaStreamingPackageBase Parse(byte[] receivedBytes) { throw null; }
         public static Azure.Communication.CallingServer.MediaStreamingPackageBase Parse(string stringJson) { throw null; }
         public static Azure.Communication.CallingServer.MediaStreamingPackageBase[] ParseMany(System.BinaryData json) { throw null; }
     }
