@@ -11,7 +11,7 @@
 - The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
 - Renamed `DocumentModelAdministrationClient` methods to use the term `DocumentModel` instead of `Model` only. For example, `BuildModel` and `GetModels` became `BuildDocumentModel` and `GetDocumentModels`.
   - Similarly, `Operation` types have been renamed to reflect this change. For example, `ComposeModelOperation` became `ComposeDocumentModelOperation`.
-  - As a consequence, `BuildModelOperation` has been renamed to `BuildDocumentModelOperation`.
+  - As a consequence, `BuildModelOptions` has been renamed to `BuildDocumentModelOptions`.
 - Removed the `BoundingPolygon` type. All `BoundingPolygon` properties are now of type `IReadOnlyList<PointF>`.
 - Moved all `DocumentField` conversion methods, such as `AsDate` and `AsString`, to the new `DocumentFieldValue` class. They can be accessed from the `DocumentField.Value` property.
 - `DocumentField.ValueType` (now called `FieldType`) can now be `Unknown` when the field value couldn't be parsed by the service. In this case, `DocumentField.Content` can be used to get a textual representation of the field.
