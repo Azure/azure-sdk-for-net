@@ -27,9 +27,26 @@ namespace Azure.Template
             RequiredString = requiredString;
         }
 
+        /// <summary> Initializes a new instance of EvolvingModel. </summary>
+        /// <param name="requiredInt"> Value type property available in 2022-01-01. </param>
+        /// <param name="requiredString"> Reference type property available in 2022-01-01. </param>
+        /// <param name="optionalInt"> Value type property added in 2022-02-02. </param>
+        /// <param name="optionalString"> Reference type property added in 2022-02-02. </param>
+        internal EvolvingModel(int requiredInt, string requiredString, int? optionalInt, string optionalString)
+        {
+            RequiredInt = requiredInt;
+            RequiredString = requiredString;
+            OptionalInt = optionalInt;
+            OptionalString = optionalString;
+        }
+
         /// <summary> Value type property available in 2022-01-01. </summary>
         public int RequiredInt { get; set; }
         /// <summary> Reference type property available in 2022-01-01. </summary>
         public string RequiredString { get; set; }
+        /// <summary> Value type property added in 2022-02-02. </summary>
+        public int? OptionalInt { get; set; }
+        /// <summary> Reference type property added in 2022-02-02. </summary>
+        public string OptionalString { get; set; }
     }
 }
