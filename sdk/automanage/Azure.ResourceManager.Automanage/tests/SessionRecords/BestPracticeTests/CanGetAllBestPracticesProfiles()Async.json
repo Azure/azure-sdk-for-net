@@ -1,0 +1,200 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1701de4b3480673bdc6ad121d2ab67ca-cd98d18e4e52f1f0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "83d3381efaa8f8e2833b09ad39492ca3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "395",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Sep 2022 00:22:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "92434b43-0194-4858-b0c3-475bfe9e63dc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "92434b43-0194-4858-b0c3-475bfe9e63dc",
+        "x-ms-routing-request-id": "WESTUS2:20220901T002247Z:92434b43-0194-4858-b0c3-475bfe9e63dc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "fc9d0215-3964-4895-8df1-3801ccffb3e2",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "AMVM-SubLib-006",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a677405edd3615dd1f9bd8ad53ab66f4-585d7296eb362444-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "62c77d5cafda48182fa235ea6e8095f5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Sep 2022 00:22:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "262fe158-bf2c-4f91-a856-ab8658dd963b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "262fe158-bf2c-4f91-a856-ab8658dd963b",
+        "x-ms-routing-request-id": "WESTUS2:20220901T002247Z:262fe158-bf2c-4f91-a856-ab8658dd963b"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Automanage/bestPractices?api-version=2022-05-04",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-93a87593e22fe612bd3e5a21767b062e-78a17ea879338a0b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20220831.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "589f41b9617fc1c17e86cd9180f39aa9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2319",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Sep 2022 00:22:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:a4d240dc-d543-4b4e-a019-0a571290b85d",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "589f41b9617fc1c17e86cd9180f39aa9",
+        "x-ms-correlation-request-id": "883d3cf2-70e7-4244-8dd2-91fb8eaae579",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "883d3cf2-70e7-4244-8dd2-91fb8eaae579",
+        "x-ms-routing-request-id": "WESTUS2:20220901T002247Z:883d3cf2-70e7-4244-8dd2-91fb8eaae579"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesDevTest",
+            "name": "AzureBestPracticesDevTest",
+            "type": "Microsoft.Automanage/bestPractices",
+            "properties": {
+              "configuration": {
+                "Antimalware/Enable": "true",
+                "Antimalware/EnableRealTimeProtection": "true",
+                "Antimalware/RunScheduledScan": "true",
+                "Antimalware/ScanType": "Quick",
+                "Antimalware/ScanDay": "7",
+                "Antimalware/ScanTimeInMinutes": "120",
+                "Backup/Enable": "false",
+                "VMInsights/Enable": "false",
+                "AzureSecurityCenter/Enable": "true",
+                "UpdateManagement/Enable": "true",
+                "ChangeTrackingAndInventory/Enable": "true",
+                "GuestConfiguration/Enable": "true",
+                "LogAnalytics/Enable": "true",
+                "BootDiagnostics/Enable": "true"
+              }
+            },
+            "systemData": {
+              "createdAt": "2021-06-30T00:00:00\u002B00:00",
+              "createdBy": "SYSTEM",
+              "createdByType": "User",
+              "lastModifiedAt": "2021-06-30T00:00:00\u002B00:00",
+              "lastModifiedBy": "SYSTEM",
+              "lastModifiedByType": "User"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction",
+            "name": "AzureBestPracticesProduction",
+            "type": "Microsoft.Automanage/bestPractices",
+            "properties": {
+              "configuration": {
+                "Antimalware/Enable": "true",
+                "Antimalware/EnableRealTimeProtection": "true",
+                "Antimalware/RunScheduledScan": "true",
+                "Antimalware/ScanType": "Quick",
+                "Antimalware/ScanDay": "7",
+                "Antimalware/ScanTimeInMinutes": "120",
+                "Backup/Enable": "true",
+                "Backup/PolicyName": "dailyBackupPolicy",
+                "Backup/TimeZone": "UTC",
+                "Backup/InstantRpRetentionRangeInDays": "2",
+                "Backup/SchedulePolicy/ScheduleRunFrequency": "Daily",
+                "Backup/SchedulePolicy/ScheduleRunTimes": [
+                  "2017-01-26T00:00:00Z"
+                ],
+                "Backup/SchedulePolicy/SchedulePolicyType": "SimpleSchedulePolicy",
+                "Backup/RetentionPolicy/RetentionPolicyType": "LongTermRetentionPolicy",
+                "Backup/RetentionPolicy/DailySchedule/RetentionTimes": [
+                  "2017-01-26T00:00:00Z"
+                ],
+                "Backup/RetentionPolicy/DailySchedule/RetentionDuration/Count": "180",
+                "Backup/RetentionPolicy/DailySchedule/RetentionDuration/DurationType": "Days",
+                "VMInsights/Enable": "true",
+                "AzureSecurityCenter/Enable": "true",
+                "UpdateManagement/Enable": "true",
+                "ChangeTrackingAndInventory/Enable": "true",
+                "GuestConfiguration/Enable": "true",
+                "LogAnalytics/Enable": "true",
+                "BootDiagnostics/Enable": "true"
+              }
+            },
+            "systemData": {
+              "createdAt": "2021-06-30T00:00:00\u002B00:00",
+              "createdBy": "SYSTEM",
+              "createdByType": "User",
+              "lastModifiedAt": "2021-06-30T00:00:00\u002B00:00",
+              "lastModifiedBy": "SYSTEM",
+              "lastModifiedByType": "User"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "43960462",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "fc9d0215-3964-4895-8df1-3801ccffb3e2"
+  }
+}

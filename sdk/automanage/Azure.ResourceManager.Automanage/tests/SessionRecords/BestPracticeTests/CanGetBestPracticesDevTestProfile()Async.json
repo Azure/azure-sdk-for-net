@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1dd5a3ae4d1737c13fbb74b16d3d1f80-f6a5dcafbce4a817-00",
+        "traceparent": "00-40677de79fbd62f84465d800bc0e2aed-33e70ba67ee2c92c-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "d89a8f287cf056b7f83bc475e3b35152",
+        "x-ms-client-request-id": "0f3e94cc320d85647c98e6f9e901b51e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -22,10 +22,10 @@
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "91ee7ed4-de45-4872-89e5-1704e6c01b15",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "91ee7ed4-de45-4872-89e5-1704e6c01b15",
-        "x-ms-routing-request-id": "WESTUS2:20220901T002248Z:91ee7ed4-de45-4872-89e5-1704e6c01b15"
+        "x-ms-correlation-request-id": "87dfa55e-6488-4c51-90b9-0105b136c4f6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "87dfa55e-6488-4c51-90b9-0105b136c4f6",
+        "x-ms-routing-request-id": "WESTUS2:20220901T002248Z:87dfa55e-6488-4c51-90b9-0105b136c4f6"
       },
       "ResponseBody": {
         "id": "/subscriptions/fc9d0215-3964-4895-8df1-3801ccffb3e2",
@@ -48,9 +48,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f2a0ee59051299bf1e59b600a5abfac4-ba725b274a9c4ff0-00",
+        "traceparent": "00-59a9dd74de09ae26377611edf23b73f1-db3328d02936a0dc-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "aab767ae0f49a57e9a57cf97aa58b1ae",
+        "x-ms-client-request-id": "03513ef9cc49289bad02a863bd05ad6f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -64,10 +64,10 @@
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a3a265c3-74c0-4190-a338-9b6b781ba69d",
-        "x-ms-ratelimit-remaining-tenant-reads": "11995",
-        "x-ms-request-id": "a3a265c3-74c0-4190-a338-9b6b781ba69d",
-        "x-ms-routing-request-id": "WESTUS2:20220901T002248Z:a3a265c3-74c0-4190-a338-9b6b781ba69d"
+        "x-ms-correlation-request-id": "65810077-6b5f-4788-a197-59535325f79e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "65810077-6b5f-4788-a197-59535325f79e",
+        "x-ms-routing-request-id": "WESTUS2:20220901T002248Z:65810077-6b5f-4788-a197-59535325f79e"
       },
       "ResponseBody": {
         "value": [
@@ -80,21 +80,21 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction?api-version=2022-05-04",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesDevTest?api-version=2022-05-04",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c88d78057e92e9f91849b6478dc043a4-a116d13296739d0f-00",
+        "traceparent": "00-d91c1b3a359e9ccc2db80186de3ce7e9-366a811ec4dd1379-00",
         "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20220831.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "1d02f1cfae70c99d4b9129a95bc6e489",
+        "x-ms-client-request-id": "109897117f70c417cdfca3307421858e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1449",
+        "Content-Length": "857",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 01 Sep 2022 00:22:47 GMT",
         "Expires": "-1",
@@ -103,15 +103,15 @@
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1d02f1cfae70c99d4b9129a95bc6e489",
-        "x-ms-correlation-request-id": "cd89c9b1-75d2-4dcb-991f-ef51887fddcd",
-        "x-ms-ratelimit-remaining-tenant-reads": "11994",
-        "x-ms-request-id": "cd89c9b1-75d2-4dcb-991f-ef51887fddcd",
-        "x-ms-routing-request-id": "WESTUS2:20220901T002248Z:cd89c9b1-75d2-4dcb-991f-ef51887fddcd"
+        "x-ms-client-request-id": "109897117f70c417cdfca3307421858e",
+        "x-ms-correlation-request-id": "f9a6835a-b325-4123-b4ad-7bc00ddf1c49",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "f9a6835a-b325-4123-b4ad-7bc00ddf1c49",
+        "x-ms-routing-request-id": "WESTUS2:20220901T002248Z:f9a6835a-b325-4123-b4ad-7bc00ddf1c49"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction",
-        "name": "AzureBestPracticesProduction",
+        "id": "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesDevTest",
+        "name": "AzureBestPracticesDevTest",
         "type": "Microsoft.Automanage/bestPractices",
         "properties": {
           "configuration": {
@@ -121,22 +121,8 @@
             "Antimalware/ScanType": "Quick",
             "Antimalware/ScanDay": "7",
             "Antimalware/ScanTimeInMinutes": "120",
-            "Backup/Enable": "true",
-            "Backup/PolicyName": "dailyBackupPolicy",
-            "Backup/TimeZone": "UTC",
-            "Backup/InstantRpRetentionRangeInDays": "2",
-            "Backup/SchedulePolicy/ScheduleRunFrequency": "Daily",
-            "Backup/SchedulePolicy/ScheduleRunTimes": [
-              "2017-01-26T00:00:00Z"
-            ],
-            "Backup/SchedulePolicy/SchedulePolicyType": "SimpleSchedulePolicy",
-            "Backup/RetentionPolicy/RetentionPolicyType": "LongTermRetentionPolicy",
-            "Backup/RetentionPolicy/DailySchedule/RetentionTimes": [
-              "2017-01-26T00:00:00Z"
-            ],
-            "Backup/RetentionPolicy/DailySchedule/RetentionDuration/Count": "180",
-            "Backup/RetentionPolicy/DailySchedule/RetentionDuration/DurationType": "Days",
-            "VMInsights/Enable": "true",
+            "Backup/Enable": "false",
+            "VMInsights/Enable": "false",
             "AzureSecurityCenter/Enable": "true",
             "UpdateManagement/Enable": "true",
             "ChangeTrackingAndInventory/Enable": "true",
@@ -158,7 +144,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1623750399",
+    "RandomSeed": "34632427",
     "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "fc9d0215-3964-4895-8df1-3801ccffb3e2"
   }
