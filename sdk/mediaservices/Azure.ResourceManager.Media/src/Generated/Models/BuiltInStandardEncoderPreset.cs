@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes a built-in preset for encoding the input video with the Standard Encoder. </summary>
-    public partial class BuiltInStandardEncoderPreset : MediaPreset
+    public partial class BuiltInStandardEncoderPreset : MediaTransformPreset
     {
         /// <summary> Initializes a new instance of BuiltInStandardEncoderPreset. </summary>
         /// <param name="presetName"> The built-in preset to be used for encoding videos. </param>

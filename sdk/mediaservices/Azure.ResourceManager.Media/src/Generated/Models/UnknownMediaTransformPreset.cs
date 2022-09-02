@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownMediaPreset. </summary>
-    internal partial class UnknownMediaPreset : MediaPreset
+    /// <summary> The UnknownMediaTransformPreset. </summary>
+    internal partial class UnknownMediaTransformPreset : MediaTransformPreset
     {
-        /// <summary> Initializes a new instance of UnknownMediaPreset. </summary>
+        /// <summary> Initializes a new instance of UnknownMediaTransformPreset. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownMediaPreset(string odataType) : base(odataType)
+        internal UnknownMediaTransformPreset(string odataType) : base(odataType)
         {
             OdataType = odataType ?? "Unknown";
         }

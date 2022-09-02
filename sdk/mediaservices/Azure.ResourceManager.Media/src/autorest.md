@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Media
 namespace: Azure.ResourceManager.Media
-require: https://github.com/Azure/azure-rest-api-specs/blob/0f9df940977c680c39938c8b8bd5baf893737ed0/specification/mediaservices/resource-manager/readme.md
-tag: package-account-2021-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/aefbcc5fb18a3b33f401394ebeae01df0733c830/specification/mediaservices/resource-manager/readme.md
+tag: package-metadata-2022-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -68,10 +68,6 @@ rename-rules:
   CRF: Crf
   MP4: Mp4
 
-list-exception:
-- /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
-
 rename-mapping:
   AacAudioProfile.HeAacV1: HEAacV1
   AacAudioProfile.HeAacV2: HEAacV2
@@ -84,13 +80,12 @@ rename-mapping:
   ContentKeyPolicy.properties.created: CreatedOn
   ContentKeyPolicy.properties.lastModified: LastModifiedOn
   ContentKeyPolicy.properties.options: Preferences
-  ContentKeyPolicyOption: ContentKeyPolicyPreference
   Job: MediaTransformJob
   Job.properties.created: CreatedOn
   Job.properties.lastModified: LastModifiedOn
   Job.properties.startTime: StartsOn
   Job.properties.endTime: EndsOn
-  Priority: TransformOutputsPriority
+  Priority: MediaTransformOutputsPriority
   LiveEvent.properties.created: CreatedOn
   LiveEvent.properties.lastModified: LastModifiedOn
   LiveOutput.properties.created: CreatedOn
@@ -132,10 +127,10 @@ rename-mapping:
   Image: ImageBasicProperties
   Video: InputVideoEncodingProperties
   Layer: VideoOrImageLayerProperties
-  ListContainerSasInput: GetContainerSasContent
+  ListContainerSasInput: GetStorageContainersContent
   ListContainerSasInput.expiryTime: ExpiresOn
   ListEdgePoliciesInput: GetEdgePoliciesContent
-  Preset: MediaPreset
+  Preset: MediaTransformPreset
   StorageAccountType: MediaServicesStorageAccountType
   Visibility: PlayerVisibility
   AssetCollection: AssetListResult
@@ -229,8 +224,17 @@ rename-mapping:
   HlsSettings.default: IsDefault
   HlsSettings.forced: IsForced
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
+  SecurityLevel: ContentKeyPolicyPlayReadySecurityLevel
   
 directive:
+  - remove-operation: OperationResults_Get
+  - remove-operation: MediaServicesOperationResults_Get
+  - remove-operation: StreamingEndpoints_OperationLocation
+  - remove-operation: LiveOutputs_OperationLocation
+  - remove-operation: LiveEvents_OperationLocation
+  - remove-operation: LiveEvents_AsyncOperation
+  - remove-operation: LiveOutputs_AsyncOperation
+  - remove-operation: StreamingEndpoints_AsyncOperation
   - from: Accounts.json
     where: $.definitions
     transform: >

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownMediaPreset : IUtf8JsonSerializable
+    internal partial class UnknownMediaTransformPreset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownMediaPreset DeserializeUnknownMediaPreset(JsonElement element)
+        internal static UnknownMediaTransformPreset DeserializeUnknownMediaTransformPreset(JsonElement element)
         {
             string odataType = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new UnknownMediaPreset(odataType);
+            return new UnknownMediaTransformPreset(odataType);
         }
     }
 }

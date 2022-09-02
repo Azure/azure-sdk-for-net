@@ -10,9 +10,9 @@ using System;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents a policy option. </summary>
-    public partial class ContentKeyPolicyPreference
+    public partial class ContentKeyPolicyOption
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPreference. </summary>
+        /// <summary> Initializes a new instance of ContentKeyPolicyOption. </summary>
         /// <param name="configuration">
         /// The key delivery configuration.
         /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> or <paramref name="restriction"/> is null. </exception>
-        public ContentKeyPolicyPreference(ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
+        public ContentKeyPolicyOption(ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
         {
             if (configuration == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             Restriction = restriction;
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPreference. </summary>
+        /// <summary> Initializes a new instance of ContentKeyPolicyOption. </summary>
         /// <param name="policyOptionId"> The legacy Policy Option ID. </param>
         /// <param name="name"> The Policy Option description. </param>
         /// <param name="configuration">
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
         /// </param>
-        internal ContentKeyPolicyPreference(Guid? policyOptionId, string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
+        internal ContentKeyPolicyOption(Guid? policyOptionId, string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
         {
             PolicyOptionId = policyOptionId;
             Name = name;

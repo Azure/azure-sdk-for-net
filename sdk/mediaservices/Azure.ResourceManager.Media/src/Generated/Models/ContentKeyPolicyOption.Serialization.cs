@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPreference : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyOption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyPreference DeserializeContentKeyPolicyPreference(JsonElement element)
+        internal static ContentKeyPolicyOption DeserializeContentKeyPolicyOption(JsonElement element)
         {
             Optional<Guid> policyOptionId = default;
             Optional<string> name = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ContentKeyPolicyPreference(Optional.ToNullable(policyOptionId), name.Value, configuration, restriction);
+            return new ContentKeyPolicyOption(Optional.ToNullable(policyOptionId), name.Value, configuration, restriction);
         }
     }
 }
