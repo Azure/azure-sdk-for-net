@@ -54,10 +54,6 @@ directive:
   - remove-operation: ServicePrincipals_ListBySubscription
   - remove-operation: ServicePrincipals_Get
 
-  - from: automanage.json
-    where: $.definitions.AssignmentReportProperties.duration
-    transform: $['format'] = "
-
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
     where: $.paths
