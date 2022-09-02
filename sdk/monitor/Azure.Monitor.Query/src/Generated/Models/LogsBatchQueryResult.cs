@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -29,9 +28,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <param name="statistics"> Any object. </param>
-        /// <param name="render"> Any object. </param>
+        /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, object render, ResponseError error) : base(allTables, statistics, render, error)
+        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error) : base(allTables, statistics, visualization, error)
         {
         }
     }

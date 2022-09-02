@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of IndexingResult. </summary>
         /// <param name="key"> The key of a document that was in the indexing request. </param>
         /// <param name="succeeded"> A value indicating whether the indexing operation succeeded for the document identified by the key. </param>
-        /// <param name="statusCode"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
+        /// <param name="status"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        internal IndexingResult(string key, bool succeeded, int statusCode)
+        internal IndexingResult(string key, bool succeeded, int status)
         {
             if (key == null)
             {
@@ -26,20 +26,20 @@ namespace Azure.Search.Documents.Models
 
             Key = key;
             Succeeded = succeeded;
-            StatusCode = statusCode;
+            Status = status;
         }
 
         /// <summary> Initializes a new instance of IndexingResult. </summary>
         /// <param name="key"> The key of a document that was in the indexing request. </param>
         /// <param name="errorMessage"> The error message explaining why the indexing operation failed for the document identified by the key; null if indexing succeeded. </param>
         /// <param name="succeeded"> A value indicating whether the indexing operation succeeded for the document identified by the key. </param>
-        /// <param name="statusCode"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
-        internal IndexingResult(string key, string errorMessage, bool succeeded, int statusCode)
+        /// <param name="status"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
+        internal IndexingResult(string key, string errorMessage, bool succeeded, int status)
         {
             Key = key;
             ErrorMessage = errorMessage;
             Succeeded = succeeded;
-            StatusCode = statusCode;
+            Status = status;
         }
 
         /// <summary> The key of a document that was in the indexing request. </summary>
@@ -48,7 +48,5 @@ namespace Azure.Search.Documents.Models
         public string ErrorMessage { get; }
         /// <summary> A value indicating whether the indexing operation succeeded for the document identified by the key. </summary>
         public bool Succeeded { get; }
-        /// <summary> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </summary>
-        public int StatusCode { get; }
     }
 }

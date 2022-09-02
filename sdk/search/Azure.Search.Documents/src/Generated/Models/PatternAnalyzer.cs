@@ -24,7 +24,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Flags = new ChangeTrackingList<RegexFlag>();
             Stopwords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.PatternAnalyzer";
         }
@@ -34,13 +33,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="lowerCaseTerms"> A value indicating whether terms should be lower-cased. Default is true. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
-        /// <param name="flags"> Regular expression flags. </param>
+        /// <param name="flagsInternal"> Regular expression flags. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
-        internal PatternAnalyzer(string oDataType, string name, bool? lowerCaseTerms, string pattern, IList<RegexFlag> flags, IList<string> stopwords) : base(oDataType, name)
+        internal PatternAnalyzer(string oDataType, string name, bool? lowerCaseTerms, string pattern, string flagsInternal, IList<string> stopwords) : base(oDataType, name)
         {
             LowerCaseTerms = lowerCaseTerms;
             Pattern = pattern;
-            Flags = flags;
+            FlagsInternal = flagsInternal;
             Stopwords = stopwords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternAnalyzer";
         }

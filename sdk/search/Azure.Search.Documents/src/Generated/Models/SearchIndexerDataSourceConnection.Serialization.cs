@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -26,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("credentials");
-            writer.WriteObjectValue(Credentials);
+            writer.WriteObjectValue(CredentialsInternal);
             writer.WritePropertyName("container");
             writer.WriteObjectValue(Container);
             if (Optional.IsDefined(Identity))
@@ -65,10 +64,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataDeletionDetectionPolicy");
                 }
             }
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(_etag);
             }
             if (Optional.IsDefined(EncryptionKey))
             {
@@ -95,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<SearchIndexerDataIdentity> identity = default;
             Optional<DataChangeDetectionPolicy> dataChangeDetectionPolicy = default;
             Optional<DataDeletionDetectionPolicy> dataDeletionDetectionPolicy = default;
-            Optional<ETag> odataEtag = default;
+            Optional<string> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -156,12 +155,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    odataEtag = new ETag(property.Value.GetString());
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("encryptionKey"))
@@ -175,7 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerDataSourceConnection(name, description.Value, type, credentials, container, identity.Value, dataChangeDetectionPolicy.Value, dataDeletionDetectionPolicy.Value, Optional.ToNullable(odataEtag), encryptionKey.Value);
+            return new SearchIndexerDataSourceConnection(name, description.Value, type, credentials, container, identity.Value, dataChangeDetectionPolicy.Value, dataDeletionDetectionPolicy.Value, odataEtag.Value, encryptionKey.Value);
         }
     }
 }

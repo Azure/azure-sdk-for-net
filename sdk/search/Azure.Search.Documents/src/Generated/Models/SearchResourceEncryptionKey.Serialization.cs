@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,11 +20,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("keyVaultKeyVersion");
             writer.WriteStringValue(KeyVersion);
             writer.WritePropertyName("keyVaultUri");
-            writer.WriteStringValue(VaultUri.AbsoluteUri);
-            if (Optional.IsDefined(AccessCredentials))
+            writer.WriteStringValue(_vaultUri);
+            if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials");
-                writer.WriteObjectValue(AccessCredentials);
+                writer.WriteObjectValue(AccessCredentialsInternal);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -46,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             string keyVaultKeyName = default;
             string keyVaultKeyVersion = default;
-            Uri keyVaultUri = default;
+            string keyVaultUri = default;
             Optional<AzureActiveDirectoryApplicationCredentials> accessCredentials = default;
             Optional<SearchIndexerDataIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
@@ -63,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("keyVaultUri"))
                 {
-                    keyVaultUri = new Uri(property.Value.GetString());
+                    keyVaultUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("accessCredentials"))

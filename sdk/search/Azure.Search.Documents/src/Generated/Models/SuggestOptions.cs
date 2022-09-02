@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents
 {
@@ -22,7 +20,5 @@ namespace Azure.Search.Documents
         public string HighlightPreTag { get; set; }
         /// <summary> A number between 0 and 100 indicating the percentage of the index that must be covered by a suggestion query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 80. </summary>
         public double? MinimumCoverage { get; set; }
-        /// <summary> The number of suggestions to retrieve. This must be a value between 1 and 100. The default is 5. </summary>
-        public int? Top { get; set; }
     }
 }

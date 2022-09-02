@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -32,16 +31,14 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <param name="statistics"> Any object. </param>
-        /// <param name="render"> Any object. </param>
+        /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        internal LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, object render, ResponseError error)
+        internal LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error)
         {
             AllTables = allTables;
             _statistics = statistics;
-            Render = render;
-            Error = error;
+            _visualization = visualization;
+            _error = error;
         }
-        /// <summary> Any object. </summary>
-        public object Render { get; }
     }
 }

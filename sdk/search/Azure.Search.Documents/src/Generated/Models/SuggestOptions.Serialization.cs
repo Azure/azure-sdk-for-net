@@ -40,29 +40,29 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (Optional.IsCollectionDefined(OrderBy))
+            if (Optional.IsDefined(OrderByRaw))
             {
                 writer.WritePropertyName("orderby");
-                writer.(OrderBy);
+                writer.WriteStringValue(OrderByRaw);
             }
             writer.WritePropertyName("search");
             writer.WriteStringValue(SearchText);
-            if (Optional.IsCollectionDefined(SearchFields))
+            if (Optional.IsDefined(SearchFieldsRaw))
             {
                 writer.WritePropertyName("searchFields");
-                writer.(SearchFields);
+                writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (Optional.IsCollectionDefined(Select))
+            if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select");
-                writer.(Select);
+                writer.WriteStringValue(SelectRaw);
             }
             writer.WritePropertyName("suggesterName");
             writer.WriteStringValue(SuggesterName);
-            if (Optional.IsDefined(Top))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top");
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             writer.WriteEndObject();
         }

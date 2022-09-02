@@ -18,11 +18,7 @@ namespace Azure.Search.Documents
         public SearchOptions()
         {
             Facets = new ChangeTrackingList<string>();
-            OrderBy = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
-            SearchFields = new ChangeTrackingList<string>();
-            Select = new ChangeTrackingList<string>();
-            SemanticFields = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SearchOptions. </summary>
@@ -33,25 +29,25 @@ namespace Azure.Search.Documents
         /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &amp;lt;/em&amp;gt;. </param>
         /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &amp;lt;em&amp;gt;. </param>
         /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </param>
-        /// <param name="orderBy"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
+        /// <param name="orderByRaw"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
         /// <param name="queryType"> A value that specifies the syntax of the search query. The default is &apos;simple&apos;. Use &apos;full&apos; if your query uses the Lucene query syntax. </param>
         /// <param name="scoringStatistics"> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is &apos;local&apos;. Use &apos;global&apos; to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </param>
         /// <param name="sessionId"> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a &apos;_&apos; character. </param>
         /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called &apos;mylocation&apos; the parameter string would be &quot;mylocation--122.2,44.8&quot; (without the quotes). </param>
         /// <param name="scoringProfile"> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </param>
-        /// <param name="semanticConfiguration"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
+        /// <param name="semanticConfigurationName"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
         /// <param name="searchText"> A full-text search query expression; Use &quot;*&quot; or omit this parameter to match all documents. </param>
-        /// <param name="searchFields"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
+        /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
         /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
-        /// <param name="speller"> A value that specified the type of the speller to use to spell-correct individual search query terms. </param>
-        /// <param name="answers"> A value that specifies whether answers should be returned as part of the search response. </param>
-        /// <param name="select"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
+        /// <param name="querySpeller"> A value that specified the type of the speller to use to spell-correct individual search query terms. </param>
+        /// <param name="queryAnswerRaw"> A value that specifies whether answers should be returned as part of the search response. </param>
+        /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
-        /// <param name="top"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
-        /// <param name="captions"> A value that specifies whether captions should be returned as part of the search response. </param>
-        /// <param name="semanticFields"> The comma-separated list of field names used for semantic search. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IList<string> orderBy, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfiguration, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? speller, QueryAnswerType? answers, IList<string> select, int? skip, int? top, QueryCaptionType? captions, IList<string> semanticFields)
+        /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
+        /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
+        /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -60,24 +56,24 @@ namespace Azure.Search.Documents
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
             MinimumCoverage = minimumCoverage;
-            OrderBy = orderBy;
+            OrderByRaw = orderByRaw;
             QueryType = queryType;
             ScoringStatistics = scoringStatistics;
             SessionId = sessionId;
             ScoringParameters = scoringParameters;
             ScoringProfile = scoringProfile;
-            SemanticConfiguration = semanticConfiguration;
+            SemanticConfigurationName = semanticConfigurationName;
             SearchText = searchText;
-            SearchFields = searchFields;
+            SearchFieldsRaw = searchFieldsRaw;
             SearchMode = searchMode;
             QueryLanguage = queryLanguage;
-            Speller = speller;
-            Answers = answers;
-            Select = select;
+            QuerySpeller = querySpeller;
+            QueryAnswerRaw = queryAnswerRaw;
+            SelectRaw = selectRaw;
             Skip = skip;
-            Top = top;
-            Captions = captions;
-            SemanticFields = semanticFields;
+            Size = size;
+            QueryCaptionRaw = queryCaptionRaw;
+            SemanticFieldsRaw = semanticFieldsRaw;
         }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &amp;lt;/em&amp;gt;. </summary>
         public string HighlightPostTag { get; set; }
@@ -93,19 +89,9 @@ namespace Azure.Search.Documents
         public string SessionId { get; set; }
         /// <summary> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </summary>
         public string ScoringProfile { get; set; }
-        /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
-        public string SemanticConfiguration { get; set; }
         /// <summary> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </summary>
         public SearchMode? SearchMode { get; set; }
-        /// <summary> A value that specified the type of the speller to use to spell-correct individual search query terms. </summary>
-        public QuerySpellerType? Speller { get; set; }
-        /// <summary> A value that specifies whether answers should be returned as part of the search response. </summary>
-        public QueryAnswerType? Answers { get; set; }
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
         public int? Skip { get; set; }
-        /// <summary> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </summary>
-        public int? Top { get; set; }
-        /// <summary> A value that specifies whether captions should be returned as part of the search response. </summary>
-        public QueryCaptionType? Captions { get; set; }
     }
 }

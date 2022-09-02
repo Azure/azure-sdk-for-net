@@ -12,47 +12,21 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest in Azure Cognitive Search, such as indexes and synonym maps. </summary>
     public partial class SearchResourceEncryptionKey
     {
-        /// <summary> Initializes a new instance of SearchResourceEncryptionKey. </summary>
-        /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
-        /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
-        /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be https://my-keyvault-name.vault.azure.net. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/>, <paramref name="keyVersion"/> or <paramref name="vaultUri"/> is null. </exception>
-        public SearchResourceEncryptionKey(string keyName, string keyVersion, Uri vaultUri)
-        {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
-            if (vaultUri == null)
-            {
-                throw new ArgumentNullException(nameof(vaultUri));
-            }
-
-            KeyName = keyName;
-            KeyVersion = keyVersion;
-            VaultUri = vaultUri;
-        }
 
         /// <summary> Initializes a new instance of SearchResourceEncryptionKey. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be https://my-keyvault-name.vault.azure.net. </param>
-        /// <param name="accessCredentials"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>
+        /// <param name="accessCredentialsInternal"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>
         /// <param name="identity"> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If &quot;none&quot; is specified, the value of this property is cleared. </param>
-        internal SearchResourceEncryptionKey(string keyName, string keyVersion, Uri vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentials, SearchIndexerDataIdentity identity)
+        internal SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal, SearchIndexerDataIdentity identity)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
-            VaultUri = vaultUri;
-            AccessCredentials = accessCredentials;
+            _vaultUri = vaultUri;
+            AccessCredentialsInternal = accessCredentialsInternal;
             Identity = identity;
         }
-        /// <summary> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </summary>
-        public AzureActiveDirectoryApplicationCredentials AccessCredentials { get; set; }
         /// <summary> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If &quot;none&quot; is specified, the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity Identity { get; set; }
     }
