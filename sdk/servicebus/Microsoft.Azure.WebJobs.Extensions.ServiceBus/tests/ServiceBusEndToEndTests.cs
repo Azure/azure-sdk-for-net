@@ -1528,12 +1528,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
                     new[] { message.SequenceNumber });
 
-                var received = await receiveActions.ReceiveMessagesAsync(1);
-                Assert.IsNotEmpty(received);
-
-                var peeked = await receiveActions.PeekMessagesAsync(1);
+                var peeked = await receiveActions.PeekMessagesAsync(1, message.SequenceNumber);
                 Assert.IsNotEmpty(peeked);
-                Assert.AreEqual(received.Single().SequenceNumber, peeked.Single().SequenceNumber);
+                Assert.AreEqual(message.SequenceNumber, peeked.Single().SequenceNumber);
 
                 _waitHandle1.Set();
             }
