@@ -19,19 +19,20 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     internal class ReceiverManager
     {
-        internal virtual ServiceBusReceiver Receiver { get; set; }
+        internal virtual ServiceBusReceiver Receiver { get; private set; }
 
         protected readonly ServiceBusProcessor Processor;
         protected readonly TimeSpan? _maxReceiveWaitTime;
         private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
-        protected readonly EntityScopeFactory _scopeFactory;
+        private readonly EntityScopeFactory _scopeFactory;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         public ReceiverManager(
             ServiceBusProcessor processor,
-            EntityScopeFactory scopeFactory)
+            EntityScopeFactory scopeFactory,
+            bool isSession)
         {
             Processor = processor;
             ProcessorOptions = processor.Options;
@@ -45,12 +46,16 @@ namespace Azure.Messaging.ServiceBus
                 Identifier = $"{processor.Identifier}-Receiver"
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
-            Receiver = new ServiceBusReceiver(
-                connection: Processor.Connection,
-                entityPath: Processor.EntityPath,
-                isSessionEntity: false,
-                isProcessor: true,
-                options: _receiverOptions);
+            if (!isSession)
+            {
+                Receiver = new ServiceBusReceiver(
+                    connection: Processor.Connection,
+                    entityPath: Processor.EntityPath,
+                    isSessionEntity: false,
+                    isProcessor: true,
+                    options: _receiverOptions);
+            }
+
             _scopeFactory = scopeFactory;
         }
 

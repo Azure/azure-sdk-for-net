@@ -4,21 +4,21 @@
 namespace Azure.Monitor.Ingestion
 {
     /// <summary>
-    /// test
+    /// Enum to indicate the status of a logs upload operation.
     /// </summary>
     public enum UploadLogsStatus
     {
         /// <summary>
-        /// test
+        /// Indicates that all the logs were successfully uploaded to Azure Monitor.
         /// </summary>
-        SUCCESS,
+        Success = 0,
         /// <summary>
-        /// test
+        /// Indicates that some logs failed to upload to Azure Monitor.
         /// </summary>
-        PARTIALFAILURE,
+        PartialFailure = 1,
         /// <summary>
-        /// test
+        /// Indicates that all the logs failed to upload to Azure Monitor.
         /// </summary>
-        FAILURE
+        Failure = 2
     }
 }

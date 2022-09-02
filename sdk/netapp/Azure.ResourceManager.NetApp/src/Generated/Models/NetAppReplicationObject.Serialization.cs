@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
         internal static NetAppReplicationObject DeserializeNetAppReplicationObject(JsonElement element)
         {
             Optional<string> replicationId = default;
-            Optional<EndpointType> endpointType = default;
+            Optional<NetAppEndpointType> endpointType = default;
             Optional<NetAppReplicationSchedule> replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
             Optional<string> remoteVolumeRegion = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endpointType = new EndpointType(property.Value.GetString());
+                    endpointType = new NetAppEndpointType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicationSchedule"))

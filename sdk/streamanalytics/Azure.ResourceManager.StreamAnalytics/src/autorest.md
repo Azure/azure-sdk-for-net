@@ -19,11 +19,15 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
 
+# add this configuration to avoid the type of cluster is changed to writeablesubresource from ClusterInfo automatically,The writeablesubresource type cannot fail to have the nullable attribute. In tests, the return value of the cluster is null.
+no-property-type-replacement:
+- ClusterInfo
 rename-mapping:
   SampleInput.dataLocale: dataLocalion|azure-location
   StreamingJob.properties.dataLocale: dataLocalion|azure-location
   StreamingJob.properties.jobId: -|uuid
   ClusterJob.id: -|arm-id
+  ClusterInfo.id: -|arm-id
   ClusterProperties.clusterId: -|uuid
   LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|datetime
   LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|datetime
@@ -98,7 +102,7 @@ rename-mapping:
   Transformation: StreamingJobTransformation
   UpdateMode: StreamingJobFunctionUpdateMode
   UdfType: StreamingJobFunctionUdfType
-  
+
 prepend-rp-prefix:
   - AuthenticationMode
   - Cluster
@@ -210,5 +214,21 @@ directive:
             'modelAsString': true
           }
         };
+- from: swagger-document
+  where: $.definitions.StreamingJobProperties.properties.jobStorageAccount
+  transform: >
+        $["x-nullable"] = true;
+- from: swagger-document
+  where: $.definitions.PrivateEndpoint.properties.etag
+  transform: >
+        $["x-nullable"] = true;
+- from: swagger-document
+  where: $.definitions.StreamingJobProperties.properties.cluster
+  transform: >
+        $["x-nullable"] = true;
+- from: swagger-document
+  where: $.definitions.FunctionInput.properties.isConfigurationParameter
+  transform: >
+        $["x-nullable"] = true;
 
 ```
