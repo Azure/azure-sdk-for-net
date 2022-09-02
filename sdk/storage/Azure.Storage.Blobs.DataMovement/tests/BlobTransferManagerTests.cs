@@ -64,6 +64,31 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             await blobs[3].SetMetadataAsync(metadata);
         }
 
+        internal class CheckDirectoryCompletionProgress : IProgress<long>
+        {
+            private long _expectedSize { get; }
+            private AutoResetEvent _completeEvent { get; }
+            public CheckDirectoryCompletionProgress(long expectedSize, AutoResetEvent completeEvent)
+            {
+                _expectedSize = expectedSize;
+                _completeEvent = completeEvent;
+            }
+            public void Report(long value)
+            {
+                if (value == _expectedSize)
+                {
+                    //Console.WriteLine("Completed!");
+                    _completeEvent.Set();
+                }
+                else if (value >= _expectedSize)
+                {
+                    // Error!!
+                    Assert.Fail();
+                    _completeEvent.Set();
+                }
+            }
+        };
+
         [RecordedTest]
         public void Ctor_Defaults()
         {
@@ -89,6 +114,58 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         }
 
         #region SingleUpload
+        [RecordedTest]
+        [TestCase(0, 10)]
+        [TestCase(Constants.KB, 10)]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 200)]
+        [TestCase(Constants.GB, 500)]
+        public async Task ScheduleUpload_Progress()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+
+            // Set up blob to upload
+            var blobName = GetNewBlobName();
+            string tempfolder = Path.GetTempPath();
+            string directoryName = GetNewBlobDirectoryName();
+            long size = Constants.KB;
+            try
+            {
+                string directory = CreateRandomDirectory(tempfolder, directoryName);
+                string localSourceFile = await CreateRandomFileAsync(directory, size: size).ConfigureAwait(false);
+
+                // Set up destination client
+                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
+
+                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+                {
+                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                    MaximumConcurrency = 1,
+                };
+                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
+
+                AutoResetEvent CompletedWait = new AutoResetEvent(false);
+                BlobSingleUploadOptions options = new BlobSingleUploadOptions()
+                {
+                    ProgressHandler = new CheckDirectoryCompletionProgress(size, CompletedWait)
+                };
+                // Act
+                await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options).ConfigureAwait(false);
+
+                // Assert
+                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(10)));
+            }
+            finally
+            {
+                // Cleanup
+                if (Directory.Exists(directoryName))
+                {
+                    Directory.Delete(directoryName, true);
+                }
+            }
+        }
+
         [RecordedTest]
         public async Task ScheduleUpload_EventHandler()
         {
@@ -149,15 +226,16 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase(0, 30)]
-        [TestCase(4 * Constants.MB, 300)]
-        [TestCase(257 * Constants.MB, 300)]
+        [TestCase(0, 10)]
+        [TestCase(Constants.KB, 10)]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 200)]
         [TestCase(Constants.GB, 500)]
         public async Task ScheduleUpload_BlobSize(long fileSize, int waitTimeInSec)
         {
             // Arrange
             //await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            BlobContainerClient containerClient = new BlobContainerClient("DefaultEndpointsProtocol=https;AccountName=amandadev3;AccountKey=w1FcAGMn3nvAZ+p+X7MLJZBmeBGsUoj46DooFI165FrireIfvZddHYmE0/N8CU9zwWdSY3oLceIUcigLUZizyQ==;EndpointSuffix=core.windows.net", "sample15container");
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
             // Set up blob to upload
             var blobName = GetNewBlobName();
@@ -169,12 +247,11 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                 string localSourceFile = await CreateRandomFileAsync(parentPath: directory, size: fileSize).ConfigureAwait(false);
 
                 // Set up destination client
-                BlockBlobClient destClient = containerClient.GetBlockBlobClient(blobName);
+                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
 
                 StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
                 {
                     ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                    MaximumConcurrency = 1,
                 };
                 BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
 
@@ -194,6 +271,16 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                         Assert.IsTrue(exists);
                         CompletedWait.Set();
                     }
+                };
+                options.UploadFailedEventHandler += (BlobUploadFailedEventArgs args) =>
+                {
+                    if (args.Exception != null)
+                    {
+                        Assert.Fail(args.Exception.Message);
+                        InProgressWait.Set();
+                        CompletedWait.Set();
+                    }
+                    return Task.CompletedTask;
                 };
                 // Act
                 await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options).ConfigureAwait(false);
@@ -250,7 +337,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                     {
                         InProgressWait.Set();
                     }
-                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
+                    else if (args.StorageTransferStatus == StorageTransferStatus.Completed)
                     {
                         CompletedWait.Set();
                         bool exists = await destClient.ExistsAsync();
@@ -277,8 +364,8 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         [RecordedTest]
         [TestCase(0, 30)]
         [TestCase(4 * Constants.MB, 300)]
-        [TestCase(257 * Constants.MB, 300)]
-        [TestCase(Constants.GB, 500)]
+        [TestCase(257 * Constants.MB, 400)]
+        [TestCase(Constants.GB, 1000)]
         public async Task ScheduleUpload_Two(long fileSize, int waitTimeInSec)
         {
             // Arrange

@@ -68,15 +68,18 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="copyMethod"></param>
         /// <param name="copyFromUriOptions"></param>
         /// <param name="errorOption"></param>
+        /// <param name="queueChunkTask"></param>
         public BlobFolderServiceCopyTransferJob(
             string transferId,
             BlobFolderClient sourceClient,
             BlobFolderClient destinationClient,
             BlobCopyMethod copyMethod,
             BlobFolderCopyFromUriOptions copyFromUriOptions,
-            ErrorHandlingOptions errorOption)
+            ErrorHandlingOptions errorOption,
+            QueueChunkTaskInternal queueChunkTask)
             : base(transferId: transferId,
-                  errorHandling: errorOption)
+                  errorHandling: errorOption,
+                  queueChunkTask: queueChunkTask)
         {
             SourceBlobDirectoryClient = sourceClient;
             SourceBlobConfiguration = new BlobBaseConfiguration()
@@ -467,7 +470,7 @@ namespace Azure.Storage.Blobs.DataMovement
             throw new NotImplementedException();
         }
 
-        public override IAsyncEnumerable<Func<Task>> ProcessPartToChunkAsync()
+        public override Task ProcessPartToChunkAsync()
         {
             throw new NotImplementedException();
         }

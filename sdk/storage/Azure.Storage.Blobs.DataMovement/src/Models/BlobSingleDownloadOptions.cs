@@ -15,5 +15,12 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// </summary>
         public event SyncAsyncEventHandler<StorageTransferStatusEventArgs> TransferStatusEventHandler;
         internal SyncAsyncEventHandler<StorageTransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
+
+        /// <summary>
+        /// Number of Files Failing Transfer either due to no access or just failing transfer in general
+        /// </summary>
+        public event SyncAsyncEventHandler<BlobDownloadFailedEventArgs> DownloadFailedEventHandler;
+
+        internal SyncAsyncEventHandler<BlobDownloadFailedEventArgs> GetDownloadFailed() => DownloadFailedEventHandler;
     }
 }

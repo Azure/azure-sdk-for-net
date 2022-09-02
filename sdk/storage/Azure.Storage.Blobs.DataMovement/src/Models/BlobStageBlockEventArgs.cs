@@ -12,8 +12,6 @@ namespace Azure.Storage.Blobs.DataMovement.Models
 {
     internal class BlobStageBlockEventArgs : StorageTransferEventArgs
     {
-        public bool IsSinglePut { get;}
-
         public bool Success { get; }
 
         public long Offset { get; }
@@ -26,7 +24,6 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="isSinglePut"></param>
         /// <param name="transferId"></param>
         /// <param name="success"></param>
         /// <param name="offset"></param>
@@ -35,7 +32,6 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// <param name="cancellationToken"></param>
         public BlobStageBlockEventArgs(
             string transferId,
-            bool isSinglePut,
             bool success,
             long offset,
             long bytesTransferred,
@@ -43,7 +39,6 @@ namespace Azure.Storage.Blobs.DataMovement.Models
             CancellationToken cancellationToken) :
             base(transferId, isRunningSynchronously, cancellationToken)
         {
-            IsSinglePut = isSinglePut;
             Success = success;
             Offset = offset;
             BytesTransferred = bytesTransferred;

@@ -13,51 +13,51 @@ using System.Threading.Tasks;
 using System.Xml.Schema;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.DataMovement;
-using Azure.Storage.Blobs.DataMovement.Models;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-namespace Azure.Storage.Blob.Experiemental
+namespace Azure.Storage.Blobs.DataMovement
 {
     internal class ParallelPartitionedUploader<TServiceSpecificData, TCompleteUploadReturn>
     {
         #region Definitions
-        // delegte for getting a partition from a stream based on the selected data management stragegy
+        // delegate for getting a partition from a stream based on the selected data management strategy
         private delegate Task<SlicedStream> GetNextStreamPartition(
             Stream stream,
             long minCount,
             long maxCount,
             long absolutePosition,
-            bool async,
+            CancellationToken cancellationToken);
+
+        // delegate for getting a patition from a stream based on previous calculated offset and length
+        private delegate Task<SlicedStream> GetNextSlicedStream(
+            Stream stream,
+            long offset,
+            int length,
             CancellationToken cancellationToken);
 
         // injected behaviors for services to use partitioned uploads
         public delegate DiagnosticScope CreateScope(string operationName);
-        public delegate Task InitializeDestinationInternal(TServiceSpecificData args, bool async, CancellationToken cancellationToken);
-        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadInternal(
+        public delegate Task InitializeDestinationInternal(TServiceSpecificData args, CancellationToken cancellationToken);
+        public delegate Task SingleUploadInternal(
             string filePath,
             TServiceSpecificData args,
-            IProgress<long> progressHandler,
             // TODO #27253
             //UploadTransactionalHashingOptions hashingOptions,
             string operationName,
-            bool async,
             CancellationToken cancellationToken);
-        public delegate Task UploadPartitionInternal(Stream contentStream,
+        public delegate Task UploadPartitionInternal(
             long offset,
+            int blockLength,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
             // TODO #27253
             //UploadTransactionalHashingOptions hashingOptions,
-            bool async,
             CancellationToken cancellationToken);
-        public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
+        public delegate Task CommitPartitionedUploadInternal(
             List<(long Offset, long Size)> partitions,
             TServiceSpecificData args,
-            bool async,
             CancellationToken cancellationToken);
 
         public struct Behaviors
@@ -69,7 +69,7 @@ namespace Azure.Storage.Blob.Experiemental
             public CreateScope Scope { get; set; }
         }
 
-        public static readonly InitializeDestinationInternal InitializeNoOp = (args, async, cancellationToken) => Task.CompletedTask;
+        public static readonly InitializeDestinationInternal InitializeNoOp = (args, cancellationToken) => Task.CompletedTask;
         #endregion
 
         private readonly InitializeDestinationInternal _initializeDestinationInternal;
@@ -130,6 +130,20 @@ namespace Azure.Storage.Blob.Experiemental
         /// Commit Ranges gathered from staging blocks
         /// </summary>
         private ConcurrentBag<(long Offset, long Size)> _blockList;
+
+        /// <summary>
+        /// Keeps the Last Write Time of when the block parititons were created
+        /// in order to prevent uploading a file that gets modified during an upload.
+        ///
+        /// We should fail an upload if a file is changed in a middle of the upload,
+        /// could cause corruption.
+        /// </summary>
+        private DateTimeOffset _lastWriteTimeUtc;
+
+        /// <summary>
+        /// Calculates if the upload transfer will be done in one request
+        /// </summary>
+        public bool IsPutBlockRequest => _fileLength < _singleUploadThreshold;
 
         public ParallelPartitionedUploader(
             string filePath,
@@ -202,38 +216,6 @@ namespace Azure.Storage.Blob.Experiemental
             _fileLength = fileInfo.Length;
         }
 
-        public bool IsPutBlockRequest() => _fileLength < _singleUploadThreshold;
-
-        /*
-        public IEnumerable<Task> Upload(
-            Stream content,
-            long? expectedContentLength,
-            TServiceSpecificData args,
-            IProgress<long> progressHandler,
-            CancellationToken cancellationToken = default)
-        => UploadInternal(
-            content,
-            expectedContentLength,
-            args,
-            progressHandler,
-            false,
-            cancellationToken).EnsureCompleted();
-
-        public async IAsyncEnumerable<Task> UploadAsync(
-            Stream content,
-            long? expectedContentLength,
-            TServiceSpecificData args,
-            IProgress<long> progressHandler,
-            CancellationToken cancellationToken = default)
-        => return UploadInternal(
-            content,
-            expectedContentLength,
-            args,
-            progressHandler,
-            true,
-            cancellationToken);
-        */
-
         public async Task UploadInternal(
             TServiceSpecificData args,
             IProgress<long> progressHandler,
@@ -241,21 +223,19 @@ namespace Azure.Storage.Blob.Experiemental
         {
             if (_initializeDestinationInternal != InitializeNoOp)
             {
-                await _initializeDestinationInternal(args, true, cancellationToken).ConfigureAwait(false);
+                await _initializeDestinationInternal(args, cancellationToken).ConfigureAwait(false);
             }
 
             // If we know the length and it's small enough
-            if (IsPutBlockRequest())
+            if (IsPutBlockRequest)
             {
                 // Upload it in a single request
                 await _singleUploadInternal(
                             _filePath,
                             args,
-                            progressHandler,
                             // TODO #27253
                             //_hashingOptions,
                             _operationName,
-                            async: true,
                             cancellationToken).ConfigureAwait(false);
                 // default on empty bag
                 _blockList = default;
@@ -270,13 +250,15 @@ namespace Azure.Storage.Blob.Experiemental
                     : _fileLength < Constants.LargeUploadThreshold ?
                         Constants.DefaultBufferSize :
                         Constants.LargeBufferSize;
+                // Keep track of the last time the file was written to, to prevent
+                // data from being written over during the upload.
+                _lastWriteTimeUtc = new FileInfo(_filePath).LastAccessTimeUtc;
 
                 // Otherwise stage individual blocks
                 _blockList = await CreateStageBlocks(
                     blockSize,
                     args,
                     progressHandler,
-                    true,
                     cancellationToken).ConfigureAwait(false);
             }
         }
@@ -285,7 +267,6 @@ namespace Azure.Storage.Blob.Experiemental
             long blockSize,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            bool async,
             CancellationToken cancellationToken)
         {
             // Wrap the staging and commit calls in an Upload span for
@@ -293,48 +274,28 @@ namespace Azure.Storage.Blob.Experiemental
             DiagnosticScope scope = _createScope(_operationName);
             scope.Start();
 
-            // Wrap progressHandler in a AggregatingProgressIncrementer to prevent
-            // progress from being reset with each stage blob operation.
-            if (progressHandler != null)
-            {
-                progressHandler = new AggregatingProgressIncrementer(progressHandler);
-            }
-
             // The list tracking blocks IDs we're going to commit
             ConcurrentBag<(long Offset, long Size)> partitions = new ConcurrentBag<(long, long)>();
 
-            // A list of tasks that are currently executing which will
-            // always be smaller than _maxWorkerCount
-            ConcurrentBag<Func<Task>> runningTasks = new ConcurrentBag<Func<Task>>();
-
             // Partition the stream into individual blocks
-            using (FileStream stream = new FileStream(_filePath, FileMode.Open, FileAccess.Read))
-            {
-                await foreach (SlicedStream block in GetPartitionsAsync(
-                stream,
+            foreach ((long Offset, long Length) block in GetParitionIndexes(
                 _fileLength,
-                blockSize,
-                GetBufferedPartitionInternal, // we always buffer for upload in parallel from stream
-                async: async,
-                cancellationToken).ConfigureAwait(false))
-                {
-                    /* We need to do this first! Length is calculated on the fly based on stream buffer
-                        * contents; We need to record the partition data first before consuming the stream
-                        * asynchronously. */
-                    partitions.Add((block.AbsolutePosition, block.Length));
+                blockSize))
+            {
+                /* We need to do this first! Length is calculated on the fly based on stream buffer
+                    * contents; We need to record the partition data first before consuming the stream
+                    * asynchronously. */
+                partitions.Add(block);
 
-                    // Start staging the next block (but don't await the Task!)
-                    Func<Task> func = async () =>
-                    {
-                        await StagePartitionAndDisposeInternal(
-                              block,
-                              block.AbsolutePosition,
-                              args,
-                              progressHandler,
-                              async: async,
-                              cancellationToken).ConfigureAwait(false);
-                    };
-                }
+                // Queue paritioned block task
+                await _uploadPartitionInternal(
+                        block.Offset,
+                        (int)block.Length,
+                        args,
+                        progressHandler,
+                        // TODO #27253
+                        //_hashingOptions,
+                        cancellationToken).ConfigureAwait(false);
             }
             return partitions;
         }
@@ -343,57 +304,61 @@ namespace Azure.Storage.Blob.Experiemental
             TServiceSpecificData args,
             CancellationToken cancellationToken)
         {
-            if (_blockList != null && !(_blockList.IsEmpty))
-            {
-                await _commitPartitionedUploadInternal(
-                    _blockList.ToList(),
-                    args,
-                    true,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Wraps both the async method and dispose call in one task.
-        /// </summary>
-        private async Task StagePartitionAndDisposeInternal(
-            SlicedStream partition,
-            long offset,
-            TServiceSpecificData args,
-            IProgress<long> progressHandler,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            try
-            {
-                await _uploadPartitionInternal(
-                    partition,
-                    offset,
-                    args,
-                    progressHandler,
-                    // TODO #27253
-                    //_hashingOptions,
-                    async,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            finally
-            {
-                // Return the memory used by the block to our ArrayPool as soon
-                // as we've staged it
-                partition.Dispose();
-            }
+            Argument.AssertNotNull(_blockList, "Block List was not populated, cannot Commit Block List.");
+            await _commitPartitionedUploadInternal(
+                _blockList.ToList(),
+                args,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         #region Stream Splitters
         /// <summary>
         /// Partition a stream into a series of blocks buffered as needed by an array pool.
         /// </summary>
+        private static IEnumerable<(long Offset, long Length)> GetParitionIndexes(
+            long streamLength, // StreamLength needed to divide before hand
+            long blockSize)
+        {
+            // The minimum amount of data we'll accept from a stream before
+            // splitting another block. Code that sets `blockSize` will always
+            // set it to a positive number. Min() only avoids edge case where
+            // user sets their block size to 1.
+            long acceptableBlockSize = Math.Max(1, blockSize / 2);
+
+            // service has a max block count per blob
+            // block size * block count limit = max data length to upload
+            // if stream length is longer than specified max block size allows, can't upload
+            long minRequiredBlockSize = (long)Math.Ceiling((double)streamLength / Constants.Blob.Block.MaxBlocks);
+            if (blockSize < minRequiredBlockSize)
+            {
+                throw Errors.InsufficientStorageTransferOptions(streamLength, blockSize, minRequiredBlockSize);
+            }
+            // bring min up to our min required by the service
+            acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
+
+            long absolutePosition = 0;
+            long blockLength = acceptableBlockSize;
+
+            // TODO: divide up paritions based on how much array pool is left
+            while (absolutePosition < streamLength)
+            {
+                // Return based on the size of the stream divided up by the acceptable blocksize.
+                blockLength = (absolutePosition + acceptableBlockSize < streamLength) ?
+                    acceptableBlockSize :
+                    streamLength - absolutePosition;
+                yield return (absolutePosition, blockLength);
+                absolutePosition += blockLength;
+            }
+        }
+
+        /// <summary>
+        /// Partition a stream into a series of blocks buffered as needed by an array pool.
+        /// </summary>
         private static async IAsyncEnumerable<SlicedStream> GetPartitionsAsync(
             Stream stream,
-            long? streamLength,
+            long streamLength, // StreamLength needed to divide before hand
             long blockSize,
             GetNextStreamPartition getNextPartition,
-            bool async,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             // The minimum amount of data we'll accept from a stream before
@@ -402,20 +367,16 @@ namespace Azure.Storage.Blob.Experiemental
             // user sets their block size to 1.
             long acceptableBlockSize = Math.Max(1, blockSize / 2);
 
-            // if we know the data length, assert boundaries before spending resources uploading beyond service capabilities
-            if (streamLength.HasValue)
+            // service has a max block count per blob
+            // block size * block count limit = max data length to upload
+            // if stream length is longer than specified max block size allows, can't upload
+            long minRequiredBlockSize = (long)Math.Ceiling((double)streamLength / Constants.Blob.Block.MaxBlocks);
+            if (blockSize < minRequiredBlockSize)
             {
-                // service has a max block count per blob
-                // block size * block count limit = max data length to upload
-                // if stream length is longer than specified max block size allows, can't upload
-                long minRequiredBlockSize = (long)Math.Ceiling((double)streamLength.Value / Constants.Blob.Block.MaxBlocks);
-                if (blockSize < minRequiredBlockSize)
-                {
-                    throw Errors.InsufficientStorageTransferOptions(streamLength.Value, blockSize, minRequiredBlockSize);
-                }
-                // bring min up to our min required by the service
-                acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
+                throw Errors.InsufficientStorageTransferOptions(streamLength, blockSize, minRequiredBlockSize);
             }
+            // bring min up to our min required by the service
+            acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
 
             long read;
             long absolutePosition = 0;
@@ -426,7 +387,6 @@ namespace Azure.Storage.Blob.Experiemental
                     acceptableBlockSize,
                     blockSize,
                     absolutePosition,
-                    async,
                     cancellationToken).ConfigureAwait(false);
                 read = partition.Length;
                 absolutePosition += read;
@@ -462,9 +422,6 @@ namespace Azure.Storage.Blob.Experiemental
         /// <param name="absolutePosition">
         /// Offset of this stream relative to the large stream.
         /// </param>
-        /// <param name="async">
-        /// Whether to buffer this partition asynchronously.
-        /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token.
         /// </param>
@@ -476,7 +433,6 @@ namespace Azure.Storage.Blob.Experiemental
             long minCount,
             long maxCount,
             long absolutePosition,
-            bool async,
             CancellationToken cancellationToken)
             => await PooledMemoryStream.BufferStreamPartitionInternal(
                 stream,
@@ -485,30 +441,8 @@ namespace Azure.Storage.Blob.Experiemental
                 absolutePosition,
                 _arrayPool,
                 maxArrayPoolRentalSize: default,
-                async,
+                true,
                 cancellationToken).ConfigureAwait(false);
         #endregion
-    }
-
-    internal static partial class StreamExtensions
-    {
-        /// <summary>
-        /// Some streams will throw if you try to access their length so we wrap
-        /// the check in a TryGet helper.
-        /// </summary>
-        public static long? GetLengthOrDefault(this Stream content)
-        {
-            try
-            {
-                if (content.CanSeek)
-                {
-                    return content.Length - content.Position;
-                }
-            }
-            catch (NotSupportedException)
-            {
-            }
-            return default;
-        }
     }
 }

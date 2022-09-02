@@ -27,7 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Threading" VersionOverride="16.10.56" />
-    <PackageReference Include="System.Threading.Channels"/>
+    <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" VersionOverride="5.0.0" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +38,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
@@ -64,6 +65,7 @@
     <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StageBlockStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared\Storage" />
@@ -89,6 +91,8 @@
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementSharedSources)PartitionedProgressIncrementer.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)ProgressMultipleParititonedStream.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScanner.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScannerFactory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PlanJobWriter.cs" LinkBase="Shared\DataMovement" />

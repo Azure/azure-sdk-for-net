@@ -595,6 +595,14 @@ namespace Azure.Storage.Blobs.Specialized
                     IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
                 }
             };
+
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        protected static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
         #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>

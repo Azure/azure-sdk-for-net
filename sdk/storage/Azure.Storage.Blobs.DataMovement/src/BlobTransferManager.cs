@@ -259,7 +259,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 sourceClient,
                 destinationLocalPath,
                 options,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures);
+                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
                 //action: transferJob.ProcessDownloadTransfer(),
             return transferJob.ToBlobTransferJobDetails();
@@ -299,7 +300,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 overwrite,
                 destinationClient,
                 options,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures);
+                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
 
             // Queue task to scan the local directory for paths to upload
@@ -358,7 +360,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 sourceClient,
                 destinationLocalPath,
                 options,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures);
+                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
             // Queue task to scan the remote directory for paths to download
@@ -403,7 +406,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 destinationClient,
                 copyMethod,
                 copyOptions,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures);
+                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
             //transferJob.ProcessCopyTransfer();
@@ -440,7 +444,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 destinationClient,
                 copyMethod,
                 copyOptions,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures);
+                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId , transferJob);
             // Queue task to scan the remote directory for paths to download

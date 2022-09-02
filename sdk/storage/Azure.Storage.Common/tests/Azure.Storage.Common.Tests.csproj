@@ -35,6 +35,7 @@
     <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StageBlockStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />

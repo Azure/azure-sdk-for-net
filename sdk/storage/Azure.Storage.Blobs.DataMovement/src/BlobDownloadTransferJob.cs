@@ -74,14 +74,18 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="errorOption">
         /// Error Options
         /// </param>
+        /// <param name="queueChunkTask">
+        /// </param>
         public BlobDownloadTransferJob(
             string transferId,
             BlobBaseClient sourceClient,
             string destinationPath,
             BlobSingleDownloadOptions options,
-            ErrorHandlingOptions errorOption)
+            ErrorHandlingOptions errorOption,
+            QueueChunkTaskInternal queueChunkTask)
             : base(transferId: transferId,
-                  errorHandling: errorOption)
+                  errorHandling: errorOption,
+                  queueChunkTask: queueChunkTask)
         {
             SourceBlobConfiguration = new BlobBaseConfiguration()
             {
@@ -270,9 +274,30 @@ namespace Azure.Storage.Blobs.DataMovement
             yield return new BlobDownloadPartInternal(this);
         }
 
-        public override IAsyncEnumerable<Func<Task>> ProcessPartToChunkAsync()
+        public override async Task ProcessPartToChunkAsync()
         {
-            throw new NotImplementedException();
+            PartitionedProgressIncrementer progressIncrementer;
+            if (Options?.ProgressHandler != default)
+            {
+                progressIncrementer = new PartitionedProgressIncrementer(Options.ProgressHandler);
+            }
+            else
+            {
+                // Create new progress tracker in the case that
+                progressIncrementer = new PartitionedProgressIncrementer(new Progress<long>());
+            }
+
+            var downloader = new ParallelPartitionedDownloader(
+                //TODO: replace with job
+                client: SourceBlobClient,
+                options: Options);
+
+            CancellationToken cancellationToken = CancellationTokenSource.Token;
+            // TODO: Flush File
+
+            // This will internally use the queueChunkTask to add all the tasks to channel.
+            // TODO: change DownloadTo to queued chunk task
+            await downloader.DownloadToAsync(default, default, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -5,17 +5,14 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
+using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Linq;
 
 namespace Azure.Storage.Shared
 {
-    /// <summary>
-    /// Functions like a readable <see cref="MemoryStream"/> but uses an ArrayPool to supply the backing memory.
-    /// This stream support buffering long sizes.
-    /// </summary>
-    internal class PooledMemoryStream : SlicedStream
+    internal class StageBlockStream : SlicedStream
     {
         private const int DefaultMaxArrayPoolRentalSize = 128 * Constants.MB;
 
@@ -54,20 +51,38 @@ namespace Azure.Storage.Shared
         /// </summary>
         private List<BufferPartition> BufferSet { get; } = new List<BufferPartition>();
 
-        public PooledMemoryStream(ArrayPool<byte> arrayPool, long absolutePosition, int maxArraySize)
+        /// <summary>
+        /// Length
+        /// </summary>
+        public override long Length => BufferSet.Sum(tuple => (long) tuple.DataLength);
+
+        public override bool CanRead => true;
+
+        public override bool CanSeek => true;
+
+        public override bool CanWrite => true;
+
+        public override long Position { get; set; }
+
+        public StageBlockStream(
+            ArrayPool<byte> arrayPool,
+            long absolutePosition,
+            int? maxArraySize)
         {
             AbsolutePosition = absolutePosition;
             ArrayPool = arrayPool;
-            MaxArraySize = maxArraySize;
+            MaxArraySize = maxArraySize ?? DefaultMaxArrayPoolRentalSize;
         }
 
         /// <summary>
         /// Parameterless constructor for mocking.
         /// </summary>
-        public PooledMemoryStream() { }
+        public StageBlockStream() { }
 
         /// <summary>
-        /// Buffers a portion of the given stream, returning the buffered stream partition.
+        /// Temporary use when we already know the offset beforehand
+        ///
+        /// More work to be done to make sure the array pool is managed correctly.
         /// </summary>
         /// <param name="stream">
         /// Stream to buffer from.
@@ -78,36 +93,26 @@ namespace Azure.Storage.Shared
         /// <param name="maxCount">
         /// Maximum number of bytes to buffer.
         /// </param>
-        /// <param name="absolutePosition">
-        /// Current position of the stream, since <see cref="Stream.Position"/> throws if not seekable.
-        /// </param>
-        /// <param name="arrayPool">
-        /// Pool to rent buffer space from.
-        /// </param>
-        /// <param name="maxArrayPoolRentalSize">
-        /// Max size we can request from the array pool.
-        /// </param>
-        /// <param name="async">
-        /// Whether to perform this operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The buffered stream partition with memory backed by an array pool.
-        /// </returns>
-        internal static async Task<PooledMemoryStream> BufferStreamPartitionInternal(
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async Task SetStreamPartitionInternal(
             Stream stream,
             long minCount,
             long maxCount,
-            long absolutePosition,
-            ArrayPool<byte> arrayPool,
-            int? maxArrayPoolRentalSize,
-            bool async,
             CancellationToken cancellationToken)
         {
+            // Check if the Stream is already at the offset expected in the constructor
+            if (maxCount > MaxArraySize)
+            {
+                throw new ArgumentException("Invalid Stream for block length");
+            }
+            // Save previous stream position
+            long originalPosition = stream.Position;
+            if (stream.Position != AbsolutePosition)
+            {
+                stream.Position = AbsolutePosition;
+            }
             long totalRead = 0;
-            var streamPartition = new PooledMemoryStream(arrayPool, absolutePosition, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
 
             // max count to write into a single array
             int maxCountIndividualBuffer;
@@ -121,7 +126,7 @@ namespace Azure.Storage.Shared
                 byte[] buffer;
                 // offset to start writing at
                 int offset;
-                BufferPartition latestBuffer = streamPartition.GetLatestBufferWithAvailableSpaceOrDefault();
+                BufferPartition latestBuffer = GetLatestBufferWithAvailableSpaceOrDefault();
                 // whether we got a brand new buffer to write into
                 bool newbuffer;
                 if (latestBuffer != default)
@@ -132,7 +137,7 @@ namespace Azure.Storage.Shared
                 }
                 else
                 {
-                    buffer = arrayPool.Rent((int)Math.Min(maxCount - totalRead, streamPartition.MaxArraySize));
+                    buffer = ArrayPool.Rent((int)Math.Min(maxCount - totalRead, MaxArraySize));
                     offset = 0;
                     newbuffer = true;
                 }
@@ -148,17 +153,17 @@ namespace Azure.Storage.Shared
                     offset: offset,
                     minCountIndividualBuffer,
                     maxCountIndividualBuffer,
-                    async,
+                    true,
                     cancellationToken).ConfigureAwait(false);
                 // if nothing was placed in a brand new array
                 if (readIndividualBuffer == 0 && newbuffer)
                 {
-                    arrayPool.Return(buffer);
+                    ArrayPool.Return(buffer);
                 }
                 // if brand new array and we did place data in it
                 else if (newbuffer)
                 {
-                    streamPartition.BufferSet.Add(new BufferPartition
+                    BufferSet.Add(new BufferPartition
                     {
                         Buffer = buffer,
                         DataLength = readIndividualBuffer
@@ -172,78 +177,6 @@ namespace Azure.Storage.Shared
 
                 totalRead += readIndividualBuffer;
 
-            /* If we filled the buffer this loop, then quitting on min count is pointless. The point of quitting
-             * on min count is when the source stream doesn't have available bytes and we've reached an amount worth
-             * sending instead of blocking on. If we filled the available array, we don't actually know whether more
-             * data is available yet, as we limited our read for reasons outside the stream state. We should therefore
-             * try another read regardless of whether we hit min count.
-             */
-            } while (
-                // stream is done if this value is zero; no other check matters
-                readIndividualBuffer != 0 &&
-                // stop filling the partition if we've hit the max size of the partition
-                totalRead < maxCount &&
-                // stop filling the partition if we've reached min count and we know we've hit at least a pause in the stream
-                (totalRead < minCount || readIndividualBuffer == maxCountIndividualBuffer));
-
-            return streamPartition;
-        }
-
-        /// <summary>
-        /// Temporary use when we already know the offset beforehand
-        ///
-        /// More work to be done to make sure the array pool is managed correctly.
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="offset"></param>
-        /// <param name="length"></param>
-        /// <param name="arrayPool"></param>
-        /// <param name="async"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        internal async Task SetStreamPartitionInternal(
-            Stream stream,
-            int offset,
-            int length,
-            ArrayPool<byte> arrayPool,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            long totalRead = 0;
-
-            // the amount that was written into the current array
-            int readIndividualBuffer;
-            do
-            {
-                // buffer to write to
-                byte[] buffer;
-                buffer = arrayPool.Rent(length);
-
-                readIndividualBuffer = await ReadLoopInternal(
-                    stream,
-                    buffer,
-                    offset: offset,
-                    length,
-                    length,
-                    async,
-                    cancellationToken).ConfigureAwait(false);
-                // if nothing was placed in a brand new array
-                if (readIndividualBuffer == 0)
-                {
-                    arrayPool.Return(buffer);
-                }
-                // if brand new array and we did place data in it
-                else
-                {
-                    BufferSet.Add(new BufferPartition
-                    {
-                        Buffer = buffer,
-                        DataLength = readIndividualBuffer
-                    });
-                }
-
-                totalRead += readIndividualBuffer;
-
                 /* If we filled the buffer this loop, then quitting on min count is pointless. The point of quitting
                  * on min count is when the source stream doesn't have available bytes and we've reached an amount worth
                  * sending instead of blocking on. If we filled the available array, we don't actually know whether more
@@ -253,8 +186,11 @@ namespace Azure.Storage.Shared
             } while (
                 // stream is done if this value is zero; no other check matters
                 readIndividualBuffer != 0 &&
+                // stop filling the partition if we've hit the max size of the partition
+                totalRead < maxCount &&
                 // stop filling the partition if we've reached min count and we know we've hit at least a pause in the stream
-                (totalRead < length || readIndividualBuffer == length));
+                (totalRead < minCount || readIndividualBuffer == maxCountIndividualBuffer));
+            stream.Position = originalPosition;
         }
 
         /// <summary>
@@ -265,7 +201,14 @@ namespace Azure.Storage.Shared
         /// This method may have read bytes even if it has reached the confirmed end of stream. You will have to call
         /// this method again and read zero bytes to get that confirmation.
         /// </remarks>
-        private static async Task<int> ReadLoopInternal(Stream stream, byte[] buffer, int offset, int minCount, int maxCount, bool async, CancellationToken cancellationToken)
+        private static async Task<int> ReadLoopInternal(
+            Stream stream,
+            byte[] buffer,
+            int offset,
+            int minCount,
+            int maxCount,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (minCount > maxCount)
             {
@@ -288,25 +231,14 @@ namespace Azure.Storage.Shared
                     break;
                 }
                 totalRead += read;
-            // we always request the number that will bring our total read to maxCount
-            // if the stream can only give us so much at the moment and we've at least hit minCount, we can exit
+                // we always request the number that will bring our total read to maxCount
+                // if the stream can only give us so much at the moment and we've at least hit minCount, we can exit
             } while (totalRead < minCount);
             return totalRead;
         }
 
-        public override bool CanRead => true;
-
-        public override bool CanSeek => true;
-
-        public override bool CanWrite => true;
-
-        public override long Length => BufferSet.Sum(tuple => (long)tuple.DataLength);
-
-        public override long Position { get; set; }
-
         public override void Flush()
         {
-            // no-op, just like MemoryStream
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -383,7 +315,7 @@ namespace Azure.Storage.Shared
 
         public override void SetLength(long value)
         {
-            throw new NotSupportedException();
+            throw new NotImplementedException();
         }
 
         public override void Write(byte[] buffer, int offset, int count)

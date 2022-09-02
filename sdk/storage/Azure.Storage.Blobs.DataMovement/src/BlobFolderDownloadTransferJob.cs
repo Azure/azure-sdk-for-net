@@ -66,14 +66,17 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="destinationPath"></param>
         /// <param name="options"></param>
         /// <param name="errorOption"></param>
+        /// <param name="queueChunkTask"></param>
         public BlobFolderDownloadTransferJob(
             string transferId,
             BlobFolderClient sourceClient,
             string destinationPath,
             BlobFolderDownloadOptions options,
-            ErrorHandlingOptions errorOption)
+            ErrorHandlingOptions errorOption,
+            QueueChunkTaskInternal queueChunkTask)
             : base(transferId: transferId,
-                  errorHandling: errorOption)
+                  errorHandling: errorOption,
+                  queueChunkTask: queueChunkTask)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationLocalPath = destinationPath;
@@ -438,7 +441,7 @@ namespace Azure.Storage.Blobs.DataMovement
             throw new NotImplementedException();
         }
 
-        public override IAsyncEnumerable<Func<Task>> ProcessPartToChunkAsync()
+        public override Task ProcessPartToChunkAsync()
         {
             throw new NotImplementedException();
         }

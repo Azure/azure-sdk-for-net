@@ -38,5 +38,13 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
         public static new BlobClientOptions GetClientOptions(BlobBaseClient client) =>
             BlobBaseClient.GetClientOptions(client);
+
+        /// <summary>
+        /// If the client is using client side encryption, turn back the value whether or not it's true.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public static new bool GetUsingClientSideEncryption(BlobBaseClient client) =>
+            BlobBaseClient.GetUsingClientSideEncryption(client);
     }
 }

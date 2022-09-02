@@ -29,10 +29,8 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public async Task ProcessJobPartToJobChunk()
         {
-            await foreach (Func<Task> item in Job.ProcessPartToChunkAsync().ConfigureAwait(false))
-            {
-                await QueueChunk(item).ConfigureAwait(false);
-            }
+            // TODO: change this to do job part to job chunk instead of job to chunk
+            await Job.ProcessPartToChunkAsync().ConfigureAwait(false);
         }
     }
 }

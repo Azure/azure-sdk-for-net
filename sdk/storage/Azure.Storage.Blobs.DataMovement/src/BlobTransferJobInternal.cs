@@ -13,6 +13,9 @@ namespace Azure.Storage.Blobs.DataMovement
 {
     internal abstract class BlobTransferJobInternal
     {
+        public delegate Task QueueChunkTaskInternal(Func<Task> uploadTask);
+        public QueueChunkTaskInternal QueueChunkTask { get; internal set; }
+
         /// <summary>
         /// Job Id in form of a Guid
         /// </summary>
@@ -65,9 +68,13 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Create Storage Transfer Job.
         /// </summary>
-        internal protected BlobTransferJobInternal(string transferId, string planFolderPath = default, ErrorHandlingOptions errorHandling = ErrorHandlingOptions.PauseOnAllFailures)
+        internal protected BlobTransferJobInternal(
+            string transferId,
+            string planFolderPath = default,
+            ErrorHandlingOptions errorHandling = ErrorHandlingOptions.PauseOnAllFailures,
+            QueueChunkTaskInternal queueChunkTask = null)
         {
-            _transferStatus = (long) StorageTransferStatus.Queued;
+            _transferStatus = (long)StorageTransferStatus.Queued;
             TransferId = transferId;
             // TODO; get loglevel from StorageTransferManager
             //PlanJobWriter = new PlanJobWriter(folderPath, transferId);
@@ -75,6 +82,7 @@ namespace Azure.Storage.Blobs.DataMovement
             _errorHandling = errorHandling;
             CancellationTokenSource = new CancellationTokenSource();
             PlanJobWriter = new PlanJobWriter(transferId, planFolderPath);
+            QueueChunkTask = queueChunkTask;
         }
 
         /// <summary>
@@ -143,6 +151,6 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job chunks</returns>
-        public abstract IAsyncEnumerable<Func<Task>> ProcessPartToChunkAsync();
+        public abstract Task ProcessPartToChunkAsync();
     }
 }

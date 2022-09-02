@@ -10,11 +10,13 @@ using Azure.Core;
 using System.Buffers;
 using System.IO;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blob.Experiemental;
 using System.Linq;
 using Azure.Storage.Blobs.Specialized;
 using System.Threading;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+using Azure.Storage.Shared;
+using System.Security.Cryptography;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -23,8 +25,8 @@ namespace Azure.Storage.Blobs.DataMovement
     /// </summary>
     internal class BlobUploadTransferJob : BlobTransferJobInternal
     {
-        public delegate Task QueueChunkTaskInternal(Func<Task> uploadTask);
-        private readonly QueueChunkTaskInternal _queueChunkTask;
+        public delegate Task CommitBlockTaskInternal(BlobSingleUploadOptions options, CancellationToken cancellationToken);
+        public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
         /// <summary>
         /// The path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
@@ -59,7 +61,13 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public ClientDiagnostics Diagnostics => _diagnostics;
 
-        internal SyncAsyncEventHandler<BlobStageBlockEventArgs> commitBlockHandler;
+        internal CommitBlockEventHandler commitBlockHandler;
+
+        /// <summary>
+        /// Array pool designated for upload file
+        /// </summary>
+        public ArrayPool<byte> UploadArrayPool => _arrayPool;
+        internal ArrayPool<byte> _arrayPool;
 
         /// <summary>
         /// Constructor. Creates Single Upload Transfer Job.
@@ -81,15 +89,20 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </param>
         /// <param name="queueChunkTask">
         /// </param>
+        /// <param name="arrayPool">
+        /// // TODO array pool
+        /// </param>
         public BlobUploadTransferJob(
             string transferId,
             string sourceLocalPath,
             BlockBlobClient destinationClient,
             BlobSingleUploadOptions uploadOptions,
             ErrorHandlingOptions errorOption,
-            QueueChunkTaskInternal queueChunkTask)
+            QueueChunkTaskInternal queueChunkTask,
+            ArrayPool<byte> arrayPool = default)
             : base(transferId: transferId,
-                  errorHandling: errorOption)
+                  errorHandling: errorOption,
+                  queueChunkTask: queueChunkTask)
         {
             _sourceLocalPath = sourceLocalPath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
@@ -102,7 +115,8 @@ namespace Azure.Storage.Blobs.DataMovement
             };
             _uploadOptions = uploadOptions;
             _diagnostics = new ClientDiagnostics(BlobBaseClientInternals.GetClientOptions(destinationClient));
-            _queueChunkTask = queueChunkTask;
+            QueueChunkTask = queueChunkTask;
+            _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
         }
 
         /// <summary>
@@ -112,9 +126,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// we could be waiting for a while to queue up the commit block request waiting on the blocks to upload.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-#pragma warning disable CA1801 // Review unused parameters
-        public async Func<Task> ProcessUploadTransfer()
-#pragma warning restore CA1801 // Review unused parameters
+        public override async Task ProcessPartToChunkAsync()
         {
             // TODO: make logging messages similar to the errors class where we only take in params
             // so we dont have magic strings hanging out here
@@ -125,15 +137,15 @@ namespace Azure.Storage.Blobs.DataMovement
             // Do only blockblob upload for now for now
             //BlockBlobClientInternals internalClient = new BlockBlobClientInternals(DestinationBlobClient);
 
-            AggregatingProgressIncrementer progressIncrementer;
-            if (UploadOptions?.ProgressHandler == default)
+            PartitionedProgressIncrementer progressIncrementer;
+            if (UploadOptions?.ProgressHandler != default)
             {
-                progressIncrementer = new AggregatingProgressIncrementer(UploadOptions.ProgressHandler);
+                progressIncrementer = new PartitionedProgressIncrementer(UploadOptions.ProgressHandler);
             }
             else
             {
                 // Create new progress tracker in the case that
-                progressIncrementer = new AggregatingProgressIncrementer(new Progress<long>());
+                progressIncrementer = new PartitionedProgressIncrementer(new Progress<long>());
             }
 
             var uploader = GetPartitionedUploader(
@@ -144,34 +156,20 @@ namespace Azure.Storage.Blobs.DataMovement
                 operationName: $"{nameof(BlobTransferManager.ScheduleUploadAsync)}");
 
             CancellationToken cancellationToken = CancellationTokenSource.Token;
-            commitBlockHandler += async (BlobStageBlockEventArgs args) =>
+            if (!uploader.IsPutBlockRequest)
             {
-                if (args.Success && !uploader.IsPutBlockRequest)
-                {
-                    if(progressIncrementer.Current == uploader.)
-                    {
-                        await uploader.CommitBlockList(
-                            UploadOptions,
-                            cancellationToken).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    // Set status to completed
-                    await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
-                }
-            };
+                commitBlockHandler = GetBlockListCommitHandler(
+                    expectedLength: uploader.FileLength,
+                    commitBlockTask: uploader.CommitBlockList,
+                    job: this);
+            }
 
-            await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
-            await foreach (UploadBlobTask func in uploader.UploadInternal(
-                SourceLocalPath,
+            // This will internally use the queueChunkTask to add all the tasks to channel.
+            await uploader.UploadInternal(
                 UploadOptions,
                 progressIncrementer,
-                cancellationToken).ConfigureAwait(false))
-            {
-                yield return func;
-            }
-    }
+                cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Translates job details
@@ -269,15 +267,12 @@ namespace Azure.Storage.Blobs.DataMovement
                     if ((UploadOptions != null) &&
                         (UploadOptions?.GetTransferStatus() != null))
                     {
-                        await UploadOptions.GetTransferStatus().RaiseAsync(
+                        await UploadOptions.GetTransferStatus().Invoke(
                                 new StorageTransferStatusEventArgs(
                                     TransferId,
                                     transferStatus,
                                     true,
-                                    CancellationTokenSource.Token),
-                                nameof(BlobFolderUploadOptions),
-                                nameof(BlobFolderUploadOptions.TransferStatusEventHandler),
-                                Diagnostics).ConfigureAwait(false);
+                                    CancellationTokenSource.Token)).ConfigureAwait(false);
                     }
                 }
                 else
@@ -301,7 +296,296 @@ namespace Azure.Storage.Blobs.DataMovement
             }
         }
 
+        public void TriggerJobCancellation()
+        {
+            if (!CancellationTokenSource.IsCancellationRequested)
+            {
+                CancellationTokenSource.Cancel();
+            }
+        }
+
         #region PartitionedUploader
+        internal static async Task SingleUploadInternal(
+            BlobUploadTransferJob job,
+            BlobSingleUploadOptions options,
+            string operationName,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(job.SourceLocalPath, FileMode.Open, FileAccess.Read))
+                {
+                    await job.OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
+                    Response<BlobContentInfo> response = await BlockBlobClientInternals.PutBlobCallAsync(
+                        job.DestinationBlobClient,
+                        stream,
+                        options,
+                        operationName,
+                        cancellationToken).ConfigureAwait(false);
+                    await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+                    // progressHandler is updated by passing the options bag to the putblob call
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                StorageTransferStatus status = StorageTransferStatus.Completed;
+                if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
+                {
+                    job.PauseTransferJob();
+                    status = StorageTransferStatus.Paused;
+                }
+                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
+            }
+            catch (IOException ex)
+            {
+                options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                StorageTransferStatus status = StorageTransferStatus.Completed;
+                if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
+                {
+                    job.PauseTransferJob();
+                    status = StorageTransferStatus.Paused;
+                }
+                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Unexpected exception
+                options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                job.PauseTransferJob();
+                await job.OnTransferStatusChanged(StorageTransferStatus.Paused, true).ConfigureAwait(false);
+            }
+        }
+
+        internal static async Task StageBlockInternal(
+            BlobUploadTransferJob job,
+            long offset,
+            int blockLength,
+            BlobSingleUploadOptions options,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
+        {
+            // Stage Block only accepts LeaseId.
+            BlobRequestConditions conditions = null;
+            if (options?.Conditions != null)
+            {
+                conditions = new BlobRequestConditions
+                {
+                    LeaseId = options.Conditions.LeaseId
+                };
+            }
+            try
+            {
+                // Make sure it's opened only in Shared Read Only Mode
+                using (FileStream stream = new FileStream(job.SourceLocalPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    await job.OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
+                    Stream slicedStream = await GetOffsetPartitionInternal(
+                        stream,
+                        (int) offset,
+                        blockLength,
+                        job.UploadArrayPool,
+                        cancellationToken).ConfigureAwait(false);
+
+                    await job.DestinationBlobClient.StageBlockAsync(
+                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            slicedStream,
+                            // TODO #27253
+                            //new BlockBlobStageBlockOptions()
+                            //{
+                            //    TransactionalHashingOptions = hashingOptions,
+                            //    Conditions = conditions,
+                            //    ProgressHandler = progressHandler
+                            //},
+                            transactionalContentHash: default,
+                            conditions,
+                            progressHandler,
+                            cancellationToken).ConfigureAwait(false);
+                    await job.commitBlockHandler.InvokeEvent(
+                        new BlobStageBlockEventArgs(
+                            job.TransferId,
+                            true,
+                            offset,
+                            blockLength,
+                            true,
+                            cancellationToken)).ConfigureAwait(false);
+                };
+            }
+            // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
+            // (Core already performs the retry policy on the one stage block request which means the rest are not worth to continue)
+            catch (RequestFailedException ex)
+            {
+                options?.GetUploadFailed()?.Invoke(
+                    new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                StorageTransferStatus status = StorageTransferStatus.Completed;
+                if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
+                {
+                    job.PauseTransferJob();
+                    status = StorageTransferStatus.Paused;
+                }
+                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
+                await job.commitBlockHandler.InvokeEvent(
+                    new BlobStageBlockEventArgs(
+                        job.TransferId,
+                        false,
+                        offset,
+                        0,
+                        true,
+                        cancellationToken)).ConfigureAwait(false);
+            }
+            catch (IOException ex)
+            {
+                options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                StorageTransferStatus status = StorageTransferStatus.Completed;
+                if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
+                {
+                    job.PauseTransferJob();
+                    status = StorageTransferStatus.Paused;
+                }
+                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
+                await job.commitBlockHandler.InvokeEvent(
+                    new BlobStageBlockEventArgs(
+                        job.TransferId,
+                        false,
+                        offset,
+                        0,
+                        false,
+                        cancellationToken)).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Unexpected exception
+                options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                job.PauseTransferJob();
+                await job.OnTransferStatusChanged(StorageTransferStatus.Paused, true).ConfigureAwait(false);
+            }
+        }
+
+        internal static async Task CommitBlockListInternal(
+            BlobUploadTransferJob job,
+            List<(long Offset, long Size)> partitions,
+            BlobSingleUploadOptions uploadOptions,
+            CancellationToken cancellationToken)
+        {
+            CommitBlockListOptions options = new CommitBlockListOptions()
+            {
+                HttpHeaders = uploadOptions.HttpHeaders,
+                Metadata = uploadOptions.Metadata,
+                Tags = uploadOptions.Tags,
+                Conditions = uploadOptions.Conditions,
+                AccessTier = uploadOptions.AccessTier,
+                ImmutabilityPolicy = uploadOptions.ImmutabilityPolicy,
+                LegalHold = uploadOptions.LegalHold,
+            };
+            try
+            {
+                Response<BlobContentInfo> response = await job.DestinationBlobClient.CommitBlockListAsync(
+                        partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
+                        options,
+                        cancellationToken).ConfigureAwait(false);
+
+                await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                uploadOptions?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                StorageTransferStatus status = StorageTransferStatus.Completed;
+                if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
+                {
+                    job.PauseTransferJob();
+                    status = StorageTransferStatus.Paused;
+                }
+                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
+            }
+            catch (IOException ex)
+            {
+                uploadOptions?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                StorageTransferStatus status = StorageTransferStatus.Completed;
+                if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
+                {
+                    job.PauseTransferJob();
+                    status = StorageTransferStatus.Paused;
+                }
+                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Unexpected exception
+                uploadOptions?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
+                                job.TransferId,
+                                job.SourceLocalPath,
+                                job.DestinationBlobClient,
+                                ex,
+                                false,
+                                job.CancellationTokenSource.Token));
+                job.PauseTransferJob();
+                await job.OnTransferStatusChanged(StorageTransferStatus.Paused, true).ConfigureAwait(false);
+            }
+        }
+
         internal static ParallelPartitionedUploader<BlobSingleUploadOptions, BlobContentInfo> GetPartitionedUploader(
             BlobUploadTransferJob job,
             StorageTransferOptions transferOptions,
@@ -309,391 +593,83 @@ namespace Azure.Storage.Blobs.DataMovement
             //UploadTransactionalHashingOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => new ParallelPartitionedUploader<BlobSingleUploadOptions, BlobContentInfo>(
-                GetPartitionedUploaderBehaviors(job),
-                transferOptions,
-                //validationOptions,
-                arrayPool,
-                operationName);
+        => new ParallelPartitionedUploader<BlobSingleUploadOptions, BlobContentInfo>(
+            job.SourceLocalPath,
+            GetPartitionedUploaderBehaviors(job),
+            transferOptions,
+            //validationOptions,
+            arrayPool,
+            operationName);
 
         internal static ParallelPartitionedUploader<BlobSingleUploadOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlobUploadTransferJob job)
         {
             return new ParallelPartitionedUploader<BlobSingleUploadOptions, BlobContentInfo>.Behaviors
             {
                 // TODO #27253
-                SingleUpload = async (filePath, args, progressHandler, /*hashingOptions,*/ operationName, async, cancellationToken)
-                    =>
-                {
-                    job._queueChunkTask(async () =>
-                    {
-                        try
-                        {
-                            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                            {
-                                if (async)
-                                {
-                                    Response<BlobContentInfo> response = await BlockBlobClientInternals.PutBlobCallAsync(
-                                       job.DestinationBlobClient,
-                                       stream,
-                                       args,
-                                       operationName,
-                                       cancellationToken).ConfigureAwait(false);
-                                    await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
-                                    return response;
-                                }
-                                else
-                                {
-                                    Response<BlobContentInfo> response = BlockBlobClientInternals.PutBlobCall(
-                                        job.DestinationBlobClient,
-                                        stream,
-                                        args,
-                                        operationName,
-                                        cancellationToken);
-                                    job.OnTransferStatusChanged(StorageTransferStatus.Completed, false).EnsureCompleted();
-                                    return response;
-                                }
-                            }
-                        }
-                        catch (RequestFailedException ex)
-                        {
-                            args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                            job.TransferId,
-                                            job.SourceLocalPath,
-                                            job.DestinationBlobClient,
-                                            ex,
-                                            false,
-                                            job.CancellationTokenSource.Token));
-                            StorageTransferStatus status = StorageTransferStatus.Completed;
-                            if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                            {
-                                job.PauseTransferJob();
-                                status = StorageTransferStatus.Paused;
-                            }
-                            if (async)
-                            {
-                                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
-                            }
-                            else
-                            {
-                                job.OnTransferStatusChanged(status, false).EnsureCompleted();
-                            }
-                        }
-                        catch (IOException ex)
-                        {
-                            args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                            job.TransferId,
-                                            job.SourceLocalPath,
-                                            job.DestinationBlobClient,
-                                            ex,
-                                            false,
-                                            job.CancellationTokenSource.Token));
-                            StorageTransferStatus status = StorageTransferStatus.Completed;
-                            if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                            {
-                                job.PauseTransferJob();
-                                status = StorageTransferStatus.Paused;
-                            }
-                            if (async)
-                            {
-                                await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
-                            }
-                            else
-                            {
-                                job.OnTransferStatusChanged(status, false).EnsureCompleted();
-                            }
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            // Job was cancelled
-                            if (async)
-                            {
-                                await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
-                            }
-                            else
-                            {
-                                job.OnTransferStatusChanged(StorageTransferStatus.Completed, false).EnsureCompleted();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            // Unexpected exception
-                            args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                            job.TransferId,
-                                            job.SourceLocalPath,
-                                            job.DestinationBlobClient,
-                                            ex,
-                                            false,
-                                            job.CancellationTokenSource.Token));
-                            job.PauseTransferJob();
-                            if (async)
-                            {
-                                await job.OnTransferStatusChanged(StorageTransferStatus.Paused, true).ConfigureAwait(false);
-                            }
-                            else
-                            {
-                                job.OnTransferStatusChanged(StorageTransferStatus.Paused, false).EnsureCompleted();
-                            }
-                        }
-                    }
-                    return default;
-                },
+                SingleUpload = (filePath, args, /*hashingOptions,*/ operationName, cancellationToken)
+                    => job.QueueChunkTask(
+                        async () =>
+                        await SingleUploadInternal(
+                            job,
+                            args,
+                            operationName,
+                            cancellationToken).ConfigureAwait(false)),
                 // TODO #27253
-                UploadPartition = async (stream, offset, args, progressHandler, /*validationOptions,*/ async, cancellationToken)
-                    =>
-                {
-                    // Stage Block only accepts LeaseId.
-                    BlobRequestConditions conditions = null;
-                    if (args?.Conditions != null)
-                    {
-                        conditions = new BlobRequestConditions
-                        {
-                            LeaseId = args.Conditions.LeaseId
-                        };
-                    }
-                    try
-                    {
-                        if (async)
-                        {
-                            await job.DestinationBlobClient.StageBlockAsync(
-                                    Shared.StorageExtensions.GenerateBlockId(offset),
-                                    stream,
-                                    // TODO #27253
-                                    //new BlockBlobStageBlockOptions()
-                                    //{
-                                    //    TransactionalHashingOptions = hashingOptions,
-                                    //    Conditions = conditions,
-                                    //    ProgressHandler = progressHandler
-                                    //},
-                                    transactionalContentHash: default,
-                                    conditions,
-                                    progressHandler,
-                                    cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.DestinationBlobClient.StageBlock(
-                                    Shared.StorageExtensions.GenerateBlockId(offset),
-                                    stream,
-                                    // TODO #27253
-                                    //new BlockBlobStageBlockOptions()
-                                    //{
-                                    //    TransactionalHashingOptions = hashingOptions,
-                                    //    Conditions = conditions,
-                                    //    ProgressHandler = progressHandler
-                                    //},
-                                    transactionalContentHash: default,
-                                    conditions,
-                                    progressHandler,
-                                    cancellationToken);
-                        }
-                        job.commitBlockHandler.(offset, stream.Length);
-                    }
-                    // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
-                    // (Core already performs the retry policy on the one stage block request which means the rest are not worth to continue)
-                    catch (RequestFailedException ex)
-                    {
-                        args?.GetUploadFailed()?.Invoke(
-                            new BlobUploadFailedEventArgs(
-                                        job.TransferId,
-                                        job.SourceLocalPath,
-                                        job.DestinationBlobClient,
-                                        ex,
-                                        false,
-                                        job.CancellationTokenSource.Token));
-                        StorageTransferStatus status = StorageTransferStatus.Completed;
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                        {
-                            job.PauseTransferJob();
-                            status = StorageTransferStatus.Paused;
-                        }
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(status, false).EnsureCompleted();
-                        }
-                    }
-                    catch (IOException ex)
-                    {
-                        args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                        job.TransferId,
-                                        job.SourceLocalPath,
-                                        job.DestinationBlobClient,
-                                        ex,
-                                        false,
-                                        job.CancellationTokenSource.Token));
-                        StorageTransferStatus status = StorageTransferStatus.Completed;
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                        {
-                            job.PauseTransferJob();
-                            status = StorageTransferStatus.Paused;
-                        }
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(status, false).EnsureCompleted();
-                        }
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // Job was cancelled
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(StorageTransferStatus.Completed, false).EnsureCompleted();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Unexpected exception
-                        args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                        job.TransferId,
-                                        job.SourceLocalPath,
-                                        job.DestinationBlobClient,
-                                        ex,
-                                        false,
-                                        job.CancellationTokenSource.Token));
-                        job.PauseTransferJob();
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(StorageTransferStatus.Paused, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(StorageTransferStatus.Paused, false).EnsureCompleted();
-                        }
-                    }
-                },
-                CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
-                    =>
-                {
-                    CommitBlockListOptions options = new CommitBlockListOptions()
-                    {
-                        HttpHeaders = args.HttpHeaders,
-                        Metadata = args.Metadata,
-                        Tags = args.Tags,
-                        Conditions = args.Conditions,
-                        AccessTier = args.AccessTier,
-                        ImmutabilityPolicy = args.ImmutabilityPolicy,
-                        LegalHold = args.LegalHold,
-                    };
-                    try
-                    {
-                        if (async)
-                        {
-                            Response<BlobContentInfo> response = await job.DestinationBlobClient.CommitBlockListAsync(
-                                  partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
-                                  options,
-                                  cancellationToken).ConfigureAwait(false);
-
-                            await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
-                            return response;
-                        }
-                        else
-                        {
-                            Response<BlobContentInfo> response = job.DestinationBlobClient.CommitBlockList(
-                                partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
-                                  options,
-                                  cancellationToken);
-                            job.OnTransferStatusChanged(StorageTransferStatus.Completed, false).EnsureCompleted();
-                            return response;
-                        }
-                    }
-                    catch (RequestFailedException ex)
-                    {
-                        args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                        job.TransferId,
-                                        job.SourceLocalPath,
-                                        job.DestinationBlobClient,
-                                        ex,
-                                        false,
-                                        job.CancellationTokenSource.Token));
-                        StorageTransferStatus status = StorageTransferStatus.Completed;
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                        {
-                            job.PauseTransferJob();
-                            status = StorageTransferStatus.Paused;
-                        }
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(status, false).EnsureCompleted();
-                        }
-                    }
-                    catch (IOException ex)
-                    {
-                        args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                        job.TransferId,
-                                        job.SourceLocalPath,
-                                        job.DestinationBlobClient,
-                                        ex,
-                                        false,
-                                        job.CancellationTokenSource.Token));
-                        StorageTransferStatus status = StorageTransferStatus.Completed;
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                        {
-                            job.PauseTransferJob();
-                            status = StorageTransferStatus.Paused;
-                        }
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(status, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(status, false).EnsureCompleted();
-                        }
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // Job was cancelled
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(StorageTransferStatus.Completed, false).EnsureCompleted();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Unexpected exception
-                        args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                        job.TransferId,
-                                        job.SourceLocalPath,
-                                        job.DestinationBlobClient,
-                                        ex,
-                                        false,
-                                        job.CancellationTokenSource.Token));
-                        job.PauseTransferJob();
-                        if (async)
-                        {
-                            await job.OnTransferStatusChanged(StorageTransferStatus.Paused, true).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            job.OnTransferStatusChanged(StorageTransferStatus.Paused, false).EnsureCompleted();
-                        }
-                    }
-                    return default;
-                },
+                UploadPartition = (offset, blockLength, args, progressHandler, /*validationOptions,*/ cancellationToken)
+                    => job.QueueChunkTask(
+                        async () =>
+                        await StageBlockInternal(
+                            job,
+                            offset,
+                            blockLength,
+                            args,
+                            progressHandler,
+                            /*validationOptions,*/
+                            cancellationToken).ConfigureAwait(false)),
+                CommitPartitionedUpload = (partitions, args, cancellationToken)
+                    => job.QueueChunkTask(
+                        async () =>
+                        await CommitBlockListInternal(
+                            job,
+                            partitions,
+                            args,
+                            cancellationToken).ConfigureAwait(false)),
                 Scope = operationname =>
                 {
                     StorageClientDiagnostics diagnostics = new StorageClientDiagnostics(BlobBaseClientInternals.GetClientOptions(job.DestinationBlobClient));
                     return diagnostics.CreateScope(operationname);
                 }
+            };
+        }
+        #endregion
+
+        #region CommitBlockHandler
+        internal static CommitBlockEventHandler GetBlockListCommitHandler(
+            long expectedLength,
+            CommitBlockTaskInternal commitBlockTask,
+            BlobUploadTransferJob job)
+        => new CommitBlockEventHandler(
+            expectedLength,
+            new Uri(job.SourceLocalPath), // Change source local path ot a uri
+            job.DestinationBlobClient,
+            GetBlockListCommitHandlerBehaviors(commitBlockTask, job),
+            job.UploadOptions,
+            job.CancellationTokenSource.Token);
+
+        internal static CommitBlockEventHandler.Behaviors GetBlockListCommitHandlerBehaviors(
+            CommitBlockTaskInternal commitBlockTask,
+            BlobUploadTransferJob job)
+        {
+            return new CommitBlockEventHandler.Behaviors
+            {
+                // TODO #27253
+                QueueCommitBlockTask = async () =>
+                        await commitBlockTask(
+                            job.UploadOptions,
+                            job.CancellationTokenSource.Token).ConfigureAwait(false),
+                TriggerCancellationTask = () => job.TriggerJobCancellation(),
+                UpdateTransferStatus = async (StorageTransferStatus status)
+                    => await job.OnTransferStatusChanged(status, true).ConfigureAwait(false)
             };
         }
         #endregion
@@ -705,27 +681,41 @@ namespace Azure.Storage.Blobs.DataMovement
             yield return new BlobUploadPartInternal(this);
         }
 
-        public override async IAsyncEnumerable<Func<Task>> ProcessPartToChunkAsync()
+        /// <summary>
+        /// Gets a partition from the current location of the given stream.
+        ///
+        /// This partition is buffered and it is safe to get many before using any of them.
+        /// </summary>
+        /// <param name="stream">
+        /// Stream to buffer a partition from.
+        /// </param>
+        /// <param name="offset">
+        /// Minimum amount of data to wait on before finalizing buffer.
+        /// </param>
+        /// <param name="length">
+        /// Max amount of data to buffer before cutting off for the next.
+        /// </param>
+        /// <param name="arrayPool">
+        /// </param>
+        /// <param name="cancellationToken">
+        /// </param>
+        /// <returns>
+        /// Task containing the buffered stream partition.
+        /// </returns>
+        private static async Task<SlicedStream> GetOffsetPartitionInternal(
+            Stream stream,
+            int offset,
+            int length,
+            ArrayPool<byte> arrayPool,
+            CancellationToken cancellationToken)
         {
-            // Do only blockblob upload for now for now
-            //BlockBlobClientInternals internalClient = new BlockBlobClientInternals(DestinationBlobClient);
-            var uploader = GetPartitionedUploader(
-                job: this,
-                transferOptions: UploadOptions?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
-                operationName: $"{nameof(BlobTransferManager.ScheduleUploadAsync)}");
-
-            await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
-            CancellationToken cancellationToken = CancellationTokenSource.Token;
-            await foreach (UploadBlobTask func in uploader.UploadInternal(
-                SourceLocalPath,
-                UploadOptions,
-                UploadOptions?.ProgressHandler,
-                cancellationToken).ConfigureAwait(false))
-            {
-                yield return func;
-            }
+            StageBlockStream slicedStream = new StageBlockStream(arrayPool, offset, length);
+            await slicedStream.SetStreamPartitionInternal(
+                stream,
+                length,
+                length,
+                cancellationToken).ConfigureAwait(false);
+            return slicedStream;
         }
     }
 }

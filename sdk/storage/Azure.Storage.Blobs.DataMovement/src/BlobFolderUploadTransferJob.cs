@@ -12,7 +12,6 @@ using Azure.Storage.DataMovement;
 using Azure.Core;
 using System.Buffers;
 using System.Linq;
-using Azure.Storage.Blob.Experiemental;
 using Azure.Core.Pipeline;
 using Microsoft;
 
@@ -78,15 +77,18 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="overwrite"></param>
         /// <param name="uploadOptions"></param>
         /// <param name="errorOption"></param>
+        /// <param name="queueChunkTask"></param>
         public BlobFolderUploadTransferJob(
             string transferId,
             string sourceLocalPath,
             bool overwrite,
             BlobFolderClient destinationClient,
             BlobFolderUploadOptions uploadOptions,
-            ErrorHandlingOptions errorOption)
+            ErrorHandlingOptions errorOption,
+            QueueChunkTaskInternal queueChunkTask)
             : base(transferId: transferId,
-                  errorHandling: errorOption)
+                  errorHandling: errorOption,
+                  queueChunkTask: queueChunkTask)
         {
             _sourceLocalPath = sourceLocalPath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
@@ -665,7 +667,7 @@ namespace Azure.Storage.Blobs.DataMovement
             throw new NotImplementedException();
         }
 
-        public override IAsyncEnumerable<Func<Task>> ProcessPartToChunkAsync()
+        public override Task ProcessPartToChunkAsync()
         {
             throw new NotImplementedException();
         }

@@ -1,22 +1,21 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading;
+using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
-namespace Azure.Storage
+namespace Azure.Storage.DataMovement
 {
-    /// <summary>
-    /// Wraps a stream, and reports position updates to a progress incrementer
-    /// </summary>
-    internal sealed class ProgressIncrementingStream : Stream
+    internal class ProgressMultipleParititonedStream : Stream
     {
         private readonly Stream _innerStream;
-        private readonly AggregatingProgressIncrementer _incrementer;
+        private readonly PartitionedProgressIncrementer _incrementer;
 
-        public ProgressIncrementingStream(Stream stream, AggregatingProgressIncrementer incrementer)
+        public ProgressMultipleParititonedStream(Stream stream, PartitionedProgressIncrementer incrementer)
         {
             _innerStream = stream ?? throw Errors.ArgumentNull(nameof(stream));
             _incrementer = incrementer ?? throw Errors.ArgumentNull(nameof(incrementer));
@@ -107,13 +106,19 @@ namespace Azure.Storage
             set => _innerStream.ReadTimeout = value;
         }
 
+        /// <summary>
+        /// Seek the starting position without calling reporting to the progress incrementer
+        ///
+        /// Report only when the stream is read, not seeked.
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="origin"></param>
+        /// <returns></returns>
         public override long Seek(long offset, SeekOrigin origin)
         {
             var oldPosition = _innerStream.Position;
 
             var newPosition = _innerStream.Seek(offset, origin);
-
-            _incrementer.Report(newPosition - oldPosition);
 
             return newPosition;
         }
