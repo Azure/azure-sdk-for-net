@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
     public class BatchAccountCertificateOperationTests : BatchManagementTestBase
     {
         public BatchAccountCertificateOperationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -32,11 +32,10 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         }
 
         [TestCase]
-        [Ignore("Thumbprint Value invalid")]
         public async Task CertificateResourceApiTests()
         {
             //1.Get
-            var certificateName = Recording.GenerateAssetName("testCertificate-");
+            var certificateName = "sha1-cff2ab63c8c955aaf71989efa641b906558d9fb7";
             var certificate1 = await CreateAccountResourceAsync(certificateName);
             BatchAccountCertificateResource certificate2 = await certificate1.GetAsync();
 

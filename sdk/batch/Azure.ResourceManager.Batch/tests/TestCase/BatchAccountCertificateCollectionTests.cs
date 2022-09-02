@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
     public class BatchAccountCertificateCollectionTests : BatchManagementTestBase
     {
         public BatchAccountCertificateCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -29,19 +29,18 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         }
 
         [TestCase]
-        [Ignore("Thumbprint Value invalid")]
         public async Task CertificateCollectionApiTests()
         {
             //1.CreateOrUpdate
             var container = await GetAccountCollectionAsync();
-            var name = Recording.GenerateAssetName("testCertificate-");
+            var name = "sha1-cff2ab63c8c955aaf71989efa641b906558d9fb7";
             var input = ResourceDataHelper.GetBatchAccountCertificateData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountCertificateResource certificate1 = lro.Value;
             Assert.AreEqual(name, certificate1.Data.Name);
             //2.Get
-            BatchAccountCertificateResource ertificate2 = await container.GetAsync(name);
-            ResourceDataHelper.AssertCertificate(certificate1.Data, ertificate2.Data);
+            BatchAccountCertificateResource certificate2 = await container.GetAsync(name);
+            ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             int count = 0;
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             Assert.GreaterOrEqual(count, 1);
             //4Exists
             Assert.IsTrue(await container.ExistsAsync(name));
-            Assert.IsFalse(await container.ExistsAsync(name + "1"));
+            Assert.IsFalse(await container.ExistsAsync("sha1-cff2ab63c8c955aaf71989efa641b906558d9fb8"));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
