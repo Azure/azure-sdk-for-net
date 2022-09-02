@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Description = patchedDescription,
                 Method = patchedMethod,
             };
-            getResponse = (await apiOperationResponse.UpdateAsync("*", patchOperation)).Value;
+            getResponse = (await apiOperationResponse.UpdateAsync(ETag.All, patchOperation)).Value;
             Assert.NotNull(getResponse);
             Assert.AreEqual(getResponse.Data.Method, patchedMethod);
 
             // Delete the operation
-            await apiOperationResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await apiOperationResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var exsits = (await collection.ExistsAsync(newOperationId)).Value;
             Assert.IsFalse(exsits);
         }

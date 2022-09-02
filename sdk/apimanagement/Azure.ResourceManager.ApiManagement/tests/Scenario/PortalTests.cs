@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var updatedResult = (await getPortalRevision.UpdateAsync(
                 WaitUntil.Completed,
-                "*",
+                ETag.All,
                 new ApiManagementPortalRevisionData { Description = updateDescription })).Value;
 
             Assert.NotNull(updatedResult);

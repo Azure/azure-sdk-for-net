@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.GreaterOrEqual(listResponse.Count, 2);
 
             // delete a OpenId Connect Provider
-            await openIdConnectProviderContract.DeleteAsync(WaitUntil.Completed, "*");
+            await openIdConnectProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             // get the deleted openId Connect Provider to make sure it was deleted
             var falseResult = (await collection.ExistsAsync(openIdNoSecret)).Value;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // patch the openId Connect Provider
             string updateMetadataEndpoint = GetOpenIdMetadataEndpointUrl();
             string updatedClientId = Recording.GenerateAssetName("updatedClient");
-            await getResponse2.UpdateAsync("*",
+            await getResponse2.UpdateAsync(ETag.All,
                 new ApiManagementOpenIdConnectProviderPatch
                 {
                     MetadataEndpoint = updateMetadataEndpoint,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(clientSecret, secretsResponse.ClientSecret);
 
             // delete the openId Connect Provider
-            await getResponseOpendId2.DeleteAsync(WaitUntil.Completed, "*");
+            await getResponseOpendId2.DeleteAsync(WaitUntil.Completed, ETag.All);
             falseResult = (await collection.ExistsAsync(openId2)).Value;
             Assert.IsFalse(falseResult);
         }

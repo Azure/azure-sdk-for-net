@@ -27,13 +27,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(AuthenticationSettings))
             {
-                writer.WritePropertyName("authenticationSettings");
-                writer.WriteObjectValue(AuthenticationSettings);
+                if (AuthenticationSettings != null)
+                {
+                    writer.WritePropertyName("authenticationSettings");
+                    writer.WriteObjectValue(AuthenticationSettings);
+                }
+                else
+                {
+                    writer.WriteNull("authenticationSettings");
+                }
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
-                writer.WritePropertyName("subscriptionKeyParameterNames");
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                if (SubscriptionKeyParameterNames != null)
+                {
+                    writer.WritePropertyName("subscriptionKeyParameterNames");
+                    writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                }
+                else
+                {
+                    writer.WriteNull("subscriptionKeyParameterNames");
+                }
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -112,13 +126,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols");
-                writer.WriteStartArray();
-                foreach (var item in Protocols)
+                if (Protocols != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("protocols");
+                    writer.WriteStartArray();
+                    foreach (var item in Protocols)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("protocols");
+                }
             }
             if (Optional.IsDefined(ApiVersionSet))
             {
@@ -201,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                authenticationSettings = null;
                                 continue;
                             }
                             authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value);
@@ -211,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                subscriptionKeyParameterNames = null;
                                 continue;
                             }
                             subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value);
@@ -351,7 +372,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                protocols = null;
                                 continue;
                             }
                             List<ApiOperationInvokableProtocol> array = new List<ApiOperationInvokableProtocol>();

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(cacheListResponse.Count, 1);
 
             // remove the cache
-            await getResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await cacheCollection.ExistsAsync(cacheid));
             Assert.IsFalse(resultFalse);
         }

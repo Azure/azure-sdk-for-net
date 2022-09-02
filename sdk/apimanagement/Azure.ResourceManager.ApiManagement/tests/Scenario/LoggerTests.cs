@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // patch logger
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
-            await loggerContract.UpdateAsync("*", new ApiManagementLoggerPatch() { Description = patchedDescription });
+            await loggerContract.UpdateAsync(ETag.All, new ApiManagementLoggerPatch() { Description = patchedDescription });
 
             // get to check it was patched
             loggerContract = await logCollection.GetAsync(newloggerId);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(loggerContract.Data.Credentials);
 
             // delete the logger
-            await loggerContract.DeleteAsync(WaitUntil.Completed, "*");
+            await loggerContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var falseResult = await logCollection.ExistsAsync(newloggerId);
             Assert.IsFalse(falseResult);
         }

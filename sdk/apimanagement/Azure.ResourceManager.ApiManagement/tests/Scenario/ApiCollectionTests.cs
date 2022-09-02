@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 {
                     var newitem = (await item.GetAsync()).Value;
                     Assert.NotNull(newitem.Data.DisplayName);
-                    await newitem.DeleteAsync(WaitUntil.Completed, "*");
+                    await newitem.DeleteAsync(WaitUntil.Completed, ETag.All);
                 }
             }
         }

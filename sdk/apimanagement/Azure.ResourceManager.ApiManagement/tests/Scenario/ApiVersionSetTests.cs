@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 VersionQueryName = paramName,
                 VersionHeaderName = null
             };
-            await versionSetContract.UpdateAsync("*", versionSetUpdateParams);
+            await versionSetContract.UpdateAsync(ETag.All, versionSetUpdateParams);
             versionSetContract = await versionSetContract.GetAsync();
             Assert.NotNull(versionSetContract);
             Assert.AreEqual(VersioningScheme.Query, versionSetContract.Data.VersioningScheme);
             Assert.AreEqual(paramName, versionSetContract.Data.VersionQueryName);
 
             // now delete it
-            await versionSetContract.DeleteAsync(WaitUntil.Completed, "*");
+            await versionSetContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await versionCollection.ExistsAsync(newversionsetid)).Value;
             Assert.IsFalse(resultFalse);
         }

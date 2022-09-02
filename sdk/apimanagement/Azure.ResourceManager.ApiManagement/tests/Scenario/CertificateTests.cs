@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(1, listResponse.Count);
 
             // remove the certificate
-            await getResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await certCollection.ExistsAsync(certificateId));
             Assert.IsFalse(resultFalse);
         }

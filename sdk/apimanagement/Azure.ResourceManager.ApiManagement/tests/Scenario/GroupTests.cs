@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 Description = "Updating the description of the Sdk"
             };
-            await groupContract.UpdateAsync("*", updateParameters);
+            await groupContract.UpdateAsync(ETag.All, updateParameters);
 
             // get the updatedGroup
             var updatedResponse = (await groupContract.GetAsync()).Value;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(ApiManagementGroupType.Custom, updatedResponse.Data.GroupType);
 
             // delete the group
-            await updatedResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await updatedResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var falseResult = (await collection.ExistsAsync(newGroupId)).Value;
             Assert.IsFalse(falseResult);
         }

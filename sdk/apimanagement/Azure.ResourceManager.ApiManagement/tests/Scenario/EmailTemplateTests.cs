@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 Subject = "Updated Subject"
             };
-            var updatePublisherEmailTemplate = (await publisherEmailTemplateResponse.UpdateAsync("*", content)).Value;
+            var updatePublisherEmailTemplate = (await publisherEmailTemplateResponse.UpdateAsync(ETag.All, content)).Value;
             var updatePublisherEmailTemplateResponse = (await updatePublisherEmailTemplate.GetAsync()).Value;
             Assert.NotNull(updatePublisherEmailTemplateResponse);
             Assert.AreEqual("Updated Subject", updatePublisherEmailTemplateResponse.Data.Subject);
 
             // reset the template to default
-            await updatePublisherEmailTemplateResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await updatePublisherEmailTemplateResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             publisherEmailTemplate = (await collection.GetAsync(publisherEmailTemplate.Data.Name)).Value;
             Assert.NotNull(publisherEmailTemplate);
             Assert.IsTrue(publisherEmailTemplate.Data.IsDefault);

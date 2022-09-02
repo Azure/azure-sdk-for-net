@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 Description = patchedDescription,
             };
-            await backendContract.UpdateAsync("*", patch);
+            await backendContract.UpdateAsync(ETag.All, patch);
 
             // get to check it was patched
             backendContract = await backendCollection.GetAsync(backendId);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(patchedDescription, backendContract.Data.Description);
 
             // delete the backend
-            await backendContract.DeleteAsync(WaitUntil.Completed, "*");
+            await backendContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await backendCollection.ExistsAsync(backendId)).Value;
             Assert.IsFalse(resultFalse);
         }

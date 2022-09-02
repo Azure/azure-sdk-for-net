@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // update product to accept unlimited number or subscriptions
             var product = (await ApiServiceResource.GetApiManagementProducts().GetAsync("starter")).Value;
-            await product.UpdateAsync("*",
+            await product.UpdateAsync(ETag.All,
                 new ApiManagementProductPatch
                 {
                     SubscriptionsLimit = int.MaxValue
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
 
             await subscriptionContract.UpdateAsync(
-                "*",
+                ETag.All,
                 new ApiManagementSubscriptionPatch
                 {
                     DisplayName = patchedName,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreNotEqual(patchedSk, keysHttpResponse.Data.SecondaryKey);
 
             // delete the subscription
-            await getResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var falseResult = (await collection.ExistsAsync(newSubscriptionId)).Value;
             Assert.IsFalse(falseResult);
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(globalSubscriptionDisplayName, globalSubscriptionCreateResponse.Data.DisplayName);
 
             // delete the global subscription
-            await globalSubscriptionCreateResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await globalSubscriptionCreateResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             // get the deleted subscription to make sure it was deleted
             falseResult = (await collection.ExistsAsync(globalSubscriptionId)).Value;

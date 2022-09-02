@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var resultNew = await result.GetAsync();
             Assert.NotNull(resultNew.Value.Data);
 
-            await resultNew.Value.DeleteAsync(WaitUntil.Completed, "*");
+            await resultNew.Value.DeleteAsync(WaitUntil.Completed, ETag.All);
             resultFalse = (await collection.ExistsAsync("applicationinsights")).Value;
             Assert.IsFalse(resultFalse);
         }

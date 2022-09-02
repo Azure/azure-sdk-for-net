@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(2, listResponse.Count);
 
             // delete a property
-            await getResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await collection.ExistsAsync(propertyId)).Value;
             Assert.IsFalse(resultFalse);
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 IsSecret = false
             };
-            await secretValueResponse.UpdateAsync(WaitUntil.Completed, "*", updateProperty);
+            await secretValueResponse.UpdateAsync(WaitUntil.Completed, ETag.All, updateProperty);
 
             // check it is patched
             var secretResponse = (await secretValueResponse.GetAsync()).Value;

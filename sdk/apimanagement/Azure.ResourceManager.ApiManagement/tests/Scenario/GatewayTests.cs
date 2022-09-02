@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class GatewayTests : ApiManagementManagementTestBase
     {
         public GatewayTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/30572")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/30572")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             //Assert.AreEqual(echoApi.Data.Name, apiGatewaysResponse.FirstOrDefault().Data.Name);
 
             // remove the gateway
-            await getResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await collection.ExistsAsync(gatewayId)).Value;
             //Assert.IsFalse(resultFalse);
         }

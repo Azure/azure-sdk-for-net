@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getPolicyResponse.Data.Value);
 
             // remove policy
-            await getPolicyResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await getPolicyResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             // get policy to check it was removed
             var resultFalse = (await collection.ExistsAsync("policy")).Value;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getApiPolicyRawXml.Data.Value);
 
             // remove policy
-            await getApiPolicy.DeleteAsync(WaitUntil.Completed, "*");
+            await getApiPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
             resultFalse = (await apiPolicyCollection.ExistsAsync("policy")).Value;
             Assert.IsFalse(resultFalse);
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 {
                     Value = policyDoc.ToString()
                 },
-                "*")).Value;
+                ETag.All)).Value;
 
             Assert.NotNull(setResponse2);
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getOperationPolicy.Data.Value);
 
             // remove policy
-            await getOperationPolicy.DeleteAsync(WaitUntil.Completed, "*");
+            await getOperationPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             resultFalse = (await operationPolicyCollection.ExistsAsync("policy")).Value;
             Assert.IsFalse(resultFalse);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 {
                     Value = policyDoc.ToString()
                 },
-                "*")).Value;
+                ETag.All)).Value;
 
             Assert.NotNull(setResponse3);
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getProductPolicyXml.Data.Value);
 
             // remove policy
-            await getProductPolicy.DeleteAsync(WaitUntil.Completed, "*");
+            await getProductPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             resultFalse = (await productPolicyCollection.ExistsAsync("policy")).Value;
             Assert.IsFalse(resultFalse);

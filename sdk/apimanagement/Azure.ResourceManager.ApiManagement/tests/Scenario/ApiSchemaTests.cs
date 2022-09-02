@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(schemaData.ContentType, schemasList.FirstOrDefault().Data.ContentType);
 
             // delete the schema
-            await schemaContract.DeleteAsync(WaitUntil.Completed, "*");
+            await schemaContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await schemaCollection.ExistsAsync(newSchemaId)).Value;
             Assert.IsFalse(resultFalse);
         }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             data.Subscriptions.IsSubscriptionDelegationEnabled = false;
             data.UserRegistration.IsUserRegistrationDelegationEnabled = false;
 
-            await portalDelegationSettings.UpdateAsync("*", data);
+            await portalDelegationSettings.UpdateAsync(ETag.All, data);
             portalDelegationSettings = await portalDelegationSettings.GetAsync();
             //Assert.NotNull(portalDelegationSettings);
             //Assert.IsNull(portalDelegationSettings.Data.Uri.ToString());

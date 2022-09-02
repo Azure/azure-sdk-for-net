@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 ClientSecret = patchedSecret
             };
-            await identityProviderContract.UpdateAsync("*", patch);
+            await identityProviderContract.UpdateAsync(ETag.All, patch);
 
             // get to check it was patched
             identityProviderContract = await collection.GetAsync(IdentityProviderType.Facebook);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(patchedSecret, secret.ClientSecret);
 
             // delete the identity provider
-            await identityProviderContract.DeleteAsync(WaitUntil.Completed, "*");
+            await identityProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await collection.ExistsAsync(IdentityProviderType.Facebook)).Value;
             Assert.IsFalse(resultFalse);
         }

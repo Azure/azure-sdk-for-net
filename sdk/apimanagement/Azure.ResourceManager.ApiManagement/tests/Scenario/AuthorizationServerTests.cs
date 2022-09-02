@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 GrantTypes = { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword }
             };
-            await getResponse.UpdateAsync("*", updateParameters);
+            await getResponse.UpdateAsync(ETag.All, updateParameters);
 
             // get to check is was updated
             getResponse = await getResponse.GetAsync();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.IsTrue(getResponse.Data.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))));
 
             // delete
-            await getResponse.DeleteAsync(WaitUntil.Completed, "*");
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var falseResult = (await authCollection.ExistsAsync(authsid)).Value;
             Assert.IsFalse(falseResult);
         }

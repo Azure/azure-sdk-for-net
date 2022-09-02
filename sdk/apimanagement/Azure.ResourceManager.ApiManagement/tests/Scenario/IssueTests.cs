@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Title = updateTitle
             };
 
-            await issueData.UpdateAsync("*", issueUpdateContract);
+            await issueData.UpdateAsync(ETag.All, issueUpdateContract);
 
             // get the issue
             issueData = await issueData.GetAsync();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(addedComment.Data.CreatedOn);
 
             // delete the commment
-            await addedComment.DeleteAsync(WaitUntil.Completed, "*");
+            await addedComment.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await commentCollection.ExistsAsync(newcommentId)).Value;
             Assert.IsFalse(resultFalse);
 
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(issueAttachment.Data.Content);
 
             // delete the attachment
-            await issueAttachment.DeleteAsync(WaitUntil.Completed, "*");
+            await issueAttachment.DeleteAsync(WaitUntil.Completed, ETag.All);
             resultFalse = (await attachmentsCollection.ExistsAsync(newattachmentId)).Value;
             Assert.IsFalse(resultFalse);
 
             // delete the issue
-            await issueData.DeleteAsync(WaitUntil.Completed, "*");
+            await issueData.DeleteAsync(WaitUntil.Completed, ETag.All);
             resultFalse = (await issueCollection.ExistsAsync(newissueId)).Value;
             Assert.IsFalse(resultFalse);
         }
