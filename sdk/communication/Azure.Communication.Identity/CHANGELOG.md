@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
 - Added support to customize the Communication Identity access token’s validity period:
