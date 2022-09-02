@@ -244,7 +244,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await operation.CancelAsync());
 
-            Assert.AreEqual("Cancellation is only available for API version 2022-05-01 and newer.", ex.Message);
+            Assert.AreEqual("Cancellation is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         #endregion Analyze

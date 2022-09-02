@@ -395,11 +395,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("StartAnalyzeHealthcareEntitiesAsync is only available for API version 2022-05-01 and newer.", ex.Message);
+                Assert.AreEqual("StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.1. Use service API version 2022-05-1 or newer.", ex.Message);
             }
             else
             {
-                Assert.AreEqual("StartAnalyzeHealthcareEntities is only available for API version 2022-05-01 and newer.", ex.Message);
+                Assert.AreEqual("StartAnalyzeHealthcareEntities is not available in API version v3.1. Use service API version 2022-05-1 or newer.", ex.Message);
             }
         }
 

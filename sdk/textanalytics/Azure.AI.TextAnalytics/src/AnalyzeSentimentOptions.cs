@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
     /// is run. For example, execute opinion mining, set model version,
     /// whether to include statistics, and more.
     /// </summary>
-    public class AnalyzeSentimentOptions : TextAnalyticsRequestOptions
+    public class AnalyzeSentimentOptions : TextAnalyticsRequestOptions, IModelValidator
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeSentimentOptions"/>
@@ -36,11 +36,11 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
 
-        internal new AnalyzeSentimentOptions CheckSupported(TextAnalyticsClientOptions.ServiceVersion version)
+        /// <inheritdoc/>
+        internal override void CheckSupported(TextAnalyticsClientOptions.ServiceVersion current)
         {
-            base.CheckSupported(version);
-            Validation.SupportsProperty(IncludeOpinionMining, nameof(IncludeOpinionMining), TextAnalyticsClientOptions.ServiceVersion.V3_1, version);
-            return this;
+            base.CheckSupported(current);
+            Validation.SupportsProperty(this, IncludeOpinionMining, nameof(IncludeOpinionMining), TextAnalyticsClientOptions.ServiceVersion.V3_1, current);
         }
     }
 }

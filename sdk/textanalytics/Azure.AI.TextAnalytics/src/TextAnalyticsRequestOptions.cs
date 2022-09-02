@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -11,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// <para>For example, set model version, whether to include statistics,
     /// and more.</para>
     /// </summary>
-    public class TextAnalyticsRequestOptions
+    public class TextAnalyticsRequestOptions : IModelValidator
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsRequestOptions"/>
@@ -58,10 +56,15 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
 
-        internal TextAnalyticsRequestOptions CheckSupported(TextAnalyticsClientOptions.ServiceVersion version)
+        /// <summary>
+        /// Checks that the specified <see cref="TextAnalyticsClientOptions.ServiceVersion"/> supports all properties set within this model.
+        /// </summary>
+        /// <param name="current">The current <see cref="TextAnalyticsClientOptions.ServiceVersion"/> used by the <see cref="TextAnalyticsClient"/>.</param>
+        internal virtual void CheckSupported(TextAnalyticsClientOptions.ServiceVersion current)
         {
-            Validation.SupportsProperty(DisableServiceLogs, nameof(DisableServiceLogs), TextAnalyticsClientOptions.ServiceVersion.V3_1, version);
-            return this;
+            Validation.SupportsProperty(this, DisableServiceLogs, nameof(DisableServiceLogs), TextAnalyticsClientOptions.ServiceVersion.V3_1, current);
         }
+
+        void IModelValidator.CheckSupported(TextAnalyticsClientOptions.ServiceVersion current) => CheckSupported(current);
     }
 }

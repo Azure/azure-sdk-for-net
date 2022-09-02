@@ -43,11 +43,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("StartAnalyzeActionsAsync is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActionsAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
             else
             {
-                Assert.AreEqual("StartAnalyzeActions is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActions is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
         }
 
@@ -59,11 +59,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("RecognizePiiEntitiesAsync is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
             else
             {
-                Assert.AreEqual("RecognizePiiEntities is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
         }
 
@@ -75,11 +75,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("RecognizePiiEntitiesBatchAsync is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatchAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
             else
             {
-                Assert.AreEqual("RecognizePiiEntitiesBatch is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatch is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
         }
 
@@ -91,11 +91,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("StartAnalyzeHealthcareEntitiesAsync is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
             else
             {
-                Assert.AreEqual("StartAnalyzeHealthcareEntities is only available for API version v3.1 and newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
             }
         }
     }
