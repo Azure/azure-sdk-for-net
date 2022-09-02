@@ -438,10 +438,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fields = result.Documents.Single().Fields;
 
             // Verify that we got back at least one missing field to make sure we hit the code path we want to test.
-            // The missing field is returned with its value set to null.
+            // The missing field is returned with its type set to Unknown.
 
             Assert.IsTrue(fields.Values.Any(field =>
-                field.FieldType == DocumentFieldType.String && field.Value.AsString() == null));
+                field.FieldType == DocumentFieldType.Unknown && field.ExpectedFieldType == DocumentFieldType.String));
         }
 
         [RecordedTest]

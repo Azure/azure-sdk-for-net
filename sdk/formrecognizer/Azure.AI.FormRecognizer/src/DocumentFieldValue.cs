@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private DocumentSelectionMarkState? _mockValueSelectionMark;
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
-        /// <param name="fieldType"> Data type of the field value. </param>
+        /// <param name="expectedFieldType"> Data type of the field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
         /// <param name="valueTime"> Time value in hh:mm:ss format (ISO 8601). </param>
@@ -30,9 +30,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="valueObject"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
         /// <param name="valueAddress"> Address value. </param>
-        internal DocumentFieldValue(DocumentFieldType fieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null)
+        internal DocumentFieldValue(DocumentFieldType expectedFieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null)
         {
-            FieldType = fieldType;
+            ExpectedFieldType = expectedFieldType;
             ValueString = valueString;
             ValueDate = valueDate;
             ValueTime = valueTime;
@@ -51,17 +51,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentFieldValue. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentFieldValue(DocumentSelectionMarkState? value)
+        internal DocumentFieldValue(DocumentSelectionMarkState value)
         {
-            FieldType = DocumentFieldType.SelectionMark;
+            ExpectedFieldType = DocumentFieldType.SelectionMark;
             _mockValueSelectionMark = value;
         }
 
         /// <summary>
         /// The data type of the field value.
         /// </summary>
-        private DocumentFieldType FieldType { get; }
+        internal DocumentFieldType FieldType => (InternalValue == null) ? DocumentFieldType.Unknown : ExpectedFieldType;
 
+        /// <summary>
+        /// The expected data type of the field value according to the document model used for analysis.
+        /// </summary>
+        private DocumentFieldType ExpectedFieldType { get; }
+
+        #region Field Values
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValueString { get; }
 
@@ -100,146 +106,82 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyDictionary<string, DocumentField> ValueObject { get; }
+        #endregion FieldValues
 
+        private object InternalValue => ExpectedFieldType switch
+        {
+            DocumentFieldType.Address => ValueAddress,
+            DocumentFieldType.CountryRegion => ValueCountryRegion,
+            DocumentFieldType.Currency => ValueCurrency,
+            DocumentFieldType.Date => ValueDate,
+            DocumentFieldType.Dictionary => ValueObject,
+            DocumentFieldType.Double => ValueNumber,
+            DocumentFieldType.Int64 => ValueInteger,
+            DocumentFieldType.List => ValueArray,
+            DocumentFieldType.PhoneNumber => ValuePhoneNumber,
+            DocumentFieldType.SelectionMark => ValueSelectionMark,
+            DocumentFieldType.Signature => ValueSignature,
+            DocumentFieldType.String => ValueString,
+            DocumentFieldType.Time => ValueTime,
+            _ => null
+        };
+
+        #region Conversion Methods
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="string"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.String"/>.</exception>
-        public string AsString()
-        {
-            if (FieldType != DocumentFieldType.String)
-            {
-                throw new InvalidOperationException($"Cannot get field as String.  Field value's type is {FieldType}.");
-            }
-
-            return ValueString;
-        }
+        public string AsString() => AssertFieldTypeAndGetValue(DocumentFieldType.String, ValueString);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="long"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="long"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Int64"/> or when the value is <c>null</c>.</exception>
-        public long AsInt64()
-        {
-            if (FieldType != DocumentFieldType.Int64)
-            {
-                throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {FieldType}.");
-            }
-
-            if (!ValueInteger.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Int64)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
-            }
-
-            return ValueInteger.Value;
-        }
+        public long AsInt64() => AssertFieldTypeAndGetValue(DocumentFieldType.Int64, ValueInteger);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="double"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="double"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Double"/>.</exception>
-        public double AsDouble()
-        {
-            if (FieldType != DocumentFieldType.Double)
-            {
-                throw new InvalidOperationException($"Cannot get field as Double.  Field value's type is {FieldType}.");
-            }
-
-            if (!ValueNumber.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Double)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
-            }
-
-            return ValueNumber.Value;
-        }
+        public double AsDouble() => AssertFieldTypeAndGetValue(DocumentFieldType.Double, ValueNumber);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="DateTimeOffset"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Date"/> or when the value is <c>null</c>.</exception>
-        public DateTimeOffset AsDate()
-        {
-            if (FieldType != DocumentFieldType.Date)
-            {
-                throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {FieldType}.");
-            }
-
-            if (!ValueDate.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Date)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
-            }
-
-            return ValueDate.Value;
-        }
+        public DateTimeOffset AsDate() => AssertFieldTypeAndGetValue(DocumentFieldType.Date, ValueDate);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="TimeSpan"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Time"/> or when the value is <c>null</c>.</exception>
-        public TimeSpan AsTime()
-        {
-            if (FieldType != DocumentFieldType.Time)
-            {
-                throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {FieldType}.");
-            }
-
-            if (!ValueTime.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Time)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
-            }
-
-            return ValueTime.Value;
-        }
+        public TimeSpan AsTime() => AssertFieldTypeAndGetValue(DocumentFieldType.Time, ValueTime);
 
         /// <summary>
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
         /// <returns>The value of the field converted to a phone number <see cref="string"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.PhoneNumber"/>.</exception>
-        public string AsPhoneNumber()
-        {
-            if (FieldType != DocumentFieldType.PhoneNumber)
-            {
-                throw new InvalidOperationException($"Cannot get field as PhoneNumber.  Field value's type is {FieldType}.");
-            }
-
-            return ValuePhoneNumber;
-        }
+        public string AsPhoneNumber() => AssertFieldTypeAndGetValue(DocumentFieldType.PhoneNumber, ValuePhoneNumber);
 
         /// <summary>
         /// Gets the value of the field as an <see cref="IReadOnlyList{T}"/>.
         /// </summary>
         /// <returns>The value of the field converted to an <see cref="IReadOnlyList{T}"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.List"/>.</exception>
-        public IReadOnlyList<DocumentField> AsList()
-        {
-            if (FieldType != DocumentFieldType.List)
-            {
-                throw new InvalidOperationException($"Cannot get field as List.  Field value's type is {FieldType}.");
-            }
-
-            return ValueArray;
-        }
+        public IReadOnlyList<DocumentField> AsList() => AssertFieldTypeAndGetValue(DocumentFieldType.List, ValueArray);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Dictionary"/>.</exception>
-        public IReadOnlyDictionary<string, DocumentField> AsDictionary()
-        {
-            if (FieldType != DocumentFieldType.Dictionary)
-            {
-                throw new InvalidOperationException($"Cannot get field as Dictionary.  Field value's type is {FieldType}.");
-            }
-
-            return ValueObject;
-        }
+        public IReadOnlyDictionary<string, DocumentField> AsDictionary() => AssertFieldTypeAndGetValue(DocumentFieldType.Dictionary, ValueObject);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="DocumentSelectionMarkState"/>.
@@ -248,20 +190,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.SelectionMark"/>.</exception>
         public DocumentSelectionMarkState AsSelectionMarkState()
         {
-            if (FieldType != DocumentFieldType.SelectionMark)
-            {
-                throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {FieldType}.");
-            }
-
             if (_mockValueSelectionMark.HasValue)
             {
                 return _mockValueSelectionMark.Value;
             }
 
-            if (!ValueSelectionMark.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.SelectionMark)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
-            }
+            AssertFieldType(DocumentFieldType.SelectionMark, ValueSelectionMark);
 
             if (ValueSelectionMark == V3SelectionMarkState.Selected)
             {
@@ -281,70 +215,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.CountryRegion"/>.</exception>
-        public string AsCountryRegion()
-        {
-            if (FieldType != DocumentFieldType.CountryRegion)
-            {
-                throw new InvalidOperationException($"Cannot get field as country code.  Field value's type is {FieldType}.");
-            }
-
-            return ValueCountryRegion;
-        }
+        public string AsCountryRegion() => AssertFieldTypeAndGetValue(DocumentFieldType.CountryRegion, ValueCountryRegion);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="DocumentSignatureType"/>.
         /// </summary>
         /// <returns>The value of the field converted to <see cref="DocumentSignatureType"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Signature"/>.</exception>
-        public DocumentSignatureType AsSignatureType()
-        {
-            if (FieldType != DocumentFieldType.Signature)
-            {
-                throw new InvalidOperationException($"Cannot get field as signature.  Field value's type is {FieldType}.");
-            }
-
-            if (!ValueSignature.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Signature)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
-            }
-
-            return ValueSignature.Value;
-        }
+        public DocumentSignatureType AsSignatureType() => AssertFieldTypeAndGetValue(DocumentFieldType.Signature, ValueSignature);
 
         /// <summary>
         /// Gets the value of the field as a <see cref="CurrencyValue"/>.
         /// </summary>
         /// <returns>The value of the field converted to <see cref="CurrencyValue"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Currency"/>.</exception>
-        public CurrencyValue AsCurrency()
-        {
-            if (FieldType != DocumentFieldType.Currency)
-            {
-                throw new InvalidOperationException($"Cannot get field as currency.  Field value's type is {FieldType}.");
-            }
-
-            if (!ValueCurrency.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Currency)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
-            }
-
-            return ValueCurrency.Value;
-        }
+        public CurrencyValue AsCurrency() => AssertFieldTypeAndGetValue(DocumentFieldType.Currency, ValueCurrency);
 
         /// <summary>
         /// Gets the value of the field as an <see cref="AddressValue"/>.
         /// </summary>
         /// <returns>The value of the field converted to an <see cref="AddressValue"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Address"/>.</exception>
-        public AddressValue AsAddress()
-        {
-            if (FieldType != DocumentFieldType.Address)
-            {
-                throw new InvalidOperationException($"Cannot get field as address.  Field value's type is {FieldType}.");
-            }
-
-            return ValueAddress;
-        }
+        public AddressValue AsAddress() => AssertFieldTypeAndGetValue(DocumentFieldType.Address, ValueAddress);
+        #endregion Conversion Methods
 
         /// <summary>
         /// Returns a string that represents the <see cref="DocumentField"/> object.
@@ -352,7 +245,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns>A string that represents the <see cref="DocumentField"/> object.</returns>
         public override string ToString()
         {
-            string conversionMethod = FieldType switch
+            string conversionMethod = ExpectedFieldType switch
             {
                 DocumentFieldType.Address => nameof(AsAddress),
                 DocumentFieldType.CountryRegion => nameof(AsCountryRegion),
@@ -371,26 +264,33 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             };
 
             return conversionMethod == null
-                ? $"{nameof(DocumentField)}: {nameof(FieldType)}={FieldType}"
-                : $"{nameof(DocumentField)}: {nameof(FieldType)}={FieldType}, {conversionMethod}()=>Value";
+                ? $"{nameof(DocumentField)}: {nameof(FieldType)}={DocumentFieldType.Unknown}"
+                : $"{nameof(DocumentField)}: {nameof(FieldType)}={ExpectedFieldType}, {conversionMethod}()=>Value";
         }
 
-        private object InternalValue => FieldType switch
+        private void AssertFieldType<T>(DocumentFieldType requestedFieldType, T value)
         {
-            DocumentFieldType.Address => AsAddress(),
-            DocumentFieldType.CountryRegion => AsCountryRegion(),
-            DocumentFieldType.Currency => AsCurrency(),
-            DocumentFieldType.Date => AsDate(),
-            DocumentFieldType.Dictionary => AsDictionary(),
-            DocumentFieldType.Double => AsDouble(),
-            DocumentFieldType.Int64 => AsInt64(),
-            DocumentFieldType.List => AsList(),
-            DocumentFieldType.PhoneNumber => AsPhoneNumber(),
-            DocumentFieldType.SelectionMark => AsSelectionMarkState(),
-            DocumentFieldType.Signature => AsSignatureType(),
-            DocumentFieldType.String => AsString(),
-            DocumentFieldType.Time => AsTime(),
-            _ => null
-        };
+            if (requestedFieldType != ExpectedFieldType)
+            {
+                throw new InvalidOperationException($"Cannot get field as {requestedFieldType}. Field value's type is {ExpectedFieldType}.");
+            }
+
+            if (value == null)
+            {
+                throw new InvalidOperationException($"The value was extracted from the document, but cannot be normalized to {requestedFieldType}. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
+            }
+        }
+
+        private T AssertFieldTypeAndGetValue<T>(DocumentFieldType requestedFieldType, T value) where T : class
+        {
+            AssertFieldType(requestedFieldType, value);
+            return value;
+        }
+
+        private T AssertFieldTypeAndGetValue<T>(DocumentFieldType requestedFieldType, T? value) where T : struct
+        {
+            AssertFieldType(requestedFieldType, value);
+            return value.Value;
+        }
     }
 }
