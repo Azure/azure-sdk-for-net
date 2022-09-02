@@ -207,11 +207,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private static RichBindingReferenceType CreateReference(BlobAttribute blobAttribute)
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
+            var connectionName =  blobAttribute.Connection??"AzureWebJobsStorage";
 
             var referenceType = new RichBindingReferenceType();
             referenceType.Properties = new Dictionary<string, string>()
             {
-                { "connection_string", blobAttribute.Connection },
+                { "connection_name", connectionName },
                 { "blob_container", blobPath.ContainerName },
                 { "blob_name", blobPath.BlobName }
             };
@@ -357,10 +358,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private static RichBindingReferenceType ConvertToReferenceType(BlobBaseClient input, BlobTriggerAttribute attr)
         {
+            var connectionName =  attr.Connection??"AzureWebJobsStorage";
+
             var referenceType = new RichBindingReferenceType();
             referenceType.Properties = new Dictionary<string, string>()
             {
-                { "connection_string", attr.Connection },
+                { "connection_name",  connectionName},
                 { "blob_container", input.BlobContainerName },
                 { "blob_name", input.Name }
             };
