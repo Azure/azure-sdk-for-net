@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.PolicyInsights
     }
     public partial class AttestationData : Azure.ResourceManager.Models.ResourceData
     {
-        public AttestationData(string policyAssignmentId) { }
+        public AttestationData(Azure.Core.ResourceIdentifier policyAssignmentId) { }
         public string Comments { get { throw null; } set { } }
-        public Azure.ResourceManager.PolicyInsights.Models.ComplianceState? ComplianceState { get { throw null; } set { } }
+        public Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState? ComplianceState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence> Evidence { get { throw null; } }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.DateTimeOffset? LastComplianceStateChangeOn { get { throw null; } }
         public string Owner { get { throw null; } set { } }
-        public string PolicyAssignmentId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -44,76 +44,76 @@ namespace Azure.ResourceManager.PolicyInsights
     }
     public static partial class PolicyInsightsExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResult> CheckAtManagementGroupScopePolicyRestriction(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResult>> CheckAtManagementGroupScopePolicyRestrictionAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResult> CheckAtResourceGroupScopePolicyRestriction(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsRequest checkRestrictionsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResult>> CheckAtResourceGroupScopePolicyRestrictionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsRequest checkRestrictionsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResult> CheckAtSubscriptionScopePolicyRestriction(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsRequest checkRestrictionsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResult>> CheckAtSubscriptionScopePolicyRestrictionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsRequest checkRestrictionsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.PolicyMetadataCollection GetAllPolicyMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.PolicyInsights.AttestationResource> GetAttestation(this Azure.ResourceManager.ArmResource armResource, string attestationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.AttestationResource>> GetAttestationAsync(this Azure.ResourceManager.ArmResource armResource, string attestationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PolicyInsights.AttestationResource> GetAttestation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string attestationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.AttestationResource>> GetAttestationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string attestationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.AttestationResource GetAttestationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.AttestationCollection GetAttestations(this Azure.ResourceManager.ArmResource armResource) { throw null; }
+        public static Azure.ResourceManager.PolicyInsights.AttestationCollection GetAttestations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetPolicyEventQueryResults(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetPolicyEventQueryResults(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetPolicyEventQueryResults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetPolicyEventQueryResultsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetPolicyEventQueryResultsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetPolicyEventQueryResultsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.PolicyInsights.PolicyMetadataResource> GetPolicyMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.PolicyMetadataResource>> GetPolicyMetadataAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.PolicyMetadataResource GetPolicyMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForManagementGroupPolicyEvents(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForManagementGroupPolicyEventsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForManagementGroupPolicyStates(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForManagementGroupPolicyStatesAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetPolicyStateQueryResults(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetPolicyStateQueryResults(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetPolicyStateQueryResults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetPolicyStateQueryResultsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetPolicyStateQueryResultsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetPolicyStateQueryResultsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResource> GetQueryResultsForManagementGroupPolicyTrackedResources(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourcesResourceType policyTrackedResourcesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResource> GetQueryResultsForManagementGroupPolicyTrackedResourcesAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourcesResourceType policyTrackedResourcesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForResourceGroupPolicyEvents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForResourceGroupPolicyEventsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForResourceGroupPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForResourceGroupPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResource> GetQueryResultsForResourceGroupPolicyTrackedResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourcesResourceType policyTrackedResourcesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResource> GetQueryResultsForResourceGroupPolicyTrackedResourcesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourcesResourceType policyTrackedResourcesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForSubscriptionPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForSubscriptionPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForSubscriptionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForSubscriptionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType policyEventsResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType policyStatesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResource> GetQueryResultsForSubscriptionPolicyTrackedResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourcesResourceType policyTrackedResourcesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResource> GetQueryResultsForSubscriptionPolicyTrackedResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourcesResourceType policyTrackedResourcesResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.PolicyInsights.RemediationResource> GetRemediation(this Azure.ResourceManager.ArmResource armResource, string remediationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.RemediationResource>> GetRemediationAsync(this Azure.ResourceManager.ArmResource armResource, string remediationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PolicyInsights.RemediationResource> GetRemediation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string remediationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.RemediationResource>> GetRemediationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string remediationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.RemediationResource GetRemediationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.RemediationCollection GetRemediations(this Azure.ResourceManager.ArmResource armResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForManagementGroupPolicyStates(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForManagementGroupPolicyStatesAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForPolicyDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForPolicyDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForPolicySetDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForPolicySetDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForResourceGroupPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForResourceGroupPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForSubscriptionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.Summary> SummarizeForSubscriptionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation TriggerResourceGroupEvaluationPolicyState(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerResourceGroupEvaluationPolicyStateAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation TriggerSubscriptionEvaluationPolicyState(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerSubscriptionEvaluationPolicyStateAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.PolicyInsights.RemediationCollection GetRemediations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForPolicyDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForPolicyDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForPolicySetDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForPolicySetDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForResourceGroupPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForResourceGroupPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizePolicyState(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizePolicyState(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizePolicyStateAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> SummarizePolicyStateAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType policyStatesSummaryResource, Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation TriggerPolicyStateEvaluation(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation TriggerPolicyStateEvaluation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerPolicyStateEvaluationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerPolicyStateEvaluationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PolicyMetadataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>, System.Collections.IEnumerable
     {
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.PolicyInsights
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary DeploymentStatus { get { throw null; } }
         public float? FailureThresholdPercentage { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> FiltersLocations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> FilterLocations { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public int? ParallelDeployments { get { throw null; } set { } }
-        public string PolicyAssignmentId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public int? ResourceCount { get { throw null; } set { } }
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PolicyInsights.RemediationResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PolicyInsights.RemediationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PolicyInsights.RemediationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment> GetDeploymentsAtResource(Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment> GetDeploymentsAtResourceAsync(Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment> GetDeployments(Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PolicyInsights.Models.RemediationDeployment> GetDeploymentsAsync(Azure.ResourceManager.PolicyInsights.Models.QueryOptions queryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PolicyInsights.RemediationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PolicyInsights.RemediationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PolicyInsights.RemediationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PolicyInsights.RemediationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -209,17 +209,23 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string Description { get { throw null; } set { } }
         public System.Uri SourceUri { get { throw null; } set { } }
     }
-    public partial class CheckManagementGroupRestrictionsContent
+    public partial class CheckManagementGroupPolicyRestrictionsContent
     {
-        public CheckManagementGroupRestrictionsContent() { }
+        public CheckManagementGroupPolicyRestrictionsContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.PolicyInsights.Models.PendingField> PendingFields { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails ResourceDetails { get { throw null; } set { } }
     }
-    public partial class CheckRestrictionsRequest
+    public partial class CheckPolicyRestrictionsContent
     {
-        public CheckRestrictionsRequest(Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails resourceDetails) { }
+        public CheckPolicyRestrictionsContent(Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails resourceDetails) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.PolicyInsights.Models.PendingField> PendingFields { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails ResourceDetails { get { throw null; } }
+    }
+    public partial class CheckPolicyRestrictionsResult
+    {
+        internal CheckPolicyRestrictionsResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions> FieldRestrictions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult> PolicyEvaluations { get { throw null; } }
     }
     public partial class CheckRestrictionsResourceDetails
     {
@@ -228,36 +234,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public System.BinaryData ResourceContent { get { throw null; } }
         public string Scope { get { throw null; } set { } }
     }
-    public partial class CheckRestrictionsResult
-    {
-        internal CheckRestrictionsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions> FieldRestrictions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult> PolicyEvaluations { get { throw null; } }
-    }
     public partial class ComplianceDetail
     {
         internal ComplianceDetail() { }
         public string ComplianceState { get { throw null; } }
         public int? Count { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComplianceState : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.ComplianceState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComplianceState(string value) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.Models.ComplianceState Compliant { get { throw null; } }
-        public static Azure.ResourceManager.PolicyInsights.Models.ComplianceState NonCompliant { get { throw null; } }
-        public static Azure.ResourceManager.PolicyInsights.Models.ComplianceState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.ComplianceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.ComplianceState left, Azure.ResourceManager.PolicyInsights.Models.ComplianceState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.ComplianceState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.ComplianceState left, Azure.ResourceManager.PolicyInsights.Models.ComplianceState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ComponentEventDetails : Azure.ResourceManager.Models.ResourceData
     {
@@ -334,11 +315,30 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     public partial class PolicyAssignmentSummary
     {
         internal PolicyAssignmentSummary() { }
-        public string PolicyAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyDefinitionSummary> PolicyDefinitions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary> PolicyGroups { get { throw null; } }
-        public string PolicySetDefinitionId { get { throw null; } }
-        public Azure.ResourceManager.PolicyInsights.Models.SummaryResults Results { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
+        public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PolicyComplianceState : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PolicyComplianceState(string value) { throw null; }
+        public static Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState Compliant { get { throw null; } }
+        public static Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState NonCompliant { get { throw null; } }
+        public static Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState left, Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState left, Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PolicyDefinitionSummary
     {
@@ -347,17 +347,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public System.Collections.Generic.IReadOnlyList<string> PolicyDefinitionGroupNames { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
-        public Azure.ResourceManager.PolicyInsights.Models.SummaryResults Results { get { throw null; } }
+        public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
     }
     public partial class PolicyDetails
     {
         internal PolicyDetails() { }
         public string PolicyAssignmentDisplayName { get { throw null; } }
-        public string PolicyAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } }
         public string PolicyAssignmentScope { get { throw null; } }
-        public string PolicyDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
-        public string PolicySetDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
     }
     public partial class PolicyEvaluationDetails
     {
@@ -383,25 +383,25 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string ManagementGroupIds { get { throw null; } }
         public string OdataContext { get { throw null; } }
         public string OdataId { get { throw null; } }
-        public string PolicyAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } }
         public string PolicyAssignmentName { get { throw null; } }
         public string PolicyAssignmentOwner { get { throw null; } }
         public string PolicyAssignmentParameters { get { throw null; } }
         public string PolicyAssignmentScope { get { throw null; } }
         public string PolicyDefinitionAction { get { throw null; } }
         public string PolicyDefinitionCategory { get { throw null; } }
-        public string PolicyDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionName { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public string PolicySetDefinitionCategory { get { throw null; } }
-        public string PolicySetDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
         public string PolicySetDefinitionName { get { throw null; } }
         public string PolicySetDefinitionOwner { get { throw null; } }
         public string PolicySetDefinitionParameters { get { throw null; } }
         public string PrincipalOid { get { throw null; } }
         public string ResourceGroup { get { throw null; } }
-        public string ResourceId { get { throw null; } }
-        public string ResourceLocation { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } }
         public string ResourceTags { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
@@ -409,35 +409,35 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyEventsResourceType : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType>
+    public readonly partial struct PolicyEventType : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.PolicyEventType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PolicyEventsResourceType(string value) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType Default { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType other) { throw null; }
+        public PolicyEventType(string value) { throw null; }
+        public static Azure.ResourceManager.PolicyInsights.Models.PolicyEventType Default { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyEventType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType left, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType left, Azure.ResourceManager.PolicyInsights.Models.PolicyEventsResourceType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyEventType left, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyEventType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.PolicyEventType left, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PolicyGroupSummary
     {
         internal PolicyGroupSummary() { }
         public string PolicyGroupName { get { throw null; } }
-        public Azure.ResourceManager.PolicyInsights.Models.SummaryResults Results { get { throw null; } }
+        public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
     }
     public partial class PolicyReference
     {
         internal PolicyReference() { }
-        public string PolicyAssignmentId { get { throw null; } }
-        public string PolicyDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
-        public string PolicySetDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
     }
     public partial class PolicyState
     {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string ManagementGroupIds { get { throw null; } }
         public string OdataContext { get { throw null; } }
         public string OdataId { get { throw null; } }
-        public string PolicyAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } }
         public string PolicyAssignmentName { get { throw null; } }
         public string PolicyAssignmentOwner { get { throw null; } }
         public string PolicyAssignmentParameters { get { throw null; } }
@@ -459,59 +459,77 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string PolicyDefinitionAction { get { throw null; } }
         public string PolicyDefinitionCategory { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PolicyDefinitionGroupNames { get { throw null; } }
-        public string PolicyDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicyDefinitionId { get { throw null; } }
         public string PolicyDefinitionName { get { throw null; } }
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public string PolicyDefinitionVersion { get { throw null; } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails PolicyEvaluationDetails { get { throw null; } }
         public string PolicySetDefinitionCategory { get { throw null; } }
-        public string PolicySetDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PolicySetDefinitionId { get { throw null; } }
         public string PolicySetDefinitionName { get { throw null; } }
         public string PolicySetDefinitionOwner { get { throw null; } }
         public string PolicySetDefinitionParameters { get { throw null; } }
         public string PolicySetDefinitionVersion { get { throw null; } }
         public string ResourceGroup { get { throw null; } }
-        public string ResourceId { get { throw null; } }
-        public string ResourceLocation { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } }
         public string ResourceTags { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyStatesResource : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource>
+    public readonly partial struct PolicyStateSummaryType : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PolicyStatesResource(string value) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource Default { get { throw null; } }
-        public static Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource Latest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource other) { throw null; }
+        public PolicyStateSummaryType(string value) { throw null; }
+        public static Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType Latest { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource left, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource left, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesResource right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyStatesSummaryResourceType : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType>
+    public readonly partial struct PolicyStateType : System.IEquatable<Azure.ResourceManager.PolicyInsights.Models.PolicyStateType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PolicyStatesSummaryResourceType(string value) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType Latest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType other) { throw null; }
+        public PolicyStateType(string value) { throw null; }
+        public static Azure.ResourceManager.PolicyInsights.Models.PolicyStateType Default { get { throw null; } }
+        public static Azure.ResourceManager.PolicyInsights.Models.PolicyStateType Latest { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyStateType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStatesSummaryResourceType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyStateType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyStateType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.PolicyStateType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PolicySummary
+    {
+        internal PolicySummary() { }
+        public string OdataContext { get { throw null; } }
+        public string OdataId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary> PolicyAssignments { get { throw null; } }
+        public Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults Results { get { throw null; } }
+    }
+    public partial class PolicySummaryResults
+    {
+        internal PolicySummaryResults() { }
+        public int? NonCompliantPolicies { get { throw null; } }
+        public int? NonCompliantResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> PolicyDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> PolicyGroupDetails { get { throw null; } }
+        public System.Uri QueryResultsUri { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> ResourceDetails { get { throw null; } }
     }
     public partial class PolicyTrackedResource
     {
@@ -597,24 +615,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string MetadataId { get { throw null; } }
         public string Owner { get { throw null; } }
         public string Title { get { throw null; } }
-    }
-    public partial class Summary
-    {
-        internal Summary() { }
-        public string OdataContext { get { throw null; } }
-        public string OdataId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary> PolicyAssignments { get { throw null; } }
-        public Azure.ResourceManager.PolicyInsights.Models.SummaryResults Results { get { throw null; } }
-    }
-    public partial class SummaryResults
-    {
-        internal SummaryResults() { }
-        public int? NonCompliantPolicies { get { throw null; } }
-        public int? NonCompliantResources { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> PolicyDetails { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> PolicyGroupDetails { get { throw null; } }
-        public System.Uri QueryResultsUri { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PolicyInsights.Models.ComplianceDetail> ResourceDetails { get { throw null; } }
     }
     public partial class TrackedResourceModificationDetails
     {

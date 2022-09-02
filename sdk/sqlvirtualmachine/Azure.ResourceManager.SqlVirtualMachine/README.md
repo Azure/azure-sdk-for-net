@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Sql Virtual Machine management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.SqlVirtualMachine --prerelease
+dotnet add package Azure.ResourceManager.SqlVirtualMachine
 ```
 
 ### Prerequisites

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static HybridConnectionListResult DeserializeHybridConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<HybridConnectionData>> value = default;
+            Optional<IReadOnlyList<RelayHybridConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Relay.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HybridConnectionData> array = new List<HybridConnectionData>();
+                    List<RelayHybridConnectionData> array = new List<RelayHybridConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridConnectionData.DeserializeHybridConnectionData(item));
+                        array.Add(RelayHybridConnectionData.DeserializeRelayHybridConnectionData(item));
                     }
                     value = array;
                     continue;

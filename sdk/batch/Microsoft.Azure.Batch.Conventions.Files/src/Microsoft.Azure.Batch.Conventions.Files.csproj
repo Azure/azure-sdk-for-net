@@ -6,7 +6,9 @@
       by task and job id and the type of output.
     </Description>
     <AssemblyTitle>Microsoft Azure Batch File Conventions</AssemblyTitle>
-    <Version>4.0.0</Version>
+    <Version>4.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>4.0.0</ApiCompatVersion>
     <PackageTags>Microsoft,Azure,Batch,windowsazureofficial</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <PackageReleaseNotes>

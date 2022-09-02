@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetAppSubvolumeData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppSubvolumeInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        NetAppSubvolumeData value = default;
+                        NetAppSubvolumeInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetAppSubvolumeData.DeserializeNetAppSubvolumeData(document.RootElement);
+                        value = NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetAppSubvolumeData)null, message.Response);
+                    return Response.FromValue((NetAppSubvolumeInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetAppSubvolumeData> Get(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, CancellationToken cancellationToken = default)
+        public Response<NetAppSubvolumeInfoData> Get(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,19 +216,19 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        NetAppSubvolumeData value = default;
+                        NetAppSubvolumeInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetAppSubvolumeData.DeserializeNetAppSubvolumeData(document.RootElement);
+                        value = NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetAppSubvolumeData)null, message.Response);
+                    return Response.FromValue((NetAppSubvolumeInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeInfoData info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="subvolumeName"> The name of the subvolume. </param>
-        /// <param name="data"> Subvolume object supplied in the body of the operation. </param>
+        /// <param name="info"> Subvolume object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="subvolumeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="subvolumeName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, subvolumeName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, subvolumeName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -299,11 +299,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="subvolumeName"> The name of the subvolume. </param>
-        /// <param name="data"> Subvolume object supplied in the body of the operation. </param>
+        /// <param name="info"> Subvolume object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="subvolumeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="subvolumeName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -311,9 +311,9 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, subvolumeName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, subvolumeName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeInfoPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="subvolumeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeInfoPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="subvolumeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName, NetAppSubvolumeInfoPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
