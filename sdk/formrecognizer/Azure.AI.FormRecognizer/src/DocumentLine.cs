@@ -12,14 +12,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     [CodeGenModel("DocumentLine")]
     public partial class DocumentLine
     {
+        private readonly IReadOnlyList<DocumentWord> _mockWords;
+
         /// <summary>
         /// Initializes a new instance of DocumentLine. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentLine(string content, IReadOnlyList<PointF> boundingPolygon, IReadOnlyList<DocumentSpan> spans)
+        internal DocumentLine(string content, IReadOnlyList<PointF> boundingPolygon, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words)
         {
             Content = content;
             BoundingPolygon = boundingPolygon;
             Spans = spans;
+            _mockWords = words;
         }
 
         /// <summary>
@@ -48,10 +51,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns></returns>
         public IReadOnlyList<DocumentWord> GetWords()
         {
-            // ContainingPage could be null if this DocumentLine instance was created by the model factory.
-            if (ContainingPage == null)
+            if (_mockWords != null)
             {
-                return Array.Empty<DocumentWord>();
+                return _mockWords;
             }
 
             var words = new List<DocumentWord>();

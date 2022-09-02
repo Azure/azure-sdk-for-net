@@ -287,12 +287,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="boundingPolygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
+        /// <param name="words"> The words that compose this line. Returned by the <see cref="DocumentLine.GetWords"/> method. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentLine"/> instance for mocking. </returns>
-        public static DocumentLine DocumentLine(string content = null, IReadOnlyList<PointF> boundingPolygon = default, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentLine DocumentLine(string content = null, IReadOnlyList<PointF> boundingPolygon = default, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null)
         {
             spans ??= new List<DocumentSpan>();
+            words ??= new List<DocumentWord>();
 
-            return new DocumentLine(content, boundingPolygon, spans?.ToList());
+            return new DocumentLine(content, boundingPolygon, spans?.ToList(), words?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
