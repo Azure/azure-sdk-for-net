@@ -1344,8 +1344,8 @@ schemas: !Schemas
                               serializationFormats:
                                 - json
                               usage:
-                                - output
                                 - input
+                                - output
                               language: !Languages 
                                 default:
                                   name: ServicePrincipal
@@ -1833,7 +1833,7 @@ schemas: !Schemas
       protocol: !Protocols {}
     - *ref_43
     - *ref_66
-    - !ObjectSchema &ref_125
+    - !ObjectSchema 
       type: object
       apiVersions:
         - !ApiVersion 
@@ -1857,10 +1857,6 @@ schemas: !Schemas
               name: value
               description: The list of servicePrincipals.
           protocol: !Protocols {}
-      serializationFormats:
-        - json
-      usage:
-        - output
       language: !Languages 
         default:
           name: ServicePrincipalListResult
@@ -4743,203 +4739,6 @@ operationGroups:
         description: ''
     protocol: !Protocols {}
   - !OperationGroup 
-    $key: ServicePrincipals
-    operations:
-      - !Operation 
-        operationId: ServicePrincipals_ListBySubscription
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - *ref_84
-          - *ref_79
-        requests:
-          - !Request 
-            parameters:
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters: []
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpRequest 
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals
-                method: get
-                uri: '{$host}'
-        signatureParameters: []
-        responses:
-          - !SchemaResponse 
-            schema: *ref_125
-            language: !Languages 
-              default:
-                name: ''
-                description: Returns the Automanage ADD first party Application Service Principal details for the subscription.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '200'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            List service principal by subscription:
-              parameters:
-                api-version: '2022-05-04'
-                subscriptionId: mySubscriptionId
-              responses:
-                '200':
-                  body:
-                    value:
-                      - name: default
-                        type: Microsoft.Automanage/ConfigurationProfileAssignments
-                        id: /subscriptions/subscriptionId/providers/Microsoft.Automanage/servicePrincipals/default
-                        properties:
-                          authorizationSet: true
-                          servicePrincipalId: <servicePrincipalId>
-                        systemData:
-                          createdAt: '0001-01-01T00:00:00.00Z'
-                          createdBy: SYSTEM
-                          createdByType: User
-                          lastModifiedAt: '0001-01-01T00:00:00.00Z'
-                          lastModifiedBy: SYSTEM
-                          lastModifiedByType: User
-                  headers: {}
-          x-ms-pageable:
-            nextLinkName: null
-        language: !Languages 
-          default:
-            name: ListBySubscription
-            description: Get the Automanage AAD first party Application Service Principal details for the subscription id.
-            paging:
-              nextLinkName: null
-        protocol: !Protocols {}
-      - !Operation 
-        operationId: ServicePrincipals_Get
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - *ref_84
-          - *ref_79
-        requests:
-          - !Request 
-            parameters:
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters: []
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpRequest 
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default
-                method: get
-                uri: '{$host}'
-        signatureParameters: []
-        responses:
-          - !SchemaResponse 
-            schema: *ref_44
-            language: !Languages 
-              default:
-                name: ''
-                description: Returns the Automanage ADD first party Application Service Principal details for the subscription.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '200'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            Get service principal:
-              parameters:
-                api-version: '2022-05-04'
-                subscriptionId: mySubscriptionId
-              responses:
-                '200':
-                  body:
-                    name: default
-                    type: Microsoft.Automanage/ConfigurationProfileAssignments
-                    id: /subscriptions/subscriptionId/providers/Microsoft.Automanage/servicePrincipals/default
-                    properties:
-                      authorizationSet: true
-                      servicePrincipalId: <servicePrincipalId>
-                    systemData:
-                      createdAt: '0001-01-01T00:00:00.00Z'
-                      createdBy: SYSTEM
-                      createdByType: User
-                      lastModifiedAt: '0001-01-01T00:00:00.00Z'
-                      lastModifiedBy: SYSTEM
-                      lastModifiedByType: User
-                  headers: {}
-        language: !Languages 
-          default:
-            name: Get
-            description: Get the Automanage AAD first party Application Service Principal details for the subscription id.
-        protocol: !Protocols {}
-    language: !Languages 
-      default:
-        name: ServicePrincipals
-        description: ''
-    protocol: !Protocols {}
-  - !OperationGroup 
     $key: HCRPReports
     operations:
       - !Operation 
@@ -4950,7 +4749,7 @@ operationGroups:
         parameters:
           - *ref_78
           - *ref_84
-          - !Parameter &ref_126
+          - !Parameter &ref_125
             schema: *ref_85
             implementation: Method
             required: true
@@ -4962,7 +4761,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_127
+          - !Parameter &ref_126
             schema: *ref_2
             implementation: Method
             required: true
@@ -4974,7 +4773,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_128
+          - !Parameter &ref_127
             schema: *ref_2
             implementation: Method
             required: true
@@ -5015,9 +4814,9 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
+          - *ref_125
           - *ref_126
           - *ref_127
-          - *ref_128
         responses:
           - !SchemaResponse 
             schema: *ref_121
@@ -5139,7 +4938,7 @@ operationGroups:
         parameters:
           - *ref_78
           - *ref_84
-          - !Parameter &ref_129
+          - !Parameter &ref_128
             schema: *ref_85
             implementation: Method
             required: true
@@ -5151,7 +4950,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_130
+          - !Parameter &ref_129
             schema: *ref_2
             implementation: Method
             required: true
@@ -5163,7 +4962,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_131
+          - !Parameter &ref_130
             schema: *ref_2
             implementation: Method
             required: true
@@ -5204,9 +5003,9 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
+          - *ref_128
           - *ref_129
           - *ref_130
-          - *ref_131
         responses:
           - !SchemaResponse 
             schema: *ref_121

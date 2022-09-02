@@ -77,14 +77,6 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets an object representing a ServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipal(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetServicePrincipal();
-        }
-
         /// <summary>
         /// Retrieve a list of configuration profile within a subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles
@@ -381,25 +373,6 @@ namespace Azure.ResourceManager.Automanage
             {
                 ConfigurationProfileAssignmentResource.ValidateResourceId(id);
                 return new ConfigurationProfileAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ServicePrincipalResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ServicePrincipalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePrincipalResource.CreateResourceIdentifier" /> to create a <see cref="ServicePrincipalResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipalResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ServicePrincipalResource.ValidateResourceId(id);
-                return new ServicePrincipalResource(client, id);
             }
             );
         }
