@@ -22,5 +22,15 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                     Tenant = t;
             }
         }
+
+        protected void AssertValues(BestPracticeResource profile, string profileName)
+        {
+            Assert.NotNull(profile);
+            Assert.True(profile.HasData);
+            Assert.AreEqual(profileName, profile.Id.Name);
+            Assert.NotNull(profile.Id);
+            Assert.NotNull(profile.Data);
+            Assert.NotNull(profile.Data.Configuration);
+        }
     }
 }
