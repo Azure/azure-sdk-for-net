@@ -1627,9 +1627,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call ImportUpdateAsync with required parameters and request content.
+        /// This sample shows how to call ImportUpdateAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1656,12 +1656,37 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = await client.ImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// 
-        /// var response = await operation.WaitForCompletionResponseAsync();
-        /// Console.WriteLine(response.Status)
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
+        /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
+        /// Console.WriteLine(result.GetProperty("updateType").ToString());
+        /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handler").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handlerProperties").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("files")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
+        /// Console.WriteLine(result.GetProperty("manifestVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("etag").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -1682,8 +1707,44 @@ namespace Azure.IoT.DeviceUpdate
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Update</c>:
+        /// <code>{
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
+        ///       }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1692,7 +1753,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1707,9 +1768,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call ImportUpdate with required parameters and request content.
+        /// This sample shows how to call ImportUpdate with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1736,12 +1797,37 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(data));
         /// 
-        /// var response = operation.WaitForCompletionResponse();
-        /// Console.WriteLine(response.Status)
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
+        /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
+        /// Console.WriteLine(result.GetProperty("updateType").ToString());
+        /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handler").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handlerProperties").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("files")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
+        /// Console.WriteLine(result.GetProperty("manifestVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("etag").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -1762,8 +1848,44 @@ namespace Azure.IoT.DeviceUpdate
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Update</c>:
+        /// <code>{
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
+        ///       }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
+        /// }
+        /// </code>
+        /// 
         /// </remarks>
-        public virtual Operation ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1772,7 +1894,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1894,7 +2016,7 @@ namespace Azure.IoT.DeviceUpdate
 
         internal HttpMessage CreateImportUpdateRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2204,9 +2326,11 @@ namespace Azure.IoT.DeviceUpdate
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier _responseClassifier200202;
+        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
         private static ResponseClassifier _responseClassifier200304;
         private static ResponseClassifier ResponseClassifier200304 => _responseClassifier200304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 304 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

@@ -61,8 +61,8 @@ var content = new[]
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-Operation response = await client.ImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(content));
+Operation<BinaryData> response = await client.ImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(content));
 
-JsonDocument doc = JsonDocument.Parse(response.GetRawResponse().Content.ToMemory());
+JsonDocument doc = JsonDocument.Parse(response.Value.ToMemory());
 Console.WriteLine($"Imported update resource location: {doc.RootElement.GetProperty("resourceLocation").GetString()}");
 ```
