@@ -86,6 +86,22 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
             ValidateAudioData((MediaStreamingAudio)parsedPackages[1]);
         }
 
+        [Test]
+        public void ParseAudioEventsWithBynaryArray()
+        {
+            JObject jsonAudio = new JObject();
+            jsonAudio["data"] = "AQIDBAU=";
+            jsonAudio["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonAudio["participantId"] = "participantId";
+            jsonAudio["isSilence"] = false;
+
+            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonAudio.ToString());
+            MediaStreamingAudio parsedPackage = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(receivedBytes);
+
+            Assert.NotNull(parsedPackage);
+            ValidateAudioData(parsedPackage);
+        }
+
         private static void ValidateMetadata(MediaStreamingMetadata streamingMetadata)
         {
             Assert.IsNotNull(streamingMetadata);

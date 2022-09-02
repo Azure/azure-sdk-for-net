@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Text.Json;
 using Azure.Communication.CallingServer.Models.MediaStreaming;
 using Azure.Core;
@@ -23,6 +24,16 @@ namespace Azure.Communication.CallingServer
         public static MediaStreamingPackageBase Parse(BinaryData json)
         {
             return Parse(json.ToString());
+        }
+
+        /// <summary>
+        /// Parsing a MediaStreaming package from a decoded byte array.
+        /// </summary>
+        /// <param name="receivedBytes">a base64 decoded UTF8 byte array.</param>
+        /// <returns></returns>
+        public static MediaStreamingPackageBase Parse(byte[] receivedBytes)
+        {
+            return Parse(Encoding.UTF8.GetString(receivedBytes));
         }
 
         /// <summary>
