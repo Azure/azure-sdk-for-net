@@ -22,7 +22,7 @@ namespace Azure.Template
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-        //private readonly MultiVersionClientOptions.ServiceVersion _serviceVersion;
+        private readonly MultiVersionClientOptions.ServiceVersion _serviceVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -265,8 +265,17 @@ namespace Azure.Template
 
             RequestContent content = value.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = SetEvolvingModel(content, context);
-            return Response.FromValue(EvolvingModel.FromResponse(response), response);
+
+            try
+            {
+                Response response = SetEvolvingModel(content, context);
+                return Response.FromValue(EvolvingModel.FromResponse(response), response);
+            }
+            catch (RequestFailedException e)
+            {
+                MultiVersion.AssertValidInput<EvolvingModel, MultiVersionClientOptions.ServiceVersion>(value, _serviceVersion, e);
+                throw;
+            }
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();

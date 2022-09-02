@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Template
 {
     /// <summary> The EvolvingModel. </summary>
-    public partial class EvolvingModel
+    public partial class EvolvingModel : IVersionValidatable<MultiVersionClientOptions.ServiceVersion>
     {
         /// <summary> Initializes a new instance of EvolvingModel. </summary>
         /// <param name="requiredInt"> Value type property available in 2022-01-01. </param>
@@ -38,6 +39,49 @@ namespace Azure.Template
             RequiredString = requiredString;
             OptionalInt = optionalInt;
             OptionalString = optionalString;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="targetVersion"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public bool IsValidInput(MultiVersionClientOptions.ServiceVersion targetVersion, out string message)
+        {
+            List<string> invalidValues = new List<string>();
+
+            // if caller set a property that wasn't present in the target version, not valid
+            if (targetVersion <= MultiVersionClientOptions.ServiceVersion.V2022_02_02)
+            {
+                // property was added in v2
+                if (OptionalInt.HasValue)
+                {
+                    invalidValues.Add(nameof(OptionalInt));
+                }
+
+                // property was added in v2
+                if (OptionalString != null)
+                {
+                    invalidValues.Add(nameof(OptionalString));
+                }
+
+                // Back out if more than some max threshold?
+            }
+
+            if (invalidValues.Count == 0)
+            {
+                message = null;
+                return true;
+            }
+
+            message = FormatVersionExceptionMessage(invalidValues);
+            return false;
+
+        }
+
+        private string FormatVersionExceptionMessage(List<string> invalidValues)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary> Value type property available in 2022-01-01. </summary>
