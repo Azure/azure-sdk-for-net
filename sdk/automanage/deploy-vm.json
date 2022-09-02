@@ -5,9 +5,6 @@
         "vmName": {
             "type": "string",
             "defaultValue": "test-vm"
-        },
-        "adminPassword": {
-            "type": "securestring"
         }
     },
     "resources": [
@@ -75,7 +72,7 @@
                 "osProfile": {
                     "computerName": "[parameters('vmName')]",
                     "adminUsername": "adminUser",
-                    "adminPassword": "[parameters('adminPassword')]",
+                    "adminPassword": "[concat('P', uniqueString(resourceGroup().id, '34f322c6-845c-4b54-b2d2-09ec6500be9a'), '!')]",
                     "windowsConfiguration": {
                         "enableAutomaticUpdates": true,
                         "patchSettings": {
