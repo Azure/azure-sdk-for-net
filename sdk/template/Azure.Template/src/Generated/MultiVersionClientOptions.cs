@@ -13,15 +13,13 @@ namespace Azure.Template
     /// <summary> Client options for MultiVersionClient. </summary>
     public partial class MultiVersionClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_02_02;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_01_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2022-01-01". </summary>
-            V2022_01_01 = 1,
-            /// <summary> Service version "2022-02-02". </summary>
-            V2022_02_02 = 2,
+            V2022_01_01 = 1
         }
 
         internal ServiceVersion TargetVersion { get; }
@@ -36,7 +34,6 @@ namespace Azure.Template
             Version = version switch
             {
                 ServiceVersion.V2022_01_01 => "2022-01-01",
-                ServiceVersion.V2022_02_02 => "2022-02-02",
                 _ => throw new NotSupportedException()
             };
         }

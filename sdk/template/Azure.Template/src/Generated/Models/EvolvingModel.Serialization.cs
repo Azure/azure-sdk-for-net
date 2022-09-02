@@ -19,16 +19,6 @@ namespace Azure.Template
             writer.WriteNumberValue(RequiredInt);
             writer.WritePropertyName("requiredString");
             writer.WriteStringValue(RequiredString);
-            if (Optional.IsDefined(OptionalInt))
-            {
-                writer.WritePropertyName("optionalInt");
-                writer.WriteNumberValue(OptionalInt.Value);
-            }
-            if (Optional.IsDefined(OptionalString))
-            {
-                writer.WritePropertyName("optionalString");
-                writer.WriteStringValue(OptionalString);
-            }
             writer.WriteEndObject();
         }
 
@@ -36,8 +26,6 @@ namespace Azure.Template
         {
             int requiredInt = default;
             string requiredString = default;
-            Optional<int> optionalInt = default;
-            Optional<string> optionalString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requiredInt"))
@@ -50,23 +38,8 @@ namespace Azure.Template
                     requiredString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("optionalInt"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    optionalInt = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("optionalString"))
-                {
-                    optionalString = property.Value.GetString();
-                    continue;
-                }
             }
-            return new EvolvingModel(requiredInt, requiredString, Optional.ToNullable(optionalInt), optionalString.Value);
+            return new EvolvingModel(requiredInt, requiredString);
         }
 
         internal RequestContent ToRequestContent()
