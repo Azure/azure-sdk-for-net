@@ -37,18 +37,16 @@ namespace Azure.Communication.CallingServer
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var target = await CreateIdentityUserAsync().ConfigureAwait(false);
 
-                string uniqId = user.Id;
-
                 // setup service bus
-                await ServiceBusWithNewCall(uniqId);
+                var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                CreateCallResult response = await client.CreateCallAsync(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqId}")).ConfigureAwait(false);
+                CreateCallResult response = await client.CreateCallAsync(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}")).ConfigureAwait(false);
                 string callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                 // wait for incomingcall context
-                string? incomingCallContext = await WaitForIncomingCallContext(uniqId, TimeSpan.FromSeconds(20));
+                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
