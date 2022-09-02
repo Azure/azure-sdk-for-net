@@ -135,7 +135,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
             if (_receiver != null)
             {
-               return await _receiver.PeekMessagesAsync(
+                // Peeked messages are not locked so we don't need to track them for lock renewal or autocompletion, as these options do not apply.
+                return await _receiver.PeekMessagesAsync(
                        maxMessages: maxMessages,
                        fromSequenceNumber: fromSequenceNumber,
                        cancellationToken: cancellationToken)
