@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The compliance state that should be set on the resource.
-    /// Serialized Name: ComplianceState
-    /// </summary>
+    /// <summary> The compliance state that should be set on the resource. </summary>
     public readonly partial struct PolicyComplianceState : IEquatable<PolicyComplianceState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         private const string NonCompliantValue = "NonCompliant";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// The resource is in compliance with the policy.
-        /// Serialized Name: ComplianceState.Compliant
-        /// </summary>
+        /// <summary> The resource is in compliance with the policy. </summary>
         public static PolicyComplianceState Compliant { get; } = new PolicyComplianceState(CompliantValue);
-        /// <summary>
-        /// The resource is not in compliance with the policy.
-        /// Serialized Name: ComplianceState.NonCompliant
-        /// </summary>
+        /// <summary> The resource is not in compliance with the policy. </summary>
         public static PolicyComplianceState NonCompliant { get; } = new PolicyComplianceState(NonCompliantValue);
-        /// <summary>
-        /// The compliance state of the resource is not known.
-        /// Serialized Name: ComplianceState.Unknown
-        /// </summary>
+        /// <summary> The compliance state of the resource is not known. </summary>
         public static PolicyComplianceState Unknown { get; } = new PolicyComplianceState(UnknownValue);
         /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are the same. </summary>
         public static bool operator ==(PolicyComplianceState left, PolicyComplianceState right) => left.Equals(right);

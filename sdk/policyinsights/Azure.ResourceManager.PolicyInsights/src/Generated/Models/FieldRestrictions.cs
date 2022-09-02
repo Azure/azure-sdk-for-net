@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The restrictions that will be placed on a field in the resource by policy.
-    /// Serialized Name: FieldRestrictions
-    /// </summary>
+    /// <summary> The restrictions that will be placed on a field in the resource by policy. </summary>
     public partial class FieldRestrictions
     {
         /// <summary> Initializes a new instance of FieldRestrictions. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of FieldRestrictions. </summary>
-        /// <param name="field">
-        /// The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias.
-        /// Serialized Name: FieldRestrictions.field
-        /// </param>
-        /// <param name="restrictions">
-        /// The restrictions placed on that field by policy.
-        /// Serialized Name: FieldRestrictions.restrictions
-        /// </param>
+        /// <param name="field"> The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias. </param>
+        /// <param name="restrictions"> The restrictions placed on that field by policy. </param>
         internal FieldRestrictions(string field, IReadOnlyList<FieldRestriction> restrictions)
         {
             Field = field;
             Restrictions = restrictions;
         }
 
-        /// <summary>
-        /// The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias.
-        /// Serialized Name: FieldRestrictions.field
-        /// </summary>
+        /// <summary> The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias. </summary>
         public string Field { get; }
-        /// <summary>
-        /// The restrictions placed on that field by policy.
-        /// Serialized Name: FieldRestrictions.restrictions
-        /// </summary>
+        /// <summary> The restrictions placed on that field by policy. </summary>
         public IReadOnlyList<FieldRestriction> Restrictions { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The PolicyStateType.
-    /// Serialized Name: PolicyStatesResource
-    /// </summary>
+    /// <summary> The PolicyStateType. </summary>
     public readonly partial struct PolicyStateType : IEquatable<PolicyStateType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         private const string DefaultValue = "default";
         private const string LatestValue = "latest";
 
-        /// <summary>
-        /// default
-        /// Serialized Name: PolicyStatesResource.default
-        /// </summary>
+        /// <summary> default. </summary>
         public static PolicyStateType Default { get; } = new PolicyStateType(DefaultValue);
-        /// <summary>
-        /// latest
-        /// Serialized Name: PolicyStatesResource.latest
-        /// </summary>
+        /// <summary> latest. </summary>
         public static PolicyStateType Latest { get; } = new PolicyStateType(LatestValue);
         /// <summary> Determines if two <see cref="PolicyStateType"/> values are the same. </summary>
         public static bool operator ==(PolicyStateType left, PolicyStateType right) => left.Equals(right);

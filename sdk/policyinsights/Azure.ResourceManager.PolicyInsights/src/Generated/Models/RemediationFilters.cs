@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The filters that will be applied to determine which resources to remediate.
-    /// Serialized Name: RemediationFilters
-    /// </summary>
+    /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
     internal partial class RemediationFilters
     {
         /// <summary> Initializes a new instance of RemediationFilters. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of RemediationFilters. </summary>
-        /// <param name="locations">
-        /// The resource locations that will be remediated.
-        /// Serialized Name: RemediationFilters.locations
-        /// </param>
+        /// <param name="locations"> The resource locations that will be remediated. </param>
         internal RemediationFilters(IList<AzureLocation> locations)
         {
             Locations = locations;
         }
 
-        /// <summary>
-        /// The resource locations that will be remediated.
-        /// Serialized Name: RemediationFilters.locations
-        /// </summary>
+        /// <summary> The resource locations that will be remediated. </summary>
         public IList<AzureLocation> Locations { get; }
     }
 }

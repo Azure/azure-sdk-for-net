@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The information about the resource that will be evaluated.
-    /// Serialized Name: CheckRestrictionsResourceDetails
-    /// </summary>
+    /// <summary> The information about the resource that will be evaluated. </summary>
     public partial class CheckRestrictionsResourceDetails
     {
         /// <summary> Initializes a new instance of CheckRestrictionsResourceDetails. </summary>
-        /// <param name="resourceContent">
-        /// The resource content. This should include whatever properties are already known and can be a partial set of all resource properties.
-        /// Serialized Name: CheckRestrictionsResourceDetails.resourceContent
-        /// </param>
+        /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceContent"/> is null. </exception>
         public CheckRestrictionsResourceDetails(BinaryData resourceContent)
         {
@@ -33,7 +27,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary>
         /// The resource content. This should include whatever properties are already known and can be a partial set of all resource properties.
-        /// Serialized Name: CheckRestrictionsResourceDetails.resourceContent
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -63,15 +56,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// </para>
         /// </summary>
         public BinaryData ResourceContent { get; }
-        /// <summary>
-        /// The api-version of the resource content.
-        /// Serialized Name: CheckRestrictionsResourceDetails.apiVersion
-        /// </summary>
+        /// <summary> The api-version of the resource content. </summary>
         public string ApiVersion { get; set; }
-        /// <summary>
-        /// The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource&apos;s resource ID.
-        /// Serialized Name: CheckRestrictionsResourceDetails.scope
-        /// </summary>
+        /// <summary> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource&apos;s resource ID. </summary>
         public string Scope { get; set; }
     }
 }

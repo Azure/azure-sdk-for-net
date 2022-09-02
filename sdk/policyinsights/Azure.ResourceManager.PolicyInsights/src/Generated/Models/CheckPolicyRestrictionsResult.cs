@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The result of a check policy restrictions evaluation on a resource.
-    /// Serialized Name: CheckRestrictionsResult
-    /// </summary>
+    /// <summary> The result of a check policy restrictions evaluation on a resource. </summary>
     public partial class CheckPolicyRestrictionsResult
     {
         /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
@@ -23,34 +20,19 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
-        /// <param name="fieldRestrictions">
-        /// The restrictions that will be placed on various fields in the resource by policy.
-        /// Serialized Name: CheckRestrictionsResult.fieldRestrictions
-        /// </param>
-        /// <param name="contentEvaluationResult">
-        /// Evaluation results for the provided partial resource content.
-        /// Serialized Name: CheckRestrictionsResult.contentEvaluationResult
-        /// </param>
+        /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
+        /// <param name="contentEvaluationResult"> Evaluation results for the provided partial resource content. </param>
         internal CheckPolicyRestrictionsResult(IReadOnlyList<FieldRestrictions> fieldRestrictions, CheckRestrictionsResultContentEvaluationResult contentEvaluationResult)
         {
             FieldRestrictions = fieldRestrictions;
             ContentEvaluationResult = contentEvaluationResult;
         }
 
-        /// <summary>
-        /// The restrictions that will be placed on various fields in the resource by policy.
-        /// Serialized Name: CheckRestrictionsResult.fieldRestrictions
-        /// </summary>
+        /// <summary> The restrictions that will be placed on various fields in the resource by policy. </summary>
         public IReadOnlyList<FieldRestrictions> FieldRestrictions { get; }
-        /// <summary>
-        /// Evaluation results for the provided partial resource content.
-        /// Serialized Name: CheckRestrictionsResult.contentEvaluationResult
-        /// </summary>
+        /// <summary> Evaluation results for the provided partial resource content. </summary>
         internal CheckRestrictionsResultContentEvaluationResult ContentEvaluationResult { get; }
-        /// <summary>
-        /// Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is.
-        /// Serialized Name: CheckRestrictionsResultContentEvaluationResult.policyEvaluations
-        /// </summary>
+        /// <summary> Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is. </summary>
         public IReadOnlyList<PolicyEvaluationResult> PolicyEvaluations
         {
             get => ContentEvaluationResult?.PolicyEvaluations;

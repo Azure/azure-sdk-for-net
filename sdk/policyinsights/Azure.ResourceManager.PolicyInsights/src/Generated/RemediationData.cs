@@ -26,58 +26,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyAssignmentId">
-        /// The resource ID of the policy assignment that should be remediated.
-        /// Serialized Name: Remediation.properties.policyAssignmentId
-        /// </param>
-        /// <param name="policyDefinitionReferenceId">
-        /// The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition.
-        /// Serialized Name: Remediation.properties.policyDefinitionReferenceId
-        /// </param>
-        /// <param name="resourceDiscoveryMode">
-        /// The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified.
-        /// Serialized Name: Remediation.properties.resourceDiscoveryMode
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the remediation.
-        /// Serialized Name: Remediation.properties.provisioningState
-        /// </param>
-        /// <param name="createdOn">
-        /// The time at which the remediation was created.
-        /// Serialized Name: Remediation.properties.createdOn
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// The time at which the remediation was last updated.
-        /// Serialized Name: Remediation.properties.lastUpdatedOn
-        /// </param>
-        /// <param name="filter">
-        /// The filters that will be applied to determine which resources to remediate.
-        /// Serialized Name: Remediation.properties.filters
-        /// </param>
-        /// <param name="deploymentStatus">
-        /// The deployment status summary for all deployments created by the remediation.
-        /// Serialized Name: Remediation.properties.deploymentStatus
-        /// </param>
-        /// <param name="statusMessage">
-        /// The remediation status message. Provides additional details regarding the state of the remediation.
-        /// Serialized Name: Remediation.properties.statusMessage
-        /// </param>
-        /// <param name="correlationId">
-        /// The remediation correlation Id. Can be used to find events related to the remediation in the activity log.
-        /// Serialized Name: Remediation.properties.correlationId
-        /// </param>
-        /// <param name="resourceCount">
-        /// Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used.
-        /// Serialized Name: Remediation.properties.resourceCount
-        /// </param>
-        /// <param name="parallelDeployments">
-        /// Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used.
-        /// Serialized Name: Remediation.properties.parallelDeployments
-        /// </param>
-        /// <param name="failureThreshold">
-        /// The remediation failure threshold settings
-        /// Serialized Name: Remediation.properties.failureThreshold
-        /// </param>
+        /// <param name="policyAssignmentId"> The resource ID of the policy assignment that should be remediated. </param>
+        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition. </param>
+        /// <param name="resourceDiscoveryMode"> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </param>
+        /// <param name="provisioningState"> The status of the remediation. </param>
+        /// <param name="createdOn"> The time at which the remediation was created. </param>
+        /// <param name="lastUpdatedOn"> The time at which the remediation was last updated. </param>
+        /// <param name="filter"> The filters that will be applied to determine which resources to remediate. </param>
+        /// <param name="deploymentStatus"> The deployment status summary for all deployments created by the remediation. </param>
+        /// <param name="statusMessage"> The remediation status message. Provides additional details regarding the state of the remediation. </param>
+        /// <param name="correlationId"> The remediation correlation Id. Can be used to find events related to the remediation in the activity log. </param>
+        /// <param name="resourceCount"> Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used. </param>
+        /// <param name="parallelDeployments"> Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used. </param>
+        /// <param name="failureThreshold"> The remediation failure threshold settings. </param>
         internal RemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, RemediationFilters filter, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, RemediationPropertiesFailureThreshold failureThreshold) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
@@ -95,45 +56,21 @@ namespace Azure.ResourceManager.PolicyInsights
             FailureThreshold = failureThreshold;
         }
 
-        /// <summary>
-        /// The resource ID of the policy assignment that should be remediated.
-        /// Serialized Name: Remediation.properties.policyAssignmentId
-        /// </summary>
+        /// <summary> The resource ID of the policy assignment that should be remediated. </summary>
         public ResourceIdentifier PolicyAssignmentId { get; set; }
-        /// <summary>
-        /// The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition.
-        /// Serialized Name: Remediation.properties.policyDefinitionReferenceId
-        /// </summary>
+        /// <summary> The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition. </summary>
         public string PolicyDefinitionReferenceId { get; set; }
-        /// <summary>
-        /// The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified.
-        /// Serialized Name: Remediation.properties.resourceDiscoveryMode
-        /// </summary>
+        /// <summary> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </summary>
         public ResourceDiscoveryMode? ResourceDiscoveryMode { get; set; }
-        /// <summary>
-        /// The status of the remediation.
-        /// Serialized Name: Remediation.properties.provisioningState
-        /// </summary>
+        /// <summary> The status of the remediation. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The time at which the remediation was created.
-        /// Serialized Name: Remediation.properties.createdOn
-        /// </summary>
+        /// <summary> The time at which the remediation was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The time at which the remediation was last updated.
-        /// Serialized Name: Remediation.properties.lastUpdatedOn
-        /// </summary>
+        /// <summary> The time at which the remediation was last updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary>
-        /// The filters that will be applied to determine which resources to remediate.
-        /// Serialized Name: Remediation.properties.filters
-        /// </summary>
+        /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
         internal RemediationFilters Filter { get; set; }
-        /// <summary>
-        /// The resource locations that will be remediated.
-        /// Serialized Name: RemediationFilters.locations
-        /// </summary>
+        /// <summary> The resource locations that will be remediated. </summary>
         public IList<AzureLocation> FilterLocations
         {
             get
@@ -144,40 +81,19 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        /// <summary>
-        /// The deployment status summary for all deployments created by the remediation.
-        /// Serialized Name: Remediation.properties.deploymentStatus
-        /// </summary>
+        /// <summary> The deployment status summary for all deployments created by the remediation. </summary>
         public RemediationDeploymentSummary DeploymentStatus { get; }
-        /// <summary>
-        /// The remediation status message. Provides additional details regarding the state of the remediation.
-        /// Serialized Name: Remediation.properties.statusMessage
-        /// </summary>
+        /// <summary> The remediation status message. Provides additional details regarding the state of the remediation. </summary>
         public string StatusMessage { get; }
-        /// <summary>
-        /// The remediation correlation Id. Can be used to find events related to the remediation in the activity log.
-        /// Serialized Name: Remediation.properties.correlationId
-        /// </summary>
+        /// <summary> The remediation correlation Id. Can be used to find events related to the remediation in the activity log. </summary>
         public string CorrelationId { get; }
-        /// <summary>
-        /// Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used.
-        /// Serialized Name: Remediation.properties.resourceCount
-        /// </summary>
+        /// <summary> Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used. </summary>
         public int? ResourceCount { get; set; }
-        /// <summary>
-        /// Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used.
-        /// Serialized Name: Remediation.properties.parallelDeployments
-        /// </summary>
+        /// <summary> Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used. </summary>
         public int? ParallelDeployments { get; set; }
-        /// <summary>
-        /// The remediation failure threshold settings
-        /// Serialized Name: Remediation.properties.failureThreshold
-        /// </summary>
+        /// <summary> The remediation failure threshold settings. </summary>
         internal RemediationPropertiesFailureThreshold FailureThreshold { get; set; }
-        /// <summary>
-        /// A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold.
-        /// Serialized Name: RemediationPropertiesFailureThreshold.percentage
-        /// </summary>
+        /// <summary> A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold. </summary>
         public float? FailureThresholdPercentage
         {
             get => FailureThreshold is null ? default : FailureThreshold.Percentage;

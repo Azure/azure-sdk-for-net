@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Component event details.
-    /// Serialized Name: ComponentEventDetails
-    /// </summary>
+    /// <summary> Component event details. </summary>
     public partial class ComponentEventDetails : ResourceData
     {
         /// <summary> Initializes a new instance of ComponentEventDetails. </summary>
@@ -29,22 +26,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timestamp">
-        /// Timestamp for component policy event record.
-        /// Serialized Name: ComponentEventDetails.timestamp
-        /// </param>
-        /// <param name="tenantId">
-        /// Tenant ID for the policy event record.
-        /// Serialized Name: ComponentEventDetails.tenantId
-        /// </param>
-        /// <param name="principalOid">
-        /// Principal object ID for the user who initiated the resource component operation that triggered the policy event.
-        /// Serialized Name: ComponentEventDetails.principalOid
-        /// </param>
-        /// <param name="policyDefinitionAction">
-        /// Policy definition action, i.e. effect.
-        /// Serialized Name: ComponentEventDetails.policyDefinitionAction
-        /// </param>
+        /// <param name="timestamp"> Timestamp for component policy event record. </param>
+        /// <param name="tenantId"> Tenant ID for the policy event record. </param>
+        /// <param name="principalOid"> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </param>
+        /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ComponentEventDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timestamp, Guid? tenantId, string principalOid, string policyDefinitionAction, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
@@ -55,25 +40,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Timestamp for component policy event record.
-        /// Serialized Name: ComponentEventDetails.timestamp
-        /// </summary>
+        /// <summary> Timestamp for component policy event record. </summary>
         public DateTimeOffset? Timestamp { get; }
-        /// <summary>
-        /// Tenant ID for the policy event record.
-        /// Serialized Name: ComponentEventDetails.tenantId
-        /// </summary>
+        /// <summary> Tenant ID for the policy event record. </summary>
         public Guid? TenantId { get; }
-        /// <summary>
-        /// Principal object ID for the user who initiated the resource component operation that triggered the policy event.
-        /// Serialized Name: ComponentEventDetails.principalOid
-        /// </summary>
+        /// <summary> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </summary>
         public string PrincipalOid { get; }
-        /// <summary>
-        /// Policy definition action, i.e. effect.
-        /// Serialized Name: ComponentEventDetails.policyDefinitionAction
-        /// </summary>
+        /// <summary> Policy definition action, i.e. effect. </summary>
         public string PolicyDefinitionAction { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

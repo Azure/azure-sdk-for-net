@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Slim version of policy metadata resource definition, excluding properties with large strings
-    /// Serialized Name: SlimPolicyMetadata
-    /// </summary>
+    /// <summary> Slim version of policy metadata resource definition, excluding properties with large strings. </summary>
     public partial class SlimPolicyMetadata : ResourceData
     {
         /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
@@ -27,30 +24,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId">
-        /// The policy metadata identifier.
-        /// Serialized Name: SlimPolicyMetadata.properties.metadataId
-        /// </param>
-        /// <param name="category">
-        /// The category of the policy metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.category
-        /// </param>
-        /// <param name="title">
-        /// The title of the policy metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.title
-        /// </param>
-        /// <param name="owner">
-        /// The owner of the policy metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.owner
-        /// </param>
-        /// <param name="additionalContentUri">
-        /// Url for getting additional content about the resource metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.additionalContentUrl
-        /// </param>
-        /// <param name="metadata">
-        /// Additional metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.metadata
-        /// </param>
+        /// <param name="metadataId"> The policy metadata identifier. </param>
+        /// <param name="category"> The category of the policy metadata. </param>
+        /// <param name="title"> The title of the policy metadata. </param>
+        /// <param name="owner"> The owner of the policy metadata. </param>
+        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
+        /// <param name="metadata"> Additional metadata. </param>
         internal SlimPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata) : base(id, name, resourceType, systemData)
         {
             MetadataId = metadataId;
@@ -61,34 +40,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Metadata = metadata;
         }
 
-        /// <summary>
-        /// The policy metadata identifier.
-        /// Serialized Name: SlimPolicyMetadata.properties.metadataId
-        /// </summary>
+        /// <summary> The policy metadata identifier. </summary>
         public string MetadataId { get; }
-        /// <summary>
-        /// The category of the policy metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.category
-        /// </summary>
+        /// <summary> The category of the policy metadata. </summary>
         public string Category { get; }
-        /// <summary>
-        /// The title of the policy metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.title
-        /// </summary>
+        /// <summary> The title of the policy metadata. </summary>
         public string Title { get; }
-        /// <summary>
-        /// The owner of the policy metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.owner
-        /// </summary>
+        /// <summary> The owner of the policy metadata. </summary>
         public string Owner { get; }
-        /// <summary>
-        /// Url for getting additional content about the resource metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.additionalContentUrl
-        /// </summary>
+        /// <summary> Url for getting additional content about the resource metadata. </summary>
         public Uri AdditionalContentUri { get; }
         /// <summary>
         /// Additional metadata.
-        /// Serialized Name: SlimPolicyMetadata.properties.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

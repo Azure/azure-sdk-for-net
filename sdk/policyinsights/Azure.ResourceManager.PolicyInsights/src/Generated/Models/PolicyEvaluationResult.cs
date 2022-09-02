@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The result of a non-compliant policy evaluation against the given resource content.
-    /// Serialized Name: PolicyEvaluationResult
-    /// </summary>
+    /// <summary> The result of a non-compliant policy evaluation against the given resource content. </summary>
     public partial class PolicyEvaluationResult
     {
         /// <summary> Initializes a new instance of PolicyEvaluationResult. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyEvaluationResult. </summary>
-        /// <param name="policyInfo">
-        /// The details of the policy that was evaluated.
-        /// Serialized Name: PolicyEvaluationResult.policyInfo
-        /// </param>
-        /// <param name="evaluationResult">
-        /// The result of the policy evaluation against the resource. This will typically be &apos;NonCompliant&apos; but may contain other values if errors were encountered.
-        /// Serialized Name: PolicyEvaluationResult.evaluationResult
-        /// </param>
-        /// <param name="evaluationDetails">
-        /// The detailed results of the policy expressions and values that were evaluated.
-        /// Serialized Name: PolicyEvaluationResult.evaluationDetails
-        /// </param>
+        /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
+        /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be &apos;NonCompliant&apos; but may contain other values if errors were encountered. </param>
+        /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         internal PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, PolicyEvaluationDetails evaluationDetails)
         {
             PolicyInfo = policyInfo;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             EvaluationDetails = evaluationDetails;
         }
 
-        /// <summary>
-        /// The details of the policy that was evaluated.
-        /// Serialized Name: PolicyEvaluationResult.policyInfo
-        /// </summary>
+        /// <summary> The details of the policy that was evaluated. </summary>
         public PolicyReference PolicyInfo { get; }
-        /// <summary>
-        /// The result of the policy evaluation against the resource. This will typically be &apos;NonCompliant&apos; but may contain other values if errors were encountered.
-        /// Serialized Name: PolicyEvaluationResult.evaluationResult
-        /// </summary>
+        /// <summary> The result of the policy evaluation against the resource. This will typically be &apos;NonCompliant&apos; but may contain other values if errors were encountered. </summary>
         public string EvaluationResult { get; }
-        /// <summary>
-        /// The detailed results of the policy expressions and values that were evaluated.
-        /// Serialized Name: PolicyEvaluationResult.evaluationDetails
-        /// </summary>
+        /// <summary> The detailed results of the policy expressions and values that were evaluated. </summary>
         public PolicyEvaluationDetails EvaluationDetails { get; }
     }
 }

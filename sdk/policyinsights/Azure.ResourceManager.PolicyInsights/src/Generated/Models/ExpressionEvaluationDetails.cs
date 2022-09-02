@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Evaluation details of policy language expressions.
-    /// Serialized Name: ExpressionEvaluationDetails
-    /// </summary>
+    /// <summary> Evaluation details of policy language expressions. </summary>
     public partial class ExpressionEvaluationDetails
     {
         /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
@@ -21,34 +18,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
-        /// <param name="result">
-        /// Evaluation result.
-        /// Serialized Name: ExpressionEvaluationDetails.result
-        /// </param>
-        /// <param name="expression">
-        /// Expression evaluated.
-        /// Serialized Name: ExpressionEvaluationDetails.expression
-        /// </param>
-        /// <param name="expressionKind">
-        /// The kind of expression that was evaluated.
-        /// Serialized Name: ExpressionEvaluationDetails.expressionKind
-        /// </param>
-        /// <param name="path">
-        /// Property path if the expression is a field or an alias.
-        /// Serialized Name: ExpressionEvaluationDetails.path
-        /// </param>
-        /// <param name="expressionValue">
-        /// Value of the expression.
-        /// Serialized Name: ExpressionEvaluationDetails.expressionValue
-        /// </param>
-        /// <param name="targetValue">
-        /// Target value to be compared with the expression value.
-        /// Serialized Name: ExpressionEvaluationDetails.targetValue
-        /// </param>
-        /// <param name="operator">
-        /// Operator to compare the expression value and the target value.
-        /// Serialized Name: ExpressionEvaluationDetails.operator
-        /// </param>
+        /// <param name="result"> Evaluation result. </param>
+        /// <param name="expression"> Expression evaluated. </param>
+        /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
+        /// <param name="path"> Property path if the expression is a field or an alias. </param>
+        /// <param name="expressionValue"> Value of the expression. </param>
+        /// <param name="targetValue"> Target value to be compared with the expression value. </param>
+        /// <param name="operator"> Operator to compare the expression value and the target value. </param>
         internal ExpressionEvaluationDetails(string result, string expression, string expressionKind, string path, BinaryData expressionValue, BinaryData targetValue, string @operator)
         {
             Result = result;
@@ -60,29 +36,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Operator = @operator;
         }
 
-        /// <summary>
-        /// Evaluation result.
-        /// Serialized Name: ExpressionEvaluationDetails.result
-        /// </summary>
+        /// <summary> Evaluation result. </summary>
         public string Result { get; }
-        /// <summary>
-        /// Expression evaluated.
-        /// Serialized Name: ExpressionEvaluationDetails.expression
-        /// </summary>
+        /// <summary> Expression evaluated. </summary>
         public string Expression { get; }
-        /// <summary>
-        /// The kind of expression that was evaluated.
-        /// Serialized Name: ExpressionEvaluationDetails.expressionKind
-        /// </summary>
+        /// <summary> The kind of expression that was evaluated. </summary>
         public string ExpressionKind { get; }
-        /// <summary>
-        /// Property path if the expression is a field or an alias.
-        /// Serialized Name: ExpressionEvaluationDetails.path
-        /// </summary>
+        /// <summary> Property path if the expression is a field or an alias. </summary>
         public string Path { get; }
         /// <summary>
         /// Value of the expression.
-        /// Serialized Name: ExpressionEvaluationDetails.expressionValue
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -114,7 +77,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public BinaryData ExpressionValue { get; }
         /// <summary>
         /// Target value to be compared with the expression value.
-        /// Serialized Name: ExpressionEvaluationDetails.targetValue
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -144,10 +106,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// </para>
         /// </summary>
         public BinaryData TargetValue { get; }
-        /// <summary>
-        /// Operator to compare the expression value and the target value.
-        /// Serialized Name: ExpressionEvaluationDetails.operator
-        /// </summary>
+        /// <summary> Operator to compare the expression value and the target value. </summary>
         public string Operator { get; }
     }
 }

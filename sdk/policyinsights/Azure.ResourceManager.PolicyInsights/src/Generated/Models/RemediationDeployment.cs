@@ -10,10 +10,7 @@ using Azure;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Details of a single deployment created by the remediation.
-    /// Serialized Name: RemediationDeployment
-    /// </summary>
+    /// <summary> Details of a single deployment created by the remediation. </summary>
     public partial class RemediationDeployment
     {
         /// <summary> Initializes a new instance of RemediationDeployment. </summary>
@@ -22,34 +19,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of RemediationDeployment. </summary>
-        /// <param name="remediatedResourceId">
-        /// Resource ID of the resource that is being remediated by the deployment.
-        /// Serialized Name: RemediationDeployment.remediatedResourceId
-        /// </param>
-        /// <param name="deploymentId">
-        /// Resource ID of the template deployment that will remediate the resource.
-        /// Serialized Name: RemediationDeployment.deploymentId
-        /// </param>
-        /// <param name="status">
-        /// Status of the remediation deployment.
-        /// Serialized Name: RemediationDeployment.status
-        /// </param>
-        /// <param name="resourceLocation">
-        /// Location of the resource that is being remediated.
-        /// Serialized Name: RemediationDeployment.resourceLocation
-        /// </param>
-        /// <param name="error">
-        /// Error encountered while remediated the resource.
-        /// Serialized Name: RemediationDeployment.error
-        /// </param>
-        /// <param name="createdOn">
-        /// The time at which the remediation was created.
-        /// Serialized Name: RemediationDeployment.createdOn
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// The time at which the remediation deployment was last updated.
-        /// Serialized Name: RemediationDeployment.lastUpdatedOn
-        /// </param>
+        /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
+        /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
+        /// <param name="status"> Status of the remediation deployment. </param>
+        /// <param name="resourceLocation"> Location of the resource that is being remediated. </param>
+        /// <param name="error"> Error encountered while remediated the resource. </param>
+        /// <param name="createdOn"> The time at which the remediation was created. </param>
+        /// <param name="lastUpdatedOn"> The time at which the remediation deployment was last updated. </param>
         internal RemediationDeployment(string remediatedResourceId, string deploymentId, string status, string resourceLocation, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn)
         {
             RemediatedResourceId = remediatedResourceId;
@@ -61,40 +37,19 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary>
-        /// Resource ID of the resource that is being remediated by the deployment.
-        /// Serialized Name: RemediationDeployment.remediatedResourceId
-        /// </summary>
+        /// <summary> Resource ID of the resource that is being remediated by the deployment. </summary>
         public string RemediatedResourceId { get; }
-        /// <summary>
-        /// Resource ID of the template deployment that will remediate the resource.
-        /// Serialized Name: RemediationDeployment.deploymentId
-        /// </summary>
+        /// <summary> Resource ID of the template deployment that will remediate the resource. </summary>
         public string DeploymentId { get; }
-        /// <summary>
-        /// Status of the remediation deployment.
-        /// Serialized Name: RemediationDeployment.status
-        /// </summary>
+        /// <summary> Status of the remediation deployment. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Location of the resource that is being remediated.
-        /// Serialized Name: RemediationDeployment.resourceLocation
-        /// </summary>
+        /// <summary> Location of the resource that is being remediated. </summary>
         public string ResourceLocation { get; }
-        /// <summary>
-        /// Error encountered while remediated the resource.
-        /// Serialized Name: RemediationDeployment.error
-        /// </summary>
+        /// <summary> Error encountered while remediated the resource. </summary>
         public ResponseError Error { get; }
-        /// <summary>
-        /// The time at which the remediation was created.
-        /// Serialized Name: RemediationDeployment.createdOn
-        /// </summary>
+        /// <summary> The time at which the remediation was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The time at which the remediation deployment was last updated.
-        /// Serialized Name: RemediationDeployment.lastUpdatedOn
-        /// </summary>
+        /// <summary> The time at which the remediation deployment was last updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

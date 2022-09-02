@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The remediation failure threshold settings
-    /// Serialized Name: RemediationPropertiesFailureThreshold
-    /// </summary>
+    /// <summary> The remediation failure threshold settings. </summary>
     internal partial class RemediationPropertiesFailureThreshold
     {
         /// <summary> Initializes a new instance of RemediationPropertiesFailureThreshold. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of RemediationPropertiesFailureThreshold. </summary>
-        /// <param name="percentage">
-        /// A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold.
-        /// Serialized Name: RemediationPropertiesFailureThreshold.percentage
-        /// </param>
+        /// <param name="percentage"> A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold. </param>
         internal RemediationPropertiesFailureThreshold(float? percentage)
         {
             Percentage = percentage;
         }
 
-        /// <summary>
-        /// A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold.
-        /// Serialized Name: RemediationPropertiesFailureThreshold.percentage
-        /// </summary>
+        /// <summary> A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold. </summary>
         public float? Percentage { get; set; }
     }
 }

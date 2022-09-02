@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Collection of policy metadata resources.
-    /// Serialized Name: PolicyMetadataCollection
-    /// </summary>
+    /// <summary> Collection of policy metadata resources. </summary>
     internal partial class PolicyMetadataCollection
     {
         /// <summary> Initializes a new instance of PolicyMetadataCollection. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyMetadataCollection. </summary>
-        /// <param name="value">
-        /// Array of policy metadata definitions.
-        /// Serialized Name: PolicyMetadataCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: PolicyMetadataCollection.nextLink
-        /// </param>
+        /// <param name="value"> Array of policy metadata definitions. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PolicyMetadataCollection(IReadOnlyList<SlimPolicyMetadata> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of policy metadata definitions.
-        /// Serialized Name: PolicyMetadataCollection.value
-        /// </summary>
+        /// <summary> Array of policy metadata definitions. </summary>
         public IReadOnlyList<SlimPolicyMetadata> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: PolicyMetadataCollection.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

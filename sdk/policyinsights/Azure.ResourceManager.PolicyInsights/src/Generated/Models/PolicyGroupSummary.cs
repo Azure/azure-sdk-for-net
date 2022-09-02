@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Policy definition group summary.
-    /// Serialized Name: PolicyGroupSummary
-    /// </summary>
+    /// <summary> Policy definition group summary. </summary>
     public partial class PolicyGroupSummary
     {
         /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
-        /// <param name="policyGroupName">
-        /// Policy group name.
-        /// Serialized Name: PolicyGroupSummary.policyGroupName
-        /// </param>
-        /// <param name="results">
-        /// Compliance summary for the policy definition group.
-        /// Serialized Name: PolicyGroupSummary.results
-        /// </param>
+        /// <param name="policyGroupName"> Policy group name. </param>
+        /// <param name="results"> Compliance summary for the policy definition group. </param>
         internal PolicyGroupSummary(string policyGroupName, PolicySummaryResults results)
         {
             PolicyGroupName = policyGroupName;
             Results = results;
         }
 
-        /// <summary>
-        /// Policy group name.
-        /// Serialized Name: PolicyGroupSummary.policyGroupName
-        /// </summary>
+        /// <summary> Policy group name. </summary>
         public string PolicyGroupName { get; }
-        /// <summary>
-        /// Compliance summary for the policy definition group.
-        /// Serialized Name: PolicyGroupSummary.results
-        /// </summary>
+        /// <summary> Compliance summary for the policy definition group. </summary>
         public PolicySummaryResults Results { get; }
     }
 }

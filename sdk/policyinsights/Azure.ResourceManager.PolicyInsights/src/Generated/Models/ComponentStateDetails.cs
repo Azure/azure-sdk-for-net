@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Component state details.
-    /// Serialized Name: ComponentStateDetails
-    /// </summary>
+    /// <summary> Component state details. </summary>
     public partial class ComponentStateDetails : ResourceData
     {
         /// <summary> Initializes a new instance of ComponentStateDetails. </summary>
@@ -29,14 +26,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timestamp">
-        /// Component compliance evaluation timestamp.
-        /// Serialized Name: ComponentStateDetails.timestamp
-        /// </param>
-        /// <param name="complianceState">
-        /// Component compliance state.
-        /// Serialized Name: ComponentStateDetails.complianceState
-        /// </param>
+        /// <param name="timestamp"> Component compliance evaluation timestamp. </param>
+        /// <param name="complianceState"> Component compliance state. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ComponentStateDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timestamp, string complianceState, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
@@ -45,15 +36,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Component compliance evaluation timestamp.
-        /// Serialized Name: ComponentStateDetails.timestamp
-        /// </summary>
+        /// <summary> Component compliance evaluation timestamp. </summary>
         public DateTimeOffset? Timestamp { get; }
-        /// <summary>
-        /// Component compliance state.
-        /// Serialized Name: ComponentStateDetails.complianceState
-        /// </summary>
+        /// <summary> Component compliance state. </summary>
         public string ComplianceState { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

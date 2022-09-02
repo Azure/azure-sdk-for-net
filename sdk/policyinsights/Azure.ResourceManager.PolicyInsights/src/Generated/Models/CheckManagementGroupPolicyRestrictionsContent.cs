@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// The check policy restrictions parameters describing the resource that is being evaluated.
-    /// Serialized Name: CheckManagementGroupRestrictionsRequest
-    /// </summary>
+    /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
     public partial class CheckManagementGroupPolicyRestrictionsContent
     {
         /// <summary> Initializes a new instance of CheckManagementGroupPolicyRestrictionsContent. </summary>
@@ -22,15 +19,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PendingFields = new ChangeTrackingList<PendingField>();
         }
 
-        /// <summary>
-        /// The information about the resource that will be evaluated.
-        /// Serialized Name: CheckManagementGroupRestrictionsRequest.resourceDetails
-        /// </summary>
+        /// <summary> The information about the resource that will be evaluated. </summary>
         public CheckRestrictionsResourceDetails ResourceDetails { get; set; }
-        /// <summary>
-        /// The list of fields and values that should be evaluated for potential restrictions.
-        /// Serialized Name: CheckManagementGroupRestrictionsRequest.pendingFields
-        /// </summary>
+        /// <summary> The list of fields and values that should be evaluated for potential restrictions. </summary>
         public IList<PendingField> PendingFields { get; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary>
-    /// Summary results.
-    /// Serialized Name: Summary
-    /// </summary>
+    /// <summary> Summary results. </summary>
     public partial class PolicySummary
     {
         /// <summary> Initializes a new instance of PolicySummary. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicySummary. </summary>
-        /// <param name="odataId">
-        /// OData entity ID; always set to null since summaries do not have an entity ID.
-        /// Serialized Name: Summary.@odata.id
-        /// </param>
-        /// <param name="odataContext">
-        /// OData context string; used by OData clients to resolve type information based on metadata.
-        /// Serialized Name: Summary.@odata.context
-        /// </param>
-        /// <param name="results">
-        /// Compliance summary for all policy assignments.
-        /// Serialized Name: Summary.results
-        /// </param>
-        /// <param name="policyAssignments">
-        /// Policy assignments summary.
-        /// Serialized Name: Summary.policyAssignments
-        /// </param>
+        /// <param name="odataId"> OData entity ID; always set to null since summaries do not have an entity ID. </param>
+        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
+        /// <param name="results"> Compliance summary for all policy assignments. </param>
+        /// <param name="policyAssignments"> Policy assignments summary. </param>
         internal PolicySummary(string odataId, string odataContext, PolicySummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments)
         {
             OdataId = odataId;
@@ -47,25 +32,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PolicyAssignments = policyAssignments;
         }
 
-        /// <summary>
-        /// OData entity ID; always set to null since summaries do not have an entity ID.
-        /// Serialized Name: Summary.@odata.id
-        /// </summary>
+        /// <summary> OData entity ID; always set to null since summaries do not have an entity ID. </summary>
         public string OdataId { get; }
-        /// <summary>
-        /// OData context string; used by OData clients to resolve type information based on metadata.
-        /// Serialized Name: Summary.@odata.context
-        /// </summary>
+        /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
         public string OdataContext { get; }
-        /// <summary>
-        /// Compliance summary for all policy assignments.
-        /// Serialized Name: Summary.results
-        /// </summary>
+        /// <summary> Compliance summary for all policy assignments. </summary>
         public PolicySummaryResults Results { get; }
-        /// <summary>
-        /// Policy assignments summary.
-        /// Serialized Name: Summary.policyAssignments
-        /// </summary>
+        /// <summary> Policy assignments summary. </summary>
         public IReadOnlyList<PolicyAssignmentSummary> PolicyAssignments { get; }
     }
 }

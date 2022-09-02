@@ -70,9 +70,6 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-mgmt-debug:
-  show-serialized-names: true
-
 rename-mapping:
   ComplianceState: PolicyComplianceState
   Attestation.properties.expiresOn: ExpireOn
