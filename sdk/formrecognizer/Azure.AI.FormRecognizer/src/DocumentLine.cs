@@ -46,9 +46,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// TODO.
+        /// Returns the list of <see cref="DocumentWord"/> that compose this line.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The list of <see cref="DocumentWord"/> that compose this line.</returns>
         public IReadOnlyList<DocumentWord> GetWords()
         {
             if (_mockWords != null)
