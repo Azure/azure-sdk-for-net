@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.Models
             string shareSnapshot = default;
             StringEncoded directoryPath = default;
             StringEncoded prefix = default;
-            StringEncoded marker = default;
+            string marker = default;
             int? maxResults = default;
             FilesAndDirectoriesListSegment segment = default;
             string nextMarker = default;
@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("Marker") is XElement markerElement)
             {
-                marker = StringEncoded.DeserializeStringEncoded(markerElement);
+                marker = (string)markerElement;
             }
             if (element.Element("MaxResults") is XElement maxResultsElement)
             {

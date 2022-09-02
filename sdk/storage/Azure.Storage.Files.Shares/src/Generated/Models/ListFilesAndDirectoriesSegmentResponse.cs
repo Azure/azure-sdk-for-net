@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"></param>
         /// <param name="directoryId"></param>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, StringEncoded directoryPath, StringEncoded prefix, StringEncoded marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, StringEncoded directoryPath, StringEncoded prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
         {
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
@@ -91,7 +91,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Gets the prefix. </summary>
         public StringEncoded Prefix { get; }
         /// <summary> Gets the marker. </summary>
-        public StringEncoded Marker { get; }
+        public string Marker { get; }
         /// <summary> Gets the max results. </summary>
         public int? MaxResults { get; }
         /// <summary> Abstract for entries that can be listed from Directory. </summary>
