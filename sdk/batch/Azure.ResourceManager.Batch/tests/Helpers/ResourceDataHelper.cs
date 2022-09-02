@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
                         }
                     }
                 },
-                UserAccounts =
+                /*UserAccounts =
                 {
                     //new BatchUserAccount("adminUser", "xyz123"),
                     new BatchUserAccount("testaccount", "randompasswd")
-                },
+                },*/
                 ScaleSettings = new BatchAccountPoolScaleSettings()
                 {
                     FixedScale = new BatchAccountFixedScaleSettings()
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             {
                 AllowUpdates = true,
                 DisplayName = "displayName",
-                DefaultVersion = "blah"
+                //DefaultVersion = "blah"
             };
         }
         public static void AssertApplicationData(BatchApplicationData applicationData1, BatchApplicationData applicationData2)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
     public class BatchAccountCollectionTests : BatchManagementTestBase
     {
         public BatchAccountCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

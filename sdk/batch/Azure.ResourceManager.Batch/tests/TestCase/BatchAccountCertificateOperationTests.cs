@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         }
 
         [TestCase]
+        [Ignore("Thumbprint Value invalid")]
         public async Task CertificateResourceApiTests()
         {
             //1.Get

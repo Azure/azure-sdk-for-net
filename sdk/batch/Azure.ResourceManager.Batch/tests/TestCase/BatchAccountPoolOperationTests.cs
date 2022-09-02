@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
     public class BatchAccountPoolOperationTests : BatchManagementTestBase
     {
         public BatchAccountPoolOperationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
