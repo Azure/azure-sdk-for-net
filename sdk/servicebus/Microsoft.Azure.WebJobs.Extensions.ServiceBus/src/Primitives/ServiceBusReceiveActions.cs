@@ -125,6 +125,39 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 .ConfigureAwait(false);
         }
 
+        /// <inheritdoc cref="ServiceBusReceiver.PeekMessagesAsync"/>
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+            int maxMessages,
+            long? fromSequenceNumber = default,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateCallbackInScope();
+
+            if (_receiver != null)
+            {
+               return await _receiver.PeekMessagesAsync(
+                       maxMessages: maxMessages,
+                       fromSequenceNumber: fromSequenceNumber,
+                       cancellationToken: cancellationToken)
+                   .ConfigureAwait(false);
+            }
+
+            if (_eventArgs != null)
+            {
+                return await _eventArgs.GetReceiveActions().PeekMessagesAsync(
+                        maxMessages: maxMessages,
+                        fromSequenceNumber: fromSequenceNumber,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+
+            return await _sessionEventArgs.GetReceiveActions().PeekMessagesAsync(
+                    maxMessages: maxMessages,
+                    fromSequenceNumber: fromSequenceNumber,
+                    cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
         private void ValidateCallbackInScope()
         {
             if (Volatile.Read(ref _callbackCompleted))

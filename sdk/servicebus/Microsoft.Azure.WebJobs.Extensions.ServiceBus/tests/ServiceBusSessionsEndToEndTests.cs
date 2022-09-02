@@ -570,6 +570,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction.ReceiveActions.ReceiveMessagesAsync(1));
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction.ReceiveActions.PeekMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
                 await host.StopAsync();
             }
@@ -614,6 +616,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(500);
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction_Batch.ReceiveActions.PeekMessagesAsync(1));
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
                 await host.StopAsync();
@@ -1166,7 +1170,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new[] { message.SequenceNumber });
 
                 var received = await receiveActions.ReceiveMessagesAsync(1);
-                Assert.IsNotNull(received);
+                Assert.IsNotEmpty(received);
+
+                var peeked = await receiveActions.PeekMessagesAsync(1);
+                Assert.IsNotEmpty(peeked);
+                Assert.AreEqual(received.Single().SequenceNumber, peeked.Single().SequenceNumber);
 
                 _waitHandle1.Set();
             }
