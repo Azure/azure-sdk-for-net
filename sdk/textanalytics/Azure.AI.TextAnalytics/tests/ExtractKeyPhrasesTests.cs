@@ -253,7 +253,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
