@@ -20,12 +20,6 @@ namespace Azure.AI.TextAnalytics
         {
         }
 
-        internal TextAnalyticsRequestOptions(bool includeStatistics, string modelVersion)
-        {
-            IncludeStatistics = includeStatistics;
-            ModelVersion = modelVersion;
-        }
-
         /// <summary>
         /// Gets or sets a value that, if set to true, indicates that the service
         /// should return document and document batch statistics with the results

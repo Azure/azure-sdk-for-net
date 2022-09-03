@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
     /// is run. For example, execute opinion mining, set model version,
     /// whether to include statistics, and more.
     /// </summary>
-    public class AnalyzeSentimentOptions : TextAnalyticsRequestOptions, IModelValidator
+    public class AnalyzeSentimentOptions : TextAnalyticsRequestOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeSentimentOptions"/>
@@ -21,8 +21,10 @@ namespace Azure.AI.TextAnalytics
         }
 
         internal AnalyzeSentimentOptions(TextAnalyticsRequestOptions options)
-            : base(options.IncludeStatistics, options.ModelVersion)
         {
+            DisableServiceLogs = options.DisableServiceLogs;
+            IncludeStatistics = options.IncludeStatistics;
+            ModelVersion = options.ModelVersion;
         }
 
         /// <summary>

@@ -900,8 +900,11 @@ namespace Azure.AI.TextAnalytics
         /// and each of the sentences it contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default) =>
-            await _serviceClient.AnalyzeSentimentAsync(document, language, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.AnalyzeSentimentAsync(document, language, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
@@ -926,8 +929,11 @@ namespace Azure.AI.TextAnalytics
         /// and each of the sentences it contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default) =>
-            _serviceClient.AnalyzeSentiment(document, language, options, cancellationToken);
+        public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.AnalyzeSentiment(document, language, options, cancellationToken);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral

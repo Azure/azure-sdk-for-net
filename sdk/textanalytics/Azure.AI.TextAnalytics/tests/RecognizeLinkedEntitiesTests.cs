@@ -273,9 +273,11 @@ namespace Azure.AI.TextAnalytics.Tests
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
         public void RecognizeLinkedEntitiesBatchDisableServiceLogsThrows()
         {
+            TestDiagnostics = false;
+
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
         private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)

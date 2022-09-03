@@ -784,6 +784,8 @@ namespace Azure.AI.TextAnalytics.Tests
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
         {
+            TestDiagnostics = false;
+
             TextAnalyticsClient client = GetClient();
 
             TextAnalyticsActions batchActions = new()
@@ -795,13 +797,15 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
-            Assert.AreEqual("AnalyzeHealthcareEntitiesAction is only available for API version 2022-05-01 or newer.", ex.Message);
+            Assert.AreEqual("AnalyzeHealthcareEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationMultiLabelClassifyActionNotSupported()
         {
+            TestDiagnostics = false;
+
             TextAnalyticsClient client = GetClient();
 
             TextAnalyticsActions batchActions = new()
@@ -813,13 +817,15 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
-            Assert.AreEqual("MultiLabelClassifyAction is only available for API version 2022-05-01 or newer.", ex.Message);
+            Assert.AreEqual("MultiLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationRecognizeCustomEntitiesActionNotSupported()
         {
+            TestDiagnostics = false;
+
             TextAnalyticsClient client = GetClient();
 
             TextAnalyticsActions batchActions = new()
@@ -831,13 +837,15 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
-            Assert.AreEqual("RecognizeCustomEntitiesAction is only available for API version 2022-05-01 or newer.", ex.Message);
+            Assert.AreEqual("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationSingleLabelClassifyActionNotSupported()
         {
+            TestDiagnostics = false;
+
             TextAnalyticsClient client = GetClient();
 
             TextAnalyticsActions batchActions = new()
@@ -849,7 +857,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
-            Assert.AreEqual("SingleLabelClassifyAction is only available for API version 2022-05-01 or newer.", ex.Message);
+            Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
     }
 }

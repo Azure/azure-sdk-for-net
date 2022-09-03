@@ -259,9 +259,11 @@ namespace Azure.AI.TextAnalytics.Tests
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
         public void DetectLanguageBatchDisableServiceLogsThrows()
         {
+            TestDiagnostics = false;
+
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.DetectLanguageBatchAsync(batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("DisableServiceLogs is only available for API version v3.1 and newer.", ex.Message);
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         private void ValidateInDocumenResult(DetectedLanguage language)

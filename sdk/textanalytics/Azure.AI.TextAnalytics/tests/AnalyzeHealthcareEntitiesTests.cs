@@ -386,6 +386,8 @@ namespace Azure.AI.TextAnalytics.Tests
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeHealthcareEntitiesBatchWithNameThrows()
         {
+            TestDiagnostics = false;
+
             TextAnalyticsClient client = GetClient();
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
@@ -395,11 +397,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.1. Use service API version 2022-05-1 or newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.1. Use service API version 2022-05-1 or newer.", ex.Message);
             }
             else
             {
-                Assert.AreEqual("StartAnalyzeHealthcareEntities is not available in API version v3.1. Use service API version 2022-05-1 or newer.", ex.Message);
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntities is not available in API version v3.1. Use service API version 2022-05-1 or newer.", ex.Message);
             }
         }
 
