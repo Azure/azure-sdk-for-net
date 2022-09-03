@@ -13,10 +13,16 @@
   - `AnalyzeHealthcareEntitiesOperation` from `AnalyzeHealthcareEntitiesOptions`
   - `ClassifyDocumentOperation` from `MultiLabelClassifyOptions` and `SingleLabelClassifyOptions`
   - `RecognizeCustomEntitiesOperation` from `RecognizeCustomEntitiesOptions`
+- Added the following members to `HealthcareEntityCategory` following proper naming guidelines:
+  - `Age`
+  - `GeneOrProtein`
+  - `SymptomOrSign`
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- The values of `HealthcareEntityCategory` have been redefined to match what the service actually returns. ([#20024](https://github.com/Azure/azure-rest-api-specs/issues/20024))
 
 ### Other Changes
 
