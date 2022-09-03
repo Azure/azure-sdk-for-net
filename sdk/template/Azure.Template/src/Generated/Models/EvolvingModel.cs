@@ -33,12 +33,18 @@ namespace Azure.Template
         /// <param name="requiredString"> Reference type property available in 2022-01-01. </param>
         /// <param name="optionalInt"> Optional value type property.  Property added in service API version 2022-02-02. </param>
         /// <param name="optionalString"> Optional reference type property.  Property added in service API version 2022-02-02. </param>
-        internal EvolvingModel(int requiredInt, string requiredString, int? optionalInt, string optionalString)
+        /// <param name="requiredOutputInt"></param>
+        /// <param name="requiredOutputString"></param>
+        internal EvolvingModel(MultiVersionClientOptions.ServiceVersion targetVersion, int requiredInt, string requiredString, int? optionalInt, string optionalString, int? requiredOutputInt, string requiredOutputString)
         {
+            _targetVersion = targetVersion;
+
             RequiredInt = requiredInt;
             RequiredString = requiredString;
             OptionalInt = optionalInt;
             OptionalString = optionalString;
+            _requiredOutputInt = requiredOutputInt;
+            _requiredOutputString = requiredOutputString;
         }
 
         /// <summary>
@@ -88,9 +94,41 @@ namespace Azure.Template
         public int RequiredInt { get; set; }
         /// <summary> Reference type property available in 2022-01-01. </summary>
         public string RequiredString { get; set; }
+
         /// <summary> Optional value type property.  Property added in service API version 2022-02-02.</summary>
         public int? OptionalInt { get; set; }
         /// <summary> Optional reference type property.  Property added in service API version 2022-02-02. </summary>
         public string OptionalString { get; set; }
+
+        private MultiVersionClientOptions.ServiceVersion _targetVersion;
+
+        private int? _requiredOutputInt;
+        /// <summary> Required output value type property.  Property added in service API version 2022-03-03.</summary>
+        public int RequiredOutputInt
+        {
+            get {
+
+                // We could say here, if it's null, it's not supported in this version.  However, there's a
+                // chance the service has a bug and this just isn't true.
+
+                // What would it take to check the target version here?
+
+                if (_targetVersion <= MultiVersionClientOptions.ServiceVersion.V2022_03_03)
+                {
+                    throw new NotSupportedException();
+
+                    // TODO: would it make sense to put this in a core common class?
+                    // That would look more like Heath's property supported one ....
+                }
+
+                return _requiredOutputInt; }
+        }
+
+        private string _requiredOutputString;
+        /// <summary> Required output reference type property.  Property added in service API version 2022-03-03. </summary>
+        public string RequiredOutputString
+        {
+            get { return _requiredOutputString; }
+        }
     }
 }

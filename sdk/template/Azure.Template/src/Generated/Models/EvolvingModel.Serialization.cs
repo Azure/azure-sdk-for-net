@@ -32,12 +32,15 @@ namespace Azure.Template
             writer.WriteEndObject();
         }
 
-        internal static EvolvingModel DeserializeEvolvingModel(JsonElement element)
+        internal static EvolvingModel DeserializeEvolvingModel(JsonElement element, MultiVersionClientOptions.ServiceVersion targetVersion)
         {
             int requiredInt = default;
             string requiredString = default;
             Optional<int> optionalInt = default;
             Optional<string> optionalString = default;
+
+            int? requiredOutputInt = default;
+            string requiredOutputString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requiredInt"))
@@ -65,8 +68,20 @@ namespace Azure.Template
                     optionalString = property.Value.GetString();
                     continue;
                 }
+
+                // added in version 3!
+                if (property.NameEquals("requiredOutputInt"))
+                {
+                    requiredOutputInt = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("requiredOutputString"))
+                {
+                    requiredOutputString = property.Value.GetString();
+                    continue;
+                }
             }
-            return new EvolvingModel(requiredInt, requiredString, Optional.ToNullable(optionalInt), optionalString.Value);
+            return new EvolvingModel(targetVersion, requiredInt, requiredString, Optional.ToNullable(optionalInt), optionalString.Value, requiredOutputInt, requiredOutputString);
         }
 
         internal RequestContent ToRequestContent()
@@ -76,10 +91,10 @@ namespace Azure.Template
             return content;
         }
 
-        internal static EvolvingModel FromResponse(Response response)
+        internal static EvolvingModel FromResponse(Response response, MultiVersionClientOptions.ServiceVersion targetVersion)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEvolvingModel(document.RootElement);
+            return DeserializeEvolvingModel(document.RootElement, targetVersion);
         }
     }
 }
