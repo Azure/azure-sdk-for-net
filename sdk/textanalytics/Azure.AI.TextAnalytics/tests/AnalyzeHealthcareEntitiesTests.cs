@@ -395,7 +395,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeHealthcareEntitiesBatchWithNameThrows",
             }));
 
-            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DisplayName is not available in API version v3.1. Use service API version 2022-05-1 or newer.", ex.Message);
+            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DisplayName is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]
