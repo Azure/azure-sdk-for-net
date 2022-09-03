@@ -64,6 +64,7 @@ namespace Azure.AI.TextAnalytics
         protected AnalyzeHealthcareEntitiesOperation() { }
         public AnalyzeHealthcareEntitiesOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
         public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual string DisplayName { get { throw null; } }
         public virtual System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -85,6 +86,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeHealthcareEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AnalyzeHealthcareEntitiesOptions() { }
+        public string DisplayName { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -176,6 +178,7 @@ namespace Azure.AI.TextAnalytics
         protected ClassifyDocumentOperation() { }
         public ClassifyDocumentOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
         public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual string DisplayName { get { throw null; } }
         public virtual System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -482,6 +485,7 @@ namespace Azure.AI.TextAnalytics
     {
         public MultiLabelClassifyOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
         public bool IncludeStatistics { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -714,6 +718,7 @@ namespace Azure.AI.TextAnalytics
         protected RecognizeCustomEntitiesOperation() { }
         public RecognizeCustomEntitiesOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
         public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual string DisplayName { get { throw null; } }
         public virtual System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -736,6 +741,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizeCustomEntitiesOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
         public bool IncludeStatistics { get { throw null; } set { } }
     }
     public partial class RecognizeCustomEntitiesResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeEntitiesResult>
@@ -869,6 +875,7 @@ namespace Azure.AI.TextAnalytics
     {
         public SingleLabelClassifyOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
         public bool IncludeStatistics { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
