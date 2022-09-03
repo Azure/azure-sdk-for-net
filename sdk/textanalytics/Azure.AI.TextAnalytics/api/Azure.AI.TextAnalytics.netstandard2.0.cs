@@ -351,6 +351,8 @@ namespace Azure.AI.TextAnalytics
         private readonly int _dummyPrimitive;
         public HealthcareEntityCategory(string value) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory AdministrativeEvent { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityCategory Age { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory AGE { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory BodyStructure { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory CareEnvironment { get { throw null; } }
@@ -363,6 +365,8 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory FamilyRelation { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory Frequency { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory Gender { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityCategory GeneOrProtein { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory GeneORProtein { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory HealthcareProfession { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory MeasurementUnit { get { throw null; } }
@@ -372,6 +376,8 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory MedicationName { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory MedicationRoute { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory RelationalOperator { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityCategory SymptomOrSign { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory SymptomORSign { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory Time { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory TreatmentName { get { throw null; } }
