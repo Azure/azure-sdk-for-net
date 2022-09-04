@@ -49,9 +49,6 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  Attachednetwork: AttachedNetwork
-  Devbox: DevBox
-  devboxdefinition: DevBoxDefinition
 
 rename-mapping:
   DevCenterSku: DevCenterSkuDetails
