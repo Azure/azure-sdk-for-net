@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             string targetId = default;
             string lunName = default;
-            Optional<MountOptionEnum> mountOption = default;
+            Optional<LunMountMode> mountOption = default;
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mountOption = new MountOptionEnum(property.Value.GetString());
+                    mountOption = new LunMountMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"))

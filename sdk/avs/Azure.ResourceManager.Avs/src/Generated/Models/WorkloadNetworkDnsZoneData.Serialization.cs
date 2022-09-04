@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp");
-                writer.WriteStringValue(SourceIP);
+                writer.WriteStringValue(SourceIP.ToString());
             }
             if (Optional.IsDefined(DnsServices))
             {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             Optional<string> displayName = default;
             Optional<IList<string>> domain = default;
             Optional<IList<string>> dnsServerIPs = default;
-            Optional<string> sourceIP = default;
+            Optional<IPAddress> sourceIP = default;
             Optional<long> dnsServices = default;
             Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
             Optional<long> revision = default;
@@ -150,7 +151,12 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("sourceIp"))
                         {
-                            sourceIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dnsServices"))

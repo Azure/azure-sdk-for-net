@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="dnsServices"> Number of DNS Services using the DNS zone. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<string> dnsServerIPs, string sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<string> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Domain = domain;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> DNS Server IP array of the DNS Zone. </summary>
         public IList<string> DnsServerIPs { get; }
         /// <summary> Source IP of the DNS Zone. </summary>
-        public string SourceIP { get; set; }
+        public IPAddress SourceIP { get; set; }
         /// <summary> Number of DNS Services using the DNS zone. </summary>
         public long? DnsServices { get; set; }
         /// <summary> The provisioning state. </summary>

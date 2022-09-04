@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<Trial>> CheckTrialAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionTrialAvailability>> CheckTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).CheckTrialAvailabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<Trial> CheckTrialAvailabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionTrialAvailability> CheckTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).CheckTrialAvailabilityLocation(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckTrialAvailability(location, cancellationToken);
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<Quota>> CheckQuotaAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionQuotaDetails>> CheckQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).CheckQuotaAvailabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<Quota> CheckQuotaAvailabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionQuotaDetails> CheckQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).CheckQuotaAvailabilityLocation(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckQuotaAvailability(location, cancellationToken);
         }
 
         /// <summary>
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PrivateCloudResource> GetPrivateCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateCloudsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PrivateCloudResource> GetPrivateClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateClouds(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.Avs
             );
         }
 
-        /// <summary> Gets a collection of PrivateCloudResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PrivateCloudResources and their operations over a PrivateCloudResource. </returns>
-        public static PrivateCloudCollection GetPrivateClouds(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
+        public static AvsPrivateCloudCollection GetAvsPrivateClouds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetPrivateClouds();
+            return GetExtensionClient(resourceGroupResource).GetAvsPrivateClouds();
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateCloudResource>> GetPrivateCloudAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateClouds().GetAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAvsPrivateClouds().GetAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,63 +150,63 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateCloudResource> GetPrivateCloud(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
+        public static Response<AvsPrivateCloudResource> GetAvsPrivateCloud(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateClouds().Get(privateCloudName, cancellationToken);
+            return resourceGroupResource.GetAvsPrivateClouds().Get(privateCloudName, cancellationToken);
         }
 
-        #region PrivateCloudResource
+        #region AvsPrivateCloudResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateCloudResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateCloudResource.CreateResourceIdentifier" /> to create a <see cref="PrivateCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateCloudResource" /> object. </returns>
-        public static PrivateCloudResource GetPrivateCloudResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPrivateCloudResource" /> object. </returns>
+        public static AvsPrivateCloudResource GetAvsPrivateCloudResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateCloudResource.ValidateResourceId(id);
-                return new PrivateCloudResource(client, id);
+                AvsPrivateCloudResource.ValidateResourceId(id);
+                return new AvsPrivateCloudResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterResource
+        #region AvsPrivateCloudClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudClusterResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPrivateCloudClusterResource" /> object. </returns>
+        public static AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                AvsPrivateCloudClusterResource.ValidateResourceId(id);
+                return new AvsPrivateCloudClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatastoreResource
+        #region AvsPrivateCloudDatastoreResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatastoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatastoreResource.CreateResourceIdentifier" /> to create a <see cref="DatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudDatastoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudDatastoreResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudDatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatastoreResource" /> object. </returns>
-        public static DatastoreResource GetDatastoreResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPrivateCloudDatastoreResource" /> object. </returns>
+        public static AvsPrivateCloudDatastoreResource GetAvsPrivateCloudDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatastoreResource.ValidateResourceId(id);
-                return new DatastoreResource(client, id);
+                AvsPrivateCloudDatastoreResource.ValidateResourceId(id);
+                return new AvsPrivateCloudDatastoreResource(client, id);
             }
             );
         }
@@ -326,20 +326,20 @@ namespace Azure.ResourceManager.Avs
         }
         #endregion
 
-        #region WorkloadNetworkPortMirroringResource
+        #region WorkloadNetworkPortMirroringProfileResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkPortMirroringResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkPortMirroringResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPortMirroringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkPortMirroringProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkPortMirroringProfileResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPortMirroringProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringResource" /> object. </returns>
-        public static WorkloadNetworkPortMirroringResource GetWorkloadNetworkPortMirroringResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringProfileResource" /> object. </returns>
+        public static WorkloadNetworkPortMirroringProfileResource GetWorkloadNetworkPortMirroringProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkloadNetworkPortMirroringResource.ValidateResourceId(id);
-                return new WorkloadNetworkPortMirroringResource(client, id);
+                WorkloadNetworkPortMirroringProfileResource.ValidateResourceId(id);
+                return new WorkloadNetworkPortMirroringProfileResource(client, id);
             }
             );
         }
@@ -440,58 +440,58 @@ namespace Azure.ResourceManager.Avs
         }
         #endregion
 
-        #region CloudLinkResource
+        #region AvsCloudLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="CloudLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudLinkResource.CreateResourceIdentifier" /> to create a <see cref="CloudLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsCloudLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsCloudLinkResource.CreateResourceIdentifier" /> to create an <see cref="AvsCloudLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudLinkResource" /> object. </returns>
-        public static CloudLinkResource GetCloudLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsCloudLinkResource" /> object. </returns>
+        public static AvsCloudLinkResource GetAvsCloudLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CloudLinkResource.ValidateResourceId(id);
-                return new CloudLinkResource(client, id);
+                AvsCloudLinkResource.ValidateResourceId(id);
+                return new AvsCloudLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AddonResource
+        #region AvsPrivateCloudAddonResource
         /// <summary>
-        /// Gets an object representing an <see cref="AddonResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AddonResource.CreateResourceIdentifier" /> to create an <see cref="AddonResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudAddonResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudAddonResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AddonResource" /> object. </returns>
-        public static AddonResource GetAddonResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPrivateCloudAddonResource" /> object. </returns>
+        public static AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AddonResource.ValidateResourceId(id);
-                return new AddonResource(client, id);
+                AvsPrivateCloudAddonResource.ValidateResourceId(id);
+                return new AvsPrivateCloudAddonResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualMachineResource
+        #region AvsPrivateCloudClusterVirtualMachineResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudClusterVirtualMachineResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
-        public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> object. </returns>
+        public static AvsPrivateCloudClusterVirtualMachineResource GetAvsPrivateCloudClusterVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualMachineResource.ValidateResourceId(id);
-                return new VirtualMachineResource(client, id);
+                AvsPrivateCloudClusterVirtualMachineResource.ValidateResourceId(id);
+                return new AvsPrivateCloudClusterVirtualMachineResource(client, id);
             }
             );
         }

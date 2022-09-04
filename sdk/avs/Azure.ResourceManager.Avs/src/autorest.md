@@ -16,7 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+override-operation-name:
+  Locations_CheckQuotaAvailability: CheckQuotaAvailability
+  Locations_CheckTrialAvailability: CheckTrialAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,5 +49,63 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  Addon: AvsPrivateCloudAddon
+  AddonProperties: AvsPrivateCloudAddonProperties
+  CloudLink.properties.linkedCloud: -|arm-id
+  Cluster: AvsPrivateCloudCluster
+  Datastore: AvsPrivateCloudDatastore
+  ExpressRouteAuthorization.properties.expressRouteAuthorizationId: -|arm-id
+  ExpressRouteAuthorization.properties.expressRouteId: -|arm-id
+  GlobalReachConnection.properties.expressRouteId: -|arm-id
+  GlobalReachConnection.properties.peerExpressRouteCircuit: -|arm-id
+  AvailabilityProperties: PrivateCloudAvailabilityProperties
+  Circuit: ExpressRouteCircuit
+  Encryption: CustomerManagedEncryption
+  Endpoints: AvsPrivateCloudEndpoints
+  IdentitySource: SingleSignOnIdentitySource
+  InternetEnum: InternetConnectivityState
+  ScriptParameter: ScriptParameterProperties
+  ScriptExecutionParameter: ScriptExecutionParameterDetails
+  PSCredentialExecutionParameter: PSCredentialExecutionParameterDetails
+  ScriptSecureStringExecutionParameter: ScriptSecureStringExecutionParameterDetails
+  ScriptStringExecutionParameter: ScriptStringExecutionParameterDetails
+  ScriptExecution.properties.scriptCmdletId: -|arm-id
+  VirtualMachine: AvsPrivateCloudClusterVirtualMachine
+  WorkloadNetworkDnsService.properties.dnsServiceIp: -|ip-address
+  DnsServiceLogLevelEnum: DnsServiceLogLevel
+  DnsServiceStatusEnum: DnsServiceStatus
+  WorkloadNetworkDnsZone.properties.dnsServerIps: -|ip-address
+  WorkloadNetworkDnsZone.properties.sourceIp: -|ip-address
+  WorkloadNetworkPortMirroring: WorkloadNetworkPortMirroringProfile
+  PortMirroringDirectionEnum: PortMirroringProfileDirection
+  WorkloadNetworkPortMirroringProvisioningState: WorkloadNetworkPortMirroringProfileProvisioningState
+  PortMirroringStatusEnum: PortMirroringProfileStatus
+  SegmentStatusEnum: WorkloadNetworkSegmentStatus
+  VmTypeEnum: WorkloadNetworkVmType
+  VmGroupStatusEnum: WorkloadNetworkVmGroupStatus
+  Quota: SubscriptionQuotaDetails
+  QuotaEnabled: SubscriptionQuotaEnabled
+  Trial: SubscriptionTrialAvailability
+  TrialStatus: SubscriptionTrialStatus
+  Circuit.expressRouteID: -|arm-id
+  Circuit.expressRoutePrivatePeeringID: -|arm-id
+  MountOptionEnum: LunMountMode
+  SslEnum: SslCertificateStatus
+  OptionalParamEnum: ParameterOptionalityStatus
+  VisibilityParameterEnum: ParameterVisibilityStatus
+
+prepend-rp-prefix:
+- CloudLink
+- CloudLinkStatus
+- PrivateCloud
+- PrivateCloudProvisioningState
+
+directive:
+  - from: vmware.json
+    where: $.definitions
+    transform: >
+      $.PrivateCloudProperties.properties.externalCloudLinks.items['x-ms-format'] = 'arm-id';
 
 ```
