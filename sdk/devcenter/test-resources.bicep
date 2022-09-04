@@ -3,6 +3,7 @@ param resourceLocation string = resourceGroup().location
 var defaultDevCenterName = 'sdk-default-devcenter'
 var defaultProjectName = 'sdk-default-project'
 var defaultNetworkConnectionName = 'sdk-default-networkconnection'
+var defaultNetworkConnection2Name = 'sdk-default-networkconnection2'
 var defaultMarketplaceDefinition = 'sdk-default-devboxdefinition'
 
 var devBoxSkuName = 'general_a_8c32gb_v1'
@@ -28,15 +29,43 @@ resource project 'Microsoft.DevCenter/projects@2022-08-01-preview' = {
   }
 }
 
-// resource gallery 'Microsoft.DevCenter/devcenters/galleries@2022-08-01-preview' = {
-//   name: '${devcenter.name}/Gallery1'
-//   properties: {
-//     galleryResourceId: computeGalleryId
-//   }
-// }
-
 resource vnet1 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   name: 'sdk-vnet1'
+  location: resourceLocation
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.4.0.0/16'
+      ]
+    }
+    subnets: [
+      {
+        name: 'default'
+        properties: {
+          addressPrefix: '10.4.0.0/24'
+          serviceEndpoints: []
+          delegations: [
+            {
+              name: 'Microsoft.DevCenter.networkConnections'
+              properties: {
+                'serviceName': 'Microsoft.DevCenter/networkConnection'
+              }
+            }
+          ]
+          privateEndpointNetworkPolicies: 'Enabled'
+          privateLinkServiceNetworkPolicies: 'Enabled'
+        }
+      }
+    ]
+    virtualNetworkPeerings: [
+
+    ]
+    enableDdosProtection: false
+  }
+}
+
+resource vnet2 'Microsoft.Network/virtualNetworks@2021-05-01' = {
+  name: 'sdk-vnet2'
   location: resourceLocation
   properties: {
     addressSpace: {
@@ -79,6 +108,15 @@ resource networkConnection1 'Microsoft.DevCenter/networkConnections@2022-08-01-p
   }
 }
 
+resource networkConnection2 'Microsoft.DevCenter/networkConnections@2022-08-01-preview' = {
+  name: defaultNetworkConnection2Name
+  location: resourceLocation
+  properties: {
+    domainJoinType: 'AzureADJoin'
+    subnetId: vnet2.properties.subnets[0].id
+  }
+}
+
 resource attachedNetwork 'Microsoft.DevCenter/devcenters/attachednetworks@2022-08-01-preview' = {
   name: '${devcenter.name}/${networkConnection1.name}'
   properties: {
@@ -105,3 +143,4 @@ output DefaultProjectId string = project.id
 output DefaultMarketplaceDefinitionId string = marketplaceDefinition.id
 output DefaultNetworkConnectionId string = networkConnection1.id
 output DefaultAttachedNetworkName string = networkConnection1.name
+output DefaultNetworkConnection2Id string = networkConnection2.id

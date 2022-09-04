@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
         public string DefaultAttachedNetworkName => GetRecordedOptionalVariable("DefaultAttachedNetworkName");
 
+        public string DefaultNetworkConnection2Id => GetRecordedOptionalVariable("DefaultNetworkConnection2Id");
+
         /// <summary>
         /// Determines if tests running in recording model should delete the resource group after test run.
         /// </summary>

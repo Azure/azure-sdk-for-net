@@ -12,15 +12,15 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Tests
 {
-    public class ProjectOperationsTests : DevCenterManagementTestBase
+    public class ProjectOperationsOperationsTests : DevCenterManagementTestBase
     {
-        public ProjectOperationsTests(bool isAsync)
+        public ProjectOperationsOperationsTests(bool isAsync)
             : base(isAsync)
         {
         }
 
         [Test]
-        [PlaybackOnly("TODO")]
+        [PlaybackOnly("")]
         public async Task ProjectResourceFull()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
         }
 
         [Test]
-        [PlaybackOnly("TODO")]
+        [PlaybackOnly("")]
         public async Task ListImagesByDevCenter()
         {
             ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
         }
 
         [Test]
-        [PlaybackOnly("TODO")]
+        [PlaybackOnly("")]
         public async Task ListAndGetImagesByGallery()
         {
             ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);

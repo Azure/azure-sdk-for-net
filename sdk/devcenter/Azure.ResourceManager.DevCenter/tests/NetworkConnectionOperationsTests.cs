@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
         }
 
         [Test]
-        [PlaybackOnly("TODO")]
+        [PlaybackOnly("")]
         public async Task NetworkConnectionResourceFull()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
