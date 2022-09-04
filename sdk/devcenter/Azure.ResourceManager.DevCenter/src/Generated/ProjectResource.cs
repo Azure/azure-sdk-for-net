@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ProjectAttachednetworkResources in the Project. </summary>
-        /// <returns> An object representing collection of ProjectAttachednetworkResources and their operations over a ProjectAttachednetworkResource. </returns>
-        public virtual ProjectAttachednetworkCollection GetProjectAttachednetworks()
+        /// <summary> Gets a collection of ProjectAttachedNetworkConnectionResources in the Project. </summary>
+        /// <returns> An object representing collection of ProjectAttachedNetworkConnectionResources and their operations over a ProjectAttachedNetworkConnectionResource. </returns>
+        public virtual ProjectAttachedNetworkConnectionCollection GetProjectAttachedNetworkConnections()
         {
-            return GetCachedClient(Client => new ProjectAttachednetworkCollection(Client, Id));
+            return GetCachedClient(Client => new ProjectAttachedNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectAttachednetworkResource>> GetProjectAttachednetworkAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectAttachedNetworkConnectionResource>> GetProjectAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetProjectAttachednetworks().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetProjectAttachedNetworkConnections().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectAttachednetworkResource> GetProjectAttachednetwork(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectAttachedNetworkConnectionResource> GetProjectAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetProjectAttachednetworks().Get(attachedNetworkConnectionName, cancellationToken);
+            return GetProjectAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProjectEnvironmentTypeResources in the Project. </summary>
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetProjectEnvironmentTypes().Get(environmentTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectDevboxdefinitionResources in the Project. </summary>
-        /// <returns> An object representing collection of ProjectDevboxdefinitionResources and their operations over a ProjectDevboxdefinitionResource. </returns>
-        public virtual ProjectDevboxdefinitionCollection GetProjectDevboxdefinitions()
+        /// <summary> Gets a collection of ProjectDevBoxDefinitionResources in the Project. </summary>
+        /// <returns> An object representing collection of ProjectDevBoxDefinitionResources and their operations over a ProjectDevBoxDefinitionResource. </returns>
+        public virtual ProjectDevBoxDefinitionCollection GetProjectDevBoxDefinitions()
         {
-            return GetCachedClient(Client => new ProjectDevboxdefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new ProjectDevBoxDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectDevboxdefinitionResource>> GetProjectDevboxdefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetProjectDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetProjectDevboxdefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetProjectDevBoxDefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectDevboxdefinitionResource> GetProjectDevboxdefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDevBoxDefinitionResource> GetProjectDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetProjectDevboxdefinitions().Get(devBoxDefinitionName, cancellationToken);
+            return GetProjectDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PoolResources in the Project. </summary>

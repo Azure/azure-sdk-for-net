@@ -18,46 +18,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing a ProjectDevboxdefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectDevboxdefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProjectDevboxdefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetProjectDevboxdefinition method.
+    /// A Class representing a ProjectDevBoxDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectDevBoxDefinitionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetProjectDevBoxDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetProjectDevBoxDefinition method.
     /// </summary>
-    public partial class ProjectDevboxdefinitionResource : ArmResource
+    public partial class ProjectDevBoxDefinitionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ProjectDevboxdefinitionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProjectDevBoxDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string devBoxDefinitionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics;
-        private readonly DevBoxDefinitionsRestOperations _projectDevboxdefinitionDevBoxDefinitionsRestClient;
+        private readonly ClientDiagnostics _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics;
+        private readonly DevBoxDefinitionsRestOperations _projectDevBoxDefinitionDevBoxDefinitionsRestClient;
         private readonly DevBoxDefinitionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectDevboxdefinitionResource"/> class for mocking. </summary>
-        protected ProjectDevboxdefinitionResource()
+        /// <summary> Initializes a new instance of the <see cref="ProjectDevBoxDefinitionResource"/> class for mocking. </summary>
+        protected ProjectDevBoxDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProjectDevboxdefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ProjectDevBoxDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProjectDevboxdefinitionResource(ArmClient client, DevBoxDefinitionData data) : this(client, data.Id)
+        internal ProjectDevBoxDefinitionResource(ArmClient client, DevBoxDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectDevboxdefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectDevBoxDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProjectDevboxdefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectDevBoxDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string projectDevboxdefinitionDevBoxDefinitionsApiVersion);
-            _projectDevboxdefinitionDevBoxDefinitionsRestClient = new DevBoxDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectDevboxdefinitionDevBoxDefinitionsApiVersion);
+            _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string projectDevBoxDefinitionDevBoxDefinitionsApiVersion);
+            _projectDevBoxDefinitionDevBoxDefinitionsRestClient = new DevBoxDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectDevBoxDefinitionDevBoxDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: DevBoxDefinitions_GetByProject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectDevboxdefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.Get");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = await _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: DevBoxDefinitions_GetByProject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectDevboxdefinitionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDevBoxDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.Get");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,20 +144,20 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ProjectDevboxdefinitionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.AddTag");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,20 +175,20 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ProjectDevboxdefinitionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDevBoxDefinitionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.AddTag");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ProjectDevboxdefinitionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.SetTags");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.SetTags");
             scope.Start();
             try
             {
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.DevCenter
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ProjectDevboxdefinitionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDevBoxDefinitionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.SetTags");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.SetTags");
             scope.Start();
             try
             {
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.DevCenter
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -265,19 +265,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ProjectDevboxdefinitionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.RemoveTag");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -294,19 +294,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ProjectDevboxdefinitionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDevBoxDefinitionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _projectDevboxdefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevboxdefinitionResource.RemoveTag");
+            using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _projectDevboxdefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ProjectDevboxdefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

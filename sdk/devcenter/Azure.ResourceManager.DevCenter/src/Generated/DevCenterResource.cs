@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.DevCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DevcenterAttachednetworkResources in the DevCenter. </summary>
-        /// <returns> An object representing collection of DevcenterAttachednetworkResources and their operations over a DevcenterAttachednetworkResource. </returns>
-        public virtual DevcenterAttachednetworkCollection GetDevcenterAttachednetworks()
+        /// <summary> Gets a collection of AttachedNetworkConnectionResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of AttachedNetworkConnectionResources and their operations over a AttachedNetworkConnectionResource. </returns>
+        public virtual AttachedNetworkConnectionCollection GetAttachedNetworkConnections()
         {
-            return GetCachedClient(Client => new DevcenterAttachednetworkCollection(Client, Id));
+            return GetCachedClient(Client => new AttachedNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevcenterAttachednetworkResource>> GetDevcenterAttachednetworkAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AttachedNetworkConnectionResource>> GetAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetDevcenterAttachednetworks().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetAttachedNetworkConnections().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevcenterAttachednetworkResource> GetDevcenterAttachednetwork(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<AttachedNetworkConnectionResource> GetAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetDevcenterAttachednetworks().Get(attachedNetworkConnectionName, cancellationToken);
+            return GetAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GalleryResources in the DevCenter. </summary>
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetEnvironmentTypes().Get(environmentTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevcenterDevboxdefinitionResources in the DevCenter. </summary>
-        /// <returns> An object representing collection of DevcenterDevboxdefinitionResources and their operations over a DevcenterDevboxdefinitionResource. </returns>
-        public virtual DevcenterDevboxdefinitionCollection GetDevcenterDevboxdefinitions()
+        /// <summary> Gets a collection of DevBoxDefinitionResources in the DevCenter. </summary>
+        /// <returns> An object representing collection of DevBoxDefinitionResources and their operations over a DevBoxDefinitionResource. </returns>
+        public virtual DevBoxDefinitionCollection GetDevBoxDefinitions()
         {
-            return GetCachedClient(Client => new DevcenterDevboxdefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new DevBoxDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevcenterDevboxdefinitionResource>> GetDevcenterDevboxdefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevBoxDefinitionResource>> GetDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetDevcenterDevboxdefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetDevBoxDefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -275,9 +275,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevcenterDevboxdefinitionResource> GetDevcenterDevboxdefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<DevBoxDefinitionResource> GetDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetDevcenterDevboxdefinitions().Get(devBoxDefinitionName, cancellationToken);
+            return GetDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
         }
 
         /// <summary>

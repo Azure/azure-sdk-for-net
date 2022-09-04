@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Partial update of a Dev Box definition resource. </summary>
-    public partial class DevcenterDevboxdefinitionPatch : TrackedResourceUpdate
+    public partial class DevBoxDefinitionPatch : TrackedResourceUpdate
     {
-        /// <summary> Initializes a new instance of DevcenterDevboxdefinitionPatch. </summary>
-        public DevcenterDevboxdefinitionPatch()
+        /// <summary> Initializes a new instance of DevBoxDefinitionPatch. </summary>
+        public DevBoxDefinitionPatch()
         {
         }
 

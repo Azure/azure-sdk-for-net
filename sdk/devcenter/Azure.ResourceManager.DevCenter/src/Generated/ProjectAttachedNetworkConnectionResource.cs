@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing a ProjectAttachednetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectAttachednetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProjectAttachednetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetProjectAttachednetwork method.
+    /// A Class representing a ProjectAttachedNetworkConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectAttachedNetworkConnectionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetProjectAttachedNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetProjectAttachedNetworkConnection method.
     /// </summary>
-    public partial class ProjectAttachednetworkResource : ArmResource
+    public partial class ProjectAttachedNetworkConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ProjectAttachednetworkResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProjectAttachedNetworkConnectionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string attachedNetworkConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _projectAttachednetworkAttachedNetworksClientDiagnostics;
-        private readonly AttachedNetworksRestOperations _projectAttachednetworkAttachedNetworksRestClient;
+        private readonly ClientDiagnostics _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics;
+        private readonly AttachedNetworksRestOperations _projectAttachedNetworkConnectionAttachedNetworksRestClient;
         private readonly AttachedNetworkConnectionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectAttachednetworkResource"/> class for mocking. </summary>
-        protected ProjectAttachednetworkResource()
+        /// <summary> Initializes a new instance of the <see cref="ProjectAttachedNetworkConnectionResource"/> class for mocking. </summary>
+        protected ProjectAttachedNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProjectAttachednetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ProjectAttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProjectAttachednetworkResource(ArmClient client, AttachedNetworkConnectionData data) : this(client, data.Id)
+        internal ProjectAttachedNetworkConnectionResource(ArmClient client, AttachedNetworkConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectAttachednetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectAttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProjectAttachednetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectAttachedNetworkConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _projectAttachednetworkAttachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string projectAttachednetworkAttachedNetworksApiVersion);
-            _projectAttachednetworkAttachedNetworksRestClient = new AttachedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectAttachednetworkAttachedNetworksApiVersion);
+            _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string projectAttachedNetworkConnectionAttachedNetworksApiVersion);
+            _projectAttachedNetworkConnectionAttachedNetworksRestClient = new AttachedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectAttachedNetworkConnectionAttachedNetworksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: AttachedNetworks_GetByProject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectAttachednetworkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectAttachedNetworkConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkResource.Get");
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _projectAttachednetworkAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectAttachednetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: AttachedNetworks_GetByProject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectAttachednetworkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectAttachedNetworkConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkResource.Get");
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _projectAttachednetworkAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectAttachednetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -12,9 +12,6 @@ using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-using DevBoxDefinitionCollection = Azure.ResourceManager.DevCenter.DevcenterDevboxdefinitionCollection;
-using DevBoxDefinitionResource = Azure.ResourceManager.DevCenter.DevcenterDevboxdefinitionResource;
-
 namespace Azure.ResourceManager.DevCenter.Tests
 {
     public class DevBoxDefinitionOperationsTests : DevCenterManagementTestBase
@@ -33,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var devCenterResponse = await Client.GetDevCenterResource(devCenterId).GetAsync();
             var devCenterResource = devCenterResponse.Value;
 
-            DevBoxDefinitionCollection resourceCollection = devCenterResource.GetDevcenterDevboxdefinitions();
+            DevBoxDefinitionCollection resourceCollection = devCenterResource.GetDevBoxDefinitions();
 
             string resourceName = "sdktest-devboxdefinition";
 
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
                 Sku = new DevCenterSku(name: "general_a_8c32gb_v1"),
                 OSStorageType = "ssd_512gb",
             };
-            ArmOperation<DevcenterDevboxdefinitionResource> createdResourceResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, devBoxDefinitionData);
+            ArmOperation<DevBoxDefinitionResource> createdResourceResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, devBoxDefinitionData);
             DevBoxDefinitionResource createdResource = createdResourceResponse.Value;
 
             Assert.NotNull(createdResource);
@@ -73,7 +70,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             Assert.NotNull(retrievedResource.Value.Data);
 
             // Update
-            DevcenterDevboxdefinitionPatch updateRequest = new DevcenterDevboxdefinitionPatch()
+            var updateRequest = new DevBoxDefinitionPatch()
             {
                 OSStorageType = "ssd_256gb",
             };

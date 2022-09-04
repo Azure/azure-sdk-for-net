@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
         {
             Optional<ResourceRange> memory = default;
-            Optional<ResourceRange> vcpUs = default;
+            Optional<ResourceRange> vCpus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memory"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vcpUs = ResourceRange.DeserializeResourceRange(property.Value);
+                    vCpus = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
             }
-            return new RecommendedMachineConfiguration(memory.Value, vcpUs.Value);
+            return new RecommendedMachineConfiguration(memory.Value, vCpus.Value);
         }
     }
 }

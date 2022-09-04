@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectAttachednetworkResource" /> and their operations.
-    /// Each <see cref="ProjectAttachednetworkResource" /> in the collection will belong to the same instance of <see cref="ProjectResource" />.
-    /// To get a <see cref="ProjectAttachednetworkCollection" /> instance call the GetProjectAttachednetworks method from an instance of <see cref="ProjectResource" />.
+    /// A class representing a collection of <see cref="ProjectAttachedNetworkConnectionResource" /> and their operations.
+    /// Each <see cref="ProjectAttachedNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="ProjectResource" />.
+    /// To get a <see cref="ProjectAttachedNetworkConnectionCollection" /> instance call the GetProjectAttachedNetworkConnections method from an instance of <see cref="ProjectResource" />.
     /// </summary>
-    public partial class ProjectAttachednetworkCollection : ArmCollection, IEnumerable<ProjectAttachednetworkResource>, IAsyncEnumerable<ProjectAttachednetworkResource>
+    public partial class ProjectAttachedNetworkConnectionCollection : ArmCollection, IEnumerable<ProjectAttachedNetworkConnectionResource>, IAsyncEnumerable<ProjectAttachedNetworkConnectionResource>
     {
-        private readonly ClientDiagnostics _projectAttachednetworkAttachedNetworksClientDiagnostics;
-        private readonly AttachedNetworksRestOperations _projectAttachednetworkAttachedNetworksRestClient;
+        private readonly ClientDiagnostics _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics;
+        private readonly AttachedNetworksRestOperations _projectAttachedNetworkConnectionAttachedNetworksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectAttachednetworkCollection"/> class for mocking. </summary>
-        protected ProjectAttachednetworkCollection()
+        /// <summary> Initializes a new instance of the <see cref="ProjectAttachedNetworkConnectionCollection"/> class for mocking. </summary>
+        protected ProjectAttachedNetworkConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectAttachednetworkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectAttachedNetworkConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ProjectAttachednetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectAttachedNetworkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _projectAttachednetworkAttachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectAttachednetworkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProjectAttachednetworkResource.ResourceType, out string projectAttachednetworkAttachedNetworksApiVersion);
-            _projectAttachednetworkAttachedNetworksRestClient = new AttachedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectAttachednetworkAttachedNetworksApiVersion);
+            _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectAttachedNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ProjectAttachedNetworkConnectionResource.ResourceType, out string projectAttachedNetworkConnectionAttachedNetworksApiVersion);
+            _projectAttachedNetworkConnectionAttachedNetworksRestClient = new AttachedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectAttachedNetworkConnectionAttachedNetworksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
-        public virtual async Task<Response<ProjectAttachednetworkResource>> GetAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectAttachedNetworkConnectionResource>> GetAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.Get");
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _projectAttachednetworkAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectAttachednetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
-        public virtual Response<ProjectAttachednetworkResource> Get(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectAttachedNetworkConnectionResource> Get(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.Get");
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _projectAttachednetworkAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken);
+                var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectAttachednetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectAttachednetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProjectAttachednetworkResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProjectAttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProjectAttachedNetworkConnectionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProjectAttachednetworkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ProjectAttachedNetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.GetAll");
+                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _projectAttachednetworkAttachedNetworksRestClient.ListByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachednetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.DevCenter
                     throw;
                 }
             }
-            async Task<Page<ProjectAttachednetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ProjectAttachedNetworkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.GetAll");
+                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _projectAttachednetworkAttachedNetworksRestClient.ListByProjectNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachednetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProjectNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectAttachednetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProjectAttachednetworkResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProjectAttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProjectAttachedNetworkConnectionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ProjectAttachednetworkResource> FirstPageFunc(int? pageSizeHint)
+            Page<ProjectAttachedNetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.GetAll");
+                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _projectAttachednetworkAttachedNetworksRestClient.ListByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachednetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.DevCenter
                     throw;
                 }
             }
-            Page<ProjectAttachednetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ProjectAttachedNetworkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.GetAll");
+                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _projectAttachednetworkAttachedNetworksRestClient.ListByProjectNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachednetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProjectNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.Exists");
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _projectAttachednetworkAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
 
-            using var scope = _projectAttachednetworkAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachednetworkCollection.Exists");
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _projectAttachednetworkAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken: cancellationToken);
+                var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<ProjectAttachednetworkResource> IEnumerable<ProjectAttachednetworkResource>.GetEnumerator()
+        IEnumerator<ProjectAttachedNetworkConnectionResource> IEnumerable<ProjectAttachedNetworkConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ProjectAttachednetworkResource> IAsyncEnumerable<ProjectAttachednetworkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ProjectAttachedNetworkConnectionResource> IAsyncEnumerable<ProjectAttachedNetworkConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

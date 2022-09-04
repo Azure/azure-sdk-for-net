@@ -371,39 +371,39 @@ namespace Azure.ResourceManager.DevCenter
         }
         #endregion
 
-        #region ProjectAttachednetworkResource
+        #region ProjectAttachedNetworkConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectAttachednetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectAttachednetworkResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachednetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectAttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectAttachednetworkResource" /> object. </returns>
-        public static ProjectAttachednetworkResource GetProjectAttachednetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource" /> object. </returns>
+        public static ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProjectAttachednetworkResource.ValidateResourceId(id);
-                return new ProjectAttachednetworkResource(client, id);
+                ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
+                return new ProjectAttachedNetworkConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DevcenterAttachednetworkResource
+        #region AttachedNetworkConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DevcenterAttachednetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevcenterAttachednetworkResource.CreateResourceIdentifier" /> to create a <see cref="DevcenterAttachednetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevcenterAttachednetworkResource" /> object. </returns>
-        public static DevcenterAttachednetworkResource GetDevcenterAttachednetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AttachedNetworkConnectionResource" /> object. </returns>
+        public static AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DevcenterAttachednetworkResource.ValidateResourceId(id);
-                return new DevcenterAttachednetworkResource(client, id);
+                AttachedNetworkConnectionResource.ValidateResourceId(id);
+                return new AttachedNetworkConnectionResource(client, id);
             }
             );
         }
@@ -523,39 +523,39 @@ namespace Azure.ResourceManager.DevCenter
         }
         #endregion
 
-        #region DevcenterDevboxdefinitionResource
+        #region DevBoxDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DevcenterDevboxdefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevcenterDevboxdefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevcenterDevboxdefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevcenterDevboxdefinitionResource" /> object. </returns>
-        public static DevcenterDevboxdefinitionResource GetDevcenterDevboxdefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevBoxDefinitionResource" /> object. </returns>
+        public static DevBoxDefinitionResource GetDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DevcenterDevboxdefinitionResource.ValidateResourceId(id);
-                return new DevcenterDevboxdefinitionResource(client, id);
+                DevBoxDefinitionResource.ValidateResourceId(id);
+                return new DevBoxDefinitionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProjectDevboxdefinitionResource
+        #region ProjectDevBoxDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectDevboxdefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectDevboxdefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevboxdefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectDevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectDevboxdefinitionResource" /> object. </returns>
-        public static ProjectDevboxdefinitionResource GetProjectDevboxdefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource" /> object. </returns>
+        public static ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProjectDevboxdefinitionResource.ValidateResourceId(id);
-                return new ProjectDevboxdefinitionResource(client, id);
+                ProjectDevBoxDefinitionResource.ValidateResourceId(id);
+                return new ProjectDevBoxDefinitionResource(client, id);
             }
             );
         }

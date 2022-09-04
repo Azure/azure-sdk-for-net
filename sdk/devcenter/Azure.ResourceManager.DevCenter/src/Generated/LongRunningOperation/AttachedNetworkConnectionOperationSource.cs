@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevcenterAttachednetworkOperationSource : IOperationSource<DevcenterAttachednetworkResource>
+    internal class AttachedNetworkConnectionOperationSource : IOperationSource<AttachedNetworkConnectionResource>
     {
         private readonly ArmClient _client;
 
-        internal DevcenterAttachednetworkOperationSource(ArmClient client)
+        internal AttachedNetworkConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        DevcenterAttachednetworkResource IOperationSource<DevcenterAttachednetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AttachedNetworkConnectionResource IOperationSource<AttachedNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(document.RootElement);
-            return new DevcenterAttachednetworkResource(_client, data);
+            return new AttachedNetworkConnectionResource(_client, data);
         }
 
-        async ValueTask<DevcenterAttachednetworkResource> IOperationSource<DevcenterAttachednetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AttachedNetworkConnectionResource> IOperationSource<AttachedNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(document.RootElement);
-            return new DevcenterAttachednetworkResource(_client, data);
+            return new AttachedNetworkConnectionResource(_client, data);
         }
     }
 }
