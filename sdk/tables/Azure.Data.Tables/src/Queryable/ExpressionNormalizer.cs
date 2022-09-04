@@ -95,7 +95,7 @@ namespace Azure.Data.Tables.Queryable
         internal override Expression VisitUnary(UnaryExpression u)
         {
             Expression result;
-            if (u.NodeType == ExpressionType.Convert && typeof(bool?).IsAssignableFrom(u.Type) && IsImplicitBooleanComparison(u))
+            if (u.NodeType == ExpressionType.Convert && IsImplicitBooleanComparison(u))
             {
                 BinaryExpression expandedBooleanComparison = CreateExplicitBooleanComparison(u);
                 result = VisitBinary(expandedBooleanComparison);
