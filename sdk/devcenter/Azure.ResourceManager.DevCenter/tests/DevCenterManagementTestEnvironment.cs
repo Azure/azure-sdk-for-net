@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
         public string DefaultAttachedNetworkName => GetRecordedOptionalVariable("DefaultAttachedNetworkName");
 
         /// <summary>
-        /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
+        /// Determines if tests running in recording model should delete the resource group after test run.
         /// </summary>
         internal static bool GlobalDisableResourceGroupCleanup
         {
