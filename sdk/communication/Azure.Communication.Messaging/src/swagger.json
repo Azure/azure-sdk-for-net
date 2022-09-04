@@ -1,0 +1,290 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "CommunicationNotificationClient",
+        "description": "Azure Communication Messaging Service",
+        "version": "2022-06-30-preview"
+    },
+    "paths": {
+        "/messaging/messages/:send": {
+            "post": {
+                "tags": [
+                    "Messaging"
+                ],
+                "operationId": "SendMessage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SendMessageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SendMessageResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CommunicationError": {
+            "description": "The Communication Services error.",
+            "required": [
+                "code",
+                "message"
+            ],
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "The error code.",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "The error message.",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "The error target.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "details": {
+                    "description": "Further details about specific errors that led to this error.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationError"
+                    },
+                    "readOnly": true
+                },
+                "innererror": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
+        },
+        "CommunicationErrorResponse": {
+            "description": "The Communication Services error.",
+            "required": [
+                "error"
+            ],
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
+        },
+        "MessageTemplate": {
+            "description": "The template object used to create templates.",
+            "required": [
+                "language",
+                "name",
+                "parameters"
+            ],
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the template.",
+                    "type": "string",
+                    "example": "appointment_update"
+                },
+                "language": {
+                    "description": "The codes for the supported languages for templates.",
+                    "type": "string",
+                    "example": "en_US"
+                },
+                "parameters": {
+                    "description": "Array of parameters for the content of the template.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Friday",
+                        "2424"
+                    ]
+                }
+            }
+        },
+        "MessageStatus": {
+            "description": "Status of a message.",
+            "enum": [
+                "enqueued",
+                "sent",
+                "delivered",
+                "read",
+                "failed",
+                "unknown"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "MessageStatus",
+                "modelAsString": true
+            }
+        },
+        "MessageType": {
+            "description": "The type of message. Supports text, image, template.",
+            "enum": [
+                "text",
+                "image",
+                "template"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "MessageType",
+                "modelAsString": true
+            }
+        },
+        "SendMessageRequest": {
+            "description": "Details of the message to send.",
+            "required": [
+                "channelRegistrationId",
+                "to",
+                "type"
+            ],
+            "type": "object",
+            "properties": {
+                "channelRegistrationId": {
+                    "description": "The Channel Registration ID for the Business Identifier.",
+                    "type": "string"
+                },
+                "to": {
+                    "description": "The native external platform user identifiers of the recipient.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        16315551234,
+                        16315552345
+                    ]
+                },
+                "type": {
+                    "$ref": "#/definitions/MessageType"
+                },
+                "content": {
+                    "description": "Message content.",
+                    "type": "string",
+                    "example": "Come on guys, lets go for lunch together."
+                },
+                "mediaUri": {
+                    "description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
+                    "type": "string",
+                    "example": "https://IMAGE_URL"
+                },
+                "template": {
+                    "$ref": "#/definitions/MessageTemplate"
+                }
+            }
+        },
+        "SendMessageResponse": {
+            "description": "Result of the send message operation.",
+            "required": [
+                "result"
+            ],
+            "type": "object",
+            "properties": {
+                "result": {
+                    "description": "The message id.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SendMessageResult"
+                    }
+                }
+            }
+        },
+        "SendMessageResult": {
+            "description": "Result of the sending one message.",
+            "required": [
+                "id",
+                "status"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The message id.",
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/MessageStatus"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "ApiVersionParameter": {
+            "in": "query",
+            "name": "api-version",
+            "description": "Version of API to invoke.",
+            "required": true,
+            "type": "string"
+        }
+    },
+    "securityDefinitions": {
+        "azure_auth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+            "scopes": {
+                "user_impersonation": "impersonate your user account"
+            }
+        }
+    },
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "name": "endpoint",
+                "description": "The communication resource, for example https://my-resource.communication.azure.com",
+                "required": true,
+                "type": "string",
+                "in": "path",
+                "x-ms-skip-url-encoding": true,
+                "x-ms-parameter-location": "client"
+            }
+        ]
+    }
+}

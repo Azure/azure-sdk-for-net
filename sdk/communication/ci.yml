@@ -33,6 +33,8 @@ extends:
       safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
       safeName: AzureCommunicationChat
+    - name: Azure.Communication.Messaging
+      safeName: AzureCommunicationMessaging
     - name: Azure.Communication.Common
       safeName: AzureCommunicationCommon
     - name: Azure.Communication.Email
