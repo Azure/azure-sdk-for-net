@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public FhirServiceAcrConfiguration()
         {
             LoginServers = new ChangeTrackingList<string>();
-            OciArtifacts = new ChangeTrackingList<ServiceOciArtifactEntry>();
+            OciArtifacts = new ChangeTrackingList<HealthcareApisServiceOciArtifactEntry>();
         }
 
         /// <summary> Initializes a new instance of FhirServiceAcrConfiguration. </summary>
         /// <param name="loginServers"> The list of the Azure container registry login servers. </param>
         /// <param name="ociArtifacts"> The list of Open Container Initiative (OCI) artifacts. </param>
-        internal FhirServiceAcrConfiguration(IList<string> loginServers, IList<ServiceOciArtifactEntry> ociArtifacts)
+        internal FhirServiceAcrConfiguration(IList<string> loginServers, IList<HealthcareApisServiceOciArtifactEntry> ociArtifacts)
         {
             LoginServers = loginServers;
             OciArtifacts = ociArtifacts;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The list of the Azure container registry login servers. </summary>
         public IList<string> LoginServers { get; }
         /// <summary> The list of Open Container Initiative (OCI) artifacts. </summary>
-        public IList<ServiceOciArtifactEntry> OciArtifacts { get; }
+        public IList<HealthcareApisServiceOciArtifactEntry> OciArtifacts { get; }
     }
 }

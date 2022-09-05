@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         public static string ToSerialString(this FluidRelayKeyName value) => value switch
         {
-            FluidRelayKeyName.Key1 => "key1",
-            FluidRelayKeyName.Key2 => "key2",
+            FluidRelayKeyName.PrimaryKey => "key1",
+            FluidRelayKeyName.SecondaryKey => "key2",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FluidRelayKeyName value.")
         };
 
         public static FluidRelayKeyName ToFluidRelayKeyName(this string value)
         {
-            if (string.Equals(value, "key1", StringComparison.InvariantCultureIgnoreCase)) return FluidRelayKeyName.Key1;
-            if (string.Equals(value, "key2", StringComparison.InvariantCultureIgnoreCase)) return FluidRelayKeyName.Key2;
+            if (string.Equals(value, "key1", StringComparison.InvariantCultureIgnoreCase)) return FluidRelayKeyName.PrimaryKey;
+            if (string.Equals(value, "key2", StringComparison.InvariantCultureIgnoreCase)) return FluidRelayKeyName.SecondaryKey;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FluidRelayKeyName value.");
         }
     }

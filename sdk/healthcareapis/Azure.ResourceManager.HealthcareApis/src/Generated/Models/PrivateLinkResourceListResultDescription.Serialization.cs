@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static PrivateLinkResourceListResultDescription DeserializePrivateLinkResourceListResultDescription(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkResourceDescriptionData>> value = default;
+            Optional<IReadOnlyList<HealthcareApisPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkResourceDescriptionData> array = new List<PrivateLinkResourceDescriptionData>();
+                    List<HealthcareApisPrivateLinkResourceData> array = new List<HealthcareApisPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResourceDescriptionData.DeserializePrivateLinkResourceDescriptionData(item));
+                        array.Add(HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

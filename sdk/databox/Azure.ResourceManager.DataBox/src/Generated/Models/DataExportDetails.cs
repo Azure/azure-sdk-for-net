@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="accountDetails">
         /// Account details of the data to be transferred
         /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="StorageAccountDetails"/>.
+        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transferConfiguration"/> or <paramref name="accountDetails"/> is null. </exception>
         public DataExportDetails(TransferConfiguration transferConfiguration, DataAccountDetails accountDetails)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="accountDetails">
         /// Account details of the data to be transferred
         /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="StorageAccountDetails"/>.
+        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
         /// </param>
         internal DataExportDetails(TransferConfiguration transferConfiguration, LogCollectionLevel? logCollectionLevel, DataAccountDetails accountDetails)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary>
         /// Account details of the data to be transferred
         /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="StorageAccountDetails"/>.
+        /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
         /// </summary>
         public DataAccountDetails AccountDetails { get; set; }
     }

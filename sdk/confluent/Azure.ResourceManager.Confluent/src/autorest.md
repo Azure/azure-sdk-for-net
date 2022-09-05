@@ -54,11 +54,16 @@ prepend-rp-prefix:
 
 rename-mapping:
   OrganizationResource: ConfluentOrganization
+  OrganizationResource.properties.organizationId: -|uuid
   OrganizationResourceListResult: ConfluentOrganizationListResult
   ConfluentAgreementResource: ConfluentAgreement
+  ConfluentAgreementResource.properties.accepted: IsAccepted
+  ConfluentAgreementResource.properties.retrieveDatetime: RetrieveOn
   OrganizationResourceUpdate: ConfluentOrganizationPatch
   ConfluentAgreementResourceListResponse: ConfluentAgreementListResult
 
+override-operation-name:
+  Validations_ValidateOrganization: ValidateOrganization
 directive:
   - remove-operation: OrganizationOperations_List
 ```

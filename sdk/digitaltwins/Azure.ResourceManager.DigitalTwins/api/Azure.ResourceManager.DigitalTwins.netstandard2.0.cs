@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
-    public partial class DigitalTwinsEndpointResourceProperties
+    public abstract partial class DigitalTwinsEndpointResourceProperties
     {
-        public DigitalTwinsEndpointResourceProperties() { }
+        protected DigitalTwinsEndpointResourceProperties() { }
         public Azure.ResourceManager.DigitalTwins.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DeadLetterSecret { get { throw null; } set { } }
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public string PrimaryConnectionString { get { throw null; } set { } }
         public string SecondaryConnectionString { get { throw null; } set { } }
     }
-    public partial class TimeSeriesDatabaseConnectionProperties
+    public abstract partial class TimeSeriesDatabaseConnectionProperties
     {
-        public TimeSeriesDatabaseConnectionProperties() { }
+        protected TimeSeriesDatabaseConnectionProperties() { }
         public Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? ProvisioningState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

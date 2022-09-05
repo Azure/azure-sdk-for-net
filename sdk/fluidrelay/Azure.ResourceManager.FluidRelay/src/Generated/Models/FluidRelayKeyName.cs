@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
     public enum FluidRelayKeyName
     {
         /// <summary> key1. </summary>
-        Key1,
+        PrimaryKey,
         /// <summary> key2. </summary>
-        Key2
+        SecondaryKey
     }
 }

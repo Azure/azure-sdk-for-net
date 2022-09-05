@@ -942,9 +942,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.OSType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.OSType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Partition
+    public abstract partial class Partition
     {
-        public Partition() { }
+        protected Partition() { }
     }
     public partial class PartitionInstanceCountScaleMechanism : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ScalingMechanism
     {
@@ -1061,9 +1061,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string UpgradeDomainTimeout { get { throw null; } set { } }
         public string UpgradeTimeout { get { throw null; } set { } }
     }
-    public partial class ScalingMechanism
+    public abstract partial class ScalingMechanism
     {
-        public ScalingMechanism() { }
+        protected ScalingMechanism() { }
     }
     public partial class ScalingPolicy
     {
@@ -1071,9 +1071,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ScalingMechanism ScalingMechanism { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ScalingTrigger ScalingTrigger { get { throw null; } set { } }
     }
-    public partial class ScalingTrigger
+    public abstract partial class ScalingTrigger
     {
-        public ScalingTrigger() { }
+        protected ScalingTrigger() { }
     }
     public partial class ServiceCorrelation
     {
@@ -1179,9 +1179,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         public ServicePlacementNonPartiallyPlaceServicePolicy() { }
     }
-    public partial class ServicePlacementPolicy
+    public abstract partial class ServicePlacementPolicy
     {
-        public ServicePlacementPolicy() { }
+        protected ServicePlacementPolicy() { }
     }
     public partial class ServicePlacementPreferPrimaryDomainPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPolicy
     {

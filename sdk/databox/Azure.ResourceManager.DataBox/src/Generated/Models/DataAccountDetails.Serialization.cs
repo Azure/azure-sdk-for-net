@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 switch (discriminator.GetString())
                 {
                     case "ManagedDisk": return ManagedDiskDetails.DeserializeManagedDiskDetails(element);
-                    case "StorageAccount": return StorageAccountDetails.DeserializeStorageAccountDetails(element);
+                    case "StorageAccount": return DataBoxStorageAccountDetails.DeserializeDataBoxStorageAccountDetails(element);
                 }
             }
             DataAccountType dataAccountType = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataAccountDetails(dataAccountType, sharePassword.Value);
+            return new UnknownDataAccountDetails(dataAccountType, sharePassword.Value);
         }
     }
 }

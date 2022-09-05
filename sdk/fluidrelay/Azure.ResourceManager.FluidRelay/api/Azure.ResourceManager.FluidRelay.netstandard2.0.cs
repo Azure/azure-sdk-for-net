@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
     }
     public enum FluidRelayKeyName
     {
-        Key1 = 0,
-        Key2 = 1,
+        PrimaryKey = 0,
+        SecondaryKey = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FluidRelayProvisioningState : System.IEquatable<Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState>
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
     public partial class FluidRelayServerKeys
     {
         internal FluidRelayServerKeys() { }
-        public string Key1 { get { throw null; } }
-        public string Key2 { get { throw null; } }
+        public string PrimaryKey { get { throw null; } }
+        public string SecondaryKey { get { throw null; } }
     }
     public partial class FluidRelayServerPatch
     {

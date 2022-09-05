@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SnapshotsList. </summary>
         internal SnapshotsList()
         {
-            Value = new ChangeTrackingList<SnapshotData>();
+            Value = new ChangeTrackingList<NetAppVolumeSnapshotData>();
         }
 
         /// <summary> Initializes a new instance of SnapshotsList. </summary>
         /// <param name="value"> A list of Snapshots. </param>
-        internal SnapshotsList(IReadOnlyList<SnapshotData> value)
+        internal SnapshotsList(IReadOnlyList<NetAppVolumeSnapshotData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of Snapshots. </summary>
-        public IReadOnlyList<SnapshotData> Value { get; }
+        public IReadOnlyList<NetAppVolumeSnapshotData> Value { get; }
     }
 }

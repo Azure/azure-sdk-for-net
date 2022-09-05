@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
         internal DataBoxHeavyJobSecrets()
         {
             CabinetPodSecrets = new ChangeTrackingList<DataBoxHeavySecret>();
-            JobSecretsType = ClassDiscriminator.DataBoxHeavy;
+            JobSecretsType = DataBoxOrderType.DataBoxHeavy;
         }
 
         /// <summary> Initializes a new instance of DataBoxHeavyJobSecrets. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
-        internal DataBoxHeavyJobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal DataBoxHeavyJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             CabinetPodSecrets = cabinetPodSecrets;
             JobSecretsType = jobSecretsType;

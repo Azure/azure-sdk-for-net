@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<LedgerNameAvailabilityResult>> CheckLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, LedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<LedgerNameAvailabilityResult> CheckLedgerNameAvailability(this SubscriptionResource subscriptionResource, LedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckLedgerNameAvailability(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
         }
 
         /// <summary>

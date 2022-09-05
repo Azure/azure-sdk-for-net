@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
     /// </summary>
-    public partial class MoverResourceSettings
+    public abstract partial class MoverResourceSettings
     {
         /// <summary> Initializes a new instance of MoverResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public MoverResourceSettings(string targetResourceName)
+        protected MoverResourceSettings(string targetResourceName)
         {
             if (targetResourceName == null)
             {

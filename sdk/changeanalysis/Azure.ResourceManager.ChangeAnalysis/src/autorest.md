@@ -16,7 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+override-operation-name:
+  Changes_ListChangesByResourceGroup: GetChangesByResourceGroup
+  Changes_ListChangesBySubscription: GetChangesBySubscription
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,5 +49,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  Change: DetectedChangeData
+  ChangeProperties.resourceId: -|arm-id
+  ChangeProperties.timeStamp: ChangeDetectedOn
+  Level: PropertyChangeLevel
 
 ```

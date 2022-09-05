@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static ListReplications DeserializeListReplications(JsonElement element)
         {
-            Optional<IReadOnlyList<Replication>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeReplication>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Replication> array = new List<Replication>();
+                    List<NetAppVolumeReplication> array = new List<NetAppVolumeReplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Replication.DeserializeReplication(item));
+                        array.Add(NetAppVolumeReplication.DeserializeNetAppVolumeReplication(item));
                     }
                     value = array;
                     continue;

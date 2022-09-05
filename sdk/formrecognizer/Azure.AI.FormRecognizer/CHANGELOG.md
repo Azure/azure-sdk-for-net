@@ -3,8 +3,23 @@
 ## 4.0.0-beta.6 (Unreleased)
 
 ### Features Added
+- Added derived classes to `DocumentModelOperationDetails` for each kind of operation: `DocumentModelBuildOperationDetails`, `DocumentModelCopyToOperationDetails`, and `DocumentModelComposeOperationDetails`.
 
 ### Breaking Changes
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
+- Removed the `BoundingPolygon` type. All `BoundingPolygon` properties are now of type `IReadOnlyList<PointF>`.
+- Moved all `DocumentField` conversion methods, such as `AsDate` and `AsString`, to the new `DocumentFieldValue` class. They can be accessed from the `DocumentField.Value` property.
+- Updated `DocumentField.AsDate` to return a `DateTimeOffset` instead of a `DateTime`.
+- Renamed classes `DocumentModelOperationDetails` and `DocumentModelOperationSummary` to `OperationDetails` and `OperationSummary`, respectively.
+- Moved property `Result` in `DocumentModelOperationDetails` (now called `OperationDetails`) to each of its new derived classes. The property can't be accessed from the base class anymore.
+- Renamed class `DocTypeInfo` to `DocumentTypeDetails`.
+- Renamed property `Offset` to `Index` in the `DocumentSpan` class.
+- Renamed property `DocType` to `DocumentType` in the `AnalyzedDocument` class.
+- Renamed property `DocTypes` to `DocumentTypes` in the `DocumentModelDetails` class.
+- Renamed properties `DocumentModelCount` and `DocumentModelLimit` to `CustomDocumentModelCount` and `CustomDocumentModelLimit` in the `ResourceDetails` class.
+- Removed property `BuildModelOptions.Prefix`. The prefix must now be set with the `prefix` parameter in the method `BuildModel`.
+- Removed class `DocumentPageKind` and related properties.
+- Made `BoundingRegion` a `struct` instead of a `class`.
 
 ### Bugs Fixed
 

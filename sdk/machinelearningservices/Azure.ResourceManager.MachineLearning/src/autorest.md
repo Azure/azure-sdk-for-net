@@ -75,6 +75,9 @@ directive:
     where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.currentNodeCount
     transform: $["x-nullable"] = true;
   - from: swagger-document
+    where: $.definitions.VirtualMachineSchema.properties.properties.properties.administratorAccount
+    transform: $["x-nullable"] = true;
+  - from: swagger-document
     where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.targetNodeCount
     transform: $["x-nullable"] = true;
   - from: swagger-document

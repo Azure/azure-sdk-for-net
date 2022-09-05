@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new SourceShareSynchronizationSetting(kind);
+            return new UnknownSourceShareSynchronizationSetting(kind);
         }
     }
 }

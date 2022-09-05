@@ -19,5 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\CallMediaLiveTests\" />
+    <Folder Include="SessionRecords\CallConnectionLiveTests\" />
   </ItemGroup>
 </Project>
