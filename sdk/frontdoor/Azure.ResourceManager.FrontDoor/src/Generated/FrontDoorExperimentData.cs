@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="status"> The description of Experiment status from the server side. </param>
         /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
-        internal FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, EndpointProperties experimentEndpointA, EndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, FrontDoorExperimentEndpointProperties experimentEndpointA, FrontDoorExperimentEndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             ExperimentEndpointA = experimentEndpointA;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> The description of the details or intents of the Experiment. </summary>
         public string Description { get; set; }
         /// <summary> The endpoint A of an experiment. </summary>
-        public EndpointProperties ExperimentEndpointA { get; set; }
+        public FrontDoorExperimentEndpointProperties ExperimentEndpointA { get; set; }
         /// <summary> The endpoint B of an experiment. </summary>
-        public EndpointProperties ExperimentEndpointB { get; set; }
+        public FrontDoorExperimentEndpointProperties ExperimentEndpointB { get; set; }
         /// <summary> The state of the Experiment. </summary>
         public FrontDoorExperimentState? EnabledState { get; set; }
         /// <summary> Resource status. </summary>

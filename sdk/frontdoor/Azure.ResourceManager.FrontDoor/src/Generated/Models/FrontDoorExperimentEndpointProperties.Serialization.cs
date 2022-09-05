@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class EndpointProperties : IUtf8JsonSerializable
+    public partial class FrontDoorExperimentEndpointProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
         }
 
-        internal static EndpointProperties DeserializeEndpointProperties(JsonElement element)
+        internal static FrontDoorExperimentEndpointProperties DeserializeFrontDoorExperimentEndpointProperties(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> endpoint = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new EndpointProperties(name.Value, endpoint.Value);
+            return new FrontDoorExperimentEndpointProperties(name.Value, endpoint.Value);
         }
     }
 }

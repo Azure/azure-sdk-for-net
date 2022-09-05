@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="description"> The description of the Latency Scorecard. </param>
         /// <param name="scorecardEndpointA"> The A endpoint in the scorecard. </param>
         /// <param name="scorecardEndpointB"> The B endpoint in the scorecard. </param>
-        /// <param name="startDateTimeUtc"> The start time of the Latency Scorecard in UTC. </param>
-        /// <param name="endDateTimeUtc"> The end time of the Latency Scorecard in UTC. </param>
+        /// <param name="startOn"> The start time of the Latency Scorecard in UTC. </param>
+        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, string scorecardEndpointA, string scorecardEndpointB, DateTimeOffset? startDateTimeUtc, DateTimeOffset? endDateTimeUtc, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
+        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, string scorecardEndpointA, string scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
         {
             LatencyScorecardId = latencyScorecardId;
             LatencyScorecardName = latencyScorecardName;
             Description = description;
             ScorecardEndpointA = scorecardEndpointA;
             ScorecardEndpointB = scorecardEndpointB;
-            StartDateTimeUtc = startDateTimeUtc;
-            EndDateTimeUtc = endDateTimeUtc;
+            StartOn = startOn;
+            EndOn = endOn;
             Country = country;
             LatencyMetrics = latencyMetrics;
         }
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The B endpoint in the scorecard. </summary>
         public string ScorecardEndpointB { get; }
         /// <summary> The start time of the Latency Scorecard in UTC. </summary>
-        public DateTimeOffset? StartDateTimeUtc { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
-        public DateTimeOffset? EndDateTimeUtc { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
         public string Country { get; }
         /// <summary> The latency metrics of the Latency Scorecard. </summary>

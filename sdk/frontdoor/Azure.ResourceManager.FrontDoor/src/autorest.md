@@ -17,14 +17,17 @@ modelerfour:
 
 override-operation-name:
   Endpoints_PurgeContent: PurgeContent
+  FrontDoorNameAvailabilityWithSubscription_Check: CheckFrontDoorNameAvailability
 
 rename-mapping:
   Experiment: FrontDoorExperiment
   State: FrontDoorExperimentState
-  Endpoint: EndpointProperties
+  Endpoint: FrontDoorExperimentEndpointProperties
   Experiment.properties.endpointA: ExperimentEndpointA
   Experiment.properties.endpointB: ExperimentEndpointB
   Timeseries: TimeseriesInfo
+  Timeseries.properties.startDateTimeUTC: StartOn
+  Timeseries.properties.endDateTimeUTC: EndOn
   WebApplicationFirewallPolicy.properties.customRules: CustomRuleList
   HealthProbeSettingsModel: FrontDoorHealthProbeSettingsData
   LoadBalancingSettingsModel: FrontDoorLoadBalancingSettingsData
@@ -70,12 +73,16 @@ rename-mapping:
   LatencyScorecard.properties.name: LatencyScorecardName
   LatencyScorecard.properties.endpointA: ScorecardEndpointA
   LatencyScorecard.properties.endpointB: ScorecardEndpointB
+  LatencyScorecard.properties.startDateTimeUTC: StartOn
+  LatencyScorecard.properties.endDateTimeUTC: EndOn
   PolicyMode: FrontDoorWebApplicationFirewallPolicyMode
   RulesEngineMatchCondition.negateCondition: IsNegateCondition
   Transform: RulesEngineMatchTransform
   Transform.UrlDecode: UriDecode
   Transform.UrlEncode: UriEncode
   ResourceType: FrontDoorResourceType
+  MinimumTLSVersion: FrontDoorRequiredMinimumTlsVersion
+  LatencyMetric.endDateTimeUTC: EndOn
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -117,6 +124,9 @@ directive:
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard'].get.parameters[5].format = 'date-time';
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard'].get.parameters[5]['x-ms-client-name'] = 'endOn';
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries'].get.parameters[5]['x-ms-client-name'] = 'startOn';
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries'].get.parameters[6]['x-ms-client-name'] = 'endOn';
   - from: networkexperiment.json
     where: $.definitions
     transform: >

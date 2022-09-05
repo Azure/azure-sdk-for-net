@@ -9,15 +9,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </summary>
-    public readonly partial struct MinimumTlsVersion : IEquatable<MinimumTlsVersion>
+    public readonly partial struct FrontDoorRequiredMinimumTlsVersion : IEquatable<FrontDoorRequiredMinimumTlsVersion>
     {
 #pragma warning disable CA1707
         /// <summary> 1.0. </summary>
         [CodeGenMember("One0")]
-        public static MinimumTlsVersion Tls1_0 { get; } = new MinimumTlsVersion(Tls1_0Value);
+        public static FrontDoorRequiredMinimumTlsVersion Tls1_0 { get; } = new FrontDoorRequiredMinimumTlsVersion(Tls1_0Value);
         /// <summary> 1.2. </summary>
         [CodeGenMember("One2")]
-        public static MinimumTlsVersion Tls1_2 { get; } = new MinimumTlsVersion(Tls1_2Value);
+        public static FrontDoorRequiredMinimumTlsVersion Tls1_2 { get; } = new FrontDoorRequiredMinimumTlsVersion(Tls1_2Value);
 #pragma warning restore CA1707
     }
 }

@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("endpoint");
                 writer.WriteStringValue(Endpoint);
             }
-            if (Optional.IsDefined(StartDateTimeUtc))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTimeUTC");
-                writer.WriteStringValue(StartDateTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndDateTimeUtc))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC");
-                writer.WriteStringValue(EndDateTimeUtc.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(AggregationInterval))
             {

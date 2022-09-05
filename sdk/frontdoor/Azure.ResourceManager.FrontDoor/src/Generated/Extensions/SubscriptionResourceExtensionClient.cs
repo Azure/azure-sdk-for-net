@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityWithSubscriptionAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFrontDoorNameAvailabilityWithSubscription");
+            using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try
             {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailabilityWithSubscription(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFrontDoorNameAvailabilityWithSubscription");
+            using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckFrontDoorNameAvailability");
             scope.Start();
             try
             {

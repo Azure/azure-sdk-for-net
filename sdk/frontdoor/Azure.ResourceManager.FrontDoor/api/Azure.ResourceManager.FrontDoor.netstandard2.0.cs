@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.FrontDoor
         public FrontDoorExperimentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.EndpointProperties ExperimentEndpointA { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.EndpointProperties ExperimentEndpointB { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties ExperimentEndpointA { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties ExperimentEndpointB { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
         public System.Uri ScriptFileUri { get { throw null; } }
         public string Status { get { throw null; } }
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard> GetLatencyScorecardsReport(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endDateTimeUtc = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>> GetLatencyScorecardsReportAsync(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endDateTimeUtc = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.TimeseriesInfo> GetTimeseriesReport(System.DateTimeOffset startDateTimeUtc, System.DateTimeOffset endDateTimeUtc, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.TimeseriesType timeseriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.TimeseriesInfo>> GetTimeseriesReportAsync(System.DateTimeOffset startDateTimeUtc, System.DateTimeOffset endDateTimeUtc, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.TimeseriesType timeseriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard> GetLatencyScorecardsReport(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>> GetLatencyScorecardsReportAsync(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.TimeseriesInfo> GetTimeseriesReport(System.DateTimeOffset startOn, System.DateTimeOffset endOn, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.TimeseriesType timeseriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.TimeseriesInfo>> GetTimeseriesReportAsync(System.DateTimeOffset startOn, System.DateTimeOffset endOn, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.TimeseriesType timeseriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public static partial class FrontDoorExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailabilityWithSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityWithSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetFrontDoor(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> GetFrontDoorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource GetFrontDoorExperimentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -387,10 +387,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class CustomHttpsConfiguration
     {
-        public CustomHttpsConfiguration(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource certificateSource, Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType protocolType, Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion minimumTlsVersion) { }
+        public CustomHttpsConfiguration(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource certificateSource, Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType protocolType, Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion minimumTlsVersion) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource CertificateSource { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType? CertificateType { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion MinimumTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion MinimumTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType ProtocolType { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
@@ -431,12 +431,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled left, Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class EndpointProperties
-    {
-        public EndpointProperties() { }
-        public string Endpoint { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EndpointType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.EndpointType>
@@ -565,6 +559,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         public FrontDoorEndpointPurgeContent(System.Collections.Generic.IEnumerable<string> contentPaths) { }
         public System.Collections.Generic.IList<string> ContentPaths { get { throw null; } }
+    }
+    public partial class FrontDoorExperimentEndpointProperties
+    {
+        public FrontDoorExperimentEndpointProperties() { }
+        public string Endpoint { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
     public partial class FrontDoorExperimentPatch
     {
@@ -758,6 +758,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorRequiredMinimumTlsVersion : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorRequiredMinimumTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion Tls1_2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class FrontDoorResourceData
@@ -975,7 +993,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public float? BValue { get { throw null; } }
         public float? Delta { get { throw null; } }
         public float? DeltaPercent { get { throw null; } }
-        public System.DateTimeOffset? EndDateTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class LatencyScorecard : Azure.ResourceManager.Models.TrackedResourceData
@@ -983,13 +1001,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public LatencyScorecard(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Country { get { throw null; } }
         public string Description { get { throw null; } }
-        public System.DateTimeOffset? EndDateTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.LatencyMetric> LatencyMetrics { get { throw null; } }
         public string LatencyScorecardId { get { throw null; } }
         public string LatencyScorecardName { get { throw null; } }
         public string ScorecardEndpointA { get { throw null; } }
         public string ScorecardEndpointB { get { throw null; } }
-        public System.DateTimeOffset? StartDateTimeUtc { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LatencyScorecardAggregationInterval : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval>
@@ -1160,24 +1178,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior left, Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior left, Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MinimumTlsVersion : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MinimumTlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion Tls1_0 { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion Tls1_2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion left, Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion left, Azure.ResourceManager.FrontDoor.Models.MinimumTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1486,9 +1486,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public TimeseriesInfo(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.FrontDoor.Models.AggregationInterval? AggregationInterval { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
-        public System.DateTimeOffset? EndDateTimeUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public string Endpoint { get { throw null; } set { } }
-        public System.DateTimeOffset? StartDateTimeUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.TimeseriesDataPoint> TimeseriesData { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.TimeseriesType? TimeseriesType { get { throw null; } set { } }
     }

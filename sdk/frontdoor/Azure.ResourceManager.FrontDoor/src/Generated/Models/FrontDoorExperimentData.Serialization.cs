@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.FrontDoor
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<EndpointProperties> endpointA = default;
-            Optional<EndpointProperties> endpointB = default;
+            Optional<FrontDoorExperimentEndpointProperties> endpointA = default;
+            Optional<FrontDoorExperimentEndpointProperties> endpointB = default;
             Optional<FrontDoorExperimentState> enabledState = default;
             Optional<NetworkExperimentResourceState> resourceState = default;
             Optional<string> status = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            endpointA = EndpointProperties.DeserializeEndpointProperties(property0.Value);
+                            endpointA = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("endpointB"))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            endpointB = EndpointProperties.DeserializeEndpointProperties(property0.Value);
+                            endpointB = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"))

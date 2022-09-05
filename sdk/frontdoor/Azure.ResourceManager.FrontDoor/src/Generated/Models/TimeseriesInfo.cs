@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="endpoint"> The endpoint associated with the Timeseries data point. </param>
-        /// <param name="startDateTimeUtc"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endDateTimeUtc"> The end DateTime of the Timeseries in UTC. </param>
+        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
+        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
         /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
         /// <param name="timeseriesType"> The type of Timeseries. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="timeseriesData"> The set of data points for the timeseries. </param>
-        internal TimeseriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string endpoint, DateTimeOffset? startDateTimeUtc, DateTimeOffset? endDateTimeUtc, AggregationInterval? aggregationInterval, TimeseriesType? timeseriesType, string country, IList<TimeseriesDataPoint> timeseriesData) : base(id, name, resourceType, systemData, tags, location)
+        internal TimeseriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, AggregationInterval? aggregationInterval, TimeseriesType? timeseriesType, string country, IList<TimeseriesDataPoint> timeseriesData) : base(id, name, resourceType, systemData, tags, location)
         {
             Endpoint = endpoint;
-            StartDateTimeUtc = startDateTimeUtc;
-            EndDateTimeUtc = endDateTimeUtc;
+            StartOn = startOn;
+            EndOn = endOn;
             AggregationInterval = aggregationInterval;
             TimeseriesType = timeseriesType;
             Country = country;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The endpoint associated with the Timeseries data point. </summary>
         public string Endpoint { get; set; }
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
-        public DateTimeOffset? StartDateTimeUtc { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
-        public DateTimeOffset? EndDateTimeUtc { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> The aggregation interval of the Timeseries. </summary>
         public AggregationInterval? AggregationInterval { get; set; }
         /// <summary> The type of Timeseries. </summary>

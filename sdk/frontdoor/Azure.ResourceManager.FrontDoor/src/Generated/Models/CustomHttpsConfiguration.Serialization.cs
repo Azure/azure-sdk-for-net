@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
-            MinimumTlsVersion minimumTlsVersion = default;
+            FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
             Optional<FrontDoorEndpointConnectionCertificateType> certificateType = default;
             Optional<WritableSubResource> vault = default;
             Optional<string> secretName = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (property.NameEquals("minimumTlsVersion"))
                 {
-                    minimumTlsVersion = new MinimumTlsVersion(property.Value.GetString());
+                    minimumTlsVersion = new FrontDoorRequiredMinimumTlsVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("frontDoorCertificateSourceParameters"))
