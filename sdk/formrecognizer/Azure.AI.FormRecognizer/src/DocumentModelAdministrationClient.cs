@@ -146,6 +146,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="prefix">A case-sensitive prefix string to filter documents in the source path for building a model. For example, you may use the prefix to restrict subfolders.</param>
         /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -153,7 +154,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual BuildModelOperation BuildModel(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation BuildModel(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, string prefix = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
 
@@ -165,9 +166,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(options.Prefix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    source.Prefix = options.Prefix;
+                    source.Prefix = prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
@@ -234,6 +235,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="prefix">A case-sensitive prefix string to filter documents in the source path for building a model. For example, you may use the prefix to restrict subfolders.</param>
         /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -241,7 +243,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual async Task<BuildModelOperation> BuildModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> BuildModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, string prefix = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             options ??= new BuildModelOptions();
@@ -252,9 +254,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(options.Prefix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    source.Prefix = options.Prefix;
+                    source.Prefix = prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
@@ -532,9 +534,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelOperationDetails"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="OperationDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual Response<DocumentModelOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -558,9 +560,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelOperationDetails"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="OperationDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual async Task<Response<DocumentModelOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -583,10 +585,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Lists all document model operations associated with the Form Recognizer resource. Note that operation information only persists for 24 hours.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DocumentModelOperationSummary"/> items.</returns>
-        public virtual Pageable<DocumentModelOperationSummary> GetOperations(CancellationToken cancellationToken = default)
+        /// <returns>A collection of <see cref="OperationSummary"/> items.</returns>
+        public virtual Pageable<OperationSummary> GetOperations(CancellationToken cancellationToken = default)
         {
-            Page<DocumentModelOperationSummary> FirstPageFunc(int? pageSizeHint)
+            Page<OperationSummary> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();
@@ -603,7 +605,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
 
-            Page<DocumentModelOperationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OperationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();
@@ -627,10 +629,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Lists all document model operations associated with the Form Recognizer resource. Note that operation information only persists for 24 hours.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DocumentModelOperationSummary"/> items.</returns>
-        public virtual AsyncPageable<DocumentModelOperationSummary> GetOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns>A collection of <see cref="OperationSummary"/> items.</returns>
+        public virtual AsyncPageable<OperationSummary> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DocumentModelOperationSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OperationSummary>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();
@@ -647,7 +649,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
 
-            async Task<Page<DocumentModelOperationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OperationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();

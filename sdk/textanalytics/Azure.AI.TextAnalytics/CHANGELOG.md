@@ -4,11 +4,29 @@
 
 ### Features Added
 
+- Added `DisplayName` property to the following classes to set the optional display name of the operations below:
+  - `AnalyzeHealthcareEntitiesOptions`
+  - `MultiLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOptions`
+  - `SingleLabelClassifyOptions`
+- Added `DisplayName` property to the following operations to read the optional display name set on options classes above:
+  - `AnalyzeHealthcareEntitiesOperation` from `AnalyzeHealthcareEntitiesOptions`
+  - `ClassifyDocumentOperation` from `MultiLabelClassifyOptions` and `SingleLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOperation` from `RecognizeCustomEntitiesOptions`
+- Added the following members to `HealthcareEntityCategory` following proper naming guidelines:
+  - `Age`
+  - `GeneOrProtein`
+  - `SymptomOrSign`
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- The values of `HealthcareEntityCategory` have been redefined to match what the service actually returns. ([#20024](https://github.com/Azure/azure-rest-api-specs/issues/20024))
+
 ### Other Changes
+
+- Validate that a number of operations and model properties are only used for API versions in which they were defined, or newer API versions.
 
 ## 5.2.0-beta.4 (2022-08-12)
 

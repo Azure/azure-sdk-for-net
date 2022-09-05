@@ -6,6 +6,9 @@
 
 ### Breaking Changes
 
+- Change the property name `IsValidateOnly` to `ValidateOnly` for all input only models.
+- Fix the name `NicIpConfigurationResourceSettings.IsValidateOnly` to `NicIpConfigurationResourceSettings.IsPrimary`.
+
 ### Bugs Fixed
 
 ### Other Changes

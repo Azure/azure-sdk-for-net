@@ -1,0 +1,827 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/geometry/json?api-version=1.0\u0026query=coffee\u0026language=en",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "364",
+        "Content-Type": "application/json",
+        "traceparent": "00-7e150c8cb7ed32c191688cfcdc8acb1c-161c0e4dff747003-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "cbb4eb16818c175718ac7d7a044769e0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "geometry": {
+          "geometries": [
+            {
+              "coordinates": [
+                [
+                  [
+                    -122.43576049804686,
+                    37.7524152343544
+                  ],
+                  [
+                    -122.433013916,
+                    37.70660472542312
+                  ],
+                  [
+                    -122.36434936523438,
+                    37.712059855877314
+                  ],
+                  [
+                    -122.43576049804686,
+                    37.7524152343544
+                  ]
+                ]
+              ],
+              "type": "Polygon"
+            },
+            {
+              "coordinates": [
+                [
+                  [
+                    121.56,
+                    25.04
+                  ],
+                  [
+                    121.565,
+                    25.04
+                  ],
+                  [
+                    121.565,
+                    25.045
+                  ],
+                  [
+                    121.56,
+                    25.045
+                  ],
+                  [
+                    121.56,
+                    25.04
+                  ]
+                ]
+              ],
+              "type": "Polygon"
+            }
+          ],
+          "type": "GeometryCollection"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "10381",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 03:06:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": [
+          "Accept-Encoding",
+          "X-HTTP-Method-Override"
+        ],
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: C68943669E954074AE9F3AEC86EE6E89 Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:09Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "coffee",
+          "queryType": "NON_NEAR",
+          "queryTime": 7,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 156,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "POI",
+            "id": "840069001883543",
+            "score": 2.145586729,
+            "info": "search:ta:840069001883543-US",
+            "poi": {
+              "name": "Cafe\u0027 Montechristo",
+              "phone": "\u002B1 415-334-2326",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2101",
+              "streetName": "Geneva Avenue",
+              "municipalitySubdivision": "Visitacion Valley",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-3118",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2101 Geneva Avenue, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.70877,
+              "lon": -122.42068
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.70967,
+                "lon": -122.42182
+              },
+              "btmRightPoint": {
+                "lat": 37.70787,
+                "lon": -122.41954
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.70851,
+                  "lon": -122.42075
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069020982288",
+            "score": 2.1455702782,
+            "info": "search:ta:840069020982288-US",
+            "poi": {
+              "name": "La Cafeto Coffee Shop",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "111",
+              "streetName": "Richland Avenue",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5839",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "111 Richland Avenue, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.73615,
+              "lon": -122.4241
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.73705,
+                "lon": -122.42524
+              },
+              "btmRightPoint": {
+                "lat": 37.73525,
+                "lon": -122.42296
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.73603,
+                  "lon": -122.42412
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840061002109078",
+            "score": 2.1455478668,
+            "info": "search:ta:840061002109078-US",
+            "poi": {
+              "name": "Noeteca",
+              "phone": "\u002B1 415-824-5524",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "www.noeteca.com",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "1551",
+              "streetName": "Dolores Street",
+              "municipalitySubdivision": "Noe Valley",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-4928",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "1551 Dolores Street, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.74454,
+              "lon": -122.42407
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74544,
+                "lon": -122.42521
+              },
+              "btmRightPoint": {
+                "lat": 37.74364,
+                "lon": -122.42293
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.74452,
+                  "lon": -122.42438
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158007000154115",
+            "score": 2.1455419064,
+            "info": "search:ta:158007000154115-TW",
+            "poi": {
+              "name": "patisserie alex fa shi tian dian",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "18",
+              "streetName": "Zhongxiao East Road Section 4 Lane 553",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "18, Zhongxiao East Road Section 4 Lane 553, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04294,
+              "lon": 121.56289
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04384,
+                "lon": 121.5619
+              },
+              "btmRightPoint": {
+                "lat": 25.04204,
+                "lon": 121.56388
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04294,
+                  "lon": 121.56276
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009001773748",
+            "score": 2.1455285549,
+            "info": "search:ta:158009001773748-TW",
+            "poi": {
+              "name": "a day ri chang sheng huo",
+              "phone": "\u002B886 2 2766 7776",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "11",
+              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 46",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "11, Zhongxiao East Road Section 4 Lane 553 Alley 46, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04428,
+              "lon": 121.56349
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04518,
+                "lon": 121.5625
+              },
+              "btmRightPoint": {
+                "lat": 25.04338,
+                "lon": 121.56448
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04419,
+                  "lon": 121.56349
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158007000142835",
+            "score": 2.1455147266,
+            "info": "search:ta:158007000142835-TW",
+            "poi": {
+              "name": "Woosa",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "28",
+              "streetName": "Zhongxiao East Road Section 4 Lane 553",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "28, Zhongxiao East Road Section 4 Lane 553, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04363,
+              "lon": 121.56287
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04453,
+                "lon": 121.56188
+              },
+              "btmRightPoint": {
+                "lat": 25.04273,
+                "lon": 121.56386
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04363,
+                  "lon": 121.56277
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069019423076",
+            "score": 2.1455068588,
+            "info": "search:ta:840069019423076-US",
+            "poi": {
+              "name": "Cafe St. Jorge",
+              "phone": "\u002B1 415-814-2028",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "www.cafestjorge.com",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "3438",
+              "streetName": "Mission Street",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5437",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "3438 Mission Street, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.74164,
+              "lon": -122.42272
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74254,
+                "lon": -122.42386
+              },
+              "btmRightPoint": {
+                "lat": 37.74074,
+                "lon": -122.42158
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.74157,
+                  "lon": -122.42248
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158007000164726",
+            "score": 2.1455066204,
+            "info": "search:ta:158007000164726-TW",
+            "poi": {
+              "name": "Comebuytea",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Zhongxiao East Road Section 4 Lane 553",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04431,
+              "lon": 121.56139
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04558,
+                "lon": 121.55999
+              },
+              "btmRightPoint": {
+                "lat": 25.04304,
+                "lon": 121.56279
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04447,
+                  "lon": 121.56278
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069019610692",
+            "score": 2.145503521,
+            "info": "search:ta:840069019610692-US",
+            "poi": {
+              "name": "Martha \u0026 Bros. Coffee",
+              "phone": "\u002B1 415-642-7585",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "url": "www.marthabros.com",
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "745",
+              "streetName": "Cortland Avenue",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5628",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "745 Cortland Avenue, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.73901,
+              "lon": -122.41478
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.73991,
+                "lon": -122.41592
+              },
+              "btmRightPoint": {
+                "lat": 37.73811,
+                "lon": -122.41364
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.73891,
+                  "lon": -122.41478
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840067000012368",
+            "score": 2.1454954147,
+            "info": "search:ta:840067000012368-US",
+            "poi": {
+              "name": "Cafe Xo",
+              "phone": "\u002B1 415-826-3535",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "url": "www.cafexo.com",
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "1799",
+              "streetName": "Church Street",
+              "municipalitySubdivision": "Noe Valley",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94131",
+              "extendedPostalCode": "94131-2451",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "1799 Church Street, San Francisco, CA 94131",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.74226,
+              "lon": -122.42666
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74316,
+                "lon": -122.4278
+              },
+              "btmRightPoint": {
+                "lat": 37.74136,
+                "lon": -122.42552
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.74218,
+                  "lon": -122.42654
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "681245882"
+  }
+}

@@ -20,48 +20,48 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
-    /// A Class representing a FrontDoorNetworkExperimentProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorNetworkExperimentProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorNetworkExperimentProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFrontDoorNetworkExperimentProfile method.
+    /// A Class representing a Profile along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProfileResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetProfile method.
     /// </summary>
-    public partial class FrontDoorNetworkExperimentProfileResource : ArmResource
+    public partial class ProfileResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="FrontDoorNetworkExperimentProfileResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProfileResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics;
-        private readonly NetworkExperimentProfilesRestOperations _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient;
+        private readonly ClientDiagnostics _profileNetworkExperimentProfilesClientDiagnostics;
+        private readonly NetworkExperimentProfilesRestOperations _profileNetworkExperimentProfilesRestClient;
         private readonly ClientDiagnostics _preconfiguredEndpointsClientDiagnostics;
         private readonly PreconfiguredEndpointsRestOperations _preconfiguredEndpointsRestClient;
-        private readonly FrontDoorNetworkExperimentProfileData _data;
+        private readonly ProfileData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorNetworkExperimentProfileResource"/> class for mocking. </summary>
-        protected FrontDoorNetworkExperimentProfileResource()
+        /// <summary> Initializes a new instance of the <see cref="ProfileResource"/> class for mocking. </summary>
+        protected ProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorNetworkExperimentProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FrontDoorNetworkExperimentProfileResource(ArmClient client, FrontDoorNetworkExperimentProfileData data) : this(client, data.Id)
+        internal ProfileResource(ArmClient client, ProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorNetworkExperimentProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FrontDoorNetworkExperimentProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorNetworkExperimentProfileNetworkExperimentProfilesApiVersion);
-            _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient = new NetworkExperimentProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileNetworkExperimentProfilesApiVersion);
+            _profileNetworkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string profileNetworkExperimentProfilesApiVersion);
+            _profileNetworkExperimentProfilesRestClient = new NetworkExperimentProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, profileNetworkExperimentProfilesApiVersion);
             _preconfiguredEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _preconfiguredEndpointsRestClient = new PreconfiguredEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles";
+        public static readonly Core.ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual FrontDoorNetworkExperimentProfileData Data
+        public virtual ProfileData Data
         {
             get
             {
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.FrontDoor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FrontDoorExperimentResources in the FrontDoorNetworkExperimentProfile. </summary>
-        /// <returns> An object representing collection of FrontDoorExperimentResources and their operations over a FrontDoorExperimentResource. </returns>
-        public virtual FrontDoorExperimentCollection GetFrontDoorExperiments()
+        /// <summary> Gets a collection of ExperimentResources in the Profile. </summary>
+        /// <returns> An object representing collection of ExperimentResources and their operations over a ExperimentResource. </returns>
+        public virtual ExperimentCollection GetExperiments()
         {
-            return GetCachedClient(Client => new FrontDoorExperimentCollection(Client, Id));
+            return GetCachedClient(Client => new ExperimentCollection(Client, Id));
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FrontDoorExperimentResource>> GetFrontDoorExperimentAsync(string experimentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExperimentResource>> GetExperimentAsync(string experimentName, CancellationToken cancellationToken = default)
         {
-            return await GetFrontDoorExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
+            return await GetExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FrontDoorExperimentResource> GetFrontDoorExperiment(string experimentName, CancellationToken cancellationToken = default)
+        public virtual Response<ExperimentResource> GetExperiment(string experimentName, CancellationToken cancellationToken = default)
         {
-            return GetFrontDoorExperiments().Get(experimentName, cancellationToken);
+            return GetExperiments().Get(experimentName, cancellationToken);
         }
 
         /// <summary>
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// Operation Id: NetworkExperimentProfiles_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FrontDoorNetworkExperimentProfileResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.Get");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _profileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// Operation Id: NetworkExperimentProfiles_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FrontDoorNetworkExperimentProfileResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.Get");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _profileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.Delete");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _profileNetworkExperimentProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation(_profileNetworkExperimentProfilesClientDiagnostics, Pipeline, _profileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.Delete");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FrontDoorArmOperation(_frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _profileNetworkExperimentProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new FrontDoorArmOperation(_profileNetworkExperimentProfilesClientDiagnostics, Pipeline, _profileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -239,16 +239,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="patch"> The Profile Update Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<FrontDoorNetworkExperimentProfileResource>> UpdateAsync(WaitUntil waitUntil, FrontDoorNetworkExperimentProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProfileResource>> UpdateAsync(WaitUntil waitUntil, ProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.Update");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _profileNetworkExperimentProfilesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation<ProfileResource>(new ProfileOperationSource(Client), _profileNetworkExperimentProfilesClientDiagnostics, Pipeline, _profileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -269,16 +269,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="patch"> The Profile Update Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<FrontDoorNetworkExperimentProfileResource> Update(WaitUntil waitUntil, FrontDoorNetworkExperimentProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProfileResource> Update(WaitUntil waitUntil, ProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.Update");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _profileNetworkExperimentProfilesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new FrontDoorArmOperation<ProfileResource>(new ProfileOperationSource(Client), _profileNetworkExperimentProfilesClientDiagnostics, Pipeline, _profileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             async Task<Page<PreconfiguredEndpoint>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints");
+                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("ProfileResource.GetPreconfiguredEndpoints");
                 scope.Start();
                 try
                 {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             async Task<Page<PreconfiguredEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints");
+                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("ProfileResource.GetPreconfiguredEndpoints");
                 scope.Start();
                 try
                 {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Page<PreconfiguredEndpoint> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints");
+                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("ProfileResource.GetPreconfiguredEndpoints");
                 scope.Start();
                 try
                 {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             Page<PreconfiguredEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints");
+                using var scope = _preconfiguredEndpointsClientDiagnostics.CreateScope("ProfileResource.GetPreconfiguredEndpoints");
                 scope.Start();
                 try
                 {
@@ -383,20 +383,35 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<FrontDoorNetworkExperimentProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.AddTag");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.AddTag");
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _profileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ProfilePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -414,20 +429,35 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<FrontDoorNetworkExperimentProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.AddTag");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.AddTag");
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _profileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ProfilePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -444,20 +474,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<FrontDoorNetworkExperimentProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.SetTags");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.SetTags");
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _profileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ProfilePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -474,20 +515,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<FrontDoorNetworkExperimentProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.SetTags");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.SetTags");
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _profileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ProfilePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -504,19 +556,34 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<FrontDoorNetworkExperimentProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.RemoveTag");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.RemoveTag");
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _profileNetworkExperimentProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ProfilePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -533,19 +600,34 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<FrontDoorNetworkExperimentProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileResource.RemoveTag");
+            using var scope = _profileNetworkExperimentProfilesClientDiagnostics.CreateScope("ProfileResource.RemoveTag");
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _profileNetworkExperimentProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ProfilePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

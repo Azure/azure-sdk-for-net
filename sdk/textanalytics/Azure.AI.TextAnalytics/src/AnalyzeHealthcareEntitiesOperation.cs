@@ -29,6 +29,7 @@ namespace Azure.AI.TextAnalytics
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
         private DateTimeOffset _createdOn;
+        private string _displayName;
         private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
 
         /// <summary>
@@ -36,6 +37,11 @@ namespace Azure.AI.TextAnalytics
         /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
+
+        /// <summary>
+        /// Display Name of the operation.
+        /// </summary>
+        public virtual string DisplayName => _displayName;
 
         /// <summary>
         /// Time when the operation was created on.
@@ -258,6 +264,7 @@ namespace Azure.AI.TextAnalytics
                 ? await _serviceClient.HealthStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
                 : _serviceClient.HealthStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
 
+            _displayName = response.Value.DisplayName;
             _createdOn = response.Value.CreatedOn;
             _expiresOn = response.Value.ExpiresOn;
             _lastModified = response.Value.LastModifiedOn;

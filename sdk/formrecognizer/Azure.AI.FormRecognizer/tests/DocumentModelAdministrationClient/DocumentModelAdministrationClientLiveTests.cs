@@ -118,7 +118,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder/" });
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, "subfolder/");
 
             Assert.IsTrue(operation.HasValue);
             Assert.IsNotNull(operation.Value.ModelId);
@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" }));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, "subfolder"));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -150,7 +150,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options: options);
 
             DocumentModelDetails model = operation.Value;
 
@@ -180,8 +180,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
-            Assert.IsNotNull(resourceDetails.DocumentModelCount);
-            Assert.IsNotNull(resourceDetails.DocumentModelLimit);
+            Assert.IsNotNull(resourceDetails.CustomDocumentModelCount);
+            Assert.IsNotNull(resourceDetails.CustomDocumentModelLimit);
         }
 
         [RecordedTest]
@@ -216,7 +216,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options: options);
             DocumentModelDetails resultModel = await client.GetModelAsync(modelId);
 
             ValidateDocumentModelDetails(resultModel, description, TestingTags);
@@ -259,7 +259,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateOperationSummary(modelOperationFromList.FirstOrDefault());
 
-            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
+            OperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
             ValidateOperationDetails(operationDetails);
         }
@@ -277,16 +277,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options: options);
 
-            DocumentModelOperationSummary operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
+            OperationSummary operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(op => op.OperationId == operation.Id);
 
             Assert.NotNull(operationSummary);
 
             CollectionAssert.AreEquivalent(TestingTags, operationSummary.Tags);
 
-            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operation.Id);
+            OperationDetails operationDetails = await client.GetOperationAsync(operation.Id);
 
             CollectionAssert.AreEquivalent(TestingTags, operationDetails.Tags);
 
@@ -468,7 +468,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion Composed model
 
-        private void ValidateOperationSummary(DocumentModelOperationSummary operationSummary)
+        private void ValidateOperationSummary(OperationSummary operationSummary)
         {
             Assert.NotNull(operationSummary.OperationId);
             Assert.AreNotEqual(default(DateTimeOffset), operationSummary.CreatedOn);
@@ -482,7 +482,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
-        private void ValidateOperationDetails(DocumentModelOperationDetails operationDetails)
+        private void ValidateOperationDetails(OperationDetails operationDetails)
         {
             Assert.NotNull(operationDetails.OperationId);
             Assert.AreNotEqual(default(DateTimeOffset), operationDetails.CreatedOn);

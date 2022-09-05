@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Fix the format of `IPConfiguration.type` to `ResourceType`.
+
 ### Bugs Fixed
 
 ### Other Changes

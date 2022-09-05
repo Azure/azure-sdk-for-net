@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
     public class IotCentralAppOperationsTests : IotCentralManagementTestBase
     {
         public IotCentralAppOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -54,10 +54,12 @@ namespace Azure.ResourceManager.IotCentral.Tests
             await iotCentralApp.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task IotCentralApplicationAddTagsTest()
+        [TestCase(null)]
+        [TestCase(true)]
+        //[TestCase(false)] TODO: Playback fails due to inner LRO call isn't instrumented
+        public async Task IotCentralApplicationAddTagsTest(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var appName = Recording.GenerateAssetName("test-app-");
 
             // Get IoT Central apps collection for resource group.
@@ -83,10 +85,12 @@ namespace Azure.ResourceManager.IotCentral.Tests
             Assert.AreEqual("value", tagReadVal);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task IotCentralApplicationRemoveTagsTest()
+        [TestCase(null)]
+        [TestCase(true)]
+        //[TestCase(false)] TODO: Playback fails due to inner LRO call isn't instrumented
+        public async Task IotCentralApplicationRemoveTagsTest(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var appName = Recording.GenerateAssetName("test-app-");
 
             // Get IoT Central apps collection for resource group.
