@@ -11,28 +11,26 @@ namespace Azure.Maps.Geolocation
     /// <summary> Client options for GeolocationClient. </summary>
     public partial class MapsGeolocationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "1.0". </summary>
-            V1_0 = 1,
+            V1 = 1
         }
 
         internal string Version { get; }
 
         internal Uri Endpoint { get; }
 
-
         /// <summary> Initializes new instance of GeolocationClientOptions. </summary>
         /// <param name="version"> Geolocation service version. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        public MapsGeolocationClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
+        public MapsGeolocationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V1_0 => "1.0",
+                ServiceVersion.V1 => "1.0",
                 _ => throw new NotSupportedException()
             };
         }

@@ -35,7 +35,7 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 
 ```C# Snippet:InstantiateGeolocationClientViaSubscriptionKey
 // Create a MapsGeolocationClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+TokenCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsGeolocationClient client = new MapsGeolocationClient(credential);
 ```
 
@@ -49,8 +49,8 @@ We also need **Azure Maps Client ID** which can get from Azure Maps page > Authe
 
 ```C# Snippet:InstantiateGeolocationClientViaAAD
 // Create a MapsGeolocationClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = new DefaultAzureCredential();
+string clientId = "<Your Map ClientId>";
 MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
 ```
 
@@ -85,8 +85,8 @@ Before calling geolocation APIs, instantiate a `MapsGeolocationClient` first. Be
 
 ```C# Snippet:InstantiateGeolocationClientViaAAD
 // Create a MapsGeolocationClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = new DefaultAzureCredential();
+string clientId = "<Your Map ClientId>";
 MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
 ```
 
@@ -96,11 +96,11 @@ This service will return the ISO country code for the provided IP address. Devel
 
 ```C# Snippet:GetLocation
 //Get location by given IP address
-var ipAddress = "2001:4898:80e8:b::189";
-var result = client.GetLocation(ipAddress);
+string ipAddress = "2001:4898:80e8:b::189";
+string result = client.GetLocation(ipAddress);
 
 //Get location result country code
-Console.WriteLine($"Country code results by given IP Address: {0}", result.Value.IsoCode);
+Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");
 ```
 
 For more detailed examples, please [geolocation range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Geolocation/samples/GetLocationSamples.md) page.
@@ -117,9 +117,9 @@ For example, if you pass wrong IP address, an error is returned, indicating "Bad
 try
 {
     // An invalid IP address
-    var inValidIpAddress = "xxx";
+    string inValidIpAddress = "xxx";
 
-    var result = client.GetLocation(inValidIpAddress);
+    string result = client.GetLocation(inValidIpAddress);
     // Do something with result ...
 }
 catch (RequestFailedException e)

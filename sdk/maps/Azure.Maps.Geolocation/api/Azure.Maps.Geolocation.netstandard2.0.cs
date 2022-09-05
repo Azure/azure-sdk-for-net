@@ -18,10 +18,10 @@ namespace Azure.Maps.Geolocation
     }
     public partial class MapsGeolocationClientOptions : Azure.Core.ClientOptions
     {
-        public MapsGeolocationClientOptions(Azure.Maps.Geolocation.MapsGeolocationClientOptions.ServiceVersion version = Azure.Maps.Geolocation.MapsGeolocationClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public MapsGeolocationClientOptions(Azure.Maps.Geolocation.MapsGeolocationClientOptions.ServiceVersion version = Azure.Maps.Geolocation.MapsGeolocationClientOptions.ServiceVersion.V1) { }
         public enum ServiceVersion
         {
-            V1_0 = 1,
+            V1 = 1,
         }
     }
 }
