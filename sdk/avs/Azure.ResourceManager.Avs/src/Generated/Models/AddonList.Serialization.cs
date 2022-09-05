@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AddonList DeserializeAddonList(JsonElement element)
         {
-            Optional<IReadOnlyList<AddonData>> value = default;
+            Optional<IReadOnlyList<AvsPrivateCloudAddonData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AddonData> array = new List<AddonData>();
+                    List<AvsPrivateCloudAddonData> array = new List<AvsPrivateCloudAddonData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AddonData.DeserializeAddonData(item));
+                        array.Add(AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(item));
                     }
                     value = array;
                     continue;

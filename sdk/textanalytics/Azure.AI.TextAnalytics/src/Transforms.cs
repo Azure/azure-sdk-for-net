@@ -783,7 +783,8 @@ namespace Azure.AI.TextAnalytics
                 CreatedOn = jobState.CreatedDateTime,
                 LastModifiedOn = jobState.LastUpdatedDateTime,
                 ExpiresOn = jobState.ExpirationDateTime,
-                Status = jobState.Status
+                Status = jobState.Status,
+                DisplayName = jobState.DisplayName,
             };
 
             if (result.Status == TextAnalyticsOperationStatus.Succeeded)

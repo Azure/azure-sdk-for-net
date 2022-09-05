@@ -288,14 +288,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
-                {
-                    var (receiver, maxMessages, maxWaitTime) = value;
-                    return await receiver.ReceiveMessagesAsyncInternal(
-                        maxMessages,
-                        maxWaitTime,
-                        timeout,
-                        token).ConfigureAwait(false);
-                },
+            {
+                var (receiver, maxMessages, maxWaitTime) = value;
+                return await receiver.ReceiveMessagesAsyncInternal(
+                    maxMessages,
+                    maxWaitTime,
+                    timeout,
+                    token).ConfigureAwait(false);
+            },
                 (this, maxMessages, maxWaitTime),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
@@ -374,7 +374,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                    registration.Dispose();
+                registration.Dispose();
             }
         }
 
@@ -778,7 +778,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[]{ lockToken };
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[] { lockToken };
             amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
             if (deadLetterReason != null)

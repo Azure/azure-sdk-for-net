@@ -10,12 +10,12 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Represents a thread-safe abstraction around a single session receiver that threads spawned
+    /// Represents a thread-safe abstraction around a single session receiver that tasks spawned
     /// by the <see cref="ServiceBusSessionProcessor"/> use to receive and process messages.
     /// If <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/> > 1, there may be
-    /// multiple threads using the same <see cref="SessionReceiverManager"/>. The manager will delegate
+    /// multiple tasks using the same <see cref="SessionReceiverManager"/>. The manager will delegate
     /// to the user provided callbacks and handle automatic locking of sessions.
-    /// The receiver instance will only be closed when no other threads are using it, or when the user
+    /// The receiver instance will only be closed when no other tasks are using it, or when the user
     /// has called <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>.
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable.
@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus
     internal class SessionReceiverManager : ReceiverManager
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-        private int _threadCount;
+        private int _activeTaskCount;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
         private readonly ServiceBusSessionReceiverOptions _sessionReceiverOptions;
         private readonly string _sessionId;
@@ -66,10 +66,10 @@ namespace Azure.Messaging.ServiceBus
                 await WaitSemaphore(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
 
-                // If a receive call timed out for this session, avoid adding more threads
+                // If a receive call timed out for this session, avoid adding more tasks
                 // if we don't intend to leave the receiver open on receive timeouts. This
                 // will help ensure other sessions get a chance to be processed.
-                if (_threadCount >= _sessionProcessor.MaxConcurrentCallsPerSession ||
+                if (_activeTaskCount >= _sessionProcessor.MaxConcurrentCallsPerSession ||
                     (_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                     // If cancellation was requested but the receiver has not been closed yet,
                     // do not initiate new processing.
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
                 }
-                _threadCount++;
+                _activeTaskCount++;
                 return true;
             }
             finally
@@ -167,9 +167,9 @@ namespace Azure.Messaging.ServiceBus
                 {
                     return;
                 }
-                _threadCount--;
+                _activeTaskCount--;
 
-                if (_threadCount == 0)
+                if (_activeTaskCount == 0)
                 {
                     // Even if there are no current receive tasks, we should leave the
                     // receiver open if _keepOpenOnReceiveTimeout is true - which happens
@@ -225,12 +225,7 @@ namespace Azure.Messaging.ServiceBus
                 // cancel the automatic session lock renewal
                 try
                 {
-                    if (_sessionLockRenewalCancellationSource != null)
-                    {
-                        _sessionLockRenewalCancellationSource.Cancel();
-                        _sessionLockRenewalCancellationSource.Dispose();
-                        await _sessionLockRenewalTask.ConfigureAwait(false);
-                    }
+                    await CancelSessionAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex) when (ex is TaskCanceledException)
                 {
@@ -272,7 +267,7 @@ namespace Azure.Messaging.ServiceBus
                     when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
                 {
                     // these exceptions are expected when no messages are available
-                    // so simply return and allow this to be tried again on next thread
+                    // so simply return and allow this to be tried again on next task
                     return;
                 }
                 finally
@@ -321,7 +316,8 @@ namespace Azure.Messaging.ServiceBus
                     // single message at one time, so cancelling the token there would serve no purpose.
                     if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
-                        CancelSession();
+                        // this will be awaited when closing the receiver
+                        _ = CancelSessionAsync();
                     }
                 }
                 await RaiseExceptionReceived(
@@ -410,12 +406,17 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal void CancelSession()
+        internal async Task CancelSessionAsync()
         {
             if (_sessionCancellationSource is { IsCancellationRequested: false })
             {
                 _sessionCancellationSource.Cancel();
                 _sessionCancellationSource.Dispose();
+            }
+
+            if (_sessionLockRenewalTask != null)
+            {
+                await _sessionLockRenewalTask.ConfigureAwait(false);
             }
         }
     }

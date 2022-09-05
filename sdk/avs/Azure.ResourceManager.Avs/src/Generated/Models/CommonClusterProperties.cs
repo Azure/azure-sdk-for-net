@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
         /// <param name="clusterId"> The identity. </param>
         /// <param name="hosts"> The hosts. </param>
-        internal CommonClusterProperties(int? clusterSize, ClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts)
+        internal CommonClusterProperties(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts)
         {
             ClusterSize = clusterSize;
             ProvisioningState = provisioningState;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The cluster size. </summary>
         public int? ClusterSize { get; set; }
         /// <summary> The state of the cluster provisioning. </summary>
-        public ClusterProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
         /// <summary> The identity. </summary>
         public int? ClusterId { get; }
         /// <summary> The hosts. </summary>

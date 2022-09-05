@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleSetType"> Type of the managed rule set. </param>
         /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
         /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
-        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string ruleSetId, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string ruleSetId, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             RuleSetId = ruleSetId;

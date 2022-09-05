@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AddonData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvsPrivateCloudAddonData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        AddonData value = default;
+                        AvsPrivateCloudAddonData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddonData.DeserializeAddonData(document.RootElement);
+                        value = AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AddonData)null, message.Response);
+                    return Response.FromValue((AvsPrivateCloudAddonData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AddonData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
+        public Response<AvsPrivateCloudAddonData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        AddonData value = default;
+                        AvsPrivateCloudAddonData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddonData.DeserializeAddonData(document.RootElement);
+                        value = AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AddonData)null, message.Response);
+                    return Response.FromValue((AvsPrivateCloudAddonData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AddonData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AvsPrivateCloudAddonData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AddonData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AvsPrivateCloudAddonData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AddonData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName, AvsPrivateCloudAddonData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
