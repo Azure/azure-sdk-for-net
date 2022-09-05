@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2022-09-05)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+This is the first stable release of the PostgreSql Management client library.
 
 ### Other Changes
+
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.2 (2022-08-29)
 
