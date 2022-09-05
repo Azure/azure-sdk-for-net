@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.DevCenter.Tests;
 using Azure.ResourceManager.Resources;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.TestFramework
         [TearDown]
         protected void CleanupResourceGroups()
         {
-            if (Mode != RecordedTestMode.Playback && !DevCenterManagementTestEnvironment.GlobalDisableResourceGroupCleanup)
+            if (Mode != RecordedTestMode.Playback)
             {
                 Parallel.ForEach(ResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
