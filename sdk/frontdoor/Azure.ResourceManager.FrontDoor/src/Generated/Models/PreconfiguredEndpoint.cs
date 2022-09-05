@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="endpoint"> The endpoint that is preconfigured. </param>
         /// <param name="endpointType"> The type of endpoint. </param>
         /// <param name="backend"> The preconfigured endpoint backend. </param>
-        internal PreconfiguredEndpoint(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string endpoint, EndpointType? endpointType, string backend) : base(id, name, resourceType, systemData, tags, location)
+        internal PreconfiguredEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string endpoint, EndpointType? endpointType, string backend) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Endpoint = endpoint;
