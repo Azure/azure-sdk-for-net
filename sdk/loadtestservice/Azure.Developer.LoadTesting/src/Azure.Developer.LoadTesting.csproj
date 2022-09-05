@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
-    <RestoreAdditionalProjectSources>https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json</RestoreAdditionalProjectSources>
+    <RestoreAdditionalProjectSources>https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/index.json</RestoreAdditionalProjectSources>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ObjectModel" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
