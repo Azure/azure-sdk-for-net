@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RulesEngineMatchVariable = rulesEngineMatchVariable;
             RulesEngineOperator = rulesEngineOperator;
             RulesEngineMatchValue = rulesEngineMatchValue.ToList();
-            Transforms = new ChangeTrackingList<Transform>();
+            Transforms = new ChangeTrackingList<RulesEngineMatchTransform>();
         }
 
         /// <summary> Initializes a new instance of RulesEngineMatchCondition. </summary>
         /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
         /// <param name="selector"> Name of selector in RequestHeader or RequestBody to be matched. </param>
         /// <param name="rulesEngineOperator"> Describes operator to apply to the match condition. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="isNegateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="rulesEngineMatchValue"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable, string selector, RulesEngineOperator rulesEngineOperator, bool? negateCondition, IList<string> rulesEngineMatchValue, IList<Transform> transforms)
+        internal RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable, string selector, RulesEngineOperator rulesEngineOperator, bool? isNegateCondition, IList<string> rulesEngineMatchValue, IList<RulesEngineMatchTransform> transforms)
         {
             RulesEngineMatchVariable = rulesEngineMatchVariable;
             Selector = selector;
             RulesEngineOperator = rulesEngineOperator;
-            NegateCondition = negateCondition;
+            IsNegateCondition = isNegateCondition;
             RulesEngineMatchValue = rulesEngineMatchValue;
             Transforms = transforms;
         }
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Describes operator to apply to the match condition. </summary>
         public RulesEngineOperator RulesEngineOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
-        public bool? NegateCondition { get; set; }
+        public bool? IsNegateCondition { get; set; }
         /// <summary> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </summary>
         public IList<string> RulesEngineMatchValue { get; }
         /// <summary> List of transforms. </summary>
-        public IList<Transform> Transforms { get; }
+        public IList<RulesEngineMatchTransform> Transforms { get; }
     }
 }

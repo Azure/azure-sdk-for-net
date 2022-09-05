@@ -62,7 +62,7 @@ namespace Azure.AI.TextAnalytics
         public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
-        /// Display Name of the operation
+        /// Display Name of the operation.
         /// </summary>
         public virtual string DisplayName => _displayName;
 

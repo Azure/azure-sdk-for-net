@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             Optional<string> odataContext = default;
             Optional<int> odataCount = default;
-            Optional<IReadOnlyList<Summary>> value = default;
+            Optional<IReadOnlyList<PolicySummary>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.context"))
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Summary> array = new List<Summary>();
+                    List<PolicySummary> array = new List<PolicySummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Summary.DeserializeSummary(item));
+                        array.Add(PolicySummary.DeserializePolicySummary(item));
                     }
                     value = array;
                     continue;

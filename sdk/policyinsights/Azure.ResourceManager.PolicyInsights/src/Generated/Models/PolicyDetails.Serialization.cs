@@ -14,22 +14,32 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyDetails DeserializePolicyDetails(JsonElement element)
         {
-            Optional<string> policyDefinitionId = default;
-            Optional<string> policyAssignmentId = default;
+            Optional<ResourceIdentifier> policyDefinitionId = default;
+            Optional<ResourceIdentifier> policyAssignmentId = default;
             Optional<string> policyAssignmentDisplayName = default;
             Optional<string> policyAssignmentScope = default;
-            Optional<string> policySetDefinitionId = default;
+            Optional<ResourceIdentifier> policySetDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"))
                 {
-                    policyDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyAssignmentId"))
                 {
-                    policyAssignmentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyAssignmentDisplayName"))
@@ -44,7 +54,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("policySetDefinitionId"))
                 {
-                    policySetDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionReferenceId"))

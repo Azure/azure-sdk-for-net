@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1d3f9b4bef1ec1efb450ec82d8e65b96-695826054909cc39-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-40927cf8240b6e4e74935c782ea97da8-5e71fe8f2bc9d696-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "f385d230b61663b4764da2b71214f27d",
+        "x-ms-client-request-id": "39791ceebba3c8fae1d263921fa66849",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,22 +17,22 @@
       "ResponseHeaders": {
         "Content-Length": "6467",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Aug 2022 05:39:49 GMT",
+        "Date": "Mon, 05 Sep 2022 03:06:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 5B3182D738E9487CBD3465EF74A092D7 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:50Z"
+        "X-MSEdge-Ref": "Ref A: 02BDC4B659294ADF8E681B06BB9C23A2 Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:16Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 7,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 677141,
+          "totalResults": 677131,
           "fuzzyLevel": 1,
           "geoBias": {
             "lat": 25.04,
@@ -42,11 +42,11 @@
         "results": [
           {
             "type": "Street",
-            "id": "TW/STR/p0/199222",
+            "id": "TW/STR/p0/313525",
             "score": 2.5942528248,
             "dist": 169.182626493177,
             "matchConfidence": {
-              "score": 0.7699791674062479
+              "score": 0.7699787483715852
             },
             "address": {
               "streetName": "Yixian Road",
@@ -78,11 +78,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/13647",
+            "id": "TW/STR/p0/5809",
             "score": 2.5942020416,
             "dist": 228.95988254790896,
             "matchConfidence": {
-              "score": 0.7702488218200888
+              "score": 0.7702483981342964
             },
             "address": {
               "streetName": "Songgao Road",
@@ -114,11 +114,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/222496",
+            "id": "TW/STR/p0/97200",
             "score": 2.5940184593,
             "dist": 372.49534015816783,
             "matchConfidence": {
-              "score": 0.7715570814224598
+              "score": 0.7715566355505475
             },
             "address": {
               "streetName": "Shifu Road",
@@ -149,11 +149,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/324492",
+            "id": "TW/STR/p0/2017",
             "score": 2.5939936638,
             "dist": 387.73710235882567,
             "matchConfidence": {
-              "score": 0.7715570814224598
+              "score": 0.7715566355505475
             },
             "address": {
               "streetName": "Shifu Road",
@@ -184,11 +184,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/90110",
+            "id": "TW/STR/p0/292950",
             "score": 2.5938193798,
             "dist": 482.1201354232015,
             "matchConfidence": {
-              "score": 0.7699791674062479
+              "score": 0.7699787483715852
             },
             "address": {
               "streetName": "Songshou Road",
@@ -220,11 +220,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/90112",
+            "id": "TW/STR/p0/292952",
             "score": 2.5936274529,
             "dist": 568.0173581187723,
             "matchConfidence": {
-              "score": 0.772602967647876
+              "score": 0.7726025044915391
             },
             "address": {
               "streetName": "Songzhi Road",
@@ -256,11 +256,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/263779",
+            "id": "TW/STR/p0/206935",
             "score": 2.5935268402,
             "dist": 608.2445994931428,
             "matchConfidence": {
-              "score": 0.7699791674062479
+              "score": 0.7699787483715852
             },
             "address": {
               "streetName": "Yanchang Road",
@@ -291,11 +291,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/386432",
+            "id": "TW/STR/p0/341002",
             "score": 2.5935094357,
             "dist": 614.9213632369967,
             "matchConfidence": {
-              "score": 0.772602967647876
+              "score": 0.7726025044915391
             },
             "address": {
               "streetName": "Songzhi Road",
@@ -327,11 +327,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/224937",
+            "id": "TW/STR/p0/216410",
             "score": 2.5934972763,
             "dist": 619.696874137873,
             "matchConfidence": {
-              "score": 0.7682473158850608
+              "score": 0.7682469273595449
             },
             "address": {
               "streetName": "Xingya Road",
@@ -362,11 +362,11 @@
           },
           {
             "type": "Street",
-            "id": "TW/STR/p0/371097",
+            "id": "TW/STR/p0/326219",
             "score": 2.5934743881,
             "dist": 628.2521976039321,
             "matchConfidence": {
-              "score": 0.7699791674062479
+              "score": 0.7699787483715852
             },
             "address": {
               "streetName": "Yanchang Road",
@@ -405,24 +405,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a3e88a4349c912e9b4485ade527414c6-825b22430a5c1c4b-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-b2ccf1a1b27fe6fcfeecfdf44f1b7b11-d85176ff478d6efc-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "ea0df5498fb177e3a8af5061f62640e0",
+        "x-ms-client-request-id": "e593b9e9cd47930242e7f8594576ad16",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "7233",
+        "Content-Length": "7240",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Aug 2022 05:39:49 GMT",
+        "Date": "Mon, 05 Sep 2022 03:06:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 6838EB1EE4194123B2C3C4454A713CAA Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:50Z"
+        "X-MSEdge-Ref": "Ref A: 7D5ABEAB00604447AF29B93EEA9DBD8A Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:17Z"
       },
       "ResponseBody": {
         "summary": {
@@ -431,7 +431,7 @@
           "queryTime": 8,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 677141,
+          "totalResults": 677131,
           "fuzzyLevel": 1,
           "geoBias": {
             "lat": 47.6773,
@@ -441,11 +441,11 @@
         "results": [
           {
             "type": "Street",
-            "id": "US/STR/p3/2713975",
+            "id": "US/STR/p1/539218",
             "score": 2.5916588306,
             "dist": 1118.3589711278755,
             "matchConfidence": {
-              "score": 0.8791372958836081
+              "score": 0.8794701236418796
             },
             "address": {
               "streetName": "East Road",
@@ -477,11 +477,11 @@
           },
           {
             "type": "Street",
-            "id": "US/STR/p2/12897",
+            "id": "US/STR/p1/518930",
             "score": 2.5913741589,
             "dist": 1176.948488180816,
             "matchConfidence": {
-              "score": 0.8763367648320537
+              "score": 0.874314832345978
             },
             "address": {
               "streetName": "West Road",
@@ -513,11 +513,11 @@
           },
           {
             "type": "Street",
-            "id": "US/STR/p1/932016",
+            "id": "US/STR/p0/1979001",
             "score": 2.4038908482,
             "dist": 10559.034560275872,
             "matchConfidence": {
-              "score": 0.8631241647370723
+              "score": 0.8610565279250594
             },
             "address": {
               "streetName": "Northeast Ring Street",
@@ -550,7 +550,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/45840",
+            "id": "US/GEO/p0/20038",
             "score": 2.3845028877,
             "dist": 88714.96755376291,
             "entityType": "Municipality",
@@ -599,12 +599,12 @@
           },
           {
             "type": "Geography",
-            "id": "IE/GEO/p0/31332",
+            "id": "IE/GEO/p0/44540",
             "score": 2.3817019463,
             "dist": 7307589.1736022495,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.876270279941491
+              "score": 0.8762705475950595
             },
             "address": {
               "municipality": "Ring",
@@ -646,7 +646,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/102473",
+            "id": "US/GEO/p0/67952",
             "score": 2.3628718853,
             "dist": 407622.80313440715,
             "entityType": "Municipality",
@@ -695,7 +695,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/112174",
+            "id": "US/GEO/p0/107686",
             "score": 2.3583564758,
             "dist": 888890.685940672,
             "entityType": "Municipality",
@@ -744,55 +744,103 @@
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/484",
+            "id": "AU/GEO/p0/455",
             "score": 2.3583519459,
-            "dist": 13371688.919068897,
+            "dist": 12096073.57027872,
             "entityType": "Municipality",
             "matchConfidence": {
               "score": 0.8582002416170917
             },
             "address": {
-              "municipality": "Claude Road",
-              "countrySecondarySubdivision": "Northern Tasmania",
-              "countrySubdivision": "Tasmania",
+              "municipality": "Dargal Road",
+              "countrySecondarySubdivision": "Maranoa",
+              "countrySubdivision": "Queensland",
               "countryCode": "AU",
               "country": "Australia",
               "countryCodeISO3": "AUS",
-              "freeformAddress": "Claude Road, Tasmania"
+              "freeformAddress": "Dargal Road, Queensland"
             },
             "position": {
-              "lat": -41.43528,
-              "lon": 146.25756
+              "lat": -26.5491,
+              "lon": 148.71703
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -41.41949,
-                "lon": 146.20923
+                "lat": -26.52663,
+                "lon": 148.68771
               },
               "btmRightPoint": {
-                "lat": -41.46836,
-                "lon": 146.3105
+                "lat": -26.58274,
+                "lon": 148.75317
               }
             },
             "boundingBox": {
               "topLeftPoint": {
-                "lat": -41.41949,
-                "lon": 146.20923
+                "lat": -26.52663,
+                "lon": 148.68771
               },
               "btmRightPoint": {
-                "lat": -41.46836,
-                "lon": 146.3105
+                "lat": -26.58274,
+                "lon": 148.75317
               }
             },
             "dataSources": {
               "geometry": {
-                "id": "00005831-3200-1200-0000-00007d31d4b9"
+                "id": "00005831-3200-1200-0000-00007d320f4a"
               }
             }
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/8982",
+            "id": "AU/GEO/p0/1279",
+            "score": 2.3583519459,
+            "dist": 14753479.815599957,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.8582002416170917
+            },
+            "address": {
+              "municipality": "Burma Road",
+              "countrySecondarySubdivision": "North Coast",
+              "countrySubdivision": "Western Australia",
+              "countryCode": "AU",
+              "country": "Australia",
+              "countryCodeISO3": "AUS",
+              "freeformAddress": "Burma Road, Western Australia"
+            },
+            "position": {
+              "lat": -28.96667,
+              "lon": 115.02397
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -28.90148,
+                "lon": 114.93362
+              },
+              "btmRightPoint": {
+                "lat": -29.01916,
+                "lon": 115.14079
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -28.90148,
+                "lon": 114.93362
+              },
+              "btmRightPoint": {
+                "lat": -29.01916,
+                "lon": 115.14079
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d322598"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "AU/GEO/p0/1818",
             "score": 2.3583519459,
             "dist": 12251462.564256718,
             "entityType": "Municipality",
@@ -837,54 +885,6 @@
                 "id": "00005831-3200-1200-0000-00007d321a95"
               }
             }
-          },
-          {
-            "type": "Geography",
-            "id": "AU/GEO/p0/9485",
-            "score": 2.3583519459,
-            "dist": 13172261.451287039,
-            "entityType": "Municipality",
-            "matchConfidence": {
-              "score": 0.8582002416170917
-            },
-            "address": {
-              "municipality": "Tetoora Road",
-              "countrySecondarySubdivision": "West Gippsland",
-              "countrySubdivision": "Victoria",
-              "countryCode": "AU",
-              "country": "Australia",
-              "countryCodeISO3": "AUS",
-              "freeformAddress": "Tetoora Road, Victoria"
-            },
-            "position": {
-              "lat": -38.27184,
-              "lon": 145.89244
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -38.25535,
-                "lon": 145.8604
-              },
-              "btmRightPoint": {
-                "lat": -38.30461,
-                "lon": 145.90578
-              }
-            },
-            "boundingBox": {
-              "topLeftPoint": {
-                "lat": -38.25535,
-                "lon": 145.8604
-              },
-              "btmRightPoint": {
-                "lat": -38.30461,
-                "lon": 145.90578
-              }
-            },
-            "dataSources": {
-              "geometry": {
-                "id": "00005831-3200-1200-0000-00007d320cb5"
-              }
-            }
           }
         ]
       }
@@ -894,6 +894,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1956978370"
+    "RandomSeed": "1011171183"
   }
 }

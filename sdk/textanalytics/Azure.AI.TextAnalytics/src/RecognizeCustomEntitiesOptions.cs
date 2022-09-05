@@ -34,9 +34,11 @@ namespace Azure.AI.TextAnalytics
         /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
         /// </para>
         /// </summary>
-        /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and up.
-        /// </remarks>
         public bool? DisableServiceLogs { get; set; }
+
+        /// <summary>
+        /// Optional display name for the operation.
+        /// </summary>
+        public string DisplayName { get; set; }
     }
 }
