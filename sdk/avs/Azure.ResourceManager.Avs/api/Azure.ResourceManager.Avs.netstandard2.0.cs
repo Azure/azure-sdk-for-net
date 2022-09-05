@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Avs
     {
         public WorkloadNetworkDnsZoneData() { }
         public string DisplayName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> DnsServerIPs { get { throw null; } }
+        public System.Collections.Generic.IList<System.Net.IPAddress> DnsServerIPs { get { throw null; } }
         public long? DnsServices { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Domain { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.WorkloadNetworkDnsZoneProvisioningState? ProvisioningState { get { throw null; } }
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.Avs
     {
         public WorkloadNetworkVirtualMachineData() { }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.VmTypeEnum? VmType { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType? VmType { get { throw null; } }
     }
     public partial class WorkloadNetworkVirtualMachineResource : Azure.ResourceManager.ArmResource
     {
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Avs
         public System.Collections.Generic.IList<string> Members { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupProvisioningState? ProvisioningState { get { throw null; } }
         public long? Revision { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.VmGroupStatusEnum? Status { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus? Status { get { throw null; } }
     }
     public partial class WorkloadNetworkVmGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -1731,24 +1731,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovementState left, Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovementState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmGroupStatusEnum : System.IEquatable<Azure.ResourceManager.Avs.Models.VmGroupStatusEnum>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VmGroupStatusEnum(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.VmGroupStatusEnum Failure { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.VmGroupStatusEnum Success { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.VmGroupStatusEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.VmGroupStatusEnum left, Azure.ResourceManager.Avs.Models.VmGroupStatusEnum right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.VmGroupStatusEnum (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.VmGroupStatusEnum left, Azure.ResourceManager.Avs.Models.VmGroupStatusEnum right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class VmHostPlacementPolicyProperties : Azure.ResourceManager.Avs.Models.PlacementPolicyProperties
     {
         public VmHostPlacementPolicyProperties(System.Collections.Generic.IEnumerable<string> vmMembers, System.Collections.Generic.IEnumerable<string> hostMembers, Azure.ResourceManager.Avs.Models.AffinityType affinityType) { }
@@ -1761,25 +1743,6 @@ namespace Azure.ResourceManager.Avs.Models
         public VmPlacementPolicyProperties(System.Collections.Generic.IEnumerable<string> vmMembers, Azure.ResourceManager.Avs.Models.AffinityType affinityType) { }
         public Azure.ResourceManager.Avs.Models.AffinityType AffinityType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VmMembers { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmTypeEnum : System.IEquatable<Azure.ResourceManager.Avs.Models.VmTypeEnum>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VmTypeEnum(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.VmTypeEnum Edge { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.VmTypeEnum Regular { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.VmTypeEnum Service { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.VmTypeEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.VmTypeEnum left, Azure.ResourceManager.Avs.Models.VmTypeEnum right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.VmTypeEnum (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.VmTypeEnum left, Azure.ResourceManager.Avs.Models.VmTypeEnum right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public abstract partial class WorkloadNetworkDhcpEntity
     {
@@ -1974,6 +1937,43 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupProvisioningState left, Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupProvisioningState left, Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkloadNetworkVmGroupStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkloadNetworkVmGroupStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus Failure { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus Success { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus left, Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus left, Azure.ResourceManager.Avs.Models.WorkloadNetworkVmGroupStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkloadNetworkVmType : System.IEquatable<Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkloadNetworkVmType(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType Edge { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType Regular { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType Service { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType left, Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType left, Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

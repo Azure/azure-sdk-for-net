@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in DnsServerIPs)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<IList<string>> domain = default;
-            Optional<IList<string>> dnsServerIPs = default;
+            Optional<IList<IPAddress>> dnsServerIPs = default;
             Optional<IPAddress> sourceIP = default;
             Optional<long> dnsServices = default;
             Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             dnsServerIPs = array;
                             continue;

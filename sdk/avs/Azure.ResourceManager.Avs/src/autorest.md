@@ -76,15 +76,14 @@ rename-mapping:
   WorkloadNetworkDnsService.properties.dnsServiceIp: -|ip-address
   DnsServiceLogLevelEnum: DnsServiceLogLevel
   DnsServiceStatusEnum: DnsServiceStatus
-  WorkloadNetworkDnsZone.properties.dnsServerIps: -|ip-address
   WorkloadNetworkDnsZone.properties.sourceIp: -|ip-address
   WorkloadNetworkPortMirroring: WorkloadNetworkPortMirroringProfile
   PortMirroringDirectionEnum: PortMirroringProfileDirection
   WorkloadNetworkPortMirroringProvisioningState: WorkloadNetworkPortMirroringProfileProvisioningState
   PortMirroringStatusEnum: PortMirroringProfileStatus
   SegmentStatusEnum: WorkloadNetworkSegmentStatus
-  VmTypeEnum: WorkloadNetworkVmType
-  VmGroupStatusEnum: WorkloadNetworkVmGroupStatus
+  VMTypeEnum: WorkloadNetworkVmType
+  VMGroupStatusEnum: WorkloadNetworkVmGroupStatus
   Quota: SubscriptionQuotaDetails
   QuotaEnabled: SubscriptionQuotaEnabled
   Trial: SubscriptionTrialAvailability
@@ -107,5 +106,6 @@ directive:
     where: $.definitions
     transform: >
       $.PrivateCloudProperties.properties.externalCloudLinks.items['x-ms-format'] = 'arm-id';
+      $.WorkloadNetworkDnsZoneProperties.properties.dnsServerIps.items['x-ms-format'] = 'ip-address';
 
 ```
