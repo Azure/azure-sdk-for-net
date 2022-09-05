@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             Assert.AreEqual(account1.Tags, account2.Tags);
             Assert.AreEqual(account1.Location, account2.Location);
             Assert.AreEqual(account1.AccountEndpoint, account2.AccountEndpoint);
-            Assert.AreEqual(account1.Identity, account2.Identity);
             Assert.AreEqual(account1.Name, account2.Name);
         }
         #endregion
