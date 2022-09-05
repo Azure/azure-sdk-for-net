@@ -526,6 +526,58 @@ directive:
           ]
         }
     reason: Modify the original swagger since the id in the real response is slightly different from the ApiResource.
+  - from: apimproducts.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementProductGroupListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "ProductGroupData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/GroupContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values.",
+                  "readOnly": true
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any."
+              }
+          },
+          "description": "Paged Group list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups/{groupId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "ProductGroupData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/GroupContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups/{groupId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "ProductGroupData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/GroupContract"
+              }
+          ]
+        }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy' 
