@@ -20,60 +20,60 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
-    /// A Class representing a WebApplicationFirewallPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebApplicationFirewallPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebApplicationFirewallPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWebApplicationFirewallPolicy method.
+    /// A Class representing a FrontDoorWebApplicationFirewallPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorWebApplicationFirewallPolicyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorWebApplicationFirewallPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFrontDoorWebApplicationFirewallPolicy method.
     /// </summary>
-    public partial class WebApplicationFirewallPolicyResource : ArmResource
+    public partial class FrontDoorWebApplicationFirewallPolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WebApplicationFirewallPolicyResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _webApplicationFirewallPolicyPoliciesClientDiagnostics;
-        private readonly PoliciesRestOperations _webApplicationFirewallPolicyPoliciesRestClient;
-        private readonly WebApplicationFirewallPolicyData _data;
+        private readonly ClientDiagnostics _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics;
+        private readonly PoliciesRestOperations _frontDoorWebApplicationFirewallPolicyPoliciesRestClient;
+        private readonly FrontDoorWebApplicationFirewallPolicyData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicyResource"/> class for mocking. </summary>
-        protected WebApplicationFirewallPolicyResource()
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> class for mocking. </summary>
+        protected FrontDoorWebApplicationFirewallPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebApplicationFirewallPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "FrontDoorWebApplicationFirewallPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebApplicationFirewallPolicyResource(ArmClient client, WebApplicationFirewallPolicyData data) : this(client, data.Id)
+        internal FrontDoorWebApplicationFirewallPolicyResource(ArmClient client, FrontDoorWebApplicationFirewallPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebApplicationFirewallPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FrontDoorWebApplicationFirewallPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webApplicationFirewallPolicyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string webApplicationFirewallPolicyPoliciesApiVersion);
-            _webApplicationFirewallPolicyPoliciesRestClient = new PoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webApplicationFirewallPolicyPoliciesApiVersion);
+            _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorWebApplicationFirewallPolicyPoliciesApiVersion);
+            _frontDoorWebApplicationFirewallPolicyPoliciesRestClient = new PoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorWebApplicationFirewallPolicyPoliciesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WebApplicationFirewallPolicyData Data
+        public virtual FrontDoorWebApplicationFirewallPolicyData Data
         {
             get
             {
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebApplicationFirewallPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.Get");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _webApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebApplicationFirewallPolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorWebApplicationFirewallPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.Get");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _webApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.Delete");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = await _webApplicationFirewallPolicyPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_webApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _webApplicationFirewallPolicyPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation(_frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.Delete");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = _webApplicationFirewallPolicyPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FrontDoorArmOperation(_webApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _webApplicationFirewallPolicyPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new FrontDoorArmOperation(_frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="patch"> FrontdoorWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<WebApplicationFirewallPolicyResource>> UpdateAsync(WaitUntil waitUntil, WebApplicationFirewallPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FrontDoorWebApplicationFirewallPolicyResource>> UpdateAsync(WaitUntil waitUntil, FrontDoorWebApplicationFirewallPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.Update");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _webApplicationFirewallPolicyPoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPolicyOperationSource(Client), _webApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _webApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -228,16 +228,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="patch"> FrontdoorWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<WebApplicationFirewallPolicyResource> Update(WaitUntil waitUntil, WebApplicationFirewallPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FrontDoorWebApplicationFirewallPolicyResource> Update(WaitUntil waitUntil, FrontDoorWebApplicationFirewallPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.Update");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _webApplicationFirewallPolicyPoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new FrontDoorArmOperation<WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPolicyOperationSource(Client), _webApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _webApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -258,12 +258,12 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<WebApplicationFirewallPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.AddTag");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -272,13 +272,13 @@ namespace Azure.ResourceManager.FrontDoor
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _webApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new WebApplicationFirewallPolicyPatch();
+                    var patch = new FrontDoorWebApplicationFirewallPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -304,12 +304,12 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<WebApplicationFirewallPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorWebApplicationFirewallPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.AddTag");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -318,13 +318,13 @@ namespace Azure.ResourceManager.FrontDoor
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _webApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new WebApplicationFirewallPolicyPatch();
+                    var patch = new FrontDoorWebApplicationFirewallPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<WebApplicationFirewallPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.SetTags");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -363,13 +363,13 @@ namespace Azure.ResourceManager.FrontDoor
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _webApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new WebApplicationFirewallPolicyPatch();
+                    var patch = new FrontDoorWebApplicationFirewallPolicyPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -390,11 +390,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<WebApplicationFirewallPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorWebApplicationFirewallPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.SetTags");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -404,13 +404,13 @@ namespace Azure.ResourceManager.FrontDoor
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _webApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new WebApplicationFirewallPolicyPatch();
+                    var patch = new FrontDoorWebApplicationFirewallPolicyPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -431,11 +431,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<WebApplicationFirewallPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.RemoveTag");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -444,13 +444,13 @@ namespace Azure.ResourceManager.FrontDoor
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _webApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new WebApplicationFirewallPolicyPatch();
+                    var patch = new FrontDoorWebApplicationFirewallPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -475,11 +475,11 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<WebApplicationFirewallPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorWebApplicationFirewallPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _webApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("WebApplicationFirewallPolicyResource.RemoveTag");
+            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -488,13 +488,13 @@ namespace Azure.ResourceManager.FrontDoor
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _webApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new WebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new WebApplicationFirewallPolicyPatch();
+                    var patch = new FrontDoorWebApplicationFirewallPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
