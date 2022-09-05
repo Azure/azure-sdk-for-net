@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="events"> The list of events for peering service prefix. </param>
         /// <param name="peeringServicePrefixKey"> The peering service prefix key. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringServicePrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PrefixValidationState? prefixValidationState, LearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal PeeringServicePrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, PeeringLearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The prefix from which your traffic originates. </summary>
         public string Prefix { get; set; }
         /// <summary> The prefix validation state. </summary>
-        public PrefixValidationState? PrefixValidationState { get; }
+        public PeeringPrefixValidationState? PrefixValidationState { get; }
         /// <summary> The prefix learned type. </summary>
-        public LearnedType? LearnedType { get; }
+        public PeeringLearnedType? LearnedType { get; }
         /// <summary> The error message for validation state. </summary>
         public string ErrorMessage { get; }
         /// <summary> The list of events for peering service prefix. </summary>
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The peering service prefix key. </summary>
         public string PeeringServicePrefixKey { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

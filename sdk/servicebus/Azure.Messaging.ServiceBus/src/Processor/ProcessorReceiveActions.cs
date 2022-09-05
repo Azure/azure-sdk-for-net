@@ -97,7 +97,22 @@ namespace Azure.Messaging.ServiceBus
             return TrackMessagesAsReceived(messages);
         }
 
-        private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
+       /// <inheritdoc cref="ServiceBusReceiver.PeekMessagesAsync"/>
+       public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+           int maxMessages,
+           long? fromSequenceNumber = default,
+           CancellationToken cancellationToken = default)
+       {
+           ValidateCallbackInScope();
+
+           // Peeked messages are not locked so we don't need to track them for lock renewal or autocompletion, as these options do not apply.
+           return await _receiver.PeekMessagesAsync(
+               maxMessages: maxMessages,
+               fromSequenceNumber: fromSequenceNumber,
+               cancellationToken: cancellationToken).ConfigureAwait(false);
+       }
+
+       private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             if (_autoRenew)
             {

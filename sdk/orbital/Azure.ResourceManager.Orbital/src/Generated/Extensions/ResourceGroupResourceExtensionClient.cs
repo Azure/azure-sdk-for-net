@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.Orbital
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SpacecraftResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SpacecraftResources and their operations over a SpacecraftResource. </returns>
-        public virtual SpacecraftCollection GetSpacecrafts()
+        /// <summary> Gets a collection of OrbitalSpacecraftResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OrbitalSpacecraftResources and their operations over a OrbitalSpacecraftResource. </returns>
+        public virtual OrbitalSpacecraftCollection GetOrbitalSpacecrafts()
         {
-            return GetCachedClient(Client => new SpacecraftCollection(Client, Id));
+            return GetCachedClient(Client => new OrbitalSpacecraftCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ContactProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ContactProfileResources and their operations over a ContactProfileResource. </returns>
-        public virtual ContactProfileCollection GetContactProfiles()
+        /// <summary> Gets a collection of OrbitalContactProfileResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OrbitalContactProfileResources and their operations over a OrbitalContactProfileResource. </returns>
+        public virtual OrbitalContactProfileCollection GetOrbitalContactProfiles()
         {
-            return GetCachedClient(Client => new ContactProfileCollection(Client, Id));
+            return GetCachedClient(Client => new OrbitalContactProfileCollection(Client, Id));
         }
     }
 }

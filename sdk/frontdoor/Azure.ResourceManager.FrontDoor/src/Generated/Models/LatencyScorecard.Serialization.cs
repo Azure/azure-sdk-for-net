@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> id0 = default;
             Optional<string> name0 = default;
             Optional<string> description = default;
             Optional<string> endpointA = default;
             Optional<string> endpointB = default;
-            Optional<DateTimeOffset> startDateTimeUTC = default;
-            Optional<DateTimeOffset> endDateTimeUTC = default;
+            Optional<DateTimeOffset> startDateTimeUtc = default;
+            Optional<DateTimeOffset> endDateTimeUtc = default;
             Optional<string> country = default;
             Optional<IList<LatencyMetric>> latencyMetrics = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            startDateTimeUTC = property0.Value.GetDateTimeOffset("O");
+                            startDateTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("endDateTimeUTC"))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            endDateTimeUTC = property0.Value.GetDateTimeOffset("O");
+                            endDateTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("country"))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new LatencyScorecard(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(startDateTimeUTC), Optional.ToNullable(endDateTimeUTC), country.Value, Optional.ToList(latencyMetrics));
+            return new LatencyScorecard(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), country.Value, Optional.ToList(latencyMetrics));
         }
     }
 }

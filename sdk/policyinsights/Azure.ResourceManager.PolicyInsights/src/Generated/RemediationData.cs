@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="provisioningState"> The status of the remediation. </param>
         /// <param name="createdOn"> The time at which the remediation was created. </param>
         /// <param name="lastUpdatedOn"> The time at which the remediation was last updated. </param>
-        /// <param name="filters"> The filters that will be applied to determine which resources to remediate. </param>
+        /// <param name="filter"> The filters that will be applied to determine which resources to remediate. </param>
         /// <param name="deploymentStatus"> The deployment status summary for all deployments created by the remediation. </param>
         /// <param name="statusMessage"> The remediation status message. Provides additional details regarding the state of the remediation. </param>
         /// <param name="correlationId"> The remediation correlation Id. Can be used to find events related to the remediation in the activity log. </param>
         /// <param name="resourceCount"> Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used. </param>
         /// <param name="parallelDeployments"> Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used. </param>
         /// <param name="failureThreshold"> The remediation failure threshold settings. </param>
-        internal RemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, RemediationFilters filters, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, RemediationPropertiesFailureThreshold failureThreshold) : base(id, name, resourceType, systemData)
+        internal RemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, RemediationFilters filter, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, RemediationPropertiesFailureThreshold failureThreshold) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            Filters = filters;
+            Filter = filter;
             DeploymentStatus = deploymentStatus;
             StatusMessage = statusMessage;
             CorrelationId = correlationId;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> The resource ID of the policy assignment that should be remediated. </summary>
-        public string PolicyAssignmentId { get; set; }
+        public ResourceIdentifier PolicyAssignmentId { get; set; }
         /// <summary> The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition. </summary>
         public string PolicyDefinitionReferenceId { get; set; }
         /// <summary> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </summary>
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> The time at which the remediation was last updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
-        internal RemediationFilters Filters { get; set; }
+        internal RemediationFilters Filter { get; set; }
         /// <summary> The resource locations that will be remediated. </summary>
-        public IList<string> FiltersLocations
+        public IList<AzureLocation> FilterLocations
         {
             get
             {
-                if (Filters is null)
-                    Filters = new RemediationFilters();
-                return Filters.Locations;
+                if (Filter is null)
+                    Filter = new RemediationFilters();
+                return Filter.Locations;
             }
         }
 
