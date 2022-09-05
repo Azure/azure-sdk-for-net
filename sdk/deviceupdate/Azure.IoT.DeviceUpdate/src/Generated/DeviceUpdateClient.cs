@@ -1621,288 +1621,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call ImportUpdateAsync with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-        /// 
-        /// var data = new[] {
-        ///     new {
-        ///         importManifest = new {
-        ///             url = "<url>",
-        ///             sizeInBytes = 1234L,
-        ///             hashes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///         },
-        ///         friendlyName = "<friendlyName>",
-        ///         files = new[] {
-        ///             new {
-        ///                 filename = "<filename>",
-        ///                 url = "<url>",
-        ///             }
-        ///         },
-        ///     }
-        /// };
-        /// 
-        /// var operation = await client.ImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
-        /// Console.WriteLine(result.GetProperty("updateType").ToString());
-        /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handler").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handlerProperties").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("files")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
-        /// Console.WriteLine(result.GetProperty("manifestVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ImportUpdateInputItem</c>:
-        /// <code>{
-        ///   importManifest: {
-        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     sizeInBytes: number, # Required. File size in number of bytes.
-        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
-        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
-        ///   friendlyName: string, # Optional. Friendly update name.
-        ///   files: [
-        ///     {
-        ///       filename: string, # Required. Update file name as specified inside import manifest.
-        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     }
-        ///   ], # Optional. One or more update file properties like filename and source URL.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Update</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string, # Required. Update provider.
-        ///     name: string, # Required. Update name.
-        ///     version: string, # Required. Update version.
-        ///   }, # Required. Update identity.
-        ///   description: string, # Optional. Update description specified by creator.
-        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
-        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        ///         description: string, # Optional. Step description.
-        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
-        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-        ///       }
-        ///     ], # Required. Collection of installation steps.
-        ///   }, # Optional. Update install instructions.
-        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
-        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-        ///   etag: string, # Optional. Update ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call ImportUpdate with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-        /// 
-        /// var data = new[] {
-        ///     new {
-        ///         importManifest = new {
-        ///             url = "<url>",
-        ///             sizeInBytes = 1234L,
-        ///             hashes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///         },
-        ///         friendlyName = "<friendlyName>",
-        ///         files = new[] {
-        ///             new {
-        ///                 filename = "<filename>",
-        ///                 url = "<url>",
-        ///             }
-        ///         },
-        ///     }
-        /// };
-        /// 
-        /// var operation = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
-        /// Console.WriteLine(result.GetProperty("updateType").ToString());
-        /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handler").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("handlerProperties").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("files")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps")[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("referencedBy")[0].GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
-        /// Console.WriteLine(result.GetProperty("manifestVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ImportUpdateInputItem</c>:
-        /// <code>{
-        ///   importManifest: {
-        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     sizeInBytes: number, # Required. File size in number of bytes.
-        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
-        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
-        ///   friendlyName: string, # Optional. Friendly update name.
-        ///   files: [
-        ///     {
-        ///       filename: string, # Required. Update file name as specified inside import manifest.
-        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-        ///     }
-        ///   ], # Optional. One or more update file properties like filename and source URL.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Update</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string, # Required. Update provider.
-        ///     name: string, # Required. Update name.
-        ///     version: string, # Required. Update version.
-        ///   }, # Required. Update identity.
-        ///   description: string, # Optional. Update description specified by creator.
-        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
-        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        ///         description: string, # Optional. Step description.
-        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
-        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-        ///       }
-        ///     ], # Required. Collection of installation steps.
-        ///   }, # Optional. Update install instructions.
-        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
-        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-        ///   etag: string, # Optional. Update ETag.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Operation<BinaryData> ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Delete a specific update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provider"> Update provider. </param>
@@ -1989,6 +1707,166 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
+        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call StartImportUpdateAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         importManifest = new {
+        ///             url = "<url>",
+        ///             sizeInBytes = 1234L,
+        ///             hashes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///         },
+        ///         friendlyName = "<friendlyName>",
+        ///         files = new[] {
+        ///             new {
+        ///                 filename = "<filename>",
+        ///                 url = "<url>",
+        ///             }
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// var operation = await client.StartImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImportUpdateInputItem</c>:
+        /// <code>{
+        ///   importManifest: {
+        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
+        ///     sizeInBytes: number, # Required. File size in number of bytes.
+        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
+        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
+        ///   friendlyName: string, # Optional. Friendly update name.
+        ///   files: [
+        ///     {
+        ///       filename: string, # Required. Update file name as specified inside import manifest.
+        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
+        ///     }
+        ///   ], # Optional. One or more update file properties like filename and source URL.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Operation> StartImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartImportUpdateRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call StartImportUpdate with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         importManifest = new {
+        ///             url = "<url>",
+        ///             sizeInBytes = 1234L,
+        ///             hashes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///         },
+        ///         friendlyName = "<friendlyName>",
+        ///         files = new[] {
+        ///             new {
+        ///                 filename = "<filename>",
+        ///                 url = "<url>",
+        ///             }
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// var operation = client.StartImportUpdate(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImportUpdateInputItem</c>:
+        /// <code>{
+        ///   importManifest: {
+        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
+        ///     sizeInBytes: number, # Required. File size in number of bytes.
+        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
+        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
+        ///   friendlyName: string, # Optional. Friendly update name.
+        ///   files: [
+        ///     {
+        ///       filename: string, # Required. Update file name as specified inside import manifest.
+        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
+        ///     }
+        ///   ], # Optional. One or more update file properties like filename and source URL.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Operation StartImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartImportUpdateRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateGetUpdatesRequest(string search, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2011,25 +1889,6 @@ namespace Azure.IoT.DeviceUpdate
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateImportUpdateRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/deviceUpdate/", false);
-            uri.AppendPath(_instanceId, false);
-            uri.AppendPath("/updates:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
             return message;
         }
 
@@ -2240,6 +2099,25 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal HttpMessage CreateStartImportUpdateRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateGetUpdatesNextPageRequest(string nextLink, string search, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2326,8 +2204,6 @@ namespace Azure.IoT.DeviceUpdate
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier200202;
-        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
         private static ResponseClassifier _responseClassifier200304;
         private static ResponseClassifier ResponseClassifier200304 => _responseClassifier200304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 304 });
         private static ResponseClassifier _responseClassifier202;
