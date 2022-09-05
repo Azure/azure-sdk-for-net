@@ -17,13 +17,13 @@ namespace Azure.Maps.Geolocation
         }
 
         /// <summary> Initializes a new instance of CountryRegion. </summary>
-        /// <param name="isoCode"> The IP Address&apos;s 2-character code [(ISO 3166-1)](https://www.iso.org/iso-3166-country-codes.html) of the country or region. Please note, IP address in ranges reserved for special purpose will return Null for country/region. </param>
+        /// <param name="isoCode"> The IP Address's 2-character code <see href="https://www.iso.org/iso-3166-country-codes.html">(ISO 3166-1)</see> of the country or region. Please note, IP address in ranges reserved for special purpose will return Null for country/region. </param>
         internal CountryRegion(string isoCode)
         {
             IsoCode = isoCode;
         }
 
-        /// <summary> The IP Address&apos;s 2-character code [(ISO 3166-1)](https://www.iso.org/iso-3166-country-codes.html) of the country or region. Please note, IP address in ranges reserved for special purpose will return Null for country/region. </summary>
+        /// <summary> The IP Address's 2-character code <see href="https://www.iso.org/iso-3166-country-codes.html">(ISO 3166-1)</see> of the country or region. Please note, IP address in ranges reserved for special purpose will return Null for country/region. </summary>
         public string IsoCode { get; }
     }
 }

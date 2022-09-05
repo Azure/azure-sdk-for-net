@@ -1,6 +1,6 @@
 # Azure Maps Geolocation client library for .NET
 
-Azure Maps Geolocation is a library that can find geolocation to a location or point of interests.
+Azure Maps Geolocation is a library that can find geolocation to a location or points of interest.
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/geolocation) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
@@ -28,7 +28,7 @@ az maps account create --kind "Gen2" --disable-local-auth true --account-name "m
 
 There are 2 ways to authenticate the client: Shared key authentication and Azure AD.
 
-#### Shared Key Authentication
+#### Shared Key authentication
 
 * Go to Azure Maps account > Authentication tab
 * Copy `Primary Key` or `Secondary Key` under **Shared Key Authentication** section
@@ -39,11 +39,11 @@ var credential = new AzureKeyCredential("<My Subscription Key>");
 MapsGeolocationClient client = new MapsGeolocationClient(credential);
 ```
 
-#### Azure AD Authentication
+#### Azure AD authentication
 
 In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsGeolocationClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
+To use AAD authentication, set the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsRouteClient`.
 
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
@@ -79,7 +79,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/samples).
+You can familiarize yourself with different APIs using our [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/samples).
 
 Before calling geolocation APIs, instantiate a `MapsGeolocationClient` first. Below example uses AAD to create the client instance:
 
@@ -109,9 +109,9 @@ For more detailed examples, please [geolocation range samples](https://github.co
 
 ### General
 
-When you interact with the Azure Maps Services, errors returned by the Language service correspond to the same HTTP status codes returned for REST API requests.
+When you interact with the Azure Maps services, errors returned by the Language service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/geolocation).
 
-For example, if you pass wrong IP address, an error is returned, indicating "Bad Request".400
+For example, if you pass wrong IP address, an error is returned, indicating "Bad Request" (HTTP Status code: 400).
 
 ```C# Snippet:CatchGeolocationException
 try
@@ -130,7 +130,7 @@ catch (RequestFailedException e)
 
 ## Next steps
 
-* [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/samples)
+* For more context and additional scenarios, please see: [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/samples)
 
 ## Contributing
 

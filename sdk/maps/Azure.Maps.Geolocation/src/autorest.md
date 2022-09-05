@@ -11,7 +11,7 @@ input-file:
 title: MapsGeolocationClient
 openapi-type: data-plane
 tag: 1.0
-add-credentials: false
+add-credentials: true
 # at some point those credentials will move away to Swagger according to [this](https://github.com/Azure/autorest/issues/3718)
 credential-default-policy-type: BearerTokenCredentialPolicy
 credential-scopes: https://atlas.microsoft.com/.default
@@ -28,10 +28,17 @@ data-plane: true
 skip-csproj: true
 ```
 
+### remove unused "security" section
+
 ```yaml
 directive:
-    - from: swagger-document
-      where: $.security
-      transform: >
-       $ = [];
-```
+- from: swagger-document
+  where: $.securityDefinitions
+  transform: |
+    $["azure_auth"] = $["AADToken"];
+    delete $["AADToken"];
+- from: swagger-document
+  where: '$.security[0]'
+  transform: |
+    $["azure_auth"] = $["AADToken"];
+    delete $["AADToken"];

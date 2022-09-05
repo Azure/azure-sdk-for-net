@@ -25,7 +25,7 @@
             "type": "Microsoft.Maps/accounts",
             "apiVersion": "2021-12-01-preview",
             "name": "[variables('mapsAccountName')]",
-            "location": "eastus",
+            "location": "[resourceGroup().location]",
             "sku": {
                 "name": "G2",
                 "tier": "Standard"
