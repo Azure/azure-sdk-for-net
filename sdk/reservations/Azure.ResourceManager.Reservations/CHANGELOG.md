@@ -1,14 +1,8 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2022-09-05)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+This is the first stable release of the Reservations Management client library.
 
 ## 1.0.0-beta.2 (2022-08-29)
 
