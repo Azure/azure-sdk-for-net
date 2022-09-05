@@ -649,7 +649,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %Synapse %Service Attention
 # PRLabel: %Synapse
-/sdk/synapse/            @wonner @idear1203 @annelo-msft
+/sdk/synapse/            @wonner @yanjungao718 @annelo-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
