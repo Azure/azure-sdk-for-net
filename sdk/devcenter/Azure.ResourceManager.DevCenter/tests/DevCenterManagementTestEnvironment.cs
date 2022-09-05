@@ -19,20 +19,5 @@ namespace Azure.ResourceManager.DevCenter.Tests
         public string DefaultAttachedNetworkName => GetRecordedOptionalVariable("DefaultAttachedNetworkName");
 
         public string DefaultNetworkConnection2Id => GetRecordedOptionalVariable("DefaultNetworkConnection2Id");
-
-        /// <summary>
-        /// Determines if tests running in recording model should delete the resource group after test run.
-        /// </summary>
-        internal static bool GlobalDisableResourceGroupCleanup
-        {
-            get
-            {
-                string switchString = TestContext.Parameters["DisableResourceGroupCleanup"] ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_RESOURCE_GROUP_CLEANUP");
-
-                bool.TryParse(switchString, out bool disableAutoRecording);
-
-                return disableAutoRecording || GlobalIsRunningInCI;
-            }
-        }
     }
 }
