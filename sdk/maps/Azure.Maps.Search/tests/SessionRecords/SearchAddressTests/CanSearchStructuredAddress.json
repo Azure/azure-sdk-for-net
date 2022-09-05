@@ -6,39 +6,39 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-774a3e6996e8391c7b9ab01b09ebe689-77f43f5d16956bd2-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-77ced45f44bc4190e5a95b09a7bef07b-987a8a9b055892cc-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "c0d3186a517b2f83066e0c445ddb242e",
+        "x-ms-client-request-id": "15bc6e177a4f2d54ae52e1a6b834b7e6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6876",
+        "Content-Length": "6729",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Aug 2022 05:39:51 GMT",
+        "Date": "Mon, 05 Sep 2022 00:17:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: E6A4AE9DB76C4C85A3CCC66669FFC8E4 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:52Z"
+        "X-MSEdge-Ref": "Ref A: 640294EF62E140D48F35ED403E68EB4D Ref B: PAOEDGE0616 Ref C: 2022-09-05T00:17:32Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "ne 24th street 15127 redmond 98052 wa",
           "queryType": "NON_NEAR",
-          "queryTime": 7,
+          "queryTime": 14,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 30,
+          "totalResults": 28,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Point Address",
-            "id": "US/PAD/p0/47332945",
+            "id": "US/PAD/p0/31570413",
             "score": 14.1640310287,
             "address": {
               "streetNumber": "15127",
@@ -88,7 +88,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p2/1167630",
+            "id": "US/XSTR/p0/1177189",
             "score": 10.7666654587,
             "address": {
               "streetName": "Northeast 24th Street \u0026 Bel Red Road, Bellevue Redmond Road",
@@ -120,7 +120,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p2/1167631",
+            "id": "US/XSTR/p0/1177190",
             "score": 10.6782073975,
             "address": {
               "streetName": "Bel Red Road, Bellevue Redmond Road \u0026 Northeast 24th Street",
@@ -152,11 +152,10 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/937995",
+            "id": "US/XSTR/p0/1177160",
             "score": 10.4268474579,
             "address": {
-              "streetName": "186th Avenue Northeast \u0026 Northeast 24th Street",
-              "municipalitySubdivision": "Idylwood",
+              "streetName": "148th Avenue Northeast \u0026 Northeast 24th Street",
               "municipality": "Redmond",
               "countrySecondarySubdivision": "King",
               "countrySubdivision": "WA",
@@ -165,32 +164,32 @@
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "186th Avenue Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
+              "freeformAddress": "148th Avenue Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
               "localName": "Redmond"
             },
             "position": {
-              "lat": 47.63111,
-              "lon": -122.09087
+              "lat": 47.63154,
+              "lon": -122.14297
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.63201,
-                "lon": -122.0922
+                "lat": 47.63244,
+                "lon": -122.1443
               },
               "btmRightPoint": {
-                "lat": 47.63021,
-                "lon": -122.08954
+                "lat": 47.63064,
+                "lon": -122.14164
               }
             }
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/937998",
+            "id": "US/XSTR/p0/1177162",
             "score": 10.4268474579,
             "address": {
-              "streetName": "Northeast 24th Street \u0026 West Lake Sammamish Parkway Northeast",
-              "municipalitySubdivision": "Idylwood",
-              "municipality": "Redmond",
+              "streetName": "148th Avenue Northeast \u0026 Northeast 24th Street",
+              "municipalitySubdivision": "Bridle Trails",
+              "municipality": "Bellevue",
               "countrySecondarySubdivision": "King",
               "countrySubdivision": "WA",
               "countrySubdivisionName": "Washington",
@@ -198,31 +197,30 @@
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Northeast 24th Street \u0026 West Lake Sammamish Parkway Northeast, Redmond, WA 98052",
-              "localName": "Redmond"
+              "freeformAddress": "148th Avenue Northeast \u0026 Northeast 24th Street, Bellevue, WA 98052",
+              "localName": "Bellevue"
             },
             "position": {
-              "lat": 47.63115,
-              "lon": -122.08847
+              "lat": 47.63154,
+              "lon": -122.14314
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.63205,
-                "lon": -122.0898
+                "lat": 47.63244,
+                "lon": -122.14447
               },
               "btmRightPoint": {
-                "lat": 47.63025,
-                "lon": -122.08714
+                "lat": 47.63064,
+                "lon": -122.14181
               }
             }
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/937999",
+            "id": "US/XSTR/p0/1177164",
             "score": 10.4268474579,
             "address": {
-              "streetName": "185th Place Northeast \u0026 Northeast 24th Street",
-              "municipalitySubdivision": "Idylwood",
+              "streetName": "Northeast 24th Street \u0026 148th Avenue Northeast",
               "municipality": "Redmond",
               "countrySecondarySubdivision": "King",
               "countrySubdivision": "WA",
@@ -231,65 +229,65 @@
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "185th Place Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
+              "freeformAddress": "Northeast 24th Street \u0026 148th Avenue Northeast, Redmond, WA 98052",
               "localName": "Redmond"
             },
             "position": {
-              "lat": 47.63112,
-              "lon": -122.09299
+              "lat": 47.63154,
+              "lon": -122.14314
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.63202,
-                "lon": -122.09432
+                "lat": 47.63244,
+                "lon": -122.14447
               },
               "btmRightPoint": {
-                "lat": 47.63022,
-                "lon": -122.09166
+                "lat": 47.63064,
+                "lon": -122.14181
               }
             }
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/938002",
+            "id": "US/XSTR/p0/1177165",
             "score": 10.4268474579,
             "address": {
-              "streetName": "Northeast 24th Street \u0026 184th Avenue Northeast",
-              "municipalitySubdivision": "Idylwood",
-              "municipality": "Redmond",
+              "streetName": "Northeast 24th Street \u0026 148th Avenue Northeast",
+              "municipalitySubdivision": "Bridle Trails",
+              "municipality": "Bellevue",
               "countrySecondarySubdivision": "King",
               "countrySubdivision": "WA",
               "countrySubdivisionName": "Washington",
-              "postalCode": "98052",
+              "postalCode": "98007",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Northeast 24th Street \u0026 184th Avenue Northeast, Redmond, WA 98052",
-              "localName": "Redmond"
+              "freeformAddress": "Northeast 24th Street \u0026 148th Avenue Northeast, Bellevue, WA 98007",
+              "localName": "Bellevue"
             },
             "position": {
-              "lat": 47.63113,
-              "lon": -122.09434
+              "lat": 47.63154,
+              "lon": -122.14314
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.63203,
-                "lon": -122.09567
+                "lat": 47.63244,
+                "lon": -122.14447
               },
               "btmRightPoint": {
-                "lat": 47.63023,
-                "lon": -122.09301
+                "lat": 47.63064,
+                "lon": -122.14181
               }
             }
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/938003",
+            "id": "US/XSTR/p0/1177166",
             "score": 10.4268474579,
             "address": {
-              "streetName": "183rd Court Northeast \u0026 Northeast 24th Street",
-              "municipalitySubdivision": "Idylwood",
-              "municipality": "Redmond",
+              "streetName": "148th Avenue Northeast \u0026 Northeast 24th Street",
+              "municipalitySubdivision": "Bel Red",
+              "municipality": "Bellevue",
               "countrySecondarySubdivision": "King",
               "countrySubdivision": "WA",
               "countrySubdivisionName": "Washington",
@@ -297,31 +295,30 @@
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "183rd Court Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
-              "localName": "Redmond"
+              "freeformAddress": "148th Avenue Northeast \u0026 Northeast 24th Street, Bellevue, WA 98052",
+              "localName": "Bellevue"
             },
             "position": {
-              "lat": 47.63112,
-              "lon": -122.09543
+              "lat": 47.63145,
+              "lon": -122.14314
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.63202,
-                "lon": -122.09676
+                "lat": 47.63235,
+                "lon": -122.14447
               },
               "btmRightPoint": {
-                "lat": 47.63022,
-                "lon": -122.0941
+                "lat": 47.63055,
+                "lon": -122.14181
               }
             }
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/938005",
+            "id": "US/XSTR/p0/1177185",
             "score": 10.4268474579,
             "address": {
-              "streetName": "182nd Avenue Northeast \u0026 Northeast 24th Street",
-              "municipalitySubdivision": "Idylwood",
+              "streetName": "151st Place Northeast \u0026 Northeast 24th Street",
               "municipality": "Redmond",
               "countrySecondarySubdivision": "King",
               "countrySubdivision": "WA",
@@ -330,31 +327,30 @@
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "182nd Avenue Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
+              "freeformAddress": "151st Place Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
               "localName": "Redmond"
             },
             "position": {
-              "lat": 47.63113,
-              "lon": -122.09751
+              "lat": 47.63157,
+              "lon": -122.13936
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.63203,
-                "lon": -122.09884
+                "lat": 47.63247,
+                "lon": -122.14069
               },
               "btmRightPoint": {
-                "lat": 47.63023,
-                "lon": -122.09618
+                "lat": 47.63067,
+                "lon": -122.13803
               }
             }
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/938007",
+            "id": "US/XSTR/p0/1177187",
             "score": 10.4268474579,
             "address": {
-              "streetName": "180th Place Northeast \u0026 Northeast 24th Street",
-              "municipalitySubdivision": "Idylwood",
+              "streetName": "152nd Avenue Northeast \u0026 Northeast 24th Street",
               "municipality": "Redmond",
               "countrySecondarySubdivision": "King",
               "countrySubdivision": "WA",
@@ -363,21 +359,21 @@
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "180th Place Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
+              "freeformAddress": "152nd Avenue Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
               "localName": "Redmond"
             },
             "position": {
-              "lat": 47.63115,
-              "lon": -122.09968
+              "lat": 47.63159,
+              "lon": -122.1377
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.63205,
-                "lon": -122.10101
+                "lat": 47.63249,
+                "lon": -122.13903
               },
               "btmRightPoint": {
-                "lat": 47.63025,
-                "lon": -122.09835
+                "lat": 47.63069,
+                "lon": -122.13637
               }
             }
           }
@@ -389,6 +385,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "470477718"
+    "RandomSeed": "2080624867"
   }
 }

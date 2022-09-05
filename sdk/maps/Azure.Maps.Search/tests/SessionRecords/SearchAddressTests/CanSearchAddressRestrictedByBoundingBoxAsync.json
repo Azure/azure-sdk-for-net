@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-aab55dad931df63c0c5c378d47956235-2bd8ef869e8a9a36-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-80dedbf8713a8052496a2fe487c87f03-c4ebf7cf5993e856-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "0e94fe9ed34c124dec67de9a5b3a2b7a",
+        "x-ms-client-request-id": "4b1300475b199888250c23a533adde69",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "766",
+        "Content-Length": "765",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Aug 2022 05:39:54 GMT",
+        "Date": "Mon, 05 Sep 2022 00:17:35 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 6F078FF1972A4ECDA13A9EE0CCD4457F Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:55Z"
+        "X-MSEdge-Ref": "Ref A: 09FFC4F13C0F4C0CA96D28499280FBFE Ref B: PAOEDGE0616 Ref C: 2022-09-05T00:17:36Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "moke",
           "queryType": "NON_NEAR",
-          "queryTime": 4,
+          "queryTime": 7,
           "numResults": 1,
           "offset": 0,
           "totalResults": 1,
@@ -38,8 +38,8 @@
         "results": [
           {
             "type": "Street",
-            "id": "NZ/STR/p0/122946",
-            "score": 2.0553257465,
+            "id": "NZ/STR/p0/28548",
+            "score": 2.0553114414,
             "matchConfidence": {
               "score": 0.8924786087880523
             },
@@ -79,6 +79,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "685177666"
+    "RandomSeed": "1035941934"
   }
 }
