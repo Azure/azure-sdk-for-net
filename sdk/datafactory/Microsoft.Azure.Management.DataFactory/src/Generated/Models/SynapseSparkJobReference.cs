@@ -15,32 +15,33 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Base definition of WebLinkedServiceTypeProperties, this typeProperties
-    /// is polymorphic based on authenticationType, so not flattened in SDK
-    /// models.
+    /// Synapse spark job reference type.
     /// </summary>
-    public partial class WebLinkedServiceTypeProperties
+    public partial class SynapseSparkJobReference
     {
         /// <summary>
-        /// Initializes a new instance of the WebLinkedServiceTypeProperties
-        /// class.
+        /// Initializes a new instance of the SynapseSparkJobReference class.
         /// </summary>
-        public WebLinkedServiceTypeProperties()
+        public SynapseSparkJobReference()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebLinkedServiceTypeProperties
-        /// class.
+        /// Initializes a new instance of the SynapseSparkJobReference class.
         /// </summary>
-        /// <param name="url">The URL of the web service endpoint, e.g.
-        /// https://www.microsoft.com . Type: string (or Expression with
-        /// resultType string).</param>
-        public WebLinkedServiceTypeProperties(object url)
+        /// <param name="referenceName">Reference spark job name.</param>
+        public SynapseSparkJobReference(string referenceName)
         {
-            Url = url;
+            ReferenceName = referenceName;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for SynapseSparkJobReference class.
+        /// </summary>
+        static SynapseSparkJobReference()
+        {
+            Type = "SparkJobDefinitionReference";
         }
 
         /// <summary>
@@ -49,12 +50,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the URL of the web service endpoint, e.g.
-        /// https://www.microsoft.com . Type: string (or Expression with
-        /// resultType string).
+        /// Gets or sets reference spark job name.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
-        public object Url { get; set; }
+        [JsonProperty(PropertyName = "referenceName")]
+        public string ReferenceName { get; set; }
+
+        /// <summary>
+        /// Synapse spark job reference type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public static string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -64,9 +69,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Url == null)
+            if (ReferenceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReferenceName");
             }
         }
     }
