@@ -42,7 +42,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationTokenAsync
 
             #region Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
-            TimeSpan tokenExpiresAfter = TimeSpan.FromMinutes(60);
+            TimeSpan tokenExpiresAfter = TimeSpan.FromHours(1);
             Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter);
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
@@ -105,7 +105,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationToken
 
             #region  Snippet:CreateCommunicationTokenWithCustomExpiration
-            TimeSpan tokenExpiresAfter = TimeSpan.FromMinutes(60);
+            TimeSpan tokenExpiresAfter = TimeSpan.FromHours(1);
             Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter);
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
@@ -155,7 +155,7 @@ namespace Azure.Communication.Identity.Samples
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClientWithConnectionString();
             #region Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
-            TimeSpan tokenExpiresAfter = TimeSpan.FromMinutes(60);
+            TimeSpan tokenExpiresAfter = TimeSpan.FromHours(1);
             Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter);
             var (user, token) = response.Value;
             Console.WriteLine($"User id: {user.Id}");
@@ -171,7 +171,7 @@ namespace Azure.Communication.Identity.Samples
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClientWithConnectionString();
             #region Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
-            TimeSpan tokenExpiresAfter = TimeSpan.FromMinutes(60);
+            TimeSpan tokenExpiresAfter = TimeSpan.FromHours(1);
             Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter);
             var (user, token) = response.Value;
             Console.WriteLine($"User id: {user.Id}");

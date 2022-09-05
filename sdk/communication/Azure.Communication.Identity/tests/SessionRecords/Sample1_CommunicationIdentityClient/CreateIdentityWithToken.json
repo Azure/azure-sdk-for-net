@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-3a42a7c86444d54b80390e51f84e8448-d3ec978d47e91e4a-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220831.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "41c274df1916fd8cadc5f06c5e759b8d",
+        "traceparent": "00-824951c54803ff45bb5e100316d8dbe6-b898bb66ba7cc741-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220905.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "12b6d7bbcbe8a45d552f60b36a43d3fb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -19,14 +19,14 @@
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
         "Content-Length": "31",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 31 Aug 2022 17:02:33 GMT",
-        "MS-CV": "mu\u002Behkw6rUW6JmIFBYzKyg.0",
+        "Date": "Mon, 05 Sep 2022 10:39:50 GMT",
+        "MS-CV": "p7vOwiCvFkCFsemdO\u002BPL8g.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0KZQPYwAAAABW4QknJxR7Tbhj12pF8lBvUFJHMDFFREdFMDkxOABmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "09tEVYwAAAAB4re37gck6RoTYx6GbfFz3UFJHMDFFREdFMDkxNwBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "41c274df1916fd8cadc5f06c5e759b8d",
-        "X-Processing-Time": "40ms"
+        "x-ms-client-request-id": "12b6d7bbcbe8a45d552f60b36a43d3fb",
+        "X-Processing-Time": "39ms"
       },
       "ResponseBody": {
         "identity": {
@@ -37,6 +37,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1557037074"
+    "RandomSeed": "586121434"
   }
 }

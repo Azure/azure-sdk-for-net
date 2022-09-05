@@ -30,6 +30,8 @@ namespace Azure.Communication.Identity.Tests
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
 
+        private const string OVERFLOW_MESSAGE = "The tokenExpiresAfter argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.";
+
         private const string MIN_VALID_EXPIRATION_TIME = "minValidExpirationTime";
         private const string MAX_VALID_EXPIRATION_TIME = "maxValidExpirationTime";
         private const string MAX_INVALID_EXPIRATION_TIME = "maxInvalidExpirationTime";
@@ -37,8 +39,8 @@ namespace Azure.Communication.Identity.Tests
 
         private Dictionary<string, TimeSpan> TokenCustomExpirationTimes = new Dictionary<string, TimeSpan>
         {
-            { MIN_VALID_EXPIRATION_TIME, TimeSpan.FromMinutes(60) },
-            { MAX_VALID_EXPIRATION_TIME, TimeSpan.FromMinutes(1440) },
+            { MIN_VALID_EXPIRATION_TIME, TimeSpan.FromHours(1) },
+            { MAX_VALID_EXPIRATION_TIME, TimeSpan.FromHours(24) },
             { MAX_INVALID_EXPIRATION_TIME, TimeSpan.FromMinutes(59) },
             { MIN_INVALID_EXPIRATION_TIME, TimeSpan.FromMinutes(1441) },
         };
@@ -151,7 +153,26 @@ namespace Azure.Communication.Identity.Tests
                 Console.WriteLine(ex.Message);
                 return;
             }
-            Assert.Fail("CreateUserAndTokenWithInvalidCustomExpiration should have thrown an exception.");
+            Assert.Fail($"{nameof(CreateUserAndTokenWithInvalidCustomExpirationShouldThrow)} should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task CreateUserAndTokenWithOverflownExpirationShouldThrow()
+        {
+            try
+            {
+                TimeSpan tokenExpiresAfter = new TimeSpan(int.MaxValue/20, 0, 0);
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
+            }
+            catch (OverflowException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.AreEqual(OVERFLOW_MESSAGE, ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail($"{nameof(CreateUserAndTokenWithOverflownExpirationShouldThrow)} should have thrown an exception.");
         }
 
         [Test]
@@ -187,7 +208,27 @@ namespace Azure.Communication.Identity.Tests
                 Console.WriteLine(ex.Message);
                 return;
             }
-            Assert.Fail("GetTokenWithInvalidCustomExpiration should have thrown an exception.");
+            Assert.Fail($"{nameof(GetTokenWithInvalidCustomExpirationShouldThrow)} should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task GetTokenWithOverflownExpirationShouldThrow()
+        {
+            try
+            {
+                TimeSpan tokenExpiresAfter = new TimeSpan(int.MaxValue / 20, 0, 0);
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
+            }
+            catch (OverflowException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.AreEqual(OVERFLOW_MESSAGE, ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail($"{nameof(GetTokenWithOverflownExpirationShouldThrow)} should have thrown an exception.");
         }
 
         [Test]
