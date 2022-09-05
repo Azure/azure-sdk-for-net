@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -41,14 +42,14 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in DnsServerIPs)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp");
-                writer.WriteStringValue(SourceIP);
+                writer.WriteStringValue(SourceIP.ToString());
             }
             if (Optional.IsDefined(DnsServices))
             {
@@ -72,8 +73,8 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<IList<string>> domain = default;
-            Optional<IList<string>> dnsServerIPs = default;
-            Optional<string> sourceIP = default;
+            Optional<IList<IPAddress>> dnsServerIPs = default;
+            Optional<IPAddress> sourceIP = default;
             Optional<long> dnsServices = default;
             Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
             Optional<long> revision = default;
@@ -140,17 +141,22 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             dnsServerIPs = array;
                             continue;
                         }
                         if (property0.NameEquals("sourceIp"))
                         {
-                            sourceIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dnsServices"))
