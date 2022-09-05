@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(MicrosoftIPv4Address))
             {
                 writer.WritePropertyName("microsoftIPv4Address");
-                writer.WriteStringValue(MicrosoftIPv4Address);
+                writer.WriteStringValue(MicrosoftIPv4Address.ToString());
             }
             if (Optional.IsDefined(MicrosoftIPv6Address))
             {
                 writer.WritePropertyName("microsoftIPv6Address");
-                writer.WriteStringValue(MicrosoftIPv6Address);
+                writer.WriteStringValue(MicrosoftIPv6Address.ToString());
             }
             if (Optional.IsDefined(FacilityIPv4Prefix))
             {
@@ -62,8 +63,8 @@ namespace Azure.ResourceManager.Peering.Models
         {
             Optional<string> exchangeName = default;
             Optional<int> bandwidthInMbps = default;
-            Optional<string> microsoftIPv4Address = default;
-            Optional<string> microsoftIPv6Address = default;
+            Optional<IPAddress> microsoftIPv4Address = default;
+            Optional<IPAddress> microsoftIPv6Address = default;
             Optional<string> facilityIPv4Prefix = default;
             Optional<string> facilityIPv6Prefix = default;
             Optional<int> peeringDBFacilityId = default;
@@ -87,12 +88,22 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftIPv4Address"))
                 {
-                    microsoftIPv4Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    microsoftIPv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("microsoftIPv6Address"))
                 {
-                    microsoftIPv6Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    microsoftIPv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("facilityIPv4Prefix"))

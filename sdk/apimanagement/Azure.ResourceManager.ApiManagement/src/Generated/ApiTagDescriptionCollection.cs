@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiTagDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiTagDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ApiTagDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiTagDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
             Argument.AssertNotNull(content, nameof(content));

@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Peering.Models
         internal static PeeringSku DeserializePeeringSku(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<Tier> tier = default;
-            Optional<Family> family = default;
-            Optional<Size> size = default;
+            Optional<PeeringTier> tier = default;
+            Optional<PeeringFamily> family = default;
+            Optional<PeeringSize> size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = new Tier(property.Value.GetString());
+                    tier = new PeeringTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("family"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Peering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    family = new Family(property.Value.GetString());
+                    family = new PeeringFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("size"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    size = new Size(property.Value.GetString());
+                    size = new PeeringSize(property.Value.GetString());
                     continue;
                 }
             }

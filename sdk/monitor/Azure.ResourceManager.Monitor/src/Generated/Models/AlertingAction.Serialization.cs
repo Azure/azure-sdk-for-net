@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("severity");
             writer.WriteStringValue(Severity.ToString());
-            if (Optional.IsDefined(AznsAction))
+            if (Optional.IsDefined(NotificationDetails))
             {
                 writer.WritePropertyName("aznsAction");
-                writer.WriteObjectValue(AznsAction);
+                writer.WriteObjectValue(NotificationDetails);
             }
             if (Optional.IsDefined(ThrottlingInMin))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static AlertingAction DeserializeAlertingAction(JsonElement element)
         {
             AlertSeverity severity = default;
-            Optional<AzNsActionGroup> aznsAction = default;
+            Optional<NotificationDetails> aznsAction = default;
             Optional<int> throttlingInMin = default;
             TriggerCondition trigger = default;
             string odataType = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    aznsAction = AzNsActionGroup.DeserializeAzNsActionGroup(property.Value);
+                    aznsAction = NotificationDetails.DeserializeNotificationDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("throttlingInMin"))

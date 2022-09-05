@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Monitor.Ingestion
 {
+    // Data plane generated client. The LogsIngestion service client.
     /// <summary> The LogsIngestion service client. </summary>
     public partial class LogsIngestionClient
     {
@@ -88,12 +89,12 @@ namespace Azure.Monitor.Ingestion
         ///     new {}
         /// };
         /// 
-        /// Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
+        /// Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
+        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -147,12 +148,12 @@ namespace Azure.Monitor.Ingestion
         ///     new {}
         /// };
         /// 
-        /// Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
+        /// Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
+        public virtual Response Upload(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));

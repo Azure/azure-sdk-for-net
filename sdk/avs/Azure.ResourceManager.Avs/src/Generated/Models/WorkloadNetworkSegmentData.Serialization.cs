@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Avs
             Optional<string> connectedGateway = default;
             Optional<WorkloadNetworkSegmentSubnet> subnet = default;
             Optional<IReadOnlyList<WorkloadNetworkSegmentPortVif>> portVif = default;
-            Optional<SegmentStatusEnum> status = default;
+            Optional<WorkloadNetworkSegmentStatus> status = default;
             Optional<WorkloadNetworkSegmentProvisioningState> provisioningState = default;
             Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new SegmentStatusEnum(property0.Value.GetString());
+                            status = new WorkloadNetworkSegmentStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

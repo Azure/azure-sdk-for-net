@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Get Operation response object. </summary>
-    public partial class DocumentModelCopyToOperationDetails : DocumentModelOperationDetails
+    public partial class DocumentModelCopyToOperationDetails : OperationDetails
     {
         /// <summary> Initializes a new instance of DocumentModelCopyToOperationDetails. </summary>
         /// <param name="operationId"> Operation ID. </param>

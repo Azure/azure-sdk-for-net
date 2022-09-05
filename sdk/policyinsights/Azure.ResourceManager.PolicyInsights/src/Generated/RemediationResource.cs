@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAtResourceAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<RemediationDeployment>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeploymentsAtResource");
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeployments");
                 scope.Start();
                 try
                 {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<RemediationDeployment>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeploymentsAtResource");
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeployments");
                 scope.Start();
                 try
                 {
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RemediationDeployment> GetDeploymentsAtResource(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RemediationDeployment> GetDeployments(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             Page<RemediationDeployment> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeploymentsAtResource");
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeployments");
                 scope.Start();
                 try
                 {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<RemediationDeployment> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeploymentsAtResource");
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationResource.GetDeployments");
                 scope.Start();
                 try
                 {
