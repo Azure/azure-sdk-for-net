@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2022-09-05)
 
-### Features Added
+This is the first stable release of the Authorization Management client library.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Corrected the type of property `LinkedRoleEligibilityScheduleId` of RoleAssignmentScheduleData from `Guid` to `ResourceIdentifier`.
+- Corrected the type of property `LinkedRoleEligibilityScheduleId` of RoleAssignmentScheduleInstanceData from `Guid` to `ResourceIdentifier`.
+- Corrected the type of property `LinkedRoleEligibilityScheduleInstanceId` of RoleAssignmentScheduleInstanceData from `Guid` to `ResourceIdentifier`.
+- Corrected the type of property `LinkedRoleEligibilityScheduleId` of RoleAssignmentScheduleRequestData from `Guid` to `ResourceIdentifier`.
+- Corrected the type of property `TargetRoleAssignmentScheduleId` of RoleAssignmentScheduleRequestData from `Guid` to `ResourceIdentifier`.
+- Corrected the type of property `TargetRoleAssignmentScheduleInstanceId` of RoleAssignmentScheduleRequestData from `Guid` to `ResourceIdentifier`.
+- Corrected the type of property `TargetRoleEligibilityScheduleId` of RoleEligibilityScheduleRequestData from `Guid` to `ResourceIdentifier`.
+- Corrected the type of property `TargetRoleEligibilityScheduleInstanceId` of RoleEligibilityScheduleRequestData from `Guid` to `ResourceIdentifier`.
 
 ## 1.0.0-beta.2 (2022-08-29)
 
