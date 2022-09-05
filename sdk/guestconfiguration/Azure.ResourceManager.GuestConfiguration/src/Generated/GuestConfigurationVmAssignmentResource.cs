@@ -19,48 +19,48 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
-    /// A Class representing a GuestConfigurationAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GuestConfigurationAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGuestConfigurationAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetGuestConfigurationAssignment method.
+    /// A Class representing a GuestConfigurationVmAssignment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GuestConfigurationVmAssignmentResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetGuestConfigurationVmAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetGuestConfigurationVmAssignment method.
     /// </summary>
-    public partial class GuestConfigurationAssignmentResource : ArmResource
+    public partial class GuestConfigurationVmAssignmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GuestConfigurationAssignmentResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="GuestConfigurationVmAssignmentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _guestConfigurationAssignmentClientDiagnostics;
-        private readonly GuestConfigurationAssignmentsRestOperations _guestConfigurationAssignmentRestClient;
+        private readonly ClientDiagnostics _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics;
+        private readonly GuestConfigurationAssignmentsRestOperations _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient;
         private readonly ClientDiagnostics _guestConfigurationAssignmentReportsClientDiagnostics;
         private readonly GuestConfigurationAssignmentReportsRestOperations _guestConfigurationAssignmentReportsRestClient;
         private readonly GuestConfigurationAssignmentData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationAssignmentResource"/> class for mocking. </summary>
-        protected GuestConfigurationAssignmentResource()
+        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVmAssignmentResource"/> class for mocking. </summary>
+        protected GuestConfigurationVmAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GuestConfigurationAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "GuestConfigurationVmAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GuestConfigurationAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, new ResourceIdentifier(data.Id))
+        internal GuestConfigurationVmAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVmAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GuestConfigurationAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal GuestConfigurationVmAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _guestConfigurationAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string guestConfigurationAssignmentApiVersion);
-            _guestConfigurationAssignmentRestClient = new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationAssignmentApiVersion);
+            _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string guestConfigurationVmAssignmentGuestConfigurationAssignmentsApiVersion);
+            _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient = new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmAssignmentGuestConfigurationAssignmentsApiVersion);
             _guestConfigurationAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -98,16 +98,16 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Operation Id: GuestConfigurationAssignments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GuestConfigurationAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GuestConfigurationVmAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.Get");
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Operation Id: GuestConfigurationAssignments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GuestConfigurationAssignmentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<GuestConfigurationVmAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.Get");
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _guestConfigurationAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.Delete");
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationAssignmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new GuestConfigurationArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.Delete");
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _guestConfigurationAssignmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new GuestConfigurationArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -201,16 +201,16 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="data"> Parameters supplied to the create or update guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GuestConfigurationAssignmentResource>> UpdateAsync(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GuestConfigurationVmAssignmentResource>> UpdateAsync(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.Update");
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationAssignmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationAssignmentResource>(Response.FromValue(new GuestConfigurationAssignmentResource(Client, response), response.GetRawResponse()));
+                var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -231,16 +231,16 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="data"> Parameters supplied to the create or update guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GuestConfigurationAssignmentResource> Update(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GuestConfigurationVmAssignmentResource> Update(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.Update");
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _guestConfigurationAssignmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationAssignmentResource>(Response.FromValue(new GuestConfigurationAssignmentResource(Client, response), response.GetRawResponse()));
+                var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             async Task<Page<GuestConfigurationAssignmentReport>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.GetGuestConfigurationAssignmentReports");
+                using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.GetGuestConfigurationAssignmentReports");
                 scope.Start();
                 try
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Page<GuestConfigurationAssignmentReport> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.GetGuestConfigurationAssignmentReports");
+                using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.GetGuestConfigurationAssignmentReports");
                 scope.Start();
                 try
                 {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
-            using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.GetGuestConfigurationAssignmentReport");
+            using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.GetGuestConfigurationAssignmentReport");
             scope.Start();
             try
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
-            using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationAssignmentResource.GetGuestConfigurationAssignmentReport");
+            using var scope = _guestConfigurationAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.GetGuestConfigurationAssignmentReport");
             scope.Start();
             try
             {
