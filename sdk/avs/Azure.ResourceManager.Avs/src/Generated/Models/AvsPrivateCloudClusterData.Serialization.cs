@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> clusterSize = default;
-            Optional<ClusterProvisioningState> provisioningState = default;
+            Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
             Optional<int> clusterId = default;
             Optional<IList<string>> hosts = default;
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ClusterProvisioningState(property0.Value.GetString());
+                            provisioningState = new AvsPrivateCloudClusterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterId"))

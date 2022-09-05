@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (Enabled) or not (Disabled). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restrictMovement"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestrictMovementAsync(WaitUntil waitUntil, VirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestrictMovementAsync(WaitUntil waitUntil, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (Enabled) or not (Disabled). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restrictMovement"/> is null. </exception>
-        public virtual ArmOperation RestrictMovement(WaitUntil waitUntil, VirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RestrictMovement(WaitUntil waitUntil, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
 

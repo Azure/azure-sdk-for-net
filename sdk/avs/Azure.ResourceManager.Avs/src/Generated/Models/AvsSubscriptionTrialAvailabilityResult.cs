@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Subscription trial availability. </summary>
-    public partial class SubscriptionTrialAvailability
+    public partial class AvsSubscriptionTrialAvailabilityResult
     {
-        /// <summary> Initializes a new instance of SubscriptionTrialAvailability. </summary>
-        internal SubscriptionTrialAvailability()
+        /// <summary> Initializes a new instance of AvsSubscriptionTrialAvailabilityResult. </summary>
+        internal AvsSubscriptionTrialAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionTrialAvailability. </summary>
+        /// <summary> Initializes a new instance of AvsSubscriptionTrialAvailabilityResult. </summary>
         /// <param name="status"> Trial status. </param>
         /// <param name="availableHosts"> Number of trial hosts available. </param>
-        internal SubscriptionTrialAvailability(SubscriptionTrialStatus? status, int? availableHosts)
+        internal AvsSubscriptionTrialAvailabilityResult(AvsSubscriptionTrialStatus? status, int? availableHosts)
         {
             Status = status;
             AvailableHosts = availableHosts;
         }
 
         /// <summary> Trial status. </summary>
-        public SubscriptionTrialStatus? Status { get; }
+        public AvsSubscriptionTrialStatus? Status { get; }
         /// <summary> Number of trial hosts available. </summary>
         public int? AvailableHosts { get; }
     }

@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class SubscriptionTrialAvailability
+    public partial class AvsSubscriptionTrialAvailabilityResult
     {
-        internal static SubscriptionTrialAvailability DeserializeSubscriptionTrialAvailability(JsonElement element)
+        internal static AvsSubscriptionTrialAvailabilityResult DeserializeAvsSubscriptionTrialAvailabilityResult(JsonElement element)
         {
-            Optional<SubscriptionTrialStatus> status = default;
+            Optional<AvsSubscriptionTrialStatus> status = default;
             Optional<int> availableHosts = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new SubscriptionTrialStatus(property.Value.GetString());
+                    status = new AvsSubscriptionTrialStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("availableHosts"))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new SubscriptionTrialAvailability(Optional.ToNullable(status), Optional.ToNullable(availableHosts));
+            return new AvsSubscriptionTrialAvailabilityResult(Optional.ToNullable(status), Optional.ToNullable(availableHosts));
         }
     }
 }

@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Avs
     }
     public static partial class AvsExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Avs.Models.SubscriptionQuotaDetails> CheckQuotaAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.SubscriptionQuotaDetails>> CheckQuotaAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Avs.Models.SubscriptionTrialAvailability> CheckTrialAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.SubscriptionTrialAvailability>> CheckTrialAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsCloudLinkResource GetAvsCloudLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource> GetAvsPrivateCloud(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateCloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Avs
         public int? ClusterId { get { throw null; } }
         public int? ClusterSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Hosts { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.ClusterProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? ProvisioningState { get { throw null; } }
         public string SkuName { get { throw null; } set { } }
     }
     public partial class AvsPrivateCloudClusterResource : Azure.ResourceManager.ArmResource
@@ -180,8 +180,8 @@ namespace Azure.ResourceManager.Avs
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string virtualMachineId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RestrictMovement(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovement restrictMovement, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestrictMovementAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovement restrictMovement, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RestrictMovement(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestrictMovementAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AvsPrivateCloudCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.AvsPrivateCloudResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.AvsPrivateCloudResource>, System.Collections.IEnumerable
     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Avs
         public AvsPrivateCloudDatastoreData() { }
         public Azure.ResourceManager.Avs.Models.DiskPoolVolume DiskPoolVolume { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetAppVolumeId { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.DatastoreProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.DatastoreStatus? Status { get { throw null; } }
     }
     public partial class AvsPrivateCloudDatastoreResource : Azure.ResourceManager.ArmResource
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Avs
     {
         public ScriptCmdletData() { }
         public string Description { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ScriptParameterProperties> Parameters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ScriptParameter> Parameters { get { throw null; } }
         public string Timeout { get { throw null; } }
     }
     public partial class ScriptCmdletResource : Azure.ResourceManager.ArmResource
@@ -1026,6 +1026,33 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsCloudLinkStatus left, Azure.ResourceManager.Avs.Models.AvsCloudLinkStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsEncryptionKeyStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsEncryptionKeyStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus AccessDenied { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus Connected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus left, Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus left, Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsEncryptionKeyVaultProperties
+    {
+        public AvsEncryptionKeyVaultProperties() { }
+        public string KeyName { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus? KeyState { get { throw null; } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public string KeyVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.EncryptionVersionType? VersionType { get { throw null; } }
+    }
     public abstract partial class AvsPrivateCloudAddonProperties
     {
         protected AvsPrivateCloudAddonProperties() { }
@@ -1036,6 +1063,55 @@ namespace Azure.ResourceManager.Avs.Models
         public AvsPrivateCloudClusterPatch() { }
         public int? ClusterSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Hosts { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsPrivateCloudClusterProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsPrivateCloudClusterProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState left, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState left, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsPrivateCloudClusterVirtualMachineRestrictMovement
+    {
+        public AvsPrivateCloudClusterVirtualMachineRestrictMovement() { }
+        public Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovementState? RestrictMovement { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsPrivateCloudDatastoreProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsPrivateCloudDatastoreProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState Pending { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState left, Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState left, Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AvsPrivateCloudEndpoints
     {
@@ -1083,25 +1159,53 @@ namespace Azure.ResourceManager.Avs.Models
         public AvsSku(string name) { }
         public string Name { get { throw null; } set { } }
     }
+    public partial class AvsSubscriptionQuotaAvailabilityResult
+    {
+        internal AvsSubscriptionQuotaAvailabilityResult() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, int> HostsRemaining { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled? QuotaEnabled { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ClusterProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.ClusterProvisioningState>
+    public readonly partial struct AvsSubscriptionQuotaEnabled : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ClusterProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.ClusterProvisioningState Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.ClusterProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.ClusterProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.ClusterProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.ClusterProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.ClusterProvisioningState other) { throw null; }
+        public AvsSubscriptionQuotaEnabled(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.ClusterProvisioningState left, Azure.ResourceManager.Avs.Models.ClusterProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.ClusterProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.ClusterProvisioningState left, Azure.ResourceManager.Avs.Models.ClusterProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled left, Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled left, Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsSubscriptionTrialAvailabilityResult
+    {
+        internal AvsSubscriptionTrialAvailabilityResult() { }
+        public int? AvailableHosts { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus? Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsSubscriptionTrialStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsSubscriptionTrialStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus TrialAvailable { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus TrialDisabled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus TrialUsed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus left, Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus left, Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CommonClusterProperties
@@ -1110,36 +1214,13 @@ namespace Azure.ResourceManager.Avs.Models
         public int? ClusterId { get { throw null; } }
         public int? ClusterSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Hosts { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.ClusterProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class CustomerManagedEncryption
     {
         public CustomerManagedEncryption() { }
-        public Azure.ResourceManager.Avs.Models.EncryptionKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsEncryptionKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.EncryptionState? Status { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DatastoreProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.DatastoreProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DatastoreProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.DatastoreProvisioningState Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.DatastoreProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.DatastoreProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.DatastoreProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.DatastoreProvisioningState Pending { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.DatastoreProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.DatastoreProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.DatastoreProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.DatastoreProvisioningState left, Azure.ResourceManager.Avs.Models.DatastoreProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.DatastoreProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.DatastoreProvisioningState left, Azure.ResourceManager.Avs.Models.DatastoreProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DatastoreStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.DatastoreStatus>
@@ -1210,33 +1291,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static implicit operator Azure.ResourceManager.Avs.Models.DnsServiceStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.DnsServiceStatus left, Azure.ResourceManager.Avs.Models.DnsServiceStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionKeyStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.EncryptionKeyStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionKeyStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.EncryptionKeyStatus AccessDenied { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.EncryptionKeyStatus Connected { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.EncryptionKeyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.EncryptionKeyStatus left, Azure.ResourceManager.Avs.Models.EncryptionKeyStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.EncryptionKeyStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.EncryptionKeyStatus left, Azure.ResourceManager.Avs.Models.EncryptionKeyStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EncryptionKeyVaultProperties
-    {
-        public EncryptionKeyVaultProperties() { }
-        public string KeyName { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.EncryptionKeyStatus? KeyState { get { throw null; } }
-        public System.Uri KeyVaultUri { get { throw null; } set { } }
-        public string KeyVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.EncryptionVersionType? VersionType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionState : System.IEquatable<Azure.ResourceManager.Avs.Models.EncryptionState>
@@ -1586,9 +1640,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.ScriptOutputStreamType left, Azure.ResourceManager.Avs.Models.ScriptOutputStreamType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScriptParameterProperties
+    public partial class ScriptParameter
     {
-        internal ScriptParameterProperties() { }
+        internal ScriptParameter() { }
         public string Description { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.ParameterOptionalityStatus? Optional { get { throw null; } }
@@ -1658,60 +1712,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static implicit operator Azure.ResourceManager.Avs.Models.SslCertificateStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.SslCertificateStatus left, Azure.ResourceManager.Avs.Models.SslCertificateStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SubscriptionQuotaDetails
-    {
-        internal SubscriptionQuotaDetails() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, int> HostsRemaining { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled? QuotaEnabled { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SubscriptionQuotaEnabled : System.IEquatable<Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SubscriptionQuotaEnabled(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled left, Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled left, Azure.ResourceManager.Avs.Models.SubscriptionQuotaEnabled right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SubscriptionTrialAvailability
-    {
-        internal SubscriptionTrialAvailability() { }
-        public int? AvailableHosts { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus? Status { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SubscriptionTrialStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SubscriptionTrialStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus TrialAvailable { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus TrialDisabled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus TrialUsed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus left, Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus left, Azure.ResourceManager.Avs.Models.SubscriptionTrialStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class VirtualMachineRestrictMovement
-    {
-        public VirtualMachineRestrictMovement() { }
-        public Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovementState? RestrictMovement { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachineRestrictMovementState : System.IEquatable<Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovementState>

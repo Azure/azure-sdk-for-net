@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
         internal static ManagementCluster DeserializeManagementCluster(JsonElement element)
         {
             Optional<int> clusterSize = default;
-            Optional<ClusterProvisioningState> provisioningState = default;
+            Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
             Optional<int> clusterId = default;
             Optional<IList<string>> hosts = default;
             foreach (var property in element.EnumerateObject())
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ClusterProvisioningState(property.Value.GetString());
+                    provisioningState = new AvsPrivateCloudClusterProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clusterId"))

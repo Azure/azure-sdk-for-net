@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class VirtualMachineRestrictMovement : IUtf8JsonSerializable
+    public partial class AvsPrivateCloudClusterVirtualMachineRestrictMovement : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

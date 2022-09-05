@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionTrialAvailability>> CheckTrialAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrialAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsTrialAvailability");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionTrialAvailability> CheckTrialAvailability(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrialAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsTrialAvailability");
             scope.Start();
             try
             {
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionQuotaDetails>> CheckQuotaAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckQuotaAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsQuotaAvailability");
             scope.Start();
             try
             {
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionQuotaDetails> CheckQuotaAvailability(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckQuotaAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsQuotaAvailability");
             scope.Start();
             try
             {

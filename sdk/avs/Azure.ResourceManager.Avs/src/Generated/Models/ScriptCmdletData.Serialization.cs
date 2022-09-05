@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> timeout = default;
-            Optional<IReadOnlyList<ScriptParameterProperties>> parameters = default;
+            Optional<IReadOnlyList<ScriptParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ScriptParameterProperties> array = new List<ScriptParameterProperties>();
+                            List<ScriptParameter> array = new List<ScriptParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptParameterProperties.DeserializeScriptParameterProperties(item));
+                                array.Add(ScriptParameter.DeserializeScriptParameter(item));
                             }
                             parameters = array;
                             continue;

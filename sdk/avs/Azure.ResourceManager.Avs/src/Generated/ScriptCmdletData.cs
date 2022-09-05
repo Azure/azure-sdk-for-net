@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of ScriptCmdletData. </summary>
         public ScriptCmdletData()
         {
-            Parameters = new ChangeTrackingList<ScriptParameterProperties>();
+            Parameters = new ChangeTrackingList<ScriptParameter>();
         }
 
         /// <summary> Initializes a new instance of ScriptCmdletData. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="description"> Description of the scripts functionality. </param>
         /// <param name="timeout"> Recommended time limit for execution. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
-        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string timeout, IReadOnlyList<ScriptParameterProperties> parameters) : base(id, name, resourceType, systemData)
+        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string timeout, IReadOnlyList<ScriptParameter> parameters) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Timeout = timeout;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Recommended time limit for execution. </summary>
         public string Timeout { get; }
         /// <summary> Parameters the script will accept. </summary>
-        public IReadOnlyList<ScriptParameterProperties> Parameters { get; }
+        public IReadOnlyList<ScriptParameter> Parameters { get; }
     }
 }

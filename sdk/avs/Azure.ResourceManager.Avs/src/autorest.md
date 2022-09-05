@@ -17,8 +17,8 @@ modelerfour:
   flatten-payloads: false
 
 override-operation-name:
-  Locations_CheckQuotaAvailability: CheckQuotaAvailability
-  Locations_CheckTrialAvailability: CheckTrialAvailability
+  Locations_CheckQuotaAvailability: CheckAvsQuotaAvailability
+  Locations_CheckTrialAvailability: CheckAvsTrialAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -66,7 +66,6 @@ rename-mapping:
   Endpoints: AvsPrivateCloudEndpoints
   IdentitySource: SingleSignOnIdentitySource
   InternetEnum: InternetConnectivityState
-  ScriptParameter: ScriptParameterProperties
   ScriptExecutionParameter: ScriptExecutionParameterDetails
   PSCredentialExecutionParameter: PSCredentialExecutionParameterDetails
   ScriptSecureStringExecutionParameter: ScriptSecureStringExecutionParameterDetails
@@ -84,22 +83,27 @@ rename-mapping:
   SegmentStatusEnum: WorkloadNetworkSegmentStatus
   VMTypeEnum: WorkloadNetworkVmType
   VMGroupStatusEnum: WorkloadNetworkVmGroupStatus
-  Quota: SubscriptionQuotaDetails
-  QuotaEnabled: SubscriptionQuotaEnabled
-  Trial: SubscriptionTrialAvailability
-  TrialStatus: SubscriptionTrialStatus
+  Quota: AvsSubscriptionQuotaAvailabilityResult
+  QuotaEnabled: AvsSubscriptionQuotaEnabled
+  Trial: AvsSubscriptionTrialAvailabilityResult
+  TrialStatus: AvsSubscriptionTrialStatus
   Circuit.expressRouteID: -|arm-id
   Circuit.expressRoutePrivatePeeringID: -|arm-id
   MountOptionEnum: LunMountMode
   SslEnum: SslCertificateStatus
   OptionalParamEnum: ParameterOptionalityStatus
   VisibilityParameterEnum: ParameterVisibilityStatus
+  ClusterProvisioningState: AvsPrivateCloudClusterProvisioningState
+  DatastoreProvisioningState: AvsPrivateCloudDatastoreProvisioningState
+  VirtualMachineRestrictMovement: AvsPrivateCloudClusterVirtualMachineRestrictMovement
 
 prepend-rp-prefix:
 - CloudLink
 - CloudLinkStatus
 - PrivateCloud
 - PrivateCloudProvisioningState
+- EncryptionKeyStatus
+- EncryptionKeyVaultProperties
 
 directive:
   - from: vmware.json

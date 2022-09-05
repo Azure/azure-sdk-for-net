@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
         /// <param name="clusterId"> The identity. </param>
         /// <param name="hosts"> The hosts. </param>
-        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, ClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts) : base(id, name, resourceType, systemData)
+        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             ClusterSize = clusterSize;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> The cluster size. </summary>
         public int? ClusterSize { get; set; }
         /// <summary> The state of the cluster provisioning. </summary>
-        public ClusterProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
         /// <summary> The identity. </summary>
         public int? ClusterId { get; }
         /// <summary> The hosts. </summary>

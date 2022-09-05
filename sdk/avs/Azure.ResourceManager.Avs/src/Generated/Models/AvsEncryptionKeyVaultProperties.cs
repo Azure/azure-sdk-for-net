@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> An Encryption Key. </summary>
-    public partial class EncryptionKeyVaultProperties
+    public partial class AvsEncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of EncryptionKeyVaultProperties. </summary>
-        public EncryptionKeyVaultProperties()
+        /// <summary> Initializes a new instance of AvsEncryptionKeyVaultProperties. </summary>
+        public AvsEncryptionKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of AvsEncryptionKeyVaultProperties. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="keyVersion"> The version of the key. </param>
         /// <param name="keyVaultUri"> The URL of the vault. </param>
         /// <param name="keyState"> The state of key provided. </param>
         /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
-        internal EncryptionKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, EncryptionKeyStatus? keyState, EncryptionVersionType? versionType)
+        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, EncryptionVersionType? versionType)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The URL of the vault. </summary>
         public Uri KeyVaultUri { get; set; }
         /// <summary> The state of key provided. </summary>
-        public EncryptionKeyStatus? KeyState { get; }
+        public AvsEncryptionKeyStatus? KeyState { get; }
         /// <summary> Property of the key if user provided or auto detected. </summary>
         public EncryptionVersionType? VersionType { get; }
     }

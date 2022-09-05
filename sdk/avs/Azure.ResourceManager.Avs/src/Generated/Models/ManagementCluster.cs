@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
         /// <param name="clusterId"> The identity. </param>
         /// <param name="hosts"> The hosts. </param>
-        internal ManagementCluster(int? clusterSize, ClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts) : base(clusterSize, provisioningState, clusterId, hosts)
+        internal ManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts) : base(clusterSize, provisioningState, clusterId, hosts)
         {
         }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class EncryptionKeyVaultProperties : IUtf8JsonSerializable
+    public partial class AvsEncryptionKeyVaultProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndObject();
         }
 
-        internal static EncryptionKeyVaultProperties DeserializeEncryptionKeyVaultProperties(JsonElement element)
+        internal static AvsEncryptionKeyVaultProperties DeserializeAvsEncryptionKeyVaultProperties(JsonElement element)
         {
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
             Optional<Uri> keyVaultUrl = default;
-            Optional<EncryptionKeyStatus> keyState = default;
+            Optional<AvsEncryptionKeyStatus> keyState = default;
             Optional<EncryptionVersionType> versionType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyState = new EncryptionKeyStatus(property.Value.GetString());
+                    keyState = new AvsEncryptionKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("versionType"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new EncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType));
+            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType));
         }
     }
 }

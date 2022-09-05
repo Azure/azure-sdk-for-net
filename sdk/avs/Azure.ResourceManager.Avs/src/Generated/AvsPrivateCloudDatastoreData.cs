@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="netAppVolume"> An Azure NetApp Files volume. </param>
         /// <param name="diskPoolVolume"> An iSCSI volume. </param>
         /// <param name="status"> The operational status of the datastore. </param>
-        internal AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatastoreProvisioningState? provisioningState, WritableSubResource netAppVolume, DiskPoolVolume diskPoolVolume, DatastoreStatus? status) : base(id, name, resourceType, systemData)
+        internal AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, WritableSubResource netAppVolume, DiskPoolVolume diskPoolVolume, DatastoreStatus? status) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             NetAppVolume = netAppVolume;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> The state of the datastore provisioning. </summary>
-        public DatastoreProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudDatastoreProvisioningState? ProvisioningState { get; }
         /// <summary> An Azure NetApp Files volume. </summary>
         internal WritableSubResource NetAppVolume { get; set; }
         /// <summary> Gets or sets Id. </summary>

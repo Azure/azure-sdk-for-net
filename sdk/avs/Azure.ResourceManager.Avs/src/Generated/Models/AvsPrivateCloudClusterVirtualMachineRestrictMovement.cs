@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Set VM DRS-driven movement to restricted (enabled) or not (disabled). </summary>
-    public partial class VirtualMachineRestrictMovement
+    public partial class AvsPrivateCloudClusterVirtualMachineRestrictMovement
     {
-        /// <summary> Initializes a new instance of VirtualMachineRestrictMovement. </summary>
-        public VirtualMachineRestrictMovement()
+        /// <summary> Initializes a new instance of AvsPrivateCloudClusterVirtualMachineRestrictMovement. </summary>
+        public AvsPrivateCloudClusterVirtualMachineRestrictMovement()
         {
         }
 

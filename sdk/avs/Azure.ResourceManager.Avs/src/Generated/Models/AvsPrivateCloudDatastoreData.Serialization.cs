@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DatastoreProvisioningState> provisioningState = default;
+            Optional<AvsPrivateCloudDatastoreProvisioningState> provisioningState = default;
             Optional<WritableSubResource> netAppVolume = default;
             Optional<DiskPoolVolume> diskPoolVolume = default;
             Optional<DatastoreStatus> status = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new DatastoreProvisioningState(property0.Value.GetString());
+                            provisioningState = new AvsPrivateCloudDatastoreProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("netAppVolume"))

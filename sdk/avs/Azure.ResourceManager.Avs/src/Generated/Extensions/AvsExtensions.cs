@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SubscriptionTrialAvailability>> CheckTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).CheckTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SubscriptionTrialAvailability> CheckTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).CheckTrialAvailability(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAvsTrialAvailability(location, cancellationToken);
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SubscriptionQuotaDetails>> CheckQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).CheckQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SubscriptionQuotaDetails> CheckQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).CheckQuotaAvailability(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
         }
 
         /// <summary>

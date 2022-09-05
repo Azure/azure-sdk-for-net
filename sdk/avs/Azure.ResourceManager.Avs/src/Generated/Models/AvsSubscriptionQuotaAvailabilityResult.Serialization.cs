@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class SubscriptionQuotaDetails
+    public partial class AvsSubscriptionQuotaAvailabilityResult
     {
-        internal static SubscriptionQuotaDetails DeserializeSubscriptionQuotaDetails(JsonElement element)
+        internal static AvsSubscriptionQuotaAvailabilityResult DeserializeAvsSubscriptionQuotaAvailabilityResult(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, int>> hostsRemaining = default;
-            Optional<SubscriptionQuotaEnabled> quotaEnabled = default;
+            Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostsRemaining"))
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    quotaEnabled = new SubscriptionQuotaEnabled(property.Value.GetString());
+                    quotaEnabled = new AvsSubscriptionQuotaEnabled(property.Value.GetString());
                     continue;
                 }
             }
-            return new SubscriptionQuotaDetails(Optional.ToDictionary(hostsRemaining), Optional.ToNullable(quotaEnabled));
+            return new AvsSubscriptionQuotaAvailabilityResult(Optional.ToDictionary(hostsRemaining), Optional.ToNullable(quotaEnabled));
         }
     }
 }

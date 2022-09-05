@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ScriptParameterProperties
+    public partial class ScriptParameter
     {
-        internal static ScriptParameterProperties DeserializeScriptParameterProperties(JsonElement element)
+        internal static ScriptParameter DeserializeScriptParameter(JsonElement element)
         {
             Optional<ScriptParameterType> type = default;
             Optional<string> name = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new ScriptParameterProperties(Core.Optional.ToNullable(type), name.Value, description.Value, Core.Optional.ToNullable(visibility), Core.Optional.ToNullable(optional));
+            return new ScriptParameter(Core.Optional.ToNullable(type), name.Value, description.Value, Core.Optional.ToNullable(visibility), Core.Optional.ToNullable(optional));
         }
     }
 }

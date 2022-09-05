@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> An parameter that the script will accept. </summary>
-    public partial class ScriptParameterProperties
+    public partial class ScriptParameter
     {
-        /// <summary> Initializes a new instance of ScriptParameterProperties. </summary>
-        internal ScriptParameterProperties()
+        /// <summary> Initializes a new instance of ScriptParameter. </summary>
+        internal ScriptParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptParameterProperties. </summary>
+        /// <summary> Initializes a new instance of ScriptParameter. </summary>
         /// <param name="parameterType"> The type of parameter the script is expecting. psCredential is a PSCredentialObject. </param>
         /// <param name="name"> The parameter name that the script will expect a parameter value for. </param>
         /// <param name="description"> User friendly description of the parameter. </param>
         /// <param name="visibility"> Should this parameter be visible to arm and passed in the parameters argument when executing. </param>
         /// <param name="optional"> Is this parameter required or optional. </param>
-        internal ScriptParameterProperties(ScriptParameterType? parameterType, string name, string description, ParameterVisibilityStatus? visibility, ParameterOptionalityStatus? optional)
+        internal ScriptParameter(ScriptParameterType? parameterType, string name, string description, ParameterVisibilityStatus? visibility, ParameterOptionalityStatus? optional)
         {
             ParameterType = parameterType;
             Name = name;
