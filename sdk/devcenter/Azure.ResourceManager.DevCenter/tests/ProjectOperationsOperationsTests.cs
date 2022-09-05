@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ArmOperation<ResourceGroupResource> rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ResourceGroup, new ResourceGroupData(TestEnvironment.Location)).ConfigureAwait(false);
             ResourceGroupResource rg = rgResponse.Value;
 
-            ProjectCollection projectCollection = rg.GetProjects();
+            ProjectCollection resourceCollection = rg.GetProjects();
 
             string projectName = "sdktest-project";
 
@@ -39,27 +39,18 @@ namespace Azure.ResourceManager.DevCenter.Tests
                 DevCenterId = TestEnvironment.DefaultDevCenterId,
             };
 
-            ArmOperation<ProjectResource> createdProjectResponse = await projectCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData);
-            ProjectResource projectResource = createdProjectResponse.Value;
+            ProjectResource createdResource
+                = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData)).Value;
 
-            Assert.NotNull(projectResource);
-            Assert.NotNull(projectResource.Data);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List Projects
-            AsyncPageable<ProjectResource> projects = projectCollection.GetAllAsync();
-            int count = 0;
-            await foreach (ProjectResource v in projects)
-            {
-                if (v.Id == projectResource.Id)
-                {
-                    count++;
-                    break;
-                }
-            }
-            Assert.True(count == 1);
+            List<ProjectResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<ProjectResource> retrievedProject = await projectCollection.GetAsync(projectName);
+            Response<ProjectResource> retrievedProject = await resourceCollection.GetAsync(projectName);
             Assert.NotNull(retrievedProject.Value);
             Assert.NotNull(retrievedProject.Value.Data);
 

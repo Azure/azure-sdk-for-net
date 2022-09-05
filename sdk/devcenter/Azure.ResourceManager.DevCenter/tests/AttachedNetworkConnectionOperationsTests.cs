@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Tests
@@ -26,9 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
         {
             ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);
 
-            var devCenter = Client.GetDevCenterResource(devCenterId);
-
-            AttachedNetworkConnectionCollection devCenterCollection = devCenter.GetAttachedNetworkConnections();
+            AttachedNetworkConnectionCollection resourceCollection = Client.GetDevCenterResource(devCenterId).GetAttachedNetworkConnections();
 
             string devCenterName = "sdk-attachedNetwork";
 
@@ -39,27 +34,18 @@ namespace Azure.ResourceManager.DevCenter.Tests
                 NetworkConnectionId = TestEnvironment.DefaultNetworkConnection2Id,
             };
 
-            ArmOperation<AttachedNetworkConnectionResource> createdResource = await devCenterCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, devCenterData);
-            AttachedNetworkConnectionResource devCenterResource = createdResource.Value;
+            AttachedNetworkConnectionResource createdResource
+                = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, devCenterData)).Value;
 
-            Assert.NotNull(devCenterResource);
-            Assert.NotNull(devCenterResource.Data);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List AttachedNetworkConnections
-            AsyncPageable<AttachedNetworkConnectionResource> devCenters = devCenterCollection.GetAllAsync();
-            int count = 0;
-            await foreach (AttachedNetworkConnectionResource v in devCenters)
-            {
-                if (v.Id == devCenterResource.Id)
-                {
-                    count++;
-                    break;
-                }
-            }
-            Assert.True(count == 1);
+            List<AttachedNetworkConnectionResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<AttachedNetworkConnectionResource> retrievedAttachedNetworkConnection = await devCenterCollection.GetAsync(devCenterName);
+            Response<AttachedNetworkConnectionResource> retrievedAttachedNetworkConnection = await resourceCollection.GetAsync(devCenterName);
             Assert.NotNull(retrievedAttachedNetworkConnection.Value);
             Assert.NotNull(retrievedAttachedNetworkConnection.Value.Data);
 

@@ -45,24 +45,15 @@ namespace Azure.ResourceManager.DevCenter.Tests
                 Sku = new DevCenterSku(name: "general_a_8c32gb_v1"),
                 OSStorageType = "ssd_512gb",
             };
-            ArmOperation<DevBoxDefinitionResource> createdResourceResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, devBoxDefinitionData);
-            DevBoxDefinitionResource createdResource = createdResourceResponse.Value;
+            DevBoxDefinitionResource createdResource
+                = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, devBoxDefinitionData)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List
-            AsyncPageable<DevBoxDefinitionResource> devCenters = resourceCollection.GetAllAsync();
-            int count = 0;
-            await foreach (DevBoxDefinitionResource v in devCenters)
-            {
-                if (v.Id == createdResource.Id)
-                {
-                    count++;
-                    break;
-                }
-            }
-            Assert.True(count == 1);
+            List<DevBoxDefinitionResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<DevBoxDefinitionResource> retrievedResource = await resourceCollection.GetAsync(resourceName);

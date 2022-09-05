@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -12,9 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Tests
 {
-    public class DevCenterOperationsTests : DevCenterManagementTestBase
+    public class DevCenterResourceOperationsTests : DevCenterManagementTestBase
     {
-        public DevCenterOperationsTests(bool isAsync)
+        public DevCenterResourceOperationsTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -28,34 +26,25 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ArmOperation<ResourceGroupResource> rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ResourceGroup, new ResourceGroupData(TestEnvironment.Location)).ConfigureAwait(false);
             ResourceGroupResource rg = rgResponse.Value;
 
-            DevCenterCollection devCenterCollection = rg.GetDevCenters();
+            DevCenterCollection resourceCollection = rg.GetDevCenters();
 
             string devCenterName = "sdktest-devcenter";
 
             // Create a DevCenter resource
 
             var devCenterData = new DevCenterData(TestEnvironment.Location);
-            ArmOperation<DevCenterResource> createdDevCenterResponse = await devCenterCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, devCenterData);
-            DevCenterResource devCenterResource = createdDevCenterResponse.Value;
+            ArmOperation<DevCenterResource> createdDevCenterResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, devCenterData);
+            DevCenterResource createdResource = createdDevCenterResponse.Value;
 
-            Assert.NotNull(devCenterResource);
-            Assert.NotNull(devCenterResource.Data);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List DevCenters
-            AsyncPageable<DevCenterResource> devCenters = devCenterCollection.GetAllAsync();
-            int count = 0;
-            await foreach (DevCenterResource v in devCenters)
-            {
-                if (v.Id == devCenterResource.Id)
-                {
-                    count++;
-                    break;
-                }
-            }
-            Assert.True(count == 1);
+            List<DevCenterResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<DevCenterResource> retrievedDevCenter = await devCenterCollection.GetAsync(devCenterName);
+            Response<DevCenterResource> retrievedDevCenter = await resourceCollection.GetAsync(devCenterName);
             Assert.NotNull(retrievedDevCenter.Value);
             Assert.NotNull(retrievedDevCenter.Value.Data);
 
@@ -63,7 +52,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             DevCenterData updatedData = new DevCenterData(TestEnvironment.Location);
             updatedData.Tags["t1"] = "v1";
 
-            ArmOperation<DevCenterResource> updatedDevCenter = await devCenterCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, updatedData);
+            ArmOperation<DevCenterResource> updatedDevCenter = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, updatedData);
 
             // Delete
             ArmOperation deleteOp = await updatedDevCenter.Value.DeleteAsync(WaitUntil.Completed);

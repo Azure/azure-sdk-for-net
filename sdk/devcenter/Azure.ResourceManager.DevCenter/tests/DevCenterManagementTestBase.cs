@@ -32,10 +32,5 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
-
-        protected async Task Initialize()
-        {
-            await Task.Delay(0);
-        }
     }
 }

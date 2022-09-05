@@ -25,10 +25,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
         [PlaybackOnly("")]
         public async Task PoolResourceFull()
         {
-            ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);
             ResourceIdentifier projectId = new ResourceIdentifier(TestEnvironment.DefaultProjectId);
             ResourceIdentifier devBoxDefinitionId = new ResourceIdentifier(TestEnvironment.DefaultMarketplaceDefinitionId);
-            ResourceIdentifier networkConnectionId = new ResourceIdentifier(TestEnvironment.DefaultNetworkConnectionId);
 
             var projectResponse = await Client.GetProjectResource(projectId).GetAsync();
             var projectResource = projectResponse.Value;
@@ -53,17 +51,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
             Assert.NotNull(createdResource.Data);
 
             // List
-            AsyncPageable<PoolResource> devCenters = resourceCollection.GetAllAsync();
-            int count = 0;
-            await foreach (PoolResource v in devCenters)
-            {
-                if (v.Id == createdResource.Id)
-                {
-                    count++;
-                    break;
-                }
-            }
-            Assert.True(count == 1);
+            List<PoolResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<PoolResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
