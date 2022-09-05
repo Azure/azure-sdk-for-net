@@ -12,5 +12,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class TargetServiceBaseInfo
     {
+        /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
+        public TargetServiceBaseInfo()
+        {
+        }
     }
 }

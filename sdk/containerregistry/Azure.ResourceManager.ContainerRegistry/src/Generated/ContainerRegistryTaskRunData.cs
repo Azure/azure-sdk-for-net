@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="runRequest">
         /// The request (parameters) for the run
         /// Please note <see cref="ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunRequest"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
+        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
         /// </param>
         /// <param name="runResult"> The result of this task run. </param>
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary>
         /// The request (parameters) for the run
         /// Please note <see cref="ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunRequest"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
+        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
         /// </summary>
         public ContainerRegistryRunContent RunRequest { get; set; }
         /// <summary> The result of this task run. </summary>

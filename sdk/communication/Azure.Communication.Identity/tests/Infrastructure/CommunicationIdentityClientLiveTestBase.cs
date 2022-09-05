@@ -72,15 +72,11 @@ namespace Azure.Communication.Identity.Tests
                     "https://auth.msft.communication.azure.com/Teams.ManageCalls",
                     "https://auth.msft.communication.azure.com/Teams.ManageChats"
                 };
-                SecureString communicationMsalPassword = new SecureString();
-                foreach (char c in TestEnvironment.CommunicationMsalPassword)
-                {
-                    communicationMsalPassword.AppendChar(c);
-                }
+
                 AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
-                    communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+                    TestEnvironment.CommunicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
                 options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
             return options;

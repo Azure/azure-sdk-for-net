@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.Core;
+using System.Net;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationEndpoint. </summary>
-        /// <param name="location"> The location of the endpoint. </param>
+        /// <param name="endpointLocation"> The location of the endpoint. </param>
         /// <param name="destinationPort"> The destination port to connect to. </param>
         /// <param name="publicPort"> The public port to connect to. </param>
         /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
-        internal HDInsightApplicationEndpoint(AzureLocation? location, int? destinationPort, int? publicPort, string privateIPAddress)
+        internal HDInsightApplicationEndpoint(string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress)
         {
-            Location = location;
+            EndpointLocation = endpointLocation;
             DestinationPort = destinationPort;
             PublicPort = publicPort;
             PrivateIPAddress = privateIPAddress;
         }
 
         /// <summary> The location of the endpoint. </summary>
-        public AzureLocation? Location { get; set; }
+        public string EndpointLocation { get; set; }
         /// <summary> The destination port to connect to. </summary>
         public int? DestinationPort { get; set; }
         /// <summary> The public port to connect to. </summary>
         public int? PublicPort { get; set; }
         /// <summary> The private ip address of the endpoint. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
     }
 }

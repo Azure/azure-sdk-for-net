@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This library encapsulates a set of storage conventions for Azure Batch task
@@ -6,24 +6,23 @@
       by task and job id and the type of output.
     </Description>
     <AssemblyTitle>Microsoft Azure Batch File Conventions</AssemblyTitle>
-    <Version>3.6.0-preview.1</Version>
+    <Version>4.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>4.0.0</ApiCompatVersion>
     <PackageTags>Microsoft,Azure,Batch,windowsazureofficial</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <PackageReleaseNotes>
       Improve usability of GetOutputStoragePath.
     </PackageReleaseNotes>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0" />
     <PackageReference Include="Microsoft.Azure.Batch" />
-    <PackageReference Include="WindowsAzure.Storage" />
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Security.Cryptography.Algorithms" />
-  </ItemGroup>
 </Project>

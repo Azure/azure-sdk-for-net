@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering.Projects
 {
+    // Data plane generated client. The QuestionAnsweringProjects service client.
     /// <summary> The QuestionAnsweringProjects service client. </summary>
     public partial class QuestionAnsweringProjectsClient
     {

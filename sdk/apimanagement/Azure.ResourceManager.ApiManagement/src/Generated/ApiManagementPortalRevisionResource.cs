@@ -143,10 +143,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> The ApiManagementPortalRevision to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementPortalRevisionResource>> UpdateAsync(WaitUntil waitUntil, string ifMatch, ApiManagementPortalRevisionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApiManagementPortalRevisionResource>> UpdateAsync(WaitUntil waitUntil, ETag ifMatch, ApiManagementPortalRevisionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionResource.Update");
@@ -175,10 +174,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> The ApiManagementPortalRevision to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementPortalRevisionResource> Update(WaitUntil waitUntil, string ifMatch, ApiManagementPortalRevisionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ApiManagementPortalRevisionResource> Update(WaitUntil waitUntil, ETag ifMatch, ApiManagementPortalRevisionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionResource.Update");

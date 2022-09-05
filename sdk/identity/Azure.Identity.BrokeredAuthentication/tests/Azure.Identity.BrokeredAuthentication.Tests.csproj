@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableDefaultItems>false</EnableDefaultItems>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -19,6 +20,11 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Identity\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Identity.BrokeredAuthentication.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" Exclude="*Manual*.cs"/>
+    <Compile Include="ManualInteractiveBrowserCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+    <Compile Include="ManualSharedTokenCacheCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
   </ItemGroup>
 
 </Project>

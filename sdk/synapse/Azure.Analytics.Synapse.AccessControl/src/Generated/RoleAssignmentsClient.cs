@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
+    // Data plane generated client. The RoleAssignments service client.
     /// <summary> The RoleAssignments service client. </summary>
     public partial class RoleAssignmentsClient
     {
@@ -541,8 +542,8 @@ namespace Azure.Analytics.Synapse.AccessControl
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
@@ -550,7 +551,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -637,8 +638,8 @@ namespace Azure.Analytics.Synapse.AccessControl
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
@@ -646,7 +647,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -695,8 +696,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
@@ -704,7 +705,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -753,8 +754,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
@@ -762,7 +763,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

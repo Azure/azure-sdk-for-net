@@ -53,7 +53,7 @@ namespace Azure.Identity.Tests.Mock
             string[] scopes,
             string claims,
             string username,
-            SecureString password,
+            string password,
             string tenantId,
             bool async,
             CancellationToken cancellationToken)

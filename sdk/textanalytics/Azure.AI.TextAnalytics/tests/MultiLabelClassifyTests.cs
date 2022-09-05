@@ -256,6 +256,38 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, multiLabelClassifyActionsResults.Select(result => result.ActionName));
         }
 
+        [RecordedTest]
+        public async Task StartMultiLabelClassify()
+        {
+            TextAnalyticsClient client = GetClient();
+            ClassifyDocumentOperation operation = await client.StartMultiLabelClassifyAsync(s_multiLabelClassifyBatchDocuments, TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName);
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+
+            // Take the first page.
+            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection);
+        }
+
+        [RecordedTest]
+        public async Task StartMultiLabelClassifyWithName()
+        {
+            TextAnalyticsClient client = GetClient();
+            ClassifyDocumentOperation operation = await client.StartMultiLabelClassifyAsync(s_multiLabelClassifyBatchDocuments, TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName, new MultiLabelClassifyOptions
+            {
+                DisplayName = "StartMultiLabelClassifyWithName",
+            });
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.AreEqual("StartMultiLabelClassifyWithName", operation.DisplayName);
+
+            // Take the first page.
+            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection);
+        }
+
         private void ValidateSummaryDocumentResult(ClassificationCategoryCollection classificationCollection)
         {
             Assert.IsNotNull(classificationCollection.Warnings);

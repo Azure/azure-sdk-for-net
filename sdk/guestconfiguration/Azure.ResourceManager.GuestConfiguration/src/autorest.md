@@ -17,12 +17,20 @@ modelerfour:
   flatten-payloads: false
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}: GuestConfigurationAssignment
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}: GuestConfigurationAssignment
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}: GuestConfigurationAssignment
-  
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}: GuestConfigurationVmAssignment
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}: GuestConfigurationHcrpAssignment
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}: GuestConfigurationVmssAssignment
+
 rename-mapping:
   'VmssvmInfo': 'VmssVmInfo'
+
+prevent-wrapping-return-type:
+- GuestConfigurationAssignments_SubscriptionList
+- GuestConfigurationAssignments_RGList
+
+override-operation-name:
+  GuestConfigurationAssignments_SubscriptionList: GetGuestConfigurationAssignments
+  GuestConfigurationAssignments_RGList: GetGuestConfigurationAssignments
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -54,4 +62,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - from: guestconfiguration.json
+    where: $.definitions
+    transform: >
+      $.GuestConfigurationNavigation.properties.configurationSetting['x-nullable'] = true;
+      $.GuestConfigurationNavigation.properties.assignmentType['x-nullable'] = true;
+      $.GuestConfigurationNavigation.properties.kind['x-nullable'] = true;
+      $.GuestConfigurationAssignmentProperties.properties.vmssVMList['x-nullable'] = true;
 ```

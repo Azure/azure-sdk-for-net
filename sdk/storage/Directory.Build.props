@@ -8,6 +8,10 @@
     <IsWebjobsProject>true</IsWebjobsProject>
     <SupportsNetStandard20>true</SupportsNetStandard20>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <IsStorageTest Condition="'$(IsStorageTest)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsStorageTest>
+  </PropertyGroup>
   
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
   
@@ -69,20 +73,8 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
-  <!-- Add references for CLIENT LIBRARY projects -->
-  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
   <!-- Add references for TEST projects -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />

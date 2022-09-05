@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
@@ -17,21 +16,8 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InputIds))
-            {
-                writer.WritePropertyName("inputIds");
-                writer.WriteStartArray();
-                foreach (var item in InputIds)
-                {
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position");
@@ -47,16 +33,6 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("height");
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Rows))
-            {
-                writer.WritePropertyName("rows");
-                writer.WriteNumberValue(Rows.Value);
-            }
-            if (Optional.IsDefined(Columns))
-            {
-                writer.WritePropertyName("columns");
-                writer.WriteNumberValue(Columns.Value);
-            }
             if (Optional.IsDefined(Layer))
             {
                 writer.WritePropertyName("layer");
@@ -67,33 +43,24 @@ namespace Azure.Communication.MediaComposition
 
         internal static InputGroup DeserializeInputGroup(JsonElement element)
         {
-            Optional<IList<IList<string>>> inputIds = default;
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "autoGridBased": return AutoGridInputGroup.DeserializeAutoGridInputGroup(element);
+                    case "gridBased": return GridInputGroup.DeserializeGridInputGroup(element);
+                }
+            }
+            InputGroupType kind = default;
             Optional<InputPosition> position = default;
             Optional<string> width = default;
             Optional<string> height = default;
-            Optional<int> rows = default;
-            Optional<int> columns = default;
             Optional<string> layer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputIds"))
+                if (property.NameEquals("kind"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<IList<string>> array = new List<IList<string>>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
-                        {
-                            array0.Add(item0.GetString());
-                        }
-                        array.Add(array0);
-                    }
-                    inputIds = array;
+                    kind = new InputGroupType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("position"))
@@ -116,33 +83,13 @@ namespace Azure.Communication.MediaComposition
                     height = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rows"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    rows = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("columns"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    columns = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("layer"))
                 {
                     layer = property.Value.GetString();
                     continue;
                 }
             }
-            return new InputGroup(Optional.ToList(inputIds), position.Value, width.Value, height.Value, Optional.ToNullable(rows), Optional.ToNullable(columns), layer.Value);
+            return new InputGroup(kind, position.Value, width.Value, height.Value, layer.Value);
         }
     }
 }

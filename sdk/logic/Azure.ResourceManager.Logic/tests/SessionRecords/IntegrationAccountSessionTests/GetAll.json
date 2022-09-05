@@ -1,0 +1,177 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2ec72559838b5d48bbb878c12154c712-f27f7d58faac374e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9096a2ede6ed37f36933d4805c5bcd05",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:22:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d7c4830b-6c2b-4f25-aaaa-ab1458a9364e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "centralus:7abb9e13-e167-4a66-a9a2-272c28986367",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T092249Z:d7c4830b-6c2b-4f25-aaaa-ab1458a9364e"
+      },
+      "ResponseBody": {
+        "properties": {
+          "state": "Enabled"
+        },
+        "sku": {
+          "name": "Standard"
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946",
+        "name": "intergrationAccount5946",
+        "type": "Microsoft.Logic/integrationAccounts",
+        "location": "centralus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946/sessions/session8902?api-version=2019-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "63",
+        "Content-Type": "application/json",
+        "traceparent": "00-a3a939030bc8574c82812b9be4409e52-52b4ab5dfd12084d-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cff3a67a1f42e30ea6cb46fa67c1a128",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "centralus",
+        "properties": {
+          "content": 456
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "410",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:22:50 GMT",
+        "ETag": "\u002208585402739145825256\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e5abdfa3-3afe-42d0-aaf5-afacb46a2d0e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "centralus:b24f80f9-4c98-4884-a0e2-b2fa9d67ae36",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T092251Z:e5abdfa3-3afe-42d0-aaf5-afacb46a2d0e"
+      },
+      "ResponseBody": {
+        "properties": {
+          "createdTime": "2022-08-24T09:22:50.8950457Z",
+          "changedTime": "2022-08-24T09:22:50.8950457Z",
+          "content": 456
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946/sessions/session8902",
+        "name": "session8902",
+        "type": "Microsoft.Logic/integrationAccounts/sessions",
+        "etag": "\u002208585402739145825256\u0022"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946/sessions?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fb281579d62714408ae02abc86d21560-b57fa5231754d74c-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220824.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3fdf9bfea03ab5d94eb0b156fabc8f47",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1651",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 09:22:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a4bce3cb-5a48-4fcc-b9c2-39af8af66860",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "centralus:76355661-cc8f-4452-996d-117534a943fb",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T092251Z:a4bce3cb-5a48-4fcc-b9c2-39af8af66860"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "createdTime": "2022-08-24T09:22:33.3590853Z",
+              "changedTime": "2022-08-24T09:22:33.3594935Z",
+              "content": 456
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946/sessions/session7996",
+            "name": "session7996",
+            "type": "Microsoft.Logic/integrationAccounts/sessions",
+            "etag": "\u002208585402739321184859\u0022"
+          },
+          {
+            "properties": {
+              "createdTime": "2022-08-24T09:22:48.1222924Z",
+              "changedTime": "2022-08-24T09:22:48.1224019Z",
+              "content": 456
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946/sessions/session80",
+            "name": "session80",
+            "type": "Microsoft.Logic/integrationAccounts/sessions",
+            "etag": "\u002208585402739173552673\u0022"
+          },
+          {
+            "properties": {
+              "createdTime": "2022-08-24T09:22:50.8950457Z",
+              "changedTime": "2022-08-24T09:22:50.8951318Z",
+              "content": 456
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946/sessions/session8902",
+            "name": "session8902",
+            "type": "Microsoft.Logic/integrationAccounts/sessions",
+            "etag": "\u002208585402739145825256\u0022"
+          },
+          {
+            "properties": {
+              "createdTime": "2022-08-24T09:22:44.7053155Z",
+              "changedTime": "2022-08-24T09:22:44.7055935Z",
+              "content": 456
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1575/providers/Microsoft.Logic/integrationAccounts/intergrationAccount5946/sessions/session8915",
+            "name": "session8915",
+            "type": "Microsoft.Logic/integrationAccounts/sessions",
+            "etag": "\u002208585402739207722560\u0022"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1687272640",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

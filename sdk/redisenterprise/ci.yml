@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/redisenterprise/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -28,5 +27,5 @@ extends:
     ServiceDirectory: redisenterprise
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.RedisEnterpriseCache
-      safeName: AzureResourceManagerRedisEnterpriseCache
+    - name: Azure.ResourceManager.RedisEnterprise
+      safeName: AzureResourceManagerRedisEnterprise

@@ -24,6 +24,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'ifMatch': 'etag'
   'locationName': 'azure-location'
+  'thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -174,6 +175,15 @@ rename-mapping:
   UserIdentity: BatchUserIdentity
   ImageReference: BatchImageReference
   ImageReference.id: -|arm-id
+  CertificateCreateOrUpdateParameters.properties.data: -|any
+  KeyVaultProperties.keyIdentifier: -|uri
+  AzureFileShareConfiguration.azureFileUrl: FileUrl
+  MountConfiguration.azureBlobFileSystemConfiguration: BlobFileSystemConfiguration
+  MountConfiguration.azureFileShareConfiguration: FileShareConfiguration
+  ResourceFile.storageContainerUrl: BlobContainerUri
+  ResourceFile.autoStorageContainerName: AutoBlobContainerName
+  AccountKeyType: BatchAccountKeyType
+  BatchAccountRegenerateKeyParameters.keyName: KeyType
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
