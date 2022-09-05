@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             AssertResourceData(certificateData1, certificateData2);
             Assert.AreEqual(certificateData1.ETag, certificateData2.ETag);
+            Assert.AreEqual(certificateData1.PublicData, certificateData2.PublicData);
+            Assert.AreEqual(certificateData1.Format, certificateData2.Format);
+            Assert.AreEqual(certificateData1.PreviousProvisioningState, certificateData2.PreviousProvisioningState);
         }
         #endregion
 
@@ -63,23 +66,11 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         }
         public static void AssertAccount(BatchAccountData account1, BatchAccountData account2)
         {
-            //AssertResourceData(account1, account2);
             Assert.AreEqual(account1.Tags, account2.Tags);
-        }
-        #endregion
-
-        #region Detector
-        public static BatchAccountDetectorData GetDetectorData()
-        {
-            return new BatchAccountDetectorData()
-            {
-                Value = "ew0KICAibWV0YWRhdGEiOiB7DQogICAgImlkIjogInBvb2xzQW5kTm9kZXMiLA0KICAgICJuYW1lIjogIlBvb2xzIGFuZCBOb2RlcyIsDQogICAgImRlc2NyaXB0aW9uIjogbnVsbCwNCiAgICAiYXV0aG9yIjogIiIsDQogICAgImNhdGVnb3J5IjogbnVsbCwNCiAgICAic3VwcG9ydFRvcGljTGlzdCI6IFsNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDc3IiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDYxIiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDY1IiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDY2IiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDY5IiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDcyIiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDc5IiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDgyIiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDkxIiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDkzIiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfSwNCiAgICAgIHsNCiAgICAgICAgImlkIjogIjMyNjM1MDk0IiwNCiAgICAgICAgInBlc0lkIjogIjE1NjE0IiwNCiAgICAgICAgInR5cGVJZCI6ICJEaWFnbm9zdGljcy5Nb2RlbHNBbmRVdGlscy5BdHRyaWJ1dGVzLlN1cHBvcnRUb3BpYywgRGlhZ25vc3RpY3MuTW9kZWxzQW5kVXRpbHMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIg0KICAgICAgfQ0KICAgIF0sDQogICAgImFuYWx5c2lzVHlwZXMiOiBudWxsLA0KICAgICJ0eXBlIjogIkFuYWx5c2lzIiwNCiAgICAic2NvcmUiOiAwLjANCiAgfSwNCiAgImRhdGFzZXQiOiBbXSwNCiAgInN0YXR1cyI6IHsNCiAgICAibWVzc2FnZSI6IG51bGwsDQogICAgInN0YXR1c0lkIjogNA0KICB9LA0KICAiZGF0YVByb3ZpZGVyc01ldGFkYXRhIjogbnVsbCwNCiAgInN1Z2dlc3RlZFV0dGVyYW5jZXMiOiBudWxsDQp9"
-            };
-        }
-        public static void AssertDetector(BatchAccountDetectorData detectorData1, BatchAccountDetectorData detectorData2)
-        {
-            AssertResourceData(detectorData1, detectorData2);
-            Assert.AreEqual(detectorData1.ETag, detectorData2.ETag);
+            Assert.AreEqual(account1.Location, account2.Location);
+            Assert.AreEqual(account1.AccountEndpoint, account2.AccountEndpoint);
+            Assert.AreEqual(account1.Identity, account2.Identity);
+            Assert.AreEqual(account1.Name, account2.Name);
         }
         #endregion
 
