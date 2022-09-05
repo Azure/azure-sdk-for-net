@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Azure.ResourceManager.CognitiveServices.Tests
 {
-    public class CognitiveServicesPrivateEndpointConnectionResourceTests : CognitiveServicesManagementTestBase
+    public class PEConnectionCollectionTests : CognitiveServicesManagementTestBase
     {
-        public CognitiveServicesPrivateEndpointConnectionResourceTests(bool isAsync)
+        public PEConnectionCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -23,26 +22,19 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             var container = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input);
-            var account = lro.Value;
+            var account =  lro.Value;
             return account.GetCognitiveServicesPrivateEndpointConnections();
         }
 
         [TestCase]
-        public async Task CognitiveServicesPrivateEndpointConnectionResourceApiTests()
+        public async Task PEConnectionCollectionApiTests()
         {
-            //1.Get
-            var collection = await GetCognitiveServicesPrivateEndpointConnectionCollectionAsync();
-            var list = await collection.GetAllAsync().ToEnumerableAsync();
-
-            if (list.Count > 0)
-            {
-                var connection1 = list.FirstOrDefault();
-                var connection2 = (await connection1.GetAsync()).Value;
-                ResourceDataHelper.AssertConnection(connection1.Data, connection2.Data);
-
-                //2.Delete
-                await connection1.DeleteAsync(WaitUntil.Completed);
-            }
+            //1.GetAll
+            var container = await GetCognitiveServicesPrivateEndpointConnectionCollectionAsync();
+            var list = await container.GetAllAsync().ToEnumerableAsync();
+            Assert.GreaterOrEqual(list.Count, 0);
+            //4Exists
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
     }
 }
