@@ -3,6 +3,7 @@
 ## 12.13.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added support for "secondary then primary" read operations when using geo-redundant accounts.
 
 ### Breaking Changes
 

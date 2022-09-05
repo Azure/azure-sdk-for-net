@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("enforceCertificateNameCheck");
                 writer.WriteStringValue(EnforceCertificateNameCheck.Value.ToString());
             }
-            if (Optional.IsDefined(SendRecvTimeoutSeconds))
+            if (Optional.IsDefined(SendRecvTimeoutInSeconds))
             {
                 writer.WritePropertyName("sendRecvTimeoutSeconds");
-                writer.WriteNumberValue(SendRecvTimeoutSeconds.Value);
+                writer.WriteNumberValue(SendRecvTimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
         }

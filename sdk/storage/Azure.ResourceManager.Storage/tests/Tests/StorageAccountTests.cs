@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Storage.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
-        public StorageAccountTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public StorageAccountTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -1254,10 +1255,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(serviceSasParameters.SharedAccessExpiryOn);
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task AddRemoveTag()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();

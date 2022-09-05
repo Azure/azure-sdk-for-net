@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static ProfileList DeserializeProfileList(JsonElement element)
         {
-            Optional<IReadOnlyList<ProfileData>> value = default;
+            Optional<IReadOnlyList<FrontDoorNetworkExperimentProfileData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProfileData> array = new List<ProfileData>();
+                    List<FrontDoorNetworkExperimentProfileData> array = new List<FrontDoorNetworkExperimentProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileData.DeserializeProfileData(item));
+                        array.Add(FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(item));
                     }
                     value = array;
                     continue;

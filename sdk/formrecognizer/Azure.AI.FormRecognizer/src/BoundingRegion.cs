@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Drawing;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -17,13 +18,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon)
         {
             PageNumber = pageNumber;
-            BoundingPolygon = new BoundingPolygon(polygon);
+            BoundingPolygon = ClientCommon.CovertToListOfPointF(polygon);
         }
 
         /// <summary>
         /// Initializes a new instance of BoundingRegion. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal BoundingRegion(int pageNumber, BoundingPolygon boundingPolygon)
+        internal BoundingRegion(int pageNumber, IReadOnlyList<PointF> boundingPolygon)
         {
             PageNumber = pageNumber;
             BoundingPolygon = boundingPolygon;
@@ -38,6 +39,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// The bounding polygon that outlines this region. Units are in pixels for images and inches for
         /// PDF. The <see cref="LengthUnit"/> type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
-        public BoundingPolygon BoundingPolygon { get; }
+        public IReadOnlyList<PointF> BoundingPolygon { get; }
     }
 }
