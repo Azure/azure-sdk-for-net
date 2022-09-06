@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -28,11 +29,11 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<AzureLocation> location = default;
             Optional<string> restoreReference = default;
-            Optional<string> creationTime = default;
-            Optional<string> deletionTime = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> deletionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -71,7 +72,12 @@ namespace Azure.ResourceManager.Storage
                     {
                         if (property0.NameEquals("storageAccountResourceId"))
                         {
-                            storageAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("location"))
@@ -91,19 +97,29 @@ namespace Azure.ResourceManager.Storage
                         }
                         if (property0.NameEquals("creationTime"))
                         {
-                            creationTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("deletionTime"))
                         {
-                            deletionTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deletionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DeletedAccountData(id, name, type, systemData.Value, storageAccountResourceId.Value, Optional.ToNullable(location), restoreReference.Value, creationTime.Value, deletionTime.Value);
+            return new DeletedAccountData(id, name, type, systemData.Value, storageAccountResourceId.Value, Optional.ToNullable(location), restoreReference.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime));
         }
     }
 }

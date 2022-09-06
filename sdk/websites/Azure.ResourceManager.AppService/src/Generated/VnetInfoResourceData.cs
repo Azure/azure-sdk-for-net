@@ -33,24 +33,24 @@ namespace Azure.ResourceManager.AppService
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
-        /// <param name="resyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? resyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
+        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;
             CertBlob = certBlob;
             Routes = routes;
-            ResyncRequired = resyncRequired;
+            IsResyncRequired = isResyncRequired;
             DnsServers = dnsServers;
             IsSwift = isSwift;
             Kind = kind;
         }
 
         /// <summary> The Virtual Network&apos;s resource ID. </summary>
-        public string VnetResourceId { get; set; }
+        public ResourceIdentifier VnetResourceId { get; set; }
         /// <summary> The client certificate thumbprint. </summary>
         public string CertThumbprint { get; }
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The routes that this Virtual Network connection uses. </summary>
         public IReadOnlyList<VnetRoute> Routes { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? ResyncRequired { get; }
+        public bool? IsResyncRequired { get; }
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
         public string DnsServers { get; set; }
         /// <summary> Flag that is used to denote if this is VNET injection. </summary>

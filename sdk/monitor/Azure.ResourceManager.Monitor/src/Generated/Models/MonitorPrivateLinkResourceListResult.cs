@@ -17,21 +17,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>
         internal MonitorPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<PrivateLinkData>();
+            Value = new ChangeTrackingList<MonitorPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal MonitorPrivateLinkResourceListResult(IReadOnlyList<PrivateLinkData> value, string nextLink)
+        /// <param name="value"> Array of private link resources. </param>
+        internal MonitorPrivateLinkResourceListResult(IReadOnlyList<MonitorPrivateLinkResourceData> value)
         {
             Value = value;
-            NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<PrivateLinkData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Array of private link resources. </summary>
+        public IReadOnlyList<MonitorPrivateLinkResourceData> Value { get; }
     }
 }

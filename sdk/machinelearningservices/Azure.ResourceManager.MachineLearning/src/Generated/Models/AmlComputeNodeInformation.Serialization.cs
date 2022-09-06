@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element)
         {
             Optional<string> nodeId = default;
-            Optional<string> privateIpAddress = default;
-            Optional<string> publicIpAddress = default;
+            Optional<string> privateIPAddress = default;
+            Optional<string> publicIPAddress = default;
             Optional<int> port = default;
             Optional<NodeState> nodeState = default;
             Optional<string> runId = default;
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIpAddress = property.Value.GetString();
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    publicIpAddress = property.Value.GetString();
+                    publicIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("port"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AmlComputeNodeInformation(nodeId.Value, privateIpAddress.Value, publicIpAddress.Value, Optional.ToNullable(port), Optional.ToNullable(nodeState), runId.Value);
+            return new AmlComputeNodeInformation(nodeId.Value, privateIPAddress.Value, publicIPAddress.Value, Optional.ToNullable(port), Optional.ToNullable(nodeState), runId.Value);
         }
     }
 }

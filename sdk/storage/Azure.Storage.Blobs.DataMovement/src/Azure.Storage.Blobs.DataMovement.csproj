@@ -2,6 +2,7 @@
   <PropertyGroup>
     <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs.DataMovement client library</AssemblyTitle>
@@ -42,6 +43,9 @@
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared\Storage" />
@@ -88,6 +92,7 @@
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)TaskThrottler.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>

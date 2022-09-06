@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             Optional<ReferenceInputDataSource> datasource = default;
             string type = default;
-            Optional<Serialization> serialization = default;
-            Optional<Diagnostics> diagnostics = default;
+            Optional<StreamAnalyticsDataSerialization> serialization = default;
+            Optional<StreamingJobDiagnostics> diagnostics = default;
             Optional<ETag> etag = default;
-            Optional<Compression> compression = default;
+            Optional<StreamingCompression> compression = default;
             Optional<string> partitionKey = default;
-            Optional<InputWatermarkProperties> watermarkSettings = default;
+            Optional<StreamingJobInputWatermarkProperties> watermarkSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasource"))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serialization = Serialization.DeserializeSerialization(property.Value);
+                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diagnostics = Diagnostics.DeserializeDiagnostics(property.Value);
+                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    compression = Compression.DeserializeCompression(property.Value);
+                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    watermarkSettings = InputWatermarkProperties.DeserializeInputWatermarkProperties(property.Value);
+                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value);
                     continue;
                 }
             }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Communication.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
@@ -54,11 +55,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> The location where the communication service stores its data at rest. </summary>
         public string DataLocation { get; set; }
         /// <summary> Resource ID of an Azure Notification Hub linked to this resource. </summary>
-        public string NotificationHubId { get; }
+        public ResourceIdentifier NotificationHubId { get; }
         /// <summary> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </summary>
         public string Version { get; }
         /// <summary> The immutable resource Id of the communication service. </summary>
-        public string ImmutableResourceId { get; }
+        public Guid? ImmutableResourceId { get; }
         /// <summary> List of email Domain resource Ids. </summary>
         public IList<string> LinkedDomains { get; }
     }

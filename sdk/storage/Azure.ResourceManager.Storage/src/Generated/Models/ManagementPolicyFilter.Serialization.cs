@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<IList<string>> prefixMatch = default;
             IList<string> blobTypes = default;
-            Optional<IList<TagFilter>> blobIndexMatch = default;
+            Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagFilter> array = new List<TagFilter>();
+                    List<ManagementPolicyTagFilter> array = new List<ManagementPolicyTagFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagFilter.DeserializeTagFilter(item));
+                        array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item));
                     }
                     blobIndexMatch = array;
                     continue;

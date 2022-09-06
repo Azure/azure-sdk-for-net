@@ -29,3 +29,5 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.HDInsight.Job
       safeName: MicrosoftAzureHDInsightJob
+    - name: Azure.ResourceManager.HDInsight
+      safeName: AzureResourceManagerHDInsight

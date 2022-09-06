@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration");
-                writer.WriteStringValue(MaximumDuration.Value, "c");
+                writer.WriteStringValue(MaximumDuration.Value, "P");
             }
             if (Optional.IsDefined(Id))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maximumDuration = property.Value.GetTimeSpan("c");
+                    maximumDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("id"))

@@ -1,0 +1,1570 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "151",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8c469804aa888be408ff4d9292438734-8feac895c8c0bade-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b154f5c6e8499ffc101fda1d638692e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "urlSource": "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/Assets/businessCard.jpg"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "ae13117a-f521-4eda-b0eb-877ccf7ebca2",
+        "Content-Length": "0",
+        "Date": "Tue, 16 Aug 2022 05:46:42 GMT",
+        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/ae13117a-f521-4eda-b0eb-877ccf7ebca2?api-version=2022-08-31",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "458"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/ae13117a-f521-4eda-b0eb-877ccf7ebca2?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8c469804aa888be408ff4d9292438734-6e22bc28a555a0a7-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ea4810ebeb93e0a76f94171a947f586f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "24f89794-25eb-485a-a72f-f0afce32dbb9",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:46:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:46:43Z",
+        "lastUpdatedDateTime": "2022-08-16T05:46:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/ae13117a-f521-4eda-b0eb-877ccf7ebca2?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8c469804aa888be408ff4d9292438734-75d01e63af88806a-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ec4fb35139db80663437d188dbe9bb0a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f5de47b7-9b7f-4bd7-b709-e5dfa33b1b0f",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:46:44 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:46:43Z",
+        "lastUpdatedDateTime": "2022-08-16T05:46:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/ae13117a-f521-4eda-b0eb-877ccf7ebca2?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8c469804aa888be408ff4d9292438734-74abfaad53f80702-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f37559087fe5dbf74d7342b4d1e20a90",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c25c5e5f-cfcf-4beb-aac1-6e715eeee7cc",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:46:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:46:43Z",
+        "lastUpdatedDateTime": "2022-08-16T05:46:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/ae13117a-f521-4eda-b0eb-877ccf7ebca2?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8c469804aa888be408ff4d9292438734-73f79062f687def8-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b0cc6bc6a537b10aaac8b65c191f0486",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a505df7a-1ece-45e5-8c03-ad38484226c4",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:46:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:46:43Z",
+        "lastUpdatedDateTime": "2022-08-16T05:46:46Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/ae13117a-f521-4eda-b0eb-877ccf7ebca2?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8c469804aa888be408ff4d9292438734-a070d4fa89056d2c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3a120cd9640ad189bb739f68f7b1ae52",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9efca896-57cb-4949-97e0-7394f38b13ab",
+        "Content-Length": "10670",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:46:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "34"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2022-08-16T05:46:43Z",
+        "lastUpdatedDateTime": "2022-08-16T05:46:46Z",
+        "analyzeResult": {
+          "apiVersion": "2022-08-31",
+          "modelId": "prebuilt-businessCard",
+          "stringIndexType": "utf16CodeUnit",
+          "content": "Dr. Avery Smith Senior Researcher Cloud \u0026 Al Department\navery.smith@contoso.com https://www.contoso.com/\nmob: \u002B44 (0) 7911 123456 tel: \u002B44 (0) 20 9876 5432 fax: \u002B44 (0) 20 6789 2345\nContoso 2 Kingdom Street Paddington, London, W2 6BD",
+          "pages": [
+            {
+              "pageNumber": 1,
+              "angle": -16.372400283813477,
+              "width": 4032,
+              "height": 3024,
+              "unit": "pixel",
+              "words": [
+                {
+                  "content": "Dr.",
+                  "polygon": [
+                    423,
+                    1155,
+                    657,
+                    1103,
+                    682,
+                    1216,
+                    448,
+                    1260
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 0,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Avery",
+                  "polygon": [
+                    681,
+                    1098,
+                    1108,
+                    998,
+                    1136,
+                    1115,
+                    707,
+                    1211
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 4,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Smith",
+                  "polygon": [
+                    1162,
+                    985,
+                    1565,
+                    884,
+                    1596,
+                    992,
+                    1190,
+                    1101
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 10,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "Senior",
+                  "polygon": [
+                    451,
+                    1311,
+                    759,
+                    1238,
+                    777,
+                    1317,
+                    469,
+                    1386
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 16,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "Researcher",
+                  "polygon": [
+                    786,
+                    1232,
+                    1310,
+                    1103,
+                    1327,
+                    1175,
+                    804,
+                    1310
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 23,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "Cloud",
+                  "polygon": [
+                    478,
+                    1411,
+                    736,
+                    1347,
+                    754,
+                    1424,
+                    496,
+                    1483
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 34,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "\u0026",
+                  "polygon": [
+                    786,
+                    1335,
+                    834,
+                    1323,
+                    852,
+                    1401,
+                    804,
+                    1413
+                  ],
+                  "confidence": 0.98,
+                  "span": {
+                    "offset": 40,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "Al",
+                  "polygon": [
+                    894,
+                    1308,
+                    1002,
+                    1282,
+                    1020,
+                    1360,
+                    912,
+                    1387
+                  ],
+                  "confidence": 0.676,
+                  "span": {
+                    "offset": 42,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "Department",
+                  "polygon": [
+                    1017,
+                    1278,
+                    1581,
+                    1140,
+                    1599,
+                    1209,
+                    1035,
+                    1356
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 45,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "avery.smith@contoso.com",
+                  "polygon": [
+                    2104,
+                    936,
+                    2905,
+                    707,
+                    2925,
+                    761,
+                    2122,
+                    992
+                  ],
+                  "confidence": 0.864,
+                  "span": {
+                    "offset": 56,
+                    "length": 23
+                  }
+                },
+                {
+                  "content": "https://www.contoso.com/",
+                  "polygon": [
+                    2116,
+                    1005,
+                    2986,
+                    761,
+                    3004,
+                    821,
+                    2135,
+                    1072
+                  ],
+                  "confidence": 0.957,
+                  "span": {
+                    "offset": 80,
+                    "length": 24
+                  }
+                },
+                {
+                  "content": "mob:",
+                  "polygon": [
+                    2241,
+                    1102,
+                    2413,
+                    1046,
+                    2434,
+                    1115,
+                    2262,
+                    1164
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 105,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "\u002B44",
+                  "polygon": [
+                    2427,
+                    1041,
+                    2548,
+                    1002,
+                    2571,
+                    1074,
+                    2448,
+                    1110
+                  ],
+                  "confidence": 0.971,
+                  "span": {
+                    "offset": 110,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "(0)",
+                  "polygon": [
+                    2563,
+                    998,
+                    2655,
+                    969,
+                    2677,
+                    1042,
+                    2586,
+                    1070
+                  ],
+                  "confidence": 0.994,
+                  "span": {
+                    "offset": 114,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "7911",
+                  "polygon": [
+                    2668,
+                    965,
+                    2823,
+                    918,
+                    2846,
+                    990,
+                    2691,
+                    1038
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 118,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "123456",
+                  "polygon": [
+                    2838,
+                    913,
+                    3061,
+                    847,
+                    3086,
+                    914,
+                    2861,
+                    985
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 123,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "tel:",
+                  "polygon": [
+                    2336,
+                    1161,
+                    2450,
+                    1125,
+                    2472,
+                    1194,
+                    2357,
+                    1225
+                  ],
+                  "confidence": 0.988,
+                  "span": {
+                    "offset": 130,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "\u002B44",
+                  "polygon": [
+                    2464,
+                    1121,
+                    2587,
+                    1082,
+                    2609,
+                    1154,
+                    2486,
+                    1190
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 135,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "(0)",
+                  "polygon": [
+                    2601,
+                    1078,
+                    2693,
+                    1049,
+                    2716,
+                    1122,
+                    2624,
+                    1149
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 139,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "20",
+                  "polygon": [
+                    2707,
+                    1045,
+                    2784,
+                    1020,
+                    2807,
+                    1093,
+                    2730,
+                    1117
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 143,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "9876",
+                  "polygon": [
+                    2798,
+                    1016,
+                    2954,
+                    967,
+                    2978,
+                    1038,
+                    2822,
+                    1089
+                  ],
+                  "confidence": 0.978,
+                  "span": {
+                    "offset": 146,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "5432",
+                  "polygon": [
+                    2968,
+                    962,
+                    3127,
+                    912,
+                    3151,
+                    978,
+                    2992,
+                    1033
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 151,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "fax:",
+                  "polygon": [
+                    2375,
+                    1243,
+                    2506,
+                    1201,
+                    2526,
+                    1269,
+                    2395,
+                    1305
+                  ],
+                  "confidence": 0.992,
+                  "span": {
+                    "offset": 156,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "\u002B44",
+                  "polygon": [
+                    2520,
+                    1197,
+                    2642,
+                    1157,
+                    2663,
+                    1229,
+                    2540,
+                    1265
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 161,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "(0)",
+                  "polygon": [
+                    2656,
+                    1153,
+                    2752,
+                    1122,
+                    2772,
+                    1196,
+                    2677,
+                    1225
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 165,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "20",
+                  "polygon": [
+                    2765,
+                    1118,
+                    2846,
+                    1092,
+                    2867,
+                    1166,
+                    2786,
+                    1191
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 169,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "6789",
+                  "polygon": [
+                    2861,
+                    1088,
+                    3020,
+                    1037,
+                    3041,
+                    1109,
+                    2882,
+                    1161
+                  ],
+                  "confidence": 0.978,
+                  "span": {
+                    "offset": 172,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "2345",
+                  "polygon": [
+                    3034,
+                    1033,
+                    3188,
+                    985,
+                    3209,
+                    1052,
+                    3055,
+                    1104
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 177,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "Contoso",
+                  "polygon": [
+                    1146,
+                    1896,
+                    2246,
+                    1589,
+                    2293,
+                    1753,
+                    1201,
+                    2109
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 182,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "2",
+                  "polygon": [
+                    1232,
+                    2135,
+                    1290,
+                    2116,
+                    1322,
+                    2214,
+                    1264,
+                    2230
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 190,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "Kingdom",
+                  "polygon": [
+                    1310,
+                    2109,
+                    1687,
+                    1983,
+                    1717,
+                    2080,
+                    1341,
+                    2208
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 192,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "Street",
+                  "polygon": [
+                    1744,
+                    1964,
+                    2020,
+                    1871,
+                    2049,
+                    1949,
+                    1773,
+                    2059
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 200,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "Paddington,",
+                  "polygon": [
+                    1278,
+                    2265,
+                    1855,
+                    2067,
+                    1883,
+                    2147,
+                    1304,
+                    2344
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 207,
+                    "length": 11
+                  }
+                },
+                {
+                  "content": "London,",
+                  "polygon": [
+                    1870,
+                    2062,
+                    2230,
+                    1933,
+                    2259,
+                    2011,
+                    1898,
+                    2141
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 219,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "W2",
+                  "polygon": [
+                    2246,
+                    1927,
+                    2383,
+                    1877,
+                    2412,
+                    1954,
+                    2274,
+                    2005
+                  ],
+                  "confidence": 0.997,
+                  "span": {
+                    "offset": 227,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "6BD",
+                  "polygon": [
+                    2404,
+                    1869,
+                    2552,
+                    1815,
+                    2581,
+                    1890,
+                    2433,
+                    1946
+                  ],
+                  "confidence": 0.998,
+                  "span": {
+                    "offset": 230,
+                    "length": 3
+                  }
+                }
+              ],
+              "lines": [
+                {
+                  "content": "Dr. Avery Smith",
+                  "polygon": [
+                    423,
+                    1154,
+                    1605,
+                    874,
+                    1632,
+                    994,
+                    450,
+                    1260
+                  ],
+                  "spans": [
+                    {
+                      "offset": 0,
+                      "length": 15
+                    }
+                  ]
+                },
+                {
+                  "content": "Senior Researcher",
+                  "polygon": [
+                    451,
+                    1311,
+                    1313,
+                    1101,
+                    1332,
+                    1179,
+                    470,
+                    1386
+                  ],
+                  "spans": [
+                    {
+                      "offset": 16,
+                      "length": 17
+                    }
+                  ]
+                },
+                {
+                  "content": "Cloud \u0026 Al Department",
+                  "polygon": [
+                    477,
+                    1411,
+                    1590,
+                    1137,
+                    1608,
+                    1213,
+                    496,
+                    1483
+                  ],
+                  "spans": [
+                    {
+                      "offset": 34,
+                      "length": 21
+                    }
+                  ]
+                },
+                {
+                  "content": "avery.smith@contoso.com",
+                  "polygon": [
+                    2104,
+                    930,
+                    2935,
+                    700,
+                    2952,
+                    756,
+                    2120,
+                    992
+                  ],
+                  "spans": [
+                    {
+                      "offset": 56,
+                      "length": 23
+                    }
+                  ]
+                },
+                {
+                  "content": "https://www.contoso.com/",
+                  "polygon": [
+                    2116,
+                    1004,
+                    2987,
+                    760,
+                    3006,
+                    826,
+                    2135,
+                    1072
+                  ],
+                  "spans": [
+                    {
+                      "offset": 80,
+                      "length": 24
+                    }
+                  ]
+                },
+                {
+                  "content": "mob: \u002B44 (0) 7911 123456",
+                  "polygon": [
+                    2241,
+                    1096,
+                    3070,
+                    845,
+                    3092,
+                    912,
+                    2261,
+                    1164
+                  ],
+                  "spans": [
+                    {
+                      "offset": 105,
+                      "length": 24
+                    }
+                  ]
+                },
+                {
+                  "content": "tel: \u002B44 (0) 20 9876 5432",
+                  "polygon": [
+                    2332,
+                    1160,
+                    3133,
+                    911,
+                    3155,
+                    982,
+                    2354,
+                    1226
+                  ],
+                  "spans": [
+                    {
+                      "offset": 130,
+                      "length": 25
+                    }
+                  ]
+                },
+                {
+                  "content": "fax: \u002B44 (0) 20 6789 2345",
+                  "polygon": [
+                    2375,
+                    1240,
+                    3195,
+                    982,
+                    3216,
+                    1054,
+                    2397,
+                    1305
+                  ],
+                  "spans": [
+                    {
+                      "offset": 156,
+                      "length": 25
+                    }
+                  ]
+                },
+                {
+                  "content": "Contoso",
+                  "polygon": [
+                    1145,
+                    1898,
+                    2314,
+                    1570,
+                    2369,
+                    1749,
+                    1200,
+                    2108
+                  ],
+                  "spans": [
+                    {
+                      "offset": 182,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "2 Kingdom Street",
+                  "polygon": [
+                    1232,
+                    2135,
+                    2020,
+                    1870,
+                    2051,
+                    1962,
+                    1265,
+                    2230
+                  ],
+                  "spans": [
+                    {
+                      "offset": 190,
+                      "length": 16
+                    }
+                  ]
+                },
+                {
+                  "content": "Paddington, London, W2 6BD",
+                  "polygon": [
+                    1278,
+                    2265,
+                    2574,
+                    1807,
+                    2602,
+                    1888,
+                    1306,
+                    2344
+                  ],
+                  "spans": [
+                    {
+                      "offset": 207,
+                      "length": 26
+                    }
+                  ]
+                }
+              ],
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 233
+                }
+              ],
+              "kind": "document"
+            }
+          ],
+          "paragraphs": [
+            {
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 55
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    414,
+                    1156,
+                    1605,
+                    874,
+                    1683,
+                    1202,
+                    492,
+                    1484
+                  ]
+                }
+              ],
+              "content": "Dr. Avery Smith Senior Researcher Cloud \u0026 Al Department"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 56,
+                  "length": 48
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2096,
+                    932,
+                    2967,
+                    686,
+                    3006,
+                    826,
+                    2135,
+                    1072
+                  ]
+                }
+              ],
+              "content": "avery.smith@contoso.com https://www.contoso.com/"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 105,
+                  "length": 76
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2240,
+                    1096,
+                    3147,
+                    822,
+                    3218,
+                    1057,
+                    2312,
+                    1331
+                  ]
+                }
+              ],
+              "content": "mob: \u002B44 (0) 7911 123456 tel: \u002B44 (0) 20 9876 5432 fax: \u002B44 (0) 20 6789 2345"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 182,
+                  "length": 51
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1128,
+                    1904,
+                    2445,
+                    1441,
+                    2602,
+                    1888,
+                    1286,
+                    2351
+                  ]
+                }
+              ],
+              "content": "Contoso 2 Kingdom Street Paddington, London, W2 6BD"
+            }
+          ],
+          "styles": [],
+          "documents": [
+            {
+              "docType": "businessCard",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0,
+                    0,
+                    4032,
+                    0,
+                    4032,
+                    3024,
+                    0,
+                    3024
+                  ]
+                }
+              ],
+              "fields": {
+                "Addresses": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "address",
+                      "content": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            1229,
+                            2136,
+                            2505,
+                            1678,
+                            2583,
+                            1896,
+                            1307,
+                            2354
+                          ]
+                        }
+                      ],
+                      "confidence": 0.968,
+                      "spans": [
+                        {
+                          "offset": 190,
+                          "length": 43
+                        }
+                      ],
+                      "valueAddress": {
+                        "houseNumber": "2",
+                        "road": "Kingdom Street",
+                        "postalCode": "W2 6BD",
+                        "city": "London",
+                        "streetAddress": "2 Kingdom Street",
+                        "suburb": "Paddington"
+                      }
+                    }
+                  ]
+                },
+                "CompanyNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Contoso",
+                      "content": "Contoso",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            1146,
+                            1896,
+                            2246,
+                            1589,
+                            2293,
+                            1753,
+                            1201,
+                            2109
+                          ]
+                        }
+                      ],
+                      "confidence": 0.895,
+                      "spans": [
+                        {
+                          "offset": 182,
+                          "length": 7
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "ContactNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "FirstName": {
+                          "type": "string",
+                          "valueString": "Avery",
+                          "content": "Avery",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "polygon": [
+                                681,
+                                1098,
+                                1108,
+                                998,
+                                1136,
+                                1115,
+                                707,
+                                1211
+                              ]
+                            }
+                          ],
+                          "confidence": 0.989,
+                          "spans": [
+                            {
+                              "offset": 4,
+                              "length": 5
+                            }
+                          ]
+                        },
+                        "LastName": {
+                          "type": "string",
+                          "valueString": "Smith",
+                          "content": "Smith",
+                          "boundingRegions": [
+                            {
+                              "pageNumber": 1,
+                              "polygon": [
+                                1162,
+                                985,
+                                1565,
+                                884,
+                                1596,
+                                992,
+                                1190,
+                                1101
+                              ]
+                            }
+                          ],
+                          "confidence": 0.989,
+                          "spans": [
+                            {
+                              "offset": 10,
+                              "length": 5
+                            }
+                          ]
+                        }
+                      },
+                      "content": "Dr. Avery Smith",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            421,
+                            1146,
+                            1571,
+                            883,
+                            1600,
+                            1009,
+                            450,
+                            1272
+                          ]
+                        }
+                      ],
+                      "confidence": 0.984,
+                      "spans": [
+                        {
+                          "offset": 0,
+                          "length": 15
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Departments": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Cloud \u0026 Al Department",
+                      "content": "Cloud \u0026 Al Department",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            478,
+                            1410,
+                            1582,
+                            1139,
+                            1601,
+                            1218,
+                            497,
+                            1489
+                          ]
+                        }
+                      ],
+                      "confidence": 0.973,
+                      "spans": [
+                        {
+                          "offset": 34,
+                          "length": 21
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Emails": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "avery.smith@contoso.com",
+                      "content": "avery.smith@contoso.com",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            2104,
+                            936,
+                            2905,
+                            707,
+                            2925,
+                            761,
+                            2122,
+                            992
+                          ]
+                        }
+                      ],
+                      "confidence": 0.988,
+                      "spans": [
+                        {
+                          "offset": 56,
+                          "length": 23
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Faxes": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "valuePhoneNumber": "\u002B10207892345",
+                      "content": "\u002B44 (0) 20 6789 2345",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            2518,
+                            1195,
+                            3188,
+                            984,
+                            3211,
+                            1058,
+                            2541,
+                            1269
+                          ]
+                        }
+                      ],
+                      "confidence": 0.987,
+                      "spans": [
+                        {
+                          "offset": 161,
+                          "length": 20
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "JobTitles": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Senior Researcher",
+                      "content": "Senior Researcher",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            449,
+                            1302,
+                            1310,
+                            1103,
+                            1330,
+                            1189,
+                            469,
+                            1388
+                          ]
+                        }
+                      ],
+                      "confidence": 0.988,
+                      "spans": [
+                        {
+                          "offset": 16,
+                          "length": 17
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "MobilePhones": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "valuePhoneNumber": "\u002B10791112345",
+                      "content": "\u002B44 (0) 7911 123456",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            2426,
+                            1039,
+                            3064,
+                            844,
+                            3087,
+                            917,
+                            2449,
+                            1112
+                          ]
+                        }
+                      ],
+                      "confidence": 0.987,
+                      "spans": [
+                        {
+                          "offset": 110,
+                          "length": 19
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Websites": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "https://www.contoso.com/",
+                      "content": "https://www.contoso.com/",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            2116,
+                            1005,
+                            2986,
+                            761,
+                            3004,
+                            821,
+                            2135,
+                            1072
+                          ]
+                        }
+                      ],
+                      "confidence": 0.989,
+                      "spans": [
+                        {
+                          "offset": 80,
+                          "length": 24
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "WorkPhones": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "valuePhoneNumber": "\u002B10209875432",
+                      "content": "\u002B44 (0) 20 9876 5432",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            2464,
+                            1121,
+                            3129,
+                            909,
+                            3153,
+                            984,
+                            2488,
+                            1195
+                          ]
+                        }
+                      ],
+                      "confidence": 0.985,
+                      "spans": [
+                        {
+                          "offset": 135,
+                          "length": 20
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "confidence": 1,
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 233
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "1912818805"
+  }
+}

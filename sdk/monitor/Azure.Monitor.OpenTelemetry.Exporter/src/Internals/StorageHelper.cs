@@ -40,16 +40,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                             s_defaultStorageDirectory = dirPath;
                             return s_defaultStorageDirectory;
                         }
+                    }
 
-                        string temp = environmentVars["TEMP"]?.ToString();
-                        if (temp != null)
+                    string temp = environmentVars["TEMP"]?.ToString();
+                    if (temp != null)
+                    {
+                        dirPath = CreateTelemetryDirectory(temp);
+                        if (dirPath != null)
                         {
-                            dirPath = CreateTelemetryDirectory(temp);
-                            if (dirPath != null)
-                            {
-                                s_defaultStorageDirectory = dirPath;
-                                return s_defaultStorageDirectory;
-                            }
+                            s_defaultStorageDirectory = dirPath;
+                            return s_defaultStorageDirectory;
                         }
                     }
                 }

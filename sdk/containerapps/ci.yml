@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/containerapps/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -28,5 +27,5 @@ extends:
     ServiceDirectory: containerapps
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Applications.Containers
-      safeName: AzureResourceManagerApplicationsContainers
+    - name: Azure.ResourceManager.AppContainers
+      safeName: AzureResourceManagerAppContainers

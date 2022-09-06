@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<P2sVpnGatewayData>> GetAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<P2SVpnGatewayData>> GetAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        P2sVpnGatewayData value = default;
+                        P2SVpnGatewayData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = P2sVpnGatewayData.DeserializeP2sVpnGatewayData(document.RootElement);
+                        value = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((P2sVpnGatewayData)null, message.Response);
+                    return Response.FromValue((P2SVpnGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<P2sVpnGatewayData> Get(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public Response<P2SVpnGatewayData> Get(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        P2sVpnGatewayData value = default;
+                        P2SVpnGatewayData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = P2sVpnGatewayData.DeserializeP2sVpnGatewayData(document.RootElement);
+                        value = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((P2sVpnGatewayData)null, message.Response);
+                    return Response.FromValue((P2SVpnGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnGatewayData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnGatewayData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnGatewayData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string gatewayName, TagsObject p2sVpnGatewayParameters)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string gatewayName, NetworkTagsObject p2sVpnGatewayParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="p2sVpnGatewayParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string gatewayName, TagsObject p2sVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string gatewayName, NetworkTagsObject p2sVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="p2sVpnGatewayParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateTags(string subscriptionId, string resourceGroupName, string gatewayName, TagsObject p2sVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public Response UpdateTags(string subscriptionId, string resourceGroupName, string gatewayName, NetworkTagsObject p2sVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListP2sVpnGatewaysResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListP2SVpnGatewaysResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -383,9 +383,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListP2sVpnGatewaysResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ListP2SVpnGatewaysResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -410,9 +410,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListP2sVpnGatewaysResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ListP2SVpnGatewaysResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -452,9 +452,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListP2sVpnGatewaysResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ListP2SVpnGatewaysResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -477,9 +477,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGenerateVpnProfileRequest(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnProfileContent content)
+        internal HttpMessage CreateGenerateVpnProfileRequest(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnProfileContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GenerateVpnProfileAsync(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnProfileContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> GenerateVpnProfileAsync(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnProfileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GenerateVpnProfile(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnProfileContent content, CancellationToken cancellationToken = default)
+        public Response GenerateVpnProfile(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnProfileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetP2sVpnConnectionHealthRequest(string subscriptionId, string resourceGroupName, string gatewayName)
+        internal HttpMessage CreateGetP2SVpnConnectionHealthRequest(string subscriptionId, string resourceGroupName, string gatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -665,13 +665,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetP2sVpnConnectionHealthAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response> GetP2SVpnConnectionHealthAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var message = CreateGetP2sVpnConnectionHealthRequest(subscriptionId, resourceGroupName, gatewayName);
+            using var message = CreateGetP2SVpnConnectionHealthRequest(subscriptionId, resourceGroupName, gatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -690,13 +690,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetP2sVpnConnectionHealth(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public Response GetP2SVpnConnectionHealth(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var message = CreateGetP2sVpnConnectionHealthRequest(subscriptionId, resourceGroupName, gatewayName);
+            using var message = CreateGetP2SVpnConnectionHealthRequest(subscriptionId, resourceGroupName, gatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetP2sVpnConnectionHealthDetailedRequest(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnConnectionHealthContent content)
+        internal HttpMessage CreateGetP2SVpnConnectionHealthDetailedRequest(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnConnectionHealthContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -741,14 +741,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetP2sVpnConnectionHealthDetailedAsync(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> GetP2SVpnConnectionHealthDetailedAsync(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetP2sVpnConnectionHealthDetailedRequest(subscriptionId, resourceGroupName, gatewayName, content);
+            using var message = CreateGetP2SVpnConnectionHealthDetailedRequest(subscriptionId, resourceGroupName, gatewayName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -768,14 +768,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetP2sVpnConnectionHealthDetailed(string subscriptionId, string resourceGroupName, string gatewayName, P2sVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
+        public Response GetP2SVpnConnectionHealthDetailed(string subscriptionId, string resourceGroupName, string gatewayName, P2SVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetP2sVpnConnectionHealthDetailedRequest(subscriptionId, resourceGroupName, gatewayName, content);
+            using var message = CreateGetP2SVpnConnectionHealthDetailedRequest(subscriptionId, resourceGroupName, gatewayName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateDisconnectP2sVpnConnectionsRequest(string subscriptionId, string resourceGroupName, string p2sVpnGatewayName, P2sVpnConnectionRequest request)
+        internal HttpMessage CreateDisconnectP2SVpnConnectionsRequest(string subscriptionId, string resourceGroupName, string p2sVpnGatewayName, P2SVpnConnectionRequest request)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -805,9 +805,9 @@ namespace Azure.ResourceManager.Network
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(request);
-            request0.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -820,14 +820,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="p2sVpnGatewayName"/> or <paramref name="request"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="p2sVpnGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DisconnectP2sVpnConnectionsAsync(string subscriptionId, string resourceGroupName, string p2sVpnGatewayName, P2sVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response> DisconnectP2SVpnConnectionsAsync(string subscriptionId, string resourceGroupName, string p2sVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(p2sVpnGatewayName, nameof(p2sVpnGatewayName));
             Argument.AssertNotNull(request, nameof(request));
 
-            using var message = CreateDisconnectP2sVpnConnectionsRequest(subscriptionId, resourceGroupName, p2sVpnGatewayName, request);
+            using var message = CreateDisconnectP2SVpnConnectionsRequest(subscriptionId, resourceGroupName, p2sVpnGatewayName, request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -847,14 +847,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="p2sVpnGatewayName"/> or <paramref name="request"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="p2sVpnGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DisconnectP2sVpnConnections(string subscriptionId, string resourceGroupName, string p2sVpnGatewayName, P2sVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        public Response DisconnectP2SVpnConnections(string subscriptionId, string resourceGroupName, string p2sVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(p2sVpnGatewayName, nameof(p2sVpnGatewayName));
             Argument.AssertNotNull(request, nameof(request));
 
-            using var message = CreateDisconnectP2sVpnConnectionsRequest(subscriptionId, resourceGroupName, p2sVpnGatewayName, request);
+            using var message = CreateDisconnectP2SVpnConnectionsRequest(subscriptionId, resourceGroupName, p2sVpnGatewayName, request);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -869,13 +869,13 @@ namespace Azure.ResourceManager.Network
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListP2sVpnGatewaysResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListP2SVpnGatewaysResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -899,9 +899,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListP2sVpnGatewaysResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ListP2SVpnGatewaysResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -928,9 +928,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -941,13 +941,13 @@ namespace Azure.ResourceManager.Network
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListP2sVpnGatewaysResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ListP2SVpnGatewaysResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -969,9 +969,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListP2sVpnGatewaysResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ListP2SVpnGatewaysResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -996,9 +996,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListP2sVpnGatewaysResult value = default;
+                        ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListP2sVpnGatewaysResult.DeserializeListP2sVpnGatewaysResult(document.RootElement);
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

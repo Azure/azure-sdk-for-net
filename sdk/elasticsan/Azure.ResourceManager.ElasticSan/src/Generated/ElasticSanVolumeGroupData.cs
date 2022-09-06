@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary> A class representing the ElasticSanVolumeGroup data model. </summary>
-    public partial class ElasticSanVolumeGroupData : TrackedResourceData
+    public partial class ElasticSanVolumeGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
-        /// <param name="location"> The location. </param>
-        public ElasticSanVolumeGroupData(AzureLocation location) : base(location)
+        public ElasticSanVolumeGroupData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="protocolType"> Type of storage target. </param>
         /// <param name="encryption"> Type of encryption. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, StorageTargetType? protocolType, EncryptionType? encryption, NetworkRuleSet networkAcls) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="tags"> Azure resource tags. </param>
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ProtocolType = protocolType;
             Encryption = encryption;
             NetworkAcls = networkAcls;
+            Tags = tags;
         }
 
         /// <summary> State of the operation on the resource. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Type of storage target. </summary>
         public StorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
-        public EncryptionType? Encryption { get; set; }
+        public ElasticSanEncryptionType? Encryption { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>
@@ -58,5 +58,8 @@ namespace Azure.ResourceManager.ElasticSan
                 return NetworkAcls.VirtualNetworkRules;
             }
         }
+
+        /// <summary> Azure resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

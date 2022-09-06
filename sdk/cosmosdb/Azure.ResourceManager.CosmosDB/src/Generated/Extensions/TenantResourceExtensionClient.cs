@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _databaseAccountClientDiagnostics;
-        private DatabaseAccountsRestOperations _databaseAccountRestClient;
+        private ClientDiagnostics _cosmosDBAccountDatabaseAccountsClientDiagnostics;
+        private DatabaseAccountsRestOperations _cosmosDBAccountDatabaseAccountsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccountResource.ResourceType.Namespace, Diagnostics);
-        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatabaseAccountResource.ResourceType));
+        private ClientDiagnostics CosmosDBAccountDatabaseAccountsClientDiagnostics => _cosmosDBAccountDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
+        private DatabaseAccountsRestOperations CosmosDBAccountDatabaseAccountsRestClient => _cosmosDBAccountDatabaseAccountsRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            using var scope = DatabaseAccountClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
+            using var scope = CosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
             scope.Start();
             try
             {
-                var response = await DatabaseAccountRestClient.CheckNameExistsAsync(accountName, cancellationToken).ConfigureAwait(false);
+                var response = await CosmosDBAccountDatabaseAccountsRestClient.CheckNameExistsAsync(accountName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> CheckNameExistsDatabaseAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            using var scope = DatabaseAccountClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
+            using var scope = CosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
             scope.Start();
             try
             {
-                var response = DatabaseAccountRestClient.CheckNameExists(accountName, cancellationToken);
+                var response = CosmosDBAccountDatabaseAccountsRestClient.CheckNameExists(accountName, cancellationToken);
                 return response;
             }
             catch (Exception e)

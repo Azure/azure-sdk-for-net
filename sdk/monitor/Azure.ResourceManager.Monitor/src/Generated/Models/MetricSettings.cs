@@ -13,22 +13,22 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class MetricSettings
     {
         /// <summary> Initializes a new instance of MetricSettings. </summary>
-        /// <param name="enabled"> a value indicating whether this category is enabled. </param>
-        public MetricSettings(bool enabled)
+        /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
+        public MetricSettings(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of MetricSettings. </summary>
         /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
         /// <param name="category"> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="enabled"> a value indicating whether this category is enabled. </param>
+        /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
         /// <param name="retentionPolicy"> the retention policy for this category. </param>
-        internal MetricSettings(TimeSpan? timeGrain, string category, bool enabled, RetentionPolicy retentionPolicy)
+        internal MetricSettings(TimeSpan? timeGrain, string category, bool isEnabled, RetentionPolicy retentionPolicy)
         {
             TimeGrain = timeGrain;
             Category = category;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             RetentionPolicy = retentionPolicy;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </summary>
         public string Category { get; set; }
         /// <summary> a value indicating whether this category is enabled. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> the retention policy for this category. </summary>
         public RetentionPolicy RetentionPolicy { get; set; }
     }

@@ -28,32 +28,28 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public virtual CustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
-        /// <summary>
-        /// The encryption scope to be used with client provided key server-side encryption.
-        /// </summary>
+        public virtual TransferValidationOptions TransferValidation { get; internal set; }
+
         public string EncryptionScope { get; internal set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClientConfiguration"/>
-        /// </summary>
-        /// <param name="pipeline">Authentication policy used to sign requests.></param>
-        /// <param name="sharedKeyCredential">The shared key credential used to sign requests.</param>
-        /// <param name="clientDiagnostics">The handler for diagnostic messaging in the client. </param>
-        /// <param name="version"> The versions of Azure Blob Storage supported by this client library.</param>
-        /// <param name="customerProvidedKey">The encryption key to be used with client provided key server-side encryption.</param>
-        /// <param name="encryptionScope">The encryption scope to be used with client provided key server-side encryption.</param>
+        public bool PreserveBlobNameOuterSlashes { get; internal set; }
+
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             BlobClientOptions.ServiceVersion version,
             CustomerProvidedKey? customerProvidedKey,
-            string encryptionScope)
+            TransferValidationOptions transferValidation,
+            string encryptionScope,
+            bool preserveBlobNameOuterSlashes)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
+            PreserveBlobNameOuterSlashes = preserveBlobNameOuterSlashes;
         }
 
         internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)
@@ -63,6 +59,8 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 version: originalClientConfiguration.Version,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
-                encryptionScope: originalClientConfiguration.EncryptionScope);
+                transferValidation: originalClientConfiguration.TransferValidation,
+                encryptionScope: originalClientConfiguration.EncryptionScope,
+                preserveBlobNameOuterSlashes: originalClientConfiguration.PreserveBlobNameOuterSlashes);
     }
 }

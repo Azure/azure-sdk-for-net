@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticAnalysisCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DiagnosticAnalysisCollection(IEnumerable<AnalysisDefinitionData> value)
+        internal DiagnosticAnalysisCollection(IEnumerable<WebSiteAnalysisDefinitionData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticAnalysisCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal DiagnosticAnalysisCollection(IReadOnlyList<AnalysisDefinitionData> value, string nextLink)
+        internal DiagnosticAnalysisCollection(IReadOnlyList<WebSiteAnalysisDefinitionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<AnalysisDefinitionData> Value { get; }
+        public IReadOnlyList<WebSiteAnalysisDefinitionData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

@@ -1,10 +1,11 @@
 parameters:
   rootFolder: '$(Build.SourcesDirectory)'
   targetVersion: ''
+  templateRoot: '$(Build.SourcesDirectory)'
 
 steps:
   - pwsh: |
-        $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
+        ${{ parameters.templateRoot }}/eng/common/scripts/trust-proxy-certificate.ps1
     displayName: 'Language Specific Certificate Trust'
 
   - pwsh: |
@@ -12,7 +13,7 @@ steps:
     displayName: 'Dump active docker information'
 
   - pwsh: |
-      $(Build.SourcesDirectory)/eng/common/testproxy/docker-start-proxy.ps1 -Mode start -TargetFolder "${{ parameters.rootFolder }}" -VersionOverride="${{ parameters.targetVersion }}"
+      ${{ parameters.templateRoot }}/eng/common/testproxy/docker-start-proxy.ps1 -Mode start -TargetFolder "${{ parameters.rootFolder }}" -VersionOverride="${{ parameters.targetVersion }}"
     displayName: 'Run the docker container'
 
   - pwsh: |

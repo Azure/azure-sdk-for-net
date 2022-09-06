@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorSource. </summary>
         /// <param name="dataSourceId"> The resource uri over which log search query is to be run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceId"/> is null. </exception>
-        public MonitorSource(string dataSourceId)
+        public MonitorSource(ResourceIdentifier dataSourceId)
         {
             if (dataSourceId == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="authorizedResources"> List of  Resource referred into query. </param>
         /// <param name="dataSourceId"> The resource uri over which log search query is to be run. </param>
         /// <param name="queryType"> Set value to &apos;ResultCount&apos; . </param>
-        internal MonitorSource(string query, IList<string> authorizedResources, string dataSourceId, QueryType? queryType)
+        internal MonitorSource(string query, IList<string> authorizedResources, ResourceIdentifier dataSourceId, MonitorSourceQueryType? queryType)
         {
             Query = query;
             AuthorizedResources = authorizedResources;
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> List of  Resource referred into query. </summary>
         public IList<string> AuthorizedResources { get; }
         /// <summary> The resource uri over which log search query is to be run. </summary>
-        public string DataSourceId { get; set; }
+        public ResourceIdentifier DataSourceId { get; set; }
         /// <summary> Set value to &apos;ResultCount&apos; . </summary>
-        public QueryType? QueryType { get; set; }
+        public MonitorSourceQueryType? QueryType { get; set; }
     }
 }

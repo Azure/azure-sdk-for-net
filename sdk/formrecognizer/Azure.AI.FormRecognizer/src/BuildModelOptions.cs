@@ -30,12 +30,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string Description { get; set; }
 
         /// <summary>
-        /// A case-sensitive prefix string to filter documents in the source path for building a model.
-        /// For example, you may use the prefix to restrict subfolders.
-        /// </summary>
-        public string Prefix { get; set; }
-
-        /// <summary>
         /// A list of user-defined key-value tag attributes associated with the model.
         /// </summary>
         public IDictionary<string, string> Tags { get; }

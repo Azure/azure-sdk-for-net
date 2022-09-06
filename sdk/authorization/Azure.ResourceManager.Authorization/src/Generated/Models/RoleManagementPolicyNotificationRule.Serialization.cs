@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationType))
+            if (Optional.IsDefined(NotificationDeliveryType))
             {
                 writer.WritePropertyName("notificationType");
-                writer.WriteStringValue(NotificationType.Value.ToString());
+                writer.WriteStringValue(NotificationDeliveryType.Value.ToString());
             }
             if (Optional.IsDefined(NotificationLevel))
             {
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDefaultRecipientsEnabled))
+            if (Optional.IsDefined(AreDefaultRecipientsEnabled))
             {
                 writer.WritePropertyName("isDefaultRecipientsEnabled");
-                writer.WriteBooleanValue(IsDefaultRecipientsEnabled.Value);
+                writer.WriteBooleanValue(AreDefaultRecipientsEnabled.Value);
             }
             if (Optional.IsDefined(Id))
             {
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element)
         {
-            Optional<NotificationDeliveryMechanism> notificationType = default;
-            Optional<NotificationLevel> notificationLevel = default;
-            Optional<RecipientType> recipientType = default;
+            Optional<NotificationDeliveryType> notificationType = default;
+            Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
+            Optional<RoleManagementPolicyRecipientType> recipientType = default;
             Optional<IList<string>> notificationRecipients = default;
             Optional<bool> isDefaultRecipientsEnabled = default;
             Optional<string> id = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    notificationType = new NotificationDeliveryMechanism(property.Value.GetString());
+                    notificationType = new NotificationDeliveryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("notificationLevel"))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    notificationLevel = new NotificationLevel(property.Value.GetString());
+                    notificationLevel = new RoleManagementPolicyNotificationLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recipientType"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recipientType = new RecipientType(property.Value.GetString());
+                    recipientType = new RoleManagementPolicyRecipientType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("notificationRecipients"))

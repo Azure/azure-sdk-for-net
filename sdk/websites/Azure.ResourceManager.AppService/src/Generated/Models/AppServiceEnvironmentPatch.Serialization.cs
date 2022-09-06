@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("multiSize");
                 writer.WriteStringValue(MultiSize);
             }
-            if (Optional.IsDefined(IpsslAddressCount))
+            if (Optional.IsDefined(IPSslAddressCount))
             {
                 writer.WritePropertyName("ipsslAddressCount");
-                writer.WriteNumberValue(IpsslAddressCount.Value);
+                writer.WriteNumberValue(IPSslAddressCount.Value);
             }
             if (Optional.IsDefined(DnsSuffix))
             {
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("dedicatedHostCount");
                 writer.WriteNumberValue(DedicatedHostCount.Value);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<LoadBalancingMode> internalLoadBalancingMode = default;
             Optional<string> multiSize = default;
             Optional<int> multiRoleCount = default;
-            Optional<int> ipsslAddressCount = default;
+            Optional<int> ipSslAddressCount = default;
             Optional<string> dnsSuffix = default;
             Optional<int> maximumNumberOfMachines = default;
             Optional<int> frontEndScaleFactor = default;
             Optional<bool> suspended = default;
             Optional<IList<NameValuePair>> clusterSettings = default;
-            Optional<IList<string>> userWhitelistedIpRanges = default;
+            Optional<IList<string>> userWhitelistedIPRanges = default;
             Optional<bool> hasLinuxWorkers = default;
             Optional<int> dedicatedHostCount = default;
             Optional<bool> zoneRedundant = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipsslAddressCount = property0.Value.GetInt32();
+                            ipSslAddressCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("dnsSuffix"))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 array.Add(item.GetString());
                             }
-                            userWhitelistedIpRanges = array;
+                            userWhitelistedIPRanges = array;
                             continue;
                         }
                         if (property0.NameEquals("hasLinuxWorkers"))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceEnvironmentPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIpRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant), kind.Value);
+            return new AppServiceEnvironmentPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipSslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIPRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant), kind.Value);
         }
     }
 }

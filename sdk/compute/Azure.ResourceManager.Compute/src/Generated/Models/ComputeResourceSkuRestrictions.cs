@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of ComputeResourceSkuRestrictions. </summary>
-        /// <param name="resourceSkuRestrictionsType"> The type of restrictions. </param>
+        /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
-        internal ComputeResourceSkuRestrictions(ResourceSkuRestrictionsType? resourceSkuRestrictionsType, IReadOnlyList<string> values, ComputeResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode)
+        internal ComputeResourceSkuRestrictions(ComputeResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ComputeResourceSkuRestrictionInfo restrictionInfo, ComputeResourceSkuRestrictionsReasonCode? reasonCode)
         {
-            ResourceSkuRestrictionsType = resourceSkuRestrictionsType;
+            RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
         }
 
         /// <summary> The type of restrictions. </summary>
-        public ResourceSkuRestrictionsType? ResourceSkuRestrictionsType { get; }
+        public ComputeResourceSkuRestrictionsType? RestrictionsType { get; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
         public ComputeResourceSkuRestrictionInfo RestrictionInfo { get; }
         /// <summary> The reason for restriction. </summary>
-        public ResourceSkuRestrictionsReasonCode? ReasonCode { get; }
+        public ComputeResourceSkuRestrictionsReasonCode? ReasonCode { get; }
     }
 }

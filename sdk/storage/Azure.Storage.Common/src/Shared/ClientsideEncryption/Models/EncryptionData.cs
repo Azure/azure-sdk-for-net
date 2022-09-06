@@ -64,7 +64,9 @@ namespace Azure.Storage.Cryptography.Models
                 EncryptionAgent = new EncryptionAgent()
                 {
                     EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
+#pragma warning disable CS0618 // obsolete
                     EncryptionVersion = ClientSideEncryptionVersion.V1_0
+#pragma warning restore CS0618 // obsolete
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
                 {

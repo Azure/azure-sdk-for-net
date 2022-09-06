@@ -94,6 +94,11 @@ namespace Azure.Messaging.ServiceBus
         ///   result in an <see cref="InvalidOperationException" /> until the send has completed.
         /// </exception>
         ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="message"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
+        /// </exception>
+        ///
         public bool TryAddMessage(ServiceBusMessage message)
         {
             lock (_syncGuard)

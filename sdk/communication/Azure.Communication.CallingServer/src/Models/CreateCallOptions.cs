@@ -3,22 +3,51 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
+using System.Text;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The options for creating a call. </summary>
+    /// <summary>
+    /// Options for the Create Call Request.
+    /// </summary>
     public class CreateCallOptions
     {
-        /// <summary> The subject. </summary>
+        /// <summary>
+        /// Creates a new CreateCallOptions object.
+        /// </summary>
+        /// <param name="targets"></param>
+        /// <param name="source"></param>
+        /// <param name="callbackEndpoint"></param>
+        public CreateCallOptions(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackEndpoint)
+        {
+            Targets = targets;
+            Source = source;
+            CallbackEndpoint = callbackEndpoint;
+        }
+
+        /// <summary>
+        /// The targets of the call.
+        /// </summary>
+        public IEnumerable<CommunicationIdentifier> Targets { get; }
+
+        /// <summary>
+        /// The source of the call.
+        /// </summary>
+        public CallSource Source { get; }
+
+        /// <summary>
+        /// The callback URI.
+        /// </summary>
+        public Uri CallbackEndpoint { get; }
+
+        /// <summary>
+        /// The subject.
+        /// </summary>
         public string Subject { get; set; }
 
         /// <summary>
-        /// Create Call Options.
+        /// Media Streaming Configuration.
         /// </summary>
-        public CreateCallOptions()
-        {
-        }
+        public MediaStreamingConfiguration MediaStreamingConfiguration { get; set; }
     }
 }

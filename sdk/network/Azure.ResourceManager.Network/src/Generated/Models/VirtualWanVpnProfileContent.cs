@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </summary>
         public ResourceIdentifier VpnServerConfigurationResourceId { get; set; }
         /// <summary> VPN client authentication method. </summary>
-        public AuthenticationMethod? AuthenticationMethod { get; set; }
+        public NetworkAuthenticationMethod? AuthenticationMethod { get; set; }
     }
 }

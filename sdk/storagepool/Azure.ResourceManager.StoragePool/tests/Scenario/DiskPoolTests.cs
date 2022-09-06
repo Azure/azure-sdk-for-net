@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var diskPoolCollection = _resourceGroup.GetDiskPools();
 
             var sku = new StoragePoolSku("Standard_S1");
-            var diskPoolCreate = new DiskPoolCreateOrUpdateContent(sku, DefaultLocation, SubnetResourceId) {};
+            var diskPoolCreate = new DiskPoolCreateOrUpdateContent(sku, DefaultLocation, new Core.ResourceIdentifier(SubnetResourceId)) {};
             diskPoolCreate.AvailabilityZones.Add("1");
             // the following additional capability is not needed for non-test disk pools
             diskPoolCreate.AdditionalCapabilities.Add("DiskPool.SkipInfrastructureDeployment");
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var response = await diskPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskPoolName, diskPoolCreate);
             var diskPool = response.Value;
             Assert.AreEqual(diskPoolName, diskPool.Data.Name);
-            Assert.AreEqual(ProvisioningState.Succeeded, diskPool.Data.ProvisioningState);
+            Assert.AreEqual(DiskPoolIscsiTargetProvisioningState.Succeeded, diskPool.Data.ProvisioningState);
 
             // update disk pool -- by adding a new tag
             diskPoolCreate.Tags.Add("tag2", "value2");
             var updateResponse = await diskPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskPoolName, diskPoolCreate);
             diskPool = updateResponse.Value;
             Assert.AreEqual(diskPoolCreate.Tags, diskPool.Data.Tags);
-            Assert.AreEqual(ProvisioningState.Succeeded, diskPool.Data.ProvisioningState);
+            Assert.AreEqual(DiskPoolIscsiTargetProvisioningState.Succeeded, diskPool.Data.ProvisioningState);
 
             // stop disk pool
             var deallocateResponse = await diskPool.DeallocateAsync(WaitUntil.Completed);

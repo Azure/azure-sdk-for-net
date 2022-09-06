@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new AuthBaseInfo(authType);
+            return new UnknownAuthBaseInfo(authType);
         }
     }
 }

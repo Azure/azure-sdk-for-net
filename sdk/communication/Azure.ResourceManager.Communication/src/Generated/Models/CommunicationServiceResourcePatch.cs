@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class representing update parameters for CommunicationService resource. </summary>
-    public partial class CommunicationServiceResourcePatch : AcceptTags
+    public partial class CommunicationServiceResourcePatch : CommunicationAcceptTags
     {
         /// <summary> Initializes a new instance of CommunicationServiceResourcePatch. </summary>
         public CommunicationServiceResourcePatch()

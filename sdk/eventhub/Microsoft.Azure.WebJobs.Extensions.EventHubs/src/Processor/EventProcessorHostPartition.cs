@@ -60,7 +60,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         {
             private readonly EventProcessorHostPartition _hostPartition;
 
-            public EventProcessorHostPartitionContext(EventProcessorHostPartition hostPartition) : base(hostPartition.PartitionId)
+            public EventProcessorHostPartitionContext(EventProcessorHostPartition hostPartition)
+                : base(hostPartition.ProcessorHost.FullyQualifiedNamespace,
+                    hostPartition.ProcessorHost.EventHubName,
+                    hostPartition.ProcessorHost.ConsumerGroup,
+                    hostPartition.PartitionId)
             {
                 _hostPartition = hostPartition;
             }

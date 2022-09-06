@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountSkuConversionStatus DeserializeStorageAccountSkuConversionStatus(JsonElement element)
         {
-            Optional<SkuConversionStatus> skuConversionStatus = default;
+            Optional<StorageAccountSkuConversionState> skuConversionStatus = default;
             Optional<StorageSkuName> targetSkuName = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skuConversionStatus"))
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    skuConversionStatus = new SkuConversionStatus(property.Value.GetString());
+                    skuConversionStatus = new StorageAccountSkuConversionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetSkuName"))
@@ -53,16 +54,26 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    endTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new StorageAccountSkuConversionStatus(Optional.ToNullable(skuConversionStatus), Optional.ToNullable(targetSkuName), startTime.Value, endTime.Value);
+            return new StorageAccountSkuConversionStatus(Optional.ToNullable(skuConversionStatus), Optional.ToNullable(targetSkuName), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
         }
     }
 }

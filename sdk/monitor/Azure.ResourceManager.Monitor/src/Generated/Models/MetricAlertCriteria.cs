@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal MetricAlertCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties)
+        internal MetricAlertCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties)
         {
             OdataType = odataType;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> specifies the type of the alert criteria. </summary>
-        internal Odatatype OdataType { get; set; }
+        internal MonitorOdataType OdataType { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

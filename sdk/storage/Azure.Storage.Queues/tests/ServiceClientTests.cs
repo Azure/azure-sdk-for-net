@@ -11,6 +11,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -124,11 +125,12 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
-            var marker = default(string);
+            var continuationToken = default(string);
             var queues = new List<QueueItem>();
-            await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(marker))
+            await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(continuationToken))
             {
                 queues.AddRange(page.Values);
+                continuationToken = page.ContinuationToken;
             }
 
             Assert.AreNotEqual(0, queues.Count);

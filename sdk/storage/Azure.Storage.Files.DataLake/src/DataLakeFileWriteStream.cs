@@ -22,14 +22,12 @@ namespace Azure.Storage.Files.DataLake
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             bool? closeEvent) : base(
                 position,
                 bufferSize,
-                progressHandler
-                // TODO #27253
-                //hashingOptions
+                progressHandler,
+                validationOptions: validationOptions
                 )
         {
             ValidateBufferSize(bufferSize);
@@ -48,16 +46,10 @@ namespace Azure.Storage.Files.DataLake
                 await _fileClient.AppendInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    // TODO #27253
-                    //options: new DataLakeFileAppendOptions
-                    //{
-                    //    TransactionalHashingOptions = _hashingOptions,
-                    //    ProgressHandler = _progressHandler,
-                    //    LeaseId = _conditions?.LeaseId
-                    //},
-                    rangeContentMD5: default,
+                    validationOptionsOverride: _validationOptions,
                     leaseId: _conditions.LeaseId,
                     progressHandler: _progressHandler,
+                    flush: null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

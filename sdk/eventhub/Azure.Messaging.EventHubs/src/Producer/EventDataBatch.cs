@@ -157,6 +157,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   result in an <see cref="InvalidOperationException" /> until publishing has completed.
         /// </exception>
         ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="eventData"/> has a member in its <see cref="EventData.Properties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="EventData.Properties"/> remarks for details.
+        /// </exception>
+        ///
         public bool TryAdd(EventData eventData)
         {
             lock (SyncGuard)

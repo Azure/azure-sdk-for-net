@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -71,28 +72,28 @@ namespace Azure.ResourceManager.IotCentral
 
         internal static IotCentralAppData DeserializeIotCentralAppData(JsonElement element)
         {
-            AppSkuInfo sku = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            IotCentralAppSkuInfo sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> applicationId = default;
+            Optional<IotCentralProvisioningState> provisioningState = default;
+            Optional<Guid> applicationId = default;
             Optional<string> displayName = default;
             Optional<string> subdomain = default;
             Optional<string> template = default;
-            Optional<AppState> state = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<NetworkRuleSets> networkRuleSets = default;
+            Optional<IotCentralAppState> state = default;
+            Optional<IotCentralPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IotCentralNetworkRuleSets> networkRuleSets = default;
             Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = AppSkuInfo.DeserializeAppSkuInfo(property.Value);
+                    sku = IotCentralAppSkuInfo.DeserializeIotCentralAppSkuInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.IotCentral
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -166,12 +167,17 @@ namespace Azure.ResourceManager.IotCentral
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new IotCentralProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("applicationId"))
                         {
-                            applicationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            applicationId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("displayName"))
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.IotCentral
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new AppState(property0.Value.GetString());
+                            state = new IotCentralAppState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -206,7 +212,7 @@ namespace Azure.ResourceManager.IotCentral
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new IotCentralPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkRuleSets"))
@@ -216,7 +222,7 @@ namespace Azure.ResourceManager.IotCentral
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkRuleSets = NetworkRuleSets.DeserializeNetworkRuleSets(property0.Value);
+                            networkRuleSets = IotCentralNetworkRuleSets.DeserializeIotCentralNetworkRuleSets(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -238,7 +244,7 @@ namespace Azure.ResourceManager.IotCentral
                     continue;
                 }
             }
-            return new IotCentralAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(provisioningState), applicationId.Value, displayName.Value, subdomain.Value, template.Value, Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, Optional.ToList(privateEndpointConnections));
+            return new IotCentralAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(applicationId), displayName.Value, subdomain.Value, template.Value, Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

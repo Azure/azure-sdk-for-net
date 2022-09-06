@@ -1,0 +1,1056 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/receivedShare1?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "192",
+        "Content-Type": "application/json",
+        "traceparent": "00-851a3a421d1f3d4aacac83577f28828a-f9c3c06b580bbf44-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "451583bbf207b160740de2206aa76d84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "shareKind": "InPlace",
+        "properties": {
+          "invitationId": "d3a8440d-6ff1-4816-b1eb-41a31585439b",
+          "sentShareLocation": "eastus",
+          "collection": {
+            "referenceName": "w95gh9ze",
+            "type": "CollectionReference"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "623",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 22:10:19 GMT",
+        "Location": "/receivedShares/receivedShare1/receivedShare1",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "e519a6ae-24c1-4233-be3f-26f0ba7aa8f1"
+      },
+      "ResponseBody": {
+        "properties": {
+          "createdAt": "2022-07-14T22:10:19.8030093Z",
+          "sharedAt": "2022-07-14T22:07:59.9352407Z",
+          "invitationId": "d3a8440d-6ff1-4816-b1eb-41a31585439b",
+          "provisioningState": "Succeeded",
+          "receivedShareStatus": "Active",
+          "sentShareDescription": "",
+          "sentShareLocation": "eastus",
+          "shareName": "sentShare1",
+          "receiverName": "SyMS",
+          "receiverEmail": null,
+          "receiverTenantName": "Microsoft",
+          "senderName": "SyMS",
+          "senderEmail": null,
+          "senderTenantName": "Microsoft",
+          "collection": {
+            "type": "CollectionReference",
+            "referenceName": "w95gh9ze"
+          }
+        },
+        "shareKind": "InPlace",
+        "id": "/receivedShares/receivedShare1",
+        "name": "receivedShare1",
+        "type": "receivedShares"
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/receivedShare1?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d8ba9b3f691d4d49b8d2061fa6e7bd98-6a36e9550b6e5048-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "da859f4429e12c29061950844cd587af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "623",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 22:10:20 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "8cb93a89-aa3c-4d7d-bb7b-4170c389a47b"
+      },
+      "ResponseBody": {
+        "properties": {
+          "createdAt": "2022-07-14T22:10:19.8030093Z",
+          "sharedAt": "2022-07-14T22:07:59.9352407Z",
+          "invitationId": "d3a8440d-6ff1-4816-b1eb-41a31585439b",
+          "provisioningState": "Succeeded",
+          "receivedShareStatus": "Active",
+          "sentShareDescription": "",
+          "sentShareLocation": "eastus",
+          "shareName": "sentShare1",
+          "receiverName": "SyMS",
+          "receiverEmail": null,
+          "receiverTenantName": "Microsoft",
+          "senderName": "SyMS",
+          "senderEmail": null,
+          "senderTenantName": "Microsoft",
+          "collection": {
+            "type": "CollectionReference",
+            "referenceName": "w95gh9ze"
+          }
+        },
+        "shareKind": "InPlace",
+        "id": "/receivedShares/receivedShare1",
+        "name": "receivedShare1",
+        "type": "receivedShares"
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7a618cb46580e643b6c7c8afb11be4d0-26d8ae12055a4d42-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "098fa555f03ffc06cd4d9702fcf0f788",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "22247",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 22:10:20 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "7595679a-5e80-4d75-abd7-346148d0737c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "createdAt": "2022-04-13T17:19:57.6747121Z",
+              "sharedAt": "2022-04-13T16:03:13.3060421Z",
+              "invitationId": "f56ca62d-ec0c-41ff-a75a-68e2151cad08",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "SourceDeleted",
+              "sentShareDescription": "testing ",
+              "sentShareLocation": "eastus",
+              "shareName": "testTermShare",
+              "receiverName": "Ricardo Landaeta",
+              "receiverEmail": "rlandaeta@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Ricardo Landaeta",
+              "senderEmail": "rlandaeta@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "mgqrffcq"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/testTermShare",
+            "name": "testTermShare",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-04-27T00:10:56.9742934Z",
+              "sharedAt": "2022-04-27T00:10:15.2423311Z",
+              "invitationId": "d407a50f-073a-4efd-a8c0-d62d66c6dcbb",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "sai-registered",
+              "receiverName": "Sai Prakash Mekonda",
+              "receiverEmail": "smekonda@microsoft.com",
+              "receiverTenantName": "unknown",
+              "senderName": "Sai Prakash Mekonda",
+              "senderEmail": "smekonda@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qdmo00h5"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/sai-registered",
+            "name": "sai-registered",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-04-27T00:23:46.6824478Z",
+              "sharedAt": "2022-04-27T00:23:32.2520107Z",
+              "invitationId": "0521b416-7ff6-4742-a87f-560af1e8f3f6",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "sai-unregister",
+              "receiverName": "Sai Prakash Mekonda",
+              "receiverEmail": "smekonda@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Sai Prakash Mekonda",
+              "senderEmail": "smekonda@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qdmo00h5"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/sai-unregister",
+            "name": "sai-unregister",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-09T18:34:08.3065807Z",
+              "sharedAt": "2022-05-09T18:30:45.7386719Z",
+              "invitationId": "3d14628c-bc87-43ba-85a9-9b45041752e0",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "SourceDeleted",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishakoreaSouth",
+              "receiverName": "Sai Prakash Mekonda",
+              "receiverEmail": "smekonda@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qdmo00h5"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishakoreaSouth-rec",
+            "name": "namishakoreaSouth-rec",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-09T19:17:42.9644813Z",
+              "sharedAt": "2022-05-09T19:17:25.5554298Z",
+              "invitationId": "ab21836c-07c6-41b4-b261-5adcde84ba60",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "ft-testShare-1",
+              "receiverName": "Faisal Al Tell",
+              "receiverEmail": "faisalaltell@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Faisal Al Tell",
+              "senderEmail": "faisalaltell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "w95gh9ze"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/ft-testShare-1",
+            "name": "ft-testShare-1",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-10T03:58:42.933664Z",
+              "sharedAt": "2022-05-10T03:06:39.598466Z",
+              "invitationId": "b872eba5-9cb3-4f92-b098-8adc3dbaa278",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "ft-testShare-2",
+              "receiverName": "Faisal Al Tell",
+              "receiverEmail": "faisalaltell@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Faisal Al Tell",
+              "senderEmail": "faisalaltell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "w95gh9ze"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/ft-testShare-2",
+            "name": "ft-testShare-2",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-10T04:12:09.4129417Z",
+              "sharedAt": "2022-05-10T04:11:53.7611996Z",
+              "invitationId": "8e3a27a0-b378-46bd-826b-adb437d6f0c2",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "ft-testShare-3",
+              "receiverName": "Faisal Al Tell",
+              "receiverEmail": "faisalaltell@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Faisal Al Tell",
+              "senderEmail": "faisalaltell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "w95gh9ze"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/ft-testShare-3",
+            "name": "ft-testShare-3",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-12T18:03:49.5549953Z",
+              "sharedAt": "2022-05-12T18:03:41.4505773Z",
+              "invitationId": "35d6d066-4d91-4d6a-9c0c-48a8bae0fadb",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishajapaneastblob",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishajapaneastblob",
+            "name": "namishajapaneastblob",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-12T18:10:28.2983934Z",
+              "sharedAt": "2022-05-12T18:10:07.5312903Z",
+              "invitationId": "1be9ce2f-ea91-4f78-9f79-5d568ca043bc",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishasouthafricanorthadls",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishasouthafricanorthadls",
+            "name": "namishasouthafricanorthadls",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-12T18:30:05.4445571Z",
+              "sharedAt": "2022-05-12T18:28:32.5518009Z",
+              "invitationId": "9d246f00-348d-4853-9784-b3a1f101f811",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishakoreasouth",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishakoreasouth",
+            "name": "namishakoreasouth",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-12T20:08:18.1783436Z",
+              "sharedAt": "2022-05-12T20:08:05.3125036Z",
+              "invitationId": "97b8eaed-e0f9-4478-a203-4e6ebc4d404f",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishaeuapblob",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishaeuapblob",
+            "name": "namishaeuapblob",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-12T21:33:39.7240981Z",
+              "sharedAt": "2022-05-12T21:33:28.5908422Z",
+              "invitationId": "1480e85f-f2c9-4254-a32d-c6e38a0613cd",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishatestafec",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishatestafec",
+            "name": "namishatestafec",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-12T21:45:33.3378709Z",
+              "sharedAt": "2022-05-12T21:45:18.1155742Z",
+              "invitationId": "3759d086-a121-44d6-81dd-44ca11a10609",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishaSANdevshare",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishaSANdevshare",
+            "name": "namishaSANdevshare",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-12T22:08:00.8591007Z",
+              "sharedAt": "2022-05-12T22:07:07.7169004Z",
+              "invitationId": "b196484f-594f-4159-9a9a-55e06c959d5b",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "namishaksblob",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishaksblob",
+            "name": "namishaksblob",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-13T15:57:50.4377506Z",
+              "sharedAt": "2022-05-13T15:53:26.2637049Z",
+              "invitationId": "efbf71d5-396a-4e7c-98ac-e1caac8e22b2",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "Test share 5",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-5",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-5",
+            "name": "test-share-5",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-13T16:14:51.8658718Z",
+              "sharedAt": "2022-05-13T16:13:32.2432942Z",
+              "invitationId": "1096d7b5-c427-443d-8d7d-a36e242c2058",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "Test share 7",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-7",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-7",
+            "name": "test-share-7",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-20T17:14:57.8508348Z",
+              "sharedAt": "2022-05-20T17:14:31.1646027Z",
+              "invitationId": "d3e62148-3d17-4458-bc7f-8c18832c4dc4",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "dspreviewjeshare",
+              "receiverName": "Paul Wells",
+              "receiverEmail": "pawell@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Paul Wells",
+              "senderEmail": "pawell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "82egt4cx"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/dspreviewjeshare",
+            "name": "dspreviewjeshare",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-20T22:08:46.6034261Z",
+              "sharedAt": "2022-05-20T22:08:12.2853119Z",
+              "invitationId": "f45749c3-499b-40ab-b5d2-906c540cc75d",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "Testing",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-9",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-9",
+            "name": "test-share-9",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-20T22:09:39.9768528Z",
+              "sharedAt": "2022-05-20T22:06:48.4232892Z",
+              "invitationId": "b1387dfd-43ec-46b9-9fe0-bdaf7767ab4e",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "Test-share-8",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-8",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-8",
+            "name": "test-share-8",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-20T22:14:31.3769377Z",
+              "sharedAt": "2022-05-20T22:13:26.5832598Z",
+              "invitationId": "1a5d1326-558f-48d4-a883-d7a20685e94f",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-11",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-11",
+            "name": "test-share-11",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-20T22:21:03.0682468Z",
+              "sharedAt": "2022-05-20T22:18:58.3468069Z",
+              "invitationId": "70fb8c65-be49-4b6b-8ff8-560c911369a7",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "Test",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-12",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-12",
+            "name": "test-share-12",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-20T22:23:25.6091752Z",
+              "sharedAt": "2022-05-20T22:22:20.822246Z",
+              "invitationId": "1fcb1e13-69ea-41e3-805e-123b6a7c490b",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-13",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-13",
+            "name": "test-share-13",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-24T00:00:27.1496901Z",
+              "sharedAt": "2022-05-24T00:00:11.0363201Z",
+              "invitationId": "7515bc45-9c61-41d9-a669-4e4f0429f0fb",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "xfepreviewuksshare",
+              "receiverName": "Paul Wells",
+              "receiverEmail": "pawell@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Paul Wells",
+              "senderEmail": "pawell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "82egt4cx"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/xfepreviewuksshare",
+            "name": "xfepreviewuksshare",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-05-24T18:53:39.8023015Z",
+              "sharedAt": "2022-05-24T18:53:29.6535384Z",
+              "invitationId": "ba29a76d-a986-4d51-95ab-8af7c9706e9a",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "xfepreviewsanshare",
+              "receiverName": "Paul Wells",
+              "receiverEmail": "pawell@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Paul Wells",
+              "senderEmail": "pawell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "82egt4cx"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/xfepreviewsanshare",
+            "name": "xfepreviewsanshare",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-06-13T16:38:34.1789239Z",
+              "sharedAt": "2022-06-13T16:33:21.4109269Z",
+              "invitationId": "19411438-4405-49e5-ae4e-a5761c32e871",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "ft-testShare-5",
+              "receiverName": "Abdel Hermas",
+              "receiverEmail": "ahermas@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Faisal Al Tell",
+              "senderEmail": "faisalaltell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "prjz69vy"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/ft-testShare-5",
+            "name": "ft-testShare-5",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-06-13T16:43:42.4830444Z",
+              "sharedAt": "2022-06-13T16:41:39.3002067Z",
+              "invitationId": "e208b68f-b8bb-4b15-abeb-082402366702",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Revoked",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "ft-testShare-6",
+              "receiverName": "Abdel Hermas",
+              "receiverEmail": "ahermas@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Faisal Al Tell",
+              "senderEmail": "faisalaltell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "prjz69vy"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/ft-testShare-6",
+            "name": "ft-testShare-6",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-06-16T22:02:14.0084391Z",
+              "sharedAt": "2022-06-16T22:02:01.0162534Z",
+              "invitationId": "35492c6c-24b7-4dbc-a25e-3083bc626e15",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "australiaeast",
+              "shareName": "namishagoyalshare",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/namishagoyalshare",
+            "name": "namishagoyalshare",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-06-16T22:05:54.0760653Z",
+              "sharedAt": "2022-06-16T21:59:25.7847186Z",
+              "invitationId": "6ad03396-714c-42ef-bfb1-5d69bd33fe12",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "Testing readiness probe",
+              "sentShareLocation": "eastus",
+              "shareName": "test-share-15",
+              "receiverName": "Kevin Bowersox",
+              "receiverEmail": "kbowersox@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Kevin Bowersox",
+              "senderEmail": "kbowersox@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "e9m0u53t"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/test-share-15",
+            "name": "test-share-15",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-06-21T23:15:23.2560947Z",
+              "sharedAt": "2022-06-21T23:15:09.2522698Z",
+              "invitationId": "ddf32ea1-0e3b-4634-9bf3-1bc553899fdb",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "scaleoutcanaryshare1",
+              "receiverName": "Paul Wells",
+              "receiverEmail": "pawell@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Paul Wells",
+              "senderEmail": "pawell@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "82egt4cx"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/scaleoutcanaryshare1",
+            "name": "scaleoutcanaryshare1",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-07-05T22:42:45.0151351Z",
+              "sharedAt": "2022-07-05T22:42:13.1763043Z",
+              "invitationId": "77bdb0f2-2451-4eaa-957a-5abede8d11f7",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "7-5-test",
+              "receiverName": "Ricardo Landaeta",
+              "receiverEmail": "rlandaeta@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Ricardo Landaeta",
+              "senderEmail": "rlandaeta@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "mgqrffcq"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/7-5-test",
+            "name": "7-5-test",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-07-06T19:31:27.666809Z",
+              "sharedAt": "2022-07-06T19:31:19.7199586Z",
+              "invitationId": "e2812261-5d6b-414d-8afb-d0e467372d61",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "australiaeast",
+              "shareName": "newInputerror",
+              "receiverName": "Namisha Goyal",
+              "receiverEmail": "namishagoyal@microsoft.com",
+              "receiverTenantName": "Microsoft",
+              "senderName": "Namisha Goyal",
+              "senderEmail": "namishagoyal@microsoft.com",
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "qmek6nzp"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/newInputerror",
+            "name": "newInputerror",
+            "type": "receivedShares"
+          },
+          {
+            "properties": {
+              "createdAt": "2022-07-14T22:10:19.8030093Z",
+              "sharedAt": "2022-07-14T22:07:59.9352407Z",
+              "invitationId": "d3a8440d-6ff1-4816-b1eb-41a31585439b",
+              "provisioningState": "Succeeded",
+              "receivedShareStatus": "Active",
+              "sentShareDescription": "",
+              "sentShareLocation": "eastus",
+              "shareName": "sentShare1",
+              "receiverName": "SyMS",
+              "receiverEmail": null,
+              "receiverTenantName": "Microsoft",
+              "senderName": "SyMS",
+              "senderEmail": null,
+              "senderTenantName": "Microsoft",
+              "collection": {
+                "type": "CollectionReference",
+                "referenceName": "w95gh9ze"
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "/receivedShares/receivedShare1",
+            "name": "receivedShare1",
+            "type": "receivedShares"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/receivedShare1?api-version=2021-09-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-df639f0386ab6e468b46e3806e9416d6-04fe9052e2f34949-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "f74eb5c0f96a92185ae83eeda1dc649e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/Delete-ReceivedShare-c802a1f6-0cdd-45f7-9432-6ae06f5f7d19?api-version=2021-09-01-preview",
+        "Content-Length": "0",
+        "Date": "Thu, 14 Jul 2022 22:10:21 GMT",
+        "Operation-Location": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/Delete-ReceivedShare-c802a1f6-0cdd-45f7-9432-6ae06f5f7d19?api-version=2021-09-01-preview",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "a39d4b5f-e02c-470b-a093-63a0f7bee4df"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/Delete-ReceivedShare-c802a1f6-0cdd-45f7-9432-6ae06f5f7d19?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-df639f0386ab6e468b46e3806e9416d6-c4dd9a50bc877044-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d1b4dd5967d9538b3adb83b2a48bc58c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 22:10:29 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "0ebc39ef-e334-4549-8206-e7dbac8d36bc"
+      },
+      "ResponseBody": {
+        "startTime": "2022-07-14T22:10:21.7902145Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/Delete-ReceivedShare-c802a1f6-0cdd-45f7-9432-6ae06f5f7d19?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-df639f0386ab6e468b46e3806e9416d6-1f09052c3bb7f249-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3b1e31fe1851ac34418eb8228b37f700",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "93",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 22:10:30 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "c7885833-ba97-48a6-84b6-b6722dcd1472"
+      },
+      "ResponseBody": {
+        "startTime": "2022-07-14T22:10:21.7902145Z",
+        "endTime": null,
+        "status": "Succeeded",
+        "error": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "83428172"
+  }
+}

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<string> addressPrefix = default;
             Optional<RouteNextHopType> nextHopType = default;
-            Optional<string> nextHopIpAddress = default;
+            Optional<string> nextHopIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> hasBgpOverride = default;
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("nextHopIpAddress"))
                         {
-                            nextHopIpAddress = property0.Value.GetString();
+                            nextHopIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIpAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
+            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIPAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
         }
     }
 }

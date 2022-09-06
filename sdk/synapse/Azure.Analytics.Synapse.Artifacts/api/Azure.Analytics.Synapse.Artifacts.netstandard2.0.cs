@@ -2,14 +2,14 @@ namespace Azure.Analytics.Synapse.Artifacts
 {
     public partial class ArtifactsClientOptions : Azure.Core.ClientOptions
     {
-        public ArtifactsClientOptions(Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion.V2021_12_01_preview) { }
+        public ArtifactsClientOptions(Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion.V2021_12_01_Preview) { }
         public enum ServiceVersion
         {
             V2020_12_01 = 1,
-            V2021_06_01_preview = 2,
-            V2021_07_01_preview = 3,
-            V2021_11_01_preview = 4,
-            V2021_12_01_preview = 5,
+            V2021_06_01_Preview = 2,
+            V2021_07_01_Preview = 3,
+            V2021_11_01_Preview = 4,
+            V2021_12_01_Preview = 5,
         }
     }
     public partial class BigDataPoolsClient

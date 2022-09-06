@@ -36,7 +36,9 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
-
+- name: TestDependsOnDependency
+  type: string
+  default: not-specified
 jobs:
   - job: Build
     pool:
@@ -116,16 +118,17 @@ jobs:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'packages'
 
-      - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-        displayName: 'Upload Package SBOM'
-        condition: succeededOrFailed()
-        inputs:
-          BuildDropPath: $(Build.ArtifactStagingDirectory)
+      - ${{if eq(variables['System.TeamProject'], 'internal') }}:
+        - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+          displayName: 'Upload Package SBOM'
+          condition: succeededOrFailed()
+          inputs:
+            BuildDropPath: $(Build.ArtifactStagingDirectory)
 
-      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-        parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
-          ArtifactName: 'manifest'
+        - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+          parameters:
+            ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
+            ArtifactName: 'manifest'
 
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
@@ -140,6 +143,7 @@ jobs:
           ignoreDirectories: '.nuget'
 
   - job: "Analyze"
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
@@ -151,6 +155,7 @@ jobs:
               Paths:
                 - "/*"
                 - "!SessionRecords"
+      - template: /eng/common/pipelines/templates/steps/validate-filename.yml
       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -223,18 +228,48 @@ jobs:
         parameters:
           BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
+      GenerateJobName: generate_target_service_test_matrix
       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
       MatrixConfigs: ${{ parameters.MatrixConfigs }}
       MatrixFilters: ${{ parameters.MatrixFilters }}
       MatrixReplace: ${{ parameters.MatrixReplace }}
       CloudConfig:
-        Cloud: Public
+        Cloud: public
       AdditionalParameters:
         SDKType: ${{ parameters.SDKType }}
-        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
-        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }} 
+  - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+    - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+      parameters:
+        GenerateJobName: generate_target_dependencies_test_matrix 
+        JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+        MatrixConfigs: ${{ parameters.MatrixConfigs }}
+        MatrixFilters: ${{ parameters.MatrixFilters }}
+        MatrixReplace: ${{ parameters.MatrixReplace }}
+        CloudConfig:
+          Cloud: public
+        SparseCheckoutPaths: 
+          - "/*"
+          - "!/sdk/*/**/SessionRecords"
+        PreGenerationSteps: 
+        - ${{ each config in parameters.MatrixConfigs }}:
+          - template: /eng/pipelines/templates/steps/dependency.tests.yml
+            parameters:
+              TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+              # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+              ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+              ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+              ExcludeTargetTestProjects: true
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              MatrixConfigsFile: ${{ config.Path }}
+        AdditionalParameters:
+          SDKType: ${{ parameters.SDKType }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          TestSetupSteps: ${{ parameters.TestSetupSteps }}
+          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
+          ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'                                     

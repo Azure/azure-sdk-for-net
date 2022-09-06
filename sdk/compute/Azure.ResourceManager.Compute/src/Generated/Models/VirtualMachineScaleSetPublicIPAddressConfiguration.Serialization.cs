@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetPublicIPAddressConfiguration DeserializeVirtualMachineScaleSetPublicIPAddressConfiguration(JsonElement element)
         {
             string name = default;
-            Optional<PublicIPAddressSku> sku = default;
+            Optional<ComputePublicIPAddressSku> sku = default;
             Optional<int> idleTimeoutInMinutes = default;
             Optional<VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings> dnsSettings = default;
             Optional<IList<VirtualMachineScaleSetIPTag>> ipTags = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = PublicIPAddressSku.DeserializePublicIPAddressSku(property.Value);
+                    sku = ComputePublicIPAddressSku.DeserializeComputePublicIPAddressSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))

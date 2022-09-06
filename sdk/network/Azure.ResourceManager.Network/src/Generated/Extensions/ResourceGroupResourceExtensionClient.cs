@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.Network
             return GetCachedClient(Client => new VpnGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of P2sVpnGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of P2sVpnGatewayResources and their operations over a P2sVpnGatewayResource. </returns>
-        public virtual P2sVpnGatewayCollection GetP2sVpnGateways()
+        /// <summary> Gets a collection of P2SVpnGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
+        public virtual P2SVpnGatewayCollection GetP2SVpnGateways()
         {
-            return GetCachedClient(Client => new P2sVpnGatewayCollection(Client, Id));
+            return GetCachedClient(Client => new P2SVpnGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ExpressRouteGatewayResources in the ResourceGroupResource. </summary>

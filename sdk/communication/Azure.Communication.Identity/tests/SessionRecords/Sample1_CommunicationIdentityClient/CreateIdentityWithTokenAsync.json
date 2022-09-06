@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-1a6a0295f56aa3014da9d476fdca743a-8a3bbce390463ea3-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "e18b03992624318f139b657731b9f811",
+        "traceparent": "00-d2d6c202ecb3fa012b3b8272bfa384f9-41b9fc483e3f862e-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220804.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "39bc98ac90a4746b5c0f9936cff267c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -19,14 +19,14 @@
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01",
         "Content-Length": "31",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 08:59:04 GMT",
-        "MS-CV": "s86cnjFXqUyR5\u002BtmnEUUlg.2.0",
+        "Date": "Thu, 04 Aug 2022 06:50:38 GMT",
+        "MS-CV": "CPeHMEmXmEW3judobWih6Q.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0VliHYgAAAADh9sfKtcWyQJ0a7vILk9ihTFRTRURHRTEyMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0PmzrYgAAAABs8NO6iHAHQoJYkDVbQrd3TE9OMjFFREdFMTgwNQBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "e18b03992624318f139b657731b9f811",
-        "X-Processing-Time": "200ms"
+        "x-ms-client-request-id": "39bc98ac90a4746b5c0f9936cff267c6",
+        "X-Processing-Time": "29ms"
       },
       "ResponseBody": {
         "identity": {
@@ -36,7 +36,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1617104919"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1713133862"
   }
 }

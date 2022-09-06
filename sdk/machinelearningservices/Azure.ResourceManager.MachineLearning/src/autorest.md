@@ -27,7 +27,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -38,11 +38,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   AKS: Aks
   USD: Usd
 
@@ -72,6 +73,9 @@ directive:
     transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.currentNodeCount
+    transform: $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.VirtualMachineSchema.properties.properties.properties.administratorAccount
     transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.targetNodeCount

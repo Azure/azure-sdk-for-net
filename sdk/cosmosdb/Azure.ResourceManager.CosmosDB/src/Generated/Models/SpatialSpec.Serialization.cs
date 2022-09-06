@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static SpatialSpec DeserializeSpatialSpec(JsonElement element)
         {
             Optional<string> path = default;
-            Optional<IList<SpatialType>> types = default;
+            Optional<IList<CosmosDBSpatialType>> types = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SpatialType> array = new List<SpatialType>();
+                    List<CosmosDBSpatialType> array = new List<CosmosDBSpatialType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new SpatialType(item.GetString()));
+                        array.Add(new CosmosDBSpatialType(item.GetString()));
                     }
                     types = array;
                     continue;

@@ -29,13 +29,16 @@ rename-mapping:
   SecretType: LinkerSecretType
   SecretStore: LinkerSecretStore
   ClientType: LinkerClientType
-  ValidationResultItem: ValidationResultItemData
+  ValidateOperationResult: LinkerValidateOperationResult
   ValidateOperationResult.properties.reportStartTimeUtc: reportStartOn
   ValidateOperationResult.properties.reportEndTimeUtc: reportEndOn
-
+  ValidationResultItem: LinkerValidationResultItemInfo
+  ValidationResultStatus: LinkerValidationResultStatus
+  AzureKeyVaultProperties.connectAsKubernetesCsiDriver: DoesConnectAsKubernetesCsiDriver
 
 format-by-name-rules:
   'tenantId': 'uuid'
+  'principalId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   'keyVaultId': 'arm-id'
@@ -50,23 +53,27 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   VNet: Vnet
-  Etag: ETag
+
+generate-arm-resource-extensions:
+  - /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
 
 directive:
   - from: servicelinker.json

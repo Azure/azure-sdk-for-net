@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new SecretBaseInfo(secretType);
+            return new UnknownSecretBaseInfo(secretType);
         }
     }
 }

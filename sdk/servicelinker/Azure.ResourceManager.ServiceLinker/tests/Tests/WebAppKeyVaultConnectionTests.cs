@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             WebSiteResource webapp = await webSites.GetAsync(webAppName);
 
             // create key vault
-            VaultCollection vaults = resourceGroup.GetVaults();
-            var vaultProperties = new VaultProperties(new Guid(TestEnvironment.TenantId), new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
+            KeyVaultCollection vaults = resourceGroup.GetKeyVaults();
+            var vaultProperties = new KeyVaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
             vaultProperties.AccessPolicies.Clear();
-            await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new VaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
-            VaultResource vault = await vaults.GetAsync(vaultName);
+            await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new KeyVaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
+            KeyVaultResource vault = await vaults.GetAsync(vaultName);
 
             // create service linker
             LinkerResourceCollection linkers = webapp.GetLinkerResources();

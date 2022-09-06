@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new TargetServiceBaseInfo(type);
+            return new UnknownTargetServiceBaseInfo(type);
         }
     }
 }

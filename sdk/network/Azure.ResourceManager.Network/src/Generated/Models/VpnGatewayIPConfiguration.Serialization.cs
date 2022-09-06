@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Network.Models
         internal static VpnGatewayIPConfiguration DeserializeVpnGatewayIPConfiguration(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
-            Optional<string> publicIpAddress = default;
-            Optional<string> privateIpAddress = default;
+            Optional<string> publicIPAddress = default;
+            Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    publicIpAddress = property.Value.GetString();
+                    publicIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIpAddress = property.Value.GetString();
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new VpnGatewayIPConfiguration(id.Value, publicIpAddress.Value, privateIpAddress.Value);
+            return new VpnGatewayIPConfiguration(id.Value, publicIPAddress.Value, privateIPAddress.Value);
         }
     }
 }

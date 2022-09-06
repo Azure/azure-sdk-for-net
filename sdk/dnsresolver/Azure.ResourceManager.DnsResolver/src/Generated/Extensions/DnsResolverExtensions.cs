@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// Operation Id: DnsForwardingRulesets_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(this ResourceGroupResource resourceGroupResource, string dnsForwardingRulesetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(this ResourceGroupResource resourceGroupResource, string rulesetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDnsForwardingRulesets().GetAsync(dnsForwardingRulesetName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDnsForwardingRulesets().GetAsync(rulesetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// Operation Id: DnsForwardingRulesets_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DnsForwardingRulesetResource> GetDnsForwardingRuleset(this ResourceGroupResource resourceGroupResource, string dnsForwardingRulesetName, CancellationToken cancellationToken = default)
+        public static Response<DnsForwardingRulesetResource> GetDnsForwardingRuleset(this ResourceGroupResource resourceGroupResource, string rulesetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDnsForwardingRulesets().Get(dnsForwardingRulesetName, cancellationToken);
+            return resourceGroupResource.GetDnsForwardingRulesets().Get(rulesetName, cancellationToken);
         }
 
         /// <summary>
@@ -269,39 +269,39 @@ namespace Azure.ResourceManager.DnsResolver
         }
         #endregion
 
-        #region InboundEndpointResource
+        #region DnsResolverInboundEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="InboundEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InboundEndpointResource.CreateResourceIdentifier" /> to create an <see cref="InboundEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsResolverInboundEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverInboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverInboundEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InboundEndpointResource" /> object. </returns>
-        public static InboundEndpointResource GetInboundEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsResolverInboundEndpointResource" /> object. </returns>
+        public static DnsResolverInboundEndpointResource GetDnsResolverInboundEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InboundEndpointResource.ValidateResourceId(id);
-                return new InboundEndpointResource(client, id);
+                DnsResolverInboundEndpointResource.ValidateResourceId(id);
+                return new DnsResolverInboundEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OutboundEndpointResource
+        #region DnsResolverOutboundEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="OutboundEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OutboundEndpointResource.CreateResourceIdentifier" /> to create an <see cref="OutboundEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsResolverOutboundEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverOutboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverOutboundEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OutboundEndpointResource" /> object. </returns>
-        public static OutboundEndpointResource GetOutboundEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsResolverOutboundEndpointResource" /> object. </returns>
+        public static DnsResolverOutboundEndpointResource GetDnsResolverOutboundEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OutboundEndpointResource.ValidateResourceId(id);
-                return new OutboundEndpointResource(client, id);
+                DnsResolverOutboundEndpointResource.ValidateResourceId(id);
+                return new DnsResolverOutboundEndpointResource(client, id);
             }
             );
         }
@@ -326,39 +326,39 @@ namespace Azure.ResourceManager.DnsResolver
         }
         #endregion
 
-        #region ForwardingRuleResource
+        #region DnsForwardingRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="ForwardingRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ForwardingRuleResource.CreateResourceIdentifier" /> to create a <see cref="ForwardingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsForwardingRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsForwardingRuleResource.CreateResourceIdentifier" /> to create a <see cref="DnsForwardingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ForwardingRuleResource" /> object. </returns>
-        public static ForwardingRuleResource GetForwardingRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsForwardingRuleResource" /> object. </returns>
+        public static DnsForwardingRuleResource GetDnsForwardingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ForwardingRuleResource.ValidateResourceId(id);
-                return new ForwardingRuleResource(client, id);
+                DnsForwardingRuleResource.ValidateResourceId(id);
+                return new DnsForwardingRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetworkLinkResource
+        #region DnsForwardingRulesetVirtualNetworkLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsForwardingRulesetVirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkLinkResource" /> object. </returns>
-        public static VirtualNetworkLinkResource GetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> object. </returns>
+        public static DnsForwardingRulesetVirtualNetworkLinkResource GetDnsForwardingRulesetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetworkLinkResource.ValidateResourceId(id);
-                return new VirtualNetworkLinkResource(client, id);
+                DnsForwardingRulesetVirtualNetworkLinkResource.ValidateResourceId(id);
+                return new DnsForwardingRulesetVirtualNetworkLinkResource(client, id);
             }
             );
         }

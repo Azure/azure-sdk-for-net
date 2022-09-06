@@ -13,6 +13,8 @@ namespace Azure.Storage.Files.DataLake
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
+        public virtual TransferValidationOptions TransferValidation { get; } = new();
+
         public DataLakeClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
@@ -44,6 +46,7 @@ namespace Azure.Storage.Files.DataLake
         {
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = clientOptions.TransferValidation;
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)

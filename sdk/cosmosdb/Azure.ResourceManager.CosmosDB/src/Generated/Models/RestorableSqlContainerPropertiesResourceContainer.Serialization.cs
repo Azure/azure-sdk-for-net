@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy");
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<float> ts = default;
             Optional<ETag> etag = default;
             string id = default;
-            Optional<IndexingPolicy> indexingPolicy = default;
-            Optional<ContainerPartitionKey> partitionKey = default;
+            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
+            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
             Optional<int> defaultTtl = default;
-            Optional<UniqueKeyPolicy> uniqueKeyPolicy = default;
+            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
             Optional<long> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    indexingPolicy = IndexingPolicy.DeserializeIndexingPolicy(property.Value);
+                    indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionKey = ContainerPartitionKey.DeserializeContainerPartitionKey(property.Value);
+                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    uniqueKeyPolicy = UniqueKeyPolicy.DeserializeUniqueKeyPolicy(property.Value);
+                    uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("conflictResolutionPolicy"))

@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Monitor
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _vmInsightsOnboardingStatusVMInsightsClientDiagnostics;
-        private readonly VMInsightsRestOperations _vmInsightsOnboardingStatusVMInsightsRestClient;
+        private readonly ClientDiagnostics _vmInsightsOnboardingStatusVmInsightsClientDiagnostics;
+        private readonly VMInsightsRestOperations _vmInsightsOnboardingStatusVmInsightsRestClient;
         private readonly VmInsightsOnboardingStatusData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VmInsightsOnboardingStatusResource"/> class for mocking. </summary>
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VmInsightsOnboardingStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vmInsightsOnboardingStatusVMInsightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string vmInsightsOnboardingStatusVMInsightsApiVersion);
-            _vmInsightsOnboardingStatusVMInsightsRestClient = new VMInsightsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmInsightsOnboardingStatusVMInsightsApiVersion);
+            _vmInsightsOnboardingStatusVmInsightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string vmInsightsOnboardingStatusVmInsightsApiVersion);
+            _vmInsightsOnboardingStatusVmInsightsRestClient = new VMInsightsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmInsightsOnboardingStatusVmInsightsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VmInsightsOnboardingStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _vmInsightsOnboardingStatusVMInsightsClientDiagnostics.CreateScope("VmInsightsOnboardingStatusResource.Get");
+            using var scope = _vmInsightsOnboardingStatusVmInsightsClientDiagnostics.CreateScope("VmInsightsOnboardingStatusResource.Get");
             scope.Start();
             try
             {
-                var response = await _vmInsightsOnboardingStatusVMInsightsRestClient.GetOnboardingStatusAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
+                var response = await _vmInsightsOnboardingStatusVmInsightsRestClient.GetOnboardingStatusAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmInsightsOnboardingStatusResource(Client, response.Value), response.GetRawResponse());
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VmInsightsOnboardingStatusResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _vmInsightsOnboardingStatusVMInsightsClientDiagnostics.CreateScope("VmInsightsOnboardingStatusResource.Get");
+            using var scope = _vmInsightsOnboardingStatusVmInsightsClientDiagnostics.CreateScope("VmInsightsOnboardingStatusResource.Get");
             scope.Start();
             try
             {
-                var response = _vmInsightsOnboardingStatusVMInsightsRestClient.GetOnboardingStatus(Id.Parent, cancellationToken);
+                var response = _vmInsightsOnboardingStatusVmInsightsRestClient.GetOnboardingStatus(Id.Parent, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmInsightsOnboardingStatusResource(Client, response.Value), response.GetRawResponse());

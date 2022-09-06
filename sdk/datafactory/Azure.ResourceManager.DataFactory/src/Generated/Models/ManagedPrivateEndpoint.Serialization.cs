@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<string>> fqdns = default;
             Optional<string> groupId = default;
             Optional<bool> isReserved = default;
-            Optional<string> privateLinkResourceId = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> provisioningState = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("privateLinkResourceId"))
                 {
-                    privateLinkResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))

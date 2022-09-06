@@ -1,14 +1,21 @@
 # Release History
 
-## 12.12.0-beta.2 (Unreleased)
+## 12.13.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added support for "secondary then primary" read operations when using geo-redundant accounts.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.13.0-beta.1 (2022-08-23)
+- Fixed bug where Account SAS with the resources type value not in the order "sco" would get reordered to that order, which would invalidate the Account SAS signature from the string to sign
+
+## 12.12.0 (2022-07-07)
+- Includes all features from 12.12.0-beta.1.
 
 ## 12.12.0-beta.1 (2022-06-15)
 - This release contains bug fixes to improve quality.

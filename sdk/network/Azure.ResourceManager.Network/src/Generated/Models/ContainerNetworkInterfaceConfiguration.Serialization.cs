@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<IPConfigurationProfile>> ipConfigurations = default;
+            Optional<IList<NetworkIPConfigurationProfile>> ipConfigurations = default;
             Optional<IList<WritableSubResource>> containerNetworkInterfaces = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IPConfigurationProfile> array = new List<IPConfigurationProfile>();
+                            List<NetworkIPConfigurationProfile> array = new List<NetworkIPConfigurationProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPConfigurationProfile.DeserializeIPConfigurationProfile(item));
+                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item));
                             }
                             ipConfigurations = array;
                             continue;

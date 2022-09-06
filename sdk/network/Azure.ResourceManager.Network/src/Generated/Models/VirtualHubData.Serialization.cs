@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("vpnGateway");
                 JsonSerializer.Serialize(writer, VpnGateway);
             }
-            if (Optional.IsDefined(P2sVpnGateway))
+            if (Optional.IsDefined(P2SVpnGateway))
             {
                 writer.WritePropertyName("p2SVpnGateway");
-                JsonSerializer.Serialize(writer, P2sVpnGateway);
+                JsonSerializer.Serialize(writer, P2SVpnGateway);
             }
             if (Optional.IsDefined(ExpressRouteGateway))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> virtualWan = default;
             Optional<WritableSubResource> vpnGateway = default;
-            Optional<WritableSubResource> p2SVpnGateway = default;
+            Optional<WritableSubResource> p2sVpnGateway = default;
             Optional<WritableSubResource> expressRouteGateway = default;
             Optional<WritableSubResource> azureFirewall = default;
             Optional<WritableSubResource> securityPartnerProvider = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
             Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
             Optional<long> virtualRouterAsn = default;
-            Optional<IList<string>> virtualRouterIps = default;
+            Optional<IList<string>> virtualRouterIPs = default;
             Optional<bool> allowBranchToBranchTraffic = default;
             Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            p2SVpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            p2sVpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("expressRouteGateway"))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(item.GetString());
                             }
-                            virtualRouterIps = array;
+                            virtualRouterIPs = array;
                             continue;
                         }
                         if (property0.NameEquals("allowBranchToBranchTraffic"))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualWan, vpnGateway, p2SVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIps), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway));
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway));
         }
     }
 }

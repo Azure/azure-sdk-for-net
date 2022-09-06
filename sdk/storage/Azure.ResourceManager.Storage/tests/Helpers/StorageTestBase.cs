@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
-        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGRS);
+        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGrs);
         public static StorageKind DefaultKindStorage = StorageKind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {
                 accountName = Recording.GenerateAssetName(prefix);
                 StorageAccountNameAvailabilityContent parameter = new StorageAccountNameAvailabilityContent(accountName);
-                CheckNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
-                if (result.NameAvailable == true)
+                StorageAccountNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
+                if (result.IsNameAvailable ?? false)
                 {
                     return accountName;
                 }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             Assert.NotNull(account.Id.Name);
             Assert.NotNull(account.Data.Location);
             Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.CreationOn);
+            Assert.NotNull(account.Data.CreatedOn);
             Assert.NotNull(account.Data.Sku);
             Assert.NotNull(account.Data.Sku.Name);
             Assert.NotNull(account.Data.Sku.Tier);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             string ipAddressOrRangeParameters = string.Empty;
             DateTimeOffset sharedAccessStartTimeParameters = new DateTimeOffset();
             DateTimeOffset sharedAccessExpiryTimeParameters = new DateTimeOffset();
-            HttpProtocol? protocolsParameters = null;
+            StorageAccountHttpProtocol? protocolsParameters = null;
 
             foreach (var property in sasProperties)
             {
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                         break;
                     case "spr":
                         if (keyValue[1] == "https")
-                            protocolsParameters = HttpProtocol.Https;
+                            protocolsParameters = StorageAccountHttpProtocol.Https;
                         else if (keyValue[1] == "https,http")
-                            protocolsParameters = HttpProtocol.HttpsHttp;
+                            protocolsParameters = StorageAccountHttpProtocol.HttpsHttp;
                         break;
                     default:
                         break;
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                         break;
                     case "spr":
                         if (keyValue[1] == "https")
-                            parameters.Protocols = HttpProtocol.Https;
+                            parameters.Protocols = StorageAccountHttpProtocol.Https;
                         else if (keyValue[1] == "https,http")
-                            parameters.Protocols = HttpProtocol.HttpsHttp;
+                            parameters.Protocols = StorageAccountHttpProtocol.HttpsHttp;
                         break;
                     case "si":
                         parameters.Identifier = keyValue[1];

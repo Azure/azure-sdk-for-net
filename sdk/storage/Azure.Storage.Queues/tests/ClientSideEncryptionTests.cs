@@ -137,7 +137,8 @@ namespace Azure.Storage.Queues.Test
 
         [Test]
         [LiveOnly]
-        public void CanSwapKey()
+        public void CanSwapKey(
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             int options1EventCalled = 0;
             int options2EventCalled = 0;
@@ -149,14 +150,14 @@ namespace Azure.Storage.Queues.Test
             {
                 options2EventCalled++;
             }
-            var options1 = new QueueClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var options1 = new QueueClientSideEncryptionOptions(version)
             {
                 KeyEncryptionKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object,
                 KeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, default).Object,
                 KeyWrapAlgorithm = "foo"
             };
             options1.DecryptionFailed += Options1_DecryptionFailed;
-            var options2 = new QueueClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var options2 = new QueueClientSideEncryptionOptions(version)
             {
                 KeyEncryptionKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object,
                 KeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, default).Object,
@@ -192,6 +193,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(1, options2EventCalled);
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, false)] // a single cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, 14, false)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, false)] // multiple blocks
@@ -200,6 +202,7 @@ namespace Azure.Storage.Queues.Test
         [TestCase(ClientSideEncryptionVersion.V2_0, Constants.KB, false)] // block is larger than max message size, just use 1KB
         [TestCase(ClientSideEncryptionVersion.V2_0, 0, true)] // utf8 support testing
         [LiveOnly] // cannot seed content encryption key
+#pragma warning disable CS0618 // obsolete
         public async Task UploadAsync(ClientSideEncryptionVersion version, int messageSize, bool usePrebuiltMessage)
         {
             var message = usePrebuiltMessage
@@ -233,9 +236,11 @@ namespace Azure.Storage.Queues.Test
                 byte[] explicitlyUnwrappedKey;
                 switch (encryptionMetadata.EncryptionAgent.EncryptionVersion)
                 {
+#pragma warning disable CS0618 // obsolete
                     case ClientSideEncryptionVersion.V1_0:
                         explicitlyUnwrappedKey = explicitlyUnwrappedContent;
                         break;
+#pragma warning restore CS0618 // obsolete
                     case ClientSideEncryptionVersion.V2_0:
                         explicitlyUnwrappedKey = new Span<byte>(explicitlyUnwrappedContent).Slice(8).ToArray();
                         break;
@@ -246,12 +251,14 @@ namespace Azure.Storage.Queues.Test
                 string expectedEncryptedMessage;
                 switch (version)
                 {
+#pragma warning disable CS0618 // obsolete
                     case ClientSideEncryptionVersion.V1_0:
                         expectedEncryptedMessage = EncryptDataV1_0(
                             message,
                             explicitlyUnwrappedKey,
                             encryptionMetadata.ContentEncryptionIV);
                         break;
+#pragma warning restore CS0618 // obsolete
                     case ClientSideEncryptionVersion.V2_0:
                         expectedEncryptedMessage = EncryptDataV2_0(
                             message,
@@ -266,6 +273,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, false)] // a single cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, 14, false)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, false)] // multiple blocks
@@ -274,6 +282,7 @@ namespace Azure.Storage.Queues.Test
         [TestCase(ClientSideEncryptionVersion.V2_0, Constants.KB, false)] // block is larger than max message size, just use 1KB
         [TestCase(ClientSideEncryptionVersion.V2_0, 0, true)] // utf8 support testing
         [LiveOnly] // cannot seed content encryption key
+#pragma warning restore CS0618 // obsolete
         public async Task RoundtripAsync(ClientSideEncryptionVersion version, int messageSize, bool usePrebuiltMessage)
         {
             var message = usePrebuiltMessage
@@ -324,7 +333,9 @@ namespace Azure.Storage.Queues.Test
 
             var mockKey = this.GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object;
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, this.GetIKeyEncryptionKey(s_cancellationToken, keyEncryptionKeyBytes, keyId).Object).Object;
+#pragma warning disable CS0618 // obsolete
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+#pragma warning restore CS0618 // obsolete
             {
                 KeyResolver = mockKeyResolver,
                 KeyWrapAlgorithm = s_algorithmName
@@ -381,7 +392,9 @@ namespace Azure.Storage.Queues.Test
 
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken, keyEncryptionKeyBytes, keyId).Object;
             var mockKeyResolver = this.GetTrackOneIKeyResolver(this.GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object).Object;
+#pragma warning disable CS0618 // obsolete
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+#pragma warning restore CS0618 // obsolete
             {
                 KeyEncryptionKey = mockKey,
                 KeyWrapAlgorithm = s_algorithmName
@@ -410,9 +423,11 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
+#pragma warning restore CS0618 // obsolete
         public async Task RoundtripWithKeyvaultProvider(ClientSideEncryptionVersion version)
         {
             var message = GetRandomMessage(Constants.KB);
@@ -445,7 +460,7 @@ namespace Azure.Storage.Queues.Test
         {
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey).Object;
-            await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
             {
                 KeyEncryptionKey = mockKey,
                 KeyResolver = mockKeyResolver,
@@ -468,9 +483,11 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly] // cannot seed content encryption key
+#pragma warning restore CS0618 // obsolete
         public async Task OnlyOneKeyWrapCall(ClientSideEncryptionVersion version)
         {
             var message = "any old message";
@@ -499,9 +516,11 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly]
+#pragma warning restore CS0618 // obsolete
         public async Task UpdateEncryptedMessage(ClientSideEncryptionVersion version)
         {
             var message1 = GetRandomMessage(Constants.KB);
@@ -548,9 +567,11 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly] // cannot seed content encryption key
+#pragma warning restore CS0618 // obsolete
         public async Task OnlyOneKeyResolveAndUnwrapCall(ClientSideEncryptionVersion version)
         {
             var message = "any old message";
@@ -568,7 +589,7 @@ namespace Azure.Storage.Queues.Test
 
                 // replace with client that has only key resolver
                 var options = GetOptions();
-                options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = default, // we want the key resolver to trigger; no cached key
                     KeyResolver = mockKeyResolver.Object
@@ -679,8 +700,10 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
+#pragma warning restore CS0618 // obsolete
         public void CanGenerateSas_WithClientSideEncryptionOptions_True(ClientSideEncryptionVersion version)
         {
             // Arrange
@@ -710,8 +733,10 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(queueEncrypted.CanGenerateSasUri);
         }
 
+#pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
+#pragma warning restore CS0618 // obsolete
         public void CanGenerateSas_WithClientSideEncryptionOptions_False(ClientSideEncryptionVersion version)
         {
             // Arrange

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -19,10 +20,10 @@ namespace Azure.ResourceManager.Dns
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -37,10 +38,10 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TTL))
+            if (Optional.IsDefined(TtlInSeconds))
             {
                 writer.WritePropertyName("TTL");
-                writer.WriteNumberValue(TTL.Value);
+                writer.WriteNumberValue(TtlInSeconds.Value);
             }
             if (Optional.IsDefined(TargetResource))
             {
@@ -67,21 +68,21 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MxRecords))
+            if (Optional.IsCollectionDefined(MXRecords))
             {
                 writer.WritePropertyName("MXRecords");
                 writer.WriteStartArray();
-                foreach (var item in MxRecords)
+                foreach (var item in MXRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NsRecords))
+            if (Optional.IsCollectionDefined(NSRecords))
             {
                 writer.WritePropertyName("NSRecords");
                 writer.WriteStartArray();
-                foreach (var item in NsRecords)
+                foreach (var item in NSRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -117,15 +118,15 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CnameRecord))
+            if (Optional.IsDefined(CnameRecordInfo))
             {
                 writer.WritePropertyName("CNAMERecord");
-                writer.WriteObjectValue(CnameRecord);
+                writer.WriteObjectValue(CnameRecordInfo);
             }
-            if (Optional.IsDefined(SoaRecord))
+            if (Optional.IsDefined(SoaRecordInfo))
             {
                 writer.WritePropertyName("SOARecord");
-                writer.WriteObjectValue(SoaRecord);
+                writer.WriteObjectValue(SoaRecordInfo);
             }
             if (Optional.IsCollectionDefined(CaaRecords))
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static RecordSetData DeserializeRecordSetData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -153,21 +154,26 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<ARecord>> aRecords = default;
-            Optional<IList<AaaaRecord>> aaaaRecords = default;
-            Optional<IList<MxRecord>> mxRecords = default;
-            Optional<IList<NsRecord>> nsRecords = default;
-            Optional<IList<PtrRecord>> ptrRecords = default;
-            Optional<IList<SrvRecord>> srvRecords = default;
-            Optional<IList<TxtRecord>> txtRecords = default;
-            Optional<CnameRecord> cnameRecord = default;
-            Optional<SoaRecord> soaRecord = default;
-            Optional<IList<CaaRecord>> caaRecords = default;
+            Optional<IList<ARecordInfo>> aRecords = default;
+            Optional<IList<AaaaRecordInfo>> aaaaRecords = default;
+            Optional<IList<MXRecordInfo>> mxRecords = default;
+            Optional<IList<NSRecordInfo>> nsRecords = default;
+            Optional<IList<PtrRecordInfo>> ptrRecords = default;
+            Optional<IList<SrvRecordInfo>> srvRecords = default;
+            Optional<IList<TxtRecordInfo>> txtRecords = default;
+            Optional<CnameRecordInfo> cnameRecord = default;
+            Optional<SoaRecordInfo> soaRecord = default;
+            Optional<IList<CaaRecordInfo>> caaRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -256,10 +262,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ARecord> array = new List<ARecord>();
+                            List<ARecordInfo> array = new List<ARecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ARecord.DeserializeARecord(item));
+                                array.Add(ARecordInfo.DeserializeARecordInfo(item));
                             }
                             aRecords = array;
                             continue;
@@ -271,10 +277,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AaaaRecord> array = new List<AaaaRecord>();
+                            List<AaaaRecordInfo> array = new List<AaaaRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AaaaRecord.DeserializeAaaaRecord(item));
+                                array.Add(AaaaRecordInfo.DeserializeAaaaRecordInfo(item));
                             }
                             aaaaRecords = array;
                             continue;
@@ -286,10 +292,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MxRecord> array = new List<MxRecord>();
+                            List<MXRecordInfo> array = new List<MXRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MxRecord.DeserializeMxRecord(item));
+                                array.Add(MXRecordInfo.DeserializeMXRecordInfo(item));
                             }
                             mxRecords = array;
                             continue;
@@ -301,10 +307,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NsRecord> array = new List<NsRecord>();
+                            List<NSRecordInfo> array = new List<NSRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NsRecord.DeserializeNsRecord(item));
+                                array.Add(NSRecordInfo.DeserializeNSRecordInfo(item));
                             }
                             nsRecords = array;
                             continue;
@@ -316,10 +322,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PtrRecord> array = new List<PtrRecord>();
+                            List<PtrRecordInfo> array = new List<PtrRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PtrRecord.DeserializePtrRecord(item));
+                                array.Add(PtrRecordInfo.DeserializePtrRecordInfo(item));
                             }
                             ptrRecords = array;
                             continue;
@@ -331,10 +337,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SrvRecord> array = new List<SrvRecord>();
+                            List<SrvRecordInfo> array = new List<SrvRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SrvRecord.DeserializeSrvRecord(item));
+                                array.Add(SrvRecordInfo.DeserializeSrvRecordInfo(item));
                             }
                             srvRecords = array;
                             continue;
@@ -346,10 +352,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TxtRecord> array = new List<TxtRecord>();
+                            List<TxtRecordInfo> array = new List<TxtRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TxtRecord.DeserializeTxtRecord(item));
+                                array.Add(TxtRecordInfo.DeserializeTxtRecordInfo(item));
                             }
                             txtRecords = array;
                             continue;
@@ -361,7 +367,7 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cnameRecord = CnameRecord.DeserializeCnameRecord(property0.Value);
+                            cnameRecord = CnameRecordInfo.DeserializeCnameRecordInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("SOARecord"))
@@ -371,7 +377,7 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            soaRecord = SoaRecord.DeserializeSoaRecord(property0.Value);
+                            soaRecord = SoaRecordInfo.DeserializeSoaRecordInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("caaRecords"))
@@ -381,10 +387,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CaaRecord> array = new List<CaaRecord>();
+                            List<CaaRecordInfo> array = new List<CaaRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CaaRecord.DeserializeCaaRecord(item));
+                                array.Add(CaaRecordInfo.DeserializeCaaRecordInfo(item));
                             }
                             caaRecords = array;
                             continue;
@@ -393,7 +399,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new RecordSetData(id, name, type, systemData.Value, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords));
+            return new RecordSetData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords));
         }
     }
 }

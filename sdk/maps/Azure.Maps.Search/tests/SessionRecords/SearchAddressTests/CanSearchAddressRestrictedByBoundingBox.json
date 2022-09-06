@@ -1,0 +1,84 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Moke\u0026topLeft=-44.99%2C-191.4481\u0026btmRight=-45.0128%2C-191.4148",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fa190d046ab9d6ff170a88ee95c1fdbd-8daaef6839be37c8-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "b03a4cedd51b1a85bb76b423557c4039",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "766",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 05:39:50 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 62AC5E706C1A41D4BC4187C1DDC42637 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:50Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "moke",
+          "queryType": "NON_NEAR",
+          "queryTime": 5,
+          "numResults": 1,
+          "offset": 0,
+          "totalResults": 1,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/122946",
+            "score": 2.0553257465,
+            "matchConfidence": {
+              "score": 0.8924786087880523
+            },
+            "address": {
+              "streetName": "Moke Lake Road",
+              "municipality": "Closeburn",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Queenstown Lakes",
+              "countrySubdivision": "South Island",
+              "postalCode": "9371",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Moke Lake Road, Closeburn, Closeburn 9371",
+              "localName": "Closeburn"
+            },
+            "position": {
+              "lat": -44.99791,
+              "lon": 168.57396
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.99757,
+                "lon": 168.57261
+              },
+              "btmRightPoint": {
+                "lat": -44.99862,
+                "lon": 168.57492
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "939762786"
+  }
+}

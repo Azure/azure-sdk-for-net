@@ -86,12 +86,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexAnalyzer");
                 }
             }
-            if (Optional.IsDefined(Normalizer))
+            if (Optional.IsDefined(NormalizerName))
             {
-                if (Normalizer != null)
+                if (NormalizerName != null)
                 {
                     writer.WritePropertyName("normalizer");
-                    writer.WriteStringValue(Normalizer.Value.ToString());
+                    writer.WriteStringValue(NormalizerName.Value.ToString());
                 }
                 else
                 {

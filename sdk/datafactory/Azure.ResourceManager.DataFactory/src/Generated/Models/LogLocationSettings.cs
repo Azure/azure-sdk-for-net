@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LogLocationSettings. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public LogLocationSettings(LinkedServiceReference linkedServiceName)
+        public LogLocationSettings(FactoryLinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -28,15 +28,44 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LogLocationSettings. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
-        internal LogLocationSettings(LinkedServiceReference linkedServiceName, BinaryData path)
+        internal LogLocationSettings(FactoryLinkedServiceReference linkedServiceName, BinaryData path)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
         }
 
         /// <summary> Log storage linked service reference. </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
+        /// <summary>
+        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Path { get; set; }
     }
 }

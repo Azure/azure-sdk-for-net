@@ -1122,7 +1122,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CreatePartitionProcessorProcessingTaskDoesNotDispatchDeveloperCodeExceptions()
+        public async Task CreatePartitionProcessorProcessingTaskWarnsForDeveloperCodeExceptions()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -1165,10 +1165,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Protected()
-                .Verify("OnProcessingErrorAsync", Times.Never(),
-                     expectedException,
+                .Verify("OnProcessingErrorAsync", Times.Once(),
+                     ItExpr.Is<EventHubsException>(ex =>
+                         ex.IsTransient == false
+                         && ex.Message.Contains(Resources.DeveloperCodeEventProcessingError)
+                         && ex.InnerException == expectedException.InnerException),
                      partition,
-                     ItExpr.IsAny<string>(),
+                     Resources.OperationEventProcessingDeveloperCode,
                      ItExpr.IsAny<CancellationToken>());
 
             cancellationSource.Cancel();

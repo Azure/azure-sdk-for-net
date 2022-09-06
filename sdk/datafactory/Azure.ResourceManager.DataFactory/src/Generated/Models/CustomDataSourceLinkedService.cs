@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom linked service. </summary>
-    public partial class CustomDataSourceLinkedService : LinkedService
+    public partial class CustomDataSourceLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
         /// <param name="typeProperties"> Custom linked service properties. </param>
@@ -35,13 +35,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="typeProperties"> Custom linked service properties. </param>
-        internal CustomDataSourceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CustomDataSourceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             LinkedServiceType = linkedServiceType ?? "CustomDataSource";
         }
 
-        /// <summary> Custom linked service properties. </summary>
+        /// <summary>
+        /// Custom linked service properties.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData TypeProperties { get; set; }
     }
 }

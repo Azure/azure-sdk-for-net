@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -316,11 +318,14 @@ namespace Azure.Data.Tables
                 // We were passed an explicit SasCredential, use that
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
-            _pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies,
-                new[] { authPolicy },
-                new ResponseClassifier());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { authPolicy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -471,16 +476,23 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
+                var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
+                context.AddClassifier((int)HttpStatusCode.Conflict, false);
                 var response = _tableOperations.Create(
-                    new TableProperties { TableName = Name },
-                    null,
-                    _defaultQueryOptions,
-                    cancellationToken);
-                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
-            {
-                return default;
+                    RequestContent.Create(new TableProperties { TableName = Name }),
+                    TableConstants.Odata.MinimalMetadata,
+                    TableConstants.ReturnNoContent,
+                    context);
+
+                if (response.IsError || response.Status == (int)HttpStatusCode.Conflict)
+                {
+                    RequestFailedException rfe = new(response);
+                    if (rfe.Status != (int)HttpStatusCode.Conflict || rfe.ErrorCode == TableErrorCode.TableBeingDeleted)
+                    {
+                        throw rfe;
+                    }
+                }
+                return Response.FromValue(new TableItem(Name), response);
             }
             catch (Exception ex)
             {
@@ -501,17 +513,22 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
+                var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
                 var response = await _tableOperations.CreateAsync(
-                        new TableProperties { TableName = Name },
-                        null,
-                        _defaultQueryOptions,
-                        cancellationToken)
-                    .ConfigureAwait(false);
-                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict && ex.ErrorCode != TableErrorCode.TableBeingDeleted)
-            {
-                return default;
+                    RequestContent.Create(new TableProperties { TableName = Name }),
+                    TableConstants.Odata.MinimalMetadata,
+                    TableConstants.ReturnNoContent,
+                    context).ConfigureAwait(false);
+
+                if (response.IsError)
+                {
+                    RequestFailedException rfe = new(response);
+                    if (rfe.Status != (int)HttpStatusCode.Conflict || rfe.ErrorCode == TableErrorCode.TableBeingDeleted)
+                    {
+                        throw rfe;
+                    }
+                }
+                return Response.FromValue(new TableItem(Name), response);
             }
             catch (Exception ex)
             {
@@ -524,24 +541,14 @@ namespace Azure.Data.Tables
         /// Deletes the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>If the table exists, a <see cref="Response"/>. If the table already does not exist, <c>null</c>.</returns>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {
-                using var message = _tableOperations.CreateDeleteRequest(Name);
-                _pipeline.Send(message, cancellationToken);
-
-                switch (message.Response.Status)
-                {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
-                }
+                return _tableOperations.Delete(Name, TableServiceClient.CreateContextForDelete(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -554,24 +561,14 @@ namespace Azure.Data.Tables
         /// Deletes the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>If the table exists, a <see cref="Response"/>. If the table already does not exist, <c>null</c>.</returns>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {
-                using var message = _tableOperations.CreateDeleteRequest(Name);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-
-                switch (message.Response.Status)
-                {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
-                }
+                return await _tableOperations.DeleteAsync(Name, TableServiceClient.CreateContextForDelete(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -1592,12 +1589,18 @@ namespace Azure.Data.Tables
             options.Diagnostics.IsTelemetryEnabled = false;
             options.Diagnostics.IsDistributedTracingEnabled = false;
             options.Retry.MaxRetries = 0;
+            options.RequestFailedDetailsParser = new TablesRequestFailedDetailsParser();
 
             // Use an empty transport so requests aren't sent
             options.Transport = new MemoryTransport();
 
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+
             // Use the same authentication mechanism
-            return HttpPipelineBuilder.Build(options);
+            return HttpPipelineBuilder.Build(pipelineOptions);
         }
 
         internal static string Bind(Expression expression)

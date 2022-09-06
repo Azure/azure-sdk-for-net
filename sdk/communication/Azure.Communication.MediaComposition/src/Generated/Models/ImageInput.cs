@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> An image input. </summary>
-    public partial class ImageInput
+    public partial class ImageInput : MediaInput
     {
         /// <summary> Initializes a new instance of ImageInput. </summary>
         /// <param name="uri"> Url of the image file. </param>
@@ -23,6 +24,17 @@ namespace Azure.Communication.MediaComposition.Models
             }
 
             Uri = uri;
+            Kind = MediaInputType.Image;
+        }
+
+        /// <summary> Initializes a new instance of ImageInput. </summary>
+        /// <param name="kind"> Kind of media input. </param>
+        /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        /// <param name="uri"> Url of the image file. </param>
+        internal ImageInput(MediaInputType kind, string placeholderImageUri, string uri) : base(kind, placeholderImageUri)
+        {
+            Uri = uri;
+            Kind = kind;
         }
 
         /// <summary> Url of the image file. </summary>

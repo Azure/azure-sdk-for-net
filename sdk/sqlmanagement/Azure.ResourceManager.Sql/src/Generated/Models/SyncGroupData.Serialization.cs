@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("schema");
                 writer.WriteObjectValue(Schema);
             }
-            if (Optional.IsDefined(EnableConflictLogging))
+            if (Optional.IsDefined(IsConflictLoggingEnabled))
             {
                 writer.WritePropertyName("enableConflictLogging");
-                writer.WriteBooleanValue(EnableConflictLogging.Value);
+                writer.WriteBooleanValue(IsConflictLoggingEnabled.Value);
             }
             if (Optional.IsDefined(ConflictLoggingRetentionInDays))
             {

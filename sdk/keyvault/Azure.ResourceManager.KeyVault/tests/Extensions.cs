@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this DeletedVaultResource deletedVault, VaultData createdVault)
+        public static bool IsEqual(this DeletedKeyVaultResource deletedVault, KeyVaultData createdVault)
         {
             Assert.AreEqual(createdVault.Location, deletedVault.Data.Properties.Location);
             Assert.AreEqual(createdVault.Name, deletedVault.Data.Name);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this VaultData vault1, VaultData vault2)
+        public static bool IsEqual(this KeyVaultData vault1, KeyVaultData vault2)
         {
             Assert.AreEqual(vault2.Location, vault1.Location);
             Assert.AreEqual(vault2.Name, vault1.Name);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this IList<VaultAccessPolicy> expected, IList<VaultAccessPolicy> actual)
+        public static bool IsEqual(this IList<KeyVaultAccessPolicy> expected, IList<KeyVaultAccessPolicy> actual)
         {
             if (expected == null && actual == null)
                 return true;
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             if (expected.Count != actual.Count)
                 return false;
 
-            VaultAccessPolicy[] expectedCopy = new VaultAccessPolicy[expected.Count];
+            KeyVaultAccessPolicy[] expectedCopy = new KeyVaultAccessPolicy[expected.Count];
             expected.CopyTo(expectedCopy, 0);
 
-            foreach (VaultAccessPolicy a in actual)
+            foreach (KeyVaultAccessPolicy a in actual)
             {
                 var match = expectedCopy.Where(e =>
                     e.TenantId == a.TenantId &&

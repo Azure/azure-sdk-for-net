@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AlertingAction. </summary>
         /// <param name="odataType"> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </param>
         /// <param name="severity"> Severity of the alert. </param>
-        /// <param name="aznsAction"> Azure action group reference. </param>
+        /// <param name="notificationDetails"> Azure action group reference. </param>
         /// <param name="throttlingInMin"> time (in minutes) for which Alerts should be throttled or suppressed. </param>
         /// <param name="trigger"> The trigger condition that results in the alert rule being. </param>
-        internal AlertingAction(string odataType, AlertSeverity severity, AzNsActionGroup aznsAction, int? throttlingInMin, TriggerCondition trigger) : base(odataType)
+        internal AlertingAction(string odataType, AlertSeverity severity, NotificationDetails notificationDetails, int? throttlingInMin, TriggerCondition trigger) : base(odataType)
         {
             Severity = severity;
-            AznsAction = aznsAction;
+            NotificationDetails = notificationDetails;
             ThrottlingInMin = throttlingInMin;
             Trigger = trigger;
             OdataType = odataType ?? "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction";
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Severity of the alert. </summary>
         public AlertSeverity Severity { get; set; }
         /// <summary> Azure action group reference. </summary>
-        public AzNsActionGroup AznsAction { get; set; }
+        public NotificationDetails NotificationDetails { get; set; }
         /// <summary> time (in minutes) for which Alerts should be throttled or suppressed. </summary>
         public int? ThrottlingInMin { get; set; }
         /// <summary> The trigger condition that results in the alert rule being. </summary>

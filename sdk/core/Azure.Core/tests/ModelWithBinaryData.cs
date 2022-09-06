@@ -54,11 +54,6 @@ namespace Azure.Core.Tests
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }

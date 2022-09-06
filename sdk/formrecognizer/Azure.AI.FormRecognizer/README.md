@@ -25,7 +25,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|-
-|4.0.0-beta.4 | 2.0, 2.1, 2022-06-30-preview
+|4.0.0-beta.5 | 2.0, 2.1, 2022-06-30-preview
 |3.1.X        | 2.0, 2.1
 |3.0.X        | 2.0
 
@@ -136,7 +136,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 
 ### DocumentAnalysisClient
 
-`DocumentAnalysisClient` provides operations for analyzing input documents using prebuilt and custom models through the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` APIs. Use the `modelId` parameter to select the type of model for analysis.
+`DocumentAnalysisClient` provides operations for analyzing input documents using prebuilt and custom models through the `AnalyzeDocument` and `AnalyzeDocumentFromUri` APIs. Use the `modelId` parameter to select the type of model for analysis.
 
 Sample code snippets are provided to illustrate using a DocumentAnalysisClient [here](#examples).
 More information about analyzing documents, including supported features, locales, and document types can be found in the [service documentation][formreco_models].
@@ -159,7 +159,7 @@ Please note that models can also be built using a graphical user interface such 
 
 Because analyzing documents and building models take time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#extract-layout).
+For long running operations in the Azure SDK, the client exposes a method that returns an `Operation<T>` object. You can set its parameter `waitUntil` to `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later. A sample code snippet is provided to illustrate using long-running operations [below](#extract-layout).
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -197,10 +197,7 @@ Extract text, selection marks, table structures, styles, and paragraphs, along w
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -215,7 +212,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -228,7 +225,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -260,7 +257,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -287,10 +284,7 @@ Analyze text, selection marks, table structures, styles, paragraphs, and key-val
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
@@ -319,7 +313,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -332,7 +326,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -352,7 +346,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -379,10 +373,7 @@ Analyze textual elements, such as page words and lines, styles, paragraphs, and 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected languages:");
@@ -404,7 +395,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -424,7 +415,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -435,17 +426,14 @@ For more information and samples see [here][analyze_prebuilt_read].
 ### Use Prebuilt Models
 Analyze data from certain types of common documents using prebuilt models provided by the Form Recognizer service.
 
-For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `StartAnalyzeDocumentAsync` method:
+For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `AnalyzeDocumentAsync` method:
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
 string filePath = "<filePath>";
 
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", stream);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -460,39 +448,39 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField))
     {
-        if (vendorNameField.ValueType == DocumentFieldType.String)
+        if (vendorNameField.FieldType == DocumentFieldType.String)
         {
-            string vendorName = vendorNameField.AsString();
+            string vendorName = vendorNameField.Value.AsString();
             Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField))
     {
-        if (customerNameField.ValueType == DocumentFieldType.String)
+        if (customerNameField.FieldType == DocumentFieldType.String)
         {
-            string customerName = customerNameField.AsString();
+            string customerName = customerNameField.Value.AsString();
             Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField))
     {
-        if (itemsField.ValueType == DocumentFieldType.List)
+        if (itemsField.FieldType == DocumentFieldType.List)
         {
-            foreach (DocumentField itemField in itemsField.AsList())
+            foreach (DocumentField itemField in itemsField.Value.AsList())
             {
                 Console.WriteLine("Item:");
 
-                if (itemField.ValueType == DocumentFieldType.Dictionary)
+                if (itemField.FieldType == DocumentFieldType.Dictionary)
                 {
-                    IReadOnlyDictionary<string, DocumentField> itemFields = itemField.AsDictionary();
+                    IReadOnlyDictionary<string, DocumentField> itemFields = itemField.Value.AsDictionary();
 
                     if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField))
                     {
-                        if (itemDescriptionField.ValueType == DocumentFieldType.String)
+                        if (itemDescriptionField.FieldType == DocumentFieldType.String)
                         {
-                            string itemDescription = itemDescriptionField.AsString();
+                            string itemDescription = itemDescriptionField.Value.AsString();
 
                             Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                         }
@@ -500,9 +488,9 @@ for (int i = 0; i < result.Documents.Count; i++)
 
                     if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                     {
-                        if (itemAmountField.ValueType == DocumentFieldType.Currency)
+                        if (itemAmountField.FieldType == DocumentFieldType.Currency)
                         {
-                            CurrencyValue itemAmount = itemAmountField.AsCurrency();
+                            CurrencyValue itemAmount = itemAmountField.Value.AsCurrency();
 
                             Console.WriteLine($"  Amount: '{itemAmount.Symbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
                         }
@@ -514,27 +502,27 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
     {
-        if (subTotalField.ValueType == DocumentFieldType.Currency)
+        if (subTotalField.FieldType == DocumentFieldType.Currency)
         {
-            CurrencyValue subTotal = subTotalField.AsCurrency();
+            CurrencyValue subTotal = subTotalField.Value.AsCurrency();
             Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
     {
-        if (totalTaxField.ValueType == DocumentFieldType.Currency)
+        if (totalTaxField.FieldType == DocumentFieldType.Currency)
         {
-            CurrencyValue totalTax = totalTaxField.AsCurrency();
+            CurrencyValue totalTax = totalTaxField.Value.AsCurrency();
             Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
     {
-        if (invoiceTotalField.ValueType == DocumentFieldType.Currency)
+        if (invoiceTotalField.FieldType == DocumentFieldType.Currency)
         {
-            CurrencyValue invoiceTotal = invoiceTotalField.AsCurrency();
+            CurrencyValue invoiceTotal = invoiceTotalField.Value.AsCurrency();
             Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
         }
     }
@@ -557,28 +545,27 @@ Build a custom model on your own document type. The resulting model can be used 
 // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
 // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = new Uri("<trainingFileUri>");
+Uri blobContainerUri = new Uri("<blobContainerUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // We are selecting the Template build mode in this sample. For more information about the available
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))
     Console.WriteLine($"  Model description: {model.Description}");
 Console.WriteLine($"  Created on: {model.CreatedOn}");
 Console.WriteLine("  Doc types the model can recognize:");
-foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
 {
-    Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
-    foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+    Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+    foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
     {
-        Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+        Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
     }
 }
 ```
@@ -592,17 +579,14 @@ Analyze text, field values, selection marks, and table structures, styles, and p
 string modelId = "<modelId>";
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, modelId, fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Document of type: {document.DocType}");
+    Console.WriteLine($"Document of type: {document.DocumentType}");
 
     foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
     {
@@ -625,10 +609,10 @@ Manage the models stored in your account.
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
-AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
-Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
-Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
+// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
+ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
+Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
+Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
 AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
@@ -646,13 +630,12 @@ await foreach (DocumentModelSummary modelSummary in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
-DocumentModel newCreatedModel = await client.GetModelAsync(model.ModelId);
+DocumentModelDetails newCreatedModel = await client.GetModelAsync(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 
@@ -673,10 +656,10 @@ Manage the models stored in your account with a synchronous API. Note that we ar
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
-AccountProperties accountProperties = client.GetAccountProperties();
-Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
-Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
+// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
+ResourceDetails resourceDetails = client.GetResourceDetails();
+Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
+Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
 Pageable<DocumentModelSummary> models = client.GetModels();
@@ -692,13 +675,12 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
-DocumentModel newCreatedModel = client.GetModel(model.ModelId);
+DocumentModelDetails newCreatedModel = client.GetModel(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 
@@ -721,8 +703,7 @@ For example, if you submit a receipt image with an invalid `Uri`, a `400` error 
 ```C# Snippet:DocumentAnalysisBadRequest
 try
 {
-    AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", new Uri("http://invalid.uri"));
-    await operation.WaitForCompletionAsync();
+    AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", new Uri("http://invalid.uri"));
 }
 catch (RequestFailedException e)
 {

@@ -154,13 +154,13 @@ namespace Azure.ResourceManager.Network
             Optional<IList<VpnServerConfigVpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
             Optional<IList<VpnServerConfigRadiusServerRootCertificate>> radiusServerRootCertificates = default;
             Optional<IList<VpnServerConfigRadiusClientRootCertificate>> radiusClientRootCertificates = default;
-            Optional<IList<IPsecPolicy>> vpnClientIpsecPolicies = default;
+            Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
             Optional<string> radiusServerAddress = default;
             Optional<string> radiusServerSecret = default;
             Optional<IList<RadiusServer>> radiusServers = default;
             Optional<AadAuthenticationParameters> aadAuthenticationParameters = default;
             Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<P2sVpnGatewayData>> p2SVpnGateways = default;
+            Optional<IReadOnlyList<P2SVpnGatewayData>> p2sVpnGateways = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                             }
-                            vpnClientIpsecPolicies = array;
+                            vpnClientIPsecPolicies = array;
                             continue;
                         }
                         if (property0.NameEquals("radiusServerAddress"))
@@ -384,19 +384,19 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<P2sVpnGatewayData> array = new List<P2sVpnGatewayData>();
+                            List<P2SVpnGatewayData> array = new List<P2SVpnGatewayData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(P2sVpnGatewayData.DeserializeP2sVpnGatewayData(item));
+                                array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
                             }
-                            p2SVpnGateways = array;
+                            p2sVpnGateways = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2SVpnGateways));
+            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2sVpnGateways));
         }
     }
 }

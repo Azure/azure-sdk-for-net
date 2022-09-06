@@ -15,17 +15,12 @@ namespace Azure.DigitalTwins.Core
     {
         internal static IncomingRelationshipCollection DeserializeIncomingRelationshipCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<IncomingRelationship>> value = default;
+            IReadOnlyList<IncomingRelationship> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<IncomingRelationship> array = new List<IncomingRelationship>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +35,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new IncomingRelationshipCollection(Optional.ToList(value), nextLink.Value);
+            return new IncomingRelationshipCollection(value, nextLink.Value);
         }
     }
 }

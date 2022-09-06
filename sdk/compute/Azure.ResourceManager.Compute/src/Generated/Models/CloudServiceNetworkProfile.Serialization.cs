@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
         {
-            Optional<IList<LoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
             Optional<CloudServiceSlotType> slotType = default;
             Optional<WritableSubResource> swappableCloudService = default;
             foreach (var property in element.EnumerateObject())
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoadBalancerConfiguration> array = new List<LoadBalancerConfiguration>();
+                    List<CloudServiceLoadBalancerConfiguration> array = new List<CloudServiceLoadBalancerConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerConfiguration.DeserializeLoadBalancerConfiguration(item));
+                        array.Add(CloudServiceLoadBalancerConfiguration.DeserializeCloudServiceLoadBalancerConfiguration(item));
                     }
                     loadBalancerConfigurations = array;
                     continue;
