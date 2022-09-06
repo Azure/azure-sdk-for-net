@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             var data = new BatchAccountCreateOrUpdateContent(AzureLocation.WestUS)
             {
-                AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AutoRestResources2/providers/Microsoft.Storage/storageAccounts/20220725datafactory"))
+                AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AutoRestResources2/providers/Microsoft.Storage/storageAccounts/batchaccounttest"))
             };
             return data;
         }
