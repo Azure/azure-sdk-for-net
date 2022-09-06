@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             rule.BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
 
             // Bind to generic reference type
-            rule.BindToInput<RichBindingReferenceType>((attr) => CreateReference(attr));
+            rule.BindToInput<ParameterBindingData>((attr) => CreateReference(attr));
 
             // Normal blob
             // These are not converters because Blob/Page/Append affects how we *create* the blob.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             RegisterCommonConverters(rule);
             rule.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
-            rule.AddConverter<BlobBaseClient, RichBindingReferenceType>(ConvertToReferenceType);
+            rule.AddConverter<BlobBaseClient, ParameterBindingData>(ConvertToReferenceType);
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete. FluentBindingRule is "Not ready for public consumption."
@@ -204,12 +204,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             return stream;
         }
 
-        private static RichBindingReferenceType CreateReference(BlobAttribute blobAttribute)
+        private static ParameterBindingData CreateReference(BlobAttribute blobAttribute)
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
             var connectionName =  blobAttribute.Connection??"AzureWebJobsStorage";
 
-            var referenceType = new RichBindingReferenceType();
+            var referenceType = new ParameterBindingData();
             referenceType.Properties = new Dictionary<string, string>()
             {
                 { "connection_name", connectionName },
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         {
             private static readonly Type[] _types = new Type[]
             {
-                typeof(RichBindingReferenceType),
+                typeof(ParameterBindingData),
                 typeof(BlobBaseClient),
                 typeof(BlobClient),
                 typeof(BlockBlobClient),
@@ -356,11 +356,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             return await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
-        private static RichBindingReferenceType ConvertToReferenceType(BlobBaseClient input, BlobTriggerAttribute attr)
+        private static ParameterBindingData ConvertToReferenceType(BlobBaseClient input, BlobTriggerAttribute attr)
         {
             var connectionName =  attr.Connection??"AzureWebJobsStorage";
 
-            var referenceType = new RichBindingReferenceType();
+            var referenceType = new ParameterBindingData();
             referenceType.Properties = new Dictionary<string, string>()
             {
                 { "connection_name",  connectionName},
