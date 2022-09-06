@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string LessThanValue = "LessThan";
         private const string LessThanOrEqualValue = "LessThanOrEqual";
-        private const string IncludeValue = "Include";
 
         /// <summary> Equals. </summary>
         public static MonitorOperator EqualsValue { get; } = new MonitorOperator(EqualsValueValue);
@@ -39,8 +38,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorOperator LessThan { get; } = new MonitorOperator(LessThanValue);
         /// <summary> LessThanOrEqual. </summary>
         public static MonitorOperator LessThanOrEqual { get; } = new MonitorOperator(LessThanOrEqualValue);
-        /// <summary> Include. </summary>
-        public static MonitorOperator Include { get; } = new MonitorOperator(IncludeValue);
         /// <summary> Determines if two <see cref="MonitorOperator"/> values are the same. </summary>
         public static bool operator ==(MonitorOperator left, MonitorOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorOperator"/> values are not the same. </summary>
