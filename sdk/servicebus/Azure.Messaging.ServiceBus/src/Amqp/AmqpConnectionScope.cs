@@ -72,6 +72,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         private static int AuthorizationBaseJitterSeconds { get; } = 30;
 
+        ///// <summary>
+        /////   The number of milliseconds to use as the basis for calculating a random jitter amount
+        /////   when opening receiver links. This is intended to ensure that multiple
+        /////   accept session open operations don't timeout at the same exact moment.
+        /////// </summary>
+        private static int OpenReceiveLinkBaseJitterMilliseconds { get; } = 100;
+
         /// <summary>
         ///   The minimum amount of time for authorization to be refreshed; any calculations that
         ///   call for refreshing more frequently will be substituted with this value.
@@ -671,6 +678,29 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Target = new Target { Address = identifier },
                     OperationTimeout = _operationTimeout
                 };
+
+                if (isSessionReceiver && sessionId == null)
+                {
+                    // Subtract a random amount up to 100ms from the operation timeout as the jitter when attempting to open next available session link.
+                    // This prevents excessive resource usage when using high amounts of concurrency and accepting the next available session. Without the jitter,
+                    // we can get many timeout exceptions occurring at the exact same time which leads to high CPU usage and thread starvation,
+                    // particularly when using the session processor.
+                    // Take the min of 1% of the total timeout and the BaseJitter amount so that we don't end up subtracting more than 1% of the total timeout.
+                    var jitterBase = Math.Min(_operationTimeout.TotalMilliseconds / 100, OpenReceiveLinkBaseJitterMilliseconds);
+
+                    // We set the operation timeout on the properties not only to include the jitter, but also because the server will otherwise
+                    // restrict the maximum timeout to 1 minute and 5 seconds, regardless of the client timeout. We only do this for accepting next available
+                    // session as this is the only long-polling scenario.
+                    linkSettings.Properties = new Fields
+                    {
+                        {
+                            AmqpClientConstants.TimeoutName,
+                            (uint)_operationTimeout
+                                .Subtract(TimeSpan.FromMilliseconds(jitterBase * RandomNumberGenerator.Value.NextDouble()))
+                                .TotalMilliseconds
+                        }
+                    };
+                }
 
                 link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}";
