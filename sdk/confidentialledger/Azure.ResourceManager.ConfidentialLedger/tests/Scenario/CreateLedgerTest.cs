@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -10,23 +9,18 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 {
-    [TestFixture]
+    [TestFixture("create")]
     public class CreateLedgerTest : AclManagementTestBase
     {
-        private ConfidentialLedgerResource _ledgerResource;
-        private const string TestFixtureName = "Create";
-        private readonly string _ledgerName;
-
-        public CreateLedgerTest() : base(true)
+        public CreateLedgerTest(string testFixtureName) : base(true, testFixtureName)
         {
-            _ledgerName = TestEnvironment.TestLedgerName + TestFixtureName;
         }
 
         [Test, Order(1)]
         [RecordedTest]
         public async Task TestNameAvailabilityBeforeCreating()
         {
-            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability();
+            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
             Assert.True(response.IsNameAvailable);
         }
 
@@ -35,27 +29,32 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         public async Task TestCreateLedger()
         {
             // Create the ledger
-            await CreateLedger(_ledgerName);
+            await CreateLedger(LedgerName);
 
-            _ledgerResource = await GetLedgerByName(_ledgerName);
+            ConfidentialLedgerResource ledgerResource = await GetLedgerByName(LedgerName);
 
-            Assert.NotNull(_ledgerResource);
-            Assert.AreEqual(_ledgerName, _ledgerResource.Data.Properties.LedgerName);
-            Assert.NotNull(_ledgerResource.Data.Properties.LedgerUri);
+            Assert.NotNull(ledgerResource);
+            Assert.AreEqual(LedgerName, ledgerResource.Data.Properties.LedgerName);
+            Assert.NotNull(ledgerResource.Data.Properties.LedgerUri);
         }
 
         [Test, Order(3)]
         [RecordedTest]
         public async Task TestNameAvailabilityAfterCreating()
         {
-            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability();
+            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
             Assert.False(response.IsNameAvailable);
         }
 
-        private async Task<LedgerNameAvailabilityResult> GetLedgerNameAvailability()
+        /// <summary>
+        /// Method checks the availability of the input ledgerName
+        /// </summary>
+        /// <param name="ledgerName"></param>
+        /// <returns></returns>
+        private async Task<LedgerNameAvailabilityResult> GetLedgerNameAvailability(string ledgerName)
         {
             LedgerNameAvailabilityContent ledgerNameAvailabilityContent = new() {
-                Name = _ledgerName,
+                Name = ledgerName,
                 ResourceType = new ResourceType("Microsoft.ConfidentialLedger/ledgers")
             };
             return await Subscription.CheckLedgerNameAvailabilityAsync(ledgerNameAvailabilityContent);

@@ -12,49 +12,79 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
 {
     public abstract class AclManagementTestBase : ManagementRecordedTestBase<AclManagementTestEnvironment>
     {
-        private ConfidentialLedgerCollection LedgerCollection { get; set; }
-
-        private static readonly AzureLocation s_defaultTestLocation = AzureLocation.WestEurope;
-
         protected SubscriptionResource Subscription;
+        protected string LedgerName;
 
-        protected AclManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        private readonly string _testResourceGroupPrefix = "sdk-test-rg-";
+        private static readonly AzureLocation s_defaultTestLocation = AzureLocation.WestEurope;
+        private string _resourceGroupName;
+        private readonly string _testFixtureName;
+        private ResourceGroupResource _resourceGroup;
+
+        protected AclManagementTestBase(bool isAsync, RecordedTestMode mode, string testFixtureName) : base(isAsync, mode)
         {
+            _testFixtureName = testFixtureName;
         }
 
-        protected AclManagementTestBase(bool isAsync) : base(isAsync)
+        protected AclManagementTestBase(bool isAsync, string testFixtureName) : base(isAsync)
         {
+            _testFixtureName = testFixtureName;
         }
 
         [OneTimeSetUp]
         public async Task InitializeTestResources()
         {
-            Subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
-            ResourceGroupResource resourceGroup = (await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
-                TestEnvironment.TestResourceGroup, new ResourceGroupData(s_defaultTestLocation))).Value;
-
-            LedgerCollection =  resourceGroup.GetConfidentialLedgers();
+            SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+            _resourceGroupName = _testResourceGroupPrefix + _testFixtureName;
+            await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
+                _resourceGroupName, new ResourceGroupData(s_defaultTestLocation));
 
             await StopSessionRecordingAsync();
         }
 
-        [OneTimeTearDown]
-        public void CleanTestResource()
+        [SetUp]
+        public void Setup()
         {
-            CleanupResourceGroups();
+            ArmClient armClient = GetArmClient();
+            Subscription = armClient.GetSubscriptionResource(
+                new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
+            ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
+            _resourceGroup =  resourceGroups.GetAsync(_resourceGroupName).Result;
+            LedgerName = TestEnvironment.TestLedgerNamePrefix + _testFixtureName;
         }
 
+        /// <summary>
+        /// Method fetches the ledger detail provided the ledger name
+        /// It looks for the ledger in the resource group configured for the test fixture from where this method was invoked
+        /// </summary>
+        /// <param name="ledgerName"></param>
+        /// <returns></returns>
         protected async Task<ConfidentialLedgerResource> GetLedgerByName(string ledgerName)
         {
-            var resourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.TestResourceGroup}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}";
-            return await LedgerCollection.GetAsync(new ResourceIdentifier(resourceId).Name);
+            var resourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}";
+            return await _resourceGroup.GetConfidentialLedgers().GetAsync(new ResourceIdentifier(resourceId).Name);
         }
 
+        /// <summary>
+        /// Method takes the ledger name and starts a long running job for creating the confidential ledger
+        /// By default it create the ledger in West Europe location
+        /// </summary>
+        /// <param name="ledgerName"></param>
         protected async Task CreateLedger(string ledgerName)
         {
             ConfidentialLedgerData ledgerData = new(s_defaultTestLocation);
-            await LedgerCollection.CreateOrUpdateAsync(WaitUntil.Completed, ledgerName, ledgerData);
+            await _resourceGroup.GetConfidentialLedgers().CreateOrUpdateAsync(WaitUntil.Completed, ledgerName, ledgerData);
+        }
+
+        /// <summary>
+        /// Method takes the ledger name and try to update the the ledger with the given ledger data
+        /// </summary>
+        /// <param name="ledgerName"></param>
+        /// <param name="ledgerData"></param>
+        protected async Task UpdateLedger(string ledgerName, ConfidentialLedgerData ledgerData)
+        {
+            await _resourceGroup.GetConfidentialLedgers().CreateOrUpdateAsync(WaitUntil.Completed, ledgerData.Name, ledgerData);
         }
     }
 }
