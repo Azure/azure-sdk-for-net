@@ -9,7 +9,7 @@ The sample below returns the for the provided IP address:
 ```C# Snippet:GetLocation
 //Get location by given IP address
 string ipAddress = "2001:4898:80e8:b::189";
-string result = client.GetLocation(ipAddress);
+Response<IpAddressToLocationResult> result = client.GetLocation(ipAddress);
 
 //Get location result country code
 Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");

@@ -4,9 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-#region Snippet:GeolocationImportNamespace
+using Azure.Core;
 using Azure.Maps.Geolocation;
-#endregion
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -33,7 +32,7 @@ namespace Azure.Maps.Geolocation.Tests
         {
             #region Snippet:InstantiateGeolocationClientViaSubscriptionKey
             // Create a MapsGeolocationClient that will authenticate through Subscription Key (Shared key)
-            TokenCredential credential = new AzureKeyCredential("<My Subscription Key>");
+            AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
             MapsGeolocationClient client = new MapsGeolocationClient(credential);
             #endregion
         }
@@ -41,14 +40,14 @@ namespace Azure.Maps.Geolocation.Tests
         [Test]
         public void GetLocationTest()
         {
-            TokenCredential credential = new DefaultAzureCredential();
+            TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
 
             #region Snippet:GetLocation
             //Get location by given IP address
             string ipAddress = "2001:4898:80e8:b::189";
-            string result = client.GetLocation(ipAddress);
+            Response<IpAddressToLocationResult> result = client.GetLocation(ipAddress);
 
             //Get location result country code
             Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");
@@ -60,7 +59,7 @@ namespace Azure.Maps.Geolocation.Tests
         [Test]
         public void GetGeolocationDirectionsError()
         {
-            TokenCredential credential = new DefaultAzureCredential();
+            TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
 
@@ -70,7 +69,7 @@ namespace Azure.Maps.Geolocation.Tests
                 // An invalid IP address
                 string inValidIpAddress = "xxx";
 
-                string result = client.GetLocation(inValidIpAddress);
+                Response<IpAddressToLocationResult> result = client.GetLocation(inValidIpAddress);
                 // Do something with result ...
             }
             catch (RequestFailedException e)

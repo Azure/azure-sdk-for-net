@@ -35,7 +35,7 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 
 ```C# Snippet:InstantiateGeolocationClientViaSubscriptionKey
 // Create a MapsGeolocationClient that will authenticate through Subscription Key (Shared key)
-TokenCredential credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsGeolocationClient client = new MapsGeolocationClient(credential);
 ```
 
@@ -97,7 +97,7 @@ This service will return the ISO country code for the provided IP address. Devel
 ```C# Snippet:GetLocation
 //Get location by given IP address
 string ipAddress = "2001:4898:80e8:b::189";
-string result = client.GetLocation(ipAddress);
+Response<IpAddressToLocationResult> result = client.GetLocation(ipAddress);
 
 //Get location result country code
 Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");
@@ -119,7 +119,7 @@ try
     // An invalid IP address
     string inValidIpAddress = "xxx";
 
-    string result = client.GetLocation(inValidIpAddress);
+    Response<IpAddressToLocationResult> result = client.GetLocation(inValidIpAddress);
     // Do something with result ...
 }
 catch (RequestFailedException e)
