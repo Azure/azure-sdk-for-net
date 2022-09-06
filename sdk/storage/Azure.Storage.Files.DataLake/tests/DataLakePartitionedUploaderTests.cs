@@ -319,9 +319,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                     IsAny<bool?>(),
                     s_pathHttpHeaders,
                     IsAny<DataLakeRequestConditions>(),
+                    IsAny<LeaseAction?>(),
+                    IsAny<TimeSpan?>(),
+                    IsAny<string>(),
                     _async,
                     s_cancellationToken
-                )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, bool, CancellationToken>(sink.FlushInternal);
+                )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, LeaseAction?, TimeSpan?, string, bool, CancellationToken>(sink.FlushInternal);
         }
 
         private static void AssertAppended(AppendSink sink, TestStream stream)
@@ -375,6 +378,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 bool? close,
                 PathHttpHeaders httpHeaders,
                 DataLakeRequestConditions conditions,
+                LeaseAction? leaseAction,
+                TimeSpan? leaseDuration,
+                string proposedLeaseId,
                 bool async,
                 CancellationToken cancellationToken)
             {
