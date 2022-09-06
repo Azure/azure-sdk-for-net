@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
 
         private async Task<BatchApplicationCollection> GetApplicationCollectionAsync()
         {
-            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var collection = (await CreateResourceGroupAsync()).GetBatchAccounts();
             var input = ResourceDataHelper.GetBatchAccountData();
-            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
             var account = lro.Value;
             return account.GetBatchApplications();
         }
@@ -32,28 +32,32 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         public async Task ApplicationCollectionApiTests()
         {
             //1.CreateOrUpdate
-            var container = await GetApplicationCollectionAsync();
+            var collection = await GetApplicationCollectionAsync();
             var name = Recording.GenerateAssetName("Application-");
+            var name2 = Recording.GenerateAssetName("Application-");
+            var name3 = Recording.GenerateAssetName("Application-");
             var input = ResourceDataHelper.GetBatchApplicationData();
-            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchApplicationResource application1 = lro.Value;
             Assert.AreEqual(name, application1.Data.Name);
             //2.Get
-            BatchApplicationResource application2 = await container.GetAsync(name);
+            BatchApplicationResource application2 = await collection.GetAsync(name);
             ResourceDataHelper.AssertApplicationData(application1.Data, application2.Data);
             //3.GetAll
-            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
             int count = 0;
-            await foreach (var account in container.GetAllAsync())
+            await foreach (var account in collection.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.GreaterOrEqual(count, 3);
             //4Exists
-            Assert.IsTrue(await container.ExistsAsync(name));
-            Assert.IsFalse(await container.ExistsAsync(name + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(name));
+            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
     }
 }

@@ -134,6 +134,8 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             AssertResourceData(poolData1, poolData2);
             Assert.AreEqual(poolData1.ETag, poolData2.ETag);
+            Assert.AreEqual(poolData1.AllocationState, poolData2.AllocationState);
+            Assert.AreEqual(poolData1.SystemData, poolData2.SystemData);
         }
         #endregion
 
@@ -151,6 +153,8 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             AssertResourceData(applicationData1, applicationData2);
             Assert.AreEqual(applicationData1.ETag, applicationData2.ETag);
+            Assert.AreEqual(applicationData1.DisplayName, applicationData2.DisplayName);
+            Assert.AreEqual(applicationData1.SystemData, applicationData2.SystemData);
         }
         #endregion
 
@@ -166,6 +170,8 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             AssertResourceData(packageData1, packageData2);
             Assert.AreEqual(packageData1.ETag, packageData2.ETag);
+            Assert.AreEqual(packageData1.State, packageData2.State);
+            Assert.AreEqual(packageData1.SystemData, packageData2.SystemData);
         }
         #endregion
     }

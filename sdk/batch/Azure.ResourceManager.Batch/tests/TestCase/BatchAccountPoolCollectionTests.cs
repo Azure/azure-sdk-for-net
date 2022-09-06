@@ -32,28 +32,32 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         public async Task PoolCollectionApiTests()
         {
             //1.CreateOrUpdate
-            var container = await GetPoolCollectionAsync();
+            var collection = await GetPoolCollectionAsync();
             var name = Recording.GenerateAssetName("Pool-");
+            var name2 = Recording.GenerateAssetName("Pool-");
+            var name3 = Recording.GenerateAssetName("Pool-");
             var input = ResourceDataHelper.GetBatchAccountPoolData();
-            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountPoolResource pool1 = lro.Value;
             Assert.AreEqual(name, pool1.Data.Name);
             //2.Get
-            BatchAccountPoolResource pool2 = await container.GetAsync(name);
+            BatchAccountPoolResource pool2 = await collection.GetAsync(name);
             ResourceDataHelper.AssertPoolData(pool1.Data, pool2.Data);
             //3.GetAll
-            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
             int count = 0;
-            await foreach (var account in container.GetAllAsync())
+            await foreach (var account in collection.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.GreaterOrEqual(count, 3);
             //4Exists
-            Assert.IsTrue(await container.ExistsAsync(name));
-            Assert.IsFalse(await container.ExistsAsync(name + "1"));
+            Assert.IsTrue(await collection.ExistsAsync(name));
+            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
     }
 }

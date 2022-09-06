@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
 
         private async Task<BatchApplicationPackageCollection> GetApplicationCollectionAsync()
         {
-            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var collection = (await CreateResourceGroupAsync()).GetBatchAccounts();
             var input = ResourceDataHelper.GetBatchAccountData();
-            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testaccount"), input);
             var account = lro.Value;
             var applicationContainer = account.GetBatchApplications();
             var applicationInput = ResourceDataHelper.GetBatchApplicationData();
@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             //1.CreateOrUpdate
             var container = await GetApplicationCollectionAsync();
             var name = Recording.GenerateAssetName("ApplicationPackage-");
+            var name2 = Recording.GenerateAssetName("ApplicationPackage-");
+            var name3 = Recording.GenerateAssetName("ApplicationPackage-");
             var input = ResourceDataHelper.GetBatchApplicationPackageData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchApplicationPackageResource applicationPackage1 = lro.Value;
@@ -47,12 +49,14 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             ResourceDataHelper.AssertApplicationPckageData(applicationPackage1.Data, applicationPackage2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
+            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
             int count = 0;
             await foreach (var account in container.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.GreaterOrEqual(count, 3);
             //4Exists
             Assert.IsTrue(await container.ExistsAsync(name));
             Assert.IsFalse(await container.ExistsAsync(name + "1"));
