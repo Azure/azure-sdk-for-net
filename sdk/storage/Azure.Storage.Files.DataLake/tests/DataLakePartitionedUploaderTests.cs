@@ -303,11 +303,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     IsAny<long>(),
                     IsAny<UploadTransferValidationOptions>(),
                     IsAny<string>(),
+                    IsAny<LeaseAction?>(),
+                    IsAny<TimeSpan?>(),
+                    IsAny<string>(),
                     IsAny<IProgress<long>>(),
                     IsAny<bool?>(),
                     _async,
                     s_cancellationToken
-                )).Returns<Stream, long, UploadTransferValidationOptions, string, IProgress<long>, bool?, bool, CancellationToken>(sink.AppendInternal);
+                )).Returns<Stream, long, UploadTransferValidationOptions, string, LeaseAction?, TimeSpan?, string, IProgress<long>, bool?, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
@@ -387,6 +390,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 long offset,
                 UploadTransferValidationOptions validationOptions,
                 string leaseId,
+                LeaseAction? leaseAction,
+                TimeSpan? leaseDuration,
+                string proposedLeaseId,
                 IProgress<long> progressHandler,
                 bool? flush,
                 bool async,

@@ -1283,7 +1283,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateAppendDataRequest(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentHash, byte[] transactionalContentCrc64, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, bool? flush)
+        internal HttpMessage CreateAppendDataRequest(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentHash, byte[] transactionalContentCrc64, string leaseId, LeaseAction? leaseAction, long? leaseDuration, string proposedLeaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, bool? flush)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1311,6 +1311,18 @@ namespace Azure.Storage.Files.DataLake
             if (leaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
+            }
+            if (leaseAction != null)
+            {
+                request.Headers.Add("x-ms-lease-action", leaseAction.Value.ToSerialString());
+            }
+            if (leaseDuration != null)
+            {
+                request.Headers.Add("x-ms-lease-duration", leaseDuration.Value);
+            }
+            if (proposedLeaseId != null)
+            {
+                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
             request.Headers.Add("x-ms-version", _version);
             if (encryptionKey != null)
@@ -1347,20 +1359,23 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="leaseAction"> Optional. If &quot;acquire&quot; it will acquire the lease. If &quot;auto-renew&quot; it will renew the lease. If &quot;release&quot; it will release the lease only on flush. If &quot;acquire-release&quot; it will acquire &amp; complete the operation &amp; release the lease once operation is done. </param>
+        /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="flush"> If file should be flushed after the append. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, LeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush);
+            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, leaseAction, leaseDuration, proposedLeaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathAppendDataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1380,20 +1395,23 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="leaseAction"> Optional. If &quot;acquire&quot; it will acquire the lease. If &quot;auto-renew&quot; it will renew the lease. If &quot;release&quot; it will release the lease only on flush. If &quot;acquire-release&quot; it will acquire &amp; complete the operation &amp; release the lease once operation is done. </param>
+        /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="flush"> If file should be flushed after the append. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, LeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush);
+            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, leaseAction, leaseDuration, proposedLeaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, flush);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathAppendDataHeaders(message.Response);
             switch (message.Response.Status)

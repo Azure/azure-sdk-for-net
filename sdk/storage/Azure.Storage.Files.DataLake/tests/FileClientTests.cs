@@ -2467,6 +2467,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
 
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
@@ -2483,6 +2485,31 @@ namespace Azure.Storage.Files.DataLake.Tests
                         options: options),
                         e => Assert.AreEqual("LeaseNotPresent", e.ErrorCode));
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
+        public async Task AppendDataAsync_AquireLease()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateIfNotExistsAsync();
+            byte[] data = GetRandomBuffer(Size);
+            string proposedLeaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                LeaseAction = LeaseAction.Acquire,
+                ProposedLeaseId = proposedLeaseId,
+                LeaseDuration = duration
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(stream, 0, options);
         }
 
         [RecordedTest]

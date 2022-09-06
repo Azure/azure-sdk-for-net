@@ -1985,6 +1985,9 @@ namespace Azure.Storage.Files.DataLake
                 offset,
                 options?.TransferValidationOptions,
                 options?.LeaseId,
+                options?.LeaseAction,
+                options?.LeaseDuration,
+                options?.ProposedLeaseId,
                 options?.ProgressHandler,
                 options?.Flush,
                 async: false,
@@ -2034,6 +2037,9 @@ namespace Azure.Storage.Files.DataLake
                 offset,
                 options?.TransferValidationOptions,
                 options?.LeaseId,
+                options?.LeaseAction,
+                options?.LeaseDuration,
+                options?.ProposedLeaseId,
                 options?.ProgressHandler,
                 options?.Flush,
                 async: true,
@@ -2106,6 +2112,9 @@ namespace Azure.Storage.Files.DataLake
                     }
                     : default,
                 leaseId,
+                leaseAction: null,
+                leaseDuration: null,
+                proposedLeaseId: null,
                 progressHandler,
                 flush: null,
                 async: false,
@@ -2179,6 +2188,9 @@ namespace Azure.Storage.Files.DataLake
                     }
                     : default,
                 leaseId,
+                leaseAction: null,
+                leaseDuration: null,
+                proposedLeaseId: null,
                 progressHandler,
                 flush: null,
                 async: true,
@@ -2210,6 +2222,21 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseId">
         /// Lease id for operation.
         /// </param>
+        /// <param name="leaseAction">
+        /// Lease action.
+        /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.
+        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
+        /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
+        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
+        /// </param>
+        /// <param name="leaseDuration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="DataLakeLeaseClient.InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// </param>
+        /// <param name="proposedLeaseId">
+        /// Proposed lease ID. Valid with <see cref="LeaseAction.Acquire"/> and <see cref="LeaseAction.AcquireRelease"/>.
+        /// </param>
         /// <param name="progressHandler">
         /// Progress handler for append operation.
         /// </param>
@@ -2236,6 +2263,9 @@ namespace Azure.Storage.Files.DataLake
             long? offset,
             UploadTransferValidationOptions validationOptionsOverride,
             string leaseId,
+            LeaseAction? leaseAction,
+            TimeSpan? leaseDuration,
+            string proposedLeaseId,
             IProgress<long> progressHandler,
             bool? flush,
             bool async,
@@ -2264,6 +2294,14 @@ namespace Azure.Storage.Files.DataLake
                     Errors.VerifyStreamPosition(content, nameof(content));
                     ResponseWithHeaders<PathAppendDataHeaders> response;
 
+                    long? leaseDurationInt = null;
+                    if (leaseDuration.HasValue)
+                    {
+                        leaseDurationInt = leaseDuration < TimeSpan.Zero
+                            ? Constants.Blob.Lease.InfiniteLeaseDuration
+                            : Convert.ToInt64(leaseDuration.Value.TotalSeconds);
+                    }
+
                     if (async)
                     {
                         response = await PathRestClient.AppendDataAsync(
@@ -2276,6 +2314,9 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
+                            leaseAction: leaseAction,
+                            leaseDuration: leaseDurationInt,
+                            proposedLeaseId: proposedLeaseId,
                             flush: flush,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2292,6 +2333,9 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
+                            leaseAction: leaseAction,
+                            leaseDuration: leaseDurationInt,
+                            proposedLeaseId: proposedLeaseId,
                             flush: flush,
                             cancellationToken: cancellationToken);
                     }
@@ -5050,6 +5094,9 @@ namespace Azure.Storage.Files.DataLake
                         offset: 0,
                         validationOptions,
                         args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
                         progressHandler,
                         flush: null,
                         async,
@@ -5072,6 +5119,9 @@ namespace Azure.Storage.Files.DataLake
                         offset,
                         validationOptions,
                         args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
                         progressHandler,
                         flush: null,
                         async,
