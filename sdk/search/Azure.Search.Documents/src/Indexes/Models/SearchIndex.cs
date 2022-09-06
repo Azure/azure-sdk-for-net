@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         /// <example>
         /// You can create fields from a model class using <see cref="FieldBuilder"/>:
-        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex">
+        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex" language="csharp">
         /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
         /// {
         ///     Fields = new FieldBuilder().Build(typeof(Hotel)),
@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </code>
         /// For this reason, <see cref="Fields"/> is settable. In scenarios when the model is not known or cannot be modified, you can
         /// also create fields manually using helper classes:
-        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex">
+        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex" language="csharp">
         /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
         /// {
         ///     Fields =

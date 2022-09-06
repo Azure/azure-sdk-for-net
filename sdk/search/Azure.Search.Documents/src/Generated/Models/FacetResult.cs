@@ -30,7 +30,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The approximate count of documents falling within the bucket described by this facet. </summary>
         public long? Count { get; }
-        /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

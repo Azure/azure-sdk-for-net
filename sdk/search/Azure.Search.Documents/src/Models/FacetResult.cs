@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class FacetResult
+    public partial class FacetResult : IReadOnlyDictionary<string, object>
     {
         /// <summary>
         /// Gets the type of this facet.  Value facets count documents with a
@@ -56,7 +58,8 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct
         {
-            if (FacetType != FacetType.Range) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Range)
+            { throw new InvalidCastException(); }
             return new RangeFacetResult<T>(Count.GetValueOrDefault(), (T?)From, (T?)To);
         }
 
@@ -73,8 +76,31 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public ValueFacetResult<T> AsValueFacetResult<T>()
         {
-            if (FacetType != FacetType.Value) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Value)
+            { throw new InvalidCastException(); }
             return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
+        }
+
+        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+
+        /// <inheritdoc />
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
+        /// <inheritdoc />
+        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
+        /// <inheritdoc />
+        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
+        /// <inheritdoc />
+        public IEnumerable<string> Keys => AdditionalProperties.Keys;
+        /// <inheritdoc />
+        public IEnumerable<object> Values => AdditionalProperties.Values;
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
+        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
+        /// <inheritdoc />
+        public object this[string key]
+        {
+            get => AdditionalProperties[key];
         }
     }
 }
