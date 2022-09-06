@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> scriptCmdletId = default;
-            Optional<IList<ScriptExecutionParameter>> parameters = default;
-            Optional<IList<ScriptExecutionParameter>> hiddenParameters = default;
+            Optional<ResourceIdentifier> scriptCmdletId = default;
+            Optional<IList<ScriptExecutionParameterDetails>> parameters = default;
+            Optional<IList<ScriptExecutionParameterDetails>> hiddenParameters = default;
             Optional<string> failureReason = default;
             Optional<string> timeout = default;
             Optional<string> retention = default;
@@ -149,7 +149,12 @@ namespace Azure.ResourceManager.Avs
                     {
                         if (property0.NameEquals("scriptCmdletId"))
                         {
-                            scriptCmdletId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            scriptCmdletId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -159,10 +164,10 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ScriptExecutionParameter> array = new List<ScriptExecutionParameter>();
+                            List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptExecutionParameter.DeserializeScriptExecutionParameter(item));
+                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
                             }
                             parameters = array;
                             continue;
@@ -174,10 +179,10 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ScriptExecutionParameter> array = new List<ScriptExecutionParameter>();
+                            List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptExecutionParameter.DeserializeScriptExecutionParameter(item));
+                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
                             }
                             hiddenParameters = array;
                             continue;

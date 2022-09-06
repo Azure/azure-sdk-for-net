@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AFDValue = "AFD";
+        private const string AfdValue = "AFD";
         private const string AzureRegionValue = "AzureRegion";
-        private const string CDNValue = "CDN";
-        private const string ATMValue = "ATM";
+        private const string CdnValue = "CDN";
+        private const string AtmValue = "ATM";
 
         /// <summary> AFD. </summary>
-        public static EndpointType AFD { get; } = new EndpointType(AFDValue);
+        public static EndpointType Afd { get; } = new EndpointType(AfdValue);
         /// <summary> AzureRegion. </summary>
         public static EndpointType AzureRegion { get; } = new EndpointType(AzureRegionValue);
         /// <summary> CDN. </summary>
-        public static EndpointType CDN { get; } = new EndpointType(CDNValue);
+        public static EndpointType Cdn { get; } = new EndpointType(CdnValue);
         /// <summary> ATM. </summary>
-        public static EndpointType ATM { get; } = new EndpointType(ATMValue);
+        public static EndpointType Atm { get; } = new EndpointType(AtmValue);
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

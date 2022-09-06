@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // TODO: Track 2 code has bug. Until that is fixed, this method is broken
             var resourceGroupName = GuestConfigurationManagementUtilities.HybridRG;
             var vmName = GuestConfigurationManagementUtilities.HybridMachineName;
-            GuestConfigurationHcrpAssignmentCollection guestConfigurationHcrpAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName);
+            GuestConfigurationHcrpAssignmentCollection guestConfigurationHcrpAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName, vmName);
             GuestConfigurationAssignmentData gcAssignmentData = GetDefaultContactGuestConfigurationAssignmentData(guestConfigurationHcrpAssignmentCollection.Id);
 
             // Create a new guest configuration assignment
-            ArmOperation<GuestConfigurationHcrpAssignmentResource> createAssignmentOperation = await guestConfigurationHcrpAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
+            ArmOperation<GuestConfigurationHcrpAssignmentResource> createAssignmentOperation = await guestConfigurationHcrpAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await createAssignmentOperation.WaitForCompletionAsync();
             Assert.IsTrue(createAssignmentOperation.HasCompleted);
             Assert.IsTrue(createAssignmentOperation.HasValue);
 
             // Get created guest configuration assignment
-            Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationHcrpAssignmentCollection.GetAsync(vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName);
+            Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationHcrpAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationHcrpAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
             Assert.AreEqual(gcAssignmentData.Location, guestAssignmentResourceRetrieved.Data.Location);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // Update guest configuration assignment
             string updatedContext = "Azure Policy Updated";
             gcAssignmentData.Properties.Context = updatedContext;
-            ArmOperation<GuestConfigurationHcrpAssignmentResource> updateAssignmentOperation = await guestConfigurationHcrpAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
+            ArmOperation<GuestConfigurationHcrpAssignmentResource> updateAssignmentOperation = await guestConfigurationHcrpAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await updateAssignmentOperation.WaitForCompletionAsync();
             Assert.IsTrue(updateAssignmentOperation.HasCompleted);
             Assert.IsTrue(updateAssignmentOperation.HasValue);
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             //TODO: Track 2 code bug: Need it to reroute to .HybridCompute
             var resourceGroupName = GuestConfigurationManagementUtilities.HybridRG;
             var vmName = GuestConfigurationManagementUtilities.HybridMachineName;
-            GuestConfigurationHcrpAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName);
+            GuestConfigurationHcrpAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName, vmName);
 
             // get guest configuration assignment
-            Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName);
+            Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationHcrpAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
 
