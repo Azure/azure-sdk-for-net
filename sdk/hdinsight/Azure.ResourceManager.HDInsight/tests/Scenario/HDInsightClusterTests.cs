@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
             string containerName = Recording.GenerateAssetName("container");
-            var cluster = await CreateCluster(resourceGroup, storageAccount, clusterName, containerName);
+            var cluster = await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
             ValidateCluster(cluster);
             Assert.AreEqual(clusterName, cluster.Data.Name);
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
             string containerName = Recording.GenerateAssetName("container");
-            await CreateCluster(resourceGroup, storageAccount, clusterName, containerName);
+            await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
             bool flag = await resourceGroup.GetHDInsightClusters().ExistsAsync(clusterName);
             Assert.IsTrue(flag);
         }
@@ -50,8 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var resourceGroup = await CreateResourceGroup();
             var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            string containerName = Recording.GenerateAssetName("container");
-            await CreateCluster(resourceGroup, storageAccount, clusterName, containerName);
+            await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
             var cluster = await resourceGroup.GetHDInsightClusters().GetAsync(clusterName);
             ValidateCluster(cluster);
             Assert.AreEqual(clusterName, cluster.Value.Data.Name);
@@ -63,8 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var resourceGroup = await CreateResourceGroup();
             var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            string containerName = Recording.GenerateAssetName("container");
-            await CreateCluster(resourceGroup, storageAccount, clusterName, containerName);
+            await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
             var list = await resourceGroup.GetHDInsightClusters().GetAllAsync().ToEnumerableAsync();
             ValidateCluster(list.FirstOrDefault());
             Assert.AreEqual(1, list.Count);
@@ -76,8 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var resourceGroup = await CreateResourceGroup();
             var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            string containerName = Recording.GenerateAssetName("container");
-            var cluster = await CreateCluster(resourceGroup, storageAccount, clusterName, containerName);
+            var cluster = await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
             bool flag = await resourceGroup.GetHDInsightClusters().ExistsAsync(clusterName);
             Assert.IsTrue(flag);
 
@@ -92,8 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var resourceGroup = await CreateResourceGroup();
             var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            string containerName = Recording.GenerateAssetName("container");
-            var cluster = await CreateCluster(resourceGroup, storageAccount, clusterName, containerName);
+            var cluster = await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
 
             var extension    = await cluster.GetExtensionAsync("azuremonitor");
             Assert.IsNotNull(extension);

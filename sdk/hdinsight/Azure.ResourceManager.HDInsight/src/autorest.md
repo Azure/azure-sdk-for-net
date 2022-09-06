@@ -226,4 +226,7 @@ directive:
     transform: >
       $.StorageAccount.properties.msiResourceId['x-nullable'] = true;
       $.StorageAccount.properties.resourceId['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.encryptionAlgorithm['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.msiResourceId['x-nullable'] = true;
+
 ```

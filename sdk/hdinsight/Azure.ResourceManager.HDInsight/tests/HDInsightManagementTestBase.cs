@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using System.Linq;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.HDInsight.Tests
 {
@@ -59,12 +61,39 @@ namespace Azure.ResourceManager.HDInsight.Tests
             return storage.Value;
         }
 
-        protected async Task<HDInsightClusterResource> CreateCluster(ResourceGroupResource resourceGroup, StorageAccountResource storageAccount, string clusterName, string containerName)
+        protected async Task<VirtualNetworkResource> CreateDefaultNetwork(ResourceGroupResource resourceGroup, string vnetName)
         {
-            var container = await storageAccount.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
-            string key = (await storageAccount.GetKeysAsync().ToEnumerableAsync()).FirstOrDefault().Value;
+            VirtualNetworkData data = new VirtualNetworkData()
+            {
+                Location = resourceGroup.Data.Location,
+            };
+            data.AddressPrefixes.Add("10.10.0.0/16");
+            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24" });
+            data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
+            return vnet.Value;
+        }
+
+        protected async Task<HDInsightClusterResource> CreateDefaultHadoopCluster(ResourceGroupResource resourceGroup, StorageAccountResource storageAccount, string clusterName)
+        {
+            var properties = await PrepareClusterCreateParams(storageAccount);
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = resourceGroup.Data.Location,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await resourceGroup.GetHDInsightClusters().CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            return cluster.Value;
+        }
+
+        protected async Task<HDInsightClusterCreateOrUpdateProperties> PrepareClusterCreateParams(StorageAccountResource storageAccount)
+        {
             string common_user = "sshuser5951";
             string common_passwork = "Password!5951";
+            string containerName = Recording.GenerateAssetName("container");
+            string accessKey = (await storageAccount.GetKeysAsync().ToEnumerableAsync()).FirstOrDefault().Value;
+            await storageAccount.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
             string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": \"true\",             \"restAuthCredential.username\": \"admin4468\",             \"restAuthCredential.password\": \"Password1!9688\"         }     } ";
             var properties = new HDInsightClusterCreateOrUpdateProperties()
             {
@@ -115,17 +144,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             {
                 Name = $"{storageAccount.Data.Name}.blob.core.windows.net",
                 IsDefault = true,
-                Container = container.Value.Data.Name,
-                Key = key,
+                Container = containerName,
+                Key = accessKey,
             });
-            var data = new HDInsightClusterCreateOrUpdateContent()
-            {
-                Properties = properties,
-                Location = resourceGroup.Data.Location,
-            };
-            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
-            var cluster = await resourceGroup.GetHDInsightClusters().CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
-            return cluster.Value;
+            return properties;
         }
     }
 }
