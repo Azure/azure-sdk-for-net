@@ -236,6 +236,7 @@ rename-mapping:
   Condition: ScheduledQueryRuleCondition
   ScheduledQueryRuleResource.properties.enabled: IsEnabled
   ScheduledQueryRuleResourcePatch.properties.enabled: IsEnabled
+  Kind: ScheduledQueryRuleKind
 
 directive:
   # fixing the format since rename-mapping has bugs on this

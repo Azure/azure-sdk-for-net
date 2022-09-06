@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
-        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MonitorKind? kind, ETag? etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate) : base(id, name, resourceType, systemData, tags, location)
+        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledQueryRuleKind? kind, ETag? etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ETag = etag;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Indicates the type of scheduled query rule. The default is LogAlert. </summary>
-        public MonitorKind? Kind { get; set; }
+        public ScheduledQueryRuleKind? Kind { get; set; }
         /// <summary> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? ETag { get; }
         /// <summary> The api-version used when creating this alert rule. </summary>

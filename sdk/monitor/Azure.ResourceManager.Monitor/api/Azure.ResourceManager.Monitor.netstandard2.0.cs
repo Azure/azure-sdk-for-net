@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.Monitor
         public bool? IsEnabled { get { throw null; } set { } }
         public bool? IsLegacyLogAnalyticsRule { get { throw null; } }
         public bool? IsWorkspaceAlertsStorageConfigured { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind? Kind { get { throw null; } set { } }
         public System.TimeSpan? MuteActionsDuration { get { throw null; } set { } }
         public System.TimeSpan? OverrideQueryTimeRange { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
@@ -1667,24 +1667,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string TicketConfiguration { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MonitorKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MonitorKind(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.MonitorKind LogAlert { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.MonitorKind LogToMetric { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorKind left, Azure.ResourceManager.Monitor.Models.MonitorKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorKind left, Azure.ResourceManager.Monitor.Models.MonitorKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MonitorLocalizableString
     {
         internal MonitorLocalizableString() { }
@@ -2157,6 +2139,24 @@ namespace Azure.ResourceManager.Monitor.Models
         public string ResourceIdColumn { get { throw null; } set { } }
         public double? Threshold { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.TimeAggregation? TimeAggregation { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledQueryRuleKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledQueryRuleKind(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind LogAlert { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind LogToMetric { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ScheduledQueryRulePatch
     {

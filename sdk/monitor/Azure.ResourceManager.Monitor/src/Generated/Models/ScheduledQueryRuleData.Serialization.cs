@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element)
         {
-            Optional<MonitorKind> kind = default;
+            Optional<ScheduledQueryRuleKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new MonitorKind(property.Value.GetString());
+                    kind = new ScheduledQueryRuleKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
