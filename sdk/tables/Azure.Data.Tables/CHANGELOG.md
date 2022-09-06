@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a OData filter issue with implicit boolean comparisons (for example expressions such as `ent => ent.BooleanProperty`) when calling `TableClient.QueryAsync(Expression<Func<T, bool>> filter, ...)`. ([#30185](https://github.com/Azure/azure-sdk-for-net/issues/30185))
 
 ### Other Changes
 
