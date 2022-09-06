@@ -11,17 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EntityQueryItem
+    internal partial class UnknownEntityQueryItem
     {
-        internal static EntityQueryItem DeserializeEntityQueryItem(JsonElement element)
+        internal static UnknownEntityQueryItem DeserializeUnknownEntityQueryItem(JsonElement element)
         {
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Insight": return InsightQueryItem.DeserializeInsightQueryItem(element);
-                }
-            }
             EntityQueryKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
