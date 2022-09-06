@@ -3,25 +3,25 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/search/
+    - sdk/search/ci.yml
+    - sdk/search/Azure.Search.Documents/
 
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/search/
+    - sdk/search/ci.yml
+    - sdk/search/Azure.Search.Documents/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -31,11 +31,12 @@ extends:
     Artifacts:
     - name: Azure.Search.Documents
       safeName: AzureSearchDocuments
-    - name: Microsoft.Azure.Search
-      safeName: MicrosoftAzureSearch
-    - name: Microsoft.Azure.Search.Common
-      safeName: MicrosoftAzureSearchCommon
-    - name: Microsoft.Azure.Search.Data
-      safeName: MicrosoftAzureSearchData
-    - name: Microsoft.Azure.Search.Service
-      safeName: MicrosoftAzureSearchService
+    # Skip track 1 Microsoft.Azure.* packages for the release jobs
+    # - name: Microsoft.Azure.Search
+    #   safeName: MicrosoftAzureSearch
+    # - name: Microsoft.Azure.Search.Common
+    #   safeName: MicrosoftAzureSearchCommon
+    # - name: Microsoft.Azure.Search.Data
+    #   safeName: MicrosoftAzureSearchData
+    # - name: Microsoft.Azure.Search.Service
+    #   safeName: MicrosoftAzureSearchService
