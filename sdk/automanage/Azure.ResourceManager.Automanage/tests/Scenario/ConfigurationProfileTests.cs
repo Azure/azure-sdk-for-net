@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
 
             // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
             var collection = rg.GetConfigurationProfiles();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         public async Task CanGetAllConfigurationProfilesInResourceGroup()
         {
             // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
             var collection = rg.GetConfigurationProfiles();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
 
             // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
             var collection = rg.GetConfigurationProfiles();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
 
             // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
             var collection = rg.GetConfigurationProfiles();

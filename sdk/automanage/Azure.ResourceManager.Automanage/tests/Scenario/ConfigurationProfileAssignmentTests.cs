@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string vmName = "sdk-test-vm";
 
             // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create VM from existing ARM template
             var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
 
             // create assignment between best practices profile and VM
             string profileId = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
-            await CreateAssignment(vm, profileId);
+            var result = await CreateAssignment(vm, profileId);
 
             // fetch assignment
-            var assignment = vm.GetConfigurationProfileAssignmentAsync("default").Result.Value;
+            var assignment = await ArmClient.GetConfigurationProfileAssignmentAsync(vm.Id, "default");
 
             // assert
-            Assert.True(assignment.HasData);
-            Assert.NotNull(assignment.Data.Name);
-            Assert.NotNull(assignment.Data.Id);
-            Assert.AreEqual(vm.Id, assignment.Data.Properties.TargetId);
+            Assert.True(assignment.Value.HasData);
+            Assert.NotNull(assignment.Value.Data.Name);
+            Assert.NotNull(assignment.Value.Data.Id);
+            Assert.AreEqual(vm.Id, assignment.Value.Data.Properties.TargetId);
         }
 
         [TestCase]
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string vmName = "sdk-test-vm";
 
             // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create VM from existing ARM template
             var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string vmName = "sdk-test-vm";
 
             // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
             var profileCollection = rg.GetConfigurationProfiles();

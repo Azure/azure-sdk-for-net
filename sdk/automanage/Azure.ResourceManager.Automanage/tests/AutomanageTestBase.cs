@@ -45,11 +45,17 @@ namespace Azure.ResourceManager.Automanage.Tests
             CleanupResourceGroups();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        /// <summary>
+        /// Creates a resource group
+        /// </summary>
+        /// <param name="rgNamePrefix">Prefix of the resource group</param>
+        /// <param name="location">Location of the resource group</param>
+        /// <returns></returns>
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData data = new ResourceGroupData(location);
-            var rg = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, data);
+            var rg = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, data);
             return rg.Value;
         }
 
@@ -91,15 +97,17 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// </summary>
         /// <param name="vm">Virtual Machine to assign a profile to</param>
         /// <param name="profileId">ID of desired configuration profile to use</param>
+        /// <param name="scope">Scope to create the assignment under</param>
         /// <returns>ConfigurationProfileAssignmentResource</returns>
         protected async Task<ConfigurationProfileAssignmentResource> CreateAssignment(VirtualMachineResource vm, string profileId)
         {
-            var data = new ConfigurationProfileAssignmentData()
-            {
-                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId }
-            };
+            var data = new ConfigurationProfileAssignmentData();
+            data.Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId };
 
-            var assignment = await vm.GetConfigurationProfileAssignments().CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
+            // fetch assignments collection
+            var collection = ArmClient.GetConfigurationProfileAssignments(vm.Id);
+            var assignment = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
+
             return assignment.Value;
         }
 
@@ -121,7 +129,6 @@ namespace Azure.ResourceManager.Automanage.Tests
                 Template = BinaryData.FromString(templateContent),
                 Parameters = BinaryData.FromObjectAsJson(new
                 {
-                    adminPassword = new { value = "!Admin12345" },
                     vmName = new { value = vmName }
                 })
             });
