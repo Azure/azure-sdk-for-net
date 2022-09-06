@@ -11,6 +11,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.ResourceMover;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceMover.Tests
@@ -66,7 +67,6 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Need further investigation.")]
         public async Task Delete()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -74,9 +74,10 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.WestUS);
             string moverResourceSetName = Recording.GenerateAssetName("MoverResourceSet-");
             MoverResourceSetResource moverResourceSet = await CreateMoverResourceSet(rg, moverResourceSetName);
-            await moverResourceSet.DeleteAsync(WaitUntil.Completed);
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await moverResourceSet.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await moverResourceSet.DeleteAsync(WaitUntil.Completed));
+            //await moverResourceSet.DeleteAsync(WaitUntil.Completed);
+            //var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await moverResourceSet.GetAsync());
+            //Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]
@@ -100,13 +101,14 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Still in progress.")]
         public async Task ValidateResourceMove()
         {
+            // Get an existing moverResourceSet and please clean up the set if it already contains some resources.
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceIdentifier moverResourceSetId = MoverResourceSetResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, "testRG-ResourceMover", "testMoveCollection");
             MoverResourceSetResource moverResourceSet = await Client.GetMoverResourceSetResource(moverResourceSetId).GetAsync();
 
+            // Add a Vnet to the moverResourceSet.
             string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
@@ -114,16 +116,92 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
             MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
 
+            // Validate that the Vnet has an dependency.
             ArmOperation<MoverOperationStatus> lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
-            if (lro.Value.Error != null)
+            Assert.IsNotNull(lro.Value.Error);
+
+            // Retrieve a list of the dependencies and validate that there is only one unresolved dependency about the source resource group.
+            int count = 0;
+            ResourceIdentifier unresolvedDependencyId = null;
+            await foreach (var dependency in moverResourceSet.GetUnresolvedDependenciesAsync())
             {
-                int count = 0;
-                await foreach (var dependency in moverResourceSet.GetUnresolvedDependenciesAsync())
+                ++count;
+                unresolvedDependencyId = dependency.Id;
+            };
+            Assert.AreEqual(count, 1);
+            Assert.NotNull(unresolvedDependencyId);
+            Assert.AreEqual(unresolvedDependencyId, rg.Id);
+
+            // Add the source resource group to the moverResourceSet and verify there are no missed dependencies.
+            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
+            ResourceGroupResource targetRg = await CreateResourceGroup(subscription, targetRgName, AzureLocation.EastUS2);
+            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
+            MoverResourceData input = new MoverResourceData
+            {
+                Properties = new MoverResourceProperties(unresolvedDependencyId)
                 {
-                    ++count;
+                    ExistingTargetId = targetRg.Id,
+                    ResourceSettings = new ResourceGroupResourceSettings(unresolvedDependencyId.Name)
                 }
-                Assert.AreEqual(count, 1); // Only have an unresolved dependency about the target resource group.
-            }
+            };
+            _ = await moverResourceSet.GetMoverResources().CreateOrUpdateAsync(WaitUntil.Completed, moverDependentResourceName, input);
+            lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
+            Assert.IsNull(lro.Value.Error);
+
+            // Prepare, initiate and cmommit the move for the source resource group.
+            IEnumerable<ResourceIdentifier> moverRg = new List<ResourceIdentifier> { rg.Id };
+            MoverPrepareContent prepareContent = new MoverPrepareContent(moverRg)
+            {
+                MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
+            };
+            lro = await moverResourceSet.PrepareAsync(WaitUntil.Completed, prepareContent);
+            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+
+            MoverResourceMoveContent initiateContent = new MoverResourceMoveContent(moverRg)
+            {
+                MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
+            };
+            lro = await moverResourceSet.InitiateMoveAsync(WaitUntil.Completed, initiateContent);
+            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+
+            MoverCommitContent commitContent = new MoverCommitContent(moverRg)
+            {
+                MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
+            };
+            lro = await moverResourceSet.CommitAsync(WaitUntil.Completed, commitContent);
+            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+
+            // Prepare, initiate and discare the move for the Vnet.
+            IEnumerable<ResourceIdentifier> moverVnet = new List<ResourceIdentifier> { virtualNetwork.Id };
+            prepareContent = new MoverPrepareContent(moverVnet)
+            {
+                MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
+            };
+            lro = await moverResourceSet.PrepareAsync(WaitUntil.Completed, prepareContent);
+            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+
+            initiateContent = new MoverResourceMoveContent(moverVnet)
+            {
+                MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
+            };
+            lro = await moverResourceSet.InitiateMoveAsync(WaitUntil.Completed, initiateContent);
+            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+
+            MoverDiscardContent discardContent = new MoverDiscardContent(moverVnet)
+            {
+                MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
+            };
+            lro = await moverResourceSet.DiscardAsync(WaitUntil.Completed, discardContent);
+            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+
+            // Bulk remove
+            MoverBulkRemoveContent bulkRemoveContent = new MoverBulkRemoveContent()
+            {
+                MoverResources = { virtualNetwork.Id },
+                MoverResourceInputType = MoverResourceInputType.MoverResourceSourceId
+            };
+            lro = await moverResourceSet.BulkRemoveAsync(WaitUntil.Completed, bulkRemoveContent);
+            Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
         }
 
         private void AssertValidMoverResourceSet(MoverResourceSetResource model, MoverResourceSetResource getResult)
