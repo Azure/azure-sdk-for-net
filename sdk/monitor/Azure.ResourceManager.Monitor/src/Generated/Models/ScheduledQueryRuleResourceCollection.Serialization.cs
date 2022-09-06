@@ -12,11 +12,12 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class LogSearchRuleResourceCollection
+    internal partial class ScheduledQueryRuleResourceCollection
     {
-        internal static LogSearchRuleResourceCollection DeserializeLogSearchRuleResourceCollection(JsonElement element)
+        internal static ScheduledQueryRuleResourceCollection DeserializeScheduledQueryRuleResourceCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<LogSearchRuleData>> value = default;
+            Optional<IReadOnlyList<ScheduledQueryRuleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,16 +27,21 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LogSearchRuleData> array = new List<LogSearchRuleData>();
+                    List<ScheduledQueryRuleData> array = new List<ScheduledQueryRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogSearchRuleData.DeserializeLogSearchRuleData(item));
+                        array.Add(ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(item));
                     }
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new LogSearchRuleResourceCollection(Optional.ToList(value));
+            return new ScheduledQueryRuleResourceCollection(Optional.ToList(value), nextLink.Value);
         }
     }
 }
