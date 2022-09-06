@@ -40,4 +40,3 @@ extends:
     #   safeName: MicrosoftAzureSearchData
     # - name: Microsoft.Azure.Search.Service
     #   safeName: MicrosoftAzureSearchService
-    
