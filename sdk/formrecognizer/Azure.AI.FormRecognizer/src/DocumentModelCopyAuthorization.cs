@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("CopyAuthorization")]
-    public partial class CopyAuthorization
+    public partial class DocumentModelCopyAuthorization
     {
         /// <summary> Initializes a new instance of CopyAuthorization. </summary>
         /// <param name="targetResourceId"> ID of the target Azure resource where the model should be copied to. </param>
@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="expiresOn"> Date/time when the access token expires. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, <paramref name="targetModelId"/>, <paramref name="targetModelLocation"/> or <paramref name="accessToken"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, <paramref name="targetModelId"/> or <paramref name="accessToken"/> is empty. </exception>
-        public CopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, Uri targetModelLocation, string accessToken, DateTimeOffset expiresOn)
+        public DocumentModelCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, Uri targetModelLocation, string accessToken, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(targetResourceId, nameof(targetResourceId));
             Argument.AssertNotNullOrEmpty(targetResourceRegion, nameof(targetResourceRegion));
