@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of ClassicSimilarity. </summary>
-        /// <param name="oDataType"></param>
+        /// <param name="oDataType"> . </param>
         internal ClassicSimilarity(string oDataType) : base(oDataType)
         {
             ODataType = oDataType ?? "#Microsoft.Azure.Search.ClassicSimilarity";

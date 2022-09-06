@@ -57,9 +57,8 @@ namespace Azure.Search.Documents.Tests
             : base(async, mode)
         {
             ServiceVersion = serviceVersion;
-            JsonPathSanitizers.Add("$..applicationSecret");
-            SanitizedHeaders.Add("api-key");
-            CompareBodies = false;
+            Sanitizer = new SearchRecordedTestSanitizer();
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         /// <summary>
@@ -106,54 +105,6 @@ namespace Azure.Search.Documents.Tests
             {
                 await Task.Delay(playbackDelay.Value);
             }
-        }
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// <para>This method allows us to return early if the <paramref name="predicate"/> condition evaluates to true.
-        /// It evaluates the predicate after every <paramref name="delayPerIteration"/> or <paramref name="playbackDelayPerIteration"/> time span.
-        /// It returns when the condition evaluates to <c>true</c>, or if the condition stays false after <paramref name="maxIterations"/> checks.</para>
-        /// </summary>
-        /// <param name="predicate">Condition that will result in early end of delay when it evaluates to <c>true</c>.</param>
-        /// <param name="delayPerIteration">The time to wait per iteration.  Defaults to 1s.</param>
-        /// <param name="playbackDelayPerIteration">
-        /// An optional time wait if we're playing back a recorded test.  This
-        /// is useful for allowing client side events to get processed.
-        /// </param>
-        /// <param name="maxIterations">Maximum number of iterations of the wait-and-check cycle.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to check.</param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was signaled.</exception>
-        public async Task ConditionallyDelayAsync(Func<bool> predicate, TimeSpan ? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint maxIterations = 1, CancellationToken cancellationToken = default)
-        {
-            TimeSpan waitPeriod = TimeSpan.Zero;
-
-            for (int i = 0; i < maxIterations; i++)
-            {
-                if (predicate())
-                {
-                    TestContext.WriteLine($"{nameof(ConditionallyDelayAsync)}: Condition evaluated to true in {waitPeriod.TotalSeconds} seconds.");
-                    return;
-                }
-
-                cancellationToken.ThrowIfCancellationRequested();
-
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    waitPeriod += delayPerIteration ?? TimeSpan.FromSeconds(1);
-                    await Task.Delay(delayPerIteration ?? TimeSpan.FromSeconds(1));
-                }
-                else if (playbackDelayPerIteration != null)
-                {
-                    waitPeriod += playbackDelayPerIteration.Value;
-                    await Task.Delay(playbackDelayPerIteration.Value);
-                }
-            }
-
-            TestContext.WriteLine($"{nameof(ConditionallyDelayAsync)}: Condition did not evaluate to true in {waitPeriod.TotalSeconds} seconds.");
         }
 
         /// <summary>

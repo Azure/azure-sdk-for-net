@@ -14,13 +14,9 @@ namespace Azure.Search.Documents
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
-    /// <seealso href="https://docs.microsoft.com/rest/api/searchservice/search-documents#query-parameters">Query Parameters.</seealso>
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
-        private const string QueryAnswerRawSplitter = "|count-";
-        private const string QueryCaptionRawSplitter = "|highlight-";
-
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
         /// token to continue fetching results from a previous search.
@@ -44,7 +40,6 @@ namespace Azure.Search.Documents
         /// use <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        /// <seealso href="https://docs.microsoft.com/azure/search/search-filters">Filters in Azure Cognitive Search</seealso>
         [CodeGenMember("filter")]
         public string Filter { get; set; }
 
@@ -54,6 +49,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> HighlightFields { get; internal set; } = new List<string>();
 
+        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join HighlightFields so it can be sent as a comma separated string.
         /// </summary>
@@ -63,6 +59,7 @@ namespace Azure.Search.Documents
             get => HighlightFields.CommaJoin();
             set => HighlightFields = SearchExtensions.CommaSplit(value);
         }
+        #pragma warning restore CA1822
 
         /// <summary>
         /// The list of field names to which to scope the full-text search.
@@ -72,6 +69,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> SearchFields { get; internal set; } = new List<string>();
 
+        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
@@ -81,19 +79,7 @@ namespace Azure.Search.Documents
             get => SearchFields.CommaJoin();
             set => SearchFields = SearchExtensions.CommaSplit(value);
         }
-
-        /// <summary> The list of field names used for semantic search. </summary>
-        public IList<string> SemanticFields { get; internal set; } = new List<string>();
-
-        /// <summary>
-        /// Join SemanticFields so it can be sent as a comma-separated string.
-        /// </summary>
-        [CodeGenMember("semanticFields")]
-        internal string SemanticFieldsRaw
-        {
-            get => SemanticFields.CommaJoin();
-            set => SemanticFields = SearchExtensions.CommaSplit(value);
-        }
+        #pragma warning restore CA1822
 
         /// <summary>
         /// The list of fields to retrieve.  If unspecified, all fields marked
@@ -101,6 +87,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> Select { get; internal set; } = new List<string>();
 
+        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
@@ -110,6 +97,7 @@ namespace Azure.Search.Documents
             get => Select.CommaJoin();
             set => Select = SearchExtensions.CommaSplit(value);
         }
+        #pragma warning restore CA1822
 
         /// <summary>
         /// The number of search results to retrieve. This can be used in
@@ -134,6 +122,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> OrderBy { get; internal set; } = new List<string>();
 
+        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
@@ -143,6 +132,7 @@ namespace Azure.Search.Documents
             get => OrderBy.CommaJoin();
             set => OrderBy = SearchExtensions.CommaSplit(value);
         }
+        #pragma warning restore CA1822
 
         /// <summary>
         /// A value that specifies whether to fetch the total count of results
@@ -159,7 +149,6 @@ namespace Azure.Search.Documents
         /// facet expression contains a field name, optionally followed by a
         /// comma-separated list of name:value pairs.
         /// </summary>
-        /// <seealso href="https://docs.microsoft.com/azure/search/search-filters-facets">How to build a facet filter in Azure Cognitive Search.</seealso>
         [CodeGenMember("facets")]
         public IList<string> Facets { get; internal set; } = new List<string>();
 
@@ -172,133 +161,6 @@ namespace Azure.Search.Documents
         /// </summary>
         [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
-
-        /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
-        [CodeGenMember("semanticConfiguration")]
-        public string SemanticConfigurationName { get; set; }
-
-        /// <summary> A value that specifies the language of the search query. </summary>
-        [CodeGenMember("queryLanguage")]
-        public QueryLanguage? QueryLanguage { get; set; }
-
-        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
-        [CodeGenMember("speller")]
-        public QuerySpellerType? QuerySpeller { get; set; }
-
-        /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
-        public QueryAnswerType? QueryAnswer { get; set; }
-
-        /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
-        public int? QueryAnswerCount { get; set; }
-
-        /// <summary> Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>.</summary>
-        [CodeGenMember("answers")]
-        internal string QueryAnswerRaw
-        {
-            get
-            {
-                string queryAnswerStringValue = null;
-
-                if (QueryAnswer.HasValue)
-                {
-                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}";
-                }
-
-                return queryAnswerStringValue;
-            }
-
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    QueryAnswer = null;
-                    QueryAnswerCount = null;
-                }
-                else
-                {
-                    if (value.Contains(QueryAnswerRawSplitter))
-                    {
-                        var queryAnswerPart = value.Substring(0, value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase));
-                        var countPart = value.Substring(value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryAnswerRawSplitter.Length);
-
-                        if (string.IsNullOrEmpty(queryAnswerPart))
-                        {
-                            QueryAnswer = null;
-                        }
-                        else
-                        {
-                            QueryAnswer = new QueryAnswerType(queryAnswerPart);
-                        }
-
-                        if (int.TryParse(countPart, out int countValue))
-                        {
-                            QueryAnswerCount = countValue;
-                        }
-                    }
-                    else
-                    {
-                        QueryAnswer = new QueryAnswerType(value);
-                        QueryAnswerCount = null;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// A value that specifies whether <see cref="SearchResults{T}.Captions"/> should be returned as part of the search response.
-        /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
-        /// </summary>
-        public QueryCaptionType? QueryCaption { get; set; }
-
-        /// <summary>
-        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaptionType.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
-        /// It populates <see cref="CaptionResult.Highlights"/>.
-        /// <para>The default value is <c>true</c>.</para>
-        /// </summary>
-        public bool? QueryCaptionHighlightEnabled { get; set; }
-
-        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlightEnabled"/>.</summary>
-        [CodeGenMember("captions")]
-        internal string QueryCaptionRaw
-        {
-            get
-            {
-                string queryCaptionStringValue = null;
-
-                if (QueryCaption.HasValue)
-                {
-                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
-                }
-
-                return queryCaptionStringValue;
-            }
-
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    QueryCaption = null;
-                    QueryCaptionHighlightEnabled = null;
-                }
-                else
-                {
-                    int splitIndex = value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase);
-                    if (splitIndex >= 0)
-                    {
-                        var queryCaptionPart = value.Substring(0, splitIndex);
-                        var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
-
-                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaptionType(queryCaptionPart);
-                        QueryCaptionHighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
-                    }
-                    else
-                    {
-                        QueryCaption = new QueryCaptionType(value);
-                        QueryCaptionHighlightEnabled = null;
-                    }
-                }
-            }
-        }
 
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
@@ -318,23 +180,13 @@ namespace Azure.Search.Documents
             destination.IncludeTotalCount = source.IncludeTotalCount;
             destination.MinimumCoverage = source.MinimumCoverage;
             destination.OrderBy = source.OrderBy;
-            destination.QueryAnswer = source.QueryAnswer;
-            destination.QueryAnswerCount = source.QueryAnswerCount;
-            destination.QueryCaption = source.QueryCaption;
-            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
-            destination.QueryLanguage = source.QueryLanguage;
-            destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
-            destination.ScoringStatistics = source.ScoringStatistics;
             destination.SearchFields = source.SearchFields;
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
-            destination.SemanticConfigurationName = source.SemanticConfigurationName;
-            destination.SemanticFields = source.SemanticFields;
-            destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
         }

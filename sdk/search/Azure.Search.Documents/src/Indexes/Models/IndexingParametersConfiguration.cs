@@ -2,21 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexingParametersConfiguration : IDictionary<string, object>
+    public partial class IndexingParametersConfiguration
     {
         private const string QueryTimeoutFormat = @"hh\:mm\:ss";
 
         [CodeGenMember("QueryTimeout")]
         private string _queryTimeout;
-
-        internal IDictionary<string, object> AdditionalProperties { get; }
 
         /// <summary>
         /// Increases the timeout beyond the 5-minute default for Azure SQL database data sources.
@@ -86,42 +83,5 @@ namespace Azure.Search.Documents.Indexes.Models
             // Unknown type requires further investigation rather than potential data loss:
             object obj => throw new InvalidCastException($"Unable to cast object of type '{obj.GetType()}' to type {typeof(T)}'.")
         };
-
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public ICollection<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="ICollection{T}.Count"/>
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
-        /// <inheritdoc />
-        public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc cref="ICollection{T}.Add"/>
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc cref="ICollection{T}.Remove"/>
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc cref="ICollection{T}.Contains"/>
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc cref="ICollection{T}.Clear"/>
-        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-            set => AdditionalProperties[key] = value;
-        }
     }
 }

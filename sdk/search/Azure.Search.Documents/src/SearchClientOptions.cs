@@ -27,21 +27,17 @@ namespace Azure.Search.Documents
         {
             #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2020_06_30 version of the Azure Cognitive Search service.
+            /// The 2020_06_30 version of the Azure Cognitive Search
+            /// service.
             /// </summary>
             V2020_06_30 = 1,
-
-            /// <summary>
-            /// The 2021_04_30_Preview version of the Azure Cognitive Search service.
-            /// </summary>
-            V2021_04_30_Preview = 2,
             #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_04_30_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2020_06_30;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -65,12 +61,6 @@ namespace Azure.Search.Documents
         /// will be used if no value is provided.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
-        /// </summary>
-        /// <value>If <c>null</c>, <see cref="SearchAudience.AzurePublicCloud" /> will be assumed.</value>
-        public SearchAudience? Audience { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
@@ -117,25 +107,6 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Create an <see cref="HttpPipeline"/> to send requests to the Search service.
-        /// </summary>
-        /// <param name="credential">
-        /// The <see cref="TokenCredential"/> to authenticate requests.
-        /// </param>
-        /// <returns>An <see cref="HttpPipeline"/> to send requests.</returns>
-        internal HttpPipeline Build(TokenCredential credential)
-        {
-            Debug.Assert(credential != null);
-            var authorizationScope = $"{(string.IsNullOrEmpty(Audience?.ToString()) ? SearchAudience.AzurePublicCloud : Audience)}/.default";
-
-            return HttpPipelineBuilder.Build(
-                options: this,
-                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) },
-                perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
-                responseClassifier: null);
-        }
-
-        /// <summary>
         /// Add the allow list headers to the <see cref="DiagnosticsOptions"/>
         /// that are considered safe for logging/exceptions by default.
         /// </summary>
@@ -168,6 +139,7 @@ namespace Azure.Search.Documents
         /// </summary>
         private void AddLoggingQueryParameters()
         {
+            Diagnostics.LoggedQueryParameters.Add("api-version");
             Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
         }
     }
@@ -194,12 +166,11 @@ namespace Azure.Search.Documents
             version switch
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => version,
-                SearchClientOptions.ServiceVersion.V2021_04_30_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
         /// <summary>
-        /// Get a version string, like "2020-06-30", corresponding to a given
+        /// Get a version string, like "2019-05-06", corresponding to a given
         /// <see cref="SearchClientOptions.ServiceVersion"/> value.
         /// </summary>
         /// <param name="version">
@@ -217,7 +188,6 @@ namespace Azure.Search.Documents
             version switch
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => "2020-06-30",
-                SearchClientOptions.ServiceVersion.V2021_04_30_Preview => "2021-04-30-Preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 

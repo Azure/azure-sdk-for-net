@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysisSkillLanguage"/>. </summary>
+        /// <summary> Determines if two <see cref="ImageAnalysisSkillLanguage"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImageAnalysisSkillLanguage(string value)
         {

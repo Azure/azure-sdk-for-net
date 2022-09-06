@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all character filters supported by Azure Cognitive Search. </summary>
-    public readonly partial struct CharFilterName : IEquatable<CharFilterName>
+    internal readonly partial struct CharFilterName : IEquatable<CharFilterName>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CharFilterName"/>. </summary>
+        /// <summary> Determines if two <see cref="CharFilterName"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CharFilterName(string value)
         {

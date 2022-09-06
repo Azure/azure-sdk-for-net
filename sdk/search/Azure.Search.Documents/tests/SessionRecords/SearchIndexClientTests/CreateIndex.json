@@ -1,21 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://shreja-search-service.search.windows.net/indexes?api-version=2021-04-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Connection": "keep-alive",
-        "Content-Length": "4339",
+        "Content-Length": "4314",
         "Content-Type": "application/json",
-        "traceparent": "00-2ab325afed436a458076e320b52dd125-2c9fa45962019d44-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220707.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "9e1e9b1bf3c692631e8fb89f10c18a1e",
+        "traceparent": "00-cbd31bf3cb23294db0aa909df1cc319a-5961b5fb6f05ae4b-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "5cad1ef4d125aded2bffeebfd431dec8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "nkohwsor",
+        "name": "wvhobppu",
         "fields": [
           {
             "name": "hotelId",
@@ -161,8 +163,7 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": true,
-                "facetable": true,
-                "normalizer": "lowercase"
+                "facetable": true
               },
               {
                 "name": "stateProvince",
@@ -325,25 +326,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "9e1e9b1b-f3c6-9263-1e8f-b89f10c18a1e",
-        "Content-Length": "7156",
+        "client-request-id": "5cad1ef4-d125-aded-2bff-eebfd431dec8",
+        "Content-Length": "6655",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 07 Jul 2022 19:16:25 GMT",
-        "elapsed-time": "760",
-        "ETag": "W/\u00220x8DA604D3062171D\u0022",
+        "Date": "Sat, 27 Mar 2021 18:43:16 GMT",
+        "elapsed-time": "655",
+        "ETag": "W/\u00220x8D8F1502F5F0635\u0022",
         "Expires": "-1",
-        "Location": "https://shreja-search-service.search.windows.net/indexes(\u0027nkohwsor\u0027)?api-version=2021-04-30-Preview",
+        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027wvhobppu\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "9e1e9b1b-f3c6-9263-1e8f-b89f10c18a1e",
+        "request-id": "5cad1ef4-d125-aded-2bff-eebfd431dec8",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "9e1e9b1b-f3c6-9263-1e8f-b89f10c18a1e"
+        "x-ms-client-request-id": "5cad1ef4-d125-aded-2bff-eebfd431dec8"
       },
       "ResponseBody": {
-        "@odata.context": "https://shreja-search-service.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8DA604D3062171D\u0022",
-        "name": "nkohwsor",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D8F1502F5F0635\u0022",
+        "name": "wvhobppu",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -358,7 +359,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -373,7 +373,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -388,7 +387,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -403,7 +401,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "fr.lucene",
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -418,7 +415,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -433,7 +429,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -448,7 +443,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -463,7 +457,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -478,7 +471,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -493,7 +485,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -508,7 +499,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -523,7 +513,6 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
-            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -542,7 +531,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -557,7 +545,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": "lowercase",
                 "synonymMaps": []
               },
               {
@@ -572,7 +559,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -587,7 +573,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -602,7 +587,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               }
             ]
@@ -623,7 +607,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": "en.lucene",
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -638,7 +621,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": "fr.lucene",
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -653,7 +635,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -668,7 +649,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -683,7 +663,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -698,7 +677,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -713,7 +691,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -728,7 +705,6 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
                 "synonymMaps": []
               }
             ]
@@ -781,7 +757,6 @@
           }
         ],
         "analyzers": [],
-        "normalizers": [],
         "tokenizers": [],
         "tokenFilters": [],
         "charFilters": [],
@@ -790,43 +765,44 @@
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
           "k1": null,
           "b": null
-        },
-        "semantic": null
+        }
       }
     },
     {
-      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027nkohwsor\u0027)?api-version=2021-04-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027wvhobppu\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-9bb681b376aa1942bfdc3430df02e597-2cbf617fd31e4246-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220707.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "bf1d0fff7bf38a5e04967f35bfe7cf98",
+        "traceparent": "00-192503ecd2479e42ae629393a4e8dd90-13c4ad76a7d68340-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "d6e52008fe3a95c5a76f10680172906f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "bf1d0fff-7bf3-8a5e-0496-7f35bfe7cf98",
-        "Date": "Thu, 07 Jul 2022 19:16:27 GMT",
-        "elapsed-time": "213",
+        "client-request-id": "d6e52008-fe3a-95c5-a76f-10680172906f",
+        "Date": "Sat, 27 Mar 2021 18:43:16 GMT",
+        "elapsed-time": "231",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "bf1d0fff-7bf3-8a5e-0496-7f35bfe7cf98",
+        "request-id": "d6e52008-fe3a-95c5-a76f-10680172906f",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "bf1d0fff-7bf3-8a5e-0496-7f35bfe7cf98"
+        "x-ms-client-request-id": "d6e52008-fe3a-95c5-a76f-10680172906f"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "28678564",
-    "SearchIndexName": "nkohwsor",
+    "RandomSeed": "96077012",
+    "SearchIndexName": "wvhobppu",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "shreja-search-service"
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

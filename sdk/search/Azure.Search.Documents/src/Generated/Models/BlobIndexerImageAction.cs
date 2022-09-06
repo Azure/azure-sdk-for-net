@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="BlobIndexerImageAction"/>. </summary>
+        /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobIndexerImageAction(string value)
         {

@@ -53,14 +53,6 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
-        /// <summary> The answers query results for the search operation;
-        /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
-        public IList<AnswerResult> Answers { get; internal set; }
-
-        /// <summary> The captions query results for the search operation;
-        /// <c>null</c> if the <see cref="SearchOptions.QueryCaption"/> parameter was not specified or set to <see cref="QueryCaptionType.None"/>. </summary>
-        public IList<CaptionResult> Captions { get; internal set; }
-
         /// <summary>
         /// Gets the first (server side) page of search result values.
         /// </summary>
@@ -237,24 +229,6 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchNextPageKeyJson.EncodedUtf8Bytes))
                 {
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
-                }
-                else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    results.Answers = new List<AnswerResult>();
-                    foreach (JsonElement answerValue in prop.Value.EnumerateArray())
-                    {
-                        results.Answers.Add(AnswerResult.DeserializeAnswerResult(answerValue));
-                    }
-                }
-                else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    results.Captions = new List<CaptionResult>();
-                    foreach (JsonElement captionValue in prop.Value.EnumerateArray())
-                    {
-                        results.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
-                    }
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {

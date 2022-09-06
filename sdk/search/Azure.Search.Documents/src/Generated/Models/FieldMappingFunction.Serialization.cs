@@ -20,21 +20,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                if (Parameters != null)
+                writer.WritePropertyName("parameters");
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
                 {
-                    writer.WritePropertyName("parameters");
-                    writer.WriteStartObject();
-                    foreach (var item in Parameters)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("parameters");
-                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
@@ -54,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        parameters = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();

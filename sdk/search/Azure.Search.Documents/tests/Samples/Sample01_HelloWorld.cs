@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
@@ -208,7 +206,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     synonyms = new SynonymMap(synonymMapName, file);
                 }
 #else
-                synonyms = new SynonymMap(synonymMapName, HelloWorldData.CountriesSolrSynonymMap);
+                synonyms = new SynonymMap(synonymMapName, CountriesSolrSynonymMap);
 #endif
 
                 await indexClient.CreateSynonymMapAsync(synonyms);
@@ -277,26 +275,6 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Make sure our data source gets deleted, which is not deleted when our
                 // index is deleted when our SearchResources goes out of scope.
                 cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName));
-
-#if SNIPPET
-                #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
-                // Create SearchIndexerClient options
-                SearchClientOptions options = new SearchClientOptions()
-                {
-                    Transport = new HttpClientTransport(new HttpClient()
-                    {
-                        // Increase timeout for each request to 5 minutes
-                        Timeout = TimeSpan.FromMinutes(5)
-                    })
-                };
-
-                // Increase retry attempts to 6
-                options.Retry.MaxRetries = 6;
-
-                // Create a new SearchIndexerClient with options
-                indexerClient = new SearchIndexerClient(endpoint, credential, options);
-                #endregion Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
-#endif
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Skillset
                 // Translate English descriptions to French.
@@ -427,9 +405,8 @@ namespace Azure.Search.Documents.Tests.Samples
                     Console.WriteLine($"  Description (French):  {hotel.DescriptionFr}");
                 }
                 #endregion Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Query
-#if !SNIPPET
+
                 Assert.IsTrue(found, "Expected hotel #6 not found in search results");
-#endif
             }
             finally
             {

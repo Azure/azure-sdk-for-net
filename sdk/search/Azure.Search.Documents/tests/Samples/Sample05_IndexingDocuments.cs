@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [LiveOnly]
+        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         public async Task SimpleIndexing()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -157,7 +157,6 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [LiveOnly]
         public async Task BufferedSender()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -168,25 +167,22 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Simple
                 {
-                    searchClient = GetOriginal(searchClient);
-
                     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender1
                     await using SearchIndexingBufferedSender<Product> indexer =
                         new SearchIndexingBufferedSender<Product>(searchClient);
                     await indexer.UploadDocumentsAsync(GenerateCatalog(count: 100000));
                     #endregion
-#if SNIPPET
-                    #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender2
-                    await indexer.FlushAsync();
-                    Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
-                    #endregion
-#endif
                 }
 
                 await WaitForDocumentCountAsync(searchClient, 100000);
 
                 // Check
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender2
+#if SNIPPET
+                await indexer.FlushAsync();
+#endif
                 Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
+                #endregion
             }
             finally
             {

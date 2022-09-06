@@ -13,7 +13,6 @@ using NUnit.Framework;
 using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
-using Azure.Core.GeoJson;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 
 namespace Azure.Search.Documents.Tests.Samples
@@ -58,14 +57,14 @@ namespace Azure.Search.Documents.Tests.Samples
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
+            string indexName = resources.IndexName;
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Client
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
+#if SNIPPET
             string indexName = "hotels";
-#if !SNIPPET
-            indexName = resources.IndexName;
 #endif
 
             // Create a client
@@ -92,6 +91,12 @@ namespace Azure.Search.Documents.Tests.Samples
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
+            #region Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
+#if SNIPPET
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
+#else
+            response = client.Search<SearchDocument>("luxury");
+#endif
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 dynamic doc = result.Document;
@@ -99,6 +104,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 string name = doc.hotelName;
                 Console.WriteLine("{id}: {name}");
             }
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
         }
 
         #region Snippet:Azure_Search_Tests_Samples_Readme_StaticType
@@ -119,50 +125,6 @@ namespace Azure.Search.Documents.Tests.Samples
 #endif
             [SearchableField(IsFilterable = true, IsSortable = true)]
             public string Name { get; set; }
-
-#if !SNIPPET
-            [JsonPropertyName("geoLocation")]
-#endif
-            [SimpleField(IsFilterable = true, IsSortable = true)]
-            public GeoPoint GeoLocation { get; set; }
-
-#if !SNIPPET
-            [JsonPropertyName("address")]
-#endif
-            // Complex fields are included automatically in an index if not ignored.
-            public HotelAddress Address { get; set; }
-        }
-
-        public class HotelAddress
-        {
-#if !SNIPPET
-            [JsonPropertyName("streetAddress")]
-#endif
-            public string StreetAddress { get; set; }
-
-#if !SNIPPET
-            [JsonPropertyName("city")]
-#endif
-            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
-            public string City { get; set; }
-
-#if !SNIPPET
-            [JsonPropertyName("stateProvince")]
-#endif
-            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
-            public string StateProvince { get; set; }
-
-#if !SNIPPET
-            [JsonPropertyName("country")]
-#endif
-            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
-            public string Country { get; set; }
-
-#if !SNIPPET
-            [JsonPropertyName("postalCode")]
-#endif
-            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
-            public string PostalCode { get; set; }
         }
         #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticType
 
@@ -183,8 +145,12 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticQuery
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
-            SearchResults<Hotel> searchResponse = await client.SearchAsync<Hotel>("luxury");
-            await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
+#if SNIPPET
+            SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
+#else
+            response = await client.SearchAsync<Hotel>("luxury");
+#endif
+            await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
                 Hotel doc = result.Document;
                 Console.WriteLine($"{doc.Id}: {doc.Name}");

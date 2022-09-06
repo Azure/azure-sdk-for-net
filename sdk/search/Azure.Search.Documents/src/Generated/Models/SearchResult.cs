@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains a document found by a search query, plus associated metadata. </summary>
-    internal partial class SearchResult
+    internal partial class SearchResult : IReadOnlyDictionary<string, object>
     {
         /// <summary> Initializes a new instance of SearchResult. </summary>
         /// <param name="score"> The relevance score of the document compared to other documents returned by the query. </param>
@@ -19,34 +20,43 @@ namespace Azure.Search.Documents.Models
         {
             Score = score;
             Highlights = new ChangeTrackingDictionary<string, IList<string>>();
-            Captions = new ChangeTrackingList<CaptionResult>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SearchResult. </summary>
         /// <param name="score"> The relevance score of the document compared to other documents returned by the query. </param>
-        /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. Search results are sorted by the RerankerScore first and then by the Score. RerankerScore is only returned for queries of type &apos;semantic&apos;. </param>
         /// <param name="highlights"> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </param>
-        /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type &apos;semantic&apos;. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SearchResult(double score, double? rerankerScore, IReadOnlyDictionary<string, IList<string>> highlights, IReadOnlyList<CaptionResult> captions, IReadOnlyDictionary<string, object> additionalProperties)
+        /// <param name="additionalProperties"> . </param>
+        internal SearchResult(double score, IReadOnlyDictionary<string, IList<string>> highlights, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Score = score;
-            RerankerScore = rerankerScore;
             Highlights = highlights;
-            Captions = captions;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The relevance score of the document compared to other documents returned by the query. </summary>
         public double Score { get; }
-        /// <summary> The relevance score computed by the semantic ranker for the top search results. Search results are sorted by the RerankerScore first and then by the Score. RerankerScore is only returned for queries of type &apos;semantic&apos;. </summary>
-        public double? RerankerScore { get; }
         /// <summary> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </summary>
         public IReadOnlyDictionary<string, IList<string>> Highlights { get; }
-        /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type &apos;semantic&apos;. </summary>
-        public IReadOnlyList<CaptionResult> Captions { get; }
-        /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        /// <inheritdoc />
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
+        /// <inheritdoc />
+        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
+        /// <inheritdoc />
+        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
+        /// <inheritdoc />
+        public IEnumerable<string> Keys => AdditionalProperties.Keys;
+        /// <inheritdoc />
+        public IEnumerable<object> Values => AdditionalProperties.Values;
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
+        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
+        /// <inheritdoc />
+        public object this[string key]
+        {
+            get => AdditionalProperties[key];
+        }
     }
 }

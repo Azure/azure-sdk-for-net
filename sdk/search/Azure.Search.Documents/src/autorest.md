@@ -1,19 +1,20 @@
 # Azure.Search.Documents Code Generation
 
-Run `dotnet build /t:GenerateCode` in the `src` directory to generate SDK code.
-
-See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blob/fe0bf0e7e84a406ec2102c194ea05ccd5011a141/sdk/search/CONTRIBUTING.md) for more details.
+Run `/sdk/search/generate.ps1` to generate code.
 
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
 ## Swagger Source(s)
+AutoRest doesn't play nicely with multiple remote swagger files.  It will
+however merge two local swagger files together automagically.  At some point,
+we should merge the Service and Index swagger files together but for now we
+copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
-generation1-convenience-client: true
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d95c18e2d5fc678a1453c454d746fdce22d30122/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d95c18e2d5fc678a1453c454d746fdce22d30122/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
 ```
 
 ## Release hacks
@@ -50,7 +51,7 @@ directive:
     }
 ```
 
-### Make Lookup Document behave a little friendlier
+### Make Loookup Document behave a little friendlier
 It's currently an empty object and adding Additional Properties will generate
 a more useful model.
 ``` yaml
@@ -197,7 +198,6 @@ directive:
   where: $.definitions.IndexerExecutionResult
   transform: >
     $.properties.endTime["x-nullable"] = true;
-    $.properties.statusDetail["x-nullable"] = true;
 ```
 
 ``` yaml
@@ -298,7 +298,6 @@ directive:
           required: true,
           type: "string",
           enum: [ accept ],
-          "x-ms-enum": { "modelAsString": false },
           "x-ms-parameter-location": "method"
         });
       }
@@ -330,18 +329,4 @@ directive:
   from: swagger-document
   where: $.parameters.ClientRequestIdParameter
   transform: $["x-ms-parameter-location"] = "client";
-```
-
-## Seal single value enums
-
-Prevents the creation of single-value extensible enum in generated code. The following single-value enum will be generated as string constant.
-
-```yaml
-directive:
-  from: swagger-document
-  where: $.parameters.PreferHeaderParameter
-  transform: >
-    $["x-ms-enum"] = {
-      "modelAsString": false
-    }
 ```

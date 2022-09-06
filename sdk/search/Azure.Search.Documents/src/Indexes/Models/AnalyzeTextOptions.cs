@@ -16,8 +16,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="text">Required text to break into tokens.</param>
         /// <param name="analyzerName">The name of the analyzer to use to break the given <paramref name="text"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
-        public AnalyzeTextOptions(string text, LexicalAnalyzerName analyzerName) : this(text)
-            => AnalyzerName = analyzerName;
+        public AnalyzeTextOptions(string text, LexicalAnalyzerName analyzerName)
+        {
+            Text = text ?? throw new ArgumentNullException(nameof(text));
+            AnalyzerName = analyzerName;
+
+            TokenFilters = new ChangeTrackingList<TokenFilterName>();
+            CharFilters = new ChangeTrackingList<string>();
+        }
 
         /// <summary>
         /// Initializes a new instance of AnalyzeRequest.
@@ -25,34 +31,27 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="text">Required text to break into tokens.</param>
         /// <param name="tokenizerName">The name of the tokenizer to use to break the given <paramref name="text"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
-        public AnalyzeTextOptions(string text, LexicalTokenizerName tokenizerName) : this(text)
-            => TokenizerName = tokenizerName;
+        public AnalyzeTextOptions(string text, LexicalTokenizerName tokenizerName)
+        {
+            Text = text ?? throw new ArgumentNullException(nameof(text));
+            TokenizerName = tokenizerName;
 
-        /// <summary>
-        /// Initializes a new instance of AnalyzeRequest.
-        /// </summary>
-        /// <param name="text">Required text to break into tokens.</param>
-        /// <param name="normalizerName">The name of the tokenizer to use to break the given <paramref name="text"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
-        public AnalyzeTextOptions(string text, LexicalNormalizerName normalizerName) : this(text)
-            => NormalizerName = normalizerName;
+            TokenFilters = new ChangeTrackingList<TokenFilterName>();
+            CharFilters = new ChangeTrackingList<string>();
+        }
 
-        /// <summary> The name of the analyzer to use to break the given text. </summary>
+        /// <summary> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
         [CodeGenMember("Analyzer")]
         public LexicalAnalyzerName? AnalyzerName { get; }
 
-        /// <summary> The name of the tokenizer to use to break the given text. </summary>
+        /// <summary> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
         [CodeGenMember("Tokenizer")]
         public LexicalTokenizerName? TokenizerName { get; }
 
-        /// <summary> The name of the normalizer to use to normalize the given text. </summary>
-        [CodeGenMember("Normalizer")]
-        public LexicalNormalizerName? NormalizerName { get; }
-
-        /// <summary> An optional list of token filters to use when breaking the given text. </summary>
+        /// <summary> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
         public IList<TokenFilterName> TokenFilters { get; }
 
-        /// <summary> An optional list of character filters to use when breaking the given text. </summary>
+        /// <summary> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
         public IList<string> CharFilters { get; }
     }
 }
