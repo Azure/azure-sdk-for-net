@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
@@ -81,6 +82,26 @@ namespace Azure.Search.Documents.Models
             string initialTrackingState,
             string finalTrackingState) =>
             new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+
+        /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
+        /// <param name="status"> The outcome of this indexer execution. </param>
+        /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
+        /// <param name="startTime"> The start time of this indexer execution. </param>
+        /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>
+        /// <param name="errors"> The item-level indexing errors. </param>
+        /// <param name="warnings"> The item-level indexing warnings. </param>
+        /// <param name="itemCount"> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </param>
+        /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
+        /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
+        /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexerExecutionResult"/> instance for mocking. </returns>
+        private static IndexerExecutionResult IndexerExecutionResult(IndexerExecutionStatus status = default, string errorMessage = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, IEnumerable<SearchIndexerError> errors = null, IEnumerable<SearchIndexerWarning> warnings = null, int itemCount = default, int failedItemCount = default, string initialTrackingState = null, string finalTrackingState = null)
+        {
+            errors ??= new List<SearchIndexerError>();
+            warnings ??= new List<SearchIndexerWarning>();
+
+            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+        }
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
@@ -166,6 +187,19 @@ namespace Azure.Search.Documents.Models
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
             new SearchIndexerStatus(status, lastResult, executionHistory, limits);
+
+        /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
+        /// <param name="status"> Overall indexer status. </param>
+        /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
+        /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
+        /// <param name="limits"> The execution limits for the indexer. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
+        private static SearchIndexerStatus SearchIndexerStatus(IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null)
+        {
+            executionHistory ??= new List<IndexerExecutionResult>();
+
+            return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits);
+        }
 
         /// <summary> Initializes a new instance of SearchIndexerWarning. </summary>
         /// <param name="key"> The key of the item which generated a warning. </param>
@@ -281,6 +315,17 @@ namespace Azure.Search.Documents.Models
             double? coverage,
             IReadOnlyList<AutocompleteItem> results) =>
             new AutocompleteResults(coverage, results);
+
+        /// <summary> Initializes a new instance of AutocompleteResults. </summary>
+        /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
+        /// <param name="results"> The list of returned Autocompleted items. </param>
+        /// <returns> A new <see cref="Models.AutocompleteResults"/> instance for mocking. </returns>
+        private static AutocompleteResults AutocompleteResults(double? coverage = null, IEnumerable<AutocompleteItem> results = null)
+        {
+            results ??= new List<AutocompleteItem>();
+
+            return new AutocompleteResults(coverage, results?.ToList());
+        }
 
         /// <summary> Initializes a new instance of AutocompleteItem. </summary>
         /// <param name="text"> The completed term. </param>
