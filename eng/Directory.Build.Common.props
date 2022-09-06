@@ -106,16 +106,16 @@
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.1;net5.0</RequiredTargetFrameworks>
-    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp2.1 (the "primary"). -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp2.1;net5.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp3.1 (the "primary"). -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.1;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
-    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp2.1 (the "primary"). -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp2.1;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp3.1 (the "primary"). -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
