@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval. </summary>
-    public partial class FacetResult : IReadOnlyDictionary<string, object>
+    public partial class FacetResult
     {
         /// <summary> Initializes a new instance of FacetResult. </summary>
         internal FacetResult()
@@ -22,7 +21,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Count = count;
@@ -31,25 +30,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The approximate count of documents falling within the bucket described by this facet. </summary>
         public long? Count { get; }
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public IEnumerable<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-        }
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

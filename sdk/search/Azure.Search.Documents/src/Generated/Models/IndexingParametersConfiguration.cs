@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-    public partial class IndexingParametersConfiguration : IDictionary<string, object>
+    public partial class IndexingParametersConfiguration
     {
         /// <summary> Initializes a new instance of IndexingParametersConfiguration. </summary>
         public IndexingParametersConfiguration()
@@ -36,9 +35,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="allowSkillsetToReadFileData"> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source.  This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </param>
         /// <param name="pdfTextRotationAlgorithm"> Determines algorithm for text extraction from PDF files in Azure blob storage. </param>
         /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
-        /// <param name="QueryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string QueryTimeout, IDictionary<string, object> additionalProperties)
+        /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format &quot;hh:mm:ss&quot;. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, object> additionalProperties)
         {
             ParsingMode = parsingMode;
             ExcludedFileNameExtensions = excludedFileNameExtensions;
@@ -55,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
             AllowSkillsetToReadFileData = allowSkillsetToReadFileData;
             PdfTextRotationAlgorithm = pdfTextRotationAlgorithm;
             ExecutionEnvironment = executionEnvironment;
-            _queryTimeout = QueryTimeout;
+            _queryTimeout = queryTimeout;
             AdditionalProperties = additionalProperties;
         }
 
@@ -89,42 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public BlobIndexerPdfTextRotationAlgorithm? PdfTextRotationAlgorithm { get; set; }
         /// <summary> Specifies the environment in which the indexer should execute. </summary>
         public IndexerExecutionEnvironment? ExecutionEnvironment { get; set; }
-        internal IDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public ICollection<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="ICollection{T}.Count"/>
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
-        /// <inheritdoc />
-        public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc cref="ICollection{T}.Add"/>
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc cref="ICollection{T}.Remove"/>
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc cref="ICollection{T}.Contains"/>
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc cref="ICollection{T}.Clear"/>
-        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-            set => AdditionalProperties[key] = value;
-        }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }
