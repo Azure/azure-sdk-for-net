@@ -72,6 +72,7 @@ namespace Azure.Storage.Queues
     {
         public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_10_04) { }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
+        public Azure.Storage.GeoRedundantReadMode GeoRedundantReadMode { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }

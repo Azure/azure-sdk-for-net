@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of DatastoreList. </summary>
         internal DatastoreList()
         {
-            Value = new ChangeTrackingList<DatastoreData>();
+            Value = new ChangeTrackingList<AvsPrivateCloudDatastoreData>();
         }
 
         /// <summary> Initializes a new instance of DatastoreList. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal DatastoreList(IReadOnlyList<DatastoreData> value, string nextLink)
+        internal DatastoreList(IReadOnlyList<AvsPrivateCloudDatastoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on a page. </summary>
-        public IReadOnlyList<DatastoreData> Value { get; }
+        public IReadOnlyList<AvsPrivateCloudDatastoreData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

@@ -28,30 +28,6 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleAssignmentScheduleRequests();
         }
 
-        //[PlaybackOnly("This is a time senstive case")]
-        [Ignore("The Role assignment does not exist")]
-        [Test]
-        public async Task Create()
-        {
-            var collection = await GetRoleAssignmentScheduleRequestCollectionAsync();
-            var name = "fea7a502-9a96-4806-a26f-eee560e52045";
-            var data = new RoleAssignmentScheduleRequestData()
-            {
-                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
-                RoleDefinitionId = Definition.Id,
-                RequestType = RoleManagementScheduleRequestType.SelfActivate,
-                LinkedRoleEligibilityScheduleId = new Guid("b1477448-2cc6-4ceb-93b4-54a202a89413"),
-                StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),
-                ExpirationType = RoleManagementScheduleExpirationType.AfterDuration,
-                EndOn = null,
-                Duration = TypeFormatters.ParseTimeSpan("PT8H", "P"),
-                Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'",
-                ConditionVersion = "1.0"
-            };
-            var roleAssignmentScheduleRequest = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            Assert.AreEqual(roleAssignmentScheduleRequest.Value.Data.Name, name);
-        }
-
         [Test]
         public async Task Get()
         {

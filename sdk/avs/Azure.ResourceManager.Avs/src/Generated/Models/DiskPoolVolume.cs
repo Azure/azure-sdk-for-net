@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <param name="mountOption"> Mode that describes whether the LUN has to be mounted as a datastore or attached as a LUN. </param>
         /// <param name="path"> Device path. </param>
-        internal DiskPoolVolume(string targetId, string lunName, MountOptionEnum? mountOption, string path)
+        internal DiskPoolVolume(string targetId, string lunName, LunMountMode? mountOption, string path)
         {
             TargetId = targetId;
             LunName = lunName;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Name of the LUN to be used for datastore. </summary>
         public string LunName { get; set; }
         /// <summary> Mode that describes whether the LUN has to be mounted as a datastore or attached as a LUN. </summary>
-        public MountOptionEnum? MountOption { get; set; }
+        public LunMountMode? MountOption { get; set; }
         /// <summary> Device path. </summary>
         public string Path { get; }
     }
