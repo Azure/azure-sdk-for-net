@@ -48,6 +48,7 @@ jobs:
           PackageName: "Azure.Template"
           ServiceDirectory: "template"
           TestPipeline: ${{ parameters.TestPipeline }}
+      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
