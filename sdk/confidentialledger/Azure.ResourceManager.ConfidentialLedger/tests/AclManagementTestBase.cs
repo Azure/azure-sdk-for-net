@@ -10,7 +10,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using System.Threading.Tasks;
 using Azure.Identity;
-using Newtonsoft.Json;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests
 {

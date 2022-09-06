@@ -10,6 +10,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
     {
         public const string TestSubscriptionId = "027da7f8-2fc6-46d4-9be9-560706b60fec";
         public const string TestResourceGroup = "sdk-test-rg";
-        public const string TestLedgerName = "dotnet-sdk-test-ledger2";
+        public const string TestLedgerName = "dotnet-sdk-test-ledger";
     }
 }

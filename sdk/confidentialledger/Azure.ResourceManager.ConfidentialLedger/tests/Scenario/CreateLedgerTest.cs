@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         private const string LedgerName = AclManagementTestEnvironment.TestLedgerName;
         private ConfidentialLedgerResource _ledgerResource;
 
-        public CreateLedgerTest() : base(true, RecordedTestMode.Record)
+        public CreateLedgerTest() : base(true)
         {
         }
 
@@ -31,14 +32,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             }
 
             // Create the ledger
-            //await CreateLedger(LedgerName, AzureLocation.WestEurope);
+            await CreateLedger(LedgerName, AzureLocation.WestEurope);
 
             timer.Stop();
             TimeSpan timeTaken = timer.Elapsed;
-            TestContext.WriteLine("Time taken By Initializer: {0}", timeTaken.Milliseconds.ToString());
+            TestContext.WriteLine("Time taken By Initializer: {0} second {1} millisecond",
+                timeTaken.Milliseconds.ToString(), timeTaken.Milliseconds.ToString());
         }
 
-        [RecordedTest]
+        [Test]
         public async Task TestCreateLedger()
         {
             var timer = new Stopwatch();
@@ -51,7 +53,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
             timer.Stop();
             TimeSpan timeTaken = timer.Elapsed;
-            TestContext.WriteLine("Time taken By Test: {0}", timeTaken.Seconds.ToString());
+            TestContext.WriteLine("Time taken By Test: {0} second {1} millisecond",
+                timeTaken.Milliseconds.ToString(), timeTaken.Milliseconds.ToString());
         }
     }
 }
