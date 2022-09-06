@@ -32,7 +32,7 @@ namespace Azure.Template
             writer.WriteEndObject();
         }
 
-        internal static EvolvingModel DeserializeEvolvingModel(JsonElement element, MultiVersionClientOptions.ServiceVersion targetVersion)
+        internal static EvolvingModel DeserializeEvolvingModel(JsonElement element)
         {
             int requiredInt = default;
             string requiredString = default;
@@ -81,7 +81,7 @@ namespace Azure.Template
                     continue;
                 }
             }
-            return new EvolvingModel(targetVersion, requiredInt, requiredString, Optional.ToNullable(optionalInt), optionalString.Value, requiredOutputInt, requiredOutputString);
+            return new EvolvingModel(requiredInt, requiredString, Optional.ToNullable(optionalInt), optionalString.Value, requiredOutputInt, requiredOutputString);
         }
 
         internal RequestContent ToRequestContent()
@@ -91,10 +91,10 @@ namespace Azure.Template
             return content;
         }
 
-        internal static EvolvingModel FromResponse(Response response, MultiVersionClientOptions.ServiceVersion targetVersion)
+        internal static EvolvingModel FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEvolvingModel(document.RootElement, targetVersion);
+            return DeserializeEvolvingModel(document.RootElement);
         }
     }
 }

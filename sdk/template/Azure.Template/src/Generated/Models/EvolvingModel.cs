@@ -35,10 +35,8 @@ namespace Azure.Template
         /// <param name="optionalString"> Optional reference type property.  Property added in service API version 2022-02-02. </param>
         /// <param name="requiredOutputInt"></param>
         /// <param name="requiredOutputString"></param>
-        internal EvolvingModel(MultiVersionClientOptions.ServiceVersion targetVersion, int requiredInt, string requiredString, int? optionalInt, string optionalString, int? requiredOutputInt, string requiredOutputString)
+        internal EvolvingModel(int requiredInt, string requiredString, int? optionalInt, string optionalString, int? requiredOutputInt, string requiredOutputString)
         {
-            _targetVersion = targetVersion;
-
             RequiredInt = requiredInt;
             RequiredString = requiredString;
             OptionalInt = optionalInt;
@@ -100,35 +98,34 @@ namespace Azure.Template
         /// <summary> Optional reference type property.  Property added in service API version 2022-02-02. </summary>
         public string OptionalString { get; set; }
 
-        private MultiVersionClientOptions.ServiceVersion _targetVersion;
-
         private int? _requiredOutputInt;
         /// <summary> Required output value type property.  Property added in service API version 2022-03-03.</summary>
         public int RequiredOutputInt
         {
-            get {
-
-                // We could say here, if it's null, it's not supported in this version.  However, there's a
-                // chance the service has a bug and this just isn't true.
-
-                // What would it take to check the target version here?
-
-                if (_targetVersion <= MultiVersionClientOptions.ServiceVersion.V2022_03_03)
+            get
+            {
+                if (!_requiredOutputInt.HasValue)
                 {
-                    throw new NotSupportedException();
-
-                    // TODO: would it make sense to put this in a core common class?
-                    // That would look more like Heath's property supported one ....
+                    throw new NotSupportedException($"{nameof(RequiredOutputInt)} added in service API version 2022-03-03.");
                 }
 
-                return _requiredOutputInt; }
+                return _requiredOutputInt.Value;
+            }
         }
 
         private string _requiredOutputString;
         /// <summary> Required output reference type property.  Property added in service API version 2022-03-03. </summary>
         public string RequiredOutputString
         {
-            get { return _requiredOutputString; }
+            get
+            {
+                if (_requiredOutputString == null)
+                {
+                    throw new NotSupportedException($"{nameof(RequiredOutputString)} added in service API version 2022-03-03.");
+                }
+
+                return _requiredOutputString;
+            }
         }
     }
 }
