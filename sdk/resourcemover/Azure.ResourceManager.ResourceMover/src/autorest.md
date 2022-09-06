@@ -69,8 +69,6 @@ rename-mapping:
   MoveCollectionProperties.sourceRegion: -|azure-location
   MoveCollectionProperties.targetRegion: -|azure-location
   MoveCollectionProperties: MoverResourceSetProperties
-  MoveCollectionProperties.sourceRegion: -|azure-location
-  MoveCollectionProperties.targetRegion: -|azure-location
   MoveResource: MoverResource
   MoveResourceCollection: MoverResourceList
   MoveResourceDependency: MoverResourceDependency
@@ -178,4 +176,6 @@ directive:
     where: $.paths..parameters[?(@.name === 'moveResourceName')]
     transform: >
       $['x-ms-client-name'] = 'moverResourceName';
+  - remove-operation: MoveCollections_Delete
+    reason: The azure-asyncoperation header will change when polling
 ```

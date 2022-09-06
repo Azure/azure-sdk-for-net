@@ -31,14 +31,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-            ArmClientOptions options = new ArmClientOptions()
-            {
-                Diagnostics =
-                {
-                    IsLoggingContentEnabled = true
-                }
-            };
-            Client = GetArmClient(options);
+            Client = GetArmClient();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName, AzureLocation location)

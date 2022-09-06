@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.ResourceMover
                 }
                 if (property.NameEquals("type"))
                 {
+                    // The returned type may be null.
                     if (property.Value.ValueKind != JsonValueKind.Null)
                     {
                         type = new ResourceType(property.Value.GetString());
