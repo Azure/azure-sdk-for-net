@@ -272,6 +272,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // thrown to the user.
                 throw;
             }
+            catch (OperationCanceledException opEx)
+                when (_isSessionReceiver && opEx is not TaskCanceledException)
+            {
+                // Do not log as this will be translated to a TimeoutException and logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync.
+                throw;
+            }
             catch (OperationCanceledException)
                 when (_isProcessor && cancellationToken.IsCancellationRequested)
             {

@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///// <summary>
         /////   The number of milliseconds to use as the basis for calculating a random jitter amount
         /////   when opening receiver links. This is intended to ensure that multiple
-        /////   accept session open operations don't timeout at the same exact moment.
+        /////   accept session operations don't timeout at the same exact moment.
         /////// </summary>
         private static int OpenReceiveLinkBaseJitterMilliseconds { get; } = 100;
 
