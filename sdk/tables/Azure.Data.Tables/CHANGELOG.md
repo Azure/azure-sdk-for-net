@@ -3,6 +3,7 @@
 ## 12.7.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added `TableClient.GetEntityIfNotExists` which will not throw or log an error to telemetry if the specified entity does not exist in the table.
 
 ### Breaking Changes
 
