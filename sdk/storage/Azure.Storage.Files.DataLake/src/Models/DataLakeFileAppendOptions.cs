@@ -19,9 +19,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Lease action.
         /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
+        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.  Only applicable if <see cref="Flush"/> is set to true.
         /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="LeaseId"/>.
+        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="LeaseId"/>.  Only applicable if <see cref="Flush"/> is set to true.
         /// </summary>
         public LeaseAction? LeaseAction { get; set; }
 

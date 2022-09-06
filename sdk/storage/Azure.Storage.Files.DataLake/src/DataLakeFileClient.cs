@@ -2225,9 +2225,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseAction">
         /// Lease action.
         /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
+        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
         /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
+        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
         /// </param>
         /// <param name="leaseDuration">
         /// Specifies the duration of the lease, in seconds, or specify

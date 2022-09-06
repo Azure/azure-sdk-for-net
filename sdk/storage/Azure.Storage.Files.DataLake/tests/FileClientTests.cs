@@ -2552,6 +2552,70 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
+        public async Task AppendDataAsync_Lease_Release()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateIfNotExistsAsync();
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            DataLakeLeaseClient leaseClient = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
+            Response<DataLakeLease> response = await leaseClient.AcquireAsync(duration);
+
+            byte[] data = GetRandomBuffer(Size);
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                LeaseId = leaseId,
+                LeaseAction = LeaseAction.Release,
+                Flush = true
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(stream, 0, options);
+
+            // Assert
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+            Assert.AreEqual(DataLakeLeaseStatus.Unlocked, propertiesResponse.Value.LeaseStatus);
+            Assert.AreEqual(DataLakeLeaseState.Available, propertiesResponse.Value.LeaseState);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
+        public async Task AppendDataAsync_Lease_AcquireRelease()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateIfNotExistsAsync();
+            byte[] data = GetRandomBuffer(Size);
+            string proposedLeaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                Flush = true,
+                LeaseAction = LeaseAction.AcquireRelease,
+                ProposedLeaseId = proposedLeaseId,
+                LeaseDuration = duration
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(stream, 0, options);
+
+            // Assert
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+            Assert.AreEqual(DataLakeLeaseStatus.Unlocked, propertiesResponse.Value.LeaseStatus);
+            Assert.AreEqual(DataLakeLeaseState.Available, propertiesResponse.Value.LeaseState);
+        }
+
+        [RecordedTest]
         public async Task AppendDataAsync_NullStream_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
