@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30)]
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
