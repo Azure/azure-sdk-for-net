@@ -211,6 +211,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // TODO: update to use perf improvements in .NET7.0
             foreach (var tag in activityEventTags)
             {
+                // TODO: see if these can be cached
                 if (tag.Key == SemanticConventions.AttributeExceptionType)
                 {
                     exceptionType = tag.Value.ToString();
