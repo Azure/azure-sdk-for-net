@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json.Schema;
-
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>Abstract class that handles payload strongly typed payloads conversions.</summary>

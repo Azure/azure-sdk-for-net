@@ -112,7 +112,7 @@
     -->
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.46.0-preview" />
 
-    <!-- TODO: Make sure this package is arch-board approved (These can be updated to latest version) -->
+    <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->

@@ -4,16 +4,12 @@
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {

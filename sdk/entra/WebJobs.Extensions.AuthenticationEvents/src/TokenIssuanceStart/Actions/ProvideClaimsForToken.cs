@@ -6,7 +6,6 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validato
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions
 {

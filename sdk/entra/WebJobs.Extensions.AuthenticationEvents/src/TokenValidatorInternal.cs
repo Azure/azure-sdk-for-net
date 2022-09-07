@@ -113,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return Convert.FromBase64String(base64);
         }
 
-        internal bool MustCacheRefresh()
+        internal static bool MustCacheRefresh()
         {
             if (_cacheKeys.Count == 0)
                 return true;

@@ -490,7 +490,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         private static object GetUnderlying(JsonElement value, string key)
         {
-
             switch (value.ValueKind)
             {
                 case JsonValueKind.False: return false;

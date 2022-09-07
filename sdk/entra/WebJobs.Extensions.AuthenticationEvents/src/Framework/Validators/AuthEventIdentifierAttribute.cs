@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
 
             if (value is string val)
             {
-                return EventIds.Contains(val.ToLower());
+                return EventIds.Contains(val.ToLower(CultureInfo.CurrentCulture));
             }
 
             return false;
