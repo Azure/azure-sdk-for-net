@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
         public PocoToTableEntityConverter()
         {
-            _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput), typeof(ITableEntity));
+            _info = PocoTypeBinder.Shared.GetBinderInfo(typeof(TInput));
             ValidateGetter("PartitionKey", PocoTypeBinder.PartitionKeyTypes);
             ValidateGetter("RowKey", PocoTypeBinder.RowKeyTypes);
             ValidateGetter("ETag", PocoTypeBinder.ETagTypes);
