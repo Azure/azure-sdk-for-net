@@ -37,6 +37,7 @@ namespace Azure.Identity
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
         private readonly string _tenantId;
+        private readonly string[] _additionallyAllowedTenantIds;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
@@ -65,6 +66,7 @@ namespace Azure.Identity
             _tenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -136,7 +138,7 @@ namespace Azure.Identity
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
 
             ScopeUtilities.ValidateScope(resource);
-            var tenantId = TenantIdResolver.Resolve(_tenantId, context, TenantIdResolver.AllTenants);
+            var tenantId = TenantIdResolver.Resolve(_tenantId, context, _additionallyAllowedTenantIds);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);

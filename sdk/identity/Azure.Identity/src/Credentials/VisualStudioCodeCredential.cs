@@ -25,6 +25,7 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
+        private readonly string[] _additionallyAllowedTenantIds;
         private const string _commonTenant = "common";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
         internal MsalPublicClient Client { get; }
@@ -43,11 +44,12 @@ namespace Azure.Identity
         internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
             IVisualStudioCodeAdapter vscAdapter)
         {
-            _tenantId = options?.TenantId ?? _commonTenant;
+            _tenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, options);
+            Client = client ?? new MsalPublicClient(_pipeline, _tenantId, ClientId, null, options);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <inheritdoc />
@@ -65,7 +67,8 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
-                var tenantId = TenantIdResolver.Resolve(tenant, requestContext, TenantIdResolver.AllTenants);
+
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds) ?? tenant;
 
                 if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
@@ -128,7 +131,7 @@ namespace Azure.Identity
         private void GetUserSettings(out string tenant, out string environmentName)
         {
             var path = _vscAdapter.GetUserSettingsPath();
-            tenant = _tenantId;
+            tenant = _tenantId ?? _commonTenant;
             environmentName = "AzureCloud";
 
             try

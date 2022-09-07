@@ -28,6 +28,7 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
+        private readonly string[] _additionallyAllowedTenantIds;
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
         private readonly bool _logPII;
@@ -54,6 +55,7 @@ namespace Azure.Identity
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <inheritdoc />
@@ -174,7 +176,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, TenantIdResolver.AllTenants);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);

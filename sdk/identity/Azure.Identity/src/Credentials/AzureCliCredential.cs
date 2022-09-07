@@ -49,6 +49,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
+        private readonly string[] _additionallyAllowedTenantIds;
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -73,6 +74,7 @@ namespace Azure.Identity
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
             _tenantId = options?.TenantId;
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
-            string tenantId = TenantIdResolver.Resolve(_tenantId, context, TenantIdResolver.AllTenants);
+            string tenantId = TenantIdResolver.Resolve(_tenantId, context, _additionallyAllowedTenantIds);
 
             ScopeUtilities.ValidateScope(resource);
 
