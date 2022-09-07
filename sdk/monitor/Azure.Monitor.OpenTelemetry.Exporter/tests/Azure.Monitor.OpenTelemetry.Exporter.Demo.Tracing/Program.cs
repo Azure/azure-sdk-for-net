@@ -15,18 +15,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
     public class Program
     {
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+        private static readonly ActivitySource source = new ActivitySource("MyCompany.MyProduct.MyLibrary");
+        private static readonly Meter MyMeter = new("MyCompany.MyProduct.MyLibrary", "1.0");
 
         public static void Main()
         {
             GenerateTraces();
             GenerateLogs();
             GenerateMetrics();
+            Dispose();
         }
 
         private static void GenerateTraces()
         {
-            ActivitySource source = new ActivitySource("MyCompany.MyProduct.MyLibrary");
-
             var resourceAttributes = new Dictionary<string, object> { { "service.name", "my-service" }, { "service.namespace", "my-namespace" }, { "service.instance.id", "my-instance" } };
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
@@ -68,13 +69,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
         private static void GenerateMetrics()
         {
-            Meter MyMeter = new("MyCompany.MyProduct.MyLibrary", "1.0");
             Counter<long> MyFruitCounter = MyMeter.CreateCounter<long>("MyFruitCounter");
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-           .AddMeter("MyCompany.MyProduct.MyLibrary")
-           .AddAzureMonitorMetricExporter(o => o.ConnectionString = ConnectionString)
-           .Build();
+                                         .AddMeter("MyCompany.MyProduct.MyLibrary")
+                                         .AddAzureMonitorMetricExporter(o => o.ConnectionString = ConnectionString)
+                                         .Build();
 
             MyFruitCounter.Add(1, new("name", "apple"), new("color", "red"));
             MyFruitCounter.Add(2, new("name", "lemon"), new("color", "yellow"));
@@ -82,6 +82,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             MyFruitCounter.Add(2, new("name", "apple"), new("color", "green"));
             MyFruitCounter.Add(5, new("name", "apple"), new("color", "red"));
             MyFruitCounter.Add(4, new("name", "lemon"), new("color", "yellow"));
+        }
+
+        private static void Dispose()
+        {
+            source.Dispose();
+            MyMeter.Dispose();
         }
     }
 }
