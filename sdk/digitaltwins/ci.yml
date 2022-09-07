@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
+    - sdk/digitaltwins/ci.yml
     - sdk/digitaltwins/Azure.DigitalTwins.Core
 
 pr:
@@ -20,7 +20,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
+    - sdk/digitaltwins/ci.yml
     - sdk/digitaltwins/Azure.DigitalTwins.Core
 
 extends:
