@@ -1,0 +1,355 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-a07ccb4843a75746808d8b354b4781ff-0ad693cd901cd540-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "990cfacf563e67bf9a202775013bc5d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 03:46:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a1c4ad0e-c1cb-49af-88b5-a0a147a5721d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "a1c4ad0e-c1cb-49af-88b5-a0a147a5721d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T034625Z:a1c4ad0e-c1cb-49af-88b5-a0a147a5721d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "45b60d85-fd72-427a-a708-f994d26e593e",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "AzureStorage_DMStaging_10041369",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/providers/Microsoft.ElasticSan?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c99c8108c80a7a41b764050505cc5998-6bced62ebb61d949-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "83001c654b6f6ca958a9b224eea3ea5d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1288",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 03:46:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8cd5f3d8-f8df-4f76-b741-473341fb485f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "8cd5f3d8-f8df-4f76-b741-473341fb485f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T034626Z:8cd5f3d8-f8df-4f76-b741-473341fb485f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/providers/Microsoft.ElasticSan",
+        "namespace": "Microsoft.ElasticSan",
+        "authorizations": [
+          {
+            "applicationId": "0e71b730-360b-426b-aa55-081c05458189"
+          }
+        ],
+        "resourceTypes": [
+          {
+            "resourceType": "elasticSans",
+            "locations": [
+              "East US 2 (Stage)",
+              "South Central US STG"
+            ],
+            "apiVersions": [
+              "2021-11-20-preview"
+            ],
+            "defaultApiVersion": "2021-11-20-preview",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "East US 2 (Stage)",
+              "South Central US STG"
+            ],
+            "apiVersions": [
+              "2021-11-20-preview"
+            ],
+            "defaultApiVersion": "2021-11-20-preview",
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "skus",
+            "locations": [
+              "East US 2 (Stage)",
+              "South Central US STG"
+            ],
+            "apiVersions": [
+              "2021-11-20-preview"
+            ],
+            "defaultApiVersion": "2021-11-20-preview",
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/asyncoperations",
+            "locations": [
+              "East US 2 (Stage)",
+              "South Central US STG"
+            ],
+            "apiVersions": [
+              "2021-11-20-preview"
+            ],
+            "defaultApiVersion": "2021-11-20-preview",
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations",
+            "locations": [],
+            "apiVersions": [
+              "2021-11-20-preview"
+            ],
+            "defaultApiVersion": "2021-11-20-preview",
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ElasticSan/operations?api-version=2021-11-20-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c99c8108c80a7a41b764050505cc5998-068f7d3e0ee5ff41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c8af066a296794586864a9ffd902d282",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3967",
+        "Content-Type": "application/json",
+        "Date": "Mon, 29 Aug 2022 03:46:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c8af066a296794586864a9ffd902d282",
+        "x-ms-correlation-request-id": "740687bd-76dd-452e-ae15-fe20c262c5db",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "ef88aa46-d0ee-42d7-96d6-e18e3ce9c0f7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T034626Z:740687bd-76dd-452e-ae15-fe20c262c5db"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Elastic Sans",
+              "operation": "List ElasticSans by Resource Group",
+              "description": "List ElasticSans by Resource Group"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Elastic Sans",
+              "operation": "List ElasticSans by Subscription",
+              "description": "List ElasticSans by Subscription"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volume Group",
+              "operation": "List VolumeGroups by ElasticSan",
+              "description": "List VolumeGroups by ElasticSan"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/skus/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Sku",
+              "operation": "Get Sku",
+              "description": "Get Sku"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/volumes/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volumes",
+              "operation": "Delete Volume",
+              "description": "Delete Volume"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/volumes/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volume",
+              "operation": "List Volumes by Volume Group",
+              "description": "List Volumes by Volume Group"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/operations/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Operations",
+              "operation": "List Operations",
+              "description": "List the operations supported by Microsoft.ElasticSan"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/register/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "ElasticSan Resource Provider",
+              "operation": "Registers the ElasticSan Resource Provider",
+              "description": "Registers the subscription for the ElasticSan resource provider and enables the creation of san accounts."
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Elastic Sans",
+              "operation": "Delete ElasticSan",
+              "description": "Delete ElasticSan"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Elastic Sans",
+              "operation": "Get Elastic San",
+              "description": "Get Elastic San"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Elastic Sans",
+              "operation": "Create/Update Elastic San",
+              "description": "Create/Update Elastic San"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volume Groups",
+              "operation": "Delete Volume Group",
+              "description": "Delete Volume Group"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volume Groups",
+              "operation": "Get Volume Group",
+              "description": "Get Volume Group"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volume Groups",
+              "operation": "Create/Update Volume Group",
+              "description": "Create/Update Volume Group"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/volumes/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volumes",
+              "operation": "Create/Update Volume",
+              "description": "Create/Update Volume"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/elasticSans/volumeGroups/volumes/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Volumes",
+              "operation": "Get Volume",
+              "description": "Get Volume"
+            }
+          },
+          {
+            "name": "Microsoft.ElasticSan/locations/asyncoperations/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "MicrosoftElasticSan",
+              "resource": "Async Operations",
+              "operation": "Poll Asynchronous Operation",
+              "description": "Polls the status of an asynchronous operation."
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1908986407",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "45b60d85-fd72-427a-a708-f994d26e593e"
+  }
+}
