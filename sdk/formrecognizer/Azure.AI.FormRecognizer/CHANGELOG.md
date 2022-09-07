@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-beta.6 (Unreleased)
+## 4.0.0 (2022-09-08)
 
 ### Features Added
 - Added `GetWords` method to `DocumentLine`. It can be used to split the line into separate `DocumentWord` instances.
@@ -33,10 +33,6 @@
 - Renamed `LengthUnit` to `DocumentPageLengthUnit`. This change only affects the type defined in the `DocumentAnalysis` namespace.
 - Renamed `SelectionMarkState` to `DocumentSelectionMarkState`. This change only affects the type defined in the `DocumentAnalysis` namespace.
 - Renamed `CopyAuthorization` to `DocumentModelCopyAuthorization`. This change only affects the type defined in the `DocumentAnalysis` namespace.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 4.0.0-beta.5 (2022-08-09)
 
