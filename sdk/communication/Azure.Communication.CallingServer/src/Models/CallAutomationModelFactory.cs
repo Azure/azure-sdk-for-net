@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -63,18 +64,38 @@ namespace Azure.Communication.CallingServer
             return new CreateCallResult(callConnection, callConnectionProperties);
         }
 
+        /// <summary> Create an EventSource. </summary>
+        /// <param name="callConnectionId"> Call connection id for the event. </param>
+        /// <param name="eventName"> Optional event name; used for events related to content. </param>
+        /// <returns> A new <see cref="CallingServer.CreateCallResult"/> instance for mocking. </returns>
+        private static string CreateEventSource(string callConnectionId, string eventName = "")
+        {
+            var eventSourcePrefix = "calling/callConnections/";
+            StringBuilder eventSource = new StringBuilder();
+            eventSource.Append(eventSourcePrefix + "/" + callConnectionId);
+            if (eventName.Length > 0)
+            {
+                eventSource.Append("/" + eventName);
+            }
+            return eventSource.ToString();
+        }
+
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantsFailed AddParticipantsFailed(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static AddParticipantsFailed AddParticipantsFailed(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            var internalObject = new AddParticipantsFailedInternal(operationContext,
+            var internalObject = new AddParticipantsFailedInternal(
+                CreateEventSource(callConnectionId),
+                operationContext,
                 resultInformation,
                 participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                AcsEventType.AddParticipantsFailed,
+                version,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                );
 
             return new AddParticipantsFailed(internalObject);
         }
@@ -82,15 +103,19 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            var internalObject = new AddParticipantsSucceededInternal(operationContext,
+            var internalObject = new AddParticipantsSucceededInternal(
+                CreateEventSource(callConnectionId),
+                operationContext,
                 resultInformation,
                 participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                AcsEventType.AddParticipantsSucceeded,
+                version,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                );
 
             return new AddParticipantsSucceeded(internalObject);
         }
@@ -98,45 +123,87 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Initializes a new instance of Call Connected event.
         /// </summary>
-        public static CallConnected CallConnected(string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static CallConnected CallConnected(string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            return new CallConnected(AcsEventType.CallConnected, callConnectionId, serverCallId, correlationId);
+            return new CallConnected(
+                CreateEventSource(callConnectionId),
+                version,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(CallConnected)
+                );
         }
 
         /// <summary>
         /// Initializes a new instance of Call Disconnected event.
         /// </summary>
-        public static CallDisconnected CallDisconnected(string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static CallDisconnected CallDisconnected(string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            return new CallDisconnected(AcsEventType.CallDisconnected, callConnectionId, serverCallId, correlationId);
+            return new CallDisconnected(
+                CreateEventSource(callConnectionId),
+                version,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(CallDisconnected)
+                );
         }
 
         /// <summary>
         /// Initializes a new instance of Call Transfer Accepted event.
         /// </summary>
-        public static CallTransferAccepted CallTransferAccepted(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static CallTransferAccepted CallTransferAccepted(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            return new CallTransferAccepted(operationContext, resultInformation, AcsEventType.CallTransferAccepted, callConnectionId, serverCallId, correlationId);
+            return new CallTransferAccepted(
+                CreateEventSource(callConnectionId),
+                operationContext,
+                resultInformation,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(CallTransferAccepted)
+                );
         }
 
         /// <summary>
         /// Initializes a new instance of Call CallTransfer Failed event.
         /// </summary>
-        public static CallTransferFailed CallTransferFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static CallTransferFailed CallTransferFailed(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            return new CallTransferFailed(operationContext, resultInformation, AcsEventType.CallTransferFailed, callConnectionId, serverCallId, correlationId);
+            return new CallTransferFailed(
+                CreateEventSource(callConnectionId),
+                operationContext,
+                resultInformation,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(CallTransferFailed)
+                );
         }
 
         /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
-        public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            var internalObject = new ParticipantsUpdatedInternal(participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                AcsEventType.ParticipantsUpdated,
+            var internalObject = new ParticipantsUpdatedInternal(
+                CreateEventSource(callConnectionId),
+                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
+                version,
+                operationContext,
+                resultInformation,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(ParticipantsUpdated)
+                );
 
             return new ParticipantsUpdated(internalObject);
         }
@@ -144,62 +211,71 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Initializes a new instance of Play Completed event.
         /// </summary>
-        public static PlayCompleted PlayCompleted(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static PlayCompleted PlayCompleted(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            return new PlayCompleted(operationContext, resultInformation, AcsEventType.PlayCompleted, callConnectionId, serverCallId, correlationId);
+            return new PlayCompleted(operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, CallAutomationEventParser.EventPrefix + nameof(PlayCompleted));
         }
 
         /// <summary>
         /// Initializes a new instance of Play failed event.
         /// </summary>
-        public static PlayFailed PlayFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static PlayFailed PlayFailed(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            return new PlayFailed(operationContext, resultInformation, AcsEventType.PlayCompleted, callConnectionId, serverCallId, correlationId);
+            return new PlayFailed(CreateEventSource(callConnectionId, nameof(PlayFailed)),operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, CallAutomationEventParser.EventPrefix + nameof(PlayFailed));
         }
 
         /// <summary>
         /// Initializes a new instance of Recording state changed event.
         /// </summary>
-        public static CallRecordingStateChanged RecordingStateChanged(string recordingId = default, RecordingState state = default, DateTimeOffset startDateTime = default,  string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static CallRecordingStateChanged RecordingStateChanged(string recordingId = default, RecordingState state = default, DateTimeOffset startDateTime = default,  string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
             return new CallRecordingStateChanged(
-                AcsEventType.RecordingStateChanged,
+                CreateEventSource(callConnectionId, nameof(CallRecordingStateChanged)),
                 recordingId,
                 state,
                 startDateTime,
+                version,
+                operationContext,
+                resultInformation,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(RecordingStateChanged)
+                );
         }
 
         /// <summary>
         /// Initializes a new instance of Recognize Completed event.
         /// </summary>
-        public static RecognizeCompleted RecognizeCompleted(string operationContext = default, RecognitionType recognitionType = default, CollectTonesResult collectTonesResult = default, ResultInformation resultInfo = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static RecognizeCompleted RecognizeCompleted(string operationContext = default, ResultInformation resultInformation = default, RecognitionType recognitionType = default, CollectTonesResult collectTonesResult = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
             return new RecognizeCompleted(
                 operationContext,
+                resultInformation,
                 recognitionType,
                 collectTonesResult,
-                resultInfo,
-                AcsEventType.RecognizeCompleted,
+                version,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(RecognizeCompleted)
+                );
         }
 
         /// <summary>
         /// Initializes a new instance of Recognize Failed event
         /// </summary>
-        public static RecognizeFailed RecognizeFailed(string operationContext = default, ResultInformation resultInfo = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static RecognizeFailed RecognizeFailed(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
             return new RecognizeFailed(
                 operationContext,
-                resultInfo,
-                AcsEventType.RecognizeFailed,
+                resultInformation,
+                version,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                CallAutomationEventParser.EventPrefix + nameof(RecognizeFailed)
+                );
         }
     }
 }

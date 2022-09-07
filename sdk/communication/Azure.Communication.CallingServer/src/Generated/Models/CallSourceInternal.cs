@@ -28,15 +28,19 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of CallSourceInternal. </summary>
         /// <param name="callerId"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
+        /// <param name="displayName"> Display name of the call if dialing out to a pstn number. </param>
         /// <param name="identifier"> The identifier of the source of the call. </param>
-        internal CallSourceInternal(PhoneNumberIdentifierModel callerId, CommunicationIdentifierModel identifier)
+        internal CallSourceInternal(PhoneNumberIdentifierModel callerId, string displayName, CommunicationIdentifierModel identifier)
         {
             CallerId = callerId;
+            DisplayName = displayName;
             Identifier = identifier;
         }
 
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
         public PhoneNumberIdentifierModel CallerId { get; set; }
+        /// <summary> Display name of the call if dialing out to a pstn number. </summary>
+        public string DisplayName { get; set; }
         /// <summary> The identifier of the source of the call. </summary>
         public CommunicationIdentifierModel Identifier { get; set; }
     }

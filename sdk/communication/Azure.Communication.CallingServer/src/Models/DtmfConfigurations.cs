@@ -21,6 +21,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Maximum number of DTMFs to be collected. </summary>
         public int? MaxTonesToCollect { get; set; }
         /// <summary> List of tones that will stop recognizing. </summary>
-        public IEnumerable<StopTones> StopTones { get; set; }
+        public IEnumerable<Tone> StopTones { get; set; }
     }
 }
