@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                 {
                     new SubnetData()
                     {
-                        Name = "Subnet-0824",
+                        Name = Recording.GenerateAssetName("Subnet-"),
                         AddressPrefix = "10.0.0.0/24"
                     }
-                }
+                },
+                AddressPrefixes = { "10.0.0.0/16" }
             };
-            virtualNetworkData.AddressPrefixes.Add("10.0.0.0/16");
             var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
             return lro.Value;
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             {
                 Properties = new MoverResourceProperties(vnetId)
                 {
-                    ResourceSettings = new VirtualNetworkResourceSettings(targetVnetName)
+                    ResourceSettings = new MoverVirtualNetworkResourceSettings(targetVnetName)
                 }
             };
             var lro = await moverResourceSet.GetMoverResources().CreateOrUpdateAsync(WaitUntil.Completed, moverResourceName, input);

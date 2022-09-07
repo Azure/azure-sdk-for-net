@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class VirtualNetworkResourceSettings : IUtf8JsonSerializable
+    public partial class MoverVirtualNetworkResourceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkResourceSettings DeserializeVirtualNetworkResourceSettings(JsonElement element)
+        internal static MoverVirtualNetworkResourceSettings DeserializeMoverVirtualNetworkResourceSettings(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             Optional<bool?> enableDdosProtection = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new VirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
+            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
         }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
@@ -21,12 +22,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         public async Task CreateOrUpdate()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroupAsync("testRG-ResourceMover");
+            ResourceIdentifier moverResourceSetId = MoverResourceSetResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, "testRG-ResourceMover", "testMoveCollection");
+            MoverResourceSetResource moverResourceSet = await Client.GetMoverResourceSetResource(moverResourceSetId).GetAsync();
 
+            string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-
-            MoverResourceSetResource moverResourceSet = await rg.GetMoverResourceSetAsync("testMoveCollection");
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
             MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
             Assert.AreEqual(moverResourceName, moverResource.Data.Name);
@@ -37,12 +39,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         public async Task List()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroupAsync("testRG-ResourceMover");
+            ResourceIdentifier moverResourceSetId = MoverResourceSetResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, "testRG-ResourceMover", "testMoveCollection");
+            MoverResourceSetResource moverResourceSet = await Client.GetMoverResourceSetResource(moverResourceSetId).GetAsync();
 
+            string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-
-            MoverResourceSetResource moverResourceSet = await rg.GetMoverResourceSetAsync("testMoveCollection");
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
             _ = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
             int count = 0;
@@ -58,12 +61,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         public async Task Get()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroupAsync("testRG-ResourceMover");
+            ResourceIdentifier moverResourceSetId = MoverResourceSetResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, "testRG-ResourceMover", "testMoveCollection");
+            MoverResourceSetResource moverResourceSet = await Client.GetMoverResourceSetResource(moverResourceSetId).GetAsync();
 
+            string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-
-            MoverResourceSetResource moverResourceSet = await rg.GetMoverResourceSetAsync("testMoveCollection");
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
             MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
             MoverResource getMoverResource = await moverResourceSet.GetMoverResources().GetAsync(moverResourceName);
@@ -75,12 +79,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         public async Task Delete()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroupAsync("testRG-ResourceMover");
+            ResourceIdentifier moverResourceSetId = MoverResourceSetResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, "testRG-ResourceMover", "testMoveCollection");
+            MoverResourceSetResource moverResourceSet = await Client.GetMoverResourceSetResource(moverResourceSetId).GetAsync();
 
+            string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string vnetName = Recording.GenerateAssetName("Vnet-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
-
-            MoverResourceSetResource moverResourceSet = await rg.GetMoverResourceSetAsync("testMoveCollection");
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
             MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName);
             await moverResource.DeleteAsync(WaitUntil.Completed);

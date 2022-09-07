@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             MoverResourceSetPatch updateOptions = new MoverResourceSetPatch
             {
                 Tags = { { "newKey", "newVal" } },
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
+                Identity = moverResourceSet.Data.Identity
             };
             MoverResourceSetResource updatedMoverResourceSet = await moverResourceSet.UpdateAsync(updateOptions);
             Assert.AreEqual(updateOptions.Tags, updatedMoverResourceSet.Data.Tags);

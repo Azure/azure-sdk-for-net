@@ -100,6 +100,7 @@ rename-mapping:
   UnresolvedDependency: MoverUnresolvedDependency
   UnresolvedDependencyCollection: MoverUnresolvedDependencyList
   ZoneRedundant: ResourceZoneRedundantSetting
+  VirtualNetworkResourceSettings: MoverVirtualNetworkResourceSettings
 
 override-operation-name:
   MoveCollections_ListRequiredFor: GetRequiredForResources
