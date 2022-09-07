@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
         public StorageAccountTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -2010,6 +2010,36 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(account2.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy.AllowProtectedAppendWrites);
             Assert.IsFalse(account2.Data.IsDefaultToOAuthAuthentication);
             Assert.AreEqual(StoragePublicNetworkAccess.Disabled, account2.Data.PublicNetworkAccess);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountAllowedCopyScope()
+        {
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation
+                )
+            {
+                AllowedCopyScope = AllowedCopyScope.Aad
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(AllowedCopyScope.Aad, account.Data.AllowedCopyScope);
+
+            //Update account
+            var patch = new StorageAccountPatch()
+            {
+                AllowedCopyScope = AllowedCopyScope.PrivateLink
+            };
+            account = await account.UpdateAsync(patch);
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(AllowedCopyScope.PrivateLink, account.Data.AllowedCopyScope);
         }
 
         [Test]
