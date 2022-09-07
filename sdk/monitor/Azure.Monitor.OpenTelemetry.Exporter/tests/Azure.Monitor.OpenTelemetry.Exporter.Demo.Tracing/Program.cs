@@ -23,7 +23,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             GenerateTraces();
             GenerateLogs();
             GenerateMetrics();
-            Dispose();
         }
 
         private static void GenerateTraces()
@@ -82,12 +81,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             MyFruitCounter.Add(2, new("name", "apple"), new("color", "green"));
             MyFruitCounter.Add(5, new("name", "apple"), new("color", "red"));
             MyFruitCounter.Add(4, new("name", "lemon"), new("color", "yellow"));
-        }
-
-        private static void Dispose()
-        {
-            source.Dispose();
-            MyMeter.Dispose();
         }
     }
 }
