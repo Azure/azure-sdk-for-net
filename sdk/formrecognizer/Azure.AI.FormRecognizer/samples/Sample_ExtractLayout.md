@@ -1,6 +1,6 @@
 # Extract the layout of a document
 
-This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents. If you want to analyze entities and key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample.
+This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents. If you want to analyze key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 

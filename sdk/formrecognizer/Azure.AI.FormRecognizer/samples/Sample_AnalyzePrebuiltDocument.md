@@ -1,6 +1,6 @@
 # Analyze with the prebuilt document model
 
-This sample demonstrates how to analyze key-value pairs, entities, tables, and selection marks from documents using the general prebuilt document model.
+This sample demonstrates how to analyze key-value pairs, tables, and selection marks from documents using the general prebuilt document model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
