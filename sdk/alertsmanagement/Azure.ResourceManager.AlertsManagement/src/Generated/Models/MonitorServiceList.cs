@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Monitor service details. </summary>
-    public partial class MonitorServiceList : ServiceAlertsMetaDataProperties
+    public partial class MonitorServiceList : ServiceAlertMetadataProperties
     {
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
         /// <param name="data"> Array of operations. </param>

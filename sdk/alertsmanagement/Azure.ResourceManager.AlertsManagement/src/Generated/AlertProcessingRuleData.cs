@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             Scopes = new ChangeTrackingList<string>();
             Conditions = new ChangeTrackingList<AlertProcessingRuleCondition>();
-            Actions = new ChangeTrackingList<AlertProcessingRuleAction>();
+            Actions = new ChangeTrackingList<AlertProcessingAction>();
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleData. </summary>
@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="schedule"> Scheduling for alert processing rule. </param>
         /// <param name="actions">
         /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
         /// </param>
         /// <param name="description"> Description of alert processing rule. </param>
-        /// <param name="enabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
-        internal AlertProcessingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? enabled) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
+        internal AlertProcessingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingAction> actions, string description, bool? isEnabled) : base(id, name, resourceType, systemData, tags, location)
         {
             Scopes = scopes;
             Conditions = conditions;
             Schedule = schedule;
             Actions = actions;
             Description = description;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Scopes on which alert processing rule will apply. </summary>
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.AlertsManagement
         public AlertProcessingRuleSchedule Schedule { get; set; }
         /// <summary>
         /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
         /// </summary>
-        public IList<AlertProcessingRuleAction> Actions { get; }
+        public IList<AlertProcessingAction> Actions { get; }
         /// <summary> Description of alert processing rule. </summary>
         public string Description { get; set; }
         /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

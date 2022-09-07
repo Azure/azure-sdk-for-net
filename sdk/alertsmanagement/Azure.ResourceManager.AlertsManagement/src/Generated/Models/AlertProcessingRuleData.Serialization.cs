@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AlertsManagement
             Optional<IList<string>> scopes = default;
             Optional<IList<AlertProcessingRuleCondition>> conditions = default;
             Optional<AlertProcessingRuleSchedule> schedule = default;
-            Optional<IList<AlertProcessingRuleAction>> actions = default;
+            Optional<IList<AlertProcessingAction>> actions = default;
             Optional<string> description = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.AlertsManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AlertProcessingRuleAction> array = new List<AlertProcessingRuleAction>();
+                            List<AlertProcessingAction> array = new List<AlertProcessingAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item));
+                                array.Add(AlertProcessingAction.DeserializeAlertProcessingAction(item));
                             }
                             actions = array;
                             continue;

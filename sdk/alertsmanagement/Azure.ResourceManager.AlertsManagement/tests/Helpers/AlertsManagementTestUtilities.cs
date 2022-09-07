@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
                     Assert.Equals(exp.Description, act.Description);
                 }
 
-                if (exp.Enabled != null && act.Enabled != null)
+                if (exp.IsEnabled != null && act.IsEnabled != null)
                 {
-                    Assert.AreEqual(exp.Enabled, act.Enabled);
+                    Assert.AreEqual(exp.IsEnabled, act.IsEnabled);
                 }
 
                 AreEqual(exp.Scopes, act.Scopes);
