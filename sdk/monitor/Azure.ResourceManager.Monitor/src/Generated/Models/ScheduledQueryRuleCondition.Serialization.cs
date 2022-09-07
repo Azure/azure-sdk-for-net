@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static ScheduledQueryRuleCondition DeserializeScheduledQueryRuleCondition(JsonElement element)
         {
             Optional<string> query = default;
-            Optional<TimeAggregation> timeAggregation = default;
+            Optional<ScheduledQueryRuleTimeAggregationType> timeAggregation = default;
             Optional<string> metricMeasureColumn = default;
             Optional<string> resourceIdColumn = default;
             Optional<IList<MonitorDimension>> dimensions = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeAggregation = new TimeAggregation(property.Value.GetString());
+                    timeAggregation = new ScheduledQueryRuleTimeAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metricMeasureColumn"))
