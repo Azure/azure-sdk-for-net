@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Recurrence object.
-    /// Serialized Name: Recurrence
     /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
     /// </summary>
@@ -23,39 +22,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
-        /// <param name="recurrenceType">
-        /// Specifies when the recurrence should be applied.
-        /// Serialized Name: Recurrence.recurrenceType
-        /// </param>
-        /// <param name="startOn">
-        /// Start time for recurrence.
-        /// Serialized Name: Recurrence.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time for recurrence.
-        /// Serialized Name: Recurrence.endTime
-        /// </param>
-        internal AlertProcessingRuleRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
+        internal AlertProcessingRuleRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn)
         {
             RecurrenceType = recurrenceType;
             StartOn = startOn;
             EndOn = endOn;
         }
 
-        /// <summary>
-        /// Specifies when the recurrence should be applied.
-        /// Serialized Name: Recurrence.recurrenceType
-        /// </summary>
+        /// <summary> Specifies when the recurrence should be applied. </summary>
         internal RecurrenceType RecurrenceType { get; set; }
-        /// <summary>
-        /// Start time for recurrence.
-        /// Serialized Name: Recurrence.startTime
-        /// </summary>
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// End time for recurrence.
-        /// Serialized Name: Recurrence.endTime
-        /// </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        /// <summary> Start time for recurrence. </summary>
+        public TimeSpan? StartOn { get; set; }
+        /// <summary> End time for recurrence. </summary>
+        public TimeSpan? EndOn { get; set; }
     }
 }

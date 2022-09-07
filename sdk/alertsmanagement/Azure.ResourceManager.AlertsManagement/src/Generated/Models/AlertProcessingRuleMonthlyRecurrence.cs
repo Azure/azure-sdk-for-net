@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Monthly recurrence object.
-    /// Serialized Name: MonthlyRecurrence
-    /// </summary>
+    /// <summary> Monthly recurrence object. </summary>
     public partial class AlertProcessingRuleMonthlyRecurrence : AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of AlertProcessingRuleMonthlyRecurrence. </summary>
-        /// <param name="daysOfMonth">
-        /// Specifies the values for monthly recurrence pattern.
-        /// Serialized Name: MonthlyRecurrence.daysOfMonth
-        /// </param>
+        /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfMonth"/> is null. </exception>
         public AlertProcessingRuleMonthlyRecurrence(IEnumerable<int> daysOfMonth)
         {
@@ -35,32 +29,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleMonthlyRecurrence. </summary>
-        /// <param name="recurrenceType">
-        /// Specifies when the recurrence should be applied.
-        /// Serialized Name: Recurrence.recurrenceType
-        /// </param>
-        /// <param name="startOn">
-        /// Start time for recurrence.
-        /// Serialized Name: Recurrence.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time for recurrence.
-        /// Serialized Name: Recurrence.endTime
-        /// </param>
-        /// <param name="daysOfMonth">
-        /// Specifies the values for monthly recurrence pattern.
-        /// Serialized Name: MonthlyRecurrence.daysOfMonth
-        /// </param>
-        internal AlertProcessingRuleMonthlyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<int> daysOfMonth) : base(recurrenceType, startOn, endOn)
+        /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
+        /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
+        internal AlertProcessingRuleMonthlyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, IList<int> daysOfMonth) : base(recurrenceType, startOn, endOn)
         {
             DaysOfMonth = daysOfMonth;
             RecurrenceType = recurrenceType;
         }
 
-        /// <summary>
-        /// Specifies the values for monthly recurrence pattern.
-        /// Serialized Name: MonthlyRecurrence.daysOfMonth
-        /// </summary>
+        /// <summary> Specifies the values for monthly recurrence pattern. </summary>
         public IList<int> DaysOfMonth { get; }
     }
 }

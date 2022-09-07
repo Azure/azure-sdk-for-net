@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// The MonitorServiceSourceForAlert.
-    /// Serialized Name: MonitorService
-    /// </summary>
+    /// <summary> The MonitorServiceSourceForAlert. </summary>
     public readonly partial struct MonitorServiceSourceForAlert : IEquatable<MonitorServiceSourceForAlert>
     {
         private readonly string _value;
@@ -40,75 +37,33 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string VmInsightsValue = "VM Insights";
         private const string ZabbixValue = "Zabbix";
 
-        /// <summary>
-        /// Application Insights
-        /// Serialized Name: MonitorService.Application Insights
-        /// </summary>
+        /// <summary> Application Insights. </summary>
         public static MonitorServiceSourceForAlert ApplicationInsights { get; } = new MonitorServiceSourceForAlert(ApplicationInsightsValue);
-        /// <summary>
-        /// ActivityLog Administrative
-        /// Serialized Name: MonitorService.ActivityLog Administrative
-        /// </summary>
+        /// <summary> ActivityLog Administrative. </summary>
         public static MonitorServiceSourceForAlert ActivityLogAdministrative { get; } = new MonitorServiceSourceForAlert(ActivityLogAdministrativeValue);
-        /// <summary>
-        /// ActivityLog Security
-        /// Serialized Name: MonitorService.ActivityLog Security
-        /// </summary>
+        /// <summary> ActivityLog Security. </summary>
         public static MonitorServiceSourceForAlert ActivityLogSecurity { get; } = new MonitorServiceSourceForAlert(ActivityLogSecurityValue);
-        /// <summary>
-        /// ActivityLog Recommendation
-        /// Serialized Name: MonitorService.ActivityLog Recommendation
-        /// </summary>
+        /// <summary> ActivityLog Recommendation. </summary>
         public static MonitorServiceSourceForAlert ActivityLogRecommendation { get; } = new MonitorServiceSourceForAlert(ActivityLogRecommendationValue);
-        /// <summary>
-        /// ActivityLog Policy
-        /// Serialized Name: MonitorService.ActivityLog Policy
-        /// </summary>
+        /// <summary> ActivityLog Policy. </summary>
         public static MonitorServiceSourceForAlert ActivityLogPolicy { get; } = new MonitorServiceSourceForAlert(ActivityLogPolicyValue);
-        /// <summary>
-        /// ActivityLog Autoscale
-        /// Serialized Name: MonitorService.ActivityLog Autoscale
-        /// </summary>
+        /// <summary> ActivityLog Autoscale. </summary>
         public static MonitorServiceSourceForAlert ActivityLogAutoscale { get; } = new MonitorServiceSourceForAlert(ActivityLogAutoscaleValue);
-        /// <summary>
-        /// Log Analytics
-        /// Serialized Name: MonitorService.Log Analytics
-        /// </summary>
+        /// <summary> Log Analytics. </summary>
         public static MonitorServiceSourceForAlert LogAnalytics { get; } = new MonitorServiceSourceForAlert(LogAnalyticsValue);
-        /// <summary>
-        /// Nagios
-        /// Serialized Name: MonitorService.Nagios
-        /// </summary>
+        /// <summary> Nagios. </summary>
         public static MonitorServiceSourceForAlert Nagios { get; } = new MonitorServiceSourceForAlert(NagiosValue);
-        /// <summary>
-        /// Platform
-        /// Serialized Name: MonitorService.Platform
-        /// </summary>
+        /// <summary> Platform. </summary>
         public static MonitorServiceSourceForAlert Platform { get; } = new MonitorServiceSourceForAlert(PlatformValue);
-        /// <summary>
-        /// SCOM
-        /// Serialized Name: MonitorService.SCOM
-        /// </summary>
+        /// <summary> SCOM. </summary>
         public static MonitorServiceSourceForAlert Scom { get; } = new MonitorServiceSourceForAlert(ScomValue);
-        /// <summary>
-        /// ServiceHealth
-        /// Serialized Name: MonitorService.ServiceHealth
-        /// </summary>
+        /// <summary> ServiceHealth. </summary>
         public static MonitorServiceSourceForAlert ServiceHealth { get; } = new MonitorServiceSourceForAlert(ServiceHealthValue);
-        /// <summary>
-        /// SmartDetector
-        /// Serialized Name: MonitorService.SmartDetector
-        /// </summary>
+        /// <summary> SmartDetector. </summary>
         public static MonitorServiceSourceForAlert SmartDetector { get; } = new MonitorServiceSourceForAlert(SmartDetectorValue);
-        /// <summary>
-        /// VM Insights
-        /// Serialized Name: MonitorService.VM Insights
-        /// </summary>
+        /// <summary> VM Insights. </summary>
         public static MonitorServiceSourceForAlert VmInsights { get; } = new MonitorServiceSourceForAlert(VmInsightsValue);
-        /// <summary>
-        /// Zabbix
-        /// Serialized Name: MonitorService.Zabbix
-        /// </summary>
+        /// <summary> Zabbix. </summary>
         public static MonitorServiceSourceForAlert Zabbix { get; } = new MonitorServiceSourceForAlert(ZabbixValue);
         /// <summary> Determines if two <see cref="MonitorServiceSourceForAlert"/> values are the same. </summary>
         public static bool operator ==(MonitorServiceSourceForAlert left, MonitorServiceSourceForAlert right) => left.Equals(right);

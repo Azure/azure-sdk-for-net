@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ServiceAlertMetaData>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ServiceAlertMetaData> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertMetadata> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
         }

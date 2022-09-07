@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Action to be applied.
-    /// Serialized Name: Action
     /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertProcessingAction. </summary>
-        /// <param name="actionType">
-        /// Action that should be applied.
-        /// Serialized Name: Action.actionType
-        /// </param>
+        /// <param name="actionType"> Action that should be applied. </param>
         internal AlertProcessingAction(AlertProcessingActionType actionType)
         {
             ActionType = actionType;
         }
 
-        /// <summary>
-        /// Action that should be applied.
-        /// Serialized Name: Action.actionType
-        /// </summary>
+        /// <summary> Action that should be applied. </summary>
         internal AlertProcessingActionType ActionType { get; set; }
     }
 }

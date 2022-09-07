@@ -11,10 +11,7 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// List the alerts.
-    /// Serialized Name: AlertsList
-    /// </summary>
+    /// <summary> List the alerts. </summary>
     internal partial class ServiceAlertListResult
     {
         /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of alerts.
-        /// Serialized Name: AlertsList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// List of alerts
-        /// Serialized Name: AlertsList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of alerts. </param>
+        /// <param name="value"> List of alerts. </param>
         internal ServiceAlertListResult(string nextLink, IReadOnlyList<ServiceAlertData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// URL to fetch the next set of alerts.
-        /// Serialized Name: AlertsList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of alerts. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// List of alerts
-        /// Serialized Name: AlertsList.value
-        /// </summary>
+        /// <summary> List of alerts. </summary>
         public IReadOnlyList<ServiceAlertData> Value { get; }
     }
 }

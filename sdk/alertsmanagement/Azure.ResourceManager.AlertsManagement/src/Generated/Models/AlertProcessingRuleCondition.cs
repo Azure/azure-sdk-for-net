@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Condition to trigger an alert processing rule.
-    /// Serialized Name: Condition
-    /// </summary>
+    /// <summary> Condition to trigger an alert processing rule. </summary>
     public partial class AlertProcessingRuleCondition
     {
         /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
-        /// <param name="field">
-        /// Field for a given condition.
-        /// Serialized Name: Condition.field
-        /// </param>
-        /// <param name="operator">
-        /// Operator for a given condition.
-        /// Serialized Name: Condition.operator
-        /// </param>
-        /// <param name="values">
-        /// List of values to match for a given condition.
-        /// Serialized Name: Condition.values
-        /// </param>
+        /// <param name="field"> Field for a given condition. </param>
+        /// <param name="operator"> Operator for a given condition. </param>
+        /// <param name="values"> List of values to match for a given condition. </param>
         internal AlertProcessingRuleCondition(AlertProcessingRuleField? field, AlertProcessingRuleOperator? @operator, IList<string> values)
         {
             Field = field;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Values = values;
         }
 
-        /// <summary>
-        /// Field for a given condition.
-        /// Serialized Name: Condition.field
-        /// </summary>
+        /// <summary> Field for a given condition. </summary>
         public AlertProcessingRuleField? Field { get; set; }
-        /// <summary>
-        /// Operator for a given condition.
-        /// Serialized Name: Condition.operator
-        /// </summary>
+        /// <summary> Operator for a given condition. </summary>
         public AlertProcessingRuleOperator? Operator { get; set; }
-        /// <summary>
-        /// List of values to match for a given condition.
-        /// Serialized Name: Condition.values
-        /// </summary>
+        /// <summary> List of values to match for a given condition. </summary>
         public IList<string> Values { get; }
     }
 }

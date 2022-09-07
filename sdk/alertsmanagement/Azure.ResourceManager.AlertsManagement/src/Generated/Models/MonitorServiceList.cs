@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Monitor service details
-    /// Serialized Name: MonitorServiceList
-    /// </summary>
-    public partial class MonitorServiceList : ServiceAlertsMetaDataProperties
+    /// <summary> Monitor service details. </summary>
+    public partial class MonitorServiceList : ServiceAlertMetadataProperties
     {
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
-        /// <param name="data">
-        /// Array of operations
-        /// Serialized Name: MonitorServiceList.data
-        /// </param>
+        /// <param name="data"> Array of operations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data)
         {
@@ -35,24 +29,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
-        /// <param name="metadataIdentifier">
-        /// Identification of the information to be retrieved by API call
-        /// Serialized Name: AlertsMetaDataProperties.metadataIdentifier
-        /// </param>
-        /// <param name="data">
-        /// Array of operations
-        /// Serialized Name: MonitorServiceList.data
-        /// </param>
+        /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
+        /// <param name="data"> Array of operations. </param>
         internal MonitorServiceList(ServiceAlertMetadataIdentifier metadataIdentifier, IReadOnlyList<MonitorServiceDetails> data) : base(metadataIdentifier)
         {
             Data = data;
             MetadataIdentifier = metadataIdentifier;
         }
 
-        /// <summary>
-        /// Array of operations
-        /// Serialized Name: MonitorServiceList.data
-        /// </summary>
+        /// <summary> Array of operations. </summary>
         public IReadOnlyList<MonitorServiceDetails> Data { get; }
     }
 }

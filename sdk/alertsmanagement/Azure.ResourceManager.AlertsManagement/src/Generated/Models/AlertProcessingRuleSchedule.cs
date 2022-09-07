@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Scheduling configuration for a given alert processing rule.
-    /// Serialized Name: Schedule
-    /// </summary>
+    /// <summary> Scheduling configuration for a given alert processing rule. </summary>
     public partial class AlertProcessingRuleSchedule
     {
         /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>
@@ -24,21 +21,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>
-        /// <param name="effectiveFrom">
-        /// Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: Schedule.effectiveFrom
-        /// </param>
-        /// <param name="effectiveUntil">
-        /// Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: Schedule.effectiveUntil
-        /// </param>
-        /// <param name="timeZone">
-        /// Scheduling time zone.
-        /// Serialized Name: Schedule.timeZone
-        /// </param>
+        /// <param name="effectiveFrom"> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </param>
+        /// <param name="effectiveUntil"> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </param>
+        /// <param name="timeZone"> Scheduling time zone. </param>
         /// <param name="recurrences">
         /// List of recurrences.
-        /// Serialized Name: Schedule.recurrences
         /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
         /// </param>
@@ -50,24 +37,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Recurrences = recurrences;
         }
 
-        /// <summary>
-        /// Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: Schedule.effectiveFrom
-        /// </summary>
+        /// <summary> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </summary>
         public DateTimeOffset? EffectiveFrom { get; set; }
-        /// <summary>
-        /// Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: Schedule.effectiveUntil
-        /// </summary>
+        /// <summary> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </summary>
         public DateTimeOffset? EffectiveUntil { get; set; }
-        /// <summary>
-        /// Scheduling time zone.
-        /// Serialized Name: Schedule.timeZone
-        /// </summary>
+        /// <summary> Scheduling time zone. </summary>
         public string TimeZone { get; set; }
         /// <summary>
         /// List of recurrences.
-        /// Serialized Name: Schedule.recurrences
         /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
         /// </summary>

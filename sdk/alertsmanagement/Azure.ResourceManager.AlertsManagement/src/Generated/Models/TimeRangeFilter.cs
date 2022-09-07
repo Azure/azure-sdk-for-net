@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// The TimeRangeFilter.
-    /// Serialized Name: TimeRange
-    /// </summary>
+    /// <summary> The TimeRangeFilter. </summary>
     public readonly partial struct TimeRangeFilter : IEquatable<TimeRangeFilter>
     {
         private readonly string _value;
@@ -25,31 +22,19 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string OneHValue = "1h";
-        private const string OneDValue = "1d";
-        private const string SevenDValue = "7d";
-        private const string ThirtyDValue = "30d";
+        private const string OneHourValue = "1h";
+        private const string OneDayValue = "1d";
+        private const string SevenDaysValue = "7d";
+        private const string ThirtyDaysValue = "30d";
 
-        /// <summary>
-        /// 1h
-        /// Serialized Name: TimeRange.1h
-        /// </summary>
-        public static TimeRangeFilter OneH { get; } = new TimeRangeFilter(OneHValue);
-        /// <summary>
-        /// 1d
-        /// Serialized Name: TimeRange.1d
-        /// </summary>
-        public static TimeRangeFilter OneD { get; } = new TimeRangeFilter(OneDValue);
-        /// <summary>
-        /// 7d
-        /// Serialized Name: TimeRange.7d
-        /// </summary>
-        public static TimeRangeFilter SevenD { get; } = new TimeRangeFilter(SevenDValue);
-        /// <summary>
-        /// 30d
-        /// Serialized Name: TimeRange.30d
-        /// </summary>
-        public static TimeRangeFilter ThirtyD { get; } = new TimeRangeFilter(ThirtyDValue);
+        /// <summary> 1h. </summary>
+        public static TimeRangeFilter OneHour { get; } = new TimeRangeFilter(OneHourValue);
+        /// <summary> 1d. </summary>
+        public static TimeRangeFilter OneDay { get; } = new TimeRangeFilter(OneDayValue);
+        /// <summary> 7d. </summary>
+        public static TimeRangeFilter SevenDays { get; } = new TimeRangeFilter(SevenDaysValue);
+        /// <summary> 30d. </summary>
+        public static TimeRangeFilter ThirtyDays { get; } = new TimeRangeFilter(ThirtyDaysValue);
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are the same. </summary>
         public static bool operator ==(TimeRangeFilter left, TimeRangeFilter right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are not the same. </summary>

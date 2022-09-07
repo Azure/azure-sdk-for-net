@@ -11,10 +11,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     internal partial class UnknownAlertProcessingAction : AlertProcessingAction
     {
         /// <summary> Initializes a new instance of UnknownAlertProcessingAction. </summary>
-        /// <param name="actionType">
-        /// Action that should be applied.
-        /// Serialized Name: Action.actionType
-        /// </param>
+        /// <param name="actionType"> Action that should be applied. </param>
         internal UnknownAlertProcessingAction(AlertProcessingActionType actionType) : base(actionType)
         {
             ActionType = actionType;

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Action status
-    /// Serialized Name: ActionStatus
-    /// </summary>
+    /// <summary> Action status. </summary>
     internal partial class ServiceAlertActionStatus
     {
         /// <summary> Initializes a new instance of ServiceAlertActionStatus. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of ServiceAlertActionStatus. </summary>
-        /// <param name="isSuppressed">
-        /// Value indicating whether alert is suppressed.
-        /// Serialized Name: ActionStatus.isSuppressed
-        /// </param>
+        /// <param name="isSuppressed"> Value indicating whether alert is suppressed. </param>
         internal ServiceAlertActionStatus(bool? isSuppressed)
         {
             IsSuppressed = isSuppressed;
         }
 
-        /// <summary>
-        /// Value indicating whether alert is suppressed.
-        /// Serialized Name: ActionStatus.isSuppressed
-        /// </summary>
+        /// <summary> Value indicating whether alert is suppressed. </summary>
         public bool? IsSuppressed { get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> List alerts meta data information based on value of identifier parameter. </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ServiceAlertMetaData>> MetaDataAsync(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceAlertMetadata>> MetaDataAsync(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             using var message = CreateMetaDataRequest(identifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertMetaData value = default;
+                        ServiceAlertMetadata value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceAlertMetaData.DeserializeServiceAlertMetaData(document.RootElement);
+                        value = ServiceAlertMetadata.DeserializeServiceAlertMetadata(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> List alerts meta data information based on value of identifier parameter. </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ServiceAlertMetaData> MetaData(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public Response<ServiceAlertMetadata> MetaData(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             using var message = CreateMetaDataRequest(identifier);
             _pipeline.Send(message, cancellationToken);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case 200:
                     {
-                        ServiceAlertMetaData value = default;
+                        ServiceAlertMetadata value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceAlertMetaData.DeserializeServiceAlertMetaData(document.RootElement);
+                        value = ServiceAlertMetadata.DeserializeServiceAlertMetadata(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

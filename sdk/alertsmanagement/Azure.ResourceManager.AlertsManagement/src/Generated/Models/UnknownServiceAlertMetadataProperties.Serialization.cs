@@ -10,17 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertsMetaDataProperties
+    internal partial class UnknownServiceAlertMetadataProperties
     {
-        internal static ServiceAlertsMetaDataProperties DeserializeServiceAlertsMetaDataProperties(JsonElement element)
+        internal static UnknownServiceAlertMetadataProperties DeserializeUnknownServiceAlertMetadataProperties(JsonElement element)
         {
-            if (element.TryGetProperty("metadataIdentifier", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "MonitorServiceList": return MonitorServiceList.DeserializeMonitorServiceList(element);
-                }
-            }
             ServiceAlertMetadataIdentifier metadataIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,7 +23,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new UnknownServiceAlertsMetaDataProperties(metadataIdentifier);
+            return new UnknownServiceAlertMetadataProperties(metadataIdentifier);
         }
     }
 }

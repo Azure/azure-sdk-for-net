@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Days of week.
-    /// Serialized Name: DaysOfWeek
-    /// </summary>
+    /// <summary> Days of week. </summary>
     public readonly partial struct AlertsManagementDayOfWeek : IEquatable<AlertsManagementDayOfWeek>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string FridayValue = "Friday";
         private const string SaturdayValue = "Saturday";
 
-        /// <summary>
-        /// Sunday
-        /// Serialized Name: DaysOfWeek.Sunday
-        /// </summary>
+        /// <summary> Sunday. </summary>
         public static AlertsManagementDayOfWeek Sunday { get; } = new AlertsManagementDayOfWeek(SundayValue);
-        /// <summary>
-        /// Monday
-        /// Serialized Name: DaysOfWeek.Monday
-        /// </summary>
+        /// <summary> Monday. </summary>
         public static AlertsManagementDayOfWeek Monday { get; } = new AlertsManagementDayOfWeek(MondayValue);
-        /// <summary>
-        /// Tuesday
-        /// Serialized Name: DaysOfWeek.Tuesday
-        /// </summary>
+        /// <summary> Tuesday. </summary>
         public static AlertsManagementDayOfWeek Tuesday { get; } = new AlertsManagementDayOfWeek(TuesdayValue);
-        /// <summary>
-        /// Wednesday
-        /// Serialized Name: DaysOfWeek.Wednesday
-        /// </summary>
+        /// <summary> Wednesday. </summary>
         public static AlertsManagementDayOfWeek Wednesday { get; } = new AlertsManagementDayOfWeek(WednesdayValue);
-        /// <summary>
-        /// Thursday
-        /// Serialized Name: DaysOfWeek.Thursday
-        /// </summary>
+        /// <summary> Thursday. </summary>
         public static AlertsManagementDayOfWeek Thursday { get; } = new AlertsManagementDayOfWeek(ThursdayValue);
-        /// <summary>
-        /// Friday
-        /// Serialized Name: DaysOfWeek.Friday
-        /// </summary>
+        /// <summary> Friday. </summary>
         public static AlertsManagementDayOfWeek Friday { get; } = new AlertsManagementDayOfWeek(FridayValue);
-        /// <summary>
-        /// Saturday
-        /// Serialized Name: DaysOfWeek.Saturday
-        /// </summary>
+        /// <summary> Saturday. </summary>
         public static AlertsManagementDayOfWeek Saturday { get; } = new AlertsManagementDayOfWeek(SaturdayValue);
         /// <summary> Determines if two <see cref="AlertsManagementDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => left.Equals(right);

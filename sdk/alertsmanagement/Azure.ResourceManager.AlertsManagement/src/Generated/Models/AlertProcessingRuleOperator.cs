@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Operator for a given condition.
-    /// Serialized Name: Operator
-    /// </summary>
+    /// <summary> Operator for a given condition. </summary>
     public readonly partial struct AlertProcessingRuleOperator : IEquatable<AlertProcessingRuleOperator>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string ContainsValue = "Contains";
         private const string DoesNotContainValue = "DoesNotContain";
 
-        /// <summary>
-        /// Equals
-        /// Serialized Name: Operator.Equals
-        /// </summary>
+        /// <summary> Equals. </summary>
         public static AlertProcessingRuleOperator EqualsValue { get; } = new AlertProcessingRuleOperator(EqualsValueValue);
-        /// <summary>
-        /// NotEquals
-        /// Serialized Name: Operator.NotEquals
-        /// </summary>
+        /// <summary> NotEquals. </summary>
         public static AlertProcessingRuleOperator NotEquals { get; } = new AlertProcessingRuleOperator(NotEqualsValue);
-        /// <summary>
-        /// Contains
-        /// Serialized Name: Operator.Contains
-        /// </summary>
+        /// <summary> Contains. </summary>
         public static AlertProcessingRuleOperator Contains { get; } = new AlertProcessingRuleOperator(ContainsValue);
-        /// <summary>
-        /// DoesNotContain
-        /// Serialized Name: Operator.DoesNotContain
-        /// </summary>
+        /// <summary> DoesNotContain. </summary>
         public static AlertProcessingRuleOperator DoesNotContain { get; } = new AlertProcessingRuleOperator(DoesNotContainValue);
         /// <summary> Determines if two <see cref="AlertProcessingRuleOperator"/> values are the same. </summary>
         public static bool operator ==(AlertProcessingRuleOperator left, AlertProcessingRuleOperator right) => left.Equals(right);

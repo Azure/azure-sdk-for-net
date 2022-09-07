@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 scopes,
                 new List<AlertProcessingRuleCondition> { new AlertProcessingRuleCondition("Severity","Equals",new List<string> { "Sev2" }) },
                 null,
-                new List<AlertProcessingRuleAction> { new RemoveAllActionGroups()},
+                new List<AlertProcessingAction> { new RemoveAllActionGroups()},
                 null,
                 true);
 

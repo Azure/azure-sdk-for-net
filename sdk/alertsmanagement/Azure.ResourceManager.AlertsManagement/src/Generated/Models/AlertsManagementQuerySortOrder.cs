@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// The AlertsManagementQuerySortOrder.
-    /// Serialized Name: SortOrder
-    /// </summary>
+    /// <summary> The AlertsManagementQuerySortOrder. </summary>
     public readonly partial struct AlertsManagementQuerySortOrder : IEquatable<AlertsManagementQuerySortOrder>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string AscValue = "asc";
         private const string DescValue = "desc";
 
-        /// <summary>
-        /// asc
-        /// Serialized Name: SortOrder.asc
-        /// </summary>
+        /// <summary> asc. </summary>
         public static AlertsManagementQuerySortOrder Asc { get; } = new AlertsManagementQuerySortOrder(AscValue);
-        /// <summary>
-        /// desc
-        /// Serialized Name: SortOrder.desc
-        /// </summary>
+        /// <summary> desc. </summary>
         public static AlertsManagementQuerySortOrder Desc { get; } = new AlertsManagementQuerySortOrder(DescValue);
         /// <summary> Determines if two <see cref="AlertsManagementQuerySortOrder"/> values are the same. </summary>
         public static bool operator ==(AlertsManagementQuerySortOrder left, AlertsManagementQuerySortOrder right) => left.Equals(right);

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
             ServiceAlertResource alertWithStateNew = null;
-            AsyncPageable<ServiceAlertResource> alertsWithStateNew = subscription.GetServiceAlerts().GetAllAsync(alertState: new AlertState("New"));
+            AsyncPageable<ServiceAlertResource> alertsWithStateNew = subscription.GetServiceAlerts().GetAllAsync(alertState: new ServiceAlertState("New"));
             await foreach (ServiceAlertResource alert in alertsWithStateNew)
             {
                 Console.WriteLine(alert.Data.Name);
                 // Perform state change operation
-                var alertPostStateChange = await alert.ChangeStateAsync(new AlertState("Closed"));
+                var alertPostStateChange = await alert.ChangeStateAsync(new ServiceAlertState("Closed"));
 
                 // Verify the state change operation was successful
                 var alertPostStateChangeContent = alertPostStateChange.GetRawResponse().Content;
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
 
             // Get alerts filtered
             ServiceAlertSeverity severityFilter = ServiceAlertSeverity.Sev3;
-            MonitorService monitorServiceFilter = MonitorService.LogAnalytics;
-            AsyncPageable<ServiceAlertResource> alerts = subscription.GetServiceAlerts().GetAllAsync(alertState: new AlertState("New"), monitorService: monitorServiceFilter, severity: severityFilter);
+            MonitorServiceSourceForAlert monitorServiceFilter = MonitorServiceSourceForAlert.LogAnalytics;
+            AsyncPageable<ServiceAlertResource> alerts = subscription.GetServiceAlerts().GetAllAsync(alertState: new ServiceAlertState("New"), monitorService: monitorServiceFilter, severity: severityFilter);
             await foreach (ServiceAlertResource alert in alerts)
             {
                 // Verify the state change operation was successful
@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             // Get alerts summary grouped by severity and state
             string groupBy = "severity,alertState";
-            var summary = await subscription.GetSummaryAlertAsync(groupBy);
+            var summary = await subscription.GetServiceAlertSummaryAsync(groupBy);
             //summary.GetRawResponse().Content
             Assert.NotNull(summary.Value.Total);
             Assert.AreEqual("severity", summary.Value.GroupedBy);
-            IEnumerator<ServiceAlertsSummaryGroupItemData> enumerator = summary.Value.Values.GetEnumerator();
+            IEnumerator<ServiceAlertSummaryGroupItemInfo> enumerator = summary.Value.Values.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                ServiceAlertsSummaryGroupItemData current = enumerator.Current;
+                ServiceAlertSummaryGroupItemInfo current = enumerator.Current;
                 IsValidSeverity(current.Name);
                 Assert.NotNull(current.Count);
                 Assert.AreEqual("alertState", current.GroupedBy);
-                IEnumerator<ServiceAlertsSummaryGroupItemData> stateEnumerator = current.Values.GetEnumerator();
+                IEnumerator<ServiceAlertSummaryGroupItemInfo> stateEnumerator = current.Values.GetEnumerator();
                 while (stateEnumerator.MoveNext())
                 {
-                    ServiceAlertsSummaryGroupItemData currentstate = stateEnumerator.Current;
+                    ServiceAlertSummaryGroupItemInfo currentstate = stateEnumerator.Current;
                     IsValidAlertState(currentstate.Name);
                     Assert.NotNull(currentstate.Count);
                 }
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
         {
             bool eventFound = false;
 
-            IList<ServiceAlertModificationItemData> modifications = alertHistory.Value.Modifications;
+            IList<ServiceAlertModificationItemInfo> modifications = alertHistory.Value.Modifications;
             foreach (var item in modifications)
             {
                 if (item.ModificationEvent == ServiceAlertModificationEvent.StateChange)
                 {
-                    Assert.AreEqual(AlertState.New.ToString(), item.OldValue);
-                    Assert.AreEqual(AlertState.Closed.ToString(), item.NewValue);
+                    Assert.AreEqual(ServiceAlertState.New.ToString(), item.OldValue);
+                    Assert.AreEqual(ServiceAlertState.Closed.ToString(), item.NewValue);
                     eventFound = true;
                     break;
                 }
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
         {
             List<string> validStates = new List<string>
             {
-                AlertState.New.ToString(),
-                AlertState.Acknowledged.ToString(),
-                AlertState.Closed.ToString()
+                ServiceAlertState.New.ToString(),
+                ServiceAlertState.Acknowledged.ToString(),
+                ServiceAlertState.Closed.ToString()
             };
 
             Assert.Contains(name, validStates);

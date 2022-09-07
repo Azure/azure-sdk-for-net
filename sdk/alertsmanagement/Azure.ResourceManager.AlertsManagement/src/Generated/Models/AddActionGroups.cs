@@ -12,17 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Add action groups to alert processing rule.
-    /// Serialized Name: AddActionGroups
-    /// </summary>
+    /// <summary> Add action groups to alert processing rule. </summary>
     public partial class AddActionGroups : AlertProcessingAction
     {
         /// <summary> Initializes a new instance of AddActionGroups. </summary>
-        /// <param name="actionGroupIds">
-        /// List of action group Ids to add to alert processing rule.
-        /// Serialized Name: AddActionGroups.actionGroupIds
-        /// </param>
+        /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupIds"/> is null. </exception>
         public AddActionGroups(IEnumerable<ResourceIdentifier> actionGroupIds)
         {
@@ -36,24 +30,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of AddActionGroups. </summary>
-        /// <param name="actionType">
-        /// Action that should be applied.
-        /// Serialized Name: Action.actionType
-        /// </param>
-        /// <param name="actionGroupIds">
-        /// List of action group Ids to add to alert processing rule.
-        /// Serialized Name: AddActionGroups.actionGroupIds
-        /// </param>
+        /// <param name="actionType"> Action that should be applied. </param>
+        /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         internal AddActionGroups(AlertProcessingActionType actionType, IList<ResourceIdentifier> actionGroupIds) : base(actionType)
         {
             ActionGroupIds = actionGroupIds;
             ActionType = actionType;
         }
 
-        /// <summary>
-        /// List of action group Ids to add to alert processing rule.
-        /// Serialized Name: AddActionGroups.actionGroupIds
-        /// </summary>
+        /// <summary> List of action group Ids to add to alert processing rule. </summary>
         public IList<ResourceIdentifier> ActionGroupIds { get; }
     }
 }

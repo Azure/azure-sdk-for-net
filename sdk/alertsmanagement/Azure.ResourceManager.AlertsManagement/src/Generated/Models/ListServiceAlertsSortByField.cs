@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// The ListServiceAlertsSortByField.
-    /// Serialized Name: AlertsSortByFields
-    /// </summary>
+    /// <summary> The ListServiceAlertsSortByField. </summary>
     public readonly partial struct ListServiceAlertsSortByField : IEquatable<ListServiceAlertsSortByField>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string StartOnValue = "startDateTime";
         private const string LastModifiedOnValue = "lastModifiedDateTime";
 
-        /// <summary>
-        /// name
-        /// Serialized Name: AlertsSortByFields.name
-        /// </summary>
+        /// <summary> name. </summary>
         public static ListServiceAlertsSortByField Name { get; } = new ListServiceAlertsSortByField(NameValue);
-        /// <summary>
-        /// severity
-        /// Serialized Name: AlertsSortByFields.severity
-        /// </summary>
+        /// <summary> severity. </summary>
         public static ListServiceAlertsSortByField Severity { get; } = new ListServiceAlertsSortByField(SeverityValue);
-        /// <summary>
-        /// alertState
-        /// Serialized Name: AlertsSortByFields.alertState
-        /// </summary>
+        /// <summary> alertState. </summary>
         public static ListServiceAlertsSortByField AlertState { get; } = new ListServiceAlertsSortByField(AlertStateValue);
-        /// <summary>
-        /// monitorCondition
-        /// Serialized Name: AlertsSortByFields.monitorCondition
-        /// </summary>
+        /// <summary> monitorCondition. </summary>
         public static ListServiceAlertsSortByField MonitorCondition { get; } = new ListServiceAlertsSortByField(MonitorConditionValue);
-        /// <summary>
-        /// targetResource
-        /// Serialized Name: AlertsSortByFields.targetResource
-        /// </summary>
+        /// <summary> targetResource. </summary>
         public static ListServiceAlertsSortByField TargetResource { get; } = new ListServiceAlertsSortByField(TargetResourceValue);
-        /// <summary>
-        /// targetResourceName
-        /// Serialized Name: AlertsSortByFields.targetResourceName
-        /// </summary>
+        /// <summary> targetResourceName. </summary>
         public static ListServiceAlertsSortByField TargetResourceName { get; } = new ListServiceAlertsSortByField(TargetResourceNameValue);
-        /// <summary>
-        /// targetResourceGroup
-        /// Serialized Name: AlertsSortByFields.targetResourceGroup
-        /// </summary>
+        /// <summary> targetResourceGroup. </summary>
         public static ListServiceAlertsSortByField TargetResourceGroup { get; } = new ListServiceAlertsSortByField(TargetResourceGroupValue);
-        /// <summary>
-        /// targetResourceType
-        /// Serialized Name: AlertsSortByFields.targetResourceType
-        /// </summary>
+        /// <summary> targetResourceType. </summary>
         public static ListServiceAlertsSortByField TargetResourceType { get; } = new ListServiceAlertsSortByField(TargetResourceTypeValue);
-        /// <summary>
-        /// startDateTime
-        /// Serialized Name: AlertsSortByFields.startDateTime
-        /// </summary>
+        /// <summary> startDateTime. </summary>
         public static ListServiceAlertsSortByField StartOn { get; } = new ListServiceAlertsSortByField(StartOnValue);
-        /// <summary>
-        /// lastModifiedDateTime
-        /// Serialized Name: AlertsSortByFields.lastModifiedDateTime
-        /// </summary>
+        /// <summary> lastModifiedDateTime. </summary>
         public static ListServiceAlertsSortByField LastModifiedOn { get; } = new ListServiceAlertsSortByField(LastModifiedOnValue);
         /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are the same. </summary>
         public static bool operator ==(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => left.Equals(right);

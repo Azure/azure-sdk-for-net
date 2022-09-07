@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// The RetrievedInformationIdentifier.
-    /// Serialized Name: Identifier
-    /// </summary>
+    /// <summary> The RetrievedInformationIdentifier. </summary>
     public readonly partial struct RetrievedInformationIdentifier : IEquatable<RetrievedInformationIdentifier>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         private const string MonitorServiceListValue = "MonitorServiceList";
 
-        /// <summary>
-        /// MonitorServiceList
-        /// Serialized Name: Identifier.MonitorServiceList
-        /// </summary>
+        /// <summary> MonitorServiceList. </summary>
         public static RetrievedInformationIdentifier MonitorServiceList { get; } = new RetrievedInformationIdentifier(MonitorServiceListValue);
         /// <summary> Determines if two <see cref="RetrievedInformationIdentifier"/> values are the same. </summary>
         public static bool operator ==(RetrievedInformationIdentifier left, RetrievedInformationIdentifier right) => left.Equals(right);

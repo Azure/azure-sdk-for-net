@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertMetaData
+    public partial class ServiceAlertMetadata
     {
-        internal static ServiceAlertMetaData DeserializeServiceAlertMetaData(JsonElement element)
+        internal static ServiceAlertMetadata DeserializeServiceAlertMetadata(JsonElement element)
         {
-            Optional<ServiceAlertsMetaDataProperties> properties = default;
+            Optional<ServiceAlertMetadataProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ServiceAlertsMetaDataProperties.DeserializeServiceAlertsMetaDataProperties(property.Value);
+                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value);
                     continue;
                 }
             }
-            return new ServiceAlertMetaData(properties.Value);
+            return new ServiceAlertMetadata(properties.Value);
         }
     }
 }

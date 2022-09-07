@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Identification of the information to be retrieved by API call
-    /// Serialized Name: MetadataIdentifier
-    /// </summary>
+    /// <summary> Identification of the information to be retrieved by API call. </summary>
     internal readonly partial struct ServiceAlertMetadataIdentifier : IEquatable<ServiceAlertMetadataIdentifier>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         private const string MonitorServiceListValue = "MonitorServiceList";
 
-        /// <summary>
-        /// MonitorServiceList
-        /// Serialized Name: MetadataIdentifier.MonitorServiceList
-        /// </summary>
+        /// <summary> MonitorServiceList. </summary>
         public static ServiceAlertMetadataIdentifier MonitorServiceList { get; } = new ServiceAlertMetadataIdentifier(MonitorServiceListValue);
         /// <summary> Determines if two <see cref="ServiceAlertMetadataIdentifier"/> values are the same. </summary>
         public static bool operator ==(ServiceAlertMetadataIdentifier left, ServiceAlertMetadataIdentifier right) => left.Equals(right);

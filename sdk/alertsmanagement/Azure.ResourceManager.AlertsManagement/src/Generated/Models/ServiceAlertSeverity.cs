@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// The ServiceAlertSeverity.
-    /// Serialized Name: Severity
-    /// </summary>
+    /// <summary> The ServiceAlertSeverity. </summary>
     public readonly partial struct ServiceAlertSeverity : IEquatable<ServiceAlertSeverity>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string Sev3Value = "Sev3";
         private const string Sev4Value = "Sev4";
 
-        /// <summary>
-        /// Sev0
-        /// Serialized Name: Severity.Sev0
-        /// </summary>
+        /// <summary> Sev0. </summary>
         public static ServiceAlertSeverity Sev0 { get; } = new ServiceAlertSeverity(Sev0Value);
-        /// <summary>
-        /// Sev1
-        /// Serialized Name: Severity.Sev1
-        /// </summary>
+        /// <summary> Sev1. </summary>
         public static ServiceAlertSeverity Sev1 { get; } = new ServiceAlertSeverity(Sev1Value);
-        /// <summary>
-        /// Sev2
-        /// Serialized Name: Severity.Sev2
-        /// </summary>
+        /// <summary> Sev2. </summary>
         public static ServiceAlertSeverity Sev2 { get; } = new ServiceAlertSeverity(Sev2Value);
-        /// <summary>
-        /// Sev3
-        /// Serialized Name: Severity.Sev3
-        /// </summary>
+        /// <summary> Sev3. </summary>
         public static ServiceAlertSeverity Sev3 { get; } = new ServiceAlertSeverity(Sev3Value);
-        /// <summary>
-        /// Sev4
-        /// Serialized Name: Severity.Sev4
-        /// </summary>
+        /// <summary> Sev4. </summary>
         public static ServiceAlertSeverity Sev4 { get; } = new ServiceAlertSeverity(Sev4Value);
         /// <summary> Determines if two <see cref="ServiceAlertSeverity"/> values are the same. </summary>
         public static bool operator ==(ServiceAlertSeverity left, ServiceAlertSeverity right) => left.Equals(right);

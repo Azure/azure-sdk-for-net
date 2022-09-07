@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Action that should be applied.
-    /// Serialized Name: ActionType
-    /// </summary>
+    /// <summary> Action that should be applied. </summary>
     internal readonly partial struct AlertProcessingActionType : IEquatable<AlertProcessingActionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string AddActionGroupsValue = "AddActionGroups";
         private const string RemoveAllActionGroupsValue = "RemoveAllActionGroups";
 
-        /// <summary>
-        /// AddActionGroups
-        /// Serialized Name: ActionType.AddActionGroups
-        /// </summary>
+        /// <summary> AddActionGroups. </summary>
         public static AlertProcessingActionType AddActionGroups { get; } = new AlertProcessingActionType(AddActionGroupsValue);
-        /// <summary>
-        /// RemoveAllActionGroups
-        /// Serialized Name: ActionType.RemoveAllActionGroups
-        /// </summary>
+        /// <summary> RemoveAllActionGroups. </summary>
         public static AlertProcessingActionType RemoveAllActionGroups { get; } = new AlertProcessingActionType(RemoveAllActionGroupsValue);
         /// <summary> Determines if two <see cref="AlertProcessingActionType"/> values are the same. </summary>
         public static bool operator ==(AlertProcessingActionType left, AlertProcessingActionType right) => left.Equals(right);

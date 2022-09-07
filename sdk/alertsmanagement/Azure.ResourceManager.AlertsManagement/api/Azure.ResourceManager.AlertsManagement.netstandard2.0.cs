@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AlertsManagement
         public static Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetServiceAlert(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetServiceAlertAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetaData> GetServiceAlertMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetaData>> GetServiceAlertMetadataAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata> GetServiceAlertMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.ServiceAlertResource GetServiceAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.ServiceAlertCollection GetServiceAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public abstract partial class AlertProcessingRuleRecurrence
     {
         protected AlertProcessingRuleRecurrence() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.TimeSpan? EndOn { get { throw null; } set { } }
+        public System.TimeSpan? StartOn { get { throw null; } set { } }
     }
     public partial class AlertProcessingRuleSchedule
     {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string DisplayName { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class MonitorServiceList : Azure.ResourceManager.AlertsManagement.Models.ServiceAlertsMetaDataProperties
+    public partial class MonitorServiceList : Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties
     {
         internal MonitorServiceList() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails> Data { get { throw null; } }
@@ -437,10 +437,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string TargetResourceName { get { throw null; } set { } }
         public string TargetResourceType { get { throw null; } set { } }
     }
-    public partial class ServiceAlertMetaData
+    public partial class ServiceAlertMetadata
     {
-        internal ServiceAlertMetaData() { }
-        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertsMetaDataProperties Properties { get { throw null; } }
+        internal ServiceAlertMetadata() { }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties Properties { get { throw null; } }
+    }
+    public abstract partial class ServiceAlertMetadataProperties
+    {
+        protected ServiceAlertMetadataProperties() { }
     }
     public partial class ServiceAlertModification : Azure.ResourceManager.Models.ResourceData
     {
@@ -510,10 +514,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public abstract partial class ServiceAlertsMetaDataProperties
-    {
-        protected ServiceAlertsMetaDataProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceAlertState : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState>
@@ -627,10 +627,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TimeRangeFilter(string value) { throw null; }
-        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter OneD { get { throw null; } }
-        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter OneH { get { throw null; } }
-        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter SevenD { get { throw null; } }
-        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter ThirtyD { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter OneDay { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter OneHour { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter SevenDays { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter ThirtyDays { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

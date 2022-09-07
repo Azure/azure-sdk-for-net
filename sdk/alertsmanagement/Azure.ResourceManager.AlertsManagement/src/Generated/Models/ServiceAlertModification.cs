@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Alert Modification details
-    /// Serialized Name: AlertModification
-    /// </summary>
+    /// <summary> Alert Modification details. </summary>
     public partial class ServiceAlertModification : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
@@ -29,29 +26,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertId">
-        /// Unique Id of the alert for which the history is being retrieved
-        /// Serialized Name: AlertModification.properties.alertId
-        /// </param>
-        /// <param name="modifications">
-        /// Modification details
-        /// Serialized Name: AlertModification.properties.modifications
-        /// </param>
+        /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
+        /// <param name="modifications"> Modification details. </param>
         internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications) : base(id, name, resourceType, systemData)
         {
             AlertId = alertId;
             Modifications = modifications;
         }
 
-        /// <summary>
-        /// Unique Id of the alert for which the history is being retrieved
-        /// Serialized Name: AlertModification.properties.alertId
-        /// </summary>
+        /// <summary> Unique Id of the alert for which the history is being retrieved. </summary>
         public Guid? AlertId { get; }
-        /// <summary>
-        /// Modification details
-        /// Serialized Name: AlertModification.properties.modifications
-        /// </summary>
+        /// <summary> Modification details. </summary>
         public IList<ServiceAlertModificationItemInfo> Modifications { get; }
     }
 }

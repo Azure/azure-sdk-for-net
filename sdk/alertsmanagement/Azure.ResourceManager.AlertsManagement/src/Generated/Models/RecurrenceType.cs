@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Specifies when the recurrence should be applied.
-    /// Serialized Name: RecurrenceType
-    /// </summary>
+    /// <summary> Specifies when the recurrence should be applied. </summary>
     internal readonly partial struct RecurrenceType : IEquatable<RecurrenceType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string WeeklyValue = "Weekly";
         private const string MonthlyValue = "Monthly";
 
-        /// <summary>
-        /// Daily
-        /// Serialized Name: RecurrenceType.Daily
-        /// </summary>
+        /// <summary> Daily. </summary>
         public static RecurrenceType Daily { get; } = new RecurrenceType(DailyValue);
-        /// <summary>
-        /// Weekly
-        /// Serialized Name: RecurrenceType.Weekly
-        /// </summary>
+        /// <summary> Weekly. </summary>
         public static RecurrenceType Weekly { get; } = new RecurrenceType(WeeklyValue);
-        /// <summary>
-        /// Monthly
-        /// Serialized Name: RecurrenceType.Monthly
-        /// </summary>
+        /// <summary> Monthly. </summary>
         public static RecurrenceType Monthly { get; } = new RecurrenceType(MonthlyValue);
         /// <summary> Determines if two <see cref="RecurrenceType"/> values are the same. </summary>
         public static bool operator ==(RecurrenceType left, RecurrenceType right) => left.Equals(right);

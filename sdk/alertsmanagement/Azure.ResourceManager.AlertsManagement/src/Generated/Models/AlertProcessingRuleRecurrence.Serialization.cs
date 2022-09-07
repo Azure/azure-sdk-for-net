@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartOn.Value);
+                writer.WriteStringValue(StartOn.Value, "T");
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndOn.Value);
+                writer.WriteStringValue(EndOn.Value, "T");
             }
             writer.WriteEndObject();
         }
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             RecurrenceType recurrenceType = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Optional<TimeSpan> startTime = default;
+            Optional<TimeSpan> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recurrenceType"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset();
+                    startTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset();
+                    endTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
             }

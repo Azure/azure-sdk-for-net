@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   AlertModification.modifiedAt: modifiedOn|datetime
   AlertProcessingRule.properties.enabled: IsEnabled
@@ -31,10 +28,14 @@ rename-mapping:
   PatchObject.properties.enabled: IsEnabled
   SmartGroup.properties.lastModifiedUserName: lastModifiedBy
   SmartGroupModificationItem.modifiedAt: modifiedOn|datetime
-  Recurrence.startTime: -|datetime
-  Recurrence.endTime: -|datetime
+  Recurrence.startTime: startOn
+  Recurrence.endTime: endOn
   Schedule.effectiveFrom: -|datetime
   Schedule.effectiveUntil: -|datetime
+  TimeRange.1h: OneHour
+  TimeRange.1d: OneDay
+  TimeRange.7d: SevenDays
+  TimeRange.30d: ThirtyDays 
   AlertModificationEvent: ServiceAlertModificationEvent
   AlertModificationItem: ServiceAlertModificationItemInfo
   Severity: ServiceAlertSeverity
@@ -59,8 +60,8 @@ rename-mapping:
   SmartGroupModificationItem: SmartGroupModificationItemInfo
   Schedule: AlertProcessingRuleSchedule
   Recurrence: AlertProcessingRuleRecurrence
-  AlertsMetaData: ServiceAlertMetaData
-  AlertsMetaDataProperties: ServiceAlertsMetaDataProperties
+  AlertsMetaData: ServiceAlertMetadata
+  AlertsMetaDataProperties: ServiceAlertMetadataProperties
   AlertModification: ServiceAlertModification
   AlertsSortByFields: ListServiceAlertsSortByField
   AlertsSummary: ServiceAlertSummary
@@ -120,6 +121,8 @@ directive:
       $.errorResponse['x-ms-client-name'] = 'AlertProcessingRuleErrorResponse';
       $.errorResponseBody['x-ms-client-name'] = 'AlertProcessingRuleErrorResponseBody';
       $.AlertProcessingRule.properties.properties['x-ms-client-flatten'] = true;
+      $.Recurrence.properties.startTime['format'] = 'time';
+      $.Recurrence.properties.endTime['format'] = 'time';
   - from: AlertsManagement.json
     where: $.definitions
     transform: >

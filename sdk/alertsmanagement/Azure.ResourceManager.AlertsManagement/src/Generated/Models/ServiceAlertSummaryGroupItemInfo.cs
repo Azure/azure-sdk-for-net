@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary>
-    /// Alerts summary group item
-    /// Serialized Name: AlertsSummaryGroupItem
-    /// </summary>
+    /// <summary> Alerts summary group item. </summary>
     public partial class ServiceAlertSummaryGroupItemInfo
     {
         /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
-        /// <param name="name">
-        /// Value of the aggregated field
-        /// Serialized Name: AlertsSummaryGroupItem.name
-        /// </param>
-        /// <param name="count">
-        /// Count of the aggregated field
-        /// Serialized Name: AlertsSummaryGroupItem.count
-        /// </param>
-        /// <param name="groupedBy">
-        /// Name of the field aggregated
-        /// Serialized Name: AlertsSummaryGroupItem.groupedby
-        /// </param>
-        /// <param name="values">
-        /// List of the items
-        /// Serialized Name: AlertsSummaryGroupItem.values
-        /// </param>
+        /// <param name="name"> Value of the aggregated field. </param>
+        /// <param name="count"> Count of the aggregated field. </param>
+        /// <param name="groupedBy"> Name of the field aggregated. </param>
+        /// <param name="values"> List of the items. </param>
         internal ServiceAlertSummaryGroupItemInfo(string name, long? count, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values)
         {
             Name = name;
@@ -47,25 +32,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Values = values;
         }
 
-        /// <summary>
-        /// Value of the aggregated field
-        /// Serialized Name: AlertsSummaryGroupItem.name
-        /// </summary>
+        /// <summary> Value of the aggregated field. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Count of the aggregated field
-        /// Serialized Name: AlertsSummaryGroupItem.count
-        /// </summary>
+        /// <summary> Count of the aggregated field. </summary>
         public long? Count { get; set; }
-        /// <summary>
-        /// Name of the field aggregated
-        /// Serialized Name: AlertsSummaryGroupItem.groupedby
-        /// </summary>
+        /// <summary> Name of the field aggregated. </summary>
         public string GroupedBy { get; set; }
-        /// <summary>
-        /// List of the items
-        /// Serialized Name: AlertsSummaryGroupItem.values
-        /// </summary>
+        /// <summary> List of the items. </summary>
         public IList<ServiceAlertSummaryGroupItemInfo> Values { get; }
     }
 }
