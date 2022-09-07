@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="keyVaultUri"> The URL of the vault. </param>
         /// <param name="keyState"> The state of key provided. </param>
         /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
-        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, EncryptionVersionType? versionType)
+        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The state of key provided. </summary>
         public AvsEncryptionKeyStatus? KeyState { get; }
         /// <summary> Property of the key if user provided or auto detected. </summary>
-        public EncryptionVersionType? VersionType { get; }
+        public AvsEncryptionVersionType? VersionType { get; }
     }
 }

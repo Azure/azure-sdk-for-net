@@ -19,6 +19,7 @@ modelerfour:
 override-operation-name:
   Locations_CheckQuotaAvailability: CheckAvsQuotaAvailability
   Locations_CheckTrialAvailability: CheckAvsTrialAvailability
+  PrivateClouds_RotateVcenterPassword: RotateVCenterPassword
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -65,6 +66,8 @@ rename-mapping:
   Encryption: CustomerManagedEncryption
   Endpoints: AvsPrivateCloudEndpoints
   IdentitySource: SingleSignOnIdentitySource
+  IdentitySource.primaryServer: -|Uri
+  IdentitySource.secondaryServer: -|Uri
   InternetEnum: InternetConnectivityState
   ScriptExecutionParameter: ScriptExecutionParameterDetails
   PSCredentialExecutionParameter: PSCredentialExecutionParameterDetails
@@ -96,6 +99,16 @@ rename-mapping:
   ClusterProvisioningState: AvsPrivateCloudClusterProvisioningState
   DatastoreProvisioningState: AvsPrivateCloudDatastoreProvisioningState
   VirtualMachineRestrictMovement: AvsPrivateCloudClusterVirtualMachineRestrictMovement
+  PrivateCloud.properties.vmotionNetwork: VMotionNetwork
+  PrivateCloud.properties.vcenterPassword: VCenterPassword
+  PrivateCloud.properties.vcenterCertificateThumbprint: VCenterCertificateThumbprint
+  AdminCredentials.vcenterUsername: VCenterUsername
+  AdminCredentials.vcenterPassword: VCenterPassword
+  AffinityType: AvsPlacementPolicyAffinityType
+  DiskPoolVolume.targetId: -|arm-id
+  EncryptionState: AvsEncryptionState
+  EncryptionVersionType: AvsEncryptionVersionType
+  ManagementCluster: AvsManagementCluster
 
 prepend-rp-prefix:
 - CloudLink
@@ -111,5 +124,10 @@ directive:
     transform: >
       $.PrivateCloudProperties.properties.externalCloudLinks.items['x-ms-format'] = 'arm-id';
       $.WorkloadNetworkDnsZoneProperties.properties.dnsServerIps.items['x-ms-format'] = 'ip-address';
+      delete $.ScriptExecutionProperties.properties.namedOutputs.additionalProperties;
+      $.PlacementPolicyUpdateProperties.properties.vmMembers.items['x-ms-format'] = 'arm-id';
+      $.VmHostPlacementPolicyProperties.properties.vmMembers.items['x-ms-format'] = 'arm-id';
+      $.VmVmPlacementPolicyProperties.properties.vmMembers.items['x-ms-format'] = 'arm-id';
+      $.ScriptCmdletProperties.properties.timeout['format'] = 'duration';
 
 ```

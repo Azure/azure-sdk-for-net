@@ -71,20 +71,14 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NamedOutputs))
+            if (Optional.IsDefined(NamedOutputs))
             {
                 writer.WritePropertyName("namedOutputs");
-                writer.WriteStartObject();
-                foreach (var item in NamedOutputs)
-                {
-                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(NamedOutputs);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamedOutputs.ToString()).RootElement);
 #endif
-                }
-                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -107,7 +101,7 @@ namespace Azure.ResourceManager.Avs
             Optional<DateTimeOffset> finishedAt = default;
             Optional<ScriptExecutionProvisioningState> provisioningState = default;
             Optional<IList<string>> output = default;
-            Optional<IDictionary<string, BinaryData>> namedOutputs = default;
+            Optional<BinaryData> namedOutputs = default;
             Optional<IReadOnlyList<string>> information = default;
             Optional<IReadOnlyList<string>> warnings = default;
             Optional<IReadOnlyList<string>> errors = default;
@@ -264,12 +258,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                            }
-                            namedOutputs = dictionary;
+                            namedOutputs = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("information"))
@@ -321,7 +310,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), Optional.ToDictionary(namedOutputs), Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors));
+            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), namedOutputs.Value, Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors));
         }
     }
 }
