@@ -113,7 +113,6 @@ namespace Azure.Core
                                 break;
                         }
                     }
-
                 }
                 return members;
             }
