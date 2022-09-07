@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Condition to trigger an alert processing rule.
-    /// Serialized Name: AlertProcessingRuleCondition
+    /// Serialized Name: Condition
     /// </summary>
     public partial class AlertProcessingRuleCondition
     {
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
         /// <param name="field">
         /// Field for a given condition.
-        /// Serialized Name: AlertProcessingRuleCondition.field
+        /// Serialized Name: Condition.field
         /// </param>
         /// <param name="operator">
         /// Operator for a given condition.
-        /// Serialized Name: AlertProcessingRuleCondition.operator
+        /// Serialized Name: Condition.operator
         /// </param>
         /// <param name="values">
         /// List of values to match for a given condition.
-        /// Serialized Name: AlertProcessingRuleCondition.values
+        /// Serialized Name: Condition.values
         /// </param>
         internal AlertProcessingRuleCondition(AlertProcessingRuleField? field, AlertProcessingRuleOperator? @operator, IList<string> values)
         {
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Field for a given condition.
-        /// Serialized Name: AlertProcessingRuleCondition.field
+        /// Serialized Name: Condition.field
         /// </summary>
         public AlertProcessingRuleField? Field { get; set; }
         /// <summary>
         /// Operator for a given condition.
-        /// Serialized Name: AlertProcessingRuleCondition.operator
+        /// Serialized Name: Condition.operator
         /// </summary>
         public AlertProcessingRuleOperator? Operator { get; set; }
         /// <summary>
         /// List of values to match for a given condition.
-        /// Serialized Name: AlertProcessingRuleCondition.values
+        /// Serialized Name: Condition.values
         /// </summary>
         public IList<string> Values { get; }
     }

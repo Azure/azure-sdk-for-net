@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of UnknownServiceAlertsMetaDataProperties. </summary>
         /// <param name="metadataIdentifier">
         /// Identification of the information to be retrieved by API call
-        /// Serialized Name: ServiceAlertsMetaDataProperties.metadataIdentifier
+        /// Serialized Name: AlertsMetaDataProperties.metadataIdentifier
         /// </param>
         internal UnknownServiceAlertsMetaDataProperties(ServiceAlertMetadataIdentifier metadataIdentifier) : base(metadataIdentifier)
         {

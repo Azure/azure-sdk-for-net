@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SmartGroupResource>> ChangeStateAsync(AlertState newState, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SmartGroupResource>> ChangeStateAsync(ServiceAlertState newState, CancellationToken cancellationToken = default)
         {
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupResource.ChangeState");
             scope.Start();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SmartGroupResource> ChangeState(AlertState newState, CancellationToken cancellationToken = default)
+        public virtual Response<SmartGroupResource> ChangeState(ServiceAlertState newState, CancellationToken cancellationToken = default)
         {
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupResource.ChangeState");
             scope.Start();

@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartOn.Value);
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndOn.Value);
             }
             writer.WriteEndObject();
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
             }

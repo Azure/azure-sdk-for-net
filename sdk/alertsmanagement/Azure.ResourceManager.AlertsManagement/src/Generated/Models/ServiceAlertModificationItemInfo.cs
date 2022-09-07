@@ -5,56 +5,54 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
-    /// smartGroup modification item.
-    /// Serialized Name: SmartGroupModificationItemData
+    /// Alert modification item.
+    /// Serialized Name: AlertModificationItem
     /// </summary>
-    public partial class SmartGroupModificationItemData
+    public partial class ServiceAlertModificationItemInfo
     {
-        /// <summary> Initializes a new instance of SmartGroupModificationItemData. </summary>
-        public SmartGroupModificationItemData()
+        /// <summary> Initializes a new instance of ServiceAlertModificationItemInfo. </summary>
+        public ServiceAlertModificationItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModificationItemData. </summary>
+        /// <summary> Initializes a new instance of ServiceAlertModificationItemInfo. </summary>
         /// <param name="modificationEvent">
         /// Reason for the modification
-        /// Serialized Name: SmartGroupModificationItemData.modificationEvent
+        /// Serialized Name: AlertModificationItem.modificationEvent
         /// </param>
         /// <param name="oldValue">
         /// Old value
-        /// Serialized Name: SmartGroupModificationItemData.oldValue
+        /// Serialized Name: AlertModificationItem.oldValue
         /// </param>
         /// <param name="newValue">
         /// New value
-        /// Serialized Name: SmartGroupModificationItemData.newValue
+        /// Serialized Name: AlertModificationItem.newValue
         /// </param>
-        /// <param name="modifiedOn">
+        /// <param name="modifiedAt">
         /// Modified date and time
-        /// Serialized Name: SmartGroupModificationItemData.modifiedAt
+        /// Serialized Name: AlertModificationItem.modifiedAt
         /// </param>
         /// <param name="modifiedBy">
         /// Modified user details (Principal client name)
-        /// Serialized Name: SmartGroupModificationItemData.modifiedBy
+        /// Serialized Name: AlertModificationItem.modifiedBy
         /// </param>
         /// <param name="comments">
         /// Modification comments
-        /// Serialized Name: SmartGroupModificationItemData.comments
+        /// Serialized Name: AlertModificationItem.comments
         /// </param>
         /// <param name="description">
         /// Description of the modification
-        /// Serialized Name: SmartGroupModificationItemData.description
+        /// Serialized Name: AlertModificationItem.description
         /// </param>
-        internal SmartGroupModificationItemData(SmartGroupModificationEvent? modificationEvent, string oldValue, string newValue, DateTimeOffset? modifiedOn, string modifiedBy, string comments, string description)
+        internal ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, string modifiedAt, string modifiedBy, string comments, string description)
         {
             ModificationEvent = modificationEvent;
             OldValue = oldValue;
             NewValue = newValue;
-            ModifiedOn = modifiedOn;
+            ModifiedAt = modifiedAt;
             ModifiedBy = modifiedBy;
             Comments = comments;
             Description = description;
@@ -62,37 +60,37 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Reason for the modification
-        /// Serialized Name: SmartGroupModificationItemData.modificationEvent
+        /// Serialized Name: AlertModificationItem.modificationEvent
         /// </summary>
-        public SmartGroupModificationEvent? ModificationEvent { get; set; }
+        public ServiceAlertModificationEvent? ModificationEvent { get; set; }
         /// <summary>
         /// Old value
-        /// Serialized Name: SmartGroupModificationItemData.oldValue
+        /// Serialized Name: AlertModificationItem.oldValue
         /// </summary>
         public string OldValue { get; set; }
         /// <summary>
         /// New value
-        /// Serialized Name: SmartGroupModificationItemData.newValue
+        /// Serialized Name: AlertModificationItem.newValue
         /// </summary>
         public string NewValue { get; set; }
         /// <summary>
         /// Modified date and time
-        /// Serialized Name: SmartGroupModificationItemData.modifiedAt
+        /// Serialized Name: AlertModificationItem.modifiedAt
         /// </summary>
-        public DateTimeOffset? ModifiedOn { get; set; }
+        public string ModifiedAt { get; set; }
         /// <summary>
         /// Modified user details (Principal client name)
-        /// Serialized Name: SmartGroupModificationItemData.modifiedBy
+        /// Serialized Name: AlertModificationItem.modifiedBy
         /// </summary>
         public string ModifiedBy { get; set; }
         /// <summary>
         /// Modification comments
-        /// Serialized Name: SmartGroupModificationItemData.comments
+        /// Serialized Name: AlertModificationItem.comments
         /// </summary>
         public string Comments { get; set; }
         /// <summary>
         /// Description of the modification
-        /// Serialized Name: SmartGroupModificationItemData.description
+        /// Serialized Name: AlertModificationItem.description
         /// </summary>
         public string Description { get; set; }
     }

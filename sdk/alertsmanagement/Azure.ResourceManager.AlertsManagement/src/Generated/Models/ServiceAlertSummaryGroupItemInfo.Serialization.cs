@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertsSummaryGroupItemData : IUtf8JsonSerializable
+    public partial class ServiceAlertSummaryGroupItemInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceAlertsSummaryGroupItemData DeserializeServiceAlertsSummaryGroupItemData(JsonElement element)
+        internal static ServiceAlertSummaryGroupItemInfo DeserializeServiceAlertSummaryGroupItemInfo(JsonElement element)
         {
             Optional<string> name = default;
             Optional<long> count = default;
             Optional<string> groupedby = default;
-            Optional<IList<ServiceAlertsSummaryGroupItemData>> values = default;
+            Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceAlertsSummaryGroupItemData> array = new List<ServiceAlertsSummaryGroupItemData>();
+                    List<ServiceAlertSummaryGroupItemInfo> array = new List<ServiceAlertSummaryGroupItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeServiceAlertsSummaryGroupItemData(item));
+                        array.Add(DeserializeServiceAlertSummaryGroupItemInfo(item));
                     }
                     values = array;
                     continue;
                 }
             }
-            return new ServiceAlertsSummaryGroupItemData(name.Value, Optional.ToNullable(count), groupedby.Value, Optional.ToList(values));
+            return new ServiceAlertSummaryGroupItemInfo(name.Value, Optional.ToNullable(count), groupedby.Value, Optional.ToList(values));
         }
     }
 }

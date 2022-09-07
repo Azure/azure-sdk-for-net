@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertsSummary : IUtf8JsonSerializable
+    public partial class ServiceAlertSummary : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceAlertsSummary DeserializeServiceAlertsSummary(JsonElement element)
+        internal static ServiceAlertSummary DeserializeServiceAlertSummary(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<long> total = default;
             Optional<long> smartGroupsCount = default;
             Optional<string> groupedby = default;
-            Optional<IList<ServiceAlertsSummaryGroupItemData>> values = default;
+            Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServiceAlertsSummaryGroupItemData> array = new List<ServiceAlertsSummaryGroupItemData>();
+                            List<ServiceAlertSummaryGroupItemInfo> array = new List<ServiceAlertSummaryGroupItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceAlertsSummaryGroupItemData.DeserializeServiceAlertsSummaryGroupItemData(item));
+                                array.Add(ServiceAlertSummaryGroupItemInfo.DeserializeServiceAlertSummaryGroupItemInfo(item));
                             }
                             values = array;
                             continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertsSummary(id, name, type, systemData.Value, Optional.ToNullable(total), Optional.ToNullable(smartGroupsCount), groupedby.Value, Optional.ToList(values));
+            return new ServiceAlertSummary(id, name, type, systemData.Value, Optional.ToNullable(total), Optional.ToNullable(smartGroupsCount), groupedby.Value, Optional.ToList(values));
         }
     }
 }

@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="essentials">
         /// This object contains consistent fields across different monitor services.
-        /// Serialized Name: ServiceAlert.properties.essentials
+        /// Serialized Name: Alert.properties.essentials
         /// </param>
         /// <param name="context">
         /// Information specific to the monitor service that gives more contextual details about the alert.
-        /// Serialized Name: ServiceAlert.properties.context
+        /// Serialized Name: Alert.properties.context
         /// </param>
         /// <param name="egressConfig">
         /// Config which would be used for displaying the data in portal.
-        /// Serialized Name: ServiceAlert.properties.egressConfig
+        /// Serialized Name: Alert.properties.egressConfig
         /// </param>
         internal ServiceAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertEssentials essentials, BinaryData context, BinaryData egressConfig) : base(id, name, resourceType, systemData)
         {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// This object contains consistent fields across different monitor services.
-        /// Serialized Name: ServiceAlert.properties.essentials
+        /// Serialized Name: Alert.properties.essentials
         /// </summary>
         public ServiceAlertEssentials Essentials { get; set; }
         /// <summary>
         /// Information specific to the monitor service that gives more contextual details about the alert.
-        /// Serialized Name: ServiceAlert.properties.context
+        /// Serialized Name: Alert.properties.context
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AlertsManagement
         public BinaryData Context { get; }
         /// <summary>
         /// Config which would be used for displaying the data in portal.
-        /// Serialized Name: ServiceAlert.properties.egressConfig
+        /// Serialized Name: Alert.properties.egressConfig
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

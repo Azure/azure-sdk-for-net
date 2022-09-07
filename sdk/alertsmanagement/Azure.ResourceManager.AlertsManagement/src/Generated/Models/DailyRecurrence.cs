@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of DailyRecurrence. </summary>
         /// <param name="recurrenceType">
         /// Specifies when the recurrence should be applied.
-        /// Serialized Name: AlertProcessingRuleRecurrence.recurrenceType
+        /// Serialized Name: Recurrence.recurrenceType
         /// </param>
         /// <param name="startOn">
         /// Start time for recurrence.
-        /// Serialized Name: AlertProcessingRuleRecurrence.startTime
+        /// Serialized Name: Recurrence.startTime
         /// </param>
         /// <param name="endOn">
         /// End time for recurrence.
-        /// Serialized Name: AlertProcessingRuleRecurrence.endTime
+        /// Serialized Name: Recurrence.endTime
         /// </param>
         internal DailyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(recurrenceType, startOn, endOn)
         {

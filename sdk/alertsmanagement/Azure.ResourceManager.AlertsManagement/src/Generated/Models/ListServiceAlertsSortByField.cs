@@ -11,16 +11,16 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
-    /// The AlertsSortByField.
+    /// The ListServiceAlertsSortByField.
     /// Serialized Name: AlertsSortByFields
     /// </summary>
-    public readonly partial struct AlertsSortByField : IEquatable<AlertsSortByField>
+    public readonly partial struct ListServiceAlertsSortByField : IEquatable<ListServiceAlertsSortByField>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AlertsSortByField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListServiceAlertsSortByField"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AlertsSortByField(string value)
+        public ListServiceAlertsSortByField(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -33,71 +33,71 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private const string TargetResourceNameValue = "targetResourceName";
         private const string TargetResourceGroupValue = "targetResourceGroup";
         private const string TargetResourceTypeValue = "targetResourceType";
-        private const string StartDateTimeValue = "startDateTime";
-        private const string LastModifiedDateTimeValue = "lastModifiedDateTime";
+        private const string StartOnValue = "startDateTime";
+        private const string LastModifiedOnValue = "lastModifiedDateTime";
 
         /// <summary>
         /// name
         /// Serialized Name: AlertsSortByFields.name
         /// </summary>
-        public static AlertsSortByField Name { get; } = new AlertsSortByField(NameValue);
+        public static ListServiceAlertsSortByField Name { get; } = new ListServiceAlertsSortByField(NameValue);
         /// <summary>
         /// severity
         /// Serialized Name: AlertsSortByFields.severity
         /// </summary>
-        public static AlertsSortByField Severity { get; } = new AlertsSortByField(SeverityValue);
+        public static ListServiceAlertsSortByField Severity { get; } = new ListServiceAlertsSortByField(SeverityValue);
         /// <summary>
         /// alertState
         /// Serialized Name: AlertsSortByFields.alertState
         /// </summary>
-        public static AlertsSortByField AlertState { get; } = new AlertsSortByField(AlertStateValue);
+        public static ListServiceAlertsSortByField AlertState { get; } = new ListServiceAlertsSortByField(AlertStateValue);
         /// <summary>
         /// monitorCondition
         /// Serialized Name: AlertsSortByFields.monitorCondition
         /// </summary>
-        public static AlertsSortByField MonitorCondition { get; } = new AlertsSortByField(MonitorConditionValue);
+        public static ListServiceAlertsSortByField MonitorCondition { get; } = new ListServiceAlertsSortByField(MonitorConditionValue);
         /// <summary>
         /// targetResource
         /// Serialized Name: AlertsSortByFields.targetResource
         /// </summary>
-        public static AlertsSortByField TargetResource { get; } = new AlertsSortByField(TargetResourceValue);
+        public static ListServiceAlertsSortByField TargetResource { get; } = new ListServiceAlertsSortByField(TargetResourceValue);
         /// <summary>
         /// targetResourceName
         /// Serialized Name: AlertsSortByFields.targetResourceName
         /// </summary>
-        public static AlertsSortByField TargetResourceName { get; } = new AlertsSortByField(TargetResourceNameValue);
+        public static ListServiceAlertsSortByField TargetResourceName { get; } = new ListServiceAlertsSortByField(TargetResourceNameValue);
         /// <summary>
         /// targetResourceGroup
         /// Serialized Name: AlertsSortByFields.targetResourceGroup
         /// </summary>
-        public static AlertsSortByField TargetResourceGroup { get; } = new AlertsSortByField(TargetResourceGroupValue);
+        public static ListServiceAlertsSortByField TargetResourceGroup { get; } = new ListServiceAlertsSortByField(TargetResourceGroupValue);
         /// <summary>
         /// targetResourceType
         /// Serialized Name: AlertsSortByFields.targetResourceType
         /// </summary>
-        public static AlertsSortByField TargetResourceType { get; } = new AlertsSortByField(TargetResourceTypeValue);
+        public static ListServiceAlertsSortByField TargetResourceType { get; } = new ListServiceAlertsSortByField(TargetResourceTypeValue);
         /// <summary>
         /// startDateTime
         /// Serialized Name: AlertsSortByFields.startDateTime
         /// </summary>
-        public static AlertsSortByField StartDateTime { get; } = new AlertsSortByField(StartDateTimeValue);
+        public static ListServiceAlertsSortByField StartOn { get; } = new ListServiceAlertsSortByField(StartOnValue);
         /// <summary>
         /// lastModifiedDateTime
         /// Serialized Name: AlertsSortByFields.lastModifiedDateTime
         /// </summary>
-        public static AlertsSortByField LastModifiedDateTime { get; } = new AlertsSortByField(LastModifiedDateTimeValue);
-        /// <summary> Determines if two <see cref="AlertsSortByField"/> values are the same. </summary>
-        public static bool operator ==(AlertsSortByField left, AlertsSortByField right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="AlertsSortByField"/> values are not the same. </summary>
-        public static bool operator !=(AlertsSortByField left, AlertsSortByField right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlertsSortByField"/>. </summary>
-        public static implicit operator AlertsSortByField(string value) => new AlertsSortByField(value);
+        public static ListServiceAlertsSortByField LastModifiedOn { get; } = new ListServiceAlertsSortByField(LastModifiedOnValue);
+        /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are the same. </summary>
+        public static bool operator ==(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are not the same. </summary>
+        public static bool operator !=(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ListServiceAlertsSortByField"/>. </summary>
+        public static implicit operator ListServiceAlertsSortByField(string value) => new ListServiceAlertsSortByField(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AlertsSortByField other && Equals(other);
+        public override bool Equals(object obj) => obj is ListServiceAlertsSortByField other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(AlertsSortByField other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ListServiceAlertsSortByField other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

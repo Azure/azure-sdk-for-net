@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Operator for a given condition.
-    /// Serialized Name: AlertProcessingRuleOperator
+    /// Serialized Name: Operator
     /// </summary>
     public readonly partial struct AlertProcessingRuleOperator : IEquatable<AlertProcessingRuleOperator>
     {
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Equals
-        /// Serialized Name: AlertProcessingRuleOperator.Equals
+        /// Serialized Name: Operator.Equals
         /// </summary>
         public static AlertProcessingRuleOperator EqualsValue { get; } = new AlertProcessingRuleOperator(EqualsValueValue);
         /// <summary>
         /// NotEquals
-        /// Serialized Name: AlertProcessingRuleOperator.NotEquals
+        /// Serialized Name: Operator.NotEquals
         /// </summary>
         public static AlertProcessingRuleOperator NotEquals { get; } = new AlertProcessingRuleOperator(NotEqualsValue);
         /// <summary>
         /// Contains
-        /// Serialized Name: AlertProcessingRuleOperator.Contains
+        /// Serialized Name: Operator.Contains
         /// </summary>
         public static AlertProcessingRuleOperator Contains { get; } = new AlertProcessingRuleOperator(ContainsValue);
         /// <summary>
         /// DoesNotContain
-        /// Serialized Name: AlertProcessingRuleOperator.DoesNotContain
+        /// Serialized Name: Operator.DoesNotContain
         /// </summary>
         public static AlertProcessingRuleOperator DoesNotContain { get; } = new AlertProcessingRuleOperator(DoesNotContainValue);
         /// <summary> Determines if two <see cref="AlertProcessingRuleOperator"/> values are the same. </summary>

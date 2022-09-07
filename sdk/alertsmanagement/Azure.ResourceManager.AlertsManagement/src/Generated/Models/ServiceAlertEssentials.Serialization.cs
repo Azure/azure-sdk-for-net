@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             Optional<ServiceAlertSeverity> severity = default;
             Optional<ServiceAlertSignalType> signalType = default;
-            Optional<AlertState> alertState = default;
+            Optional<ServiceAlertState> alertState = default;
             Optional<MonitorCondition> monitorCondition = default;
             Optional<string> targetResource = default;
             Optional<string> targetResourceName = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    alertState = new AlertState(property.Value.GetString());
+                    alertState = new ServiceAlertState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("monitorCondition"))

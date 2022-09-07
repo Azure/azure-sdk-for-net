@@ -13,38 +13,38 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Summary of alerts based on the input filters and &apos;groupby&apos; parameters.
-    /// Serialized Name: ServiceAlertsSummary
+    /// Serialized Name: AlertsSummary
     /// </summary>
-    public partial class ServiceAlertsSummary : ResourceData
+    public partial class ServiceAlertSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAlertsSummary. </summary>
-        public ServiceAlertsSummary()
+        /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
+        public ServiceAlertSummary()
         {
-            Values = new ChangeTrackingList<ServiceAlertsSummaryGroupItemData>();
+            Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertsSummary. </summary>
+        /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="total">
         /// Total count of the result set.
-        /// Serialized Name: ServiceAlertsSummary.properties.total
+        /// Serialized Name: AlertsSummary.properties.total
         /// </param>
         /// <param name="smartGroupsCount">
         /// Total count of the smart groups.
-        /// Serialized Name: ServiceAlertsSummary.properties.smartGroupsCount
+        /// Serialized Name: AlertsSummary.properties.smartGroupsCount
         /// </param>
         /// <param name="groupedBy">
         /// Name of the field aggregated
-        /// Serialized Name: ServiceAlertsSummary.properties.groupedby
+        /// Serialized Name: AlertsSummary.properties.groupedby
         /// </param>
         /// <param name="values">
         /// List of the items
-        /// Serialized Name: ServiceAlertsSummary.properties.values
+        /// Serialized Name: AlertsSummary.properties.values
         /// </param>
-        internal ServiceAlertsSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertsSummaryGroupItemData> values) : base(id, name, resourceType, systemData)
+        internal ServiceAlertSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values) : base(id, name, resourceType, systemData)
         {
             Total = total;
             SmartGroupsCount = smartGroupsCount;
@@ -54,23 +54,23 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Total count of the result set.
-        /// Serialized Name: ServiceAlertsSummary.properties.total
+        /// Serialized Name: AlertsSummary.properties.total
         /// </summary>
         public long? Total { get; set; }
         /// <summary>
         /// Total count of the smart groups.
-        /// Serialized Name: ServiceAlertsSummary.properties.smartGroupsCount
+        /// Serialized Name: AlertsSummary.properties.smartGroupsCount
         /// </summary>
         public long? SmartGroupsCount { get; set; }
         /// <summary>
         /// Name of the field aggregated
-        /// Serialized Name: ServiceAlertsSummary.properties.groupedby
+        /// Serialized Name: AlertsSummary.properties.groupedby
         /// </summary>
         public string GroupedBy { get; set; }
         /// <summary>
         /// List of the items
-        /// Serialized Name: ServiceAlertsSummary.properties.values
+        /// Serialized Name: AlertsSummary.properties.values
         /// </summary>
-        public IList<ServiceAlertsSummaryGroupItemData> Values { get; }
+        public IList<ServiceAlertSummaryGroupItemInfo> Values { get; }
     }
 }

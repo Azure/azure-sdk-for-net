@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// Weekly recurrence object.
     /// Serialized Name: WeeklyRecurrence
     /// </summary>
-    public partial class AlertProcessingWeeklyRecurrence : AlertProcessingRuleRecurrence
+    public partial class AlertProcessingRuleWeeklyRecurrence : AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of AlertProcessingWeeklyRecurrence. </summary>
+        /// <summary> Initializes a new instance of AlertProcessingRuleWeeklyRecurrence. </summary>
         /// <param name="daysOfWeek">
         /// Specifies the values for weekly recurrence pattern.
         /// Serialized Name: WeeklyRecurrence.daysOfWeek
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfWeek"/> is null. </exception>
-        public AlertProcessingWeeklyRecurrence(IEnumerable<AlertsManagementDayOfWeek> daysOfWeek)
+        public AlertProcessingRuleWeeklyRecurrence(IEnumerable<AlertsManagementDayOfWeek> daysOfWeek)
         {
             if (daysOfWeek == null)
             {
@@ -34,24 +34,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             RecurrenceType = RecurrenceType.Weekly;
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingWeeklyRecurrence. </summary>
+        /// <summary> Initializes a new instance of AlertProcessingRuleWeeklyRecurrence. </summary>
         /// <param name="recurrenceType">
         /// Specifies when the recurrence should be applied.
-        /// Serialized Name: AlertProcessingRuleRecurrence.recurrenceType
+        /// Serialized Name: Recurrence.recurrenceType
         /// </param>
         /// <param name="startOn">
         /// Start time for recurrence.
-        /// Serialized Name: AlertProcessingRuleRecurrence.startTime
+        /// Serialized Name: Recurrence.startTime
         /// </param>
         /// <param name="endOn">
         /// End time for recurrence.
-        /// Serialized Name: AlertProcessingRuleRecurrence.endTime
+        /// Serialized Name: Recurrence.endTime
         /// </param>
         /// <param name="daysOfWeek">
         /// Specifies the values for weekly recurrence pattern.
         /// Serialized Name: WeeklyRecurrence.daysOfWeek
         /// </param>
-        internal AlertProcessingWeeklyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AlertsManagementDayOfWeek> daysOfWeek) : base(recurrenceType, startOn, endOn)
+        internal AlertProcessingRuleWeeklyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AlertsManagementDayOfWeek> daysOfWeek) : base(recurrenceType, startOn, endOn)
         {
             DaysOfWeek = daysOfWeek;
             RecurrenceType = recurrenceType;

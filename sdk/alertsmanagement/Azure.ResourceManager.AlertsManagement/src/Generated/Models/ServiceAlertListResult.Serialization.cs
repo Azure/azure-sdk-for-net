@@ -12,9 +12,9 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class ServiceAlertList
+    internal partial class ServiceAlertListResult
     {
-        internal static ServiceAlertList DeserializeServiceAlertList(JsonElement element)
+        internal static ServiceAlertListResult DeserializeServiceAlertListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<ServiceAlertData>> value = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertList(nextLink.Value, Optional.ToList(value));
+            return new ServiceAlertListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

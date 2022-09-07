@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// The type of signal the alert is based on, which could be metrics, logs or activity logs.
-    /// Serialized Name: ServiceAlertSignalType
+    /// Serialized Name: SignalType
     /// </summary>
     public readonly partial struct ServiceAlertSignalType : IEquatable<ServiceAlertSignalType>
     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Metric
-        /// Serialized Name: ServiceAlertSignalType.Metric
+        /// Serialized Name: SignalType.Metric
         /// </summary>
         public static ServiceAlertSignalType Metric { get; } = new ServiceAlertSignalType(MetricValue);
         /// <summary>
         /// Log
-        /// Serialized Name: ServiceAlertSignalType.Log
+        /// Serialized Name: SignalType.Log
         /// </summary>
         public static ServiceAlertSignalType Log { get; } = new ServiceAlertSignalType(LogValue);
         /// <summary>
         /// Unknown
-        /// Serialized Name: ServiceAlertSignalType.Unknown
+        /// Serialized Name: SignalType.Unknown
         /// </summary>
         public static ServiceAlertSignalType Unknown { get; } = new ServiceAlertSignalType(UnknownValue);
         /// <summary> Determines if two <see cref="ServiceAlertSignalType"/> values are the same. </summary>

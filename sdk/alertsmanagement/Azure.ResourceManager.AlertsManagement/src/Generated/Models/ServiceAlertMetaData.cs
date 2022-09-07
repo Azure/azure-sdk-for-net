@@ -9,30 +9,30 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// alert meta data information.
-    /// Serialized Name: ServiceAlertsMetaData
+    /// Serialized Name: AlertsMetaData
     /// </summary>
-    public partial class ServiceAlertsMetaData
+    public partial class ServiceAlertMetaData
     {
-        /// <summary> Initializes a new instance of ServiceAlertsMetaData. </summary>
-        internal ServiceAlertsMetaData()
+        /// <summary> Initializes a new instance of ServiceAlertMetaData. </summary>
+        internal ServiceAlertMetaData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertsMetaData. </summary>
+        /// <summary> Initializes a new instance of ServiceAlertMetaData. </summary>
         /// <param name="properties">
         /// alert meta data property bag
-        /// Serialized Name: ServiceAlertsMetaData.properties
+        /// Serialized Name: AlertsMetaData.properties
         /// Please note <see cref="ServiceAlertsMetaDataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MonitorServiceList"/>.
         /// </param>
-        internal ServiceAlertsMetaData(ServiceAlertsMetaDataProperties properties)
+        internal ServiceAlertMetaData(ServiceAlertsMetaDataProperties properties)
         {
             Properties = properties;
         }
 
         /// <summary>
         /// alert meta data property bag
-        /// Serialized Name: ServiceAlertsMetaData.properties
+        /// Serialized Name: AlertsMetaData.properties
         /// Please note <see cref="ServiceAlertsMetaDataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MonitorServiceList"/>.
         /// </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of SmartGroupModification. </summary>
         public SmartGroupModification()
         {
-            Modifications = new ChangeTrackingList<SmartGroupModificationItemData>();
+            Modifications = new ChangeTrackingList<SmartGroupModificationItemInfo>();
         }
 
         /// <summary> Initializes a new instance of SmartGroupModification. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// URL to fetch the next set of results.
         /// Serialized Name: SmartGroupModification.properties.nextLink
         /// </param>
-        internal SmartGroupModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? smartGroupId, IList<SmartGroupModificationItemData> modifications, string nextLink) : base(id, name, resourceType, systemData)
+        internal SmartGroupModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? smartGroupId, IList<SmartGroupModificationItemInfo> modifications, string nextLink) : base(id, name, resourceType, systemData)
         {
             SmartGroupId = smartGroupId;
             Modifications = modifications;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// Modification details
         /// Serialized Name: SmartGroupModification.properties.modifications
         /// </summary>
-        public IList<SmartGroupModificationItemData> Modifications { get; }
+        public IList<SmartGroupModificationItemInfo> Modifications { get; }
         /// <summary>
         /// URL to fetch the next set of results.
         /// Serialized Name: SmartGroupModification.properties.nextLink

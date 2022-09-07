@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// This object contains consistent fields across different monitor services.
-    /// Serialized Name: ServiceAlertEssentials
+    /// Serialized Name: Essentials
     /// </summary>
     public partial class ServiceAlertEssentials
     {
@@ -23,81 +23,81 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertEssentials. </summary>
         /// <param name="severity">
         /// Severity of alert Sev0 being highest and Sev4 being lowest.
-        /// Serialized Name: ServiceAlertEssentials.severity
+        /// Serialized Name: Essentials.severity
         /// </param>
         /// <param name="signalType">
         /// The type of signal the alert is based on, which could be metrics, logs or activity logs.
-        /// Serialized Name: ServiceAlertEssentials.signalType
+        /// Serialized Name: Essentials.signalType
         /// </param>
         /// <param name="alertState">
         /// Alert object state, which can be modified by the user.
-        /// Serialized Name: ServiceAlertEssentials.alertState
+        /// Serialized Name: Essentials.alertState
         /// </param>
         /// <param name="monitorCondition">
         /// Condition of the rule at the monitor service. It represents whether the underlying conditions have crossed the defined alert rule thresholds.
-        /// Serialized Name: ServiceAlertEssentials.monitorCondition
+        /// Serialized Name: Essentials.monitorCondition
         /// </param>
         /// <param name="targetResource">
         /// Target ARM resource, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResource
+        /// Serialized Name: Essentials.targetResource
         /// </param>
         /// <param name="targetResourceName">
         /// Name of the target ARM resource name, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResourceName
+        /// Serialized Name: Essentials.targetResourceName
         /// </param>
         /// <param name="targetResourceGroup">
         /// Resource group of target ARM resource, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResourceGroup
+        /// Serialized Name: Essentials.targetResourceGroup
         /// </param>
         /// <param name="targetResourceType">
         /// Resource type of target ARM resource, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResourceType
+        /// Serialized Name: Essentials.targetResourceType
         /// </param>
         /// <param name="monitorService">
         /// Monitor service on which the rule(monitor) is set.
-        /// Serialized Name: ServiceAlertEssentials.monitorService
+        /// Serialized Name: Essentials.monitorService
         /// </param>
         /// <param name="alertRule">
         /// Rule(monitor) which fired alert instance. Depending on the monitor service,  this would be ARM id or name of the rule.
-        /// Serialized Name: ServiceAlertEssentials.alertRule
+        /// Serialized Name: Essentials.alertRule
         /// </param>
         /// <param name="sourceCreatedId">
         /// Unique Id created by monitor service for each alert instance. This could be used to track the issue at the monitor service, in case of Nagios, Zabbix, SCOM etc.
-        /// Serialized Name: ServiceAlertEssentials.sourceCreatedId
+        /// Serialized Name: Essentials.sourceCreatedId
         /// </param>
         /// <param name="smartGroupId">
         /// Unique Id of the smart group
-        /// Serialized Name: ServiceAlertEssentials.smartGroupId
+        /// Serialized Name: Essentials.smartGroupId
         /// </param>
         /// <param name="smartGroupingReason">
         /// Verbose reason describing the reason why this alert instance is added to a smart group
-        /// Serialized Name: ServiceAlertEssentials.smartGroupingReason
+        /// Serialized Name: Essentials.smartGroupingReason
         /// </param>
-        /// <param name="startedOn">
+        /// <param name="startOn">
         /// Creation time(ISO-8601 format) of alert instance.
-        /// Serialized Name: ServiceAlertEssentials.startDateTime
+        /// Serialized Name: Essentials.startDateTime
         /// </param>
         /// <param name="lastModifiedOn">
         /// Last modification time(ISO-8601 format) of alert instance.
-        /// Serialized Name: ServiceAlertEssentials.lastModifiedDateTime
+        /// Serialized Name: Essentials.lastModifiedDateTime
         /// </param>
         /// <param name="monitorConditionResolvedOn">
         /// Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met.
-        /// Serialized Name: ServiceAlertEssentials.monitorConditionResolvedDateTime
+        /// Serialized Name: Essentials.monitorConditionResolvedDateTime
         /// </param>
         /// <param name="lastModifiedBy">
         /// User who last modified the alert, in case of monitor service updates user would be &apos;system&apos;, otherwise name of the user.
-        /// Serialized Name: ServiceAlertEssentials.lastModifiedUserName
+        /// Serialized Name: Essentials.lastModifiedUserName
         /// </param>
         /// <param name="actionStatus">
         /// Action status
-        /// Serialized Name: ServiceAlertEssentials.actionStatus
+        /// Serialized Name: Essentials.actionStatus
         /// </param>
         /// <param name="description">
         /// Alert description.
-        /// Serialized Name: ServiceAlertEssentials.description
+        /// Serialized Name: Essentials.description
         /// </param>
-        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, AlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startedOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description)
+        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description)
         {
             Severity = severity;
             SignalType = signalType;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             SourceCreatedId = sourceCreatedId;
             SmartGroupId = smartGroupId;
             SmartGroupingReason = smartGroupingReason;
-            StartedOn = startedOn;
+            StartOn = startOn;
             LastModifiedOn = lastModifiedOn;
             MonitorConditionResolvedOn = monitorConditionResolvedOn;
             LastModifiedBy = lastModifiedBy;
@@ -122,97 +122,97 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Severity of alert Sev0 being highest and Sev4 being lowest.
-        /// Serialized Name: ServiceAlertEssentials.severity
+        /// Serialized Name: Essentials.severity
         /// </summary>
         public ServiceAlertSeverity? Severity { get; }
         /// <summary>
         /// The type of signal the alert is based on, which could be metrics, logs or activity logs.
-        /// Serialized Name: ServiceAlertEssentials.signalType
+        /// Serialized Name: Essentials.signalType
         /// </summary>
         public ServiceAlertSignalType? SignalType { get; }
         /// <summary>
         /// Alert object state, which can be modified by the user.
-        /// Serialized Name: ServiceAlertEssentials.alertState
+        /// Serialized Name: Essentials.alertState
         /// </summary>
-        public AlertState? AlertState { get; }
+        public ServiceAlertState? AlertState { get; }
         /// <summary>
         /// Condition of the rule at the monitor service. It represents whether the underlying conditions have crossed the defined alert rule thresholds.
-        /// Serialized Name: ServiceAlertEssentials.monitorCondition
+        /// Serialized Name: Essentials.monitorCondition
         /// </summary>
         public MonitorCondition? MonitorCondition { get; }
         /// <summary>
         /// Target ARM resource, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResource
+        /// Serialized Name: Essentials.targetResource
         /// </summary>
         public string TargetResource { get; set; }
         /// <summary>
         /// Name of the target ARM resource name, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResourceName
+        /// Serialized Name: Essentials.targetResourceName
         /// </summary>
         public string TargetResourceName { get; set; }
         /// <summary>
         /// Resource group of target ARM resource, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResourceGroup
+        /// Serialized Name: Essentials.targetResourceGroup
         /// </summary>
         public string TargetResourceGroup { get; set; }
         /// <summary>
         /// Resource type of target ARM resource, on which alert got created.
-        /// Serialized Name: ServiceAlertEssentials.targetResourceType
+        /// Serialized Name: Essentials.targetResourceType
         /// </summary>
         public string TargetResourceType { get; set; }
         /// <summary>
         /// Monitor service on which the rule(monitor) is set.
-        /// Serialized Name: ServiceAlertEssentials.monitorService
+        /// Serialized Name: Essentials.monitorService
         /// </summary>
         public MonitorServiceSourceForAlert? MonitorService { get; }
         /// <summary>
         /// Rule(monitor) which fired alert instance. Depending on the monitor service,  this would be ARM id or name of the rule.
-        /// Serialized Name: ServiceAlertEssentials.alertRule
+        /// Serialized Name: Essentials.alertRule
         /// </summary>
         public string AlertRule { get; }
         /// <summary>
         /// Unique Id created by monitor service for each alert instance. This could be used to track the issue at the monitor service, in case of Nagios, Zabbix, SCOM etc.
-        /// Serialized Name: ServiceAlertEssentials.sourceCreatedId
+        /// Serialized Name: Essentials.sourceCreatedId
         /// </summary>
         public string SourceCreatedId { get; }
         /// <summary>
         /// Unique Id of the smart group
-        /// Serialized Name: ServiceAlertEssentials.smartGroupId
+        /// Serialized Name: Essentials.smartGroupId
         /// </summary>
         public Guid? SmartGroupId { get; }
         /// <summary>
         /// Verbose reason describing the reason why this alert instance is added to a smart group
-        /// Serialized Name: ServiceAlertEssentials.smartGroupingReason
+        /// Serialized Name: Essentials.smartGroupingReason
         /// </summary>
         public string SmartGroupingReason { get; }
         /// <summary>
         /// Creation time(ISO-8601 format) of alert instance.
-        /// Serialized Name: ServiceAlertEssentials.startDateTime
+        /// Serialized Name: Essentials.startDateTime
         /// </summary>
-        public DateTimeOffset? StartedOn { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary>
         /// Last modification time(ISO-8601 format) of alert instance.
-        /// Serialized Name: ServiceAlertEssentials.lastModifiedDateTime
+        /// Serialized Name: Essentials.lastModifiedDateTime
         /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>
         /// Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met.
-        /// Serialized Name: ServiceAlertEssentials.monitorConditionResolvedDateTime
+        /// Serialized Name: Essentials.monitorConditionResolvedDateTime
         /// </summary>
         public DateTimeOffset? MonitorConditionResolvedOn { get; }
         /// <summary>
         /// User who last modified the alert, in case of monitor service updates user would be &apos;system&apos;, otherwise name of the user.
-        /// Serialized Name: ServiceAlertEssentials.lastModifiedUserName
+        /// Serialized Name: Essentials.lastModifiedUserName
         /// </summary>
         public string LastModifiedBy { get; }
         /// <summary>
         /// Action status
-        /// Serialized Name: ServiceAlertEssentials.actionStatus
+        /// Serialized Name: Essentials.actionStatus
         /// </summary>
         internal ServiceAlertActionStatus ActionStatus { get; set; }
         /// <summary>
         /// Value indicating whether alert is suppressed.
-        /// Serialized Name: ServiceAlertActionStatus.isSuppressed
+        /// Serialized Name: ActionStatus.isSuppressed
         /// </summary>
         public bool? IsSuppressed
         {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Alert description.
-        /// Serialized Name: ServiceAlertEssentials.description
+        /// Serialized Name: Essentials.description
         /// </summary>
         public string Description { get; set; }
     }

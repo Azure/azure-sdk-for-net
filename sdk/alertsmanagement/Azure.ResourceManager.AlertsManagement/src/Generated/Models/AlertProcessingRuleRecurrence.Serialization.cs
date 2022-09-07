@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartOn.Value);
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndOn.Value);
             }
             writer.WriteEndObject();
         }
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 switch (discriminator.GetString())
                 {
                     case "Daily": return DailyRecurrence.DeserializeDailyRecurrence(element);
-                    case "Monthly": return AlertProcessingMonthlyRecurrence.DeserializeAlertProcessingMonthlyRecurrence(element);
-                    case "Weekly": return AlertProcessingWeeklyRecurrence.DeserializeAlertProcessingWeeklyRecurrence(element);
+                    case "Monthly": return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element);
+                    case "Weekly": return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element);
                 }
             }
             RecurrenceType recurrenceType = default;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
             }

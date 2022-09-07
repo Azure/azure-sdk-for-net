@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Alert Modification details
-    /// Serialized Name: ServiceAlertModification
+    /// Serialized Name: AlertModification
     /// </summary>
     public partial class ServiceAlertModification : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
         public ServiceAlertModification()
         {
-            Modifications = new ChangeTrackingList<ServiceAlertModificationItemData>();
+            Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
 
         /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="alertId">
         /// Unique Id of the alert for which the history is being retrieved
-        /// Serialized Name: ServiceAlertModification.properties.alertId
+        /// Serialized Name: AlertModification.properties.alertId
         /// </param>
         /// <param name="modifications">
         /// Modification details
-        /// Serialized Name: ServiceAlertModification.properties.modifications
+        /// Serialized Name: AlertModification.properties.modifications
         /// </param>
-        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? alertId, IList<ServiceAlertModificationItemData> modifications) : base(id, name, resourceType, systemData)
+        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications) : base(id, name, resourceType, systemData)
         {
             AlertId = alertId;
             Modifications = modifications;
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Unique Id of the alert for which the history is being retrieved
-        /// Serialized Name: ServiceAlertModification.properties.alertId
+        /// Serialized Name: AlertModification.properties.alertId
         /// </summary>
         public Guid? AlertId { get; }
         /// <summary>
         /// Modification details
-        /// Serialized Name: ServiceAlertModification.properties.modifications
+        /// Serialized Name: AlertModification.properties.modifications
         /// </summary>
-        public IList<ServiceAlertModificationItemData> Modifications { get; }
+        public IList<ServiceAlertModificationItemInfo> Modifications { get; }
     }
 }

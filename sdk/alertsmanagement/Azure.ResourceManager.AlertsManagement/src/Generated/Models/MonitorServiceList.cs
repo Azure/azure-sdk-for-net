@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
         /// <param name="metadataIdentifier">
         /// Identification of the information to be retrieved by API call
-        /// Serialized Name: ServiceAlertsMetaDataProperties.metadataIdentifier
+        /// Serialized Name: AlertsMetaDataProperties.metadataIdentifier
         /// </param>
         /// <param name="data">
         /// Array of operations

@@ -12,34 +12,34 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Alerts summary group item
-    /// Serialized Name: ServiceAlertsSummaryGroupItemData
+    /// Serialized Name: AlertsSummaryGroupItem
     /// </summary>
-    public partial class ServiceAlertsSummaryGroupItemData
+    public partial class ServiceAlertSummaryGroupItemInfo
     {
-        /// <summary> Initializes a new instance of ServiceAlertsSummaryGroupItemData. </summary>
-        public ServiceAlertsSummaryGroupItemData()
+        /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
+        public ServiceAlertSummaryGroupItemInfo()
         {
-            Values = new ChangeTrackingList<ServiceAlertsSummaryGroupItemData>();
+            Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertsSummaryGroupItemData. </summary>
+        /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
         /// <param name="name">
         /// Value of the aggregated field
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.name
+        /// Serialized Name: AlertsSummaryGroupItem.name
         /// </param>
         /// <param name="count">
         /// Count of the aggregated field
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.count
+        /// Serialized Name: AlertsSummaryGroupItem.count
         /// </param>
         /// <param name="groupedBy">
         /// Name of the field aggregated
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.groupedby
+        /// Serialized Name: AlertsSummaryGroupItem.groupedby
         /// </param>
         /// <param name="values">
         /// List of the items
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.values
+        /// Serialized Name: AlertsSummaryGroupItem.values
         /// </param>
-        internal ServiceAlertsSummaryGroupItemData(string name, long? count, string groupedBy, IList<ServiceAlertsSummaryGroupItemData> values)
+        internal ServiceAlertSummaryGroupItemInfo(string name, long? count, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values)
         {
             Name = name;
             Count = count;
@@ -49,23 +49,23 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Value of the aggregated field
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.name
+        /// Serialized Name: AlertsSummaryGroupItem.name
         /// </summary>
         public string Name { get; set; }
         /// <summary>
         /// Count of the aggregated field
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.count
+        /// Serialized Name: AlertsSummaryGroupItem.count
         /// </summary>
         public long? Count { get; set; }
         /// <summary>
         /// Name of the field aggregated
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.groupedby
+        /// Serialized Name: AlertsSummaryGroupItem.groupedby
         /// </summary>
         public string GroupedBy { get; set; }
         /// <summary>
         /// List of the items
-        /// Serialized Name: ServiceAlertsSummaryGroupItemData.values
+        /// Serialized Name: AlertsSummaryGroupItem.values
         /// </summary>
-        public IList<ServiceAlertsSummaryGroupItemData> Values { get; }
+        public IList<ServiceAlertSummaryGroupItemInfo> Values { get; }
     }
 }

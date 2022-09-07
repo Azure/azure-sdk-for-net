@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class SmartGroupModificationItemData : IUtf8JsonSerializable
+    public partial class ServiceAlertModificationItemInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,10 +30,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("newValue");
                 writer.WriteStringValue(NewValue);
             }
-            if (Optional.IsDefined(ModifiedOn))
+            if (Optional.IsDefined(ModifiedAt))
             {
                 writer.WritePropertyName("modifiedAt");
-                writer.WriteStringValue(ModifiedOn.Value, "O");
+                writer.WriteStringValue(ModifiedAt);
             }
             if (Optional.IsDefined(ModifiedBy))
             {
@@ -54,12 +53,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static SmartGroupModificationItemData DeserializeSmartGroupModificationItemData(JsonElement element)
+        internal static ServiceAlertModificationItemInfo DeserializeServiceAlertModificationItemInfo(JsonElement element)
         {
-            Optional<SmartGroupModificationEvent> modificationEvent = default;
+            Optional<ServiceAlertModificationEvent> modificationEvent = default;
             Optional<string> oldValue = default;
             Optional<string> newValue = default;
-            Optional<DateTimeOffset> modifiedAt = default;
+            Optional<string> modifiedAt = default;
             Optional<string> modifiedBy = default;
             Optional<string> comments = default;
             Optional<string> description = default;
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modificationEvent = property.Value.GetString().ToSmartGroupModificationEvent();
+                    modificationEvent = property.Value.GetString().ToServiceAlertModificationEvent();
                     continue;
                 }
                 if (property.NameEquals("oldValue"))
@@ -87,12 +86,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (property.NameEquals("modifiedAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    modifiedAt = property.Value.GetDateTimeOffset("O");
+                    modifiedAt = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("modifiedBy"))
@@ -111,7 +105,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new SmartGroupModificationItemData(Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, Optional.ToNullable(modifiedAt), modifiedBy.Value, comments.Value, description.Value);
+            return new ServiceAlertModificationItemInfo(Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, modifiedAt.Value, modifiedBy.Value, comments.Value, description.Value);
         }
     }
 }

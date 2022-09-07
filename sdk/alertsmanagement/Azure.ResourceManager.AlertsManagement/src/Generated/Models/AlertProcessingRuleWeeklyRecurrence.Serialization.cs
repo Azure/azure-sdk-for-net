@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingWeeklyRecurrence : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleWeeklyRecurrence : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartOn.Value);
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndOn.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingWeeklyRecurrence DeserializeAlertProcessingWeeklyRecurrence(JsonElement element)
+        internal static AlertProcessingRuleWeeklyRecurrence DeserializeAlertProcessingRuleWeeklyRecurrence(JsonElement element)
         {
             IList<AlertsManagementDayOfWeek> daysOfWeek = default;
             RecurrenceType recurrenceType = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
             }
-            return new AlertProcessingWeeklyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfWeek);
+            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfWeek);
         }
     }
 }

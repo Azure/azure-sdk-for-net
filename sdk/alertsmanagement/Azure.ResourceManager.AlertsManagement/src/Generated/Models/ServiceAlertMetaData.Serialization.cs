@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertsMetaData
+    public partial class ServiceAlertMetaData
     {
-        internal static ServiceAlertsMetaData DeserializeServiceAlertsMetaData(JsonElement element)
+        internal static ServiceAlertMetaData DeserializeServiceAlertMetaData(JsonElement element)
         {
             Optional<ServiceAlertsMetaDataProperties> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertsMetaData(properties.Value);
+            return new ServiceAlertMetaData(properties.Value);
         }
     }
 }

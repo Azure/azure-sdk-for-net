@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Scheduling configuration for a given alert processing rule.
-    /// Serialized Name: AlertProcessingRuleSchedule
+    /// Serialized Name: Schedule
     /// </summary>
     public partial class AlertProcessingRuleSchedule
     {
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>
         /// <param name="effectiveFrom">
         /// Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: AlertProcessingRuleSchedule.effectiveFrom
+        /// Serialized Name: Schedule.effectiveFrom
         /// </param>
         /// <param name="effectiveUntil">
         /// Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: AlertProcessingRuleSchedule.effectiveUntil
+        /// Serialized Name: Schedule.effectiveUntil
         /// </param>
         /// <param name="timeZone">
         /// Scheduling time zone.
-        /// Serialized Name: AlertProcessingRuleSchedule.timeZone
+        /// Serialized Name: Schedule.timeZone
         /// </param>
         /// <param name="recurrences">
         /// List of recurrences.
-        /// Serialized Name: AlertProcessingRuleSchedule.recurrences
+        /// Serialized Name: Schedule.recurrences
         /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingMonthlyRecurrence"/> and <see cref="AlertProcessingWeeklyRecurrence"/>.
+        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
         /// </param>
         internal AlertProcessingRuleSchedule(DateTimeOffset? effectiveFrom, DateTimeOffset? effectiveUntil, string timeZone, IList<AlertProcessingRuleRecurrence> recurrences)
         {
@@ -52,24 +52,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: AlertProcessingRuleSchedule.effectiveFrom
+        /// Serialized Name: Schedule.effectiveFrom
         /// </summary>
         public DateTimeOffset? EffectiveFrom { get; set; }
         /// <summary>
         /// Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix.
-        /// Serialized Name: AlertProcessingRuleSchedule.effectiveUntil
+        /// Serialized Name: Schedule.effectiveUntil
         /// </summary>
         public DateTimeOffset? EffectiveUntil { get; set; }
         /// <summary>
         /// Scheduling time zone.
-        /// Serialized Name: AlertProcessingRuleSchedule.timeZone
+        /// Serialized Name: Schedule.timeZone
         /// </summary>
         public string TimeZone { get; set; }
         /// <summary>
         /// List of recurrences.
-        /// Serialized Name: AlertProcessingRuleSchedule.recurrences
+        /// Serialized Name: Schedule.recurrences
         /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingMonthlyRecurrence"/> and <see cref="AlertProcessingWeeklyRecurrence"/>.
+        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
         /// </summary>
         public IList<AlertProcessingRuleRecurrence> Recurrences { get; }
     }

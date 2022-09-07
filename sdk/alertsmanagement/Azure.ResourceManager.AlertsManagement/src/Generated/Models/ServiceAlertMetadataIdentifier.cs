@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Identification of the information to be retrieved by API call
-    /// Serialized Name: ServiceAlertMetadataIdentifier
+    /// Serialized Name: MetadataIdentifier
     /// </summary>
     internal readonly partial struct ServiceAlertMetadataIdentifier : IEquatable<ServiceAlertMetadataIdentifier>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// MonitorServiceList
-        /// Serialized Name: ServiceAlertMetadataIdentifier.MonitorServiceList
+        /// Serialized Name: MetadataIdentifier.MonitorServiceList
         /// </summary>
         public static ServiceAlertMetadataIdentifier MonitorServiceList { get; } = new ServiceAlertMetadataIdentifier(MonitorServiceListValue);
         /// <summary> Determines if two <see cref="ServiceAlertMetadataIdentifier"/> values are the same. </summary>

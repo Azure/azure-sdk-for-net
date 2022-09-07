@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> alertId = default;
-            Optional<IList<ServiceAlertModificationItemData>> modifications = default;
+            Optional<IList<ServiceAlertModificationItemInfo>> modifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServiceAlertModificationItemData> array = new List<ServiceAlertModificationItemData>();
+                            List<ServiceAlertModificationItemInfo> array = new List<ServiceAlertModificationItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceAlertModificationItemData.DeserializeServiceAlertModificationItemData(item));
+                                array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item));
                             }
                             modifications = array;
                             continue;
