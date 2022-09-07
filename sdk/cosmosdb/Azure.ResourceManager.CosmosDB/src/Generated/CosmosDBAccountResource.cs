@@ -281,6 +281,80 @@ namespace Azure.ResourceManager.CosmosDB
             return GetMongoDBDatabases().Get(databaseName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of MongoRoleDefinitionGetResultResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of MongoRoleDefinitionGetResultResources and their operations over a MongoRoleDefinitionGetResultResource. </returns>
+        public virtual MongoRoleDefinitionGetResultCollection GetMongoRoleDefinitionGetResults()
+        {
+            return GetCachedClient(Client => new MongoRoleDefinitionGetResultCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo Role Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoRoleDefinition
+        /// </summary>
+        /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MongoRoleDefinitionGetResultResource>> GetMongoRoleDefinitionGetResultAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return await GetMongoRoleDefinitionGetResults().GetAsync(mongoRoleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo Role Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoRoleDefinition
+        /// </summary>
+        /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MongoRoleDefinitionGetResultResource> GetMongoRoleDefinitionGetResult(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return GetMongoRoleDefinitionGetResults().Get(mongoRoleDefinitionId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MongoUserDefinitionGetResultResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of MongoUserDefinitionGetResultResources and their operations over a MongoUserDefinitionGetResultResource. </returns>
+        public virtual MongoUserDefinitionGetResultCollection GetMongoUserDefinitionGetResults()
+        {
+            return GetCachedClient(Client => new MongoUserDefinitionGetResultCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// </summary>
+        /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoUserDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoUserDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MongoUserDefinitionGetResultResource>> GetMongoUserDefinitionGetResultAsync(string mongoUserDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return await GetMongoUserDefinitionGetResults().GetAsync(mongoUserDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// </summary>
+        /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoUserDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoUserDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MongoUserDefinitionGetResultResource> GetMongoUserDefinitionGetResult(string mongoUserDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return GetMongoUserDefinitionGetResults().Get(mongoUserDefinitionId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CosmosDBTableResources in the CosmosDBAccount. </summary>
         /// <returns> An object representing collection of CosmosDBTableResources and their operations over a CosmosDBTableResource. </returns>
         public virtual CosmosDBTableCollection GetCosmosDBTables()
@@ -464,6 +538,43 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<CosmosDBPrivateLinkResource> GetCosmosDBPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
             return GetCosmosDBPrivateLinkResources().Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
+        public virtual ServiceResourceCollection GetServiceResources()
+        {
+            return GetCachedClient(Client => new ServiceResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the status of service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}
+        /// Operation Id: Service_Get
+        /// </summary>
+        /// <param name="serviceName"> Cosmos DB service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceResource>> GetServiceResourceAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceResources().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the status of service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}
+        /// Operation Id: Service_Get
+        /// </summary>
+        /// <param name="serviceName"> Cosmos DB service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceResource> GetServiceResource(string serviceName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceResources().Get(serviceName, cancellationToken);
         }
 
         /// <summary>
