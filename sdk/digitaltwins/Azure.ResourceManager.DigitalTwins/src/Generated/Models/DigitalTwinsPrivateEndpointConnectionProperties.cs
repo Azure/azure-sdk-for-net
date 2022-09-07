@@ -12,20 +12,20 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The properties of a private endpoint connection. </summary>
-    public partial class ConnectionProperties
+    public partial class DigitalTwinsPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of ConnectionProperties. </summary>
-        public ConnectionProperties()
+        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
+        public DigitalTwinsPrivateEndpointConnectionProperties()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpoint"> The private endpoint. </param>
         /// <param name="groupIds"> The list of group ids for the private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The connection state. </param>
-        internal ConnectionProperties(ConnectionPropertiesProvisioningState? provisioningState, SubResource privateEndpoint, IList<string> groupIds, ConnectionPropertiesPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        internal DigitalTwinsPrivateEndpointConnectionProperties(DigitalTwinsPrivateLinkResourceProvisioningState? provisioningState, SubResource privateEndpoint, IList<string> groupIds, DigitalTwinsPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         }
 
         /// <summary> The provisioning state. </summary>
-        public ConnectionPropertiesProvisioningState? ProvisioningState { get; }
+        public DigitalTwinsPrivateLinkResourceProvisioningState? ProvisioningState { get; }
         /// <summary> The private endpoint. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> The list of group ids for the private endpoint connection. </summary>
         public IList<string> GroupIds { get; }
         /// <summary> The connection state. </summary>
-        public ConnectionPropertiesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public DigitalTwinsPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
     }
 }

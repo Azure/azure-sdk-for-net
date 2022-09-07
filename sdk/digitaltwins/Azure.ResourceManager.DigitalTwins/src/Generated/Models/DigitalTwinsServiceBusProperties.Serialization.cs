@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class ServiceBus : IUtf8JsonSerializable
+    public partial class DigitalTwinsServiceBusProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -98,16 +98,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceBus DeserializeServiceBus(JsonElement element)
+        internal static DigitalTwinsServiceBusProperties DeserializeDigitalTwinsServiceBusProperties(JsonElement element)
         {
             Optional<string> primaryConnectionString = default;
             Optional<string> secondaryConnectionString = default;
             Optional<Uri> endpointUri = default;
             Optional<string> entityPath = default;
             EndpointType endpointType = default;
-            Optional<EndpointProvisioningState?> provisioningState = default;
+            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
             Optional<DateTimeOffset?> createdTime = default;
-            Optional<AuthenticationType> authenticationType = default;
+            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         provisioningState = null;
                         continue;
                     }
-                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
+                    provisioningState = new DigitalTwinsEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deadLetterSecret"))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new ServiceBus(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, primaryConnectionString.Value, secondaryConnectionString.Value, endpointUri.Value, entityPath.Value);
+            return new DigitalTwinsServiceBusProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, primaryConnectionString.Value, secondaryConnectionString.Value, endpointUri.Value, entityPath.Value);
         }
     }
 }

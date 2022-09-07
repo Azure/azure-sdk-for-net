@@ -10,15 +10,15 @@ using System;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> Properties related to ServiceBus. </summary>
-    public partial class ServiceBus : DigitalTwinsEndpointResourceProperties
+    public partial class DigitalTwinsServiceBusProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of ServiceBus. </summary>
-        public ServiceBus()
+        /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
+        public DigitalTwinsServiceBusProperties()
         {
             EndpointType = EndpointType.ServiceBus;
         }
 
-        /// <summary> Initializes a new instance of ServiceBus. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the ServiceBus namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </param>
         /// <param name="entityPath"> The ServiceBus Topic name for identity-based authentication. </param>
-        internal ServiceBus(EndpointType endpointType, EndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, AuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string primaryConnectionString, string secondaryConnectionString, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
+        internal DigitalTwinsServiceBusProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string primaryConnectionString, string secondaryConnectionString, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;

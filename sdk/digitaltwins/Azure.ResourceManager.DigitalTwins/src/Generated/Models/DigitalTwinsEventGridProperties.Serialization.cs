@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class EventGrid : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventGridProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteEndObject();
         }
 
-        internal static EventGrid DeserializeEventGrid(JsonElement element)
+        internal static DigitalTwinsEventGridProperties DeserializeDigitalTwinsEventGridProperties(JsonElement element)
         {
             string topicEndpoint = default;
             string accessKey1 = default;
             Optional<string> accessKey2 = default;
             EndpointType endpointType = default;
-            Optional<EndpointProvisioningState?> provisioningState = default;
+            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
             Optional<DateTimeOffset?> createdTime = default;
-            Optional<AuthenticationType> authenticationType = default;
+            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         provisioningState = null;
                         continue;
                     }
-                    provisioningState = new EndpointProvisioningState(property.Value.GetString());
+                    provisioningState = new DigitalTwinsEndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deadLetterSecret"))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new EventGrid(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, topicEndpoint, accessKey1, accessKey2.Value);
+            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, topicEndpoint, accessKey1, accessKey2.Value);
         }
     }
 }

@@ -8,29 +8,29 @@
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The result returned from a check name availability request. </summary>
-    public partial class CheckNameResult
+    public partial class DigitalTwinsNameResult
     {
-        /// <summary> Initializes a new instance of CheckNameResult. </summary>
-        internal CheckNameResult()
+        /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>
+        internal DigitalTwinsNameResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameResult. </summary>
-        /// <param name="nameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
+        /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>
+        /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
         /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
-        internal CheckNameResult(bool? nameAvailable, string message, Reason? reason)
+        internal DigitalTwinsNameResult(bool? isNameAvailable, string message, DigitalTwinsNameUnavailableReason? reason)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Message = message;
             Reason = reason;
         }
 
         /// <summary> Specifies a Boolean value that indicates if the name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </summary>
         public string Message { get; }
         /// <summary> Message providing the reason why the given name is invalid. </summary>
-        public Reason? Reason { get; }
+        public DigitalTwinsNameUnavailableReason? Reason { get; }
     }
 }

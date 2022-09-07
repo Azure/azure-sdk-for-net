@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class ConnectionState : IUtf8JsonSerializable
+    public partial class DigitalTwinsPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteEndObject();
         }
 
-        internal static ConnectionState DeserializeConnectionState(JsonElement element)
+        internal static DigitalTwinsPrivateLinkServiceConnectionState DeserializeDigitalTwinsPrivateLinkServiceConnectionState(JsonElement element)
         {
-            PrivateLinkServiceConnectionStatus status = default;
+            DigitalTwinsPrivateLinkServiceConnectionStatus status = default;
             string description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = new PrivateLinkServiceConnectionStatus(property.Value.GetString());
+                    status = new DigitalTwinsPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new ConnectionState(status, description, actionsRequired.Value);
+            return new DigitalTwinsPrivateLinkServiceConnectionState(status, description, actionsRequired.Value);
         }
     }
 }

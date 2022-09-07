@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class ConnectionProperties : IUtf8JsonSerializable
+    public partial class DigitalTwinsPrivateEndpointConnectionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteEndObject();
         }
 
-        internal static ConnectionProperties DeserializeConnectionProperties(JsonElement element)
+        internal static DigitalTwinsPrivateEndpointConnectionProperties DeserializeDigitalTwinsPrivateEndpointConnectionProperties(JsonElement element)
         {
-            Optional<ConnectionPropertiesProvisioningState?> provisioningState = default;
+            Optional<DigitalTwinsPrivateLinkResourceProvisioningState?> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<IList<string>> groupIds = default;
-            Optional<ConnectionPropertiesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<DigitalTwinsPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         provisioningState = null;
                         continue;
                     }
-                    provisioningState = new ConnectionPropertiesProvisioningState(property.Value.GetString());
+                    provisioningState = new DigitalTwinsPrivateLinkResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpoint"))
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateLinkServiceConnectionState = ConnectionPropertiesPrivateLinkServiceConnectionState.DeserializeConnectionPropertiesPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = DigitalTwinsPrivateLinkServiceConnectionState.DeserializeDigitalTwinsPrivateLinkServiceConnectionState(property.Value);
                     continue;
                 }
             }
-            return new ConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            return new DigitalTwinsPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }

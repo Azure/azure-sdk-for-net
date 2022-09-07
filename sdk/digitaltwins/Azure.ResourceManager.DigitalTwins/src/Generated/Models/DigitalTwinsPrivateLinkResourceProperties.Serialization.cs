@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class GroupIdInformationProperties
+    public partial class DigitalTwinsPrivateLinkResourceProperties
     {
-        internal static GroupIdInformationProperties DeserializeGroupIdInformationProperties(JsonElement element)
+        internal static DigitalTwinsPrivateLinkResourceProperties DeserializeDigitalTwinsPrivateLinkResourceProperties(JsonElement element)
         {
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new GroupIdInformationProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new DigitalTwinsPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

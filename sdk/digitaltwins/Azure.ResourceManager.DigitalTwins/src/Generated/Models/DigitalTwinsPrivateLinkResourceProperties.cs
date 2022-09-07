@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The properties for a group information object. </summary>
-    public partial class GroupIdInformationProperties
+    public partial class DigitalTwinsPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of GroupIdInformationProperties. </summary>
-        internal GroupIdInformationProperties()
+        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceProperties. </summary>
+        internal DigitalTwinsPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GroupIdInformationProperties. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceProperties. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
-        internal GroupIdInformationProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
+        internal DigitalTwinsPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

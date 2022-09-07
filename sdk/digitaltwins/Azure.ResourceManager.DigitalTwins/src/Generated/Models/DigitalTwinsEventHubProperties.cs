@@ -10,15 +10,15 @@ using System;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> Properties related to EventHub. </summary>
-    public partial class EventHub : DigitalTwinsEndpointResourceProperties
+    public partial class DigitalTwinsEventHubProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of EventHub. </summary>
-        public EventHub()
+        /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
+        public DigitalTwinsEventHubProperties()
         {
             EndpointType = EndpointType.EventHub;
         }
 
-        /// <summary> Initializes a new instance of EventHub. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="connectionStringSecondaryKey"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </param>
         /// <param name="entityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
-        internal EventHub(EndpointType endpointType, EndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, AuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
+        internal DigitalTwinsEventHubProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string connectionStringPrimaryKey, string connectionStringSecondaryKey, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
         {
             ConnectionStringPrimaryKey = connectionStringPrimaryKey;
             ConnectionStringSecondaryKey = connectionStringSecondaryKey;

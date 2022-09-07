@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> Properties related to EventGrid. </summary>
-    public partial class EventGrid : DigitalTwinsEndpointResourceProperties
+    public partial class DigitalTwinsEventGridProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of EventGrid. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicEndpoint"/> is null. </exception>
-        public EventGrid(string topicEndpoint, string accessKey1)
+        public DigitalTwinsEventGridProperties(string topicEndpoint, string accessKey1)
         {
             if (topicEndpoint == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             EndpointType = EndpointType.EventGrid;
         }
 
-        /// <summary> Initializes a new instance of EventGrid. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <param name="accessKey2"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
-        internal EventGrid(EndpointType endpointType, EndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, AuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
+        internal DigitalTwinsEventGridProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
         {
             TopicEndpoint = topicEndpoint;
             AccessKey1 = accessKey1;

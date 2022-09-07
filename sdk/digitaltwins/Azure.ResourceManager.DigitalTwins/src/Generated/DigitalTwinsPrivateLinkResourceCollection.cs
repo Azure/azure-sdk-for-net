@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GroupIdInformationResource" /> and their operations.
-    /// Each <see cref="GroupIdInformationResource" /> in the collection will belong to the same instance of <see cref="DigitalTwinsDescriptionResource" />.
-    /// To get a <see cref="GroupIdInformationCollection" /> instance call the GetGroupIdInformation method from an instance of <see cref="DigitalTwinsDescriptionResource" />.
+    /// A class representing a collection of <see cref="DigitalTwinsPrivateLinkResource" /> and their operations.
+    /// Each <see cref="DigitalTwinsPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="DigitalTwinsDescriptionResource" />.
+    /// To get a <see cref="DigitalTwinsPrivateLinkResourceCollection" /> instance call the GetDigitalTwinsPrivateLinkResources method from an instance of <see cref="DigitalTwinsDescriptionResource" />.
     /// </summary>
-    public partial class GroupIdInformationCollection : ArmCollection, IEnumerable<GroupIdInformationResource>, IAsyncEnumerable<GroupIdInformationResource>
+    public partial class DigitalTwinsPrivateLinkResourceCollection : ArmCollection, IEnumerable<DigitalTwinsPrivateLinkResource>, IAsyncEnumerable<DigitalTwinsPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _groupIdInformationPrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _groupIdInformationPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GroupIdInformationCollection"/> class for mocking. </summary>
-        protected GroupIdInformationCollection()
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateLinkResourceCollection"/> class for mocking. </summary>
+        protected DigitalTwinsPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GroupIdInformationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GroupIdInformationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DigitalTwinsPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupIdInformationPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DigitalTwins", GroupIdInformationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GroupIdInformationResource.ResourceType, out string groupIdInformationPrivateLinkResourcesApiVersion);
-            _groupIdInformationPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupIdInformationPrivateLinkResourcesApiVersion);
+            _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DigitalTwins", DigitalTwinsPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DigitalTwinsPrivateLinkResource.ResourceType, out string digitalTwinsPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, digitalTwinsPrivateLinkResourcePrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public virtual async Task<Response<GroupIdInformationResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsPrivateLinkResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationCollection.Get");
+            using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _groupIdInformationPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken).ConfigureAwait(false);
+                var response = await _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GroupIdInformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DigitalTwinsPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public virtual Response<GroupIdInformationResource> Get(string resourceId, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsPrivateLinkResource> Get(string resourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationCollection.Get");
+            using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _groupIdInformationPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken);
+                var response = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GroupIdInformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DigitalTwinsPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.DigitalTwins
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GroupIdInformationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GroupIdInformationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DigitalTwinsPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DigitalTwinsPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GroupIdInformationResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DigitalTwinsPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationCollection.GetAll");
+                using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _groupIdInformationPrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupIdInformationResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.DigitalTwins
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GroupIdInformationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GroupIdInformationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DigitalTwinsPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DigitalTwinsPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GroupIdInformationResource> FirstPageFunc(int? pageSizeHint)
+            Page<DigitalTwinsPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationCollection.GetAll");
+                using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _groupIdInformationPrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupIdInformationResource(Client, value)), null, response.GetRawResponse());
+                    var response = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationCollection.Exists");
+            using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _groupIdInformationPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationCollection.Exists");
+            using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _groupIdInformationPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken: cancellationToken);
+                var response = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DigitalTwins
             }
         }
 
-        IEnumerator<GroupIdInformationResource> IEnumerable<GroupIdInformationResource>.GetEnumerator()
+        IEnumerator<DigitalTwinsPrivateLinkResource> IEnumerable<DigitalTwinsPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DigitalTwins
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<GroupIdInformationResource> IAsyncEnumerable<GroupIdInformationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DigitalTwinsPrivateLinkResource> IAsyncEnumerable<DigitalTwinsPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class AzureDataExplorerConnectionProperties : IUtf8JsonSerializable
+    public partial class DataExplorerConnectionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerConnectionProperties DeserializeAzureDataExplorerConnectionProperties(JsonElement element)
+        internal static DataExplorerConnectionProperties DeserializeDataExplorerConnectionProperties(JsonElement element)
         {
-            string adxResourceId = default;
+            ResourceIdentifier adxResourceId = default;
             Uri adxEndpointUri = default;
             string adxDatabaseName = default;
             Optional<string> adxTableName = default;
             Uri eventHubEndpointUri = default;
             string eventHubEntityPath = default;
-            string eventHubNamespaceResourceId = default;
+            ResourceIdentifier eventHubNamespaceResourceId = default;
             Optional<string> eventHubConsumerGroup = default;
             ConnectionType connectionType = default;
             Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (property.NameEquals("adxResourceId"))
                 {
-                    adxResourceId = property.Value.GetString();
+                    adxResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("adxEndpointUri"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (property.NameEquals("eventHubNamespaceResourceId"))
                 {
-                    eventHubNamespaceResourceId = property.Value.GetString();
+                    eventHubNamespaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eventHubConsumerGroup"))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new AzureDataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value);
+            return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value);
         }
     }
 }

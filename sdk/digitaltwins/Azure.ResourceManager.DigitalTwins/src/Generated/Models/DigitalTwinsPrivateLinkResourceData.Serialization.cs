@@ -12,20 +12,20 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    public partial class GroupIdInformationData
+    public partial class DigitalTwinsPrivateLinkResourceData
     {
-        internal static GroupIdInformationData DeserializeGroupIdInformationData(JsonElement element)
+        internal static DigitalTwinsPrivateLinkResourceData DeserializeDigitalTwinsPrivateLinkResourceData(JsonElement element)
         {
-            GroupIdInformationProperties properties = default;
+            DigitalTwinsPrivateLinkResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = GroupIdInformationProperties.DeserializeGroupIdInformationProperties(property.Value);
+                    properties = DigitalTwinsPrivateLinkResourceProperties.DeserializeDigitalTwinsPrivateLinkResourceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     continue;
                 }
             }
-            return new GroupIdInformationData(id, name, type, systemData.Value, properties);
+            return new DigitalTwinsPrivateLinkResourceData(id, name, type, systemData.Value, properties);
         }
     }
 }

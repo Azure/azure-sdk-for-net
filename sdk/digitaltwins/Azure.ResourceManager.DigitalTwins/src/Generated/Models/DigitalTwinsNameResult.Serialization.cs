@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class CheckNameResult
+    public partial class DigitalTwinsNameResult
     {
-        internal static CheckNameResult DeserializeCheckNameResult(JsonElement element)
+        internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
-            Optional<Reason?> reason = default;
+            Optional<DigitalTwinsNameUnavailableReason?> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"))
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         reason = null;
                         continue;
                     }
-                    reason = new Reason(property.Value.GetString());
+                    reason = new DigitalTwinsNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
             }
-            return new CheckNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason));
+            return new DigitalTwinsNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason));
         }
     }
 }

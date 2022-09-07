@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The current state of a private endpoint connection. </summary>
-    public partial class ConnectionState
+    public partial class DigitalTwinsPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of ConnectionState. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
-        public ConnectionState(PrivateLinkServiceConnectionStatus status, string description)
+        public DigitalTwinsPrivateLinkServiceConnectionState(DigitalTwinsPrivateLinkServiceConnectionStatus status, string description)
         {
             if (description == null)
             {
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of ConnectionState. </summary>
+        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
-        internal ConnectionState(PrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
+        internal DigitalTwinsPrivateLinkServiceConnectionState(DigitalTwinsPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         }
 
         /// <summary> The status of a private endpoint connection. </summary>
-        public PrivateLinkServiceConnectionStatus Status { get; set; }
+        public DigitalTwinsPrivateLinkServiceConnectionStatus Status { get; set; }
         /// <summary> The description for the current state of a private endpoint connection. </summary>
         public string Description { get; set; }
         /// <summary> Actions required for a private endpoint connection. </summary>
