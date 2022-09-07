@@ -85,8 +85,9 @@ var documentModelAdministrationClient = new DocumentModelAdministrationClient(ne
 ### Long-running operations
 
 The way long-running operations are designed has changed slightly to conform to new patterns in the Azure SDK for .NET libraries. The differences are listed below:
-- In `3.1.x`, service methods used to begin with the `Start` prefix to indicate it starts a long-running operation. In `4.0.x`, that prefix is not used anymore. For example, `StartCopyModel` is equivalent to the new `CopyDocumentModelTo`.
-- In `3.1.x`, you had to call the `WaitForCompletionAsync` method to wait for the long-running operation to finish running. In `4.0.x`, methods that start a long-running operation take a required `waitUntil` parameter. You can pass the value `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later.
+- In version `3.1.x`, service methods begin with the `Start` prefix to indicate it starts a long-running operation. In version `4.0.x`, that prefix is not used anymore. For example, `StartCopyModel` is equivalent to the new `CopyDocumentModelTo`.
+- In version `3.1.x`, the method `WaitForCompletionAsync` had to be called to wait for the long-running operation to finish running.
+- In version `4.0.x`, methods that start a long-running operation take a required `waitUntil` parameter. You can pass the value `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later.
 
 Waiting for long-running operations to finish in `3.1.x`:
 ```C# Snippet:WaitForLongRunningOperationV2
@@ -573,6 +574,11 @@ Differences between the versions:
 - Files for building a new model for version `4.0.x` can be created using the labeling tool found [here][fr_labeling_tool].
 - In version `3.1.x` the `useTrainingLabels` parameter was used to indicate whether to use labeled data when creating the custom model.
 - In version `4.0.x` the `useTrainingLabels` parameter is not supported since training must be carried out with labeled training documents. Additionally train without labels is now replaced with the prebuilt model `prebuilt-document` which extracts key-value pairs and layout from a document.
+- In version `4.0.x`, the new `buildMode` required parameter is used to choose the technique to be applied when building the model. Currently there are only two options:
+  - Template build mode: equivalent to the technique used in version `3.1.x`. Recommended when the custom documents all have the same layout. Fields are expected to be in the same place across documents. Build time tends to be considerably shorter than the neural build mode.
+  - Neural build mode: recommended when custom documents have different layouts. Fields are expected to be the same but they can be placed in different positions across documents.
+
+For more information about the available build modes and their capabilities, see [Form Recognizer custom models](https://aka.ms/azsdk/formrecognizer/buildmode).
 
 Train a custom model with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
