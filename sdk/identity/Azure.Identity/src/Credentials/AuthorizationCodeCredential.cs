@@ -104,7 +104,7 @@ namespace Azure.Identity
                           _redirectUri,
                           options);
 
-            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as AuthorizationCodeCredentialOptions)?.AdditionallyAllowedTenants);
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>

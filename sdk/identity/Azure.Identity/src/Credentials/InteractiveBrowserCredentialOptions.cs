@@ -34,7 +34,7 @@ namespace Azure.Identity
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/> this option will have no effect, and the credential will acquire tokens for any requested tenant.
         /// </summary>
-        public IList<string> AdditionallyAllowedTenants { get; } = new List<string>();
+        public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
 
         /// <summary>
         /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.

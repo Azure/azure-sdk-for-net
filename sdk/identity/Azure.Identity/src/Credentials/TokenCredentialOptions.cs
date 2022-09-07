@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -36,6 +38,11 @@ namespace Azure.Identity
         /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
         /// </summary>
         internal bool IsLoggingPIIEnabled { get; set; }
+
+        /// <summary>
+        /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the application is installed.
+        /// </summary>
+        internal IList<string> AdditionallyAllowedTenantsCore { get; } = new List<string>();
 
         /// <summary>
         /// Gets the credential diagnostic options.
