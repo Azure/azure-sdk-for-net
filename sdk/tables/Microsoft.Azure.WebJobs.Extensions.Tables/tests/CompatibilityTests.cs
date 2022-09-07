@@ -20,10 +20,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
     // Can't record V4
     [LiveOnly]
-    public class CompatibilityTests : TablesLiveTestBase
+    public class CompatibilityTests: TablesLiveTestBase
     {
-        private static DateTimeOffset DateTimeOffsetValue = DateTimeOffset.Parse("07-08-1997", null, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
-        private static DateTime DateTimeValue = DateTime.Parse("07-08-1997", null, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+        private static DateTimeOffset DateTimeOffsetValue = DateTimeOffset.Parse("07-08-1997", null,  DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+        private static DateTime DateTimeValue = DateTime.Parse("07-08-1997", null,  DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
 
         public CompatibilityTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
         {
@@ -44,25 +44,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             await writer.Write(this, testEntity);
             var output = await reader.Read<TestITableEntity>(this);
-
-            AssertAreEqual(testEntity, output);
-        }
-
-        [Test]
-        [TestCaseSource(nameof(SdkExtensionPermutations))]
-        public async Task CanSavePocoAndLoadITableEntityWithNullables2(ITablesClient writer, ITablesClient reader)
-        {
-            var testEntity = new TestITableEntity()
-            {
-                PartitionKey = PartitionKey,
-                RowKey = RowKey,
-                // SDK can't handle overflow in longs
-                UInt64TypeProperty = long.MaxValue,
-                Int64TypeProperty = long.MaxValue,
-            };
-
-            await writer.Write(this, testEntity);
-            var output = await reader.Read<ITableEntity>(this);
 
             AssertAreEqual(testEntity, output);
         }
@@ -369,7 +350,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 StringTypeProperty = "hello";
                 GuidTypeProperty = Guid.Parse("ca761232-ed42-11ce-bacd-00aa0057b223");
-                BinaryTypeProperty = new byte[] { 1, 2, 3 };
+                BinaryTypeProperty = new byte[] {1, 2, 3};
 
                 Int64TypeProperty = long.MaxValue;
                 UInt64TypeProperty = ulong.MaxValue;
@@ -429,7 +410,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
                 StringTypeProperty = "hello";
                 GuidTypeProperty = Guid.Parse("ca761232-ed42-11ce-bacd-00aa0057b223");
-                BinaryTypeProperty = new byte[] { 1, 2, 3 };
+                BinaryTypeProperty = new byte[] {1, 2, 3};
 
                 Int64TypeProperty = long.MaxValue;
                 UInt64TypeProperty = ulong.MaxValue;
@@ -485,7 +466,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             ValueTask Write<T>(CompatibilityTests test, T entity);
         }
 
-        private class Sdk : ITablesClient
+        private class Sdk: ITablesClient
         {
             public static Sdk Instance = new();
             public async ValueTask<T> Read<T>(CompatibilityTests test)
@@ -549,7 +530,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 return result.Entity;
             }
 
-            public async ValueTask Write<T>(CompatibilityTests test, T entity)
+            public async ValueTask Write<T>(CompatibilityTests test,T entity)
             {
                 await test.CallAsync<AddEntityProgramT1<T>>(arguments: new { entity }, configure: builder => Configure(builder, test));
             }
