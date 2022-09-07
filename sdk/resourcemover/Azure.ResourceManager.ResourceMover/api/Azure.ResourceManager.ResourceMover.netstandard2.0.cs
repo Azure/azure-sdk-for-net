@@ -477,6 +477,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public int? Count { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
+    public partial class MoverVirtualNetworkResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
+    {
+        public MoverVirtualNetworkResourceSettings(string targetResourceName) : base (default(string)) { }
+        public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } set { } }
+        public bool? EnableDdosProtection { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.SubnetResourceSettings> Subnets { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+    }
     public partial class NetworkInterfaceResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public NetworkInterfaceResourceSettings(string targetResourceName) : base (default(string)) { }
@@ -593,14 +602,5 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone? TargetAvailabilityZone { get { throw null; } set { } }
         public string TargetVmSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> UserManagedIdentities { get { throw null; } }
-    }
-    public partial class VirtualNetworkResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
-    {
-        public VirtualNetworkResourceSettings(string targetResourceName) : base (default(string)) { }
-        public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } set { } }
-        public bool? EnableDdosProtection { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.SubnetResourceSettings> Subnets { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
 }
