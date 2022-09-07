@@ -175,8 +175,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
         {
-            // Export exceptions from server spans only
-            // TODO: how do we handler consumer/producer spans?
             if (!activity.Events.Any())
             {
                 return;
