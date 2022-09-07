@@ -25,7 +25,7 @@ rename-mapping:
   Endpoint: FrontDoorExperimentEndpointProperties
   Experiment.properties.endpointA: ExperimentEndpointA
   Experiment.properties.endpointB: ExperimentEndpointB
-  Timeseries: TimeseriesInfo
+  Timeseries: FrontDoorTimeseriesInfo
   Timeseries.properties.endpoint: -|Uri
   Timeseries.properties.startDateTimeUTC: StartOn
   Timeseries.properties.endDateTimeUTC: EndOn
@@ -92,7 +92,7 @@ rename-mapping:
   EndpointType.ATM: AzureTrafficManager
   TimeseriesDataPoint: FrontDoorTimeSeriesDataPoint
   TimeseriesInfo: FrontDoorTimeSeriesInfo
-  timeseriesType: FrontDoorTimeSeriesType
+  TimeseriesType: FrontDoorTimeSeriesType
 
 format-by-name-rules:
   'tenantId': 'uuid'
