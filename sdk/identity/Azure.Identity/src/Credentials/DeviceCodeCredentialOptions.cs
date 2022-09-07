@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,6 +29,13 @@ namespace Azure.Identity
             get { return _tenantId; }
             set { _tenantId = Validations.ValidateTenantId(value, allowNull: true); }
         }
+
+        /// <summary>
+        /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
+        /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
+        /// If no value is specified for <see cref="TenantId"/> this option will have no effect, and the credential will acquire tokens for any requested tenant.
+        /// </summary>
+        public IList<string> AdditionallyAllowedTenants { get; } = new List<string>();
 
         /// <summary>
         /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.

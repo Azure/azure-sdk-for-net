@@ -18,6 +18,7 @@ namespace Azure.Identity
     public class InteractiveBrowserCredential : TokenCredential
     {
         private readonly string _tenantId;
+        private readonly string[] _additionallyAllowedTenantIds;
         internal string ClientId { get; }
         internal string LoginHint { get; }
         internal MsalPublicClient Client { get; }
@@ -81,6 +82,7 @@ namespace Azure.Identity
             LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options);
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as InteractiveBrowserCredentialOptions)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -181,7 +183,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext, TenantIdResolver.AllTenants);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext, _additionallyAllowedTenantIds);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);
