@@ -219,7 +219,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ActivityWithExceptionEventCreatesExceptionTelemetry()
+        public void ServerSideActivityWithExceptionEventCreatesExceptionTelemetry()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Server);
+
+            activity.RecordException(new Exception("Exception Message"));
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
+
+            Assert.Equal(2, telemetryItems.Count());
+            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
+            Assert.Equal("Exception", (IEnumerable<char>)telemetryItems[1].Name);
+            Assert.Equal("Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
+            Assert.Equal("System.Exception", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().TypeName);
+            Assert.Equal("System.Exception: Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Stack);
+        }
+
+        [Fact]
+        public void ClientSideActivityWithExceptionEventDoesNotCreateExceptionTelemetry()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -234,15 +258,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
 
-            Assert.Equal(2, telemetryItems.Count());
+            Assert.Single(telemetryItems);
             Assert.Equal("RemoteDependency", (IEnumerable<char>)telemetryItems[0].Name);
-            Assert.Equal("Exception", (IEnumerable<char>)telemetryItems[1].Name);
-            Assert.Equal("Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
-            Assert.Equal("System.Exception", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().TypeName);
-            Assert.Equal("System.Exception: Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Stack);
         }
 
-            private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
+        private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())
             {
