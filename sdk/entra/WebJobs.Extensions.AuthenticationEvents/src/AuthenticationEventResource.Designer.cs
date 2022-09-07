@@ -206,6 +206,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot assign legacy payload to cloud events..
+        /// </summary>
+        internal static string Ex_Leg_payload {
+            get {
+                return ResourceManager.GetString("Ex_Leg_payload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot find the correct Event Metadata based on the input parameter: {0}.
         /// </summary>
         internal static string Ex_Missing_Def {
@@ -359,7 +368,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The &apos;{0}&apos; fields needs to contain one of the following values: .
+        ///   Looks up a localized string similar to The &apos;{0}&apos; field needs to contain one of the following values: .
         /// </summary>
         internal static string Val_One_Of {
             get {

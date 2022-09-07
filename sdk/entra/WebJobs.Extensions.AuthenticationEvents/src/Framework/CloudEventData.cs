@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json.Schema;
+
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>Abstract class that handles payload strongly typed payloads conversions.</summary>
@@ -20,8 +22,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 }
                 else if (cloudEvent.Properties.ContainsKey("context"))
                 {
-                    cloudEvent.Properties.Add("authenticationContext", cloudEvent.FindFirstElementNamed("context"));
-                    cloudEvent.Properties.Remove("context");
+                    cloudEvent.RenameProperty("context", "authenticationContext");
+                    var authContext = cloudEvent.FindFirstElementNamed("authenticationContext");
+
+                    if (authContext != null)
+                    {
+                        authContext.RenameProperty("authProtocol", "protocol");
+                        if (authContext.PathExists("protocol", "type"))
+                        {
+                            authContext.Properties["protocol"] = authContext.GetPropertyValue("protocol", "type");
+                        }
+                    }
+
                     return base.FromJson(cloudEvent);
                 }
             }

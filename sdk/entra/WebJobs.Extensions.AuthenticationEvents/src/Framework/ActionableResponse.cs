@@ -31,7 +31,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         internal void InvalidateActions()
         {
             string actionElement = "actions";
-            string typeProperty = "type";
 
             AuthenticationEventJsonElement jPayload = new AuthenticationEventJsonElement(Body);
             AuthenticationEventJsonElement jActions = jPayload.FindFirstElementNamed(actionElement);
@@ -44,9 +43,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             foreach (T action in Actions)
             {
                 AuthenticationEventJsonElement jBody = action.BuildActionBody();
-                AuthenticationEventJsonElement jAction = jActions.FindFirstElementWithPropertyNamed(typeProperty);
+                AuthenticationEventJsonElement jAction = jActions.FindFirstElementWithPropertyNamed(action.TypeProperty);
 
-                if (jAction == null || !jAction.Properties[typeProperty].ToString().Equals(action.ActionType, StringComparison.OrdinalIgnoreCase))
+                if (jAction == null || !jAction.Properties[action.TypeProperty].ToString().Equals(action.ActionType, StringComparison.OrdinalIgnoreCase))
                 {
                     jAction = new AuthenticationEventJsonElement();
                     jActions.Elements.Add(jAction);
@@ -56,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     jAction.RemoveAll();
                 }
 
-                jAction.Properties.Add(typeProperty, action.ActionType);
+                jAction.Properties.Add(action.TypeProperty, action.ActionType);
                 jAction.Merge(jBody);
             }
 

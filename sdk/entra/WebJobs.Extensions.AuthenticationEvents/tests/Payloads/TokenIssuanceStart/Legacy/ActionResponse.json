@@ -4,10 +4,12 @@
       "type": "ProvideClaimsForToken",
       "claims": [
         {
-          "DateOfBirth": "01/01/2000"
+          "id": "DateOfBirth",
+          "value": "01/01/2000"
         },
         {
-          "CustomRoles": [
+          "id": "CustomRoles",
+          "value": [
             "Writer",
             "Editor"
           ]

@@ -2,20 +2,14 @@
   "data": {
     "actions": [
       {
-        "type": "ProvideClaimsForToken",
-        "claims": [
-          {
-            "id": "DateOfBirth",
-            "value": "01/01/2000"
-          },
-          {
-            "id": "CustomRoles",
-            "value": [
-              "Writer",
-              "Editor"
-            ]
-          }
-        ]
+        "@odata.type": "microsoft.graph.provideClaimsForToken",
+        "claims": {
+          "DateOfBirth": "01/01/2000",
+          "CustomRoles": [
+            "Writer",
+            "Editor"
+          ]
+        }
       }
     ]
   }

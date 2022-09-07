@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <value>The type of the action.</value>
         [JsonPropertyName("actionType")]
         internal abstract string ActionType { get; }
-
+        internal virtual string TypeProperty => "@odata.type";
         /// <summary>Initializes a new instance of the <see cref="AuthenticationEventAction" /> class.</summary>
         public AuthenticationEventAction() { }
 

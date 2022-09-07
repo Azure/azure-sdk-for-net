@@ -57,6 +57,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 {
                     return jAction.GetPropertyValue("type");
                 }
+                else if (jAction.Properties.ContainsKey("@odata.type"))
+                {
+                    return jAction.GetPropertyValue("@odata.type");
+                }
 
                 return null;
             }

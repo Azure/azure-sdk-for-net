@@ -62,12 +62,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>A <see cref="string" /> that represents this instance.</returns>
         public override string ToString()
         {
-            JsonSerializerOptions options = new();
+            JsonSerializerOptions options = new JsonSerializerOptions();
             options.Converters.Add(new AuthenticationEventResponseConverterFactory());
             return JsonSerializer.Serialize((object)this, options);
         }
 
-        internal virtual JsonSerializerOptions JsonSerializerOptions => new() { WriteIndented = true, PropertyNameCaseInsensitive = true };
+        internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
 
         internal abstract AuthenticationEventResponse GetResponseObject();
 

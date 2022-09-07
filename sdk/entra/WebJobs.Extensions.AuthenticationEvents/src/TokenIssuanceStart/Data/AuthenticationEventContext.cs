@@ -22,9 +22,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
 
         /// <summary>Gets the authentication protocol.</summary>
         /// <value>The authentication protocol.</value>
-        [JsonPropertyName("authenticationProtocol")]
+        [JsonPropertyName("protocol")]
         [OneOf("OAUTH2.0", "SAML", "WS-FED", "unknownFutureValue", "")]
-        public string AuthenticationProtocol { get; set; }
+        public string Protocol { get; set; }
 
         /// <summary>Gets the client service principal.</summary>
         /// <value>The client service principal.</value>

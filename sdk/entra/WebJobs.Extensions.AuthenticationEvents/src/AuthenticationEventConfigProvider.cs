@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>The main configuration provider, this also handles the initial HTTP requests and response via IAsyncConverter.</summary>
     /// <seealso cref="HttpRequestMessage" />
     /// <seealso cref="HttpResponseMessage" />
-    [Extension("AuthenticationEvents", "AuthenticationEvents")]
+    [Extension("CustomAuthenticationExtension", "CustomAuthenticationExtension")]
     internal class AuthenticationEventConfigProvider : IExtensionConfigProvider, IAsyncConverter<HttpRequestMessage, HttpResponseMessage>
     {
         private readonly ILogger _logger;

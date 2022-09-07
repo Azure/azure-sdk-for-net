@@ -41,9 +41,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal virtual void InstanceCreated(AuthenticationEventJsonElement payload)
         {
-            AuthenticationEventJsonElement jBody = new(Body);
+            AuthenticationEventJsonElement jBody = new AuthenticationEventJsonElement(Body);
 
-            Dictionary<string[], string> updates = new();
+            Dictionary<string[], string> updates = new Dictionary<string[], string>();
 
             if (payload.Properties.ContainsKey("type") && jBody.Properties.ContainsKey("type"))
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <exception cref="Exception">Thrown if the path cannot be found.</exception>
         internal void SetJsonValue<T>(T value, params string[] path)
         {
-            AuthenticationEventJsonElement payload = new(Body);
+            AuthenticationEventJsonElement payload = new AuthenticationEventJsonElement(Body);
             (string key, Dictionary<string, object> props) = payload.FindPropertyDictionary(true, path);
             if (key == null)
             {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal void SetJsonValue<T>(Dictionary<string[], T> values)
         {
-            AuthenticationEventJsonElement payload = new(Body);
+            AuthenticationEventJsonElement payload = new AuthenticationEventJsonElement(Body);
             foreach (KeyValuePair<string[], T> keyValuePair in values)
             {
                 (string key, Dictionary<string, object> props) = payload.FindPropertyDictionary(true, keyValuePair.Key);
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         internal void MarkAsFailed(Exception ex)
         {
             StatusCode = System.Net.HttpStatusCode.BadRequest;
-            ReasonPhrase = ex.Message;
+            ReasonPhrase = String.Empty;
             Body = Helpers.GetFailedRequestPayload(ex);
         }
 

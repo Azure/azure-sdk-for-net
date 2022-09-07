@@ -1,7 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
@@ -22,13 +26,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// Subsequently invalidates the actions.</summary>
         internal override void Invalidate()
         {
+            Actions.RemoveAll(a => a == null);
             AuthenticationEventJsonElement eventJsonElement = new AuthenticationEventJsonElement(Body);
             if (eventJsonElement.SetProperty<string>(ODataType, "data", "@odata.type"))
             {
+                if (Actions.Any(a => LegacyMap.Any(m => m.Value == a.GetType())))
+                    throw new Exception(AuthenticationEventResource.Ex_Leg_payload);
                 Body = eventJsonElement.ToString();
+            }
+            else//TODO: Remove when support for legacy data contracts are dropped.
+            {
+                for (int i = Actions.Count - 1; i >= 0; i--)
+                {
+                    if (LegacyMap.ContainsKey(Actions[i].GetType()))
+                    {
+                        Actions[i] = (T)Activator.CreateInstance(LegacyMap[Actions[i].GetType()], Actions[i]);
+                    }
+                }
             }
 
             base.Invalidate();
         }
+
+        //TODO: Remove when support for legacy data contracts are dropped.
+        internal static Dictionary<Type, Type> LegacyMap => new Dictionary<Type, Type>() {
+            {typeof(ProvideClaimsForToken),typeof(ProvideClaimsForTokenLegacy) }
+        };
     }
 }

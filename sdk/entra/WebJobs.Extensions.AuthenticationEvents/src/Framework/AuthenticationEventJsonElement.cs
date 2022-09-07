@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="value">A json string to build the object from.</param>
         internal AuthenticationEventJsonElement(string value)
         {
-            Utf8JsonReader reader = new(new ReadOnlySequence<byte>(Encoding.UTF8.GetBytes(value)));
+            Utf8JsonReader reader = new Utf8JsonReader(new ReadOnlySequence<byte>(Encoding.UTF8.GetBytes(value)));
             if (!BuildElement(ref reader))
             {
                 Value = value;
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>A list of all elements that match the name.</returns>
         internal List<AuthenticationEventJsonElement> FindElementsNamed(string name)
         {
-            List<AuthenticationEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new List<AuthenticationEventJsonElement>();
             SearchForElements(name, result, this);
             return result;
         }
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>A list of elements that contain the property name.</returns>
         internal List<AuthenticationEventJsonElement> FindElementsWithPropertyNamed(string name)
         {
-            List<AuthenticationEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new List<AuthenticationEventJsonElement>();
             SearchForElements(name, result, this, false, true);
             return result;
         }
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>The first element found else null.</returns>
         internal AuthenticationEventJsonElement FindFirstElementNamed(string name)
         {
-            List<AuthenticationEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new List<AuthenticationEventJsonElement>();
             SearchForElements(name, result, this, true);
             return result.FirstOrDefault();
         }
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>The first element matched or null.</returns>
         internal AuthenticationEventJsonElement FindFirstElementWithPropertyNamed(string name)
         {
-            List<AuthenticationEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new List<AuthenticationEventJsonElement>();
             SearchForElements(name, result, this, true, true);
             return result.FirstOrDefault();
         }
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// </returns>
         internal List<AuthenticationEventJsonElement> FindElementsByExpression(Regex expression)
         {
-            List<AuthenticationEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new List<AuthenticationEventJsonElement>();
             SearchForElementsByRegex(expression, result, this);
             return result;
         }
@@ -172,10 +172,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>All elements that matching child properties.</returns>
         internal List<AuthenticationEventJsonElement> FindElementsByPropertyExpression(Regex expression)
         {
-            List<AuthenticationEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new List<AuthenticationEventJsonElement>();
             SearchForElementsByRegex(expression, result, this, true);
             return result;
         }
+
+        internal void RenameProperty(string oldProperty, string newProperty)
+        {
+            if (Properties.ContainsKey(oldProperty))
+            {
+                Properties.Add(newProperty, FindFirstElementNamed(oldProperty));
+                Properties.Remove(oldProperty);
+            }
+        }
+
         private void SearchForElementsByRegex(Regex expresson, List<AuthenticationEventJsonElement> container, AuthenticationEventJsonElement element, bool withPropertyValue = false)
         {
             foreach (KeyValuePair<string, object> keyValue in element.Properties)
@@ -305,7 +315,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 {
                     if (create)
                     {
-                        AuthenticationEventJsonElement newEle = new();
+                        AuthenticationEventJsonElement newEle = new AuthenticationEventJsonElement();
                         current.Properties.Add(path[i], newEle);
                         current = newEle;
                     }
@@ -320,7 +330,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
             else if (create)
             {
-                AuthenticationEventJsonElement newEle = new();
+                AuthenticationEventJsonElement newEle = new AuthenticationEventJsonElement();
                 current.Properties.Add(path.Last(), newEle);
                 return (path.Last(), current.Properties);
             }
@@ -369,12 +379,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>A <see cref="System.String" /> that represents this instance as json.</returns>
         public override string ToString()
         {
-            using MemoryStream ms = new();
-            using var jsonWriter = new Utf8JsonWriter(ms);
-            WriteTo(jsonWriter);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (var jsonWriter = new Utf8JsonWriter(ms))
+                {
+                    WriteTo(jsonWriter);
 
-            jsonWriter.Flush();
-            return Encoding.UTF8.GetString(ms.ToArray());
+                    jsonWriter.Flush();
+                    return Encoding.UTF8.GetString(ms.ToArray());
+                }
+            }
         }
 
         private void WriteTo(Utf8JsonWriter jsonWriter)
@@ -400,6 +414,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     WriteObjectToWriter(jsonWriter, Elements);
                 }
                 else if (_jsonElement.ValueKind == JsonValueKind.Object)//Write out empty object.
+                {
+                    jsonWriter.WriteStartObject();
+                    jsonWriter.WriteEndObject();
+                }
+                else if (!string.IsNullOrEmpty(Value))//If there are no Elements or Properties but a value, write out the value.
+                {
+                    WriteObjectToWriter(jsonWriter, Value);
+                }
+                else if (Properties.Count == 0)
                 {
                     jsonWriter.WriteStartObject();
                     jsonWriter.WriteEndObject();
@@ -467,18 +490,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         private static object GetUnderlying(JsonElement value, string key)
         {
-            return value.ValueKind switch
+
+            switch (value.ValueKind)
             {
-                JsonValueKind.False => false,
-                JsonValueKind.Null => null,
-                JsonValueKind.Number => value.GetInt32(),
-                JsonValueKind.True => true,
-                JsonValueKind.String => value.GetString(),
-                _ => new AuthenticationEventJsonElement(value)
-                {
-                    Key = key
-                },
-            };
+                case JsonValueKind.False: return false;
+                case JsonValueKind.Null: return null;
+                case JsonValueKind.Number: return value.GetInt32();
+                case JsonValueKind.True: return true;
+                case JsonValueKind.String: return value.GetString();
+                default:
+                    return new AuthenticationEventJsonElement(value)
+                    {
+                        Key = key
+                    };
+            }
         }
 
         /// <summary>Creates a new object that is a copy of the current instance.</summary>

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
             {
                 if (_eventIds == null)
                 {
-                    _eventIds = Enum.GetValues(typeof(EventDefinition)).Cast<EventDefinition>().Select(x => x.GetAttribute<AuthenticationEventMetadataAttribute>().EventIdentifier).ToArray();
+                    _eventIds = Enum.GetValues(typeof(EventDefinition)).Cast<EventDefinition>().Select(x => x.GetAttribute<AuthenticationEventMetadataAttribute>().EventIdentifier.ToLower(CultureInfo.CurrentCulture)).ToArray();
                 }
 
                 return _eventIds;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
 
             if (value is string val)
             {
-                return EventIds.Contains(val);
+                return EventIds.Contains(val.ToLower());
             }
 
             return false;

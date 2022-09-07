@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -10,12 +11,20 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     internal static class Helpers
     {
+        internal static Dictionary<string, Type> _actionMapping = new Dictionary<string, Type>()
+        {
+            {"microsoft.graph.provideclaimsfortoken",typeof(ProvideClaimsForToken) },
+            {"provideclaimsfortoken",typeof(ProvideClaimsForTokenLegacy) }
+        };
+
         internal static EventDefinition GetEventDefintionFromPayload(string payload)
         {
             try
@@ -44,7 +53,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
         }
 
-        internal static ConcurrentDictionary<string, Type> _eventActions = new ConcurrentDictionary<string, Type>();
         internal static HttpResponseMessage HttpErrorResponse(Exception ex)
         {
             return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
@@ -113,22 +121,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         internal static AuthenticationEventAction GetEventActionForActionType(string actionType)
         {
-            if (_eventActions.IsEmpty)
-            {
-                Type eventType = typeof(AuthenticationEventAction);
-                var actions = Assembly.GetExecutingAssembly().GetTypes()
-                    .Where(p => eventType.IsAssignableFrom(p) && !(p.IsInterface || p.IsAbstract));
-
-                foreach (Type type in actions)
-                {
-                    AuthenticationEventAction action = (AuthenticationEventAction)Activator.CreateInstance(type);
-                    _eventActions.TryAdd(action.ActionType, type);
-                }
-            }
-
-            return actionType != null && _eventActions.ContainsKey(actionType)
-                ? (AuthenticationEventAction)Activator.CreateInstance(_eventActions[actionType])
-                : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Action_Invalid, actionType, String.Join("', '", _eventActions.Select(x => x.Key))));
+            return actionType != null && _actionMapping.ContainsKey(actionType.ToLower(CultureInfo.CurrentCulture))
+                 ? (AuthenticationEventAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
+                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Action_Invalid, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
         }
 
         internal static void ValidateGraph(object graph)

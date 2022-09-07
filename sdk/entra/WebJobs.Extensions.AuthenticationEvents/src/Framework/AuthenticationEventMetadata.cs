@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
             if (!string.IsNullOrEmpty(payload))
             {
-                AuthenticationEventJsonElement jsonPayload = new(payload);
+                AuthenticationEventJsonElement jsonPayload = new AuthenticationEventJsonElement(payload);
                 eventResponse.InstanceCreated(jsonPayload);
                 dataInfo.SetValue(eventRequest, AuthenticationEventData.CreateInstance(dataInfo.PropertyType, jsonPayload));
                 eventRequest.ParseInbound(jsonPayload);

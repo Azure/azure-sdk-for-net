@@ -6,6 +6,7 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validato
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions
 {
@@ -20,8 +21,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <summary>Gets the type of the action of ProvideClaimsForToken.</summary>
         /// <value>The type of the action.</value>
         [JsonPropertyName("actionType")]
-        [OneOf("ProvideClaimsForToken")]
-        internal override string ActionType => "ProvideClaimsForToken";
+        [OneOf("microsoft.graph.provideClaimsForToken")]
+        internal override string ActionType => "microsoft.graph.provideClaimsForToken";
 
         /// <summary>Initializes a new instance of the <see cref="ProvideClaimsForToken" /> class.</summary>
         public ProvideClaimsForToken() { }
@@ -29,7 +30,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <param name="claim">A collection of claims to add.</param>
         public ProvideClaimsForToken(params TokenClaim[] claim)
         {
-            Claims.AddRange(claim);
+            if (claim != null)
+            {
+                Claims.AddRange(claim);
+            }
         }
 
         /// <summary>Adds a claim to the collection.</summary>
@@ -44,13 +48,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <returns>A JObject representing the claims in Json format.</returns>
         internal override AuthenticationEventJsonElement BuildActionBody()
         {
-            //Create the json based on the current claims, for example... {"id":"DateOfBirth","value":"01-01-1990"} or {"id":"Roles","value":["Writer", "Editor"]}
-            var body = Claims.Select(x => x.Values.Length == 1 ?
-                new AuthenticationEventJsonElement($"{{\"{x.Id}\":\"{x.Values[0]}\" }}") :
-                new AuthenticationEventJsonElement($"{{\"{x.Id}\": [{string.Join(", ", x.Values.Select(v => $"\"{v}\""))}] }}")
-             ).ToList();
+            AuthenticationEventJsonElement jsonClaims = new AuthenticationEventJsonElement();
+            Claims.ForEach(c => jsonClaims.Properties.Add(c.Id, c.Values.Length == 1 ?
+                (object)c.Values[0] :
+                c.Values.Select(x => new AuthenticationEventJsonElement() { Value = x }).ToList()));
 
-            return new AuthenticationEventJsonElement(new Dictionary<string, object> { { "claims", body } });
+            return new AuthenticationEventJsonElement(new Dictionary<string, object> { { "claims", jsonClaims } });
         }
 
         /// <summary>Create the ProvideClaimsForToken action
@@ -61,34 +64,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
             AuthenticationEventJsonElement claims = actionBody.FindFirstElementNamed("claims");
             if (claims != null)
             {
-                foreach (AuthenticationEventJsonElement claim in claims.Elements)
+                foreach (var key in claims.Properties.Keys)
                 {
-                    var value = claim.GetPropertyValue<object>("value");
-                    if (value != null)//TODO: Remove: Old preview version.
+                    var val = claims.GetPropertyValue<object>(key);
+                    if (val is string sValue)
                     {
-                        if (value is string sValue)
-                        {
-                            AddClaim(claim.GetPropertyValue("id"), sValue);
-                        }
-                        else if (value is AuthenticationEventJsonElement jValue)
-                        {
-                            AddClaim(claim.GetPropertyValue("id"), jValue.Elements.Select(x => x.Value).ToArray());
-                        }
+                        AddClaim(key, sValue);
                     }
-                    else
+                    else if (val is AuthenticationEventJsonElement jValue)
                     {
-                        foreach (var key in claim.Properties.Keys)
-                        {
-                            var val = claim.GetPropertyValue<object>(key);
-                            if (val is string sValue)
-                            {
-                                AddClaim(key, sValue);
-                            }
-                            else if (val is AuthenticationEventJsonElement jValue)
-                            {
-                                AddClaim(key, jValue.Elements.Select(x => x.Value).ToArray());
-                            }
-                        }
+                        AddClaim(key, jValue.Elements.Select(x => x.Value).ToArray());
                     }
                 }
             }

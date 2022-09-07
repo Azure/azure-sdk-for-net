@@ -14,8 +14,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     internal class AuthenticationEventMetadataLoader
     {
         private static AuthenticationEventMetadataLoader _instance;
-        private static readonly SemaphoreSlim _semaphore = new(0, 1);
-        private readonly Dictionary<string, AuthenticationEventMetadata> _events = new();
+        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+        private readonly Dictionary<string, AuthenticationEventMetadata> _events = new Dictionary<string, AuthenticationEventMetadata>();
 
         /// <summary>Prevents a default instance of the <see cref="AuthenticationEventMetadataLoader" /> class from being created.</summary>
         private AuthenticationEventMetadataLoader() { }
@@ -26,7 +26,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             get
             {
-                _instance ??= new AuthenticationEventMetadataLoader();
+                if (_instance == null)
+                {
+                    _instance = new AuthenticationEventMetadataLoader();
+                }
 
                 return _instance;
             }
