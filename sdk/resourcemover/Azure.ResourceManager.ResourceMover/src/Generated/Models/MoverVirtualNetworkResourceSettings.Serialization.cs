@@ -11,21 +11,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class VirtualNetworkResourceSettings : IUtf8JsonSerializable
+    public partial class MoverVirtualNetworkResourceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Tags != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             if (Optional.IsDefined(EnableDdosProtection))
             {
@@ -41,33 +48,54 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(AddressSpace))
             {
-                writer.WritePropertyName("addressSpace");
-                writer.WriteStartArray();
-                foreach (var item in AddressSpace)
+                if (AddressSpace != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("addressSpace");
+                    writer.WriteStartArray();
+                    foreach (var item in AddressSpace)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("addressSpace");
+                }
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                writer.WritePropertyName("dnsServers");
-                writer.WriteStartArray();
-                foreach (var item in DnsServers)
+                if (DnsServers != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("dnsServers");
+                    writer.WriteStartArray();
+                    foreach (var item in DnsServers)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("dnsServers");
+                }
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                writer.WritePropertyName("subnets");
-                writer.WriteStartArray();
-                foreach (var item in Subnets)
+                if (Subnets != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("subnets");
+                    writer.WriteStartArray();
+                    foreach (var item in Subnets)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("subnets");
+                }
             }
             writer.WritePropertyName("resourceType");
             writer.WriteStringValue(ResourceType);
@@ -76,7 +104,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkResourceSettings DeserializeVirtualNetworkResourceSettings(JsonElement element)
+        internal static MoverVirtualNetworkResourceSettings DeserializeMoverVirtualNetworkResourceSettings(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             Optional<bool?> enableDdosProtection = default;
@@ -91,7 +119,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -116,7 +144,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        addressSpace = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -131,7 +159,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        dnsServers = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -146,7 +174,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        subnets = null;
                         continue;
                     }
                     List<SubnetResourceSettings> array = new List<SubnetResourceSettings>();
@@ -168,7 +196,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new VirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
+            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
         }
     }
 }
