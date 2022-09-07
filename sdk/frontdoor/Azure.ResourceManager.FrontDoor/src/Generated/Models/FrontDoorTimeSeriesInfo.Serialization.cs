@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class TimeseriesInfo : IUtf8JsonSerializable
+    public partial class FrontDoorTimeSeriesInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint");
-                writer.WriteStringValue(Endpoint);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("aggregationInterval");
                 writer.WriteStringValue(AggregationInterval.Value.ToString());
             }
-            if (Optional.IsDefined(TimeseriesType))
+            if (Optional.IsDefined(TimeSeriesType))
             {
                 writer.WritePropertyName("timeseriesType");
-                writer.WriteStringValue(TimeseriesType.Value.ToString());
+                writer.WriteStringValue(TimeSeriesType.Value.ToString());
             }
             if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country");
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsCollectionDefined(TimeseriesData))
+            if (Optional.IsCollectionDefined(TimeSeriesData))
             {
                 writer.WritePropertyName("timeseriesData");
                 writer.WriteStartArray();
-                foreach (var item in TimeseriesData)
+                foreach (var item in TimeSeriesData)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
         }
 
-        internal static TimeseriesInfo DeserializeTimeseriesInfo(JsonElement element)
+        internal static FrontDoorTimeSeriesInfo DeserializeFrontDoorTimeSeriesInfo(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -85,13 +85,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> endpoint = default;
+            Optional<Uri> endpoint = default;
             Optional<DateTimeOffset> startDateTimeUtc = default;
             Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<AggregationInterval> aggregationInterval = default;
-            Optional<TimeseriesType> timeseriesType = default;
+            Optional<FrontDoorTimeSeriesInfoAggregationInterval> aggregationInterval = default;
+            Optional<FrontDoorTimeSeriesType> timeSeriesType = default;
             Optional<string> country = default;
-            Optional<IList<TimeseriesDataPoint>> timeseriesData = default;
+            Optional<IList<FrontDoorTimeSeriesDataPoint>> timeSeriesData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -150,7 +150,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         if (property0.NameEquals("endpoint"))
                         {
-                            endpoint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                endpoint = null;
+                                continue;
+                            }
+                            endpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startDateTimeUTC"))
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            aggregationInterval = new AggregationInterval(property0.Value.GetString());
+                            aggregationInterval = new FrontDoorTimeSeriesInfoAggregationInterval(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("timeseriesType"))
@@ -190,7 +195,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            timeseriesType = new TimeseriesType(property0.Value.GetString());
+                            timeSeriesType = new FrontDoorTimeSeriesType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("country"))
@@ -205,19 +210,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TimeseriesDataPoint> array = new List<TimeseriesDataPoint>();
+                            List<FrontDoorTimeSeriesDataPoint> array = new List<FrontDoorTimeSeriesDataPoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TimeseriesDataPoint.DeserializeTimeseriesDataPoint(item));
+                                array.Add(FrontDoorTimeSeriesDataPoint.DeserializeFrontDoorTimeSeriesDataPoint(item));
                             }
-                            timeseriesData = array;
+                            timeSeriesData = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new TimeseriesInfo(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, endpoint.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aggregationInterval), Optional.ToNullable(timeseriesType), country.Value, Optional.ToList(timeseriesData));
+            return new FrontDoorTimeSeriesInfo(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, endpoint.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aggregationInterval), Optional.ToNullable(timeSeriesType), country.Value, Optional.ToList(timeSeriesData));
         }
     }
 }

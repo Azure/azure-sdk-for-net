@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class TimeseriesDataPoint : IUtf8JsonSerializable
+    public partial class FrontDoorTimeSeriesDataPoint : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
         }
 
-        internal static TimeseriesDataPoint DeserializeTimeseriesDataPoint(JsonElement element)
+        internal static FrontDoorTimeSeriesDataPoint DeserializeFrontDoorTimeSeriesDataPoint(JsonElement element)
         {
             Optional<DateTimeOffset> dateTimeUtc = default;
             Optional<float> value = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new TimeseriesDataPoint(Optional.ToNullable(dateTimeUtc), Optional.ToNullable(value));
+            return new FrontDoorTimeSeriesDataPoint(Optional.ToNullable(dateTimeUtc), Optional.ToNullable(value));
         }
     }
 }

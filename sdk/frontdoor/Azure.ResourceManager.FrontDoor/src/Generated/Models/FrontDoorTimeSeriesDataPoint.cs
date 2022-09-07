@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines a timeseries datapoint used in a timeseries. </summary>
-    public partial class TimeseriesDataPoint
+    public partial class FrontDoorTimeSeriesDataPoint
     {
-        /// <summary> Initializes a new instance of TimeseriesDataPoint. </summary>
-        public TimeseriesDataPoint()
+        /// <summary> Initializes a new instance of FrontDoorTimeSeriesDataPoint. </summary>
+        public FrontDoorTimeSeriesDataPoint()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeseriesDataPoint. </summary>
+        /// <summary> Initializes a new instance of FrontDoorTimeSeriesDataPoint. </summary>
         /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
         /// <param name="value"> The Value of the Timeseries data point. </param>
-        internal TimeseriesDataPoint(DateTimeOffset? dateTimeUtc, float? value)
+        internal FrontDoorTimeSeriesDataPoint(DateTimeOffset? dateTimeUtc, float? value)
         {
             DateTimeUtc = dateTimeUtc;
             Value = value;

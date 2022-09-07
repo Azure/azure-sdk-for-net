@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The identity of the private cloud, if configured. Current supported identity types: SystemAssigned, None. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default cluster used for management. </summary>
-        public ManagementCluster ManagementCluster { get; set; }
+        public AvsManagementCluster ManagementCluster { get; set; }
         /// <summary> Connectivity to internet is enabled or disabled. </summary>
         public InternetConnectivityState? Internet { get; set; }
         /// <summary> vCenter Single Sign On Identity Sources. </summary>

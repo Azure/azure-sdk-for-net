@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> endpoint = default;
-            Optional<EndpointType> endpointType = default;
+            Optional<FrontDoorEndpointType> endpointType = default;
             Optional<string> backend = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            endpointType = new EndpointType(property0.Value.GetString());
+                            endpointType = new FrontDoorEndpointType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("backend"))

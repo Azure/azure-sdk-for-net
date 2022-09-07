@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the Timeseries. </summary>
-    public partial class TimeseriesInfo : TrackedResourceData
+    public partial class FrontDoorTimeSeriesInfo : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of TimeseriesInfo. </summary>
+        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
         /// <param name="location"> The location. </param>
-        public TimeseriesInfo(AzureLocation location) : base(location)
+        public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)
         {
-            TimeseriesData = new ChangeTrackingList<TimeseriesDataPoint>();
+            TimeSeriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
         }
 
-        /// <summary> Initializes a new instance of TimeseriesInfo. </summary>
+        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,33 +33,33 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
         /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
         /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeseriesType"> The type of Timeseries. </param>
+        /// <param name="timeSeriesType"> The type of Timeseries. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="timeseriesData"> The set of data points for the timeseries. </param>
-        internal TimeseriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, AggregationInterval? aggregationInterval, TimeseriesType? timeseriesType, string country, IList<TimeseriesDataPoint> timeseriesData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
+        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeSeriesData) : base(id, name, resourceType, systemData, tags, location)
         {
             Endpoint = endpoint;
             StartOn = startOn;
             EndOn = endOn;
             AggregationInterval = aggregationInterval;
-            TimeseriesType = timeseriesType;
+            TimeSeriesType = timeSeriesType;
             Country = country;
-            TimeseriesData = timeseriesData;
+            TimeSeriesData = timeSeriesData;
         }
 
         /// <summary> The endpoint associated with the Timeseries data point. </summary>
-        public string Endpoint { get; set; }
+        public Uri Endpoint { get; set; }
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The aggregation interval of the Timeseries. </summary>
-        public AggregationInterval? AggregationInterval { get; set; }
+        public FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get; set; }
         /// <summary> The type of Timeseries. </summary>
-        public TimeseriesType? TimeseriesType { get; set; }
+        public FrontDoorTimeSeriesType? TimeSeriesType { get; set; }
         /// <summary> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
         public string Country { get; set; }
         /// <summary> The set of data points for the timeseries. </summary>
-        public IList<TimeseriesDataPoint> TimeseriesData { get; }
+        public IList<FrontDoorTimeSeriesDataPoint> TimeSeriesData { get; }
     }
 }

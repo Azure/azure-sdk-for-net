@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("networkBlock");
                 writer.WriteStringValue(NetworkBlock);
             }
-            if (Optional.IsDefined(VcenterPassword))
+            if (Optional.IsDefined(VCenterPassword))
             {
                 writer.WritePropertyName("vcenterPassword");
-                writer.WriteStringValue(VcenterPassword);
+                writer.WriteStringValue(VCenterPassword);
             }
             if (Optional.IsDefined(NsxtPassword))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ManagementCluster> managementCluster = default;
+            Optional<AvsManagementCluster> managementCluster = default;
             Optional<InternetConnectivityState> internet = default;
             Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
             Optional<PrivateCloudAvailabilityProperties> availability = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Avs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            managementCluster = ManagementCluster.DeserializeManagementCluster(property0.Value);
+                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("internet"))

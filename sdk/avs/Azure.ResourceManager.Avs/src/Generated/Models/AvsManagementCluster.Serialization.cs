@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ManagementCluster : IUtf8JsonSerializable
+    public partial class AvsManagementCluster : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagementCluster DeserializeManagementCluster(JsonElement element)
+        internal static AvsManagementCluster DeserializeAvsManagementCluster(JsonElement element)
         {
             Optional<int> clusterSize = default;
             Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new ManagementCluster(Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), Optional.ToList(hosts));
+            return new AvsManagementCluster(Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), Optional.ToList(hosts));
         }
     }
 }

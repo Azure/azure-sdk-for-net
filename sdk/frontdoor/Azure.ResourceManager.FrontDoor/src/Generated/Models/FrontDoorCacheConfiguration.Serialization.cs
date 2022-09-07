@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class CacheConfiguration : IUtf8JsonSerializable
+    public partial class FrontDoorCacheConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
         }
 
-        internal static CacheConfiguration DeserializeCacheConfiguration(JsonElement element)
+        internal static FrontDoorCacheConfiguration DeserializeFrontDoorCacheConfiguration(JsonElement element)
         {
             Optional<FrontDoorQuery> queryParameterStripDirective = default;
             Optional<string> queryParameters = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new CacheConfiguration(Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Optional.ToNullable(dynamicCompression), Optional.ToNullable(cacheDuration));
+            return new FrontDoorCacheConfiguration(Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Optional.ToNullable(dynamicCompression), Optional.ToNullable(cacheDuration));
         }
     }
 }
