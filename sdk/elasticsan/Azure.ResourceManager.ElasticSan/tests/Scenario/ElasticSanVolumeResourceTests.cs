@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.IsEmpty(volume2.Data.Tags);
             Assert.IsNull(volume2.Data.CreationData.SourceUri);
             Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume1.Data.CreationData.CreateSource);
-            ;
         }
 
         [Test]
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             string volumeName = Recording.GenerateAssetName("testvolume-");
             ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, GetDefaultElasticSanVolumeData())).Value;
             await volume1.DeleteAsync(WaitUntil.Completed);
-            //TODO: add check after deletion
+            //Skip validation for deletion as server has an issue of still showing deleted volume as active
         }
 
         [Test]
