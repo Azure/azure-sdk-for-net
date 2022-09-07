@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </summary>
-    public enum MonitorTimeAggregationType
+    public enum MetricTriggerTimeAggregationType
     {
         /// <summary> Average. </summary>
         Average,
