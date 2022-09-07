@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -13,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiManagementServiceResourceTests : ApiManagementManagementTestBase
     {
         public ApiManagementServiceResourceTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

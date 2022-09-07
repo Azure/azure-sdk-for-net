@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ContentTests : ApiManagementManagementTestBase
     {
         public ContentTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        //[Ignore("id:/contentTypes/page")]
         public async Task ListContentType()
         {
             await CreateApiServiceAsync();
