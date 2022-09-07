@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
         [TestCase]
         public async Task CanCreateGetUpdateGuestConfigurationHCRPAssignment()
         {
-            // TODO: Track 2 code has bug. Until that is fixed, this method is broken
             var resourceGroupName = GuestConfigurationManagementUtilities.HybridRG;
             var vmName = GuestConfigurationManagementUtilities.HybridMachineName;
             GuestConfigurationHcrpAssignmentCollection guestConfigurationHcrpAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName, vmName);
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
         [TestCase]
         public async Task CanGetGuestConfigurationHCRPAssignmentReports()
         {
-            //TODO: Track 2 code bug: Need it to reroute to .HybridCompute
             var resourceGroupName = GuestConfigurationManagementUtilities.HybridRG;
             var vmName = GuestConfigurationManagementUtilities.HybridMachineName;
             GuestConfigurationHcrpAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName, vmName);
@@ -83,20 +81,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             }
         }
 
-        // SDK Team has currently disabled Lists for a bug/feature they are implementing.
-        //[TestCase]
-        //public async Task CanListAllGuestConfigurationHCRPAssignments()
-        //{
-        //    var resourceGroupName = GuestConfigurationManagementUtilities.HybridRG;
-        //    //var vmName = GuestConfigurationManagementUtilities.HybridMachineName;
-        //    GuestConfigurationHcrpAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName);
+        [TestCase]
+        public async Task CanListAllGuestConfigurationHCRPAssignments()
+        {
+            var resourceGroupName = GuestConfigurationManagementUtilities.HybridRG;
+            var vmName = GuestConfigurationManagementUtilities.HybridMachineName;
+            GuestConfigurationHcrpAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName, vmName);
 
-        //    // get guest configuration assignments
-        //    //var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
-        //    await foreach (GuestConfigurationAssignmentResource gcAssignment in gcAssignments)
-        //    {
-        //        Assert.NotNull(gcAssignment);
-        //    }
-        //}
+            // get guest configuration assignments
+            var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
+            await foreach (GuestConfigurationHcrpAssignmentResource gcAssignment in gcAssignments)
+            {
+                Assert.NotNull(gcAssignment);
+            }
+        }
     }
 }
