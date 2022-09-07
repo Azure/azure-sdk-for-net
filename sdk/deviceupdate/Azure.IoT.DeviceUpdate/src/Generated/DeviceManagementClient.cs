@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
+    // Data plane generated client. The DeviceManagement service client.
     /// <summary> The DeviceManagement service client. </summary>
     public partial class DeviceManagementClient
     {

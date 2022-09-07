@@ -1259,6 +1259,19 @@ namespace Azure.Data.Tables.Tests
         }
 
         [RecordedTest]
+        public async Task GetEntityIfExistsDoesNotThrowWhenNotExists()
+        {
+            // Configure GetEntity not to throw on 404
+            RequestContext context = new();
+            context.AddClassifier((int)HttpStatusCode.NotFound, false);
+            // Get the single entity by PartitionKey and RowKey that does not exist.
+
+            var result = await client.GetEntityIfExistsAsync<TableEntity>(PartitionKeyValue, Recording.Random.NewGuid().ToString()).ConfigureAwait(false);
+
+            Assert.AreEqual((int)HttpStatusCode.NotFound, result.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
         public async Task StronglyTypedModelDoubleNaNRoundTrips()
         {
             TestEntity entityResults;

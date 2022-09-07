@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForManagementGroupPolicyEventsAsync(PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForManagementGroupPolicyEvents(PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForManagementGroupPolicyStatesAsync(PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
@@ -284,11 +284,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForManagementGroupPolicyStates(PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyState> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Summary> SummarizeForManagementGroupPolicyStatesAsync(PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicySummary> SummarizePolicyStateAsync(PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Summary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PolicySummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.SummarizeForManagementGroupPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.SummarizePolicyState");
                 scope.Start();
                 try
                 {
@@ -356,12 +356,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Summary> SummarizeForManagementGroupPolicyStates(PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicySummary> SummarizePolicyState(PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<Summary> FirstPageFunc(int? pageSizeHint)
+            Page<PolicySummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.SummarizeForManagementGroupPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.SummarizePolicyState");
                 scope.Start();
                 try
                 {
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckRestrictionsResult>> CheckAtManagementGroupScopePolicyRestrictionAsync(CheckManagementGroupRestrictionsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.CheckAtManagementGroupScopePolicyRestriction");
+            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.CheckPolicyRestrictions");
             scope.Start();
             try
             {
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckRestrictionsResult> CheckAtManagementGroupScopePolicyRestriction(CheckManagementGroupRestrictionsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.CheckAtManagementGroupScopePolicyRestriction");
+            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.CheckPolicyRestrictions");
             scope.Start();
             try
             {

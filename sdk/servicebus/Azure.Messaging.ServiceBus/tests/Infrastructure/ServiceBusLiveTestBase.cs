@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus.Tests
     [LiveOnly(true)]
     public abstract class ServiceBusLiveTestBase : LiveTestBase<ServiceBusTestEnvironment>
     {
-        private const int DefaultTryTimeout = 10;
+        private const int DefaultTryTimeout = 15;
 
         protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
 

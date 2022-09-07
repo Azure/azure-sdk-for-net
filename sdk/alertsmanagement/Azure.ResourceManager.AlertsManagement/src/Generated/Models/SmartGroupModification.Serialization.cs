@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -44,8 +45,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> smartGroupId = default;
-            Optional<IList<SmartGroupModificationItemData>> modifications = default;
+            Optional<Guid> smartGroupId = default;
+            Optional<IList<SmartGroupModificationItemInfo>> modifications = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,7 +86,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         if (property0.NameEquals("smartGroupId"))
                         {
-                            smartGroupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            smartGroupId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("modifications"))
@@ -95,10 +101,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SmartGroupModificationItemData> array = new List<SmartGroupModificationItemData>();
+                            List<SmartGroupModificationItemInfo> array = new List<SmartGroupModificationItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupModificationItemData.DeserializeSmartGroupModificationItemData(item));
+                                array.Add(SmartGroupModificationItemInfo.DeserializeSmartGroupModificationItemInfo(item));
                             }
                             modifications = array;
                             continue;
@@ -112,7 +118,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new SmartGroupModification(id, name, type, systemData.Value, smartGroupId.Value, Optional.ToList(modifications), nextLink.Value);
+            return new SmartGroupModification(id, name, type, systemData.Value, Optional.ToNullable(smartGroupId), Optional.ToList(modifications), nextLink.Value);
         }
     }
 }

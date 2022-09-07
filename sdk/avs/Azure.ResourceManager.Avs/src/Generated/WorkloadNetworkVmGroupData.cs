@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="status"> VM Group status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> members, VmGroupStatusEnum? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> members, WorkloadNetworkVmGroupStatus? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Members = members;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Virtual machine members of this group. </summary>
         public IList<string> Members { get; }
         /// <summary> VM Group status. </summary>
-        public VmGroupStatusEnum? Status { get; }
+        public WorkloadNetworkVmGroupStatus? Status { get; }
         /// <summary> The provisioning state. </summary>
         public WorkloadNetworkVmGroupProvisioningState? ProvisioningState { get; }
         /// <summary> NSX revision number. </summary>

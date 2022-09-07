@@ -61,9 +61,12 @@ rename-mapping:
   Desktop: VirtualDesktop
   DesktopGroup: VirtualDesktopGroup
   Workspace: VirtualWorkspace
+  HostPool.properties.cloudPcResource: IsCloudPcResource
   HostPool.properties.ssoadfsAuthority: SsoAdfsAuthority
   HostPool.properties.validationEnvironment: IsValidationEnvironment
   HostPoolPatch.properties.ssoadfsAuthority: SsoAdfsAuthority
+  HostPoolPatch.properties.validationEnvironment: IsValidationEnvironment
+  HostPoolType.BYODesktop: BringYourOwnDesktop
   MsixPackage.properties.lastUpdated: LastUpdatedOn
   ResourceModelWithAllowedPropertySet.managedBy: -|arm-id
   SessionHost.properties.lastUpdateTime: LastUpdatedOn

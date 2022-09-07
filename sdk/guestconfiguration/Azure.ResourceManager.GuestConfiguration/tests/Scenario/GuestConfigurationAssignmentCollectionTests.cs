@@ -35,29 +35,29 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
         {
             var resourceGroupName = GuestConfigurationManagementUtilities.DefaultResourceGroupName;
             var vmName = GuestConfigurationManagementUtilities.DefaultAzureVMName;
-            GuestConfigurationAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName);
+            GuestConfigurationVmAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName, vmName);
             GuestConfigurationAssignmentData gcAssignmentData = GetDefaultContactGuestConfigurationAssignmentData(guestConfigurationAssignmentCollection.Id);
 
             // Create a new guest configuration assignment
-            ArmOperation<GuestConfigurationAssignmentResource> createAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
+            ArmOperation<GuestConfigurationVmAssignmentResource> createAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await createAssignmentOperation.WaitForCompletionAsync();
             Assert.IsTrue(createAssignmentOperation.HasCompleted);
             Assert.IsTrue(createAssignmentOperation.HasValue);
 
             // Get created guest configuration assignment
-            Response<GuestConfigurationAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName);
-            GuestConfigurationAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
+            Response<GuestConfigurationVmAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
+            GuestConfigurationVmAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
             Assert.AreEqual(gcAssignmentData.Location, guestAssignmentResourceRetrieved.Data.Location);
 
             // Update guest configuration assignment
             string updatedContext = "Azure Policy Updated";
             gcAssignmentData.Properties.Context = updatedContext;
-            ArmOperation<GuestConfigurationAssignmentResource> updateAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
+            ArmOperation<GuestConfigurationVmAssignmentResource> updateAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await updateAssignmentOperation.WaitForCompletionAsync();
             Assert.IsTrue(updateAssignmentOperation.HasCompleted);
             Assert.IsTrue(updateAssignmentOperation.HasValue);
-            GuestConfigurationAssignmentResource updatedGuestAssignmentResourceRetrieved = updateAssignmentOperation.Value;
+            GuestConfigurationVmAssignmentResource updatedGuestAssignmentResourceRetrieved = updateAssignmentOperation.Value;
             Assert.AreEqual(updatedContext, updatedGuestAssignmentResourceRetrieved.Data.Properties.Context);
         }
 
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
         {
             var resourceGroupName = GuestConfigurationManagementUtilities.DefaultResourceGroupName;
             var vmName = GuestConfigurationManagementUtilities.DefaultAzureVMName;
-            GuestConfigurationAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName);
+            GuestConfigurationVmAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName, vmName);
 
             // get guest configuration assignment
-            Response<GuestConfigurationAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(vmName, GuestConfigurationManagementUtilities.DefaultAssignmentName);
-            GuestConfigurationAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
+            Response<GuestConfigurationVmAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
+            GuestConfigurationVmAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
 
             // Get reports
@@ -81,20 +81,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             }
         }
 
-        // SDK Team has currently disabled Lists for a bug/feature they are implementing.
-        //[TestCase]
-        //public async Task CanListAllGuestConfigurationAssignments()
-        //{
-        //    var resourceGroupName = GuestConfigurationManagementUtilities.DefaultResourceGroupName;
-        //    var vmName = GuestConfigurationManagementUtilities.DefaultAzureVMName;
-        //    GuestConfigurationAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName);
+        [TestCase]
+        public async Task CanListAllGuestConfigurationAssignments()
+        {
+            var resourceGroupName = GuestConfigurationManagementUtilities.DefaultResourceGroupName;
+            var vmName = GuestConfigurationManagementUtilities.DefaultAzureVMName;
+            GuestConfigurationVmAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName, vmName);
 
-        //    // get guest configuration assignments
-        //    var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
-        //    await foreach (GuestConfigurationAssignmentResource gcAssignment in gcAssignments)
-        //    {
-        //        Assert.NotNull(gcAssignment);
-        //    }
-        //}
+            // get guest configuration assignments
+            var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
+            await foreach (GuestConfigurationVmAssignmentResource gcAssignment in gcAssignments)
+            {
+                Assert.NotNull(gcAssignment);
+            }
+        }
     }
 }

@@ -23,13 +23,10 @@ rename-mapping:
   AzureResourceReference.sourceArmResourceId: -|arm-id
   BulkRemoveRequest.moveResourceInputType: MoverResourceInputType
   BulkRemoveRequest.moveResources: MoverResources
-  BulkRemoveRequest.validateOnly: IsValidateOnly
   CommitRequest.moveResourceInputType: MoverResourceInputType
   CommitRequest.moveResources: MoverResources
-  CommitRequest.validateOnly: IsValidateOnly
   DiscardRequest.moveResourceInputType: MoverResourceInputType
   DiscardRequest.moveResources: MoverResources
-  DiscardRequest.validateOnly: IsValidateOnly
   LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
   ManualResolutionProperties.targetId: -|arm-id
   MoveErrorInfo.moveResources: InfoMoverResources
@@ -41,17 +38,15 @@ rename-mapping:
   MoveResourceProperties.existingTargetId: -|arm-id
   MoveResourceInputType.MoveResourceId: MoverResourceId
   MoveResourceInputType.MoveResourceSourceId: MoverResourceSourceId
-  NicIpConfigurationResourceSettings.primary: IsValidateOnly
+  NicIpConfigurationResourceSettings.primary: IsPrimary
   NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
   OperationStatus.endTime: EndOn|datetime
   OperationStatus.id: -|arm-id
   OperationStatus.startTime: startOn|datetime
   PrepareRequest.moveResourceInputType: MoverResourceInputType
   PrepareRequest.moveResources: MoverResources
-  PrepareRequest.validateOnly: IsValidateOnly
   ResourceMoveRequest.moveResourceInputType: MoverResourceInputType
   ResourceMoveRequest.moveResources: MoverResources
-  ResourceMoveRequest.validateOnly: IsValidateOnly
   UnresolvedDependency.id: -|arm-id
   #ResourceSettings.resourceType: -|resource-type, One value is here https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/resourcemovercollection.json#L2418 is not a valid ResourceType, so can't change this property's format to ResourceType
   VirtualMachineResourceSettings.targetAvailabilitySetId: -|arm-id
@@ -71,6 +66,8 @@ rename-mapping:
   LoadBalancerBackendAddressPoolReference: LoadBalancerBackendAddressPoolReferenceInfo
   LoadBalancerNatRuleReference: LoadBalancerNatRuleReferenceInfo
   MoveCollection: MoverResourceSet
+  MoveCollectionProperties.sourceRegion: -|azure-location
+  MoveCollectionProperties.targetRegion: -|azure-location
   MoveCollectionProperties: MoverResourceSetProperties
   MoveResource: MoverResource
   MoveResourceCollection: MoverResourceList
@@ -103,6 +100,7 @@ rename-mapping:
   UnresolvedDependency: MoverUnresolvedDependency
   UnresolvedDependencyCollection: MoverUnresolvedDependencyList
   ZoneRedundant: ResourceZoneRedundantSetting
+  VirtualNetworkResourceSettings: MoverVirtualNetworkResourceSettings
 
 override-operation-name:
   MoveCollections_ListRequiredFor: GetRequiredForResources
@@ -150,6 +148,22 @@ directive:
       $.DiscardRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
       $.BulkRemoveRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
       $.VirtualMachineResourceSettings.properties.userManagedIdentities.items['x-ms-format'] = 'arm-id';
+      $.MoveCollectionProperties.properties.errors['x-nullable'] = true;
+      $.MoveResourceProperties.properties.targetId['x-nullable'] = true;
+      $.MoveResourceProperties.properties.existingTargetId['x-nullable'] = true;
+      $.MoveResourceProperties.properties.errors['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.addressSpace['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.dnsServers['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.subnets['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.tags['x-nullable'] = true;
+      $.MoveResourceStatus.properties.jobStatus['x-nullable'] = true;
+      $.MoveResourceStatus.properties.errors['x-nullable'] = true;
+      $.SubnetResourceSettings.properties.networkSecurityGroup['x-nullable'] = true;
+      $.MoveResourceCollection.properties.summaryCollection['x-nullable'] = true;
+      $.OperationStatus.properties.error['x-nullable'] = true;
+      $.OperationStatusError.properties.additionalInfo['x-nullable'] = true;
+      $.MoveResourceProperties.properties.resourceSettings['x-nullable'] = true;
+      $.MoveResourceProperties.properties.sourceResourceSettings['x-nullable'] = true;
   - from: resourcemovercollection.json
     where: $.parameters
     transform: >
@@ -163,4 +177,6 @@ directive:
     where: $.paths..parameters[?(@.name === 'moveResourceName')]
     transform: >
       $['x-ms-client-name'] = 'moverResourceName';
+  - remove-operation: MoveCollections_Delete
+    reason: The azure-asyncoperation header will change when polling
 ```

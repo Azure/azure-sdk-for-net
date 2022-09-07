@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
         public ServiceAlertModification()
         {
-            Modifications = new ChangeTrackingList<ServiceAlertModificationItemData>();
+            Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
 
         /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
@@ -27,15 +28,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
         /// <param name="modifications"> Modification details. </param>
-        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertId, IList<ServiceAlertModificationItemData> modifications) : base(id, name, resourceType, systemData)
+        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications) : base(id, name, resourceType, systemData)
         {
             AlertId = alertId;
             Modifications = modifications;
         }
 
         /// <summary> Unique Id of the alert for which the history is being retrieved. </summary>
-        public string AlertId { get; }
+        public Guid? AlertId { get; }
         /// <summary> Modification details. </summary>
-        public IList<ServiceAlertModificationItemData> Modifications { get; }
+        public IList<ServiceAlertModificationItemInfo> Modifications { get; }
     }
 }

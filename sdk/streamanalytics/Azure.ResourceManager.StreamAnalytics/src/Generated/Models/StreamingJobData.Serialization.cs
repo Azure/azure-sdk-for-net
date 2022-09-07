@@ -11,7 +11,6 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -129,8 +128,15 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsDefined(JobStorageAccount))
             {
-                writer.WritePropertyName("jobStorageAccount");
-                writer.WriteObjectValue(JobStorageAccount);
+                if (JobStorageAccount != null)
+                {
+                    writer.WritePropertyName("jobStorageAccount");
+                    writer.WriteObjectValue(JobStorageAccount);
+                }
+                else
+                {
+                    writer.WriteNull("jobStorageAccount");
+                }
             }
             if (Optional.IsDefined(ContentStoragePolicy))
             {
@@ -144,8 +150,15 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsDefined(Cluster))
             {
-                writer.WritePropertyName("cluster");
-                JsonSerializer.Serialize(writer, Cluster);
+                if (Cluster != null)
+                {
+                    writer.WritePropertyName("cluster");
+                    writer.WriteObjectValue(Cluster);
+                }
+                else
+                {
+                    writer.WriteNull("cluster");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -183,7 +196,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<StreamingJobStorageAccount> jobStorageAccount = default;
             Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
             Optional<StreamingJobExternal> externals = default;
-            Optional<WritableSubResource> cluster = default;
+            Optional<ClusterInfo> cluster = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -460,7 +473,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                jobStorageAccount = null;
                                 continue;
                             }
                             jobStorageAccount = StreamingJobStorageAccount.DeserializeStreamingJobStorageAccount(property0.Value);
@@ -490,17 +503,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                cluster = null;
                                 continue;
                             }
-                            cluster = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            cluster = ClusterInfo.DeserializeClusterInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster);
+            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value);
         }
     }
 }

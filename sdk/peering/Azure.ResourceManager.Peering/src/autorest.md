@@ -77,6 +77,16 @@ rename-mapping:
   SessionStateV4: PeeringSessionStateV4
   SessionStateV6: PeeringSessionStateV6
   LogAnalyticsWorkspaceProperties: PeeringLogAnalyticsWorkspaceProperties
+  PeeringLocation.properties.azureRegion: -|azure-location
+  ExchangeConnection.connectionIdentifier: -|uuid
+  ExchangePeeringFacility.microsoftIPv4Address: -|ip-address
+  ExchangePeeringFacility.microsoftIPv6Address: -|ip-address
+  BgpSession.microsoftSessionIPv4Address: -|ip-address
+  BgpSession.microsoftSessionIPv6Address: -|ip-address
+  BgpSession.peerSessionIPv4Address: -|ip-address
+  BgpSession.peerSessionIPv6Address: -|ip-address
+  CdnPeeringPrefix.properties.azureRegion: -|azure-location
+  PeeringServiceLocation.properties.azureRegion: -|azure-location
 
 directive:
   - from: swagger-document
