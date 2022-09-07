@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static CustomerManagedEncryption DeserializeCustomerManagedEncryption(JsonElement element)
         {
-            Optional<EncryptionState> status = default;
+            Optional<AvsEncryptionState> status = default;
             Optional<AvsEncryptionKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new EncryptionState(property.Value.GetString());
+                    status = new AvsEncryptionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVaultProperties"))
