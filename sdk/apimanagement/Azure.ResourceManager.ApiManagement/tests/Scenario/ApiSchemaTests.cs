@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -220,11 +221,23 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.IsTrue(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Https));
 
             var schemaCollection = apiGetResponse.GetApiSchemas();
-            var schemaData = new ApiSchemaData()
+            ApiSchemaData schemaData = null;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                ContentType = "application/vnd.ms-azure-apim.swagger.definitions+json",
-                Value = JsonSchemaString1
-            };
+                schemaData = new ApiSchemaData()
+                {
+                    ContentType = "application/vnd.ms-azure-apim.swagger.definitions+json",
+                    Value = JsonSchemaString1.Replace("\n", "\r\n")
+                };
+            }
+            else
+            {
+                schemaData = new ApiSchemaData()
+                {
+                    ContentType = "application/vnd.ms-azure-apim.swagger.definitions+json",
+                    Value = JsonSchemaString1.Replace("\n", "\r\n")
+                };
+            }
             var schemaContract = (await schemaCollection.CreateOrUpdateAsync(WaitUntil.Completed, newSchemaId, schemaData)).Value;
             Assert.NotNull(schemaContract);
             Assert.AreEqual(schemaData.ContentType, schemaContract.Data.ContentType);

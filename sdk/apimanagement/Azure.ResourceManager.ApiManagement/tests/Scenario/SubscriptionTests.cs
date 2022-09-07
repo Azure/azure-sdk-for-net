@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string patchedName = Recording.GenerateAssetName("patched1");
             string patchedPk = Recording.GenerateAssetName("patched2");
             string patchedSk = Recording.GenerateAssetName("patched3");
-            var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
+            var patchedExpirationDate = DateTimeOffset.Parse("2025-07-19T16:00:00.0000000Z");
 
             await subscriptionContract.UpdateAsync(
                 ETag.All,

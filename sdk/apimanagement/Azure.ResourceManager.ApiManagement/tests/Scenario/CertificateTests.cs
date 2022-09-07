@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [PlaybackOnly("linux cert issue")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -56,7 +57,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // create new certificate
             string certificateId = Recording.GenerateAssetName("certificateId");
 
-            var cert = new X509Certificate2("./Resources/sdktest.cer");
+            X509Certificate2 cert = null;
+            if (Mode != RecordedTestMode.Playback)
+            {
+                cert = new X509Certificate2("./Resources/sdktest.cer");
+            }
             var content = new ApiManagementCertificateCreateOrUpdateContent()
             {
                 Data = "sanitized"
@@ -70,9 +75,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getResponse = (await certCollection.GetAsync(certificateId)).Value;
             Assert.NotNull(getResponse);
             Assert.AreEqual(certificateId, getResponse.Data.Name);
-            Assert.AreEqual(cert.Subject.ToLower(), getResponse.Data.Subject.ToLower());
-            Assert.AreEqual(cert.Thumbprint.ToLower(), getResponse.Data.Thumbprint.ToLower());
-
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.AreEqual("cn=contoso.com", getResponse.Data.Subject.ToLower());
+                Assert.AreEqual("10ad178a8c73d33cde4e7ad638dc56de2671043d", getResponse.Data.Thumbprint.ToLower());
+            }
+            else
+            {
+                Assert.AreEqual(cert.Subject.ToLower(), getResponse.Data.Subject.ToLower());
+                Assert.AreEqual(cert.Thumbprint.ToLower(), getResponse.Data.Thumbprint.ToLower());
+            }
             //create key vault certificate
             //string kvcertificateId = Recording.GenerateAssetName("kvcertificateId");
             //content = new ApiManagementCertificateCreateOrUpdateContent()
