@@ -3,7 +3,7 @@
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
 - Layout - Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
-- Document - Analyze key-value pairs in addition to general layout from documents.
+- General Document - Analyze key-value pairs in addition to general layout from documents.
 - Read - Read information about textual elements, such as page words and lines in addition to text language information.
 - Prebuilt - Analyze data from certain types of common documents using prebuilt models. Supported documents include receipts, invoices, business cards, identity documents, US W2 tax forms, and more.
 - Custom - Build custom models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
@@ -145,7 +145,7 @@ More information about analyzing documents, including supported features, locale
 
 `DocumentModelAdministrationClient` provides operations for:
 
-- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
+- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModelDetails` instance is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
 - Compose a model from a collection of existing models.
 - Managing models created in your account.
 - Listing document model operations or getting a specific model operation created within the last 24 hours.
@@ -179,7 +179,7 @@ The following section provides several code snippets illustrating common pattern
 
 ### Async examples
 * [Extract Layout](#extract-layout)
-* [Use the General Prebuilt Document Model](#use-the-general-prebuilt-document-model)
+* [Use the Prebuilt General Document Model](#use-the-prebuilt-general-document-model)
 * [Use the Prebuilt Read Model](#use-the-prebuilt-read-model)
 * [Use Prebuilt Models](#use-prebuilt-models)
 * [Build a Custom Model](#build-a-custom-model)
@@ -278,8 +278,8 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 For more information and samples see [here][extract_layout].
 
-### Use the General Prebuilt Document Model
-Analyze text, selection marks, table structures, styles, paragraphs, and key-value pairs from documents using the general prebuilt document model.
+### Use the Prebuilt General Document Model
+Analyze text, selection marks, table structures, styles, paragraphs, and key-value pairs from documents using the prebuilt general document model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
@@ -651,7 +651,7 @@ await client.DeleteDocumentModelAsync(newCreatedModel.ModelId);
 For more information and samples see [here][manage_models].
 
 ### Manage Models Synchronously
-Manage the models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` when building a model, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
+Manage the models stored in your account with a synchronous API.
 
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -750,7 +750,7 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
 - [Extract the layout of a document][extract_layout]
-- [Analyze with the prebuilt document model][analyze_prebuilt_document]
+- [Analyze with the prebuilt general document model][analyze_prebuilt_document]
 - [Analyze with the prebuilt read model][analyze_prebuilt_read]
 - [Analyze a document with a custom model][analyze_custom]
 - [Analyze a document with a prebuilt model][analyze_prebuilt]

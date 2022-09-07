@@ -22,7 +22,7 @@ A natural question to ask when considering whether to adopt a new version of the
 There are many benefits to using the new design of the `Azure.AI.FormRecognizer (4.0.x)` library. This new version of the library introduces two new clients `DocumentAnalysisClient` and the `DocumentModelAdministrationClient` with unified methods for analyzing documents and provides support for the new features added by the service in API version `2022-08-31` and later.
 
 New features provided by the `DocumentAnalysisClient` include:
-- One consolidated method for analyzing document layout, a general prebuilt document model type, along with the same prebuilt models that were included previously (receipts, invoices, business cards, ID documents), and custom models.
+- One consolidated method for analyzing document layout, a prebuilt general document model type, along with the same prebuilt models that were included previously (receipts, invoices, business cards, ID documents), and custom models.
 - Models introduced in the latest version of the library, such as `AnalyzeResult`, remove hierarchical dependencies between document elements and move them to a more top level and easily accessible position.
 - The Form Recognizer service has further improved how to define where elements are located on documents by moving towards `BoundingRegion` definitions allowing for cross-page elements.
 - Document element fields are returned with more information, such as content and spans. 
@@ -58,7 +58,7 @@ Some terminology has changed to reflect the enhanced capabilities of the newest 
 We continue to support API key and AAD authentication methods when creating the clients. Below are the differences between the two versions:
 
 - In `4.0.x`, we have added `DocumentAnalysisClient` and `DocumentModelAdministrationClient` which support API version `2022-08-31` and later.
-- `FormRecognizerClient` and `FormTrainingClient` will continue to work targetting API version `2.1` and `2.0`. 
+- `FormRecognizerClient` and `FormTrainingClient` will continue to work targeting API version `2.1` and `2.0`. 
 - In `DocumentAnalysisClient` all prebuilt model methods along with custom model, layout, and a prebuilt general document analysis model are unified into two methods called `AnalyzeDocument` and `AnalyzeDocumentFromUri`.
 - In `FormRecognizerClient` there are two methods (a stream and Uri method) for each of the prebuilt models supported by the service. This results in two methods for business card, receipt, identity document, and invoice models, along with a pair of methods for recognizing custom documents and for recognizing content/layout. 
 
@@ -478,7 +478,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 }
 ```
 
-Analyzing general prebuilt document types with `4.0.x`:
+Analyzing general document types with `4.0.x`:
 
 > NOTE: Analyzing a document with the `prebuilt-document` model replaces training without labels in version `3.1.x` of the library.
 
