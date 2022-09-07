@@ -17,7 +17,6 @@ namespace Azure.Communication.Identity
     /// </summary>
     public class CommunicationIdentityClient
     {
-        private const string OVERFLOW_MESSAGE = "The tokenExpiresAfter argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.";
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CommunicationIdentityRestClient RestClient { get; }
 
@@ -141,15 +140,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
 
                 return RestClient.Create(scopes, expiresAfter, cancellationToken);
-            }
-            catch (OverflowException ex)
-            {
-                var overflowEx = new OverflowException(OVERFLOW_MESSAGE, ex);
-                scope.Failed(overflowEx);
-                throw overflowEx;
             }
             catch (Exception ex)
             {
@@ -176,15 +169,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
 
                 return await RestClient.CreateAsync(scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
-            }
-            catch (OverflowException ex)
-            {
-                var overflowEx = new OverflowException(OVERFLOW_MESSAGE, ex);
-                scope.Failed(overflowEx);
-                throw overflowEx;
             }
             catch (Exception ex)
             {
@@ -250,17 +237,11 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
 
                 Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresAfter, cancellationToken);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
-            }
-            catch (OverflowException ex)
-            {
-                var overflowEx = new OverflowException(OVERFLOW_MESSAGE, ex);
-                scope.Failed(overflowEx);
-                throw overflowEx;
             }
             catch (Exception ex)
             {
@@ -290,17 +271,11 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
 
                 Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
-            }
-            catch (OverflowException ex)
-            {
-                var overflowEx = new OverflowException(OVERFLOW_MESSAGE, ex);
-                scope.Failed(overflowEx);
-                throw overflowEx;
             }
             catch (Exception ex)
             {
@@ -391,6 +366,18 @@ namespace Azure.Communication.Identity
             {
                 scope.Failed(ex);
                 throw;
+            }
+        }
+
+        private static int? GetTokenExpirationInMinutesOrNull(TimeSpan tokenExpiresAfter)
+        {
+            try
+            {
+                return tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+            }
+            catch (OverflowException ex)
+            {
+                throw new ArgumentException($"The {nameof(tokenExpiresAfter)} argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.", ex);
             }
         }
     }

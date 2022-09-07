@@ -165,7 +165,7 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
             }
-            catch (OverflowException ex)
+            catch (ArgumentException ex)
             {
                 Assert.NotNull(ex.Message);
                 Assert.AreEqual(OVERFLOW_MESSAGE, ex.Message);
@@ -221,7 +221,7 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
                 Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
             }
-            catch (OverflowException ex)
+            catch (ArgumentException ex)
             {
                 Assert.NotNull(ex.Message);
                 Assert.AreEqual(OVERFLOW_MESSAGE, ex.Message);
