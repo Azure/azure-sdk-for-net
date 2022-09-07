@@ -58,7 +58,6 @@ irregular-plural-words:
 prepend-rp-prefix:
 - Action
 - Recurrence
-- Operator
 - Response
 - OdataType
 - Metric
@@ -174,7 +173,6 @@ rename-mapping:
   MetricTrigger.metricResourceUri: metricResourceId|arm-id
   MetricTrigger.metricResourceLocation: -|azure-location
   MetricTrigger.dividePerInstance: IsDividedPerInstance
-  AggregationTypeEnum: MonitorAggregationType
   NotificationRequestBody: NotificationContent
   Context: NotificationContext
   TestNotificationDetailsResponse: NotificationStatus
@@ -200,14 +198,11 @@ rename-mapping:
   WorkspaceInfo: DataContainerWorkspace
   WorkspaceInfo.id: -|arm-id
   CategoryType: MonitorCategoryType
-  ConditionOperator: MonitorConditionOperator
   EventLevel: MonitorEventLevel
   ScaleAction: MonitorScaleAction
   ScaleDirection: MonitorScaleDirection
   ScaleType: MonitorScaleType
   ScaleCapacity: MonitorScaleCapacity
-  TimeAggregationOperator: MonitorTimeAggregationOperator
-  TimeAggregationType: MonitorTimeAggregationType
   ReceiverStatus: MonitorReceiverStatus
   EnableRequest: ActionGroupEnableContent
   OperationStatus: MonitorPrivateLinkScopeOperationStatus
@@ -237,6 +232,13 @@ rename-mapping:
   ScheduledQueryRuleResource.properties.enabled: IsEnabled
   ScheduledQueryRuleResourcePatch.properties.enabled: IsEnabled
   Kind: ScheduledQueryRuleKind
+  AggregationTypeEnum: MetricCriteriaTimeAggregationType
+  TimeAggregationOperator: ThresholdRuleConditionTimeAggregationType
+  TimeAggregationType: MetricTriggerTimeAggregationType
+  TimeAggregation: ScheduledQueryRuleTimeAggregationType
+  Operator: MetricCriteriaOperator
+  ComparisonOperationType: MetricTriggerComparisonOperation
+  ConditionOperator: MonitorConditionOperator
 
 directive:
   # fixing the format since rename-mapping has bugs on this

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Aggregation operators allowed in a rule. </summary>
-    public enum MonitorTimeAggregationOperator
+    public enum ThresholdRuleConditionTimeAggregationType
     {
         /// <summary> Average. </summary>
         Average,

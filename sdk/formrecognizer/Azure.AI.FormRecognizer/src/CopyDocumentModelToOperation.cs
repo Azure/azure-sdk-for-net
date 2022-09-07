@@ -11,9 +11,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
-    /// Tracks the status of a long-running operation for composing a model.
+    /// Tracks the status of a long-running operation for copying a custom model into a target Form Recognizer resource.
     /// </summary>
-    public class ComposeModelOperation : Operation<DocumentModelDetails>, IOperation<DocumentModelDetails>
+    public class CopyDocumentModelToOperation : Operation<DocumentModelDetails>, IOperation<DocumentModelDetails>
     {
         private readonly OperationInternal<DocumentModelDetails> _operationInternal;
 
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private int? _percentCompleted;
 
         /// <summary>
-        /// Gets operation Id that can be used to poll for the status
+        /// Gets an ID representing the operation that can be used to poll for the status
         /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
@@ -70,11 +70,53 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override bool HasValue => _operationInternal.HasValue;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CopyDocumentModelToOperation"/> class which
+        /// tracks the status of the long-running operation for copying a custom model into a target Form Recognizer resource.
+        /// </summary>
+        /// <param name="operationId">The ID of this operation.</param>
+        /// <param name="client">The client used to check for completion.</param>
+        public CopyDocumentModelToOperation(string operationId, DocumentModelAdministrationClient client)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
+            _serviceClient = client.ServiceClient;
+            _diagnostics = client.Diagnostics;
+            _operationInternal = new(_diagnostics, this, rawResponse: null);
+
+            Id = operationId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CopyDocumentModelToOperation"/> class.
+        /// </summary>
+        /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
+        /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
+        /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
+        internal CopyDocumentModelToOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
+        {
+            _serviceClient = serviceClient;
+            _diagnostics = diagnostics;
+            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
+
+            Id = operationLocation.Split('/').Last().Split('?').FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CopyDocumentModelToOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected CopyDocumentModelToOperation()
+        {
+        }
+
+        /// <summary>
         /// The last HTTP response received from the server.
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="ComposeModelOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="CopyDocumentModelToOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
@@ -105,43 +147,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </remarks>
         public override async ValueTask<Response<DocumentModelDetails>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
-
-        internal ComposeModelOperation(
-            string location,
-            Response postResponse,
-            DocumentAnalysisRestClient allOperations,
-            ClientDiagnostics diagnostics)
-        {
-            _serviceClient = allOperations;
-            _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
-
-            Id = location.Split('/').Last().Split('?').FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComposeModelOperation"/> class which
-        /// tracks the status of a long-running operation for composing a custom model.
-        /// </summary>
-        /// <param name="operationId">The ID of this operation.</param>
-        /// <param name="client">The client used to check for completion.</param>
-        public ComposeModelOperation(string operationId, DocumentModelAdministrationClient client)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            Id = operationId;
-            _diagnostics = client.Diagnostics;
-            _serviceClient = client.ServiceClient;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(ComposeModelOperation));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComposeModelOperation"/> class. This constructor
-        /// is intended to be used for mocking only.
-        /// </summary>
-        protected ComposeModelOperation()
-        {
-        }
 
         /// <summary>
         /// Calls the server to get updated status of the long-running operation.
@@ -177,8 +182,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (status == DocumentOperationStatus.Succeeded)
             {
-                var composeOperation = response.Value as DocumentModelComposeOperationDetails;
-                return OperationState<DocumentModelDetails>.Success(rawResponse, composeOperation.Result);
+                var copyToOperation = response.Value as DocumentModelCopyToOperationDetails;
+                return OperationState<DocumentModelDetails>.Success(rawResponse, copyToOperation.Result);
             }
             else if (status == DocumentOperationStatus.Failed)
             {
