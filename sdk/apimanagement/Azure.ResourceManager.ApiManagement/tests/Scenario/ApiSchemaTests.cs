@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 schemaData = new ApiSchemaData()
                 {
                     ContentType = "application/vnd.ms-azure-apim.swagger.definitions+json",
-                    Value = JsonSchemaString1.Replace("\n", "\r\n")
+                    Value = JsonSchemaString1
                 };
             }
             else
