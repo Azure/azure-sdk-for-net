@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
         protected ArmClient Client { get; private set; }
         protected const string DefaultResourceGroupPrefix = "HDInsightRG-";
         protected AzureLocation DefaultLocation = AzureLocation.EastUS;
+        protected const string Common_User = "sshuser5951";
+        protected const string Common_Password = "Password!5951";
 
         protected HDInsightManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -68,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Location = resourceGroup.Data.Location,
             };
             data.AddressPrefixes.Add("10.10.0.0/16");
-            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24" });
+            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, });
             data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
             return vnet.Value;
@@ -89,8 +91,6 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
         protected async Task<HDInsightClusterCreateOrUpdateProperties> PrepareClusterCreateParams(StorageAccountResource storageAccount)
         {
-            string common_user = "sshuser5951";
-            string common_passwork = "Password!5951";
             string containerName = Recording.GenerateAssetName("container");
             string accessKey = (await storageAccount.GetKeysAsync().ToEnumerableAsync()).FirstOrDefault().Value;
             await storageAccount.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 HardwareVmSize = "Large",
                 OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
-                    Username = common_user,
-                    Password = common_passwork
+                    Username = Common_User,
+                    Password = Common_Password
                 }
             });
             properties.ComputeRoles.Add(new HDInsightClusterRole()
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 HardwareVmSize = "Large",
                 OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
-                    Username = common_user,
-                    Password = common_passwork
+                    Username = Common_User,
+                    Password = Common_Password
                 }
             });
             properties.ComputeRoles.Add(new HDInsightClusterRole()
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 HardwareVmSize = "Small",
                 OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
-                    Username = common_user,
-                    Password = common_passwork
+                    Username = Common_User,
+                    Password = Common_Password
                 }
             });
             properties.StorageAccounts.Add(new HDInsightStorageAccountInfo()

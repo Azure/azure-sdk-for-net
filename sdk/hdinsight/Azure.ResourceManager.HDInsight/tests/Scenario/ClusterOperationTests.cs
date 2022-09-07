@@ -161,13 +161,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task TestCreateClusterWithEncryptionInTransit()
         {
-            string clusterName = "hdisdk-encryption";
+            string clusterName = "hdisdk-encryption-intransit";
             var properties = await PrepareClusterCreateParams(_storageAccount);
             properties.ClusterDefinition.Kind = "Spark";
-            properties.EncryptionInTransitProperties = new EncryptionInTransitProperties()
-            {
-                IsEncryptionInTransitEnabled = true
-            };
+            properties.IsEncryptionInTransitEnabled = true;
 
             var data = new HDInsightClusterCreateOrUpdateContent()
             {
@@ -265,6 +262,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task TestCreateHumboldtCluster()
         {
+            //200: Internal server error occurred while processing the request
             string clusterName = "hdisdk-humboldt";
             var properties = await PrepareClusterCreateParams(_storageAccount);
 
@@ -315,6 +313,175 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+        }
+
+        [RecordedTest]
+        public async Task TestCreateLinuxSparkClusterWithComponentVersion()
+        {
+            string clusterName = "hdisdk-sparkcomponentversions";
+            var properties = await PrepareClusterCreateParams(_storageAccount);
+            properties.ClusterDefinition.Kind = "Spark";
+            properties.ClusterDefinition.ComponentVersion.Add(new KeyValuePair<string, string>("Spark", "2.2"));
+
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = _resourceGroup.Data.Location,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+        }
+
+        [RecordedTest]
+        [Ignore("HDI 4.0 doesn't support create MLServices cluster and 3.6 will be deprecated soon.")]
+        public async Task TestCreateMLServicesCluster()
+        {
+            string clusterName = "hdisdk-mlservices";
+            var properties = await PrepareClusterCreateParams(_storageAccount);
+            properties.ClusterDefinition.Kind = "MLServices";
+            properties.ClusterVersion = "4.0";
+            properties.ComputeProfile.Roles.Add(new HDInsightClusterRole()
+            {
+                Name = "edgenode",
+                TargetInstanceCount = 1,
+                HardwareProfile = new HardwareProfile
+                {
+                    VmSize = "Standard_D4_v2"
+                },
+                OSProfile = new OSProfile()
+                {
+                    LinuxProfile = new HDInsightLinuxOSProfile()
+                    {
+                        Username = Common_User,
+                        Password = Common_Password
+                    }
+                }
+            });
+
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = _resourceGroup.Data.Location,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+        }
+
+        [RecordedTest]
+        [Ignore("HDI 4.0 doesn't support create MLServices cluster and 3.6 will be deprecated soon.")]
+        public async Task TestCreateRServerCluster()
+        {
+            string clusterName = "hdisdk-rserver";
+            var properties = await PrepareClusterCreateParams(_storageAccount);
+            properties.ClusterDefinition.Kind = "RServer";
+            properties.ClusterDefinition.ComponentVersion.Add(new KeyValuePair<string, string>("RServer", "9.3"));
+            properties.ComputeProfile.Roles.Add(new HDInsightClusterRole()
+            {
+                Name = "edgenode",
+                TargetInstanceCount = 1,
+                HardwareProfile = new HardwareProfile
+                {
+                    VmSize = "Standard_D4_v2"
+                },
+                OSProfile = new OSProfile()
+                {
+                    LinuxProfile = new HDInsightLinuxOSProfile()
+                    {
+                        Username = Common_User,
+                        Password = Common_Password
+                    }
+                }
+            });
+
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = _resourceGroup.Data.Location,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+        }
+
+        [RecordedTest]
+        public async Task TestCreateWithAdditionalStorageAccount()
+        {
+            string clusterName = "hdisdk-additional";
+            var properties = await PrepareClusterCreateParams(_storageAccount);
+
+            // Add additional storage account
+            string secondaryStorageAccountName = Recording.GenerateAssetName("azstorageforcluster");
+            string containerName = Recording.GenerateAssetName("container");
+            var secondaryStorageAccount = await CreateStorageAccount(_resourceGroup, secondaryStorageAccountName);
+            string accessKey = (await secondaryStorageAccount.GetKeysAsync().ToEnumerableAsync()).FirstOrDefault().Value;
+            await secondaryStorageAccount.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
+
+            properties.StorageAccounts.Add(new HDInsightStorageAccountInfo()
+            {
+                Name = $"{secondaryStorageAccount.Data.Name}.blob.core.windows.net",
+                IsDefault = false,
+                Container = containerName,
+                Key = accessKey,
+            });
+
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = _resourceGroup.Data.Location,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+        }
+
+        [RecordedTest]
+        [Ignore("Higher permissions required")]
+        public async Task TestCreateWithADLSv1()
+        {
+            string clusterName = "hdisdk-adlgen1";
+            var properties = await PrepareClusterCreateParams(_storageAccount);
+
+            // TODO: Add data lake properties
+
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = _resourceGroup.Data.Location,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+        }
+
+        [RecordedTest]
+        public void TestCreateWithEmptyExtendedParameters()
+        {
+            string clusterName = "hdisdk-empty";
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+            };
+            Assert.ThrowsAsync<RequestFailedException>(() => _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data));
+        }
+
+        [RecordedTest]
+        public async Task TestGetOrUpdateGatewaySettings()
+        {
+            string clusterName = "hdisdk-gateway";
+            var properties = await PrepareClusterCreateParams(_storageAccount);
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = _resourceGroup.Data.Location,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+
+            var gatewaySetting = await cluster.Value.GetGatewaySettingsAsync();//System.InvalidOperationException
+            Assert.AreEqual(Common_User,gatewaySetting.Value.UserName);
+            Assert.AreEqual(Common_Password, gatewaySetting.Value.Password);
         }
     }
 }
