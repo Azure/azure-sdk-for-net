@@ -30,7 +30,7 @@ New features provided by the `DocumentAnalysisClient` include:
 New features provided by the `DocumentModelAdministrationClient` include:
 - Users can now assign their own model IDs and specify a description when building, composing, or copying models.
 - Listing models now includes both prebuilt and custom models.
-- When using `GetModel()`, users can get the field schema (field names and types that the model can extract) for the model they specified, including for prebuilt models. 
+- When using `GetDocumentModel()`, users can get the field schema (field names and types that the model can extract) for the model they specified, including for prebuilt models.
 - Ability to get information from model operations that occurred in the last 24 hours.
 
 The table below describes the relationship of each client and its supported API version(s):
@@ -572,7 +572,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 Differences between the versions:
 - Files for building a new model for version `4.0.x` can be created using the labeling tool found [here][fr_labeling_tool].
 - In version `3.1.x` the `useTrainingLabels` parameter was used to indicate whether to use labeled data when creating the custom model.
-- In version `4.0.x` the `useTrainingLabels` parameter is not supported since training must be carried out with labeled training documents. Additionally train without labels is now replaced with the prebuilt model `prebuilt-document` which extracts entities, key-value pairs, and layout from a document. 
+- In version `4.0.x` the `useTrainingLabels` parameter is not supported since training must be carried out with labeled training documents. Additionally train without labels is now replaced with the prebuilt model `prebuilt-document` which extracts key-value pairs and layout from a document.
 
 Train a custom model with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
@@ -748,8 +748,8 @@ foreach (AnalyzedDocument document in result.Documents)
 ### Managing models
 
 Differences between the versions:
-- When using API version `2022-08-31` and later models no longer include submodels, instead a model can analyze different document types.
-- When building, composing, or copying models users can now assign their own model IDs and specify a description.
+- When using API version `2022-08-31` and later, models no longer include submodels. Instead, a model can analyze different document types.
+- When building, composing, or copying models, users can now assign their own model IDs and specify a description.
 - In version `4.0.x` of the library, only models that build successfully can be retrieved from the get and list model calls. Unsuccessful model operations can be viewed with the `GetOperation()` and `GetOperations()` methods (note that document model operation data persists for only 24 hours). In version `3.1.x` of the library, models that had not succeeded were still created, had to be deleted by the user, and were returned in the `GetCustomModels()` response.
 
 ## Additional samples
