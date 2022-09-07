@@ -177,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             // Export exceptions from server spans only
             // TODO: how do we handler consumer/producer spans?
-            if (!activity.Events.Any() || activity.Kind != ActivityKind.Server)
+            if (!activity.Events.Any())
             {
                 return;
             }
