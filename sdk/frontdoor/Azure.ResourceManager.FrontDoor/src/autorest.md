@@ -26,6 +26,7 @@ rename-mapping:
   Experiment.properties.endpointA: ExperimentEndpointA
   Experiment.properties.endpointB: ExperimentEndpointB
   Timeseries: TimeseriesInfo
+  Timeseries.properties.endpoint: -|Uri
   Timeseries.properties.startDateTimeUTC: StartOn
   Timeseries.properties.endDateTimeUTC: EndOn
   WebApplicationFirewallPolicy.properties.customRules: CustomRuleList
@@ -71,8 +72,8 @@ rename-mapping:
   HeaderActionType: RulesEngineHeaderActionType
   LatencyScorecard.properties.id: LatencyScorecardId
   LatencyScorecard.properties.name: LatencyScorecardName
-  LatencyScorecard.properties.endpointA: ScorecardEndpointA
-  LatencyScorecard.properties.endpointB: ScorecardEndpointB
+  LatencyScorecard.properties.endpointA: ScorecardEndpointA-| Uri
+  LatencyScorecard.properties.endpointB: ScorecardEndpointB-| Uri
   LatencyScorecard.properties.startDateTimeUTC: StartOn
   LatencyScorecard.properties.endDateTimeUTC: EndOn
   PolicyMode: FrontDoorWebApplicationFirewallPolicyMode
@@ -83,6 +84,15 @@ rename-mapping:
   ResourceType: FrontDoorResourceType
   MinimumTLSVersion: FrontDoorRequiredMinimumTlsVersion
   LatencyMetric.endDateTimeUTC: EndOn
+  AggregationInterval: FrontDoorTimeSeriesInfoAggregationInterval
+  TimeseriesAggregationInterval: FrontDoorTimeSeriesAggregationInterval
+  CacheConfiguration: FrontDoorCacheConfiguration
+  EndpointType: FrontDoorEndpointType
+  EndpointType.AFD: AzureFrontDoor
+  EndpointType.ATM: AzureTrafficManager
+  TimeseriesDataPoint: FrontDoorTimeSeriesDataPoint
+  TimeseriesInfo: FrontDoorTimeSeriesInfo
+  timeseriesType: FrontDoorTimeSeriesType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -118,6 +128,7 @@ rename-rules:
   AFD: Afd
   ATM: Atm
   CDN: Cdn
+  Timeseries: TimeSeries
 
 directive:
   - from: networkexperiment.json
@@ -169,6 +180,9 @@ directive:
         delete $.properties.name;
         delete $.properties.type;
       }
-      
+  - from: frontdoor.json
+    where: $.definitions
+    transform: >
+      $.FrontendEndpointUpdateParameters.properties.sessionAffinityTtlSeconds['x-ms-client-name'] = 'SessionAffinityTtlInSeconds';
 
 ```
