@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
         public StorageAccountTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
