@@ -8,8 +8,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
-    - sdk/digitaltwins/Azure.DigitalTwins.Core
+    - sdk/servicebus/ci.mgmt.yml
+    - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
 
 pr:
   branches:
@@ -20,8 +20,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicebus/ci.yml
-    - sdk/digitaltwins/Azure.DigitalTwins.Core
+    - sdk/servicebus/ci.mgmt.yml
+    - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -29,6 +29,6 @@ extends:
     ServiceDirectory: digitaltwins
     ArtifactName: packages
     Artifacts:
-    - name: Azure.DigitalTwins.Core
-      safeName: AzureDigitalTwinsCore
+    - name: Azure.ResourceManager.DigitalTwins
+      safeName: AzureResourceManagerDigitalTwins
 
