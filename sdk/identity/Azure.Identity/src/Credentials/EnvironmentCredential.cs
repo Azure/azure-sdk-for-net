@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Azure.Identity
 {
@@ -65,6 +67,11 @@ namespace Azure.Identity
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
+            if (_options.AdditionallyAllowedTenantsCore.Count == 0)
+            {
+                _options.AdditionallyAllowedTenantsCore = EnvironmentVariables.AdditionallyAllowedTenants;
+            }
+
             if (!string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(clientId))
             {
                 if (!string.IsNullOrEmpty(clientSecret))
@@ -85,6 +92,7 @@ namespace Azure.Identity
                         AuthorityHost = _options.AuthorityHost,
                         IsLoggingPIIEnabled = _options.IsLoggingPIIEnabled,
                         Transport = _options.Transport,
+                        AdditionallyAllowedTenantsCore = new List<string>(_options.AdditionallyAllowedTenantsCore),
                         SendCertificateChain = sendCertificateChain
                     };
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificateCredentialOptions, _pipeline, null);
