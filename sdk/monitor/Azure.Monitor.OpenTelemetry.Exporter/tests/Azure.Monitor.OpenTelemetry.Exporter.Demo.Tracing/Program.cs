@@ -14,6 +14,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
     public class Program
     {
+        private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+
         public static void Main()
         {
             GenerateTraces();
@@ -32,16 +34,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                             .AddSource("MyCompany.MyProduct.MyLibrary")
                             .AddAzureMonitorTraceExporter(o =>
                             {
-                                o.ConnectionString = $"InstrumentationKey=Ikey;";
+                                o.ConnectionString = ConnectionString;
                             })
                             .Build();
 
             using (var activity = source.StartActivity("SayHello"))
             {
                 activity?.SetTag("foo", 1);
-                activity?.SetTag("bar", "Hello, World!");
                 activity?.SetTag("baz", new int[] { 1, 2, 3 });
                 activity?.SetStatus(ActivityStatusCode.Ok);
+
+                using (var nestedActivity = source.StartActivity("SayHelloAgain"))
+                {
+                    nestedActivity?.SetTag("bar", "Hello, World!");
+                    nestedActivity?.SetStatus(ActivityStatusCode.Ok);
+                }
             }
         }
 
@@ -51,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.AddAzureMonitorLogExporter(o => o.ConnectionString = $"InstrumentationKey=Ikey;");
+                    options.AddAzureMonitorLogExporter(o => o.ConnectionString = ConnectionString);
                 });
             });
 
@@ -66,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
            .AddMeter("MyCompany.MyProduct.MyLibrary")
-           .AddAzureMonitorMetricExporter(o => o.ConnectionString = $"InstrumentationKey=Ikey;")
+           .AddAzureMonitorMetricExporter(o => o.ConnectionString = ConnectionString)
            .Build();
 
             MyFruitCounter.Add(1, new("name", "apple"), new("color", "red"));
