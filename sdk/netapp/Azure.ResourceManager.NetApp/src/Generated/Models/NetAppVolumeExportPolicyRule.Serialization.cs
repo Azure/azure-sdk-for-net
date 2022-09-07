@@ -20,60 +20,60 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ruleIndex");
                 writer.WriteNumberValue(RuleIndex.Value);
             }
-            if (Optional.IsDefined(UnixReadOnly))
+            if (Optional.IsDefined(IsUnixReadOnly))
             {
                 writer.WritePropertyName("unixReadOnly");
-                writer.WriteBooleanValue(UnixReadOnly.Value);
+                writer.WriteBooleanValue(IsUnixReadOnly.Value);
             }
-            if (Optional.IsDefined(UnixReadWrite))
+            if (Optional.IsDefined(IsUnixReadWrite))
             {
                 writer.WritePropertyName("unixReadWrite");
-                writer.WriteBooleanValue(UnixReadWrite.Value);
+                writer.WriteBooleanValue(IsUnixReadWrite.Value);
             }
-            if (Optional.IsDefined(Kerberos5ReadOnly))
+            if (Optional.IsDefined(IsKerberos5ReadOnly))
             {
                 writer.WritePropertyName("kerberos5ReadOnly");
-                writer.WriteBooleanValue(Kerberos5ReadOnly.Value);
+                writer.WriteBooleanValue(IsKerberos5ReadOnly.Value);
             }
-            if (Optional.IsDefined(Kerberos5ReadWrite))
+            if (Optional.IsDefined(IsKerberos5ReadWrite))
             {
                 writer.WritePropertyName("kerberos5ReadWrite");
-                writer.WriteBooleanValue(Kerberos5ReadWrite.Value);
+                writer.WriteBooleanValue(IsKerberos5ReadWrite.Value);
             }
-            if (Optional.IsDefined(Kerberos5IReadOnly))
+            if (Optional.IsDefined(IsKerberos5iReadOnly))
             {
                 writer.WritePropertyName("kerberos5iReadOnly");
-                writer.WriteBooleanValue(Kerberos5IReadOnly.Value);
+                writer.WriteBooleanValue(IsKerberos5iReadOnly.Value);
             }
-            if (Optional.IsDefined(Kerberos5IReadWrite))
+            if (Optional.IsDefined(IsKerberos5iReadWrite))
             {
                 writer.WritePropertyName("kerberos5iReadWrite");
-                writer.WriteBooleanValue(Kerberos5IReadWrite.Value);
+                writer.WriteBooleanValue(IsKerberos5iReadWrite.Value);
             }
-            if (Optional.IsDefined(Kerberos5PReadOnly))
+            if (Optional.IsDefined(IsKerberos5pReadOnly))
             {
                 writer.WritePropertyName("kerberos5pReadOnly");
-                writer.WriteBooleanValue(Kerberos5PReadOnly.Value);
+                writer.WriteBooleanValue(IsKerberos5pReadOnly.Value);
             }
-            if (Optional.IsDefined(Kerberos5PReadWrite))
+            if (Optional.IsDefined(IsKerberos5pReadWrite))
             {
                 writer.WritePropertyName("kerberos5pReadWrite");
-                writer.WriteBooleanValue(Kerberos5PReadWrite.Value);
+                writer.WriteBooleanValue(IsKerberos5pReadWrite.Value);
             }
-            if (Optional.IsDefined(Cifs))
+            if (Optional.IsDefined(AllowCifsProtocol))
             {
                 writer.WritePropertyName("cifs");
-                writer.WriteBooleanValue(Cifs.Value);
+                writer.WriteBooleanValue(AllowCifsProtocol.Value);
             }
-            if (Optional.IsDefined(Nfsv3))
+            if (Optional.IsDefined(AllowNfsV3Protocol))
             {
                 writer.WritePropertyName("nfsv3");
-                writer.WriteBooleanValue(Nfsv3.Value);
+                writer.WriteBooleanValue(AllowNfsV3Protocol.Value);
             }
-            if (Optional.IsDefined(Nfsv41))
+            if (Optional.IsDefined(AllowNfsV41Protocol))
             {
                 writer.WritePropertyName("nfsv41");
-                writer.WriteBooleanValue(Nfsv41.Value);
+                writer.WriteBooleanValue(AllowNfsV41Protocol.Value);
             }
             if (Optional.IsDefined(AllowedClients))
             {

@@ -16,9 +16,35 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  EndPoint.ipAddress: -|ip-address
+  ContactProfilesPropertiesNetworkConfiguration.subnetId: NetworkSubnetId|arm-id
+  AuthorizedGroundstation.groundStation: GroundStationName
+  AuthorizedGroundstation: AuthorizedGroundStation
+  CapabilityParameter: GroundStationCapability
+  Contact: OrbitalContact
+  ContactListResult: OrbitalContactListResult
+  ContactProfile: OrbitalContactProfile
+  ContactProfileLink: OrbitalContactProfileLink
+  ContactProfileLinkChannel: OrbitalContactProfileLinkChannel
+  ContactProfilesPropertiesProvisioningState: OrbitalProvisioningState
+  ContactsPropertiesProvisioningState: OrbitalProvisioningState
+  SpacecraftsPropertiesProvisioningState: OrbitalProvisioningState
+  ContactsPropertiesAntennaConfiguration: OrbitalContactAntennaConfiguration
+  ContactsStatus: OrbitalContactStatus
+  Direction: OrbitalLinkDirection
+  EndPoint: OrbitalContactEndpoint
+  Polarization: OrbitalLinkPolarization
+  Protocol: OrbitalContactProtocol
+  ReleaseMode: GroundStationReleaseMode
+  Spacecraft: OrbitalSpacecraft
+  SpacecraftLink: OrbitalSpacecraftLink
+  SpacecraftListResult: OrbitalSpacecraftListResult
+  TagsObject: OrbitalSpacecraftTags
 
 format-by-name-rules:
+  'sourceIPs': 'ip-address'
+  'destinationIP': 'ip-address'
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
@@ -47,6 +73,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  UDP: Udp
+  TCP: Tcp
 
 directive:
   - from: orbital.json
@@ -54,5 +82,6 @@ directive:
     transform: >
       $.AvailableGroundStationProperties['x-ms-client-name'] = 'GroundStationProperties';
       $.ContactProfilesProperties.properties.minimumViableContactDuration['format'] = 'duration';
-  - remove-operation: "Spacecrafts_ListAvailableContacts"
+  - remove-operation: Spacecrafts_ListAvailableContacts
+  - remove-operation: OperationsResults_Get
 ```

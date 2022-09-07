@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element)
         {
-            Optional<IList<HeaderAction>> requestHeaderActions = default;
-            Optional<IList<HeaderAction>> responseHeaderActions = default;
+            Optional<IList<RulesEngineHeaderAction>> requestHeaderActions = default;
+            Optional<IList<RulesEngineHeaderAction>> responseHeaderActions = default;
             Optional<RouteConfiguration> routeConfigurationOverride = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HeaderAction> array = new List<HeaderAction>();
+                    List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderAction.DeserializeHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
                     }
                     requestHeaderActions = array;
                     continue;
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HeaderAction> array = new List<HeaderAction>();
+                    List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderAction.DeserializeHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
                     }
                     responseHeaderActions = array;
                     continue;

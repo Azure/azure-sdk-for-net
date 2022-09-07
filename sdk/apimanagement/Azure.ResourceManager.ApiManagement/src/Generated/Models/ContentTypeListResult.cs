@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ContentTypeListResult. </summary>
         internal ContentTypeListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementContentTypeData>();
+            Value = new ChangeTrackingList<ApiManagementContentType>();
         }
 
         /// <summary> Initializes a new instance of ContentTypeListResult. </summary>
         /// <param name="value"> Collection of content types. </param>
         /// <param name="nextLink"> Next page link, if any. </param>
-        internal ContentTypeListResult(IReadOnlyList<ApiManagementContentTypeData> value, string nextLink)
+        internal ContentTypeListResult(IReadOnlyList<ApiManagementContentType> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of content types. </summary>
-        public IReadOnlyList<ApiManagementContentTypeData> Value { get; }
+        public IReadOnlyList<ApiManagementContentType> Value { get; }
         /// <summary> Next page link, if any. </summary>
         public string NextLink { get; }
     }

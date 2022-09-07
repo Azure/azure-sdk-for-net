@@ -212,7 +212,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < line.BoundingPolygon.Length; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -225,7 +225,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < selectionMark.BoundingPolygon.Length; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -313,7 +313,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < line.BoundingPolygon.Length; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -326,7 +326,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < selectionMark.BoundingPolygon.Length; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -395,7 +395,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < line.BoundingPolygon.Length; j++)
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -448,39 +448,39 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField))
     {
-        if (vendorNameField.ValueType == DocumentFieldType.String)
+        if (vendorNameField.FieldType == DocumentFieldType.String)
         {
-            string vendorName = vendorNameField.AsString();
+            string vendorName = vendorNameField.Value.AsString();
             Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField))
     {
-        if (customerNameField.ValueType == DocumentFieldType.String)
+        if (customerNameField.FieldType == DocumentFieldType.String)
         {
-            string customerName = customerNameField.AsString();
+            string customerName = customerNameField.Value.AsString();
             Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField))
     {
-        if (itemsField.ValueType == DocumentFieldType.List)
+        if (itemsField.FieldType == DocumentFieldType.List)
         {
-            foreach (DocumentField itemField in itemsField.AsList())
+            foreach (DocumentField itemField in itemsField.Value.AsList())
             {
                 Console.WriteLine("Item:");
 
-                if (itemField.ValueType == DocumentFieldType.Dictionary)
+                if (itemField.FieldType == DocumentFieldType.Dictionary)
                 {
-                    IReadOnlyDictionary<string, DocumentField> itemFields = itemField.AsDictionary();
+                    IReadOnlyDictionary<string, DocumentField> itemFields = itemField.Value.AsDictionary();
 
                     if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField))
                     {
-                        if (itemDescriptionField.ValueType == DocumentFieldType.String)
+                        if (itemDescriptionField.FieldType == DocumentFieldType.String)
                         {
-                            string itemDescription = itemDescriptionField.AsString();
+                            string itemDescription = itemDescriptionField.Value.AsString();
 
                             Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                         }
@@ -488,9 +488,9 @@ for (int i = 0; i < result.Documents.Count; i++)
 
                     if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                     {
-                        if (itemAmountField.ValueType == DocumentFieldType.Currency)
+                        if (itemAmountField.FieldType == DocumentFieldType.Currency)
                         {
-                            CurrencyValue itemAmount = itemAmountField.AsCurrency();
+                            CurrencyValue itemAmount = itemAmountField.Value.AsCurrency();
 
                             Console.WriteLine($"  Amount: '{itemAmount.Symbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
                         }
@@ -502,27 +502,27 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
     {
-        if (subTotalField.ValueType == DocumentFieldType.Currency)
+        if (subTotalField.FieldType == DocumentFieldType.Currency)
         {
-            CurrencyValue subTotal = subTotalField.AsCurrency();
+            CurrencyValue subTotal = subTotalField.Value.AsCurrency();
             Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
     {
-        if (totalTaxField.ValueType == DocumentFieldType.Currency)
+        if (totalTaxField.FieldType == DocumentFieldType.Currency)
         {
-            CurrencyValue totalTax = totalTaxField.AsCurrency();
+            CurrencyValue totalTax = totalTaxField.Value.AsCurrency();
             Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
     {
-        if (invoiceTotalField.ValueType == DocumentFieldType.Currency)
+        if (invoiceTotalField.FieldType == DocumentFieldType.Currency)
         {
-            CurrencyValue invoiceTotal = invoiceTotalField.AsCurrency();
+            CurrencyValue invoiceTotal = invoiceTotalField.Value.AsCurrency();
             Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
         }
     }
@@ -552,7 +552,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
@@ -609,13 +609,13 @@ Manage the models stored in your account.
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
 ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
-Console.WriteLine($"Resource has {resourceDetails.DocumentModelCount} models.");
-Console.WriteLine($"It can have at most {resourceDetails.DocumentModelLimit} models.");
+Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
+Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
-AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
+AsyncPageable<DocumentModelSummary> models = client.GetDocumentModelsAsync();
 
 int count = 0;
 await foreach (DocumentModelSummary modelSummary in models)
@@ -631,11 +631,11 @@ await foreach (DocumentModelSummary modelSummary in models)
 
 // Create a new model to store in the account
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
-DocumentModelDetails newCreatedModel = await client.GetModelAsync(model.ModelId);
+DocumentModelDetails newCreatedModel = await client.GetDocumentModelAsync(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 
@@ -645,7 +645,7 @@ if (string.IsNullOrEmpty(newCreatedModel.Description))
 Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 
 // Delete the model from the account.
-await client.DeleteModelAsync(newCreatedModel.ModelId);
+await client.DeleteDocumentModelAsync(newCreatedModel.ModelId);
 ```
 
 For more information and samples see [here][manage_models].
@@ -656,13 +656,13 @@ Manage the models stored in your account with a synchronous API. Note that we ar
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
 ResourceDetails resourceDetails = client.GetResourceDetails();
-Console.WriteLine($"Resource has {resourceDetails.DocumentModelCount} models.");
-Console.WriteLine($"It can have at most {resourceDetails.DocumentModelLimit} models.");
+Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
+Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
-Pageable<DocumentModelSummary> models = client.GetModels();
+Pageable<DocumentModelSummary> models = client.GetDocumentModels();
 
 foreach (DocumentModelSummary modelSummary in models.Take(10))
 {
@@ -676,11 +676,11 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 // Create a new model to store in the account
 
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildDocumentModelOperation operation = client.BuildDocumentModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
-DocumentModelDetails newCreatedModel = client.GetModel(model.ModelId);
+DocumentModelDetails newCreatedModel = client.GetDocumentModel(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 
@@ -690,7 +690,7 @@ if (string.IsNullOrEmpty(newCreatedModel.Description))
 Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 
 // Delete the created model from the account.
-client.DeleteModel(newCreatedModel.ModelId);
+client.DeleteDocumentModel(newCreatedModel.ModelId);
 ```
 
 ## Troubleshooting

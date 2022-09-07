@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        internal NetAppReplicationObject(string replicationId, EndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Id. </summary>
         public string ReplicationId { get; set; }
         /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        public EndpointType? EndpointType { get; set; }
+        public NetAppEndpointType? EndpointType { get; set; }
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
         /// <summary> The resource ID of the remote volume. </summary>

@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary>
-    /// test
+    /// The model representing the error and the associated logs that failed when uploading a subset of logs to Azure Monitor.
     /// </summary>
     public class UploadLogsError
     {
@@ -20,12 +20,12 @@ namespace Azure.Monitor.Ingestion
         }
 
         /// <summary>
-        /// test
+        ///  List of logs that failed to upload.
         /// </summary>
         public IEnumerable<Object> FailedLogs { get; }
 
         /// <summary>
-        /// test
+        /// The response error containing the error details returned by the service.
         /// </summary>
         public ResponseError Error { get; }
     }
