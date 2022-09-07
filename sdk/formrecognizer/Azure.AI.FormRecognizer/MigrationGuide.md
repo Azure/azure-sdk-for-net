@@ -82,6 +82,23 @@ var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), crede
 var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
 ```
 
+### Long-running operations
+
+The way long-running operations are designed has changed slightly to conform to new patterns in the Azure SDK for .NET libraries. The differences are listed below:
+- In `3.1.x`, service methods used to begin with the `Start` prefix to indicate it starts a long-running operation. In `4.0.x`, that prefix is not used anymore. For example, `StartCopyModel` is equivalent to the new `CopyDocumentModelTo`.
+- In `3.1.x`, you had to call the `WaitForCompletionAsync` method to wait for the long-running operation to finish running. In `4.0.x`, methods that start a long-running operation take a required `waitUntil` parameter. You can pass the value `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later.
+
+Waiting for long-running operations to finish in `3.1.x`:
+```C# Snippet:WaitForLongRunningOperationV2
+CopyModelOperation operation = await client.StartCopyModelAsync(modelId, authorization);
+await operation.WaitForCompletionAsync();
+```
+
+Waiting for long-running operations to finish in `4.0.x`:
+```C# Snippet:WaitForLongRunningOperationV3
+CopyDocumentModelToOperation operation = await client.CopyDocumentModelToAsync(WaitUntil.Completed, modelId, authorization);
+```
+
 ### Analyzing documents
 
 Differences between the versions:
