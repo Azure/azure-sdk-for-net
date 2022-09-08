@@ -101,8 +101,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // set policy
             var policyDoc = XDocument.Parse(globalPolicy.Data.Value);
-
-            var policyContract = new PolicyContractData() { Value = policyDoc.ToString() };
+            PolicyContractData policyContract = null;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                policyContract = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString()
+                };
+            }
+            else
+            {
+                policyContract = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString().Replace("\n", "\r\n")
+                };
+            }
 
             var globalPolicyResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, "policy", policyContract)).Value;
             Assert.NotNull(globalPolicyResponse);
