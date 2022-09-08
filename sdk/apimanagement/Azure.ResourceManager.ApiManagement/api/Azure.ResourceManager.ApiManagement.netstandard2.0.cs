@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.ApiManagement
         public System.Uri GatewayRegionalUri { get { throw null; } }
         public System.Uri GatewayUri { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> HostnameConfigurations { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Uri ManagementApiUri { get { throw null; } }
         public string MinApiVersion { get { throw null; } set { } }
         public string NotificationSenderEmail { get { throw null; } set { } }
@@ -2638,14 +2638,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         internal ApiManagementServiceGetSsoTokenResult() { }
         public System.Uri RedirectUri { get { throw null; } }
     }
-    public partial class ApiManagementServiceIdentity
-    {
-        public ApiManagementServiceIdentity(Azure.ResourceManager.ApiManagement.Models.ApimIdentityType apimIdentityType) { }
-        public Azure.ResourceManager.ApiManagement.Models.ApimIdentityType ApimIdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
     public partial class ApiManagementServiceNameAvailabilityContent
     {
         public ApiManagementServiceNameAvailabilityContent(string name) { }
@@ -2678,7 +2670,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Uri GatewayRegionalUri { get { throw null; } }
         public System.Uri GatewayUri { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration> HostnameConfigurations { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Uri ManagementApiUri { get { throw null; } }
         public string MinApiVersion { get { throw null; } set { } }
         public string NotificationSenderEmail { get { throw null; } set { } }
@@ -2881,26 +2873,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState left, Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState left, Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApimIdentityType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ApimIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApimIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.ApimIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.ApimIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.ApimIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.ApimIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApimIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApimIdentityType left, Azure.ResourceManager.ApiManagement.Models.ApimIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApimIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.ApimIdentityType left, Azure.ResourceManager.ApiManagement.Models.ApimIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -17,10 +17,6 @@ modelerfour:
   flatten-payloads: false
 skip-serialization-format-xml: true
 
-#no-property-type-replacement: 
-# - ApiManagementServiceIdentity
-# - PortalSettingsContractData
-
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
 
