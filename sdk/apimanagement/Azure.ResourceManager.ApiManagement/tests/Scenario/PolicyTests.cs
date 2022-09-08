@@ -189,14 +189,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // set policy
             policyDoc = XDocument.Parse(OperationValid);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                data = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString()
+                };
+            }
+            else
+            {
+                data = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString().Replace("\n", "\r\n")
+                };
+            }
 
             var setResponse2 = (await operationPolicyCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 "policy",
-                new PolicyContractData()
-                {
-                    Value = policyDoc.ToString()
-                },
+                data,
                 ETag.All)).Value;
 
             Assert.NotNull(setResponse2);
@@ -228,14 +239,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // set policy
             policyDoc = XDocument.Parse(ProductValid);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                data = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString()
+                };
+            }
+            else
+            {
+                data = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString().Replace("\n", "\r\n")
+                };
+            }
 
             var setResponse3 = (await productPolicyCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 "policy",
-                new PolicyContractData()
-                {
-                    Value = policyDoc.ToString()
-                },
+                data,
                 ETag.All)).Value;
 
             Assert.NotNull(setResponse3);
