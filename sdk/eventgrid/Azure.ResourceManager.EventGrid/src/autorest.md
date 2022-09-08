@@ -70,7 +70,7 @@ rename-mapping:
   ChannelUpdateParameters.properties.expirationTimeIfNotActivatedUtc: ExpireOnIfNotActivated
   ChannelType: PartnerNamespaceChannelType
   ChannelProvisioningState: PartnerNamespaceChannelProvisioningState
-  ReadinessState: PartnertopicReadinessState
+  ReadinessState: PartnerTopicReadinessState
   Domain: EventGridDomain
   Domain.properties.disableLocalAuth: IsLocalAuthDisabled
   Domain.properties.endpoint: EndpointUri
@@ -83,7 +83,7 @@ rename-mapping:
   EventSubscription.properties.expirationTimeUtc: ExpireOn
   RetryPolicy: EventSubscriptionRetryPolicy
   InboundIpRule: EventGridInboundIPRule
-  IPActionType: EventGridIPActionType
+  IpActionType: EventGridIPActionType
   InputSchema: EventGridInputSchema
   InputSchemaMapping: EventGridInputSchemaMapping
   JsonInputSchemaMapping: EventGridJsonInputSchemaMapping
