@@ -4,11 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
 using NUnit.Framework;
@@ -159,20 +162,28 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             partitionEventList.Add(samplePartitionEvent);
 
             // Use this PartitionEvent to mock a return from the consumer
-            mockConsumer.Setup(c =>
-            c.ReadEventsAsync(
-                It.IsAny<CancellationToken>()))
-                .Returns((IAsyncEnumerable<PartitionEvent>)partitionEventList);
+            _ = mockConsumer.Setup(
+                c => c.ReadEventsAsync(
+                It.IsAny<CancellationToken>())).Returns(mockReturn(samplePartitionEvent));
 
             var consumer = mockConsumer.Object;
-
-            #endregion
+#if Snippet
+#else
         }
+#endif
+            // Define a simple method that returns an IAsyncEnumerable to use as the return for
+            // ReadEventsAsync above.
+            public async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
+        {
+            await Task.CompletedTask;
+            yield return samplePartitionEvent;
+        }
+#endregion
 
         [Test]
         public void PartitionReceiverMock()
         {
-            #region Snippet:EventHubs_Sample11_PartitionReceiverMock
+#region Snippet:EventHubs_Sample11_PartitionReceiverMock
 
             // Create a mock of the PartitionReceiver
             var mockReceiver = new Mock<PartitionReceiver>();
@@ -188,13 +199,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var receiver = mockReceiver.Object;
 
-            #endregion
+#endregion
         }
 
         [Test]
         public void MockingBufferedProducer()
         {
-            #region Snippet:EventHubs_Sample11_MockingBufferedProducer
+#region Snippet:EventHubs_Sample11_MockingBufferedProducer
             // Create a mock buffered producer
             var bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
 
@@ -233,13 +244,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             bufferedProducer.SendEventBatchFailedAsync += sendFailed;
 
-            #endregion
+#endregion
         }
 
         [Test]
         public async Task MockingEventProcessor()
         {
-            #region Snippet:EventHubs_Sample11_MockingEventProcessor
+#region Snippet:EventHubs_Sample11_MockingEventProcessor
 
             // TestableCustomProcessor is a wrapper class around a CustomProcessor class that exposes
             // protected methods so that they can be tested
@@ -262,12 +273,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // Using It.Is allows the test to set the PartitionId value, even though the setter is protected
             await eventProcessor.TestOnProcessingEventBatchAsync(eventList, It.Is<EventProcessorPartition>(value => value.PartitionId == "0"));
 
-            #endregion
+#endregion
         }
 
-        #region Snippet:EventHubs_Sample11_CustomEventProcessor
+#region Snippet:EventHubs_Sample11_CustomEventProcessor
         internal class CustomProcessor : EventProcessor<EventProcessorPartition>
-        #endregion
+#endregion
         {
             public CustomProcessor(int eventBatchMaximumCount,
                                         string consumerGroup,
@@ -295,9 +306,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 throw new NotImplementedException();
         }
 
-        #region Snippet:EventHubs_Sample11_TestCustomEventProcessor
+#region Snippet:EventHubs_Sample11_TestCustomEventProcessor
         internal class TestableCustomProcessor : CustomProcessor
-        #endregion
+#endregion
         {
             public TestableCustomProcessor(int eventBatchMaximumCount,
                                         string consumerGroup,

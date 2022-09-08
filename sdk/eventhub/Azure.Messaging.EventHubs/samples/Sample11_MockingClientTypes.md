@@ -103,38 +103,45 @@ var producer = mockProducer.Object;
 When testing code that is dependent on the `EventHubConsumerClient`, an application only needs to determine a representative set of events, event properties, and contexts that their application could potentially see. Tests can mock each data type, and then set up the consumer client to output representative scenarios.
 
 ```C# Snippet:EventHubs_Sample11_MockingConsumerClient
-// Create a mock of the EventHubConsumerClient
-var mockConsumer = new Mock<EventHubConsumerClient>();
-var receivedEvents = new List<EventData>();
-var cancellationTokenSource = new CancellationTokenSource();
+    // Create a mock of the EventHubConsumerClient
+    var mockConsumer = new Mock<EventHubConsumerClient>();
+    var receivedEvents = new List<EventData>();
+    var cancellationTokenSource = new CancellationTokenSource();
 
-// Create a mock of LastEnqueuedEventProperties using the model factory
-var lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
-    default, // Can set the sequence number
-    default, // Offset
-    default, // Time of last enqueued event
-    default); // or time of last received event
+    // Create a mock of LastEnqueuedEventProperties using the model factory
+    var lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
+        default, // Can set the sequence number
+        default, // Offset
+        default, // Time of last enqueued event
+        default); // or time of last received event
 
-// Create a mock of PartitionContext using the model factory
-var partitionContext = EventHubsModelFactory.PartitionContext(
-    "0",
-    lastEnqueueEventProperties);
+    // Create a mock of PartitionContext using the model factory
+    var partitionContext = EventHubsModelFactory.PartitionContext(
+        "0",
+        lastEnqueueEventProperties);
 
-var eventData = EventHubsModelFactory.EventData(new BinaryData("Sample-Event"));
+    var eventData = EventHubsModelFactory.EventData(new BinaryData("Sample-Event"));
 
-// Create a mock of a partition event using the PartitionContext and EventData
-// instances created above
-var samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
-var partitionEventList = new List<PartitionEvent>();
-partitionEventList.Add(samplePartitionEvent);
+    // Create a mock of a partition event using the PartitionContext and EventData
+    // instances created above
+    var samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
+    var partitionEventList = new List<PartitionEvent>();
+    partitionEventList.Add(samplePartitionEvent);
 
-// Use this PartitionEvent to mock a return from the consumer
-mockConsumer.Setup(c =>
-c.ReadEventsAsync(
-    It.IsAny<CancellationToken>()))
-    .Returns((IAsyncEnumerable<PartitionEvent>)partitionEventList);
+    // Use this PartitionEvent to mock a return from the consumer
+    _ = mockConsumer.Setup(
+        c => c.ReadEventsAsync(
+        It.IsAny<CancellationToken>())).Returns(mockReturn(samplePartitionEvent));
 
-var consumer = mockConsumer.Object;
+    var consumer = mockConsumer.Object;
+}
+    // Define a simple method that returns an IAsyncEnumerable to use as the return for
+    // ReadEventsAsync above.
+    public async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
+{
+    await Task.CompletedTask;
+    yield return samplePartitionEvent;
+}
 ```
 
 ## Mocking `PartitionReceiver`
