@@ -129,11 +129,12 @@ var partitionEventList = new List<PartitionEvent>();
 partitionEventList.Add(samplePartitionEvent);
 
 // Use this PartitionEvent to mock a return from the consumer
-_ = mockConsumer.Setup(
+mockConsumer.Setup(
     c => c.ReadEventsAsync(
     It.IsAny<CancellationToken>())).Returns(mockReturn(samplePartitionEvent));
 
 var consumer = mockConsumer.Object;
+
 // Define a simple method that returns an IAsyncEnumerable to use as the return for
 // ReadEventsAsync above.
 public async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
