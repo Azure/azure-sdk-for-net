@@ -18,12 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class AlertProcessingRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AlertProcessingRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProcessingRuleProperties Properties { get { throw null; } set { } }
     }
     public partial class AlertProcessingRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -82,9 +77,7 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class ServiceAlertData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceAlertData() { }
-        public System.BinaryData Context { get { throw null; } }
-        public System.BinaryData EgressConfig { get { throw null; } }
-        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials Essentials { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties Properties { get { throw null; } set { } }
     }
     public partial class ServiceAlertResource : Azure.ResourceManager.ArmResource
     {
@@ -449,8 +442,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ServiceAlertModification : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceAlertModification() { }
-        public System.Guid? AlertId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo> Modifications { get { throw null; } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties Properties { get { throw null; } set { } }
     }
     public enum ServiceAlertModificationEvent
     {
@@ -474,6 +466,29 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string ModifiedBy { get { throw null; } set { } }
         public string NewValue { get { throw null; } set { } }
         public string OldValue { get { throw null; } set { } }
+    }
+    public partial class ServiceAlertModificationProperties
+    {
+        public ServiceAlertModificationProperties() { }
+        public System.Guid? AlertId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo> Modifications { get { throw null; } }
+    }
+    public partial class ServiceAlertProcessingRuleProperties
+    {
+        public ServiceAlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> actions) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
+    }
+    public partial class ServiceAlertProperties
+    {
+        public ServiceAlertProperties() { }
+        public System.BinaryData Context { get { throw null; } }
+        public System.BinaryData EgressConfig { get { throw null; } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials Essentials { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceAlertSeverity : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity>
@@ -537,6 +552,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ServiceAlertSummary : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceAlertSummary() { }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup Properties { get { throw null; } set { } }
+    }
+    public partial class ServiceAlertSummaryGroup
+    {
+        public ServiceAlertSummaryGroup() { }
         public string GroupedBy { get { throw null; } set { } }
         public long? SmartGroupsCount { get { throw null; } set { } }
         public long? Total { get { throw null; } set { } }
@@ -559,9 +579,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class SmartGroupModification : Azure.ResourceManager.Models.ResourceData
     {
         public SmartGroupModification() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo> Modifications { get { throw null; } }
-        public string NextLink { get { throw null; } set { } }
-        public System.Guid? SmartGroupId { get { throw null; } }
+        public Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties Properties { get { throw null; } set { } }
     }
     public enum SmartGroupModificationEvent
     {
@@ -580,6 +598,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public System.DateTimeOffset? ModifiedOn { get { throw null; } set { } }
         public string NewValue { get { throw null; } set { } }
         public string OldValue { get { throw null; } set { } }
+    }
+    public partial class SmartGroupModificationProperties
+    {
+        public SmartGroupModificationProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo> Modifications { get { throw null; } }
+        public string NextLink { get { throw null; } set { } }
+        public System.Guid? SmartGroupId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SmartGroupsSortByField : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField>
