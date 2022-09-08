@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
         /// <param name="preferredBatchSizeInKilobytes"> Preferred batch size in Kilobytes. </param>
         /// <param name="azureActiveDirectoryTenantId"> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
+        /// <param name="uriOrAzureActiveDirectoryApplicationId"> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="deliveryAttributeMappings">
         /// Delivery attribute details.
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
-        internal WebHookEventSubscriptionDestination(EndpointType endpointType, Uri endpointUri, Uri endpointBaseUri, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, string azureActiveDirectoryTenantId, Uri azureActiveDirectoryApplicationIdOrUri, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
+        internal WebHookEventSubscriptionDestination(EndpointType endpointType, Uri endpointUri, Uri endpointBaseUri, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
         {
             EndpointUri = endpointUri;
             EndpointBaseUri = endpointBaseUri;
             MaxEventsPerBatch = maxEventsPerBatch;
             PreferredBatchSizeInKilobytes = preferredBatchSizeInKilobytes;
             AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
-            AzureActiveDirectoryApplicationIdOrUri = azureActiveDirectoryApplicationIdOrUri;
+            UriOrAzureActiveDirectoryApplicationId = uriOrAzureActiveDirectoryApplicationId;
             DeliveryAttributeMappings = deliveryAttributeMappings;
             EndpointType = endpointType;
         }
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Preferred batch size in Kilobytes. </summary>
         public int? PreferredBatchSizeInKilobytes { get; set; }
         /// <summary> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
-        public string AzureActiveDirectoryTenantId { get; set; }
+        public Guid? AzureActiveDirectoryTenantId { get; set; }
         /// <summary> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
-        public Uri AzureActiveDirectoryApplicationIdOrUri { get; set; }
+        public string UriOrAzureActiveDirectoryApplicationId { get; set; }
         /// <summary>
         /// Delivery attribute details.
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
