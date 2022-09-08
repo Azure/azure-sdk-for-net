@@ -7,7 +7,7 @@ Azure Cognitive Services Text Analytics is one of the three services that are pa
   * Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)
   * Healthcare Entities Recognition
   * Extractive Text Summarization
-  * Custom Named Entity Recognition
+  * Custom Named Entities Recognition
 * Classify Text: Use NLU to detect the language, analyze sentiment, or classify the text you have
   * Language Detection
   * Sentiment Analysis
@@ -30,13 +30,11 @@ This table shows the relationship between SDK versions and supported API version
 > Note that `5.2.0-beta.3` is the first version of the client library that targets the Azure Cognitive Service for Language APIs which includes the existing text analysis and natural language processing features found in the Text Analytics client library. In addition, the service API has changed from semantic to date-based versioning. This version of the client library defaults to the latest supported API version, which currently is `2022-04-01-preview`.
 
 |SDK version|Supported API version of service
-|-|- |
-|5.2.0 | 3.0, 3.1, 2022-05-01 (default)
-|5.2.0-beta.4 | 3.0, 3.1, 2022-05-01 (default)
-|5.2.0-beta.3 | 3.0, 3.1, 3.2-preview.2, 2022-04-01-preview (default)
-|5.1.X  | 3.0, 3.1 (default)
-|5.0.0  | 3.0
-|1.0.X  | 3.0
+|-----------|--------------------------------|
+|5.2.0      | 3.0, 3.1, 2022-05-01 (default)
+|5.1.X      | 3.0, 3.1 (default)
+|5.0.0      | 3.0
+|1.0.X      | 3.0
 
 ### Prerequisites
 
@@ -595,9 +593,10 @@ This functionality allows running multiple actions in one or more documents. Act
 * Linked Entity Recognition
 * Key Phrase Extraction
 * Sentiment Analysis
-* Custom Named Entity Recognition (see sample [here][recognize_custom_entities_sample])
-* Custom Single Category Classification (see sample [here][single_category_classify_sample])
-* Custom Multi Category Classification (see sample [here][multi_category_classify_sample])
+* Healthcare Entities Recognition (see sample [here][analyze_healthcare_sample])
+* Custom Named Entities Recognition (see sample [here][recognize_custom_entities_sample])
+* Custom Single Label Classification (see sample [here][single_category_classify_sample])
+* Custom Multi Label Classification (see sample [here][multi_category_classify_sample])
 
 ```C# Snippet:AnalyzeOperationConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
@@ -749,9 +748,9 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Recognize PII Entities][recognize_pii_entities_sample]
 * [Recognize Linked Entities][recognize_linked_entities_sample]
 * [Recognize Healthcare Entities][analyze_healthcare_sample]
-* [Custom Named Entity Recognition][recognize_custom_entities_sample]
-* [Custom Single Category Classification][single_category_classify_sample]
-* [Custom Multi Category Classification][multi_category_classify_sample]
+* [Custom Named Entities Recognition][recognize_custom_entities_sample]
+* [Custom Single Label Classification][single_category_classify_sample]
+* [Custom Multi Label Classification][multi_category_classify_sample]
 
 ### Advanced samples
 
