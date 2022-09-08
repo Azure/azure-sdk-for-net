@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.EventGrid
         public string MessageForActivation { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo PartnerTopicInfo { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState? ReadinessState { get { throw null; } set { } }
+        public Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState? ReadinessState { get { throw null; } set { } }
     }
     public partial class PartnerNamespaceChannelResource : Azure.ResourceManager.ArmResource
     {
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class EventGridInboundIPRule
     {
         public EventGridInboundIPRule() { }
-        public Azure.ResourceManager.EventGrid.Models.IPActionType? Action { get { throw null; } set { } }
+        public Azure.ResourceManager.EventGrid.Models.EventGridIPActionType? Action { get { throw null; } set { } }
         public string IPMask { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1176,6 +1176,23 @@ namespace Azure.ResourceManager.EventGrid.Models
     public abstract partial class EventGridInputSchemaMapping
     {
         protected EventGridInputSchemaMapping() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventGridIPActionType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.EventGridIPActionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventGridIPActionType(string value) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.EventGridIPActionType Allow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridIPActionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridIPActionType left, Azure.ResourceManager.EventGrid.Models.EventGridIPActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridIPActionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventGrid.Models.EventGridIPActionType left, Azure.ResourceManager.EventGrid.Models.EventGridIPActionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EventGridJsonInputSchemaMapping : Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping
     {
@@ -1423,23 +1440,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Uri DocumentationUri { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IPActionType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.IPActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IPActionType(string value) { throw null; }
-        public static Azure.ResourceManager.EventGrid.Models.IPActionType Allow { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventGrid.Models.IPActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventGrid.Models.IPActionType left, Azure.ResourceManager.EventGrid.Models.IPActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventGrid.Models.IPActionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventGrid.Models.IPActionType left, Azure.ResourceManager.EventGrid.Models.IPActionType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class IsNotNullAdvancedFilter : Azure.ResourceManager.EventGrid.Models.AdvancedFilter
     {
@@ -1714,21 +1714,21 @@ namespace Azure.ResourceManager.EventGrid.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PartnertopicReadinessState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState>
+    public readonly partial struct PartnerTopicReadinessState : System.IEquatable<Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PartnertopicReadinessState(string value) { throw null; }
-        public static Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState Activated { get { throw null; } }
-        public static Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState NeverActivated { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState other) { throw null; }
+        public PartnerTopicReadinessState(string value) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState Activated { get { throw null; } }
+        public static Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState NeverActivated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState left, Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState left, Azure.ResourceManager.EventGrid.Models.PartnertopicReadinessState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState left, Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState left, Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
