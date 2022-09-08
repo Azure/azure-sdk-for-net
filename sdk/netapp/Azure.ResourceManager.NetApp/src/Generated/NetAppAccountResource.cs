@@ -503,10 +503,10 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: VolumeGroups_ListByNetAppAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DummyVolumeGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DummyVolumeGroup> GetVolumeGroupsByNetAppAccountAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsByNetAppAccountAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DummyVolumeGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetAppVolumeGroupResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroupsByNetAppAccount");
                 scope.Start();
@@ -530,10 +530,10 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: VolumeGroups_ListByNetAppAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DummyVolumeGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DummyVolumeGroup> GetVolumeGroupsByNetAppAccount(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroupsByNetAppAccount(CancellationToken cancellationToken = default)
         {
-            Page<DummyVolumeGroup> FirstPageFunc(int? pageSizeHint)
+            Page<NetAppVolumeGroupResult> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroupsByNetAppAccount");
                 scope.Start();

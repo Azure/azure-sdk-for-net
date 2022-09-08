@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class DummyVolumeGroup
+    public partial class NetAppVolumeGroupResult
     {
-        internal static DummyVolumeGroup DeserializeDummyVolumeGroup(JsonElement element)
+        internal static NetAppVolumeGroupResult DeserializeNetAppVolumeGroupResult(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new DummyVolumeGroup(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, groupMetaData.Value);
+            return new NetAppVolumeGroupResult(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, groupMetaData.Value);
         }
     }
 }

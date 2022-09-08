@@ -85,14 +85,12 @@ prepend-rp-prefix:
   - ReplicationObject
   - ReplicationSchedule
   - VolumeStorageToNetworkProximity
+  - VolumeProperties
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
   Backup.properties.backupId: -|uuid
-  Volume.properties.backupId: -|uuid
   BackupPatch.properties.backupId: -|uuid
-  Volume.properties.snapshotId: -|uuid
-  Volume.properties.fileSystemId: -|uuid
   Snapshot.properties.snapshotId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
@@ -113,6 +111,9 @@ rename-mapping:
   ExportPolicyRule.kerberos5pReadWrite: IsKerberos5pReadWrite
   ExportPolicyRule.nfsv3: AllowNfsV3Protocol
   ExportPolicyRule.nfsv41: AllowNfsV41Protocol
+  Volume.properties.snapshotId: -|uuid
+  Volume.properties.fileSystemId: -|uuid
+  Volume.properties.backupId: -|uuid
   Volume.properties.coolAccess: IsCoolAccessEnabled
   Volume.properties.keyVaultPrivateEndpointResourceId: -|arm-id
   Volume.properties.subnetId: -|arm-id
@@ -196,9 +197,13 @@ rename-mapping:
   VolumeRevert: NetAppVolumeRevertContent
   VolumeBackupProperties: NetAppVolumeBackupConfiguration
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
+  VolumeGroup: NetAppVolumeGroupResult
+  VolumeGroupVolumeProperties.id: -|arm-id
+  VolumeGroupVolumeProperties.type: ResourceType|resource-type
+  VolumeGroupVolumeProperties: NetAppVolumeGroupVolume
 
 list-exception:
-  -  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
 # remove this operation because the Snapshots_Update defines an empty object
@@ -210,11 +215,15 @@ directive:
 #    transform: return "#/definitions/volumeGroupDetails"
 # rename the volumeGroup to something else to avoid model name collision because we are using VolumeGroupDetails everywhere in the SDK and it is renamed to VolumeGroup
 # this type will never be generated.
-  - from: swagger-document
-    where: $.definitions.volumeGroup
-    transform: $["x-ms-client-name"] = "DummyVolumeGroup"
+#  - from: swagger-document
+#    where: $.definitions.volumeGroup
+#    transform: $["x-ms-client-name"] = "DummyVolumeGroup"
 # we have yet another two identical (almost) models volumeGroupVolumeProperties and VolumeGroupDetails. Here we take VolumeGroupDetails because it contains more
+#  - from: swagger-document
+#    where: $.definitions.volumeGroupProperties.properties.volumes.items["$ref"]
+#    transform: return "#/definitions/volumeGroupDetails"
   - from: swagger-document
-    where: $.definitions.volumeGroupProperties.properties.volumes.items["$ref"]
-    transform: return "#/definitions/volumeGroupDetails"
+    where: $.definitions.volumeGroupVolumeProperties
+    transform: >
+      $.properties.properties['x-ms-client-flatten'] = true;
 ```

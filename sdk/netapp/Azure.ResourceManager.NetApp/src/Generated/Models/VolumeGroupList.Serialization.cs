@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VolumeGroupList DeserializeVolumeGroupList(JsonElement element)
         {
-            Optional<IReadOnlyList<DummyVolumeGroup>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeGroupResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DummyVolumeGroup> array = new List<DummyVolumeGroup>();
+                    List<NetAppVolumeGroupResult> array = new List<NetAppVolumeGroupResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DummyVolumeGroup.DeserializeDummyVolumeGroup(item));
+                        array.Add(NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult(item));
                     }
                     value = array;
                     continue;

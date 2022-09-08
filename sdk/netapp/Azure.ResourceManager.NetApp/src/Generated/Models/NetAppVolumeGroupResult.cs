@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume group resource. </summary>
-    public partial class DummyVolumeGroup : ResourceData
+    public partial class NetAppVolumeGroupResult : ResourceData
     {
-        /// <summary> Initializes a new instance of DummyVolumeGroup. </summary>
-        internal DummyVolumeGroup()
+        /// <summary> Initializes a new instance of NetAppVolumeGroupResult. </summary>
+        internal NetAppVolumeGroupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DummyVolumeGroup. </summary>
+        /// <summary> Initializes a new instance of NetAppVolumeGroupResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
-        internal DummyVolumeGroup(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeGroupResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
