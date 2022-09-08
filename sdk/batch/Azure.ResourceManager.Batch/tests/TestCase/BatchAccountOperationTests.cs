@@ -21,9 +21,10 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
 
         private async Task<BatchAccountResource> CreateAccountResourceAsync(string accountName)
         {
-            var container = (await CreateResourceGroupAsync()).GetBatchAccounts();
-            var input = ResourceDataHelper.GetBatchAccountData();
-            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
+            ResourceIdentifier storageAccountId = (await GetStorageAccountResource()).Id;
+            var collection = (await CreateResourceGroupAsync()).GetBatchAccounts();
+            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
             return lro.Value;
         }
 

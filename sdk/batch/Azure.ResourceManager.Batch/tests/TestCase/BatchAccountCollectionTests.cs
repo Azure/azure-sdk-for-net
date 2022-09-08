@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Batch.Models;
+using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Batch.Tests.TestCase
 {
@@ -28,12 +30,13 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         [TestCase]
         public async Task AccountCollectionApiTests()
         {
+            ResourceIdentifier storageAccountId = (await GetStorageAccountResource()).Id;
             //1.CreateOrUpdate
             var collection = await GetAccountCollectionAsync();
             var name = Recording.GenerateAssetName("account");
             var name2 = Recording.GenerateAssetName("account");
             var name3 = Recording.GenerateAssetName("account");
-            var input = ResourceDataHelper.GetBatchAccountData();
+            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountResource account1 = lro.Value;
             Assert.AreEqual(name, account1.Data.Name);

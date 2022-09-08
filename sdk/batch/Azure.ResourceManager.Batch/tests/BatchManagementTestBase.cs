@@ -4,10 +4,16 @@
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using Azure.ResourceManager.Batch.Models;
+using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.Batch.Tests.Helpers;
 
 namespace Azure.ResourceManager.Batch.Tests
 {
@@ -49,5 +55,20 @@ namespace Azure.ResourceManager.Batch.Tests
                 });
             return rgOp.Value;
         }
+        #region GetStorageAccoountId
+        public async Task<StorageAccountCollection> GetStorageAccountCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetStorageAccounts();
+        }
+        public async Task<StorageAccountResource> GetStorageAccountResource()
+        {
+            var storageCollection = await GetStorageAccountCollectionAsync();
+            var storageName = Recording.GenerateAssetName("accountforbatch");
+            var storageInput = ResourceDataHelper.GetStorageAccountData();
+            var lros = await storageCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageName, storageInput);
+            return lros.Value;
+        }
+        #endregion
     }
 }

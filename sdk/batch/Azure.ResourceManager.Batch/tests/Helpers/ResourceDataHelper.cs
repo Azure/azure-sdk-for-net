@@ -3,12 +3,18 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager.Batch.Models;
+using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.Core;
 using System;
 using System.Net.Http.Headers;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Batch.Tests.Helpers
 {
@@ -50,17 +56,18 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             AssertResourceData(certificateData1, certificateData2);
             Assert.AreEqual(certificateData1.ETag, certificateData2.ETag);
             Assert.AreEqual(certificateData1.PublicData, certificateData2.PublicData);
+            Assert.AreEqual(certificateData1.ThumbprintAlgorithm, certificateData2.ThumbprintAlgorithm);
             Assert.AreEqual(certificateData1.Format, certificateData2.Format);
             Assert.AreEqual(certificateData1.PreviousProvisioningState, certificateData2.PreviousProvisioningState);
         }
         #endregion
 
         #region Account
-        public static BatchAccountCreateOrUpdateContent GetBatchAccountData()
+        public static BatchAccountCreateOrUpdateContent GetBatchAccountData(ResourceIdentifier id)
         {
             var data = new BatchAccountCreateOrUpdateContent(AzureLocation.WestUS)
             {
-                AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/AutoRestResources2/providers/Microsoft.Storage/storageAccounts/20220725datafactory"))
+                AutoStorage = new BatchAccountAutoStorageBaseConfiguration(id)
             };
             return data;
         }
@@ -70,6 +77,49 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             Assert.AreEqual(account1.Location, account2.Location);
             Assert.AreEqual(account1.AccountEndpoint, account2.AccountEndpoint);
             Assert.AreEqual(account1.Name, account2.Name);
+            Assert.AreEqual(account1.NodeManagementEndpoint, account2.NodeManagementEndpoint);
+            Assert.AreEqual(account1.DedicatedCoreQuota, account2.DedicatedCoreQuota);
+            Assert.AreEqual(account1.LowPriorityCoreQuota, account2.LowPriorityCoreQuota);
+            Assert.AreEqual(account1.IsDedicatedCoreQuotaPerVmFamilyEnforced, account2.IsDedicatedCoreQuotaPerVmFamilyEnforced);
+        }
+        #endregion
+
+        #region Storage Acccount
+        public static StorageAccountCreateOrUpdateContent GetStorageAccountData()
+        {
+            var sku = new StorageSku("Standard_RAGRS");
+            var kind = StorageKind.StorageV2;
+            var storageAccount = new StorageAccountCreateOrUpdateContent(sku, kind, AzureLocation.WestUS2)
+            {
+                MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_2,
+                AllowBlobPublicAccess = true,
+                AllowSharedKeyAccess = true,
+                NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
+                {
+                    Bypass = StorageNetworkBypass.AzureServices,
+                    VirtualNetworkRules =
+                    {
+                    }
+                },
+                EnableHttpsTrafficOnly = true,
+                Encryption = new StorageAccountEncryption()
+                {
+                    Services = new StorageAccountEncryptionServices()
+                    {
+                        File = new StorageEncryptionService()
+                        {
+                            IsEnabled = true,
+                        },
+                        Blob = new StorageEncryptionService()
+                        {
+                            IsEnabled = true
+                        }
+                    },
+                    KeySource = StorageAccountKeySource.Storage
+                },
+                AccessTier = StorageAccountAccessTier.Hot,
+            };
+            return storageAccount;
         }
         #endregion
 
@@ -114,11 +164,6 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
                         }
                     }
                 },
-                /*UserAccounts =
-                {
-                    //new BatchUserAccount("adminUser", "xyz123"),
-                    new BatchUserAccount("testaccount", "randompasswd")
-                },*/
                 ScaleSettings = new BatchAccountPoolScaleSettings()
                 {
                     FixedScale = new BatchAccountFixedScaleSettings()
@@ -135,7 +180,9 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             AssertResourceData(poolData1, poolData2);
             Assert.AreEqual(poolData1.ETag, poolData2.ETag);
             Assert.AreEqual(poolData1.AllocationState, poolData2.AllocationState);
-            Assert.AreEqual(poolData1.SystemData, poolData2.SystemData);
+            Assert.AreEqual(poolData1.DisplayName, poolData2.DisplayName);
+            Assert.AreEqual(poolData1.VmSize, poolData2.VmSize);
+            Assert.AreEqual(poolData1.ProvisioningState, poolData2.ProvisioningState);
         }
         #endregion
 
@@ -154,7 +201,8 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             AssertResourceData(applicationData1, applicationData2);
             Assert.AreEqual(applicationData1.ETag, applicationData2.ETag);
             Assert.AreEqual(applicationData1.DisplayName, applicationData2.DisplayName);
-            Assert.AreEqual(applicationData1.SystemData, applicationData2.SystemData);
+            Assert.AreEqual(applicationData1.DefaultVersion, applicationData2.DefaultVersion);
+            Assert.AreEqual(applicationData1.AllowUpdates, applicationData2.AllowUpdates);
         }
         #endregion
 
@@ -171,7 +219,10 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             AssertResourceData(packageData1, packageData2);
             Assert.AreEqual(packageData1.ETag, packageData2.ETag);
             Assert.AreEqual(packageData1.State, packageData2.State);
-            Assert.AreEqual(packageData1.SystemData, packageData2.SystemData);
+            Assert.AreEqual(packageData1.Format, packageData2.Format);
+            Assert.AreEqual(packageData1.LastActivatedOn, packageData2.LastActivatedOn);
+            //Assert.AreEqual(packageData1.StorageUriExpireOn, packageData2.StorageUriExpireOn);
+            //Assert.AreEqual(packageData1.StorageUri, packageData2.StorageUri);
         }
         #endregion
     }
