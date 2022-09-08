@@ -175,14 +175,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
     public partial class AuthenticationEventContext
     {
         public AuthenticationEventContext() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("authenticationProtocol")]
-        public string AuthenticationProtocol { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("client")]
         public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data.AuthenticationEventContextClient Client { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("clientServicePrincipal")]
         public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data.AuthenticationEventContextServicePrincipal ClientServicePrincipal { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("correlationId")]
         public System.Guid CorrelationId { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("protocol")]
+        public string Protocol { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("resourceServicePrincipal")]
         public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data.AuthenticationEventContextServicePrincipal ResourceServicePrincipal { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("user")]
