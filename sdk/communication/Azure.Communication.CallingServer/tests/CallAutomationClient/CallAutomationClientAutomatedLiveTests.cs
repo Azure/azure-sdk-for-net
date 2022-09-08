@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 

@@ -13,7 +13,7 @@ namespace Azure.Communication.CallingServer
     {
         private const string URIDomainRegEx = @"https://([^/?]+)";
 
-        public CallAutomationClientLiveTestsBase(bool isAsync) : base(isAsync)
+        public CallAutomationClientLiveTestsBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
