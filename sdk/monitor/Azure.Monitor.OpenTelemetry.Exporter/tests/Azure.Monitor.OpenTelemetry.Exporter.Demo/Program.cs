@@ -10,7 +10,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
+namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 {
     public class Program
     {

@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
+namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 {
     internal class InstrumentationWithActivitySource : IDisposable
     {
