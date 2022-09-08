@@ -168,17 +168,25 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var consumer = mockConsumer.Object;
 #if SNIPPET
-#else
-        }
-#endif
             // Define a simple method that returns an IAsyncEnumerable to use as the return for
             // ReadEventsAsync above.
             public async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
+            {
+                await Task.CompletedTask;
+                yield return samplePartitionEvent;
+            }
+#else
+        }
+        // Define a simple method that returns an IAsyncEnumerable to use as the return for
+        // ReadEventsAsync above.
+        public async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
         {
             await Task.CompletedTask;
             yield return samplePartitionEvent;
         }
-#endregion
+#endif
+
+        #endregion
 
         [Test]
         public void PartitionReceiverMock()
