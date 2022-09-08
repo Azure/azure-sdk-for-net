@@ -19,11 +19,11 @@ DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credent
 
 First, let's try to retrieve update metadata.
 
-```C# Snippet:AzDeviceUpdateSample2_GetUpdate
+```C# Snippet:AzDeviceUpdateSample2_GetUpdateAsync
 string provider = "<update-provider>";
 string name = "<update-name>";
 string version = "<update-version>";
-Response response = client.GetUpdate(provider, name, version);
+Response response = await client.GetUpdateAsync(provider, name, version);
 JsonDocument update = JsonDocument.Parse(response.Content.ToMemory());
 Console.WriteLine("Update:");
 Console.WriteLine($"  Provider: {update.RootElement.GetProperty("updateId").GetProperty("provider").GetString()}");
@@ -37,10 +37,10 @@ Console.WriteLine(update.RootElement.ToString());
 
 Now that we have update metadata, let's try to retrieve payload file identities that correspond to this update.
 
-```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentities
-Pageable<BinaryData> fileIds = client.GetFiles(provider, name, version);
+```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentitiesAsync
+AsyncPageable<BinaryData> fileIds = client.GetFilesAsync(provider, name, version);
 List<string> files = new List<string>();
-foreach (var fileId in fileIds)
+await foreach (var fileId in fileIds)
 {
     JsonDocument doc = JsonDocument.Parse(fileId.ToMemory());
     files.Add(doc.RootElement.GetString());
@@ -51,12 +51,12 @@ foreach (var fileId in fileIds)
 
 In this step, we will retrieve full file metadata for each file associated with the update.
 
-```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFiles
+```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFilesAsync
 foreach (var file in files)
 {
     Console.WriteLine("\nFile:");
     Console.WriteLine($"  FileId: {file}");
-    Response fileResponse = client.GetFile(provider, name, version, file);
+    Response fileResponse = await client.GetFileAsync(provider, name, version, file);
     JsonDocument fileDoc = JsonDocument.Parse(fileResponse.Content.ToMemory());
     Console.WriteLine("Metadata:");
     Console.WriteLine(fileDoc.RootElement.ToString());

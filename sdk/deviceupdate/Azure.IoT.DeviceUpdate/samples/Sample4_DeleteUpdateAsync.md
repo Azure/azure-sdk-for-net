@@ -20,5 +20,5 @@ DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credent
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-Operation response = client.DeleteUpdate(WaitUntil.Completed, provider, name, version);
+Operation response = await client.DeleteUpdateAsync(WaitUntil.Completed, provider, name, version);
 ```

@@ -19,9 +19,9 @@ DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credent
 
 First, let's try to enumerate all available (already imported) device update providers.
 
-```C# Snippet:AzDeviceUpdateSample1_EnumerateProviders
-Pageable<BinaryData> providers = client.GetProviders();
-foreach (var provider in providers)
+```C# Snippet:AzDeviceUpdateSample1_EnumerateProvidersAsync
+AsyncPageable<BinaryData> providers = client.GetProvidersAsync();
+await foreach (var provider in providers)
 {
     JsonDocument doc = JsonDocument.Parse(provider.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());
@@ -32,10 +32,10 @@ foreach (var provider in providers)
 
 First, let's try to enumerate all available (already imported) device update names.
 
-```C# Snippet:AzDeviceUpdateSample1_EnumerateNames
+```C# Snippet:AzDeviceUpdateSample1_EnumerateNamesAsync
 string updateProvider = "<update-provider>";
-Pageable<BinaryData> names = client.GetNames(updateProvider);
-foreach (var name in names)
+AsyncPageable<BinaryData> names = client.GetNamesAsync(updateProvider);
+await foreach (var name in names)
 {
     JsonDocument doc = JsonDocument.Parse(name.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());
@@ -46,10 +46,10 @@ foreach (var name in names)
 
 First, let's try to enumerate all available (already imported) device update versions.
 
-```C# Snippet:AzDeviceUpdateSample1_EnumerateVersions
+```C# Snippet:AzDeviceUpdateSample1_EnumerateVersionsAsync
 string updateName = "<update-name>";
-Pageable<BinaryData> versions = client.GetVersions(updateProvider, updateName);
-foreach (var version in versions)
+AsyncPageable<BinaryData> versions = client.GetVersionsAsync(updateProvider, updateName);
+await foreach (var version in versions)
 {
     JsonDocument doc = JsonDocument.Parse(version.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());
