@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class AssignmentReportResource : IUtf8JsonSerializable
+    public partial class AssignmentReportResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static AssignmentReportResource DeserializeAssignmentReportResource(JsonElement element)
+        internal static AssignmentReportResourceInfo DeserializeAssignmentReportResourceInfo(JsonElement element)
         {
-            Optional<ComplianceStatus> complianceStatus = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<string> resourceId = default;
             Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;
             Optional<BinaryData> properties = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    complianceStatus = new ComplianceStatus(property.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new AssignmentReportResource(Optional.ToNullable(complianceStatus), resourceId.Value, Optional.ToList(reasons), properties.Value);
+            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, Optional.ToList(reasons), properties.Value);
         }
     }
 }

@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Information about VMSS VM. </summary>
-    public partial class VmssVmInfo
+    public partial class VmssvmInfo
     {
-        /// <summary> Initializes a new instance of VmssVmInfo. </summary>
-        public VmssVmInfo()
+        /// <summary> Initializes a new instance of VmssvmInfo. </summary>
+        public VmssvmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VmssVmInfo. </summary>
+        /// <summary> Initializes a new instance of VmssvmInfo. </summary>
         /// <param name="vmId"> UUID of the VM. </param>
         /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
         /// <param name="lastComplianceChecked"> Date and time when last compliance status was checked. </param>
-        internal VmssVmInfo(string vmId, string vmResourceId, ComplianceStatus? complianceStatus, string latestReportId, DateTimeOffset? lastComplianceChecked)
+        internal VmssvmInfo(string vmId, string vmResourceId, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, string latestReportId, DateTimeOffset? lastComplianceChecked)
         {
             VmId = vmId;
             VmResourceId = vmResourceId;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Azure resource Id of the VM. </summary>
         public string VmResourceId { get; }
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
-        public ComplianceStatus? ComplianceStatus { get; }
+        public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Id of the latest report for the guest configuration assignment. </summary>
         public string LatestReportId { get; }
         /// <summary> Date and time when last compliance status was checked. </summary>

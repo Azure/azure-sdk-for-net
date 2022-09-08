@@ -5,85 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class ConfigurationSetting
+    public partial class GuestConfigurationAssignmentReportDetails
     {
-        internal static ConfigurationSetting DeserializeConfigurationSetting(JsonElement element)
+        internal static GuestConfigurationAssignmentReportDetails DeserializeGuestConfigurationAssignmentReportDetails(JsonElement element)
         {
-            Optional<ConfigurationMode> configurationMode = default;
-            Optional<bool> allowModuleOverwrite = default;
-            Optional<ActionAfterReboot> actionAfterReboot = default;
-            Optional<float> refreshFrequencyMins = default;
-            Optional<bool> rebootIfNeeded = default;
-            Optional<float> configurationModeFrequencyMins = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<Guid> jobId = default;
+            Optional<Type> operationType = default;
+            Optional<IReadOnlyList<AssignmentReportResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationMode"))
+                if (property.NameEquals("complianceStatus"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurationMode = new ConfigurationMode(property.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowModuleOverwrite"))
+                if (property.NameEquals("startTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowModuleOverwrite = property.Value.GetBoolean();
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("actionAfterReboot"))
+                if (property.NameEquals("endTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionAfterReboot = new ActionAfterReboot(property.Value.GetString());
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("refreshFrequencyMins"))
+                if (property.NameEquals("jobId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    refreshFrequencyMins = property.Value.GetSingle();
+                    jobId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("rebootIfNeeded"))
+                if (property.NameEquals("operationType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rebootIfNeeded = property.Value.GetBoolean();
+                    operationType = new Type(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("configurationModeFrequencyMins"))
+                if (property.NameEquals("resources"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurationModeFrequencyMins = property.Value.GetSingle();
+                    List<AssignmentReportResourceInfo> array = new List<AssignmentReportResourceInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item));
+                    }
+                    resources = array;
                     continue;
                 }
             }
-            return new ConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins));
+            return new GuestConfigurationAssignmentReportDetails(Optional.ToNullable(complianceStatus), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(jobId), Optional.ToNullable(operationType), Optional.ToList(resources));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class VmssVmInfo : IUtf8JsonSerializable
+    public partial class VmssvmInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static VmssVmInfo DeserializeVmssVmInfo(JsonElement element)
+        internal static VmssvmInfo DeserializeVmssvmInfo(JsonElement element)
         {
             Optional<string> vmId = default;
             Optional<string> vmResourceId = default;
-            Optional<ComplianceStatus> complianceStatus = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<string> latestReportId = default;
             Optional<DateTimeOffset?> lastComplianceChecked = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    complianceStatus = new ComplianceStatus(property.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("latestReportId"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new VmssVmInfo(vmId.Value, vmResourceId.Value, Optional.ToNullable(complianceStatus), latestReportId.Value, Optional.ToNullable(lastComplianceChecked));
+            return new VmssvmInfo(vmId.Value, vmResourceId.Value, Optional.ToNullable(complianceStatus), latestReportId.Value, Optional.ToNullable(lastComplianceChecked));
         }
     }
 }
