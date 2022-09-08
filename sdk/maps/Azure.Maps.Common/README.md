@@ -4,7 +4,7 @@ Azure Maps is a Microsoft-managed service providing maps service that is...
 
 The Azure.Maps.Common library provides infrastructure shared across other Azure Maps client libraries.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/src) | [API reference documentation][https://docs.microsoft.com/rest/api/maps/] | [Product documentation][https://docs.microsoft.com/azure/azure-maps]
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [Product documentation](https://docs.microsoft.com/azure/azure-maps)
 
 ## Getting started
 
@@ -14,7 +14,7 @@ Install the Azure Maps client library for .NET you'd like to use with [NuGet](ht
 
 ```dotnetcli
 dotnet add package Azure.Maps.Search --prerelease
-dotnet add package Azure.Maps.Render --prerelease
+dotnet add package Azure.Maps.Rendering --prerelease
 ```
 
 ### Prerequisites
@@ -53,14 +53,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Please see the examples for [Search](https://github.com/khmic5/azure-sdk-for-net/tree/khmic/search/sdk/maps/Azure.Maps.Search).
+Please see the examples for [Search](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search) and [Render](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering).
 
 ## Troubleshooting
 
-If a `null` `LocalizedMapView` is instantiated, the program will throw a `ArgumentNullException` error.
+If instantiate a `null` `LocalizedMapView`, the program will throw a `ArgumentNullException` error.
+
 ## Next steps
 
-Get started with our [Common samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/samples) and then continue on with our [Search](https://github.com/khmic5/azure-sdk-for-net/blob/khmic/search/sdk/maps/Azure.Maps.Search/tests/Samples/SearchClientSamples.HelloWorld.cs) samples.
+Get started with our [Common samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/samples) and then continue on with our [Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/tests/Samples/SearchClientSamples.HelloWorld.cs) and [Render](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples) samples.
 
 ## Contributing
 
