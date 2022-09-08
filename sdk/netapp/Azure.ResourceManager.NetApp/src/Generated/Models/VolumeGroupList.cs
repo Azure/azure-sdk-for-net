@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VolumeGroupList. </summary>
         internal VolumeGroupList()
         {
-            Value = new ChangeTrackingList<NetAppVolumeGroupData>();
+            Value = new ChangeTrackingList<DummyVolumeGroup>();
         }
 
         /// <summary> Initializes a new instance of VolumeGroupList. </summary>
         /// <param name="value"> List of volume Groups. </param>
-        internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupData> value)
+        internal VolumeGroupList(IReadOnlyList<DummyVolumeGroup> value)
         {
             Value = value;
         }
 
         /// <summary> List of volume Groups. </summary>
-        public IReadOnlyList<NetAppVolumeGroupData> Value { get; }
+        public IReadOnlyList<DummyVolumeGroup> Value { get; }
     }
 }
