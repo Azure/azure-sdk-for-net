@@ -91,7 +91,7 @@ try {
         }
 
         $mgmtPackagesInServiceDirectory = Get-ChildItem -Path "$PSScriptRoot/../../sdk/$ServiceDirectory" -Directory | Where-Object { $_.Name -match "(Azure.ResourceManager)" -and $(Test-Path("$($_.FullName)/src")) }
-        if($mgmtPackagesInServiceDirectory.Length -gt 0) {
+        if($ServiceDirectory -eq "*" -or $mgmtPackagesInServiceDirectory.Length -gt 0) {
     
             Write-Host "Re-generating ci.mgmt.yml for $ServiceDirectory"
             Invoke-Block {
