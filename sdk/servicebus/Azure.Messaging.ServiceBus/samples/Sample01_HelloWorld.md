@@ -1,4 +1,4 @@
-# Sending and Receiving Messages
+# Sending and receiving messages
 
 This sample demonstrates how to send and receive messages from a Service Bus queue. Once a message is received, you will typically want to settle it. Message settlement is covered in detail in the [Settling Messages samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample02_MessageSettlement.md).
 

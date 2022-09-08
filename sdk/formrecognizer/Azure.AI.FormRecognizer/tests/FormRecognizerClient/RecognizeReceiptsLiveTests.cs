@@ -299,7 +299,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceipMultipage);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeReceiptsAsync(stream, options);
@@ -307,7 +307,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceipMultipage);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptMultipage);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
@@ -520,7 +520,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormRecognizerClient();
             RecognizeReceiptsOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceipMultipage);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptMultipage);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { pages } });

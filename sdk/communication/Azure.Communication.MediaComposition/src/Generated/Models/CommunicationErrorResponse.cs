@@ -7,10 +7,10 @@
 
 using System;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> The Communication Services error. </summary>
-    public partial class CommunicationErrorResponse
+    internal partial class CommunicationErrorResponse
     {
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
         /// <param name="error"> The Communication Services error. </param>

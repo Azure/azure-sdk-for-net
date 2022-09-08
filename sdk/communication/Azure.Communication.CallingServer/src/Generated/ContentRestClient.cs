@@ -45,8 +45,9 @@ namespace Azure.Communication.CallingServer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/calling/callConnections:play", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":play", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -117,8 +118,9 @@ namespace Azure.Communication.CallingServer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/calling/callConnections:cancelAllMediaOperations", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":cancelAllMediaOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             return message;
@@ -175,8 +177,9 @@ namespace Azure.Communication.CallingServer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/calling/callConnections:recognize", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":recognize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -262,7 +265,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="startCallRecording"> The request body of start call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
-        public async Task<Response<RecordingStatusResult>> RecordingAsync(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordingStateResult>> RecordingAsync(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {
@@ -275,9 +278,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        RecordingStatusResult value = default;
+                        RecordingStateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordingStatusResult.DeserializeRecordingStatusResult(document.RootElement);
+                        value = RecordingStateResult.DeserializeRecordingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -289,7 +292,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="startCallRecording"> The request body of start call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
-        public Response<RecordingStatusResult> Recording(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
+        public Response<RecordingStateResult> Recording(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {
@@ -302,9 +305,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        RecordingStatusResult value = default;
+                        RecordingStateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordingStatusResult.DeserializeRecordingStatusResult(document.RootElement);
+                        value = RecordingStateResult.DeserializeRecordingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

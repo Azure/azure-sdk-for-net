@@ -30,23 +30,23 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AddActionGroups DeserializeAddActionGroups(JsonElement element)
         {
-            IList<string> actionGroupIds = default;
-            AlertProcessingRuleActionType actionType = default;
+            IList<ResourceIdentifier> actionGroupIds = default;
+            AlertProcessingActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroupIds"))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     actionGroupIds = array;
                     continue;
                 }
                 if (property.NameEquals("actionType"))
                 {
-                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
+                    actionType = new AlertProcessingActionType(property.Value.GetString());
                     continue;
                 }
             }

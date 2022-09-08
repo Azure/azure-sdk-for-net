@@ -62,7 +62,7 @@ namespace Azure.AI.TextAnalytics
         public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
-        /// Display Name of the operation
+        /// Display Name of the operation.
         /// </summary>
         public virtual string DisplayName => _displayName;
 
@@ -111,6 +111,8 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
+        /// <exception cref="ArgumentException"><paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the <see cref="Id"/> property returned on the original operation.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="operationId"/> or <paramref name="client"/> is null.</exception>
         public AnalyzeActionsOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -305,13 +307,9 @@ namespace Azure.AI.TextAnalytics
 
                 return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                    .ConfigureAwait(false);
-
-                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
@@ -319,7 +317,11 @@ namespace Azure.AI.TextAnalytics
                     new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
+            RequestFailedException requestFailedException = await ClientCommon
+                .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
+                .ConfigureAwait(false);
+
+            return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
         }
 
         private AsyncPageable<AnalyzeActionsResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)

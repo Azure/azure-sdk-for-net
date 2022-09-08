@@ -603,9 +603,9 @@ namespace Azure.ResourceManager.ArcScVmm
             if (body != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(body);
-                request.Content = content0;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
@@ -683,9 +683,9 @@ namespace Azure.ResourceManager.ArcScVmm
             if (body != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(body);
-                request.Content = content0;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
@@ -763,9 +763,9 @@ namespace Azure.ResourceManager.ArcScVmm
             if (body != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(body);
-                request.Content = content0;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
