@@ -104,8 +104,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "tags": {},
-        "location": "Global",
         "properties": {
           "scopes": [
             "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
@@ -125,7 +123,9 @@
             }
           ],
           "enabled": true
-        }
+        },
+        "tags": {},
+        "location": "Global"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
