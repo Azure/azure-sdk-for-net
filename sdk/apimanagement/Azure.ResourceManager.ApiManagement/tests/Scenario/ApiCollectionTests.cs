@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
-                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
@@ -69,15 +70,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.IsTrue(resultTrue);
             Assert.IsFalse(resultFalse);
 
-            var list = await collection.GetAllAsync().ToEnumerableAsync();
-            if (list.Count != 0)
+            await foreach (var item in collection.GetAllAsync())
             {
-                foreach (var item in list)
-                {
-                    var newitem = (await item.GetAsync()).Value;
-                    Assert.NotNull(newitem.Data.DisplayName);
-                    await newitem.DeleteAsync(WaitUntil.Completed, ETag.All);
-                }
+                var newitem = (await item.GetAsync()).Value;
+                Assert.NotNull(newitem.Data.DisplayName);
+                await newitem.DeleteAsync(WaitUntil.Completed, ETag.All);
             }
         }
     }

@@ -13,6 +13,7 @@ using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
-                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }

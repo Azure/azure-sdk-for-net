@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 using NUnit.Framework;
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
-                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
             Assert.AreEqual(apiManagementService.Data.Name, apiName);

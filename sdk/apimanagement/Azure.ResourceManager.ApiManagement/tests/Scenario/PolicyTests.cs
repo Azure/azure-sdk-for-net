@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
-                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
