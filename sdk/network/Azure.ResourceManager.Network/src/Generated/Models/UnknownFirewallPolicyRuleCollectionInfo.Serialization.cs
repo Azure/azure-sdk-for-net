@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyRuleCollectionInfo : IUtf8JsonSerializable
+    internal partial class UnknownFirewallPolicyRuleCollectionInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,16 +30,8 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicyRuleCollectionInfo DeserializeFirewallPolicyRuleCollectionInfo(JsonElement element)
+        internal static UnknownFirewallPolicyRuleCollectionInfo DeserializeUnknownFirewallPolicyRuleCollectionInfo(JsonElement element)
         {
-            if (element.TryGetProperty("ruleCollectionType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "FirewallPolicyFilterRuleCollection": return FirewallPolicyFilterRuleCollectionInfo.DeserializeFirewallPolicyFilterRuleCollectionInfo(element);
-                    case "FirewallPolicyNatRuleCollection": return FirewallPolicyNatRuleCollectionInfo.DeserializeFirewallPolicyNatRuleCollectionInfo(element);
-                }
-            }
             FirewallPolicyRuleCollectionType ruleCollectionType = default;
             Optional<string> name = default;
             Optional<int> priority = default;
