@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The action detail. </summary>
@@ -20,15 +22,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the action. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="subState"> The substatus of the action. </param>
-        /// <param name="sendTime"> The send time. </param>
+        /// <param name="sendOn"> The send time. </param>
         /// <param name="detail"> The detail of the friendly error message. </param>
-        internal NotificationActionDetail(string mechanismType, string name, string status, string subState, string sendTime, string detail)
+        internal NotificationActionDetail(string mechanismType, string name, string status, string subState, DateTimeOffset? sendOn, string detail)
         {
             MechanismType = mechanismType;
             Name = name;
             Status = status;
             SubState = subState;
-            SendTime = sendTime;
+            SendOn = sendOn;
             Detail = detail;
         }
 
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The substatus of the action. </summary>
         public string SubState { get; }
         /// <summary> The send time. </summary>
-        public string SendTime { get; }
+        public DateTimeOffset? SendOn { get; }
         /// <summary> The detail of the friendly error message. </summary>
         public string Detail { get; }
     }

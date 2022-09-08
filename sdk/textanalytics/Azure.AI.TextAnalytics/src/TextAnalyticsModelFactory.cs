@@ -404,6 +404,23 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Recognize PII Entities
 
+        #region Recognize Custom Entities
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="list">Sets the collection of <see cref="RecognizeCustomEntitiesResultCollection"/>.</param>
+        /// <param name="statistics">Sets the <see cref="RecognizeCustomEntitiesResultCollection.Statistics"/> property.</param>
+        /// <param name="projectName">Sets the <see cref="RecognizeCustomEntitiesResultCollection.ProjectName"/> property.</param>
+        /// <param name="deploymentName">Sets hte <see cref="RecognizeCustomEntitiesResultCollection.DeploymentName"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesResultCollection"/> for mocking purposes.</returns>
+        public static RecognizeCustomEntitiesResultCollection RecognizeCustomEntitiesResultCollection(IList<RecognizeEntitiesResult> list, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        {
+            return new RecognizeCustomEntitiesResultCollection(list, statistics, projectName, deploymentName);
+        }
+
+        #endregion
+
         #region Extract KeyPhrase
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.
@@ -465,7 +482,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.</returns>
         public static ClassifyDocumentResult ClassifyDocumentResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, warnings.ToList());
+            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, warnings?.ToList());
         }
 
         /// <summary>
@@ -1387,7 +1404,6 @@ namespace Azure.AI.TextAnalytics
         {
             return new HealthcareEntityRelation(relationType, roles.ToList());
         }
-        #endregion Healthcare
 
         /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
@@ -1407,5 +1423,7 @@ namespace Azure.AI.TextAnalytics
         {
             return new EntityDataSource(name, entityId);
         }
+
+        #endregion Healthcare
     }
 }

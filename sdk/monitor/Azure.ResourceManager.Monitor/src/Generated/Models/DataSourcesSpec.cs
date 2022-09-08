@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
             WindowsEventLogs = new ChangeTrackingList<WindowsEventLogDataSource>();
             Syslog = new ChangeTrackingList<SyslogDataSource>();
             Extensions = new ChangeTrackingList<ExtensionDataSource>();
+            LogFiles = new ChangeTrackingList<LogFilesDataSource>();
+            IisLogs = new ChangeTrackingList<IisLogsDataSource>();
         }
 
         /// <summary> Initializes a new instance of DataSourcesSpec. </summary>
@@ -27,12 +29,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>
         /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
-        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions)
+        /// <param name="logFiles"> The list of Log files source configurations. </param>
+        /// <param name="iisLogs"> The list of IIS logs source configurations. </param>
+        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs)
         {
             PerformanceCounters = performanceCounters;
             WindowsEventLogs = windowsEventLogs;
             Syslog = syslog;
             Extensions = extensions;
+            LogFiles = logFiles;
+            IisLogs = iisLogs;
         }
 
         /// <summary> The list of performance counter data source configurations. </summary>
@@ -43,5 +49,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<SyslogDataSource> Syslog { get; }
         /// <summary> The list of Azure VM extension data source configurations. </summary>
         public IList<ExtensionDataSource> Extensions { get; }
+        /// <summary> The list of Log files source configurations. </summary>
+        public IList<LogFilesDataSource> LogFiles { get; }
+        /// <summary> The list of IIS logs source configurations. </summary>
+        public IList<IisLogsDataSource> IisLogs { get; }
     }
 }
