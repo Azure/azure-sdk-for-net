@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return await CreateDatabaseAccount(name, kind, null);
         }
 
-        protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name, CosmosDBAccountKind kind, CosmosDBAccountCapability capability)
+        protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name, CosmosDBAccountKind kind, CosmosDBAccountCapability capability, bool isAnalyticalStorageEnabled = false)
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,
                 DisableKeyBasedMetadataWriteAccess = false,
+                IsAnalyticalStorageEnabled = isAnalyticalStorageEnabled
             };
             if (capability != null)
             {
