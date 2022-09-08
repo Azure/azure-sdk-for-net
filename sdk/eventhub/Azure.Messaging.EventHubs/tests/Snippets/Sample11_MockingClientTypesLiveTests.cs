@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 It.IsAny<CancellationToken>())).Returns(mockReturn(samplePartitionEvent));
 
             var consumer = mockConsumer.Object;
-#if Snippet
+#if SNIPPET
 #else
         }
 #endif
