@@ -13,7 +13,7 @@ Modified the following classes to abstract classes and changed their constructor
 
 ### Other Changes
 
-- Upgraded dependent `Azure.ResourceManager` to 1.3.1
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
 - Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0 (2022-07-11)

@@ -2,6 +2,15 @@
 
 ## 1.1.0 (2022-09-09)
 
+### Breaking Changes
+
+- Changed the constructor of `CosmosDBAccountBackupPolicy` from public to protected
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
 ## 1.0.0 (2022-07-21)
 
 This is the first stable release of the Azure CosmosDB management library.
