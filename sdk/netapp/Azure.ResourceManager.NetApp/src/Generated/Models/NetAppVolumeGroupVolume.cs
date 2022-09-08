@@ -7,23 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp
+namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> A class representing the NetAppVolume data model. </summary>
-    public partial class NetAppVolumeData : TrackedResourceData
+    /// <summary> Volume resource. </summary>
+    public partial class NetAppVolumeGroupVolume
     {
-        /// <summary> Initializes a new instance of NetAppVolumeData. </summary>
-        /// <param name="location"> The location. </param>
+        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB. Specified in bytes. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
-        public NetAppVolumeData(AzureLocation location, string creationToken, long usageThreshold, ResourceIdentifier subnetId) : base(location)
+        public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
         {
             if (creationToken == null)
             {
@@ -34,7 +30,7 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentNullException(nameof(subnetId));
             }
 
-            Zones = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             CreationToken = creationToken;
             UsageThreshold = usageThreshold;
             ProtocolTypes = new ChangeTrackingList<string>();
@@ -43,15 +39,11 @@ namespace Azure.ResourceManager.NetApp
             PlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="zones"> Availability Zone. </param>
+        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
@@ -96,10 +88,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
         /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
-        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, Guid? snapshotId, Guid? backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, bool? isSmbContinuouslyAvailable, float? throughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppAvsDataStore? avsDataStore, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, Guid? snapshotId, Guid? backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, bool? isSmbContinuouslyAvailable, float? throughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppAvsDataStore? avsDataStore, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes)
         {
-            ETag = etag;
-            Zones = zones;
+            Id = id;
+            Name = name;
+            ResourceType = resourceType;
+            Tags = tags;
             FileSystemId = fileSystemId;
             CreationToken = creationToken;
             ServiceLevel = serviceLevel;
@@ -146,10 +140,14 @@ namespace Azure.ResourceManager.NetApp
             EnableSubvolumes = enableSubvolumes;
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Availability Zone. </summary>
-        public IList<string> Zones { get; }
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> Resource name. </summary>
+        public string Name { get; set; }
+        /// <summary> Resource type. </summary>
+        public ResourceType? ResourceType { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Unique FileSystem Identifier. </summary>
         public Guid? FileSystemId { get; }
         /// <summary> A unique file path for the volume. Used when creating mount targets. </summary>

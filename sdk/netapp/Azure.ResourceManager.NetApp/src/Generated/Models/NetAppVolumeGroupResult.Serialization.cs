@@ -5,46 +5,15 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp
+namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeGroupData : IUtf8JsonSerializable
+    public partial class NetAppVolumeGroupResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(GroupMetaData))
-            {
-                writer.WritePropertyName("groupMetaData");
-                writer.WriteObjectValue(GroupMetaData);
-            }
-            if (Optional.IsCollectionDefined(Volumes))
-            {
-                writer.WritePropertyName("volumes");
-                writer.WriteStartArray();
-                foreach (var item in Volumes)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
-        internal static NetAppVolumeGroupData DeserializeNetAppVolumeGroupData(JsonElement element)
+        internal static NetAppVolumeGroupResult DeserializeNetAppVolumeGroupResult(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -53,7 +22,6 @@ namespace Azure.ResourceManager.NetApp
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<NetAppVolumeGroupMetadata> groupMetaData = default;
-            Optional<IList<NetAppVolumeGroupVolume>> volumes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -115,26 +83,11 @@ namespace Azure.ResourceManager.NetApp
                             groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("volumes"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<NetAppVolumeGroupVolume> array = new List<NetAppVolumeGroupVolume>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item));
-                            }
-                            volumes = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new NetAppVolumeGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, groupMetaData.Value, Optional.ToList(volumes));
+            return new NetAppVolumeGroupResult(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, groupMetaData.Value);
         }
     }
 }
