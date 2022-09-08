@@ -1,6 +1,6 @@
 $packagesPath = "$PSScriptRoot/../../sdk"
 
-$track2MgmtDirs = Get-ChildItem -Path "$packagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.Name -match "(Azure.ResourceManager.)" } | Where-Object { Test-Path("$($_.FullName)/src") }
+$track2MgmtDirs = Get-ChildItem -Path "$packagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.Name -match "(Azure.ResourceManager.)" -and $(Test-Path("$($_.FullName)/src")) }
 
 function Update-CIFile() {
     param(
