@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="threshold"> the threshold value that activates the alert. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </param>
         /// <param name="timeAggregation"> the time aggregation operator. How the data that are collected should be combined over time. The default value is the PrimaryAggregationType of the Metric. </param>
-        internal ThresholdRuleCondition(string odataType, RuleDataSource dataSource, MonitorConditionOperator @operator, double threshold, TimeSpan? windowSize, MonitorTimeAggregationOperator? timeAggregation) : base(odataType, dataSource)
+        internal ThresholdRuleCondition(string odataType, RuleDataSource dataSource, MonitorConditionOperator @operator, double threshold, TimeSpan? windowSize, ThresholdRuleConditionTimeAggregationType? timeAggregation) : base(odataType, dataSource)
         {
             Operator = @operator;
             Threshold = threshold;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </summary>
         public TimeSpan? WindowSize { get; set; }
         /// <summary> the time aggregation operator. How the data that are collected should be combined over time. The default value is the PrimaryAggregationType of the Metric. </summary>
-        public MonitorTimeAggregationOperator? TimeAggregation { get; set; }
+        public ThresholdRuleConditionTimeAggregationType? TimeAggregation { get; set; }
     }
 }

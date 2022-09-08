@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins
         private ClientDiagnostics DigitalTwinsDescriptionDigitalTwinsClientDiagnostics => _digitalTwinsDescriptionDigitalTwinsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DigitalTwins", DigitalTwinsDescriptionResource.ResourceType.Namespace, Diagnostics);
         private DigitalTwinsRestOperations DigitalTwinsDescriptionDigitalTwinsRestClient => _digitalTwinsDescriptionDigitalTwinsRestClient ??= new DigitalTwinsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DigitalTwinsDescriptionResource.ResourceType));
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityDigitalTwinAsync(AzureLocation location, CheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityDigitalTwin");
+            using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDigitalTwinsNameAvailability");
             scope.Start();
             try
             {
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameResult> CheckNameAvailabilityDigitalTwin(AzureLocation location, CheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityDigitalTwin");
+            using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDigitalTwinsNameAvailability");
             scope.Start();
             try
             {

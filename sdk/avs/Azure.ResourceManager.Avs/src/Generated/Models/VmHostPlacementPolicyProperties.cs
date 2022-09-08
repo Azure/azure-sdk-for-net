@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> or <paramref name="hostMembers"/> is null. </exception>
-        public VmHostPlacementPolicyProperties(IEnumerable<string> vmMembers, IEnumerable<string> hostMembers, AffinityType affinityType)
+        public VmHostPlacementPolicyProperties(IEnumerable<ResourceIdentifier> vmMembers, IEnumerable<string> hostMembers, AvsPlacementPolicyAffinityType affinityType)
         {
             if (vmMembers == null)
             {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
-        internal VmHostPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<string> vmMembers, IList<string> hostMembers, AffinityType affinityType) : base(policyType, state, displayName, provisioningState)
+        internal VmHostPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, AvsPlacementPolicyAffinityType affinityType) : base(policyType, state, displayName, provisioningState)
         {
             VmMembers = vmMembers;
             HostMembers = hostMembers;
@@ -53,10 +54,10 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Virtual machine members list. </summary>
-        public IList<string> VmMembers { get; }
+        public IList<ResourceIdentifier> VmMembers { get; }
         /// <summary> Host members list. </summary>
         public IList<string> HostMembers { get; }
         /// <summary> placement policy affinity type. </summary>
-        public AffinityType AffinityType { get; set; }
+        public AvsPlacementPolicyAffinityType AffinityType { get; set; }
     }
 }

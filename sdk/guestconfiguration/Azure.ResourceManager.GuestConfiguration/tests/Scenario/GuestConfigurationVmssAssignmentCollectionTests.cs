@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
         {
             var resourceGroupName = GuestConfigurationManagementUtilities.VMSSRG;
             var vmName = GuestConfigurationManagementUtilities.VMSSName;
-            GuestConfigurationVmssAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationVmssAssignmentCollection(resourceGroupName);
+            GuestConfigurationVmssAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationVmssAssignmentCollection(resourceGroupName, vmName);
 
             // Get created guest configuration assignment
-            Response<GuestConfigurationVmssAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(vmName, GuestConfigurationManagementUtilities.VMSSAssignmentName);
+            Response<GuestConfigurationVmssAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.VMSSAssignmentName);
             GuestConfigurationVmssAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
             Assert.AreEqual(GuestConfigurationManagementUtilities.VMSSAssignmentName, guestAssignmentResourceRetrieved.Data.Name);

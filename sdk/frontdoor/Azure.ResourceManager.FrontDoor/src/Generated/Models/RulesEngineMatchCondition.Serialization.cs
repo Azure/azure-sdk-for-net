@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("rulesEngineOperator");
             writer.WriteStringValue(RulesEngineOperator.ToString());
-            if (Optional.IsDefined(NegateCondition))
+            if (Optional.IsDefined(IsNegateCondition))
             {
                 writer.WritePropertyName("negateCondition");
-                writer.WriteBooleanValue(NegateCondition.Value);
+                writer.WriteBooleanValue(IsNegateCondition.Value);
             }
             writer.WritePropertyName("rulesEngineMatchValue");
             writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RulesEngineOperator rulesEngineOperator = default;
             Optional<bool> negateCondition = default;
             IList<string> rulesEngineMatchValue = default;
-            Optional<IList<Transform>> transforms = default;
+            Optional<IList<RulesEngineMatchTransform>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rulesEngineMatchVariable"))
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Transform> array = new List<Transform>();
+                    List<RulesEngineMatchTransform> array = new List<RulesEngineMatchTransform>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Transform(item.GetString()));
+                        array.Add(new RulesEngineMatchTransform(item.GetString()));
                     }
                     transforms = array;
                     continue;

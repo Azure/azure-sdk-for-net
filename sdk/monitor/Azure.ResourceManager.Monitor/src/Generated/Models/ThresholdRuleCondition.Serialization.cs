@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorConditionOperator @operator = default;
             double threshold = default;
             Optional<TimeSpan> windowSize = default;
-            Optional<MonitorTimeAggregationOperator> timeAggregation = default;
+            Optional<ThresholdRuleConditionTimeAggregationType> timeAggregation = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeAggregation = property.Value.GetString().ToMonitorTimeAggregationOperator();
+                    timeAggregation = property.Value.GetString().ToThresholdRuleConditionTimeAggregationType();
                     continue;
                 }
                 if (property.NameEquals("odata.type"))

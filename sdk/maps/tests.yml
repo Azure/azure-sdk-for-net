@@ -8,7 +8,3 @@ extends:
     TimeoutInMinutes: 180
     Clouds: 'Public'
     SupportedClouds: 'Public,UsGov,Canary'
-    EnvVars:
-      AZURE_MAPS_TEST_MODE: 'Live'
-      ENDPOINT_URL: 'https://atlas.microsoft.com'
-      AZMAPS_CLIENT_ID: $(aad-azure-sdk-test-client-id)

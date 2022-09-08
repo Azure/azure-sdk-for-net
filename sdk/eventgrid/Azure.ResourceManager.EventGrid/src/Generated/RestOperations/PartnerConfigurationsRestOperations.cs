@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateAuthorizePartnerRequest(string subscriptionId, string resourceGroupName, Partner partnerInfo)
+        internal HttpMessage CreateAuthorizePartnerRequest(string subscriptionId, string resourceGroupName, EventGridPartnerContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -494,9 +494,9 @@ namespace Azure.ResourceManager.EventGrid
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(partnerInfo);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -504,17 +504,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Authorize a single partner either by partner registration immutable Id or by partner name. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
-        /// <param name="partnerInfo"> The information of the partner to be authorized. </param>
+        /// <param name="content"> The information of the partner to be authorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PartnerConfigurationData>> AuthorizePartnerAsync(string subscriptionId, string resourceGroupName, Partner partnerInfo, CancellationToken cancellationToken = default)
+        public async Task<Response<PartnerConfigurationData>> AuthorizePartnerAsync(string subscriptionId, string resourceGroupName, EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAuthorizePartnerRequest(subscriptionId, resourceGroupName, partnerInfo);
+            using var message = CreateAuthorizePartnerRequest(subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -533,17 +533,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Authorize a single partner either by partner registration immutable Id or by partner name. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
-        /// <param name="partnerInfo"> The information of the partner to be authorized. </param>
+        /// <param name="content"> The information of the partner to be authorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PartnerConfigurationData> AuthorizePartner(string subscriptionId, string resourceGroupName, Partner partnerInfo, CancellationToken cancellationToken = default)
+        public Response<PartnerConfigurationData> AuthorizePartner(string subscriptionId, string resourceGroupName, EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAuthorizePartnerRequest(subscriptionId, resourceGroupName, partnerInfo);
+            using var message = CreateAuthorizePartnerRequest(subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateUnauthorizePartnerRequest(string subscriptionId, string resourceGroupName, Partner partnerInfo)
+        internal HttpMessage CreateUnauthorizePartnerRequest(string subscriptionId, string resourceGroupName, EventGridPartnerContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -575,9 +575,9 @@ namespace Azure.ResourceManager.EventGrid
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(partnerInfo);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -585,17 +585,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Unauthorize a single partner either by partner registration immutable Id or by partner name. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
-        /// <param name="partnerInfo"> The information of the partner to be unauthorized. </param>
+        /// <param name="content"> The information of the partner to be unauthorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PartnerConfigurationData>> UnauthorizePartnerAsync(string subscriptionId, string resourceGroupName, Partner partnerInfo, CancellationToken cancellationToken = default)
+        public async Task<Response<PartnerConfigurationData>> UnauthorizePartnerAsync(string subscriptionId, string resourceGroupName, EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUnauthorizePartnerRequest(subscriptionId, resourceGroupName, partnerInfo);
+            using var message = CreateUnauthorizePartnerRequest(subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -614,17 +614,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Unauthorize a single partner either by partner registration immutable Id or by partner name. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
-        /// <param name="partnerInfo"> The information of the partner to be unauthorized. </param>
+        /// <param name="content"> The information of the partner to be unauthorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PartnerConfigurationData> UnauthorizePartner(string subscriptionId, string resourceGroupName, Partner partnerInfo, CancellationToken cancellationToken = default)
+        public Response<PartnerConfigurationData> UnauthorizePartner(string subscriptionId, string resourceGroupName, EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUnauthorizePartnerRequest(subscriptionId, resourceGroupName, partnerInfo);
+            using var message = CreateUnauthorizePartnerRequest(subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
