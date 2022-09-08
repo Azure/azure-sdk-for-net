@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Event type info for the partner topic. </summary>
-        public EventTypeInfo EventTypeInfo { get; set; }
+        public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
     }
 }

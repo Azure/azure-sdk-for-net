@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerRegistrationImmutableId"> The immutableId of the corresponding partner registration. </param>
         /// <param name="source"> Source associated with this partner topic. This represents a unique partner resource. </param>
         /// <param name="eventTypeInfo"> Event Type information from the corresponding event channel. </param>
-        /// <param name="expirationTimeIfNotActivatedUtc">
+        /// <param name="expireOnIfNotActivated">
         /// Expiration time of the partner topic. If this timer expires while the partner topic is still never activated,
         /// the partner topic and corresponding event channel are deleted.
         /// </param>
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.EventGrid
         /// This will be helpful to remove any ambiguity of the origin of creation of the partner topic for the customer.
         /// </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
-        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityInfo identity, Guid? partnerRegistrationImmutableId, string source, EventTypeInfo eventTypeInfo, DateTimeOffset? expirationTimeIfNotActivatedUtc, PartnerTopicProvisioningState? provisioningState, PartnerTopicActivationState? activationState, string partnerTopicFriendlyDescription, string messageForActivation) : base(id, name, resourceType, systemData, tags, location)
+        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? partnerRegistrationImmutableId, string source, PartnerTopicEventTypeInfo eventTypeInfo, DateTimeOffset? expireOnIfNotActivated, PartnerTopicProvisioningState? provisioningState, PartnerTopicActivationState? activationState, string partnerTopicFriendlyDescription, string messageForActivation) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             Source = source;
             EventTypeInfo = eventTypeInfo;
-            ExpirationTimeIfNotActivatedUtc = expirationTimeIfNotActivatedUtc;
+            ExpireOnIfNotActivated = expireOnIfNotActivated;
             ProvisioningState = provisioningState;
             ActivationState = activationState;
             PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
@@ -58,18 +58,18 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Identity information for the Partner Topic resource. </summary>
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The immutableId of the corresponding partner registration. </summary>
         public Guid? PartnerRegistrationImmutableId { get; set; }
         /// <summary> Source associated with this partner topic. This represents a unique partner resource. </summary>
         public string Source { get; set; }
         /// <summary> Event Type information from the corresponding event channel. </summary>
-        public EventTypeInfo EventTypeInfo { get; set; }
+        public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
         /// <summary>
         /// Expiration time of the partner topic. If this timer expires while the partner topic is still never activated,
         /// the partner topic and corresponding event channel are deleted.
         /// </summary>
-        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc { get; set; }
+        public DateTimeOffset? ExpireOnIfNotActivated { get; set; }
         /// <summary> Provisioning state of the partner topic. </summary>
         public PartnerTopicProvisioningState? ProvisioningState { get; }
         /// <summary> Activation state of the partner topic. </summary>
