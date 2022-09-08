@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ConfidentialLedger.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
@@ -13,48 +13,52 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     [TestFixture]
     public class CreateLedgerTest : AclManagementTestBase
     {
-        private const string LedgerName = AclManagementTestEnvironment.TestLedgerName;
         private ConfidentialLedgerResource _ledgerResource;
+        private const string TestFixtureName = "Create";
+        private readonly string _ledgerName;
 
         public CreateLedgerTest() : base(true)
         {
+            _ledgerName = TestEnvironment.TestLedgerName + TestFixtureName;
         }
 
-        [SetUp]
-        public async Task InitializeTestFixture()
+        [Test, Order(1)]
+        [RecordedTest]
+        public async Task TestNameAvailabilityBeforeCreating()
         {
-            var timer = new Stopwatch();
-            timer.Start();
-
-            if (Mode is RecordedTestMode.Record or RecordedTestMode.Playback)
-            {
-                await InitializeClients();
-            }
-
-            // Create the ledger
-            await CreateLedger(LedgerName, AzureLocation.WestEurope);
-
-            timer.Stop();
-            TimeSpan timeTaken = timer.Elapsed;
-            TestContext.WriteLine("Time taken By Initializer: {0} second {1} millisecond",
-                timeTaken.Milliseconds.ToString(), timeTaken.Milliseconds.ToString());
+            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability();
+            Assert.True(response.IsNameAvailable);
         }
 
-        [Test]
+        [Test, Order(2)]
+        [RecordedTest]
         public async Task TestCreateLedger()
         {
-            var timer = new Stopwatch();
-            timer.Start();
+            // Create the ledger
+            await CreateLedger(_ledgerName);
 
-            // Fetch the ledger created in setup stage.
-            _ledgerResource = await GetLedgerByName(LedgerName);
+            _ledgerResource = await GetLedgerByName(_ledgerName);
+
             Assert.NotNull(_ledgerResource);
-            Assert.AreEqual(LedgerName, _ledgerResource.Data.Properties.LedgerName);
+            Assert.AreEqual(_ledgerName, _ledgerResource.Data.Properties.LedgerName);
+            Assert.NotNull(_ledgerResource.Data.Properties.LedgerUri);
+        }
 
-            timer.Stop();
-            TimeSpan timeTaken = timer.Elapsed;
-            TestContext.WriteLine("Time taken By Test: {0} second {1} millisecond",
-                timeTaken.Milliseconds.ToString(), timeTaken.Milliseconds.ToString());
+        [Test, Order(3)]
+        [RecordedTest]
+        public async Task TestNameAvailabilityAfterCreating()
+        {
+            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability();
+            Assert.False(response.IsNameAvailable);
+        }
+
+        private async Task<LedgerNameAvailabilityResult> GetLedgerNameAvailability()
+        {
+            LedgerNameAvailabilityContent ledgerNameAvailabilityContent = new() {
+                Name = _ledgerName,
+                ResourceType = new ResourceType("Microsoft.ConfidentialLedger/ledgers")
+            };
+            return await Subscription.CheckLedgerNameAvailabilityAsync(ledgerNameAvailabilityContent);
         }
     }
 }

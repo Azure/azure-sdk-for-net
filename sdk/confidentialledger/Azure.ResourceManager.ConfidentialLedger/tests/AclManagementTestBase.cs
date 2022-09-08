@@ -1,21 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using System.Threading.Tasks;
-using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests
 {
     public abstract class AclManagementTestBase : ManagementRecordedTestBase<AclManagementTestEnvironment>
     {
-        private ResourceGroupCollection ResourceGroups { get; set; }
+        private ConfidentialLedgerCollection LedgerCollection { get; set; }
+
+        private static readonly AzureLocation s_defaultTestLocation = AzureLocation.WestEurope;
+
+        protected SubscriptionResource Subscription;
 
         protected AclManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -25,40 +26,35 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         {
         }
 
-        protected async Task InitializeClients()
+        [OneTimeSetUp]
+        public async Task InitializeTestResources()
         {
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            SubscriptionCollection subscriptions = armClient.GetSubscriptions();
-            SubscriptionResource subscription = await subscriptions.GetAsync(AclManagementTestEnvironment.TestSubscriptionId);
+            Subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
+            ResourceGroupResource resourceGroup = (await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
+                TestEnvironment.TestResourceGroup, new ResourceGroupData(s_defaultTestLocation))).Value;
 
-            ResourceGroups = subscription.GetResourceGroups();
+            LedgerCollection =  resourceGroup.GetConfidentialLedgers();
+
+            await StopSessionRecordingAsync();
         }
 
-        protected ConfidentialLedgerCollection GetConfidentialLedgerCollection()
+        [OneTimeTearDown]
+        public void CleanTestResource()
         {
-            ResourceGroupResource rgr  = ResourceGroups.Get(AclManagementTestEnvironment.TestResourceGroup);
-            return rgr.GetConfidentialLedgers();
+            CleanupResourceGroups();
         }
 
         protected async Task<ConfidentialLedgerResource> GetLedgerByName(string ledgerName)
         {
-            ConfidentialLedgerCollection confidentialLedgerCollection = GetConfidentialLedgerCollection();
-            return await confidentialLedgerCollection.GetAsync(GetResourceIdentifier(ledgerName).Name);
+            var resourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.TestResourceGroup}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}";
+            return await LedgerCollection.GetAsync(new ResourceIdentifier(resourceId).Name);
         }
 
-        protected async Task CreateLedger(string ledgerName, AzureLocation location)
+        protected async Task CreateLedger(string ledgerName)
         {
-            ConfidentialLedgerCollection ledgerCollection = GetConfidentialLedgerCollection();
-
-            ConfidentialLedgerData ledgerData = new ConfidentialLedgerData(location);
-            await ledgerCollection.CreateOrUpdateAsync(WaitUntil.Completed, ledgerName, ledgerData);
-        }
-
-        private ResourceIdentifier GetResourceIdentifier(string ledgerName)
-        {
-            var resourceId =
-                $"/subscriptions/{AclManagementTestEnvironment.TestSubscriptionId}/resourceGroups/{AclManagementTestEnvironment.TestResourceGroup}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}";
-            return new ResourceIdentifier(resourceId);
+            ConfidentialLedgerData ledgerData = new(s_defaultTestLocation);
+            await LedgerCollection.CreateOrUpdateAsync(WaitUntil.Completed, ledgerName, ledgerData);
         }
     }
 }
