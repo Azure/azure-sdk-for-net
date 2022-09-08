@@ -206,24 +206,6 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
-# remove this operation because the Snapshots_Update defines an empty object
+  # remove this operation because the Snapshots_Update defines an empty object
   - remove-operation: Snapshots_Update
-# the list method of volumeGroup `VolumeGroups_ListByNetAppAccount` is returning a model `VolumeGroup` which is very similar to `VolumeGroupDetails` (with one property missing)
-# but this breaks our convention about List method. Here we override the return schema of list method
-#  - from: swagger-document
-#    where: $.definitions.volumeGroupList.properties.value.items["$ref"]
-#    transform: return "#/definitions/volumeGroupDetails"
-# rename the volumeGroup to something else to avoid model name collision because we are using VolumeGroupDetails everywhere in the SDK and it is renamed to VolumeGroup
-# this type will never be generated.
-#  - from: swagger-document
-#    where: $.definitions.volumeGroup
-#    transform: $["x-ms-client-name"] = "DummyVolumeGroup"
-# we have yet another two identical (almost) models volumeGroupVolumeProperties and VolumeGroupDetails. Here we take VolumeGroupDetails because it contains more
-#  - from: swagger-document
-#    where: $.definitions.volumeGroupProperties.properties.volumes.items["$ref"]
-#    transform: return "#/definitions/volumeGroupDetails"
-  - from: swagger-document
-    where: $.definitions.volumeGroupVolumeProperties
-    transform: >
-      $.properties.properties['x-ms-client-flatten'] = true;
 ```
