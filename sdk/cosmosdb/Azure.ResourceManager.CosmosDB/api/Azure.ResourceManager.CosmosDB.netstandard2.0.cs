@@ -1635,7 +1635,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public abstract partial class CosmosDBAccountBackupPolicy
     {
-        public CosmosDBAccountBackupPolicy() { }
+        protected CosmosDBAccountBackupPolicy() { }
         public Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationState MigrationState { get { throw null; } set { } }
     }
     public partial class CosmosDBAccountCapability
