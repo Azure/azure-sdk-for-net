@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
 using NUnit.Framework;
@@ -33,12 +34,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public void BatchingValidation()
+        public void MockingEventDataBatch()
         {
-            #region Snippet:EventHubs_Sample11_SimpleBatchingLogic_Test
+            #region Snippet:EventHubs_Sample11_MockingEventDataBatch
             var mockProducer = new Mock<EventHubProducerClient>();
 
-            // Setting up a mock CreateBatchAsync
+            var createBatchOptions = new CreateBatchOptions() { MaximumSizeInBytes = 516 };
+            var batchSizeInBytes = 500;
+
+            // Setting up a mock of the CreateBatchAsync method
             mockProducer.Setup(p => p.CreateBatchAsync(
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
@@ -46,15 +50,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     46,
                     new List<EventData>(),
                     new CreateBatchOptions() { },
-                    // Constructing a batch using the factory allows the user to define a custom TryAdd
-                    // callback. In this case we want an easily predictable result from TryAdd, so
-                    // just choosing an arbitrary length comparison value
+                    // The model factory allows the user to define a custom TryAdd callback, making
+                    // it easy to test specific scenarios
                     eventData =>
                     {
-                        return eventData.EventBody.ToString().Length < 10;
+                        return eventData.Body.Length > createBatchOptions.MaximumSizeInBytes - batchSizeInBytes;
                     }));
 
-            // Placeholder for the SendAsync function
+            // Mocking the SendAsync method so that it will always pass
             mockProducer.Setup(p => p.SendAsync(
                 It.IsAny<EventDataBatch>(),
                 It.IsAny<CancellationToken>()))
@@ -62,82 +65,55 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var producer = mockProducer.Object;
 
-            // Defining a "large event" that has a length longer than 10
-            var largeEvent = EventHubsModelFactory.EventData(new BinaryData("This represents a very large Event"));
+            // Mocking EventData instances for send
+            var eventDataBody = new BinaryData("Sample large event body");
+            var eventData = EventHubsModelFactory.EventData(eventDataBody);
 
-            // In this case we want to make sure that the method does not throw any exceptions
-            Assert.DoesNotThrow(() => SendALargeEvent(producer, largeEvent));
+            // Using the mocked event producer to test that SendAsync was never called
+            mockProducer.Verify(bp =>
+            bp.SendAsync(
+                It.IsAny<EventDataBatch>(),
+                It.IsAny<CancellationToken>()),Times.Never);
+
             #endregion
         }
-
-        #region Snippet:EventHubs_Sample11_SimpleBatchingLogic
-        private async void SendALargeEvent(EventHubProducerClient producer, EventData eventData)
-        {
-            var eventBatch = await producer.CreateBatchAsync();
-            var fitInBatch = eventBatch.TryAdd(eventData);
-
-            if (!fitInBatch)
-            {
-                // EventSplitter is an application-specific method that splits a large event into
-                // a list of smaller events that are smaller than the maximum size of the batch
-                var smallerEvents = EventSplitter(eventData, eventBatch.MaximumSizeInBytes);
-
-                foreach (var smallEvent in smallerEvents)
-                {
-                    if (!eventBatch.TryAdd(smallEvent))
-                    {
-                        await producer.SendAsync(eventBatch);
-                        eventBatch = await producer.CreateBatchAsync();
-                        var attemptTwo = eventBatch.TryAdd(smallEvent);
-                        if (!attemptTwo)
-                        {
-                            throw new Exception($"The event could not be added.");
-                        }
-                    }
-                }
-            }
-
-            // Send any lingering event batches
-
-            if (eventBatch.Count != 0)
-            {
-                await producer.SendAsync(eventBatch);
-            }
-
-            // If no exceptions were thrown the event was successfully sent
-        }
-        #endregion
 
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
         ///
         [Test]
-        public void SimplePropertiesLogic()
+        public void MockingEventHubsProperties()
         {
-            #region Snippet:EventHubs_Sample11_PropertiesLogic_Test
+            #region Snippet:EventHubs_Sample11_MockingEventHubProperties
 
             var mockProducer = new Mock<EventHubProducerClient>();
 
-            // Create a mock of the partitions and publishing properties
+            // Define the set of partitions and publishing properties to use for testing
             var partitions = new Dictionary<string, PartitionPublishingProperties>()
             {
+                // Has no reader ownership - no OwnerLevel
                 { "0", EventHubsModelFactory.PartitionPublishingProperties(false, null, null, null) },
+                // Has an exclusive reader - OwnerLevel is high
                 { "1", EventHubsModelFactory.PartitionPublishingProperties(false, null, 42, null) }
             };
 
+            // Mock the EventHubProperties using the model factory
             var eventHubProperties =
                 EventHubsModelFactory.EventHubProperties(
-                    "fakeEventHub",
-                    DateTimeOffset.UtcNow,
-                    new string[] { "0", "1" });
+                    "fakeEventHubName", // arbitrary value
+                    DateTimeOffset.UtcNow, // arbitrary value
+                    partitions.Keys.ToArray());
 
-            // For this test case, we just need to mock GetEventHubPropertiesAsync and
-            // GetPartitionPublishingPropertiesAsync (for each partition), using the partitions
-            // and properties defined above
+            // Mocking GetEventHubPropertiesAsync, GetPartitionIdsAsync and GetPartitionPublishingPropertiesAsync
+            // (for each partition), using the partitions and properties defined above
             mockProducer.Setup(p => p.GetEventHubPropertiesAsync(
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(eventHubProperties);
+
+            mockProducer.Setup(p => p.GetPartitionIdsAsync(
+                It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitions.Keys.ToArray());
 
             foreach (var partition in partitions)
             {
@@ -149,246 +125,64 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var producer = mockProducer.Object;
 
-            var generatedEvents = GenerateEvents(50);
-            var smallBatchCount = 10;
-            var largeBatchCount = 20;
-
-            // Call the method we are trying to test
-            SendEventsToProspectivePartitions(producer, generatedEvents, smallBatchCount, largeBatchCount);
-
-            foreach (var partition in partitions)
-            {
-                // Verify that the batch with less events have been sent to the partition with exlusive reader (owner level set)
-                mockProducer.Verify(prod => prod.SendAsync(
-                    It.Is<List<EventData>>(evts => evts.Count == (partition.Value.OwnerLevel.HasValue ? smallBatchCount : largeBatchCount)),
-                    It.Is<SendEventOptions>(opts => opts.PartitionId == partition.Key),
-                    It.IsAny<CancellationToken>()), Times.AtLeastOnce);
-            }
-
             #endregion
         }
-
-        #region EventHubs_Sample11_PropertiesLogic
-        // A method to send a set of events to multiple partitions in batches, which size is dependent on the
-        // ownership level of the partition. If the partition only has one reader, send a small batch, if it has
-        // no ownership restrictions send a large batch.
-        private async void SendEventsToProspectivePartitions(EventHubProducerClient producer, List<EventData> eventDataList, int smallBatchCount, int largeBatchCount)
-        {
-            var properties = await producer.GetEventHubPropertiesAsync();
-            var partitionIds = properties.PartitionIds;
-
-            var nextEventIndexToSend = 0;
-            List<EventData> eventsToSend;
-            foreach (var partitionId in partitionIds)
-            {
-                var publishingProperties = await producer.GetPartitionPublishingPropertiesAsync(partitionId);
-
-                // GetNextSetOfEvents is an application-specific method to split events into groups for send
-                (eventsToSend, nextEventIndexToSend) = GetNextSetOfEvents(eventDataList, nextEventIndexToSend, publishingProperties.OwnerLevel, smallBatchCount, largeBatchCount);
-
-                var options = new SendEventOptions
-                {
-                    PartitionId = partitionId
-                };
-
-                await producer.SendAsync(eventsToSend, options);
-            }
-        }
-        #endregion
 
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
         ///
         [Test]
-        public async Task ThrottlingConsumer()
+        public void MockingConsumerClient()
         {
-            #region Snippet:EventHubs_Sample11_ScaleDownConsumer_Test
+            #region Snippet:EventHubs_Sample11_MockingConsumerClient
 
-            var consumerRunnerMock = new Mock<ConsumerRunner>() {  CallBase = true };
-            var consumerRunner = consumerRunnerMock.Object;
-
-            var transportConsumer = new PopulatedConsumerMock();
-            var mockConnection = new MockConnection(() => transportConsumer);
-            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            // Create a mock of the EventHubConsumerClient
+            var mockConsumer = new Mock<EventHubConsumerClient>();
             var receivedEvents = new List<EventData>();
+            var cancellationTokenSource = new CancellationTokenSource();
 
-            using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            // Create a mock of LastEnqueuedEventProperties using the model factory
+            var lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
+                default,
+                default,
+                default, // TODO
+                default);
 
-            try
-            {
-                await consumerRunner.RunConsumer(consumer, cancellation).ConfigureAwait(false);
-            }
-            catch (TaskCanceledException)
-            {
-                // All events were read
-            }
+            // Create a mock of PartitionContext using the model factory
+            var partitionContext = EventHubsModelFactory.PartitionContext(
+                "0",
+                lastEnqueueEventProperties);
 
-            consumerRunnerMock.Verify(cons => cons.NotifyScaleDownNeeded(), Times.AtLeastOnce);
+            var eventData = EventHubsModelFactory.EventData(new BinaryData("Sample-Event"));
+
+            // Create a mock of a partition event using the PartitionContext and EventData
+            // instances created above
+            var samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
+            var partitionEventList = new List<PartitionEvent>();
+            partitionEventList.Add(samplePartitionEvent);
+
+            // Use this PartitionEvent to mock a return from the consumer
+            mockConsumer.Setup(c =>
+            c.ReadEventsAsync(
+                It.IsAny<CancellationToken>()))
+                .Returns((IAsyncEnumerable<PartitionEvent>)partitionEventList);
+
+            var consumer = mockConsumer.Object;
+
             #endregion
         }
-
-        internal class ConsumerRunner
-        {
-            private CancellationTokenSource ConsumerCancellationTokenSource;
-            #region Snippet:EventHubs_Sample11_ScaleDownConsumer
-
-            public virtual async Task RunConsumer(EventHubConsumerClient consumer, CancellationTokenSource cancellationTokenSource)
-            {
-                var consumeEvents = ConsumeEventsFromAssignedPartitions(consumer, cancellationTokenSource.Token);
-                ConsumerCancellationTokenSource = cancellationTokenSource;
-
-                while (!cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
-                    await CheckScaleDownConsumers(consumer).ConfigureAwait(false);
-                }
-                await consumeEvents.ConfigureAwait(false);
-            }
-
-            public virtual async Task ConsumeEventsFromAssignedPartitions(EventHubConsumerClient consumer, CancellationToken cancellationToken)
-            {
-                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync(cancellationToken))
-                {
-                    ConsumeEvent(partitionEvent.Data);
-                }
-            }
-
-            public virtual async Task CheckScaleDownConsumers(EventHubConsumerClient consumer)
-            {
-                var partitionIds = await consumer.GetPartitionIdsAsync();
-
-                foreach (var partition in partitionIds)
-                {
-                    var partitionProperties = await consumer.GetPartitionPropertiesAsync(partition);
-
-                    if (partitionProperties.IsEmpty)
-                    {
-                        NotifyScaleDownNeeded();
-                    }
-                }
-            }
-            #endregion
-            public virtual void NotifyScaleDownNeeded()
-            {
-                ConsumerCancellationTokenSource.Cancel();
-            }
-        }
-
-        #region Snippet:EventHubs_Sample11_ScaleDownConsumer_MockClasses
-        private class PopulatedConsumerMock : TransportConsumer
-        {
-            private List<EventData> _eventsToConsume;
-
-            public PopulatedConsumerMock()
-            {
-                _eventsToConsume = GenerateEvents(500);
-            }
-
-            public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
-            {
-                var eventReturn = new List<EventData>();
-
-                // For simplicity, just return one event for consumption, the behavior of this method override is customizable depending on what needs to be tested
-                var eventData = _eventsToConsume.FirstOrDefault();
-                _eventsToConsume.RemoveAt(0);
-                eventReturn.Add(eventData);
-
-                await Task.Delay(100, cancellationToken);
-
-                return eventReturn.AsReadOnly();
-            }
-
-            public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-        }
-
-        private class MockConnection : EventHubConnection
-        {
-            public string[] PartitionIds = { "0", "1" };
-            public List<PartitionProperties> PartitionProperties = new List<PartitionProperties>();
-            public EventHubsRetryPolicy GetPartitionPropertiesInvokedWith = null;
-            public Func<TransportConsumer> TransportConsumerFactory = () => Mock.Of<TransportConsumer>();
-            public bool WasClosed = false;
-
-            public MockConnection(Func<TransportConsumer> transportConsumerFactory)
-                : base("fakeNamespace", "fakeEventHub", new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>()).Object)
-            {
-                TransportConsumerFactory = transportConsumerFactory;
-
-                var partitionProperties0 = EventHubsModelFactory.PartitionProperties("fakeEventHub", "0", true, 0, 0, 0, DateTimeOffset.UtcNow);
-                PartitionProperties.Add(partitionProperties0);
-
-                var partitionProperties1 = EventHubsModelFactory.PartitionProperties("fakeEventHub", "1", true, 0, 0, 0, DateTimeOffset.UtcNow);
-                PartitionProperties.Add(partitionProperties1);
-            }
-
-            internal override Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
-                                                                        CancellationToken cancellationToken = default) => throw new NotImplementedException();
-
-            internal override async Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
-                                                                        CancellationToken cancellationToken = default)
-            {
-                await Task.Delay(1).ConfigureAwait(false);
-                return PartitionIds;
-            }
-
-            internal override async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                                    EventHubsRetryPolicy retryPolicy,
-                                                                                    CancellationToken cancellationToken = default)
-            {
-                await Task.Delay(1);
-                if (partitionId == "0")
-                {
-                    return PartitionProperties.ElementAt(0);
-                }
-
-                if (partitionId == "1")
-                {
-                    return PartitionProperties.ElementAt(0);
-                }
-
-                else
-                {
-                    throw new Exception("Not a valid Partition Id");
-                }
-            }
-
-            internal override TransportConsumer CreateTransportConsumer(string consumerGroup,
-                                                                        string partitionId,
-                                                                        string consumerIdentifier,
-                                                                        EventPosition eventPosition,
-                                                                        EventHubsRetryPolicy retryPolicy,
-                                                                        bool trackLastEnqueuedEventProperties = true,
-                                                                        bool invalidateConsumerWhenPartitionIsStolen = false,
-                                                                        long? ownerLevel = default,
-                                                                        uint? prefetchCount = default,
-                                                                        long? prefetchSizeInBytes = default) => TransportConsumerFactory();
-
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
-                                                                    string eventHubName,
-                                                                    TimeSpan timeout,
-                                                                    EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options)
-            {
-                var client = new Mock<TransportClient>();
-
-                client
-                    .Setup(client => client.ServiceEndpoint)
-                    .Returns(new Uri($"amgp://{fullyQualifiedNamespace}.com/{eventHubName}"));
-
-                return client.Object;
-            }
-        }
-        #endregion
 
         [Test]
-        public async void PartitionReceiver()
+        public void PartitionReceiverMock()
         {
-            #region Snippet:EventHubs_Sample11_PartitionReceiver_Test
+            #region Snippet:EventHubs_Sample11_PartitionReceiverMock
+
+            // Create a mock of the PartitionReceiver
             var mockReceiver = new Mock<PartitionReceiver>();
             var emptyEventBatch = new List<EventData>();
 
+            // Setup the mock to receive an empty batch when ReceiveBatchAsync is called
             mockReceiver.Setup(
                 r => r.ReceiveBatchAsync(
                     It.IsAny<int>(),
@@ -398,96 +192,116 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var receiver = mockReceiver.Object;
 
-            var cancellationSource = new CancellationTokenSource();
+            #endregion
+        }
 
-            var ranOutOfEvents = await ReceiveBatches(receiver, cancellationSource);
+        public void MockingBufferedProducer()
+        {
+            #region Snippet:EventHubs_Sample11_MockingBufferedProducer
+            // Create a mock buffered producer
+            var bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
 
-            Assert.IsTrue(ranOutOfEvents);
+            // Define a failed handler for the mock
+            var sendFailed = new Func<SendEventBatchFailedEventArgs, Task>(async args =>
+            {
+                foreach (var eventData in args.EventBatch)
+                {
+                    if (eventData.Body.Length != 0)
+                    {
+                        await bufferedProducerMock.Object.EnqueueEventAsync(eventData);
+                    }
+                }
+            });
+
+            // Create a mock event to fail send
+            var eventToEnqueue = EventHubsModelFactory.EventData(new BinaryData("Sample-Event"));
+            var eventList = new List<EventData>();
+            eventList.Add(eventToEnqueue);
+
+            // Create a set of args to send to the SendEventBatchFailedAsync handler
+            var args = new SendEventBatchFailedEventArgs(eventList, new Exception(), "0", default);
+
+            // Setup EnqueueEventAsync to always pass and return 1
+            bufferedProducerMock.Setup(bp => bp.EnqueueEventAsync(
+                It.IsAny<EventData>(),
+                It.IsAny<CancellationToken>())).ReturnsAsync(1);
+
+            // Set up EnqueueEventsAsync to fail and call the defined fail handler using the
+            // above created args
+            bufferedProducerMock.Setup(bp => bp.EnqueueEventsAsync(
+                It.IsAny<List<EventData>>(),
+                It.IsAny<CancellationToken>())).Callback(() => sendFailed(args));
+
+            var bufferedProducer = bufferedProducerMock.Object;
+
+            bufferedProducer.SendEventBatchFailedAsync += sendFailed;
 
             #endregion
         }
 
-        #region Snippet:EventHubs_Sample11_PartitionReceiver
-        private async Task<bool> ReceiveBatches(PartitionReceiver receiver, CancellationTokenSource cancellationSource)
+        public void MockingEventProcessor()
         {
-            var stopWatch = Stopwatch.StartNew();
-            var ranOutOfEvents = false;
-            try
+            #region Snippet:EventHubs_Sample11_MockingEventProcessor
+
+            // Example checkpoints store
+
+            var checkpoints = new List<long>();
+
+            const int EventsBeforeCheckpoint = 5;
+            const int CheckpointsCount = 5;
+
+            // Example handler uses event's SequenceNumber to decide when to checkpoint
+
+            void processEventHandler(ProcessEventArgs args)
             {
-                while (!cancellationSource.IsCancellationRequested)
+                try
                 {
-                    int batchSize = 50;
-                    TimeSpan waitTime = TimeSpan.FromSeconds(1);
+                    // Process the event here...
 
-                    IEnumerable<EventData> eventBatch = await receiver.ReceiveBatchAsync(
-                        batchSize,
-                        waitTime,
-                        cancellationSource.Token);
-
-                    foreach (EventData eventData in eventBatch)
+                    if (args.Data.SequenceNumber % EventsBeforeCheckpoint == 0)
                     {
-                        ConsumeEvent(eventData);
-                        stopWatch.Restart();
-                    }
-
-                    var timeSinceLastEvent = stopWatch.Elapsed;
-
-                    if (timeSinceLastEvent == TimeSpan.FromSeconds(5))
-                    {
-                        cancellationSource.Cancel();
-                        ranOutOfEvents = true;
+                        checkpoints.Add(args.Data.Offset);
                     }
                 }
+                catch
+                {
+                    // Handle the exception...
+                }
             }
-            catch (TaskCanceledException)
+
+            var partitionContext = EventHubsModelFactory.PartitionContext("0");
+
+            // Fire (EventsBeforeCheckpoint * CheckpointsCount) number of the events
+
+            for (int eventCount = 1; eventCount <= EventsBeforeCheckpoint * CheckpointsCount; eventCount++)
             {
-                // This is expected if the cancellation token is
-                // signaled.
+                // EventData method allows to mock ALL those read-only properties
+                // passed over to the event handler in the ProcessEventArgs argument
+
+                var eventData = EventHubsModelFactory.EventData(
+                    new BinaryData("This is a sample event body"),
+                    null, // The custom event properties can be mocked,
+                    null, // as well as the Event Hub's system properties,
+                    null, // and the Partition Key.
+                    eventCount, // For this demonstration we mock the partition's Sequence Number,
+                    eventCount + (1000 * eventCount + new Random().Next(50, 500))); // and the Offset
+
+                var eventArgs = new ProcessEventArgs(
+                    partitionContext,
+                    eventData,
+                    // Do nothing as we use custom checkpoints store
+                    _ => Task.CompletedTask);
+
+                // Execute the handler
+
+                processEventHandler(eventArgs);
             }
-            finally
-            {
-                await receiver.CloseAsync();
-            }
-            return ranOutOfEvents;
-        }
-        #endregion
 
-        // processor client
+            // Verify the number of persisted checkpoints
 
-        // event processor
+            Assert.IsTrue(checkpoints.Count == CheckpointsCount);
 
-        // buffered producer
-
-        // include: last enqueued event properties, partition context
-
-        // Fake helper methods for illustrative purposes
-        private static List<EventData> EventSplitter(EventData eventData, long maxBatchSize)
-        {
-            var returnList = new List<EventData>();
-            returnList.Add(new EventData(new BinaryData("smaller")));
-            return returnList;
-        }
-
-        private static List<EventData> GenerateEvents(int numEvents)
-        {
-            var returnList = new List<EventData>();
-            for (int i = 0; i < numEvents; i++)
-            {
-                returnList.Add(new EventData(new BinaryData($"sample-event-{i}")));
-            }
-            return returnList;
-        }
-
-        private static (List<EventData> EventDataList, int Index) GetNextSetOfEvents(List<EventData> eventData, int index, short? ownerLevel, int small, int large)
-        {
-            var eventCount = (ownerLevel.HasValue ? small : large);
-            var endIndex = index + eventCount;
-            var returnList = eventData.GetRange(index, eventCount);
-            return (returnList, endIndex);
-        }
-
-        private static void ConsumeEvent(EventData eventData)
-        {
+            #endregion
         }
     }
 }
