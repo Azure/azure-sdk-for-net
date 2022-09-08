@@ -221,6 +221,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             Assert.AreEqual(packageData1.State, packageData2.State);
             Assert.AreEqual(packageData1.Format, packageData2.Format);
             Assert.AreEqual(packageData1.LastActivatedOn, packageData2.LastActivatedOn);
+            //Because StorageUriExpireOn is a DateTimeOffset type, and Uri ends with a timestamp, the value is always different, so it is commented out
             //Assert.AreEqual(packageData1.StorageUriExpireOn, packageData2.StorageUriExpireOn);
             //Assert.AreEqual(packageData1.StorageUri, packageData2.StorageUri);
         }
