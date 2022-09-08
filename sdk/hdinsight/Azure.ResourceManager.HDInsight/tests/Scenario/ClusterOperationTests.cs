@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
-            //Assert.AreEqual(4,cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MinInstanceCount);
-            //Assert.AreEqual(5, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MaxInstanceCount);
+            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MinInstanceCount);
+            Assert.AreEqual(5, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MaxInstanceCount);
         }
 
         [RecordedTest]
@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+            Assert.AreEqual("China Standard Time", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.TimeZone);
+            Assert.AreEqual("16:00", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.Time);
+            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.MaxInstanceCount);
+            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.MinInstanceCount);
         }
 
         [RecordedTest]
@@ -109,8 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.ClusterVersion = "4.0";
 
             // availability zones requires custom vnet
-            string vnetName = Recording.GenerateAssetName("vnet");
-            var vnet = await CreateDefaultNetwork(_resourceGroup, vnetName);
+            var vnet = await CreateDefaultNetwork(_resourceGroup, Recording.GenerateAssetName("vnet"));
             foreach (var role in properties.ComputeProfile.Roles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
@@ -156,6 +159,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+            Assert.AreEqual("Spark", cluster.Value.Data.Properties.ClusterDefinition.Kind);
+            Assert.AreEqual("standard_ds14_v2", cluster.Value.Data.Properties.ComputeRoles.FirstOrDefault().HardwareVmSize);
         }
 
         [RecordedTest]
@@ -174,22 +179,25 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+            Assert.AreEqual("Spark", cluster.Value.Data.Properties.ClusterDefinition.Kind);
+            Assert.AreEqual(true, cluster.Value.Data.Properties.IsEncryptionInTransitEnabled);
         }
 
         [RecordedTest]
+        [Ignore("200: Azure.RequestFailedException : Internal server error occurred while processing the request")]
         public async Task TestCreateClusterWithOutboundAndPrivateLink()
         {
-            string clusterName = "hdisdk-outboundpl";
+            string clusterName = "hdisdk-outbounprivatelink";
             var properties = await PrepareClusterCreateParams(_storageAccount);
+            properties.StorageAccounts.FirstOrDefault().ResourceId = _storageAccount.Data.Id;
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
                 ResourceProviderConnection = HDInsightResourceProviderConnection.Outbound,
                 PrivateLink = HDInsightPrivateLinkState.Enabled
             };
 
-            string vnetName = Recording.GenerateAssetName("vnet");
-            var vnet = await CreateDefaultNetwork(_resourceGroup, vnetName);
-            foreach (var role in properties.ComputeProfile.Roles)
+            var vnet = await CreateDefaultNetwork(_resourceGroup, Recording.GenerateAssetName("vnet"));
+            foreach (var role in properties.ComputeRoles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
@@ -209,15 +217,17 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
 
         [RecordedTest]
+        [Ignore("200: Azure.RequestFailedException : Internal server error occurred while processing the request")]
         public async Task TestCreateClusterWithPrivateLinkConfiguration()
         {
-            string clusterName = "hdisdk-outboundpl";
+            string clusterName = "hdisdk-privatelinkconfig";
             var properties = await PrepareClusterCreateParams(_storageAccount);
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
                 ResourceProviderConnection = HDInsightResourceProviderConnection.Outbound,
                 PrivateLink = HDInsightPrivateLinkState.Enabled
             };
+            properties.StorageAccounts.FirstOrDefault().ResourceId = _storageAccount.Data.Id;
 
             string vnetName = Recording.GenerateAssetName("vnet");
             var vnet = await CreateDefaultNetwork(_resourceGroup, vnetName);
@@ -257,12 +267,13 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+            Assert.AreEqual("Spark", cluster.Value.Data.Properties.ClusterDefinition.Kind);
         }
 
         [RecordedTest]
+        [Ignore("200: Internal server error occurred while processing the request")]
         public async Task TestCreateHumboldtCluster()
         {
-            //200: Internal server error occurred while processing the request
             string clusterName = "hdisdk-humboldt";
             var properties = await PrepareClusterCreateParams(_storageAccount);
 
@@ -295,6 +306,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+            Assert.AreEqual("Spark", cluster.Value.Data.Properties.ClusterDefinition.Kind);
         }
 
         [RecordedTest]
@@ -479,9 +491,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
 
-            var gatewaySetting = await cluster.Value.GetGatewaySettingsAsync();//System.InvalidOperationException
-            Assert.AreEqual(Common_User,gatewaySetting.Value.UserName);
-            Assert.AreEqual(Common_Password, gatewaySetting.Value.Password);
+            var gatewaySetting = await cluster.Value.GetGatewaySettingsAsync();
+            Assert.AreEqual("admin4468", gatewaySetting.Value.UserName);
+            Assert.AreEqual("Password1!9688", gatewaySetting.Value.Password);
         }
     }
 }

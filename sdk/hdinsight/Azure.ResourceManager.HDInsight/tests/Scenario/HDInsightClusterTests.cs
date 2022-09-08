@@ -10,24 +10,33 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Tests
 {
     internal class HDInsightClusterTests : HDInsightManagementTestBase
     {
+        private ResourceGroupResource _resourceGroup;
+        private StorageAccountResource _storageAccount;
+        private HDInsightClusterCollection _clusterCollection => _resourceGroup.GetHDInsightClusters();
+
         public HDInsightClusterTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public async Task TestSetUp()
+        {
+            _resourceGroup = await CreateResourceGroup();
+            _storageAccount = await CreateStorageAccount(_resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
         }
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var resourceGroup = await CreateResourceGroup();
-            var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            string containerName = Recording.GenerateAssetName("container");
-            var cluster = await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
+            var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _storageAccount, clusterName);
             ValidateCluster(cluster);
             Assert.AreEqual(clusterName, cluster.Data.Name);
         }
@@ -35,23 +44,18 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task Exist()
         {
-            var resourceGroup = await CreateResourceGroup();
-            var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            string containerName = Recording.GenerateAssetName("container");
-            await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
-            bool flag = await resourceGroup.GetHDInsightClusters().ExistsAsync(clusterName);
+            await CreateDefaultHadoopCluster(_resourceGroup, _storageAccount, clusterName);
+            bool flag = await _clusterCollection.ExistsAsync(clusterName);
             Assert.IsTrue(flag);
         }
 
         [RecordedTest]
         public async Task Get()
         {
-            var resourceGroup = await CreateResourceGroup();
-            var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
-            var cluster = await resourceGroup.GetHDInsightClusters().GetAsync(clusterName);
+            await CreateDefaultHadoopCluster(_resourceGroup, _storageAccount, clusterName);
+            var cluster = await _clusterCollection.GetAsync(clusterName);
             ValidateCluster(cluster);
             Assert.AreEqual(clusterName, cluster.Value.Data.Name);
         }
@@ -59,11 +63,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            var resourceGroup = await CreateResourceGroup();
-            var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
-            var list = await resourceGroup.GetHDInsightClusters().GetAllAsync().ToEnumerableAsync();
+            await CreateDefaultHadoopCluster(_resourceGroup, _storageAccount, clusterName);
+            var list = await _clusterCollection.GetAllAsync().ToEnumerableAsync();
             ValidateCluster(list.FirstOrDefault());
             Assert.AreEqual(1, list.Count);
         }
@@ -71,30 +73,39 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            var resourceGroup = await CreateResourceGroup();
-            var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            var cluster = await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
-            bool flag = await resourceGroup.GetHDInsightClusters().ExistsAsync(clusterName);
+            var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _storageAccount, clusterName);
+            bool flag = await _clusterCollection.ExistsAsync(clusterName);
             Assert.IsTrue(flag);
 
             await cluster.DeleteAsync(WaitUntil.Completed);
-            flag = await resourceGroup.GetHDInsightClusters().ExistsAsync(clusterName);
+            flag = await _clusterCollection.ExistsAsync(clusterName);
             Assert.IsFalse(flag);
         }
 
         [RecordedTest]
         public async Task GetExtension()
         {
-            var resourceGroup = await CreateResourceGroup();
-            var storageAccount = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName("azstorageforcluster"));
             string clusterName = Recording.GenerateAssetName("cluster");
-            var cluster = await CreateDefaultHadoopCluster(resourceGroup, storageAccount, clusterName);
+            var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _storageAccount, clusterName);
 
-            var extension    = await cluster.GetExtensionAsync("azuremonitor");
+            var extension = await cluster.GetExtensionAsync("azuremonitor");
             Assert.IsNotNull(extension);
             Assert.IsFalse(extension.Value.IsClusterMonitoringEnabled);
             Assert.IsNull(extension.Value.WorkspaceId);
+        }
+
+        [RecordedTest]
+        public async Task AddTagTest()
+        {
+            string clusterName = Recording.GenerateAssetName("cluster");
+            var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _storageAccount, clusterName);
+            await cluster.AddTagAsync("addtagkey", "addtagvalue");
+
+            cluster = await _clusterCollection.GetAsync(clusterName);
+            KeyValuePair<string, string> tag = cluster.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
         }
 
         private void ValidateCluster(HDInsightClusterResource cluster)

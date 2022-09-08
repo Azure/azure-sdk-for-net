@@ -65,12 +65,14 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
         protected async Task<VirtualNetworkResource> CreateDefaultNetwork(ResourceGroupResource resourceGroup, string vnetName)
         {
-            VirtualNetworkData data = new VirtualNetworkData()
-            {
-                Location = resourceGroup.Data.Location,
-            };
+            // Create a NSG
+            string nsgName = Recording.GenerateAssetName("ngs");
+            var nsgData = new NetworkSecurityGroupData() { Location = resourceGroup.Data.Location, };
+            var nsg = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, nsgName, nsgData);
+
+            VirtualNetworkData data = new VirtualNetworkData() {Location = resourceGroup.Data.Location,};
             data.AddressPrefixes.Add("10.10.0.0/16");
-            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, });
+            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled,NetworkSecurityGroup = nsg.Value.Data });
             data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
             return vnet.Value;
