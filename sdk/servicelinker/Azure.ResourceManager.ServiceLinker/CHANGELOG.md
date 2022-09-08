@@ -1,14 +1,18 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.1.0 (2022-09-09)
 
 ### Breaking Changes
 
-### Bugs Fixed
+Changed the constructors of following classes from public to protected:
+- `AuthBaseInfo`
+- `AzureResourceBaseProperties`
+- `SecretBaseInfo`
+- `TargetServiceBaseInfo`
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
 
 ## 1.0.0 (2022-07-21)
 
