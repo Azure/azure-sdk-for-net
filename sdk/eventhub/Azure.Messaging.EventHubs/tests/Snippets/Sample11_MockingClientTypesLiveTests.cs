@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,7 +15,9 @@ using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs.Models;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
@@ -195,6 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #endregion
         }
 
+        [Test]
         public void MockingBufferedProducer()
         {
             #region Snippet:EventHubs_Sample11_MockingBufferedProducer
@@ -239,69 +243,97 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #endregion
         }
 
-        public void MockingEventProcessor()
+        [Test]
+        public async Task MockingEventProcessor()
         {
             #region Snippet:EventHubs_Sample11_MockingEventProcessor
 
-            // Example checkpoints store
+            // TestableCustomProcessor is a wrapper class around a CustomProcessor class that exposes
+            // protected methods so that they can be tested
+            var eventProcessorMock =
+                new Mock<TestableCustomProcessor>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions))
+                { CallBase = true };
 
-            var checkpoints = new List<long>();
+            var testEvents = new[] {
+                EventHubsModelFactory.EventData(new BinaryData("Sample-Event-1")),
+                EventHubsModelFactory.EventData(new BinaryData("Sample-Event-2")),
+                EventHubsModelFactory.EventData(new BinaryData("Sample-Event-3")),
+                EventHubsModelFactory.EventData(new BinaryData("Sample-Event-4")),
+            };
 
-            const int EventsBeforeCheckpoint = 5;
-            const int CheckpointsCount = 5;
+            var eventList = new List<EventData>(testEvents);
 
-            // Example handler uses event's SequenceNumber to decide when to checkpoint
+            var eventProcessor = eventProcessorMock.Object;
 
-            void processEventHandler(ProcessEventArgs args)
-            {
-                try
-                {
-                    // Process the event here...
-
-                    if (args.Data.SequenceNumber % EventsBeforeCheckpoint == 0)
-                    {
-                        checkpoints.Add(args.Data.Offset);
-                    }
-                }
-                catch
-                {
-                    // Handle the exception...
-                }
-            }
-
-            var partitionContext = EventHubsModelFactory.PartitionContext("0");
-
-            // Fire (EventsBeforeCheckpoint * CheckpointsCount) number of the events
-
-            for (int eventCount = 1; eventCount <= EventsBeforeCheckpoint * CheckpointsCount; eventCount++)
-            {
-                // EventData method allows to mock ALL those read-only properties
-                // passed over to the event handler in the ProcessEventArgs argument
-
-                var eventData = EventHubsModelFactory.EventData(
-                    new BinaryData("This is a sample event body"),
-                    null, // The custom event properties can be mocked,
-                    null, // as well as the Event Hub's system properties,
-                    null, // and the Partition Key.
-                    eventCount, // For this demonstration we mock the partition's Sequence Number,
-                    eventCount + (1000 * eventCount + new Random().Next(50, 500))); // and the Offset
-
-                var eventArgs = new ProcessEventArgs(
-                    partitionContext,
-                    eventData,
-                    // Do nothing as we use custom checkpoints store
-                    _ => Task.CompletedTask);
-
-                // Execute the handler
-
-                processEventHandler(eventArgs);
-            }
-
-            // Verify the number of persisted checkpoints
-
-            Assert.IsTrue(checkpoints.Count == CheckpointsCount);
+            // Call the wrapper method in order to reach proctected method within a custom processor
+            // Using It.Is allows the test to set the PartitionId value, even though the setter is protected
+            await eventProcessor.TestOnProcessingEventBatchAsync(eventList, It.Is<EventProcessorPartition>(value => value.PartitionId == "0"));
 
             #endregion
+        }
+
+        #region Snippet:EventHubs_Sample11_CustomEventProcessor
+        internal class CustomProcessor : EventProcessor<EventProcessorPartition>
+        #endregion
+        {
+            public CustomProcessor(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        TokenCredential credential,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
+
+            protected override async Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken = default)
+            {
+                await Task.Delay(1);
+            }
+
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken = default) =>
+                Task.CompletedTask;
+
+            // Storage integration
+            protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
+        }
+
+        #region Snippet:EventHubs_Sample11_TestCustomEventProcessor
+        internal class TestableCustomProcessor : CustomProcessor
+        #endregion
+        {
+            public TestableCustomProcessor(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        TokenCredential credential,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
+
+            // Local event processing
+            internal async Task TestOnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken = default) =>
+                await OnProcessingEventBatchAsync(events, partition, cancellationToken);
+
+            protected override async Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken = default)
+            {
+                await Task.Delay(1);
+            }
+
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken = default) =>
+                Task.CompletedTask;
+
+            // Storage integration
+            protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
         }
     }
 }

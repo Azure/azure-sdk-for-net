@@ -18,7 +18,11 @@ var mockProducer = new Mock<EventHubProducerClient>();
 var createBatchOptions = new CreateBatchOptions() { MaximumSizeInBytes = 516 };
 var batchSizeInBytes = 500;
 
-var mockedDataBatch = EventHubsModelFactory.EventDataBatch(
+// Setting up a mock of the CreateBatchAsync method
+mockProducer.Setup(p => p.CreateBatchAsync(
+    It.IsAny<CancellationToken>()))
+    .ReturnsAsync(
+    EventHubsModelFactory.EventDataBatch(
         46,
         new List<EventData>(),
         new CreateBatchOptions() { },
@@ -27,12 +31,7 @@ var mockedDataBatch = EventHubsModelFactory.EventDataBatch(
         eventData =>
         {
             return eventData.Body.Length > createBatchOptions.MaximumSizeInBytes - batchSizeInBytes;
-        });
-
-// Setting up a mock of the CreateBatchAsync method
-mockProducer.Setup(p => p.CreateBatchAsync(
-    It.IsAny<CancellationToken>()))
-    .ReturnsAsync(mockedDataBatch);
+        }));
 
 // Mocking the SendAsync method so that it will always pass
 mockProducer.Setup(p => p.SendAsync(
@@ -199,6 +198,47 @@ var bufferedProducer = bufferedProducerMock.Object;
 
 bufferedProducer.SendEventBatchFailedAsync += sendFailed;
 ```
+
+## Mocking a custom event processor using `EventProcessor<Partition>` 
+
+When implementing a custom event processor built on top of the `EventProcessor`, mocking can be used to test the implementation of each of the application defined methods.
+
+Given an application custom processor class defined like the following:
+```C# Snippet:EventHubs_Sample11_CustomEventProcessor
+internal class CustomProcessor : EventProcessor<EventProcessorPartition>
+```
+
+One can write a testable class on top, that exposes the set of protected override methods that the application has written (see the [`EventProcessor` documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_CustomEventProcessor.md#extending-eventprocessortpartition) for more information)
+```C# Snippet:EventHubs_Sample11_TestCustomEventProcessor
+internal class TestableCustomProcessor : CustomProcessor
+```
+
+When testing each method, the focus is again just on the application-defined code, not the functionality defined through the `EventProcessor` implementation.
+
+```C# Snippet:EventHubs_Sample11_MockingEventProcessor
+// TestableCustomProcessor is a wrapper class around a CustomProcessor class that exposes
+// protected methods so that they can be tested
+var eventProcessorMock =
+    new Mock<TestableCustomProcessor>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions))
+    { CallBase = true };
+
+var testEvents = new[] {
+    EventHubsModelFactory.EventData(new BinaryData("Sample-Event-1")),
+    EventHubsModelFactory.EventData(new BinaryData("Sample-Event-2")),
+    EventHubsModelFactory.EventData(new BinaryData("Sample-Event-3")),
+    EventHubsModelFactory.EventData(new BinaryData("Sample-Event-4")),
+};
+
+var eventList = new List<EventData>(testEvents);
+
+var eventProcessor = eventProcessorMock.Object;
+
+// Call the wrapper method in order to reach proctected method within a custom processor
+// Using It.Is allows the test to set the PartitionId value, even though the setter is protected
+await eventProcessor.TestOnProcessingEventBatchAsync(eventList, It.Is<EventProcessorPartition>(value => value.PartitionId == "0"));
+```
+
+
 
 
 
