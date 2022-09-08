@@ -57,6 +57,8 @@ rename-rules:
   SMB: Smb
   NFS: Nfs
   HCS: Hcs
+  AzureDC: AzureDataCenter
+  TeraBytes: Terabytes
 
 prepend-rp-prefix:
   - CopyStatus
@@ -119,7 +121,6 @@ rename-mapping:
   UserAssignedProperties: DataBoxUserAssignedIdentity
   JobDetails: DataBoxBasicJobDetails
   JobStages: DataBoxJobStage
-  MarkDevicesShippedContent.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
   Preferences: DataBoxOrderPreferences
   RegionConfigurationRequest: RegionConfigurationContent
   RegionConfigurationResponse: RegionConfigurationResult
@@ -133,7 +134,9 @@ rename-mapping:
   CancellationReason: DataBoxJobCancellationReason
   ClassDiscriminator: DataBoxOrderType
   TransferType: DataBoxJobTransferType
-
+  JobSecrets.dcAccessSecurityCode: DataCenterAccessSecurityCode
+  MarkDevicesShippedRequest.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
+  LastMitigationActionOnJob.actionDateTimeInUtc: ActionPerformedOn
 
 override-operation-name:
   Service_ListAvailableSkusByResourceGroup: GetAvailableSkus
