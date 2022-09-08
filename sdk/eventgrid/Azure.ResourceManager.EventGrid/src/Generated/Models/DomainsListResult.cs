@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of DomainsListResult. </summary>
         internal DomainsListResult()
         {
-            Value = new ChangeTrackingList<DomainData>();
+            Value = new ChangeTrackingList<EventGridDomainData>();
         }
 
         /// <summary> Initializes a new instance of DomainsListResult. </summary>
         /// <param name="value"> A collection of Domains. </param>
         /// <param name="nextLink"> A link for the next page of domains. </param>
-        internal DomainsListResult(IReadOnlyList<DomainData> value, string nextLink)
+        internal DomainsListResult(IReadOnlyList<EventGridDomainData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A collection of Domains. </summary>
-        public IReadOnlyList<DomainData> Value { get; }
+        public IReadOnlyList<EventGridDomainData> Value { get; }
         /// <summary> A link for the next page of domains. </summary>
         public string NextLink { get; }
     }

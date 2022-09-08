@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="threshold"> the criteria threshold value that activates the alert. Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="metricName"> The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric. </param>
-        internal ScheduledQueryRuleCondition(string query, TimeAggregation? timeAggregation, string metricMeasureColumn, string resourceIdColumn, IList<MonitorDimension> dimensions, MonitorConditionOperator? @operator, double? threshold, ConditionFailingPeriods failingPeriods, string metricName)
+        internal ScheduledQueryRuleCondition(string query, ScheduledQueryRuleTimeAggregationType? timeAggregation, string metricMeasureColumn, string resourceIdColumn, IList<MonitorDimension> dimensions, MonitorConditionOperator? @operator, double? threshold, ConditionFailingPeriods failingPeriods, string metricName)
         {
             Query = query;
             TimeAggregation = timeAggregation;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Log query alert. </summary>
         public string Query { get; set; }
         /// <summary> Aggregation type. Relevant and required only for rules of the kind LogAlert. </summary>
-        public TimeAggregation? TimeAggregation { get; set; }
+        public ScheduledQueryRuleTimeAggregationType? TimeAggregation { get; set; }
         /// <summary> The column containing the metric measure number. Relevant only for rules of the kind LogAlert. </summary>
         public string MetricMeasureColumn { get; set; }
         /// <summary> The column containing the resource id. The content of the column must be a uri formatted as resource id. Relevant only for rules of the kind LogAlert. </summary>

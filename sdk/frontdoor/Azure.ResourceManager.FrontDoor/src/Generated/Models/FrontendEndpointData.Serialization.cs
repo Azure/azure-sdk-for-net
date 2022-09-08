@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("sessionAffinityEnabledState");
                 writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(SessionAffinityTtlSeconds))
+            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
             {
                 writer.WritePropertyName("sessionAffinityTtlSeconds");
-                writer.WriteNumberValue(SessionAffinityTtlSeconds.Value);
+                writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {

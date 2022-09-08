@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Avs
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> IdentitySources { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.InternetConnectivityState? Internet { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.ManagementCluster ManagementCluster { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsManagementCluster ManagementCluster { get { throw null; } set { } }
         public string ManagementNetwork { get { throw null; } }
         public string NetworkBlock { get { throw null; } set { } }
         public string NsxtCertificateThumbprint { get { throw null; } }
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.Avs
         public Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.ExpressRouteCircuit SecondaryCircuit { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
-        public string VcenterCertificateThumbprint { get { throw null; } }
-        public string VcenterPassword { get { throw null; } set { } }
-        public string VmotionNetwork { get { throw null; } }
+        public string VCenterCertificateThumbprint { get { throw null; } }
+        public string VCenterPassword { get { throw null; } set { } }
+        public string VMotionNetwork { get { throw null; } }
     }
     public partial class AvsPrivateCloudDatastoreCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.AvsPrivateCloudDatastoreResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.AvsPrivateCloudDatastoreResource>, System.Collections.IEnumerable
     {
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.Avs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation RotateNsxtPassword(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RotateNsxtPasswordAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RotateVcenterPassword(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RotateVcenterPasswordAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RotateVCenterPassword(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RotateVCenterPasswordAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.AvsPrivateCloudResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.AvsPrivateCloudPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Avs
         public ScriptCmdletData() { }
         public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ScriptParameter> Parameters { get { throw null; } }
-        public string Timeout { get { throw null; } }
+        public System.TimeSpan? Timeout { get { throw null; } }
     }
     public partial class ScriptCmdletResource : Azure.ResourceManager.ArmResource
     {
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Avs
         public System.DateTimeOffset? FinishedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.ScriptExecutionParameterDetails> HiddenParameters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Information { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> NamedOutputs { get { throw null; } }
+        public System.BinaryData NamedOutputs { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Output { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.ScriptExecutionParameterDetails> Parameters { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.ScriptExecutionProvisioningState? ProvisioningState { get { throw null; } }
@@ -966,26 +966,8 @@ namespace Azure.ResourceManager.Avs.Models
         internal AdminCredentials() { }
         public string NsxtPassword { get { throw null; } }
         public string NsxtUsername { get { throw null; } }
-        public string VcenterPassword { get { throw null; } }
-        public string VcenterUsername { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AffinityType : System.IEquatable<Azure.ResourceManager.Avs.Models.AffinityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AffinityType(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.AffinityType Affinity { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.AffinityType AntiAffinity { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.AffinityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.AffinityType left, Azure.ResourceManager.Avs.Models.AffinityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.AffinityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.AffinityType left, Azure.ResourceManager.Avs.Models.AffinityType right) { throw null; }
-        public override string ToString() { throw null; }
+        public string VCenterPassword { get { throw null; } }
+        public string VCenterUsername { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AvailabilityStrategy : System.IEquatable<Azure.ResourceManager.Avs.Models.AvailabilityStrategy>
@@ -1051,7 +1033,65 @@ namespace Azure.ResourceManager.Avs.Models
         public Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus? KeyState { get { throw null; } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.EncryptionVersionType? VersionType { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType? VersionType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsEncryptionState : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsEncryptionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsEncryptionState(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsEncryptionState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsEncryptionState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsEncryptionState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsEncryptionState left, Azure.ResourceManager.Avs.Models.AvsEncryptionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsEncryptionState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsEncryptionState left, Azure.ResourceManager.Avs.Models.AvsEncryptionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsEncryptionVersionType : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsEncryptionVersionType(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType AutoDetected { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType Fixed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType left, Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType left, Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsManagementCluster : Azure.ResourceManager.Avs.Models.CommonClusterProperties
+    {
+        public AvsManagementCluster() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsPlacementPolicyAffinityType : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsPlacementPolicyAffinityType(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType Affinity { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType AntiAffinity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType left, Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType left, Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public abstract partial class AvsPrivateCloudAddonProperties
     {
@@ -1128,7 +1168,7 @@ namespace Azure.ResourceManager.Avs.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> IdentitySources { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.InternetConnectivityState? Internet { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.ManagementCluster ManagementCluster { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsManagementCluster ManagementCluster { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1220,7 +1260,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         public CustomerManagedEncryption() { }
         public Azure.ResourceManager.Avs.Models.AvsEncryptionKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.EncryptionState? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsEncryptionState? Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DatastoreStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.DatastoreStatus>
@@ -1247,11 +1287,11 @@ namespace Azure.ResourceManager.Avs.Models
     }
     public partial class DiskPoolVolume
     {
-        public DiskPoolVolume(string targetId, string lunName) { }
+        public DiskPoolVolume(Azure.Core.ResourceIdentifier targetId, string lunName) { }
         public string LunName { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.LunMountMode? MountOption { get { throw null; } set { } }
         public string Path { get { throw null; } }
-        public string TargetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DnsServiceLogLevel : System.IEquatable<Azure.ResourceManager.Avs.Models.DnsServiceLogLevel>
@@ -1290,42 +1330,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(Azure.ResourceManager.Avs.Models.DnsServiceStatus left, Azure.ResourceManager.Avs.Models.DnsServiceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Avs.Models.DnsServiceStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.DnsServiceStatus left, Azure.ResourceManager.Avs.Models.DnsServiceStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionState : System.IEquatable<Azure.ResourceManager.Avs.Models.EncryptionState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionState(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.EncryptionState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.EncryptionState Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.EncryptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.EncryptionState left, Azure.ResourceManager.Avs.Models.EncryptionState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.EncryptionState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.EncryptionState left, Azure.ResourceManager.Avs.Models.EncryptionState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionVersionType : System.IEquatable<Azure.ResourceManager.Avs.Models.EncryptionVersionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionVersionType(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.EncryptionVersionType AutoDetected { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.EncryptionVersionType Fixed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.EncryptionVersionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.EncryptionVersionType left, Azure.ResourceManager.Avs.Models.EncryptionVersionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.EncryptionVersionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.EncryptionVersionType left, Azure.ResourceManager.Avs.Models.EncryptionVersionType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1449,10 +1453,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.LunMountMode left, Azure.ResourceManager.Avs.Models.LunMountMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagementCluster : Azure.ResourceManager.Avs.Models.CommonClusterProperties
-    {
-        public ManagementCluster() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ParameterOptionalityStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.ParameterOptionalityStatus>
     {
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.Avs.Models
         public PlacementPolicyPatch() { }
         public System.Collections.Generic.IList<string> HostMembers { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.PlacementPolicyState? State { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VmMembers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> VmMembers { get { throw null; } }
     }
     public abstract partial class PlacementPolicyProperties
     {
@@ -1690,8 +1690,8 @@ namespace Azure.ResourceManager.Avs.Models
         public string Domain { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
-        public string PrimaryServer { get { throw null; } set { } }
-        public string SecondaryServer { get { throw null; } set { } }
+        public System.Uri PrimaryServer { get { throw null; } set { } }
+        public System.Uri SecondaryServer { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.SslCertificateStatus? Ssl { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
@@ -1733,16 +1733,16 @@ namespace Azure.ResourceManager.Avs.Models
     }
     public partial class VmHostPlacementPolicyProperties : Azure.ResourceManager.Avs.Models.PlacementPolicyProperties
     {
-        public VmHostPlacementPolicyProperties(System.Collections.Generic.IEnumerable<string> vmMembers, System.Collections.Generic.IEnumerable<string> hostMembers, Azure.ResourceManager.Avs.Models.AffinityType affinityType) { }
-        public Azure.ResourceManager.Avs.Models.AffinityType AffinityType { get { throw null; } set { } }
+        public VmHostPlacementPolicyProperties(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> vmMembers, System.Collections.Generic.IEnumerable<string> hostMembers, Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType affinityType) { }
+        public Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType AffinityType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HostMembers { get { throw null; } }
-        public System.Collections.Generic.IList<string> VmMembers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> VmMembers { get { throw null; } }
     }
     public partial class VmPlacementPolicyProperties : Azure.ResourceManager.Avs.Models.PlacementPolicyProperties
     {
-        public VmPlacementPolicyProperties(System.Collections.Generic.IEnumerable<string> vmMembers, Azure.ResourceManager.Avs.Models.AffinityType affinityType) { }
-        public Azure.ResourceManager.Avs.Models.AffinityType AffinityType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VmMembers { get { throw null; } }
+        public VmPlacementPolicyProperties(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> vmMembers, Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType affinityType) { }
+        public Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType AffinityType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> VmMembers { get { throw null; } }
     }
     public abstract partial class WorkloadNetworkDhcpEntity
     {

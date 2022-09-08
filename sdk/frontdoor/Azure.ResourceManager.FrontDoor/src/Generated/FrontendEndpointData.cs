@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="hostName"> The host name of the frontendEndpoint. Must be a domain name. </param>
         /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
-        /// <param name="sessionAffinityTtlSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
+        /// <param name="sessionAffinityTtlInSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each host (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="customHttpsProvisioningState"> Provisioning status of Custom Https of the frontendEndpoint. </param>
         /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
-        internal FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType)
+        internal FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlInSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType)
         {
             HostName = hostName;
             SessionAffinityEnabledState = sessionAffinityEnabledState;
-            SessionAffinityTtlSeconds = sessionAffinityTtlSeconds;
+            SessionAffinityTtlInSeconds = sessionAffinityTtlInSeconds;
             WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
             ResourceState = resourceState;
             CustomHttpsProvisioningState = customHttpsProvisioningState;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
         public SessionAffinityEnabledState? SessionAffinityEnabledState { get; set; }
         /// <summary> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </summary>
-        public int? SessionAffinityTtlSeconds { get; set; }
+        public int? SessionAffinityTtlInSeconds { get; set; }
         /// <summary> Defines the Web Application Firewall policy for each host (if applicable). </summary>
         internal WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
         /// <summary> Gets or sets Id. </summary>

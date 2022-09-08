@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> vCenter Single Sign On Identity Source. </summary>
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
         /// <param name="username"> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </param>
         /// <param name="password"> The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups. </param>
-        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, string primaryServer, string secondaryServer, SslCertificateStatus? ssl, string username, string password)
+        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password)
         {
             Name = name;
             Alias = @alias;
@@ -51,9 +53,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The base distinguished name for groups. </summary>
         public string BaseGroupDN { get; set; }
         /// <summary> Primary server URL. </summary>
-        public string PrimaryServer { get; set; }
+        public Uri PrimaryServer { get; set; }
         /// <summary> Secondary server URL. </summary>
-        public string SecondaryServer { get; set; }
+        public Uri SecondaryServer { get; set; }
         /// <summary> Protect LDAP communication using SSL certificate (LDAPS). </summary>
         public SslCertificateStatus? Ssl { get; set; }
         /// <summary> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </summary>

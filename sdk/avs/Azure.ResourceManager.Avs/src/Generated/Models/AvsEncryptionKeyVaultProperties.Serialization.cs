@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> keyVersion = default;
             Optional<Uri> keyVaultUrl = default;
             Optional<AvsEncryptionKeyStatus> keyState = default;
-            Optional<EncryptionVersionType> versionType = default;
+            Optional<AvsEncryptionVersionType> versionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    versionType = new EncryptionVersionType(property.Value.GetString());
+                    versionType = new AvsEncryptionVersionType(property.Value.GetString());
                     continue;
                 }
             }

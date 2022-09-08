@@ -8,6 +8,15 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
+    /// <summary>
+    /// The response object of a <see cref="DocumentModelAdministrationClient.GetOperation"/> request. Supported
+    /// operations are:
+    /// <list type="bullet">
+    ///     <item><description><see cref="DocumentModelBuildOperationDetails"/></description></item>
+    ///     <item><description><see cref="DocumentModelComposeOperationDetails"/></description></item>
+    ///     <item><description><see cref="DocumentModelCopyToOperationDetails"/></description></item>
+    /// </list>
+    /// </summary>
     [CodeGenModel("OperationDetails")]
     public partial class OperationDetails
     {

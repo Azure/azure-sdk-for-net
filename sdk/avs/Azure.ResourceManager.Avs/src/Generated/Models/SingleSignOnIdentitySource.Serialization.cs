@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(PrimaryServer))
             {
                 writer.WritePropertyName("primaryServer");
-                writer.WriteStringValue(PrimaryServer);
+                writer.WriteStringValue(PrimaryServer.AbsoluteUri);
             }
             if (Optional.IsDefined(SecondaryServer))
             {
                 writer.WritePropertyName("secondaryServer");
-                writer.WriteStringValue(SecondaryServer);
+                writer.WriteStringValue(SecondaryServer.AbsoluteUri);
             }
             if (Optional.IsDefined(Ssl))
             {
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> domain = default;
             Optional<string> baseUserDN = default;
             Optional<string> baseGroupDN = default;
-            Optional<string> primaryServer = default;
-            Optional<string> secondaryServer = default;
+            Optional<Uri> primaryServer = default;
+            Optional<Uri> secondaryServer = default;
             Optional<SslCertificateStatus> ssl = default;
             Optional<string> username = default;
             Optional<string> password = default;
@@ -109,12 +110,22 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("primaryServer"))
                 {
-                    primaryServer = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        primaryServer = null;
+                        continue;
+                    }
+                    primaryServer = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secondaryServer"))
                 {
-                    secondaryServer = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        secondaryServer = null;
+                        continue;
+                    }
+                    secondaryServer = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ssl"))

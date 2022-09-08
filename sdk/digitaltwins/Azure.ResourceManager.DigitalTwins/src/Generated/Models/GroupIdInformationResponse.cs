@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of GroupIdInformationResponse. </summary>
         internal GroupIdInformationResponse()
         {
-            Value = new ChangeTrackingList<GroupIdInformationData>();
+            Value = new ChangeTrackingList<DigitalTwinsPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of GroupIdInformationResponse. </summary>
         /// <param name="value"> The list of available private link resources for a Digital Twin. </param>
-        internal GroupIdInformationResponse(IReadOnlyList<GroupIdInformationData> value)
+        internal GroupIdInformationResponse(IReadOnlyList<DigitalTwinsPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of available private link resources for a Digital Twin. </summary>
-        public IReadOnlyList<GroupIdInformationData> Value { get; }
+        public IReadOnlyList<DigitalTwinsPrivateLinkResourceData> Value { get; }
     }
 }
