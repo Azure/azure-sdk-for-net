@@ -504,11 +504,11 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsByNetAppAccountAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetAppVolumeGroupResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroupsByNetAppAccount");
+                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroups");
                 scope.Start();
                 try
                 {
@@ -531,11 +531,11 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroupsByNetAppAccount(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
         {
             Page<NetAppVolumeGroupResult> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroupsByNetAppAccount");
+                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroups");
                 scope.Start();
                 try
                 {

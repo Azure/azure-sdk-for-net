@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.NetApp
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.SnapshotPolicyResource>> GetSnapshotPolicyAsync(string snapshotPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVault> GetVaults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVault> GetVaultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroupsByNetAppAccount(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroupsByNetAppAccountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupResult> GetVolumeGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -344,11 +344,11 @@ namespace Azure.ResourceManager.NetApp
         public long? MaximumNumberOfFiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> MountTargets { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? NetworkFeatures { get { throw null; } set { } }
-        public string NetworkSiblingSetId { get { throw null; } }
+        public System.Guid? NetworkSiblingSetId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> PlacementRules { get { throw null; } }
         public System.Collections.Generic.IList<string> ProtocolTypes { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public string ProximityPlacementGroup { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? SecurityStyle { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
         public System.Guid? SnapshotId { get { throw null; } set { } }
@@ -1169,38 +1169,38 @@ namespace Azure.ResourceManager.NetApp.Models
         public string BaremetalTenantId { get { throw null; } }
         public Azure.Core.ResourceIdentifier CapacityPoolResourceId { get { throw null; } set { } }
         public int? CloneProgress { get { throw null; } }
-        public bool? CoolAccess { get { throw null; } set { } }
         public int? CoolnessPeriod { get { throw null; } set { } }
         public string CreationToken { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection DataProtection { get { throw null; } set { } }
         public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
         public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? EnableSubvolumes { get { throw null; } set { } }
-        public bool? Encrypted { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? EncryptionKeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
         public System.Guid? FileSystemId { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsCoolAccessEnabled { get { throw null; } set { } }
         public bool? IsDefaultQuotaEnabled { get { throw null; } set { } }
+        public bool? IsEncrypted { get { throw null; } }
+        public bool? IsKerberosEnabled { get { throw null; } set { } }
+        public bool? IsLdapEnabled { get { throw null; } set { } }
         public bool? IsRestoring { get { throw null; } set { } }
-        public bool? KerberosEnabled { get { throw null; } set { } }
+        public bool? IsSmbContinuouslyAvailable { get { throw null; } set { } }
+        public bool? IsSmbEncryptionEnabled { get { throw null; } set { } }
+        public bool? IsSnapshotDirectoryVisible { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier KeyVaultPrivateEndpointResourceId { get { throw null; } set { } }
-        public bool? LdapEnabled { get { throw null; } set { } }
         public long? MaximumNumberOfFiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> MountTargets { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? NetworkFeatures { get { throw null; } set { } }
-        public string NetworkSiblingSetId { get { throw null; } }
+        public System.Guid? NetworkSiblingSetId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> PlacementRules { get { throw null; } }
         public System.Collections.Generic.IList<string> ProtocolTypes { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public string ProximityPlacementGroup { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? SecurityStyle { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
-        public bool? SmbContinuouslyAvailable { get { throw null; } set { } }
-        public bool? SmbEncryption { get { throw null; } set { } }
-        public bool? SnapshotDirectoryVisible { get { throw null; } set { } }
         public System.Guid? SnapshotId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }

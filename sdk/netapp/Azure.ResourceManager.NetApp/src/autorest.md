@@ -62,6 +62,7 @@ override-operation-name:
   Volumes_ReplicationStatus: GetReplicationStatus
   Backups_GetStatus: GetBackupStatus
   Backups_GetVolumeRestoreStatus: GetRestoreStatus
+  VolumeGroups_ListByNetAppAccount: GetVolumeGroups
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
@@ -85,7 +86,6 @@ prepend-rp-prefix:
   - ReplicationObject
   - ReplicationSchedule
   - VolumeStorageToNetworkProximity
-  - VolumeProperties
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -114,16 +114,29 @@ rename-mapping:
   Volume.properties.snapshotId: -|uuid
   Volume.properties.fileSystemId: -|uuid
   Volume.properties.backupId: -|uuid
+  Volume.properties.networkSiblingSetId: -|uuid
   Volume.properties.coolAccess: IsCoolAccessEnabled
   Volume.properties.keyVaultPrivateEndpointResourceId: -|arm-id
   Volume.properties.subnetId: -|arm-id
   Volume.properties.capacityPoolResourceId: -|arm-id
+  Volume.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
   Volume.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
   Volume.properties.kerberosEnabled: IsKerberosEnabled
   Volume.properties.smbEncryption: IsSmbEncryptionEnabled
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
+  VolumeGroupVolumeProperties.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
+  VolumeGroupVolumeProperties.properties.coolAccess: IsCoolAccessEnabled
+  VolumeGroupVolumeProperties.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
+  VolumeGroupVolumeProperties.properties.kerberosEnabled: IsKerberosEnabled
+  VolumeGroupVolumeProperties.properties.smbEncryption: IsSmbEncryptionEnabled
+  VolumeGroupVolumeProperties.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
+  VolumeGroupVolumeProperties.properties.ldapEnabled: IsLdapEnabled
+  VolumeGroupVolumeProperties.properties.encrypted: IsEncrypted
+  VolumeGroupVolumeProperties.id: -|arm-id
+  VolumeGroupVolumeProperties.type: ResourceType|resource-type
+  VolumeGroupVolumeProperties: NetAppVolumeGroupVolume
   SnapshotPolicy.properties.enabled: IsEnabled
   SnapshotPolicyPatch.properties.enabled: IsEnabled
   ActiveDirectory.aesEncryption: IsAesEncryptionEnabled
@@ -198,9 +211,6 @@ rename-mapping:
   VolumeBackupProperties: NetAppVolumeBackupConfiguration
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
   VolumeGroup: NetAppVolumeGroupResult
-  VolumeGroupVolumeProperties.id: -|arm-id
-  VolumeGroupVolumeProperties.type: ResourceType|resource-type
-  VolumeGroupVolumeProperties: NetAppVolumeGroupVolume
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
