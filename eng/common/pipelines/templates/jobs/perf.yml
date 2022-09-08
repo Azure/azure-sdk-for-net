@@ -163,6 +163,12 @@ jobs:
       artifactName: results-${{ parameters.Language }}-$(MatrixName)
     condition: always()
 
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: $(System.DefaultWorkingDirectory)/${{ parameters.Language }}-profile.zip
+      artifactName: ${{ parameters.Language }}-profile.zip
+    condition: ${{ parameters.Profile }}
+
   - template: /eng/common/TestResources/remove-test-resources.yml
     parameters:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
