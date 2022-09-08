@@ -89,6 +89,15 @@ try {
         Invoke-Block {
             & dotnet msbuild $PSScriptRoot/../service.proj /restore /t:GenerateTests /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
         }
+
+        $mgmtPackagesInServiceDirectory = Get-ChildItem -Path "$PSScriptRoot/../../sdk/$ServiceDirectory" -Directory | Where-Object { $_.Name -match "(Azure.ResourceManager)" -and $(Test-Path("$($_.FullName)/src")) }
+        if($mgmtPackagesInServiceDirectory.Length -gt 0) {
+    
+            Write-Host "Re-generating ci.mgmt.yml for $ServiceDirectory"
+            Invoke-Block {
+                & $PSScriptRoot/Update-Mgmt-CI.ps1
+            }
+        }
     }
 
     Write-Host "Re-generating snippets"
