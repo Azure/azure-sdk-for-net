@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- If the `eastus2.mixedreality.azure.com` account domain is provided, it will be changed to `mixedreality.azure.com` in
+  order to prevent AAD authentication issues. Other regions are unaffected.
+
 ### Other Changes
 
 ## 1.1.0 (2022-07-28)

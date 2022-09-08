@@ -10,6 +10,8 @@ namespace Azure.MixedReality.Authentication
 {
     internal static class AuthenticationEndpoint
     {
+        private const string EastUS2Prefix = "eastus2.";
+
         /// <summary>
         /// Constructs an authentication endpoint from a service domain.
         /// </summary>
@@ -18,6 +20,13 @@ namespace Azure.MixedReality.Authentication
         public static Uri ConstructFromDomain(string accountDomain)
         {
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
+
+            if (accountDomain.StartsWith(EastUS2Prefix, StringComparison.OrdinalIgnoreCase))
+            {
+                // The Mixed Reality STS instance in East US 2 prefers "sts.mixedreality.azure.com" over "sts.eastus2.mixedreality.azure.com".
+                // AAD authentication will not work using "sts.eastus2.mixedreality.azure.com".
+                accountDomain = accountDomain.Substring(EastUS2Prefix.Length);
+            }
 
             if (!Uri.TryCreate($"https://sts.{accountDomain}", UriKind.Absolute, out Uri? result))
             {

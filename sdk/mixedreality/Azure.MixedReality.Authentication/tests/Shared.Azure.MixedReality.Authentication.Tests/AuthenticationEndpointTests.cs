@@ -8,13 +8,14 @@ namespace Azure.MixedReality.Authentication.Tests
 {
     public class AuthenticationEndpointTests
     {
-        [Test]
-        public void ConstructFromDomain()
+        [TestCase("mixedreality.com", "sts.mixedreality.com")]
+        [TestCase("eastus2.mixedreality.com", "sts.mixedreality.com")]
+        [TestCase("westus2.mixedreality.com", "sts.westus2.mixedreality.com")]
+        public void ConstructFromDomain(string input, string expected)
         {
-            Uri expected = new Uri("https://sts.eastus2.mixedreality.com");
-            Uri actual = AuthenticationEndpoint.ConstructFromDomain("eastus2.mixedreality.com");
+            Uri actual = AuthenticationEndpoint.ConstructFromDomain(input);
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual.Host);
         }
 
         [Test]
