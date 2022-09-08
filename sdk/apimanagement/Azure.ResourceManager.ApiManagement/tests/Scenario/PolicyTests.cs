@@ -3,12 +3,14 @@
 
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
@@ -134,14 +136,27 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // set policy
             policyDoc = XDocument.Parse(ApiValid);
+            PolicyContractData data = null;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                data = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString()
+                };
+            }
+            else
+            {
+                data = new PolicyContractData()
+                {
+                    Value = policyDoc.ToString().Replace("\n", "\r\n")
+                };
+            }
 
             var setResponse = (await apiPolicyCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 "policy",
-                new PolicyContractData()
-                {
-                    Value = policyDoc.ToString()
-                })).Value;
+                data
+                )).Value;
 
             Assert.NotNull(setResponse);
 
