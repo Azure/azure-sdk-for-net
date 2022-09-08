@@ -39,6 +39,8 @@ namespace IotHub.Tests.ScenarioTests
         {
             RecorderUtilities.JsonPathSanitizers.Add("$..primaryKey");
             RecorderUtilities.JsonPathSanitizers.Add("$..secondaryKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..PrimaryKey");
+            RecorderUtilities.JsonPathSanitizers.Add("$..SecondaryKey");
         }
 
         protected void Initialize(MockContext context)
