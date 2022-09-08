@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> Actions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ServiceAlertSummaryGroup
     {
         public ServiceAlertSummaryGroup() { }
-        public string Groupedby { get { throw null; } set { } }
+        public string GroupedBy { get { throw null; } set { } }
         public long? SmartGroupsCount { get { throw null; } set { } }
         public long? Total { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo> Values { get { throw null; } }
