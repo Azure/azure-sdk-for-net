@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// Please note <see cref="EntityQueryItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="InsightQueryItem"/>.
     /// </summary>
-    public partial class EntityQueryItem : ResourceData
+    public abstract partial class EntityQueryItem : ResourceData
     {
         /// <summary> Initializes a new instance of EntityQueryItem. </summary>
-        internal EntityQueryItem()
+        protected EntityQueryItem()
         {
         }
 

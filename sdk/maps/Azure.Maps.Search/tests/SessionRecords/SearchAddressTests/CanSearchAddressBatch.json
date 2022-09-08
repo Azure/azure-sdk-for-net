@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "102",
         "Content-Type": "application/json",
-        "traceparent": "00-89394e6354c873ba65e0b5b6898f803d-1324854c00bf6239-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-e87e632f1fbde85a5ede7df42f1f0c23-46753bb138aea4b3-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "636895091cfc94eabdc21342f9ae9e00",
+        "x-ms-client-request-id": "58e8fa57605a2f377de299ecc669deaf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 30 Aug 2022 05:39:49 GMT",
+        "Date": "Mon, 05 Sep 2022 03:06:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 015CEB649753483787C39B01830D2563 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:49Z"
+        "X-MSEdge-Ref": "Ref A: CABC2886A8DA47799FF3CCE418DA6EC6 Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:16Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -43,7 +43,7 @@
               "summary": {
                 "query": "microsoft campus",
                 "queryType": "NON_NEAR",
-                "queryTime": 4,
+                "queryTime": 3,
                 "numResults": 1,
                 "offset": 0,
                 "totalResults": 1,
@@ -52,7 +52,7 @@
               "results": [
                 {
                   "type": "Street",
-                  "id": "US/STR/p3/2753032",
+                  "id": "US/STR/p2/1557700",
                   "score": 4.1924114227,
                   "matchConfidence": {
                     "score": 1
@@ -93,7 +93,7 @@
               "summary": {
                 "query": "millenium",
                 "queryType": "NON_NEAR",
-                "queryTime": 4,
+                "queryTime": 5,
                 "numResults": 2,
                 "offset": 0,
                 "totalResults": 2,
@@ -102,7 +102,7 @@
               "results": [
                 {
                   "type": "Street",
-                  "id": "US/STR/p3/1660572",
+                  "id": "US/STR/p1/1964792",
                   "score": 2.0959999561,
                   "matchConfidence": {
                     "score": 1
@@ -139,10 +139,10 @@
                 },
                 {
                   "type": "Street",
-                  "id": "US/STR/p0/331533",
+                  "id": "US/STR/p2/4573596",
                   "score": 2.0754508972,
                   "matchConfidence": {
-                    "score": 0.9361310421463442
+                    "score": 0.9356123084875305
                   },
                   "address": {
                     "streetName": "Millenium Parkway",
@@ -187,6 +187,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "768585832"
+    "RandomSeed": "328920824"
   }
 }

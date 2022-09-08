@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> policyDefinitionReferenceId = default;
             Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
             Optional<string> effect = default;
-            Optional<SummaryResults> results = default;
+            Optional<PolicySummaryResults> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = SummaryResults.DeserializeSummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
             }

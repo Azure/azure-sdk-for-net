@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DigitalTwins
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, CheckNameContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, DigitalTwinsNameContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, CheckNameContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DigitalTwinsNameResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -528,9 +528,9 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 case 200:
                     {
-                        CheckNameResult value = default;
+                        DigitalTwinsNameResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
+                        value = DigitalTwinsNameResult.DeserializeDigitalTwinsNameResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameResult> CheckNameAvailability(string subscriptionId, AzureLocation location, CheckNameContent content, CancellationToken cancellationToken = default)
+        public Response<DigitalTwinsNameResult> CheckNameAvailability(string subscriptionId, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -556,9 +556,9 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 case 200:
                     {
-                        CheckNameResult value = default;
+                        DigitalTwinsNameResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
+                        value = DigitalTwinsNameResult.DeserializeDigitalTwinsNameResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

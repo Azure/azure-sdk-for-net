@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "204",
         "Content-Type": "application/json",
-        "traceparent": "00-2948a9762359d3f307b1644c0425ef1a-fb50b575b2b22805-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-74287c455c0d0a775d7af12801481761-fd3a532eb5731270-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "8c535da84c2bca8dd86fc864c05cd2b5",
+        "x-ms-client-request-id": "0495ab54be21ae56df339d507ed7e6d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -41,9 +41,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10662",
+        "Content-Length": "10740",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Aug 2022 05:39:35 GMT",
+        "Date": "Mon, 05 Sep 2022 03:06:06 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -52,13 +52,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: D7A5A29229114D05907F89967183561C Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:36Z"
+        "X-MSEdge-Ref": "Ref A: 00E2A1700BA2478394F202F13EC5587D Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:07Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 14,
+          "queryTime": 9,
           "numResults": 10,
           "offset": 0,
           "totalResults": 64,
@@ -67,86 +67,12 @@
         "results": [
           {
             "type": "POI",
-            "id": "840061001925567",
-            "score": 2.1455433369,
-            "info": "search:ta:840061001925567-US",
+            "id": "840069001883543",
+            "score": 2.145586729,
+            "info": "search:ta:840069001883543-US",
             "poi": {
-              "name": "Stray Bar",
-              "phone": "\u002B1 415-821-9263",
-              "categorySet": [
-                {
-                  "id": 9376003
-                }
-              ],
-              "url": "www.straybarsf.com",
-              "categories": [
-                "caf\u00E9/pub",
-                "pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "pub"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "309",
-              "streetName": "Cortland Avenue",
-              "municipalitySubdivision": "Bernal Heights",
-              "municipality": "San Francisco",
-              "countrySecondarySubdivision": "San Francisco",
-              "countrySubdivision": "CA",
-              "countrySubdivisionName": "California",
-              "postalCode": "94110",
-              "extendedPostalCode": "94110-5535",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "309 Cortland Avenue, San Francisco, CA 94110",
-              "localName": "San Francisco"
-            },
-            "position": {
-              "lat": 37.73942,
-              "lon": -122.41824
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 37.74032,
-                "lon": -122.41938
-              },
-              "btmRightPoint": {
-                "lat": 37.73852,
-                "lon": -122.4171
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 37.73923,
-                  "lon": -122.41824
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "840069002766840",
-            "score": 2.1455183029,
-            "info": "search:ta:840069002766840-US",
-            "poi": {
-              "name": "La Paloma Cafe",
-              "phone": "\u002B1 415-654-5147",
+              "name": "Cafe\u0027 Montechristo",
+              "phone": "\u002B1 415-334-2326",
               "categorySet": [
                 {
                   "id": 9376002
@@ -173,41 +99,261 @@
               ]
             },
             "address": {
-              "streetNumber": "257",
-              "streetName": "Randall Street",
-              "municipalitySubdivision": "Glen Park",
+              "streetNumber": "2101",
+              "streetName": "Geneva Avenue",
+              "municipalitySubdivision": "Visitacion Valley",
               "municipality": "San Francisco",
               "countrySecondarySubdivision": "San Francisco",
               "countrySubdivision": "CA",
               "countrySubdivisionName": "California",
-              "postalCode": "94131",
-              "extendedPostalCode": "94131-2738",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-3118",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "257 Randall Street, San Francisco, CA 94131",
+              "freeformAddress": "2101 Geneva Avenue, San Francisco, CA 94134",
               "localName": "San Francisco"
             },
             "position": {
-              "lat": 37.74004,
-              "lon": -122.42905
+              "lat": 37.70877,
+              "lon": -122.42068
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 37.74094,
-                "lon": -122.43019
+                "lat": 37.70967,
+                "lon": -122.42182
               },
               "btmRightPoint": {
-                "lat": 37.73914,
-                "lon": -122.42791
+                "lat": 37.70787,
+                "lon": -122.41954
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 37.74022,
-                  "lon": -122.42889
+                  "lat": 37.70851,
+                  "lon": -122.42075
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069020982288",
+            "score": 2.1455702782,
+            "info": "search:ta:840069020982288-US",
+            "poi": {
+              "name": "La Cafeto Coffee Shop",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "111",
+              "streetName": "Richland Avenue",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5839",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "111 Richland Avenue, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.73615,
+              "lon": -122.4241
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.73705,
+                "lon": -122.42524
+              },
+              "btmRightPoint": {
+                "lat": 37.73525,
+                "lon": -122.42296
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.73603,
+                  "lon": -122.42412
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840061002109078",
+            "score": 2.1455478668,
+            "info": "search:ta:840061002109078-US",
+            "poi": {
+              "name": "Noeteca",
+              "phone": "\u002B1 415-824-5524",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "www.noeteca.com",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "1551",
+              "streetName": "Dolores Street",
+              "municipalitySubdivision": "Noe Valley",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-4928",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "1551 Dolores Street, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.74454,
+              "lon": -122.42407
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74544,
+                "lon": -122.42521
+              },
+              "btmRightPoint": {
+                "lat": 37.74364,
+                "lon": -122.42293
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.74452,
+                  "lon": -122.42438
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069019423076",
+            "score": 2.1455068588,
+            "info": "search:ta:840069019423076-US",
+            "poi": {
+              "name": "Cafe St. Jorge",
+              "phone": "\u002B1 415-814-2028",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "www.cafestjorge.com",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "3438",
+              "streetName": "Mission Street",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5437",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "3438 Mission Street, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.74164,
+              "lon": -122.42272
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74254,
+                "lon": -122.42386
+              },
+              "btmRightPoint": {
+                "lat": 37.74074,
+                "lon": -122.42158
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.74157,
+                  "lon": -122.42248
                 }
               }
             ]
@@ -215,7 +361,7 @@
           {
             "type": "POI",
             "id": "840069019610692",
-            "score": 2.1455101967,
+            "score": 2.145503521,
             "info": "search:ta:840069019610692-US",
             "poi": {
               "name": "Martha \u0026 Bros. Coffee",
@@ -236,11 +382,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "coffee shop"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "coffee shop"
                     }
                   ]
                 }
@@ -288,16 +434,18 @@
           },
           {
             "type": "POI",
-            "id": "840069020900640",
-            "score": 2.1454901695,
-            "info": "search:ta:840069020900640-US",
+            "id": "840067000012368",
+            "score": 2.1454954147,
+            "info": "search:ta:840067000012368-US",
             "poi": {
-              "name": "Canyon Coffee Bar",
+              "name": "Cafe Xo",
+              "phone": "\u002B1 415-826-3535",
               "categorySet": [
                 {
                   "id": 9376006
                 }
               ],
+              "url": "www.cafexo.com",
               "categories": [
                 "caf\u00E9/pub",
                 "coffee shop"
@@ -308,210 +456,64 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "coffee shop"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "coffee shop"
                     }
                   ]
                 }
               ]
             },
             "address": {
-              "streetName": "Wilder Street",
-              "municipalitySubdivision": "Glen Park",
+              "streetNumber": "1799",
+              "streetName": "Church Street",
+              "municipalitySubdivision": "Noe Valley",
               "municipality": "San Francisco",
               "countrySecondarySubdivision": "San Francisco",
               "countrySubdivision": "CA",
               "countrySubdivisionName": "California",
               "postalCode": "94131",
-              "extendedPostalCode": "94131-3007",
+              "extendedPostalCode": "94131-2451",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Wilder Street, San Francisco, CA 94131",
+              "freeformAddress": "1799 Church Street, San Francisco, CA 94131",
               "localName": "San Francisco"
             },
             "position": {
-              "lat": 37.73416,
-              "lon": -122.43386
+              "lat": 37.74226,
+              "lon": -122.42666
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 37.73506,
-                "lon": -122.435
+                "lat": 37.74316,
+                "lon": -122.4278
               },
               "btmRightPoint": {
-                "lat": 37.73326,
-                "lon": -122.43272
+                "lat": 37.74136,
+                "lon": -122.42552
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 37.73425,
-                  "lon": -122.43385
+                  "lat": 37.74218,
+                  "lon": -122.42654
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "840069021057256",
-            "score": 2.1454889774,
-            "info": "search:ta:840069021057256-US",
+            "id": "840069020843503",
+            "score": 2.1454856396,
+            "info": "search:ta:840069020843503-US",
             "poi": {
-              "name": "Laughing Monk Brewing",
-              "phone": "\u002B1 415-890-5970",
-              "categorySet": [
-                {
-                  "id": 9376007
-                }
-              ],
-              "url": "laughingmonkbrewing.com",
-              "categories": [
-                "caf\u00E9/pub",
-                "microbrewery/beer garden"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "microbrewery/beer garden"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "1439",
-              "streetName": "Egbert Avenue",
-              "municipalitySubdivision": "Bayview",
-              "municipality": "San Francisco",
-              "countrySecondarySubdivision": "San Francisco",
-              "countrySubdivision": "CA",
-              "countrySubdivisionName": "California",
-              "postalCode": "94124",
-              "extendedPostalCode": "94124-3221",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "1439 Egbert Avenue, San Francisco, CA 94124",
-              "localName": "San Francisco"
-            },
-            "position": {
-              "lat": 37.72294,
-              "lon": -122.39345
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 37.72384,
-                "lon": -122.39459
-              },
-              "btmRightPoint": {
-                "lat": 37.72204,
-                "lon": -122.39231
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 37.72308,
-                  "lon": -122.39335
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "840069005615432",
-            "score": 2.1454834938,
-            "info": "search:ta:840069005615432-US",
-            "poi": {
-              "name": "Artis Coffee",
-              "phone": "\u002B1 415-875-9081",
-              "categorySet": [
-                {
-                  "id": 9376002
-                }
-              ],
-              "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "1439",
-              "streetName": "Egbert Avenue",
-              "municipalitySubdivision": "Bayview",
-              "municipality": "San Francisco",
-              "countrySecondarySubdivision": "San Francisco",
-              "countrySubdivision": "CA",
-              "countrySubdivisionName": "California",
-              "postalCode": "94124",
-              "extendedPostalCode": "94124-3221",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "1439 Egbert Avenue, San Francisco, CA 94124",
-              "localName": "San Francisco"
-            },
-            "position": {
-              "lat": 37.72286,
-              "lon": -122.39326
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 37.72376,
-                "lon": -122.3944
-              },
-              "btmRightPoint": {
-                "lat": 37.72196,
-                "lon": -122.39212
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 37.72308,
-                  "lon": -122.39335
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "840069021108745",
-            "score": 2.1454780102,
-            "info": "search:ta:840069021108745-US",
-            "poi": {
-              "name": "Omg Tea",
-              "phone": "\u002B1 415-349-4717",
+              "name": "5 Degree Tea House",
+              "phone": "\u002B1 415-468-8123",
               "categorySet": [
                 {
                   "id": 9376005
@@ -538,7 +540,7 @@
               ]
             },
             "address": {
-              "streetNumber": "2891",
+              "streetNumber": "2527",
               "streetName": "San Bruno Avenue",
               "municipalitySubdivision": "Portola",
               "municipality": "San Francisco",
@@ -546,104 +548,33 @@
               "countrySubdivision": "CA",
               "countrySubdivisionName": "California",
               "postalCode": "94134",
-              "extendedPostalCode": "94134-1510",
+              "extendedPostalCode": "94134-1504",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "2891 San Bruno Avenue, San Francisco, CA 94134",
+              "freeformAddress": "2527 San Bruno Avenue, San Francisco, CA 94134",
               "localName": "San Francisco"
             },
             "position": {
-              "lat": 37.72544,
-              "lon": -122.40258
+              "lat": 37.72984,
+              "lon": -122.40423
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 37.72634,
-                "lon": -122.40372
+                "lat": 37.73074,
+                "lon": -122.40537
               },
               "btmRightPoint": {
-                "lat": 37.72454,
-                "lon": -122.40144
+                "lat": 37.72894,
+                "lon": -122.40309
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 37.72543,
-                  "lon": -122.4027
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "840069021143845",
-            "score": 2.1454720497,
-            "info": "search:ta:840069021143845-US",
-            "poi": {
-              "name": "Aps Cafe",
-              "categorySet": [
-                {
-                  "id": 9376002
-                }
-              ],
-              "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetName": "24th Street",
-              "municipalitySubdivision": "Noe Valley",
-              "municipality": "San Francisco",
-              "countrySecondarySubdivision": "San Francisco",
-              "countrySubdivision": "CA",
-              "countrySubdivisionName": "California",
-              "postalCode": "94114",
-              "extendedPostalCode": "94114-3600",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "24th Street, San Francisco, CA 94114",
-              "localName": "San Francisco"
-            },
-            "position": {
-              "lat": 37.75137,
-              "lon": -122.43451
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 37.75227,
-                "lon": -122.43565
-              },
-              "btmRightPoint": {
-                "lat": 37.75047,
-                "lon": -122.43337
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 37.75127,
-                  "lon": -122.43451
+                  "lat": 37.72977,
+                  "lon": -122.4045
                 }
               }
             ]
@@ -651,7 +582,7 @@
           {
             "type": "POI",
             "id": "840069020941831",
-            "score": 2.1454691887,
+            "score": 2.1454715729,
             "info": "search:ta:840069020941831-US",
             "poi": {
               "name": "Candlestick Coffee",
@@ -671,11 +602,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "coffee shop"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "coffee shop"
                     }
                   ]
                 }
@@ -723,17 +654,16 @@
           },
           {
             "type": "POI",
-            "id": "840069019289366",
-            "score": 2.1454687119,
-            "info": "search:ta:840069019289366-US",
+            "id": "840067000009371",
+            "score": 2.145468235,
+            "info": "search:ta:840067000009371-US",
             "poi": {
-              "name": "Pinhole Coffee",
+              "name": "No\u00EB Cafe",
               "categorySet": [
                 {
                   "id": 9376002
                 }
               ],
-              "url": "www.pinholecoffee.com",
               "categories": [
                 "caf\u00E9",
                 "caf\u00E9/pub"
@@ -755,41 +685,114 @@
               ]
             },
             "address": {
-              "streetNumber": "231",
-              "streetName": "Cortland Avenue",
-              "municipalitySubdivision": "Bernal Heights",
+              "streetNumber": "1299",
+              "streetName": "Sanchez Street",
+              "municipalitySubdivision": "Noe Valley",
               "municipality": "San Francisco",
               "countrySecondarySubdivision": "San Francisco",
               "countrySubdivision": "CA",
               "countrySubdivisionName": "California",
-              "postalCode": "94110",
-              "extendedPostalCode": "94110-5556",
+              "postalCode": "94114",
+              "extendedPostalCode": "94114-3834",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "231 Cortland Avenue, San Francisco, CA 94110",
+              "freeformAddress": "1299 Sanchez Street, San Francisco, CA 94114",
               "localName": "San Francisco"
             },
             "position": {
-              "lat": 37.73967,
-              "lon": -122.41894
+              "lat": 37.74847,
+              "lon": -122.42923
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 37.74057,
-                "lon": -122.42008
+                "lat": 37.74937,
+                "lon": -122.43037
               },
               "btmRightPoint": {
-                "lat": 37.73877,
-                "lon": -122.4178
+                "lat": 37.74757,
+                "lon": -122.42809
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 37.73949,
-                  "lon": -122.41906
+                  "lat": 37.74845,
+                  "lon": -122.42936
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069004706210",
+            "score": 2.1454668045,
+            "info": "search:ta:840069004706210-US",
+            "poi": {
+              "name": "Net Stop",
+              "phone": "\u002B1 415-587-7882",
+              "categorySet": [
+                {
+                  "id": 9376004
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "internet caf\u00E9"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "internet caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "4458",
+              "streetName": "Mission Street",
+              "municipalitySubdivision": "Mission Terrace",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94112",
+              "extendedPostalCode": "94112-1946",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "4458 Mission Street, San Francisco, CA 94112",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.72642,
+              "lon": -122.43385
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.72732,
+                "lon": -122.43499
+              },
+              "btmRightPoint": {
+                "lat": 37.72552,
+                "lon": -122.43271
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72641,
+                  "lon": -122.4335
                 }
               }
             ]
@@ -802,6 +805,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1158864233"
+    "RandomSeed": "1452535771"
   }
 }

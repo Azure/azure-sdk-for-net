@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _domainClientDiagnostics;
-        private DomainsRestOperations _domainRestClient;
+        private ClientDiagnostics _eventGridDomainDomainsClientDiagnostics;
+        private DomainsRestOperations _eventGridDomainDomainsRestClient;
         private ClientDiagnostics _eventSubscriptionClientDiagnostics;
         private EventSubscriptionsRestOperations _eventSubscriptionRestClient;
-        private ClientDiagnostics _topicClientDiagnostics;
-        private TopicsRestOperations _topicRestClient;
+        private ClientDiagnostics _eventGridTopicTopicsClientDiagnostics;
+        private TopicsRestOperations _eventGridTopicTopicsRestClient;
         private ClientDiagnostics _partnerConfigurationClientDiagnostics;
         private PartnerConfigurationsRestOperations _partnerConfigurationRestClient;
         private ClientDiagnostics _partnerNamespaceClientDiagnostics;
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        private ClientDiagnostics DomainClientDiagnostics => _domainClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", DomainResource.ResourceType.Namespace, Diagnostics);
-        private DomainsRestOperations DomainRestClient => _domainRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DomainResource.ResourceType));
+        private ClientDiagnostics EventGridDomainDomainsClientDiagnostics => _eventGridDomainDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridDomainResource.ResourceType.Namespace, Diagnostics);
+        private DomainsRestOperations EventGridDomainDomainsRestClient => _eventGridDomainDomainsRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridDomainResource.ResourceType));
         private ClientDiagnostics EventSubscriptionClientDiagnostics => _eventSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventSubscriptionResource.ResourceType.Namespace, Diagnostics);
         private EventSubscriptionsRestOperations EventSubscriptionRestClient => _eventSubscriptionRestClient ??= new EventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventSubscriptionResource.ResourceType));
-        private ClientDiagnostics TopicClientDiagnostics => _topicClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", TopicResource.ResourceType.Namespace, Diagnostics);
-        private TopicsRestOperations TopicRestClient => _topicRestClient ??= new TopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TopicResource.ResourceType));
+        private ClientDiagnostics EventGridTopicTopicsClientDiagnostics => _eventGridTopicTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicResource.ResourceType.Namespace, Diagnostics);
+        private TopicsRestOperations EventGridTopicTopicsRestClient => _eventGridTopicTopicsRestClient ??= new TopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridTopicResource.ResourceType));
         private ClientDiagnostics PartnerConfigurationClientDiagnostics => _partnerConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerConfigurationResource.ResourceType.Namespace, Diagnostics);
         private PartnerConfigurationsRestOperations PartnerConfigurationRestClient => _partnerConfigurationRestClient ??= new PartnerConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PartnerConfigurationResource.ResourceType));
         private ClientDiagnostics PartnerNamespaceClientDiagnostics => _partnerNamespaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespaceResource.ResourceType.Namespace, Diagnostics);
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DomainResource> GetDomainsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridDomainResource> GetEventGridDomainsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DomainResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventGridDomainResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DomainClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomains");
+                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
                 scope.Start();
                 try
                 {
-                    var response = await DomainRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventGridDomainDomainsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.EventGrid
                     throw;
                 }
             }
-            async Task<Page<DomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventGridDomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DomainClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomains");
+                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
                 scope.Start();
                 try
                 {
-                    var response = await DomainRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventGridDomainDomainsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DomainResource> GetDomains(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridDomainResource> GetEventGridDomains(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DomainResource> FirstPageFunc(int? pageSizeHint)
+            Page<EventGridDomainResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DomainClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomains");
+                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
                 scope.Start();
                 try
                 {
-                    var response = DomainRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventGridDomainDomainsRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.EventGrid
                     throw;
                 }
             }
-            Page<DomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventGridDomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DomainClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomains");
+                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
                 scope.Start();
                 try
                 {
-                    var response = DomainRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventGridDomainDomainsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionResource> GetGlobalBySubscriptionForTopicTypeEventSubscriptionsAsync(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicTypeAsync(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionResource> GetGlobalBySubscriptionForTopicTypeEventSubscriptions(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicType(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionResource> GetRegionalBySubscriptionEventSubscriptionsAsync(AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsAsync(AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionResource> GetRegionalBySubscriptionEventSubscriptions(AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventSubscriptionResource> GetRegionalEventSubscriptions(AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
@@ -350,11 +350,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionResource> GetRegionalBySubscriptionForTopicTypeEventSubscriptionsAsync(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicTypeAsync(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -396,11 +396,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionResource> GetRegionalBySubscriptionForTopicTypeEventSubscriptions(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicType(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalBySubscriptionForTopicTypeEventSubscriptions");
+                using var scope = EventSubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
@@ -439,17 +439,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopicResource> GetTopicsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TopicResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventGridTopicResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = TopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopics");
+                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
                 scope.Start();
                 try
                 {
-                    var response = await TopicRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventGridTopicTopicsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -457,14 +457,14 @@ namespace Azure.ResourceManager.EventGrid
                     throw;
                 }
             }
-            async Task<Page<TopicResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventGridTopicResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = TopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopics");
+                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
                 scope.Start();
                 try
                 {
-                    var response = await TopicRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventGridTopicTopicsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -483,17 +483,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopicResource> GetTopics(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridTopicResource> GetEventGridTopics(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<TopicResource> FirstPageFunc(int? pageSizeHint)
+            Page<EventGridTopicResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = TopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopics");
+                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
                 scope.Start();
                 try
                 {
-                    var response = TopicRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventGridTopicTopicsRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -501,14 +501,14 @@ namespace Azure.ResourceManager.EventGrid
                     throw;
                 }
             }
-            Page<TopicResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventGridTopicResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = TopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTopics");
+                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
                 scope.Start();
                 try
                 {
-                    var response = TopicRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventGridTopicTopicsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

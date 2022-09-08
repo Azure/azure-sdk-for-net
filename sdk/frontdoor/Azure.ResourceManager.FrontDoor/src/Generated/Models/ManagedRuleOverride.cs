@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, ActionType? action, IList<ManagedRuleExclusion> exclusions)
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, IList<ManagedRuleExclusion> exclusions)
         {
             RuleId = ruleId;
             EnabledState = enabledState;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
         public ManagedRuleEnabledState? EnabledState { get; set; }
         /// <summary> Describes the override action to be applied when rule matches. </summary>
-        public ActionType? Action { get; set; }
+        public RuleMatchActionType? Action { get; set; }
         /// <summary> Describes the exclusions that are applied to this specific rule. </summary>
         public IList<ManagedRuleExclusion> Exclusions { get; }
     }

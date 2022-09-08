@@ -262,6 +262,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // to log here.
                 throw;
             }
+            catch (AmqpException amqpException)
+                when (_isSessionReceiver && amqpException.Error.Condition.Equals(AmqpClientConstants.TimeoutError))
+            {
+                // When this occurs during accepting a session, it will be logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync so it would be redundant
+                // to log here. This exception occurs if we get back a timeout error from the service before the client timeout.
+                // Both exceptions would be translated to a ServiceBusException with ServiceBusFailureReason.ServiceTimeout before being
+                // thrown to the user.
+                throw;
+            }
+            catch (OperationCanceledException opEx)
+                when (_isSessionReceiver && opEx is not TaskCanceledException)
+            {
+                // Do not log as this will be translated to a TimeoutException and logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync.
+                throw;
+            }
             catch (OperationCanceledException)
                 when (_isProcessor && cancellationToken.IsCancellationRequested)
             {
@@ -288,14 +305,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
-                {
-                    var (receiver, maxMessages, maxWaitTime) = value;
-                    return await receiver.ReceiveMessagesAsyncInternal(
-                        maxMessages,
-                        maxWaitTime,
-                        timeout,
-                        token).ConfigureAwait(false);
-                },
+            {
+                var (receiver, maxMessages, maxWaitTime) = value;
+                return await receiver.ReceiveMessagesAsyncInternal(
+                    maxMessages,
+                    maxWaitTime,
+                    timeout,
+                    token).ConfigureAwait(false);
+            },
                 (this, maxMessages, maxWaitTime),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
@@ -374,7 +391,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                    registration.Dispose();
+                registration.Dispose();
             }
         }
 
@@ -778,7 +795,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[]{ lockToken };
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[] { lockToken };
             amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
             if (deadLetterReason != null)

@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
+    // Data plane generated client. The Configuration service client.
     /// <summary> The Configuration service client. </summary>
     public partial class ConfigurationClient
     {

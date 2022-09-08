@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.13 (Unreleased)
+## 1.0.0 (2022-09-08)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+This is the first stable release of the Azure Storage management library.
 
 ### Other Changes
+
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.12 (2022-08-18)
 

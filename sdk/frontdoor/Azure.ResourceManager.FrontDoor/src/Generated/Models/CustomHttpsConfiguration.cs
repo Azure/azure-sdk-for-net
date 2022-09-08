@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </param>
-        public CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, MinimumTLSVersion minimumTlsVersion)
+        public CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion)
         {
             CertificateSource = certificateSource;
             ProtocolType = protocolType;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="vault"> The Key Vault containing the SSL certificate. </param>
         /// <param name="secretName"> The name of the Key Vault secret representing the full certificate PFX. </param>
         /// <param name="secretVersion"> The version of the Key Vault secret representing the full certificate PFX. </param>
-        internal CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, MinimumTLSVersion minimumTlsVersion, FrontDoorCertificateType? certificateType, WritableSubResource vault, string secretName, string secretVersion)
+        internal CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion, FrontDoorEndpointConnectionCertificateType? certificateType, WritableSubResource vault, string secretName, string secretVersion)
         {
             CertificateSource = certificateSource;
             ProtocolType = protocolType;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
         public FrontDoorTlsProtocolType ProtocolType { get; set; }
         /// <summary> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </summary>
-        public MinimumTLSVersion MinimumTlsVersion { get; set; }
+        public FrontDoorRequiredMinimumTlsVersion MinimumTlsVersion { get; set; }
         /// <summary> Defines the type of the certificate used for secure connections to a frontendEndpoint. </summary>
-        public FrontDoorCertificateType? CertificateType { get; set; }
+        public FrontDoorEndpointConnectionCertificateType? CertificateType { get; set; }
         /// <summary> The Key Vault containing the SSL certificate. </summary>
         internal WritableSubResource Vault { get; set; }
         /// <summary> Gets or sets Id. </summary>
