@@ -53,6 +53,12 @@ directive:
   - remove-operation: ServicePrincipals_ListBySubscription
   - remove-operation: ServicePrincipals_Get
 
+# add 'format: duration' to swagger (will be updated via Swagger spec file)
+  - from: automanage.json
+    where: $.definitions.AssignmentReportProperties.properties.duration
+    transform: |
+      $.format = "duration"
+
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
     where: $.paths
