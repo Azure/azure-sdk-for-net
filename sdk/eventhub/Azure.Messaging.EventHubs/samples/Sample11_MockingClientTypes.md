@@ -10,7 +10,9 @@ Another important focus of this document is guidance on abstracting . The Event 
 
 When using batches to send to Event Hubs, many applications have specific needs for creating batches and preparing to send them. When testing, applications only need to focus their testing on the creation of batches, and the call to send. Once any of the send methods found with the `EventHubProducerClient` are called it can be assumed that the library will perform as expected.
 
-The following snippet demonstrates how to mock an `EventHubProducerClient` using Moq, and `EventDataBatch` and `EventData` instances using the `EventHubsModelFactory`. Mocked data batches can be used to test that an application is adding events to the batch properly. The custom `TryAdd` callback can be used to test all code paths for adding events to the batch. The mocked `EventHubProducerClient` can be used to verify that `SendAsync` was called, as demonstrated below.
+The following snippet demonstrates how to mock an `EventHubProducerClient` using Moq, and `EventDataBatch` and `EventData` instances using the `EventHubsModelFactory`. Mocked data batches can be used to test that an application is adding events to the batch properly. The custom `TryAdd` callback can be used to test all code paths for adding events to the batch. 
+
+The mocked `EventHubProducerClient` can be used to verify that `SendAsync` was called. The sample below is not a complete test. It can be customized to call an application-defined method that contains a call to `SendAsync`, and the arguments to `Verify` can be adjusted to match the expected outcome.
 
 ```C# Snippet:EventHubs_Sample11_MockingEventDataBatch
 var mockProducer = new Mock<EventHubProducerClient>();
@@ -98,7 +100,7 @@ var producer = mockProducer.Object;
 
 ## Mocking `EventHubConsumerClient`, `LastEnqueuedEventProperties`, and `PartitionContext`
 
-When testing code that is dependent on the `EventHubConsumerClient`, an application only needs to determine a representative set of events, event properties, and contexts that their application will see. Tests can mock each data type, and then set up the consumer client to output representative scenarios.
+When testing code that is dependent on the `EventHubConsumerClient`, an application only needs to determine a representative set of events, event properties, and contexts that their application could potentially see. Tests can mock each data type, and then set up the consumer client to output representative scenarios.
 
 ```C# Snippet:EventHubs_Sample11_MockingConsumerClient
 // Create a mock of the EventHubConsumerClient
@@ -108,10 +110,10 @@ var cancellationTokenSource = new CancellationTokenSource();
 
 // Create a mock of LastEnqueuedEventProperties using the model factory
 var lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
-    default,
-    default,
-    default, // TODO
-    default);
+    default, // Can set the sequence number
+    default, // Offset
+    default, // Time of last enqueued event
+    default); // or time of last received event
 
 // Create a mock of PartitionContext using the model factory
 var partitionContext = EventHubsModelFactory.PartitionContext(
@@ -137,7 +139,7 @@ var consumer = mockConsumer.Object;
 
 ## Mocking `PartitionReceiver`
 
-The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return an empty batch.
+The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return an empty batch. Mocked partition receivers can be set up for more complex scenarios using `SetUp(...).CallBack(...)` as well.
 
 ```C# Snippet:EventHubs_Sample11_PartitionReceiverMock
 // Create a mock of the PartitionReceiver
@@ -158,6 +160,8 @@ var receiver = mockReceiver.Object;
 ## Mocking `EventHubBufferedProducerClient` and `EventData`
 
 The following snippet demonstrates how to mock the `EventHubBufferedProducerClient`. In this scenario, the failed handler decides to add events to the end of the queue after failing to send. A test could then verify that `EnqueueEventAsync` was called to make sure that their failed handler was working as expected.
+
+A mock of the `EventHubBufferedProducer` client could also be used in the same way as the `EventHubProducerClient` mock in the first scenario in this document, by verifying that `EnqueueEventAsync` or its variations are called with the expected arguments. As emphasized throughout this document, testing code that uses the `EventHubBufferedProducer` client should focus on the code written in the actual application, not the functionality of the buffered producer itself. 
 
 ```C# Snippet:EventHubs_Sample11_MockingBufferedProducer
 // Create a mock buffered producer
@@ -203,12 +207,14 @@ bufferedProducer.SendEventBatchFailedAsync += sendFailed;
 
 When implementing a custom event processor built on top of the `EventProcessor`, mocking can be used to test the implementation of each of the application defined methods.
 
-Given an application custom processor class defined like the following:
+An application may define as custom processor like below. More information about custom processors can be found in the [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_CustomEventProcessor.md#extending-eventprocessortpartition).
+
 ```C# Snippet:EventHubs_Sample11_CustomEventProcessor
 internal class CustomProcessor : EventProcessor<EventProcessorPartition>
 ```
 
-One can write a testable class on top, that exposes the set of protected override methods that the application has written (see the [`EventProcessor` documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_CustomEventProcessor.md#extending-eventprocessortpartition) for more information)
+One can write a testable class on top, that exposes the set of protected override methods that the application has written.
+
 ```C# Snippet:EventHubs_Sample11_TestCustomEventProcessor
 internal class TestableCustomProcessor : CustomProcessor
 ```

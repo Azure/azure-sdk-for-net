@@ -2,22 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Storage.Blobs.Models;
 using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
@@ -147,10 +140,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             // Create a mock of LastEnqueuedEventProperties using the model factory
             var lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
-                default,
-                default,
-                default, // TODO
-                default);
+                default, // Can set the sequence number
+                default, // Offset
+                default, // Time of last enqueued event
+                default); // or time of last received event
 
             // Create a mock of PartitionContext using the model factory
             var partitionContext = EventHubsModelFactory.PartitionContext(
