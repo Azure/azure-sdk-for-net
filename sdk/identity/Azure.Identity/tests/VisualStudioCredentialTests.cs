@@ -234,7 +234,6 @@ namespace Azure.Identity.Tests
         [Test]
         public void ConfigureVisualStudioProcessTimeout_ProcessTimeout()
         {
-            var testProcess = new TestProcess();
             VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = TimeSpan.Zero }));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), CancellationToken.None));
             Assert.True(ex.Message.Contains("has failed to get access token in 0 seconds."));

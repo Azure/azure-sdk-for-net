@@ -117,7 +117,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void ConfigureCliProcessTimeout_ProcessTimeout()
         {
-            var testProcess = new TestProcess();
+            var testProcess = new TestProcess { Timeout = 10000 };
             AzureCliCredential credential = InstrumentClient(
                 new AzureCliCredential(CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess),

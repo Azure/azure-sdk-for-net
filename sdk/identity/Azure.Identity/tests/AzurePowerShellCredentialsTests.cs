@@ -146,7 +146,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void ConfigurePowershellProcessTimeout_ProcessTimeout()
         {
-            var testProcess = new TestProcess();
+            var testProcess = new TestProcess { Timeout = 10000 };
             AzurePowerShellCredential credential = InstrumentClient(
                 new AzurePowerShellCredential(
                     new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = TimeSpan.Zero },
