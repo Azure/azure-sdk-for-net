@@ -47,13 +47,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the source of the notification request
         /// </summary>
-        [JsonProperty(PropertyName = "NotificationSource")]
+        [JsonProperty(PropertyName = "notificationSource")]
         public string NotificationSource { get; set; }
 
         /// <summary>
         /// Gets or sets the context id type
         /// </summary>
-        [JsonProperty(PropertyName = "ContextType")]
+        [JsonProperty(PropertyName = "contextType")]
         public string ContextType { get; set; }
 
     }

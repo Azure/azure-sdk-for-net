@@ -55,31 +55,31 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Context")]
+        [JsonProperty(PropertyName = "context")]
         public Context Context { get; set; }
 
         /// <summary>
         /// Gets or sets the overall state
         /// </summary>
-        [JsonProperty(PropertyName = "State")]
+        [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
         /// <summary>
         /// Gets or sets the completed time
         /// </summary>
-        [JsonProperty(PropertyName = "CompletedTime")]
+        [JsonProperty(PropertyName = "completedTime")]
         public string CompletedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the created time
         /// </summary>
-        [JsonProperty(PropertyName = "CreatedTime")]
+        [JsonProperty(PropertyName = "createdTime")]
         public string CreatedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the list of action detail
         /// </summary>
-        [JsonProperty(PropertyName = "ActionDetails")]
+        [JsonProperty(PropertyName = "actionDetails")]
         public IList<ActionDetail> ActionDetails { get; set; }
 
         /// <summary>

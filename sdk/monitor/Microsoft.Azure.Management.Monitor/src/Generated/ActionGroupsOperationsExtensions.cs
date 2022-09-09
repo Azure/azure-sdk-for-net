@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static ActionGroupsPostTestNotificationsHeaders PostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
+            public static TestNotificationDetailsResponse PostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
             {
                 return operations.PostTestNotificationsAsync(notificationRequest).GetAwaiter().GetResult();
             }
@@ -220,11 +220,11 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActionGroupsPostTestNotificationsHeaders> PostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestNotificationDetailsResponse> PostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PostTestNotificationsWithHttpMessagesAsync(notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Headers;
+                    return _result.Body;
                 }
             }
 
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders CreateNotificationsAtResourceGroupLevel(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest)
+            public static TestNotificationDetailsResponse CreateNotificationsAtResourceGroupLevel(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest)
             {
                 return operations.CreateNotificationsAtResourceGroupLevelAsync(resourceGroupName, notificationRequest).GetAwaiter().GetResult();
             }
@@ -260,11 +260,11 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders> CreateNotificationsAtResourceGroupLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestNotificationDetailsResponse> CreateNotificationsAtResourceGroupLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Headers;
+                    return _result.Body;
                 }
             }
 
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders CreateNotificationsAtActionGroupResourceLevel(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest)
+            public static TestNotificationDetailsResponse CreateNotificationsAtActionGroupResourceLevel(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest)
             {
                 return operations.CreateNotificationsAtActionGroupResourceLevelAsync(resourceGroupName, actionGroupName, notificationRequest).GetAwaiter().GetResult();
             }
@@ -306,11 +306,11 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders> CreateNotificationsAtActionGroupResourceLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestNotificationDetailsResponse> CreateNotificationsAtActionGroupResourceLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(resourceGroupName, actionGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Headers;
+                    return _result.Body;
                 }
             }
 
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static ActionGroupsPostTestNotificationsHeaders BeginPostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
+            public static TestNotificationDetailsResponse BeginPostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
             {
                 return operations.BeginPostTestNotificationsAsync(notificationRequest).GetAwaiter().GetResult();
             }
@@ -569,11 +569,11 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActionGroupsPostTestNotificationsHeaders> BeginPostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestNotificationDetailsResponse> BeginPostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPostTestNotificationsWithHttpMessagesAsync(notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Headers;
+                    return _result.Body;
                 }
             }
 
@@ -589,7 +589,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders BeginCreateNotificationsAtResourceGroupLevel(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest)
+            public static TestNotificationDetailsResponse BeginCreateNotificationsAtResourceGroupLevel(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest)
             {
                 return operations.BeginCreateNotificationsAtResourceGroupLevelAsync(resourceGroupName, notificationRequest).GetAwaiter().GetResult();
             }
@@ -609,11 +609,11 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders> BeginCreateNotificationsAtResourceGroupLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestNotificationDetailsResponse> BeginCreateNotificationsAtResourceGroupLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Headers;
+                    return _result.Body;
                 }
             }
 
@@ -632,7 +632,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders BeginCreateNotificationsAtActionGroupResourceLevel(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest)
+            public static TestNotificationDetailsResponse BeginCreateNotificationsAtActionGroupResourceLevel(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest)
             {
                 return operations.BeginCreateNotificationsAtActionGroupResourceLevelAsync(resourceGroupName, actionGroupName, notificationRequest).GetAwaiter().GetResult();
             }
@@ -655,11 +655,11 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders> BeginCreateNotificationsAtActionGroupResourceLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestNotificationDetailsResponse> BeginCreateNotificationsAtActionGroupResourceLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(resourceGroupName, actionGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Headers;
+                    return _result.Body;
                 }
             }
 

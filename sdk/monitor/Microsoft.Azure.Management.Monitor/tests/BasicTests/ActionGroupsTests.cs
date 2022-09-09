@@ -20,7 +20,7 @@ namespace Monitor.Tests.BasicTests
         [Trait("Category", "Mock")]
         public void CreateTestNotificationAtActionGroupLevelTest()
         {
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@""),
             };
@@ -33,14 +33,14 @@ namespace Monitor.Tests.BasicTests
             NotificationRequestBody request = GetNotificationRequestBody();
             var result = insightsClient.ActionGroups.CreateNotificationsAtActionGroupResourceLevel("Test-Rg", "test-Ag", request);
 
-            Assert.NotNull(result);
+            Assert.Null(result);
         }
 
         [Fact]
         [Trait("Category", "Mock")]
         public void CreateTestNotificationAtResourceGroupLevelTest()
         {
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@""),
             };
@@ -53,7 +53,76 @@ namespace Monitor.Tests.BasicTests
             NotificationRequestBody request = GetNotificationRequestBody();
             var result = insightsClient.ActionGroups.CreateNotificationsAtResourceGroupLevel("Test-Rg", request);
 
+            Assert.Null(result);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void PostTestNotificationShouldReturnCorrectHeaderTest()
+        {
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@""),
+            };
+
+            expectedResponse.Headers.Location = new Uri("https://test.test");
+
+            var handler = new RecordedDelegatingHandler(expectedResponse) { SubsequentStatusCodeToReturn = HttpStatusCode.Accepted };
+            var insightsClient = GetMonitorManagementClient(handler);
+
+            NotificationRequestBody request = GetNotificationRequestBody();
+            var result = insightsClient.ActionGroups.BeginPostTestNotificationsWithHttpMessagesAsync(request).Result;
+
             Assert.NotNull(result);
+            Assert.NotNull(result.Headers);
+            Assert.NotNull(result.Headers.Location);
+            Assert.Equal(expectedResponse.Headers.Location.AbsoluteUri, result.Headers.Location);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void PostTestNotificationAtRgShouldReturnCorrectHeaderTest()
+        {
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@""),
+            };
+
+            expectedResponse.Headers.Location = new Uri("https://test.test");
+
+            var handler = new RecordedDelegatingHandler(expectedResponse) { SubsequentStatusCodeToReturn = HttpStatusCode.Accepted };
+            var insightsClient = GetMonitorManagementClient(handler);
+
+            NotificationRequestBody request = GetNotificationRequestBody();
+            var result = insightsClient.ActionGroups.BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync("test-rg", request).Result;
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Headers);
+            Assert.NotNull(result.Headers.Location);
+            Assert.Equal(expectedResponse.Headers.Location.AbsoluteUri, result.Headers.Location);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void PostTestNotificationAtAgShouldReturnCorrectHeaderTest()
+        {
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@""),
+            };
+
+            expectedResponse.Headers.Location = new Uri("https://test.test");
+
+            var handler = new RecordedDelegatingHandler(expectedResponse) { SubsequentStatusCodeToReturn = HttpStatusCode.Accepted };
+            var insightsClient = GetMonitorManagementClient(handler);
+
+            NotificationRequestBody request = GetNotificationRequestBody();
+            var result = insightsClient.ActionGroups.BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync("test-rg", "test-ag", request).Result;
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Headers);
+            Assert.NotNull(result.Headers.Location);
+            Assert.Equal(expectedResponse.Headers.Location.AbsoluteUri, result.Headers.Location);
         }
 
         [Fact]
