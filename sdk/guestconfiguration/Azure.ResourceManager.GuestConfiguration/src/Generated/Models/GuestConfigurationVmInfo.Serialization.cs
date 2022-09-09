@@ -5,47 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class AssignmentInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationVmInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Configuration))
-            {
-                writer.WritePropertyName("configuration");
-                writer.WriteObjectValue(Configuration);
-            }
             writer.WriteEndObject();
         }
 
-        internal static AssignmentInfo DeserializeAssignmentInfo(JsonElement element)
+        internal static GuestConfigurationVmInfo DeserializeGuestConfigurationVmInfo(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<ConfigurationInfo> configuration = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<Guid> uuid = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("configuration"))
+                if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configuration = ConfigurationInfo.DeserializeConfigurationInfo(property.Value);
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("uuid"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    uuid = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new AssignmentInfo(name.Value, configuration.Value);
+            return new GuestConfigurationVmInfo(id.Value, Optional.ToNullable(uuid));
         }
     }
 }

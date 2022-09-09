@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class VmssVmInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,23 +19,33 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static VmssVmInfo DeserializeVmssVmInfo(JsonElement element)
+        internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element)
         {
-            Optional<string> vmId = default;
-            Optional<string> vmResourceId = default;
-            Optional<ComplianceStatus> complianceStatus = default;
-            Optional<string> latestReportId = default;
+            Optional<Guid> vmId = default;
+            Optional<ResourceIdentifier> vmResourceId = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Optional<Guid?> latestReportId = default;
             Optional<DateTimeOffset?> lastComplianceChecked = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"))
                 {
-                    vmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vmId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("vmResourceId"))
                 {
-                    vmResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("complianceStatus"))
@@ -45,7 +55,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    complianceStatus = new ComplianceStatus(property.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("latestReportId"))
@@ -55,7 +65,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         latestReportId = null;
                         continue;
                     }
-                    latestReportId = property.Value.GetString();
+                    latestReportId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("lastComplianceChecked"))
@@ -69,7 +79,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new VmssVmInfo(vmId.Value, vmResourceId.Value, Optional.ToNullable(complianceStatus), latestReportId.Value, Optional.ToNullable(lastComplianceChecked));
+            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked));
         }
     }
 }
