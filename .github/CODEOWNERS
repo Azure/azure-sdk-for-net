@@ -696,8 +696,8 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ######## Eng Sys ######## 
 /eng/           @hallipr @weshaggard @benbp
 /eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
-/**/tests.yml   @hallipr @weshaggard @benbp
-/**/ci.yml      @hallipr @weshaggard @benbp
+/**/tests.yml   @hallipr @benbp
+/**/ci.yml      @hallipr @benbp
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @jsquire @maririos @pallavit
