@@ -140,7 +140,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
 
                 return RestClient.Create(scopes, expiresAfter, cancellationToken);
             }
@@ -169,7 +169,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
 
                 return await RestClient.CreateAsync(scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
             }
@@ -237,7 +237,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
 
                 Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresAfter, cancellationToken);
 
@@ -271,7 +271,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutesOrNull(tokenExpiresAfter);
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
 
                 Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
 
@@ -369,7 +369,7 @@ namespace Azure.Communication.Identity
             }
         }
 
-        private static int? GetTokenExpirationInMinutesOrNull(TimeSpan tokenExpiresAfter)
+        private static int? GetTokenExpirationInMinutes(TimeSpan tokenExpiresAfter, string paramName)
         {
             try
             {
@@ -377,7 +377,7 @@ namespace Azure.Communication.Identity
             }
             catch (OverflowException ex)
             {
-                throw new ArgumentException($"The {nameof(tokenExpiresAfter)} argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.", ex);
+                throw new ArgumentException($"The {paramName} argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.", paramName, ex);
             }
         }
     }

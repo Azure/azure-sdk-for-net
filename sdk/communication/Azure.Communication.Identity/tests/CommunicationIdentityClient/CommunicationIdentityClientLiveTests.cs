@@ -25,12 +25,8 @@ namespace Azure.Communication.Identity.Tests
         /// Options used to exchange an AAD access token of a Teams user for a new Communication Identity access token.
         /// </summary>
         private GetTokenForTeamsUserOptions CTEOptions = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommunicationIdentityClient"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
 
-        private const string OVERFLOW_MESSAGE = "The tokenExpiresAfter argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.";
+        private const string TOKEN_EXPIRATION_OVERFLOW_MESSAGE = "The tokenExpiresAfter argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.";
 
         private const string MIN_VALID_EXPIRATION_TIME = "minValidExpirationTime";
         private const string MAX_VALID_EXPIRATION_TIME = "maxValidExpirationTime";
@@ -45,6 +41,10 @@ namespace Azure.Communication.Identity.Tests
             { MIN_INVALID_EXPIRATION_TIME, TimeSpan.FromMinutes(1441) },
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommunicationIdentityClient"/> class.
+        /// </summary>
+        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public CommunicationIdentityClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -134,6 +134,12 @@ namespace Azure.Communication.Identity.Tests
 
             Assert.IsNotNull(accessToken.Value.AccessToken);
             Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.AccessToken.Token));
+
+            if (Mode == RecordedTestMode.Live)
+            {
+                var tokenExpirationValid = IsTokenExpirationValid(tokenExpiresAfter, accessToken.Value.AccessToken.ExpiresOn);
+                Assert.True(tokenExpirationValid);
+            }
         }
 
         [Test]
@@ -168,7 +174,7 @@ namespace Azure.Communication.Identity.Tests
             catch (ArgumentException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.AreEqual(OVERFLOW_MESSAGE, ex.Message);
+                Assert.True(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE));
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -188,6 +194,12 @@ namespace Azure.Communication.Identity.Tests
 
             Assert.IsNotNull(accessToken.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.Token));
+
+            if (Mode == RecordedTestMode.Live)
+            {
+                var tokenExpirationValid = IsTokenExpirationValid(tokenExpiresAfter, accessToken.Value.ExpiresOn);
+                Assert.True(tokenExpirationValid);
+            }
         }
 
         [Test]
@@ -224,7 +236,7 @@ namespace Azure.Communication.Identity.Tests
             catch (ArgumentException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.AreEqual(OVERFLOW_MESSAGE, ex.Message);
+                Assert.True(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE));
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -434,6 +446,16 @@ namespace Azure.Communication.Identity.Tests
                 return;
             }
             Assert.Fail("An exception should have been thrown.");
+        }
+
+        private bool IsTokenExpirationValid(TimeSpan expectedTokenExpiration, DateTimeOffset tokenExpiresAfter)
+        {
+            var tokenTimeSpan = tokenExpiresAfter - DateTimeOffset.UtcNow;
+            var tokenSeconds = tokenTimeSpan.TotalSeconds;
+            var expectedSeconds = expectedTokenExpiration.TotalSeconds;
+            var timeDiff = Math.Abs(expectedSeconds - tokenSeconds);
+            var allowedTimeDiff = expectedSeconds * 0.05;
+            return timeDiff < allowedTimeDiff;
         }
     }
 }
