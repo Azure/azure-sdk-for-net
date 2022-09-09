@@ -492,7 +492,7 @@ namespace Azure.AI.TextAnalytics
         public MultiLabelClassifyOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PiiEntity
@@ -748,7 +748,7 @@ namespace Azure.AI.TextAnalytics
         public RecognizeCustomEntitiesOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     public partial class RecognizeCustomEntitiesResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeEntitiesResult>
     {
@@ -882,7 +882,7 @@ namespace Azure.AI.TextAnalytics
         public SingleLabelClassifyOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetSentiment
