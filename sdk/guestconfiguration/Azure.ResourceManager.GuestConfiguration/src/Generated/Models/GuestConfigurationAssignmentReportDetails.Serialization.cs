@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<Guid> jobId = default;
-            Optional<Type> operationType = default;
+            Optional<GuestConfigurationAssignmentReportType> operationType = default;
             Optional<IReadOnlyList<AssignmentReportResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationType = new Type(property.Value.GetString());
+                    operationType = new GuestConfigurationAssignmentReportType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resources"))

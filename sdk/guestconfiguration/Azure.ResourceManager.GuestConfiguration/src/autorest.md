@@ -72,24 +72,19 @@ rename-mapping:
   AssignmentReport.id: -|arm-id
   AssignmentReport.reportId: -|uuid
   ComplianceStatus: AssignedGuestConfigurationMachineComplianceStatus
-  type: GuestConfigurationAssignmentReportType
+  Type: GuestConfigurationAssignmentReportType
   AssignmentReportResource: AssignmentReportResourceInfo
   AssignmentReportResource.resourceId: AssignmentResourceSettingName
   VMInfo: GuestConfigurationVmInfo
   VMInfo.id: -|arm-id
   VMInfo.uuid: -|uuid
-  VMSSVMInfo: GuestConfigurationVmssVmInfo
-  VMSSVMInfo.lastComplianceChecked: LastComplianceCheckedOn
-  VMSSVMInfo.latestReportId: -|uuid
-  VMSSVMInfo.vmId: -|uuid
-  VMSSVMInfo.vmResourceId: -|uuid
   AssignmentReportDetails: GuestConfigurationAssignmentReportDetails
   AssignmentReportDetails.jobId: -|uuid
   ConfigurationSetting: LcmConfigurationSetting
   ConfigurationSetting.allowModuleOverwrite: IsModuleOverwriteAllowed
+  ConfigurationSetting.configurationModeFrequencyMins: ConfigurationModeFrequencyInMins
+  ConfigurationSetting.refreshFrequencyMins: RefreshFrequencyInMins
   ConfigurationMode: LcmConfigurationMode
-  ConfigurationMode.configurationModeFrequencyMins: ConfigurationModeFrequencyInMins
-  ConfigurationMode.refreshFrequencyMins: RefreshFrequencyInMins
   GuestConfigurationAssignmentProperties.lastComplianceStatusChecked: LastComplianceStatusCheckedOn
   GuestConfigurationAssignmentProperties.latestReportId: -|arm-id
   ProvisioningState: GuestConfigurationProvisioningState
@@ -147,4 +142,12 @@ directive:
       $.GuestConfigurationAssignment.allOf[0]['$ref'] = '#/definitions/Resource';
       delete $.GuestConfigurationAssignment.systemData;
     reason: Use directive to re-define the GuestConfigurationResourceData model and ensure GuestConfigurationAssignment inherits from it.
+  - from: guestconfiguration.json
+    where: $.definitions.VMSSVMInfo
+    transform: >
+      $['x-ms-client-name'] = 'GuestConfigurationVmssVmInfo';
+      $.properties.lastComplianceChecked['x-ms-client-name'] = 'LastComplianceCheckedOn';
+      $.properties.latestReportId['format'] = 'uuid';
+      $.properties.vmId['format'] = 'uuid';
+      $.properties.vmResourceId['x-ms-format'] = 'arm-id';
 ```

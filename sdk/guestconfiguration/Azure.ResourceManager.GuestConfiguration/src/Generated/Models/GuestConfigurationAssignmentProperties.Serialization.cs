@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<string> assignmentHash = default;
             Optional<GuestConfigurationProvisioningState?> provisioningState = default;
             Optional<string> resourceType = default;
-            Optional<IList<VmssvmInfo>> vmssVmList = default;
+            Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"))
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         vmssVmList = null;
                         continue;
                     }
-                    List<VmssvmInfo> array = new List<VmssvmInfo>();
+                    List<GuestConfigurationVmssVmInfo> array = new List<GuestConfigurationVmssVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmssvmInfo.DeserializeVmssvmInfo(item));
+                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item));
                     }
                     vmssVmList = array;
                     continue;

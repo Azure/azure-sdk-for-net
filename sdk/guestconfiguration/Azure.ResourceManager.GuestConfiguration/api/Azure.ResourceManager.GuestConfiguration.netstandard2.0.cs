@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.Type? OperationType { get { throw null; } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
         public System.Guid? ReportId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string TargetResourceId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.VmssvmInfo> VmssVmList { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo> VmssVmList { get { throw null; } set { } }
     }
     public partial class GuestConfigurationAssignmentReport
     {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Guid? JobId { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.Type? OperationType { get { throw null; } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
     }
@@ -248,6 +248,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo Vm { get { throw null; } }
         public string VmssResourceId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GuestConfigurationAssignmentReportType : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GuestConfigurationAssignmentReportType(string value) { throw null; }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType Consistency { get { throw null; } }
+        public static Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType Initial { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationAssignmentType : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType>
@@ -336,6 +354,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Guid? Uuid { get { throw null; } }
     }
+    public partial class GuestConfigurationVmssVmInfo
+    {
+        public GuestConfigurationVmssVmInfo() { }
+        public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
+        public System.DateTimeOffset? LastComplianceCheckedOn { get { throw null; } }
+        public System.Guid? LatestReportId { get { throw null; } }
+        public System.Guid? VmId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VmResourceId { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LcmConfigurationMode : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode>
     {
@@ -360,36 +387,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         internal LcmConfigurationSetting() { }
         public Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot? ActionAfterReboot { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode? ConfigurationMode { get { throw null; } }
-        public float? ConfigurationModeFrequencyMins { get { throw null; } }
+        public float? ConfigurationModeFrequencyInMins { get { throw null; } }
         public bool? IsModuleOverwriteAllowed { get { throw null; } }
         public bool? RebootIfNeeded { get { throw null; } }
-        public float? RefreshFrequencyMins { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Type : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.Type>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Type(string value) { throw null; }
-        public static Azure.ResourceManager.GuestConfiguration.Models.Type Consistency { get { throw null; } }
-        public static Azure.ResourceManager.GuestConfiguration.Models.Type Initial { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.GuestConfiguration.Models.Type other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.GuestConfiguration.Models.Type left, Azure.ResourceManager.GuestConfiguration.Models.Type right) { throw null; }
-        public static implicit operator Azure.ResourceManager.GuestConfiguration.Models.Type (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.Type left, Azure.ResourceManager.GuestConfiguration.Models.Type right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class VmssvmInfo
-    {
-        public VmssvmInfo() { }
-        public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
-        public System.DateTimeOffset? LastComplianceChecked { get { throw null; } }
-        public string LatestReportId { get { throw null; } }
-        public string VmId { get { throw null; } }
-        public string VmResourceId { get { throw null; } }
+        public float? RefreshFrequencyInMins { get { throw null; } }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="jobId"> GUID of the report. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
-        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? jobId, Type? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources)
+        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources)
         {
             ComplianceStatus = complianceStatus;
             StartOn = startOn;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> GUID of the report. </summary>
         public Guid? JobId { get; }
         /// <summary> Type of report, Consistency or Initial. </summary>
-        public Type? OperationType { get; }
+        public GuestConfigurationAssignmentReportType? OperationType { get; }
         /// <summary> The list of resources for which guest configuration assignment compliance is checked. </summary>
         public IReadOnlyList<AssignmentReportResourceInfo> Resources { get; }
     }

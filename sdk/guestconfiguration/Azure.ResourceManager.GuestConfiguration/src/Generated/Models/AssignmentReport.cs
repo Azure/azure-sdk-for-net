@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
-        internal AssignmentReport(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Type? operationType, IList<AssignmentReportResourceInfo> resources)
+        internal AssignmentReport(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources)
         {
             Id = id;
             ReportId = reportId;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Type of report, Consistency or Initial. </summary>
-        public Type? OperationType { get; }
+        public GuestConfigurationAssignmentReportType? OperationType { get; }
         /// <summary> The list of resources for which guest configuration assignment compliance is checked. </summary>
         public IList<AssignmentReportResourceInfo> Resources { get; }
     }
