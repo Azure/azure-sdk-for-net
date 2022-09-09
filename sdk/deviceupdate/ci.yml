@@ -29,5 +29,3 @@ extends:
     Artifacts:
     - name: Azure.IoT.DeviceUpdate
       safeName: AzureIoTDeviceUpdate
-    - name: Azure.ResourceManager.DeviceUpdate
-      safeName: AzureResourceManagerDeviceUpdate

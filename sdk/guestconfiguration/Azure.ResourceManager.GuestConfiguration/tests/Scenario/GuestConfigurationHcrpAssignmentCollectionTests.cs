@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
 
             // Get reports
-            AsyncPageable<GuestConfigurationAssignmentReport> gcAssignmentReportsRetrieved = guestAssignmentResourceRetrieved.GetGuestConfigurationHCRPAssignmentReportsAsync();
+            AsyncPageable<GuestConfigurationAssignmentReport> gcAssignmentReportsRetrieved = guestAssignmentResourceRetrieved.GetReportsAsync();
             await foreach (GuestConfigurationAssignmentReport gcReport in gcAssignmentReportsRetrieved)
             {
                 Assert.NotNull(gcReport);

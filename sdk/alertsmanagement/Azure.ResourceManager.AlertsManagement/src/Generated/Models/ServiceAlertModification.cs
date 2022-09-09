@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -18,7 +16,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
         public ServiceAlertModification()
         {
-            Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
 
         /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
@@ -26,17 +23,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
-        /// <param name="modifications"> Modification details. </param>
-        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of the alert modification item. </param>
+        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertModificationProperties properties) : base(id, name, resourceType, systemData)
         {
-            AlertId = alertId;
-            Modifications = modifications;
+            Properties = properties;
         }
 
-        /// <summary> Unique Id of the alert for which the history is being retrieved. </summary>
-        public Guid? AlertId { get; }
-        /// <summary> Modification details. </summary>
-        public IList<ServiceAlertModificationItemInfo> Modifications { get; }
+        /// <summary> Properties of the alert modification item. </summary>
+        public ServiceAlertModificationProperties Properties { get; set; }
     }
 }

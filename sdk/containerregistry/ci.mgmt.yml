@@ -1,0 +1,15 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+
+pr: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: client
+    ServiceDirectory: containerregistry
+    BuildSnippets: true
+    Artifacts:
+    - name: Azure.ResourceManager.ContainerRegistry
+      safeName: AzureResourceManagerContainerRegistry
