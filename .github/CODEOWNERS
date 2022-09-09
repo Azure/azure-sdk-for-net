@@ -27,7 +27,7 @@
 /sdk/extensions/                                @jsquire
 
 # PRLabel: %EngSys
-/sdk/template/                                  @chidozieononiwu @weshaggard @benbp @heaths @annelo-msft @chunyu3 @lirenhe
+/sdk/template/                                  @hallipr @weshaggard @benbp @heaths @annelo-msft @chunyu3 @lirenhe
 
 # Smoke tests
 /common/SmokeTests/                             @schaabs @heaths @tg-msft @jsquire @pallavit
@@ -694,10 +694,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
 # ######## Eng Sys ######## 
-/eng/           @chidozieononiwu @weshaggard @benbp
+/eng/           @hallipr @weshaggard @benbp
 /eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
-/**/tests.yml   @chidozieononiwu @weshaggard @benbp
-/**/ci.yml      @chidozieononiwu @weshaggard @benbp
+/**/tests.yml   @hallipr @weshaggard @benbp
+/**/ci.yml      @hallipr @weshaggard @benbp
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @jsquire @maririos @pallavit
