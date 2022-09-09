@@ -232,17 +232,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return null;
             }
 
-            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage);
+            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage)
+            {
+                Stack = exceptionStackTrace,
 
-            exceptionDetails.Stack = exceptionStackTrace;
+                // TODO: Update swagger schema to mandate typename.
+                TypeName = exceptionType ?? "Unknown"
+            };
 
-            // TODO: Update swagger schema to mandate typename.
-            exceptionDetails.TypeName = exceptionType ?? "Unknown";
+            List<TelemetryExceptionDetails> exceptions = new()
+            {
+                exceptionDetails
+            };
 
-            List<TelemetryExceptionDetails> exceptions = new List<TelemetryExceptionDetails>();
-            exceptions.Add(exceptionDetails);
-
-            TelemetryExceptionData exceptionData = new TelemetryExceptionData(Version, exceptions);
+            TelemetryExceptionData exceptionData = new(Version, exceptions);
 
             return new MonitorBase
             {
