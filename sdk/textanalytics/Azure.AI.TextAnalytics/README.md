@@ -252,7 +252,7 @@ Please refer to the service documentation for a conceptual discussion of [sentim
 Run a model to identify a collection of significant phrases found in the passed-in document or batch of documents.
 
 ```C# Snippet:ExtractKeyPhrases
-string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my
                     little sister thinks it is funny, I am worried it has the cold that I got last week.
                     We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
                     will be covered by the cat's insurance.
