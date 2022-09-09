@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.5 (Unreleased)
+## 5.2.0 (2022-09-08)
 
 ### Features Added
 
@@ -19,6 +19,10 @@
   - `SymptomOrSign`
 
 ### Breaking Changes
+
+- Changed type `MultiLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `RecognizeCustomEntitiesOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `SingleLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
 
 ### Bugs Fixed
 

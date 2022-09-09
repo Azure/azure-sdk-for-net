@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.EventGrid
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ChannelResources in the PartnerNamespace. </summary>
-        /// <returns> An object representing collection of ChannelResources and their operations over a ChannelResource. </returns>
-        public virtual ChannelCollection GetChannels()
+        /// <summary> Gets a collection of PartnerNamespaceChannelResources in the PartnerNamespace. </summary>
+        /// <returns> An object representing collection of PartnerNamespaceChannelResources and their operations over a PartnerNamespaceChannelResource. </returns>
+        public virtual PartnerNamespaceChannelCollection GetPartnerNamespaceChannels()
         {
-            return GetCachedClient(Client => new ChannelCollection(Client, Id));
+            return GetCachedClient(Client => new PartnerNamespaceChannelCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ChannelResource>> GetChannelAsync(string channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PartnerNamespaceChannelResource>> GetPartnerNamespaceChannelAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            return await GetChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
+            return await GetPartnerNamespaceChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ChannelResource> GetChannel(string channelName, CancellationToken cancellationToken = default)
+        public virtual Response<PartnerNamespaceChannelResource> GetPartnerNamespaceChannel(string channelName, CancellationToken cancellationToken = default)
         {
-            return GetChannels().Get(channelName, cancellationToken);
+            return GetPartnerNamespaceChannels().Get(channelName, cancellationToken);
         }
 
         /// <summary>

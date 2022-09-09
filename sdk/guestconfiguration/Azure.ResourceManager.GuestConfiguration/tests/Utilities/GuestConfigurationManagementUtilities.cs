@@ -12,8 +12,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Utilities
         public static AzureLocation DefaultResourceLocation = new AzureLocation("westcentralus");
         public static string DefaultResourceType = "ApplyAndAutoCorrect";
         public const string DefaultAzureVMName = "SDKTestVM";
-        public static AssignmentType DefaultAssignmentType = new AssignmentType("ApplyAndAutoCorrect");
-        public static ConfigurationMode DefaultConfigurationMode= new ConfigurationMode("ApplyAndAutoCorrect");
+        public static GuestConfigurationAssignmentType DefaultAssignmentType = new GuestConfigurationAssignmentType("ApplyAndAutoCorrect");
+        public static LcmConfigurationMode DefaultConfigurationMode = new LcmConfigurationMode("ApplyAndAutoCorrect");
         public static GuestConfigurationKind DefaultKind = new GuestConfigurationKind("DSC");
         public const string DefaultAssignmentVersion = "1.0.0.3";
         public const string DefaultContext = "Azure policy";

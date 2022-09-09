@@ -51,12 +51,14 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
                 new SystemData(),
                 tags: new Dictionary<string, string>(),
                 "Global",
-                scopes,
-                new List<AlertProcessingRuleCondition> { new AlertProcessingRuleCondition("Severity","Equals",new List<string> { "Sev2" }) },
-                null,
-                new List<AlertProcessingAction> { new RemoveAllActionGroups()},
-                null,
-                true);
+                new ServiceAlertProcessingRuleProperties(
+                        scopes,
+                        new List<AlertProcessingRuleCondition> { new AlertProcessingRuleCondition("Severity","Equals",new List<string> { "Sev2" }) },
+                        null,
+                        new List<AlertProcessingAction> { new RemoveAllActionGroups()},
+                        null,
+                        true)
+                );
 
             var createAlertProcessingRuleOperation = await rg.GetAlertProcessingRules().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, alertProcessingRule);
             await createAlertProcessingRuleOperation.WaitForCompletionAsync();
