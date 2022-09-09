@@ -21,19 +21,19 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Cannot set multiple partition keys (or multiple sessions when partitions are enabled) for messages in ServiceBusMessageBatch](#cannot-send-batch-with-multiple-partition-keys)
   - [Batch fails to send](#batch-fails-to-send)
 - [Troubleshoot receiver issues](#troubleshoot-receiver-issues)
-  - [Number of messages returned doesn't match number requested in batch receive](#number-messages-returned)
-  - [Message or session lock is lost before lock expiration time](#message-lock-lost)
-  - [How to see scheduled or deferred messages](#see-scheduled-deferred)
-  - [How to peek session messages across all sessions](#peek-session)
+  - [Number of messages returned doesn't match number requested in batch receive](#number-of-messages-returned-does-not-match-number-requested-in-batch-receive)
+  - [Message or session lock is lost before lock expiration time](#message-or-session-lock-is-lost-before-lock-expiration-time)
+  - [How to browse scheduled or deferred messages](#how-to-browse-scheduled-or-deferred-messages)
+  - [How to browse session messages across all sessions](#how-to-browse-session-messages-across-all-sessions)
 - [Troubleshoot processor issues](#troubleshoot-processor-issues)
-  - [Autolock renewal does not appear to be working](#autolock-renewal)
-  - [Processor appears to hang or have latency issues when using extremely high concurrency](#processor-hang)
-  - [Session processor takes too long to switch sessions](#session-idle-timeout)
+  - [Autolock renewal does not appear to be working](#autolock-renewal-is-not-working)
+  - [Processor appears to hang or have latency issues when using extremely high concurrency](#processor-appears-to-hang-or-have-latency-issues-when-using-high-concurrency)
+  - [Session processor takes too long to switch sessions](#session-processor-takes-too-long-to-switch-sessions)
   - [Processor stops immediately](#processor-stops-immediately)
 - [Troubleshoot transaction issues](#troubleshoot-transactions)
   - [Supported operations](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-transactions#operations-within-a-transaction-scope)
-  - [Operations in transactions are not retried](#transaction-retries)
-  - [Transactions across entities are not working](#cross-entity-transactions) - need to set EnableCrossEntityTransactions
+  - [Operations in transactions are not retried](#operations-in-a-transaction-are-not-retried)
+  - [Transactions across entities are not working](#transactions-across-entities-are-not-working)
 - [Quotas](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas)
 
 ## Handle Service Bus Exceptions
@@ -197,7 +197,7 @@ We define a message batch as either [ServiceBusMessageBatch][ServiceBusMessageBa
 
 ## Troubleshoot receiver issues
 
-### Number of messages returned doesn't match number requested in batch receive
+### Number of messages returned does not match number requested in batch receive
 
 When attempting to do a batch receive, i.e. passing a `maxMessages` of 2 or greater to the [ReceiveMessagesAsync][ReceiveMessages] method, you are not guaranteed to receive the number of messages requested, even if the queue or subscription has that many messages available at that time, and even if the entire configured `maxWaitTime` has not yet elapsed. The way that it works is once the first message comes over the wire, the receiver will wait an additional 20ms for any additional messages up to the max number of messages requested. The `maxWaitTime` applies to how long the receiver will wait to receive the *first* message - subsequent messages will be waited for 20ms. Therefore your application should not assume that all messages available will be received in one call.
 
@@ -211,7 +211,7 @@ Scheduled and deferred messages are included when peeking messages. They can be 
 
 When working with topics, you cannot peek scheduled messages on the subscription, as the messages remain in the topic until the scheduled enqueue time. As a workaround, you can construct a [ServiceBusReceiver][ServiceBusReceiver] passing in the topic name in order to peek such messages. Note that no other operations with the receiver will work when using a topic name.
 
-### How to peek session messages across all sessions
+### How to browse session messages across all sessions
 
 You can use a regular [ServiceBusReceiver][ServiceBusReceiver] to peek across all sessions. To peek for a specific session you can use the [ServiceBusSessionReceiver][ServiceBusSessionReceiver], but you would need to obtain a session lock.
 
@@ -221,7 +221,7 @@ You can use a regular [ServiceBusReceiver][ServiceBusReceiver] to peek across al
 
 Autolock renewal relies on the system time to determine when to renew a lock for a message or session. If your system time is not accurate, e.g. your clock is slow, then lock renewal may not happen before the lock is lost. Ensure that your system time is accurate if autolock renewal is not working.
 
-### Processor appears to hang or have latency issues when using extremely high concurrency
+### Processor appears to hang or have latency issues when using high concurrency
 
 This is often caused by thread starvation, particularly when using the session processor and using a very high value for [MaxConcurrentSessions][MaxConcurrentSessions] (e.g. > 50). The first thing to check would be to make sure you are not doing sync-over-async in any of your event handlers. Sync-over-async is an easy way to cause deadlocks and thread starvation. Even if you are not doing sync over async, any pure sync code in your handlers could contribute to thread starvation. If you've determined that this is not the issue, e.g. because you have pure async code, you can try increasing your [TryTimeout][TryTimeout]. This will relieve pressure on the threadpool by reducing the number of context switches and timeouts that may occur when using the session processor in particular. The default value for [TryTimeout][TryTimeout] is 60 seconds, but it can be set all the way up to 1 hour. Try setting it to something like 5 minutes as a starting point, and iterate from there. If none of this works, you may simply need to scale out to multiple instances. Reduce the concurrency in your application, but run the application on multiple instances to achieve the desired overall concurrency.
 
