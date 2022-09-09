@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class AssignmentReportDetails
+    public partial class GuestConfigurationAssignmentReportDetails
     {
-        internal static AssignmentReportDetails DeserializeAssignmentReportDetails(JsonElement element)
+        internal static GuestConfigurationAssignmentReportDetails DeserializeGuestConfigurationAssignmentReportDetails(JsonElement element)
         {
-            Optional<ComplianceStatus> complianceStatus = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<string> jobId = default;
-            Optional<Type> operationType = default;
-            Optional<IReadOnlyList<AssignmentReportResource>> resources = default;
+            Optional<Guid> jobId = default;
+            Optional<GuestConfigurationAssignmentReportType> operationType = default;
+            Optional<IReadOnlyList<AssignmentReportResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceStatus"))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    complianceStatus = new ComplianceStatus(property.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -56,7 +56,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (property.NameEquals("jobId"))
                 {
-                    jobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    jobId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("operationType"))
@@ -66,7 +71,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationType = new Type(property.Value.GetString());
+                    operationType = new GuestConfigurationAssignmentReportType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resources"))
@@ -76,16 +81,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssignmentReportResource> array = new List<AssignmentReportResource>();
+                    List<AssignmentReportResourceInfo> array = new List<AssignmentReportResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResource.DeserializeAssignmentReportResource(item));
+                        array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item));
                     }
                     resources = array;
                     continue;
                 }
             }
-            return new AssignmentReportDetails(Optional.ToNullable(complianceStatus), Optional.ToNullable(startTime), Optional.ToNullable(endTime), jobId.Value, Optional.ToNullable(operationType), Optional.ToList(resources));
+            return new GuestConfigurationAssignmentReportDetails(Optional.ToNullable(complianceStatus), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(jobId), Optional.ToNullable(operationType), Optional.ToList(resources));
         }
     }
 }

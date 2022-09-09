@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DSCValue = "DSC";
+        private const string DscValue = "DSC";
 
         /// <summary> DSC. </summary>
-        public static GuestConfigurationKind DSC { get; } = new GuestConfigurationKind(DSCValue);
+        public static GuestConfigurationKind Dsc { get; } = new GuestConfigurationKind(DscValue);
         /// <summary> Determines if two <see cref="GuestConfigurationKind"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationKind left, GuestConfigurationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationKind"/> values are not the same. </summary>

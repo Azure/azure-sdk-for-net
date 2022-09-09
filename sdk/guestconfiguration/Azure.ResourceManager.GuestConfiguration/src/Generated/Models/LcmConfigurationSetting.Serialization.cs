@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class ConfigurationSetting
+    public partial class LcmConfigurationSetting
     {
-        internal static ConfigurationSetting DeserializeConfigurationSetting(JsonElement element)
+        internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element)
         {
-            Optional<ConfigurationMode> configurationMode = default;
+            Optional<LcmConfigurationMode> configurationMode = default;
             Optional<bool> allowModuleOverwrite = default;
             Optional<ActionAfterReboot> actionAfterReboot = default;
             Optional<float> refreshFrequencyMins = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurationMode = new ConfigurationMode(property.Value.GetString());
+                    configurationMode = new LcmConfigurationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowModuleOverwrite"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new ConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins));
+            return new LcmConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins));
         }
     }
 }
