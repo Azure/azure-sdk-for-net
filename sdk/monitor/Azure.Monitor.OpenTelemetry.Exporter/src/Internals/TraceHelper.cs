@@ -235,7 +235,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             TelemetryExceptionDetails exceptionDetails = new(exceptionMessage);
 
             exceptionDetails.Stack = exceptionStackTrace;
-            exceptionDetails.TypeName = exceptionType;
+
+            // TODO: Update swagger schema to mandate typename.
+            exceptionDetails.TypeName = exceptionType ?? "Unknown";
 
             List<TelemetryExceptionDetails> exceptions = new List<TelemetryExceptionDetails>();
             exceptions.Add(exceptionDetails);
