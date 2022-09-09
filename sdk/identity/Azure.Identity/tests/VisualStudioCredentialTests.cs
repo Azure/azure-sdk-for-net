@@ -236,7 +236,8 @@ namespace Azure.Identity.Tests
         {
             var testProcess = new TestProcess { Timeout = 10000 };
             var processService = new TestProcessService(testProcess);
-            VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(default, default, default, processService, new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = TimeSpan.Zero }));
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio(0, 1);
+            VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = TimeSpan.Zero }));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), CancellationToken.None));
             Assert.AreEqual("test",ex.Message);
         }
