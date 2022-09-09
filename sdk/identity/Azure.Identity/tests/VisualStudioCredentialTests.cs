@@ -239,7 +239,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio(0, 1);
             VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = TimeSpan.Zero }));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), CancellationToken.None));
-            Assert.AreEqual("test",ex.Message);
+            Assert.True(ex.Message.Contains("has failed to get access token in 0 seconds."));
         }
     }
 }
