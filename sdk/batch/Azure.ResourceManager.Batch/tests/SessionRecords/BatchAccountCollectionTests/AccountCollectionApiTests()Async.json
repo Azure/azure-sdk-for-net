@@ -104,7 +104,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2730/providers/Microsoft.Storage/storageAccounts/accountforbatch5026?api-version=2021-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2730/providers/Microsoft.Storage/storageAccounts/accountforbatch5026?api-version=2022-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
