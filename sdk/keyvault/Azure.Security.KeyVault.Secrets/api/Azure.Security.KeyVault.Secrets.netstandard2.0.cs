@@ -96,6 +96,7 @@ namespace Azure.Security.KeyVault.Secrets
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {
         public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_3) { }
+        public bool VerifyChallengeResource { get { throw null; } set { } }
         public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

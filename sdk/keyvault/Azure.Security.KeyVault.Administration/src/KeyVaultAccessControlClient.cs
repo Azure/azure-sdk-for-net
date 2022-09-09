@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultAccessControlClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal. You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public KeyVaultAccessControlClient(Uri vaultUri, TokenCredential credential)
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultAccessControlClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal. You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="KeyVaultAdministrationClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Administration
             string apiVersion = options.GetVersionString();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential));
+                    new ChallengeBasedAuthenticationPolicy(credential, options.VerifyChallengeResource));
 
             _diagnostics = new ClientDiagnostics(options);
             _definitionsRestClient = new RoleDefinitionsRestClient(_diagnostics, pipeline, apiVersion);
