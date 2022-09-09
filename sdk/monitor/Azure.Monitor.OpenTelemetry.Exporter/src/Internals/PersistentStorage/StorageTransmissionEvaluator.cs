@@ -3,7 +3,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal class StorageTransmissionEvaluator
     {
@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         internal void AddExportIntervalToDataSample(long currentExportStartTimeInMilliseconds)
         {
-            long exportIntervalInMilliseconds = (currentExportStartTimeInMilliseconds - _previousExportStartTimeInMilliseconds);
+            long exportIntervalInMilliseconds = currentExportStartTimeInMilliseconds - _previousExportStartTimeInMilliseconds;
 
             _previousExportStartTimeInMilliseconds = currentExportStartTimeInMilliseconds;
 
@@ -115,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double CalculateAverage(long sum, int length)
         {
-            return (sum / length);
+            return sum / length;
         }
     }
 }

@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 

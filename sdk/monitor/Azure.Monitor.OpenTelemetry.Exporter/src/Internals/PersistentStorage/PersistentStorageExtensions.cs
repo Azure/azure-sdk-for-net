@@ -4,7 +4,7 @@
 using OpenTelemetry;
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class PersistentStorageExtensions
     {

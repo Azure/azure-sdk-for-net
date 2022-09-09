@@ -6,9 +6,7 @@ using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class StorageHelper
     {
