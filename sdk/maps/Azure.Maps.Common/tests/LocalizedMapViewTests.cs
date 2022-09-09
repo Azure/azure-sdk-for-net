@@ -20,11 +20,13 @@ namespace Azure.Maps.Tests
 
             // Normal case
             #region Snippet:LocalizedMapViewUsage
-            var view = new LocalizedMapView("Unified");
+            var unifiedView = new LocalizedMapView("Unified");
             var autoView = new LocalizedMapView("auto");
+            var unitedArabEmirates = new LocalizedMapView("AE");
             #endregion
-            Assert.AreEqual(LocalizedMapView.Unified, view);
+            Assert.AreEqual(LocalizedMapView.Unified, unifiedView);
             Assert.AreEqual(LocalizedMapView.Auto, autoView);
+            Assert.AreEqual(LocalizedMapView.UnitedArabEmirates, unitedArabEmirates);
         }
     }
 }
