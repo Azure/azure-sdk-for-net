@@ -12,6 +12,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    // Note: This customization is meant to fix identity null in response, we should bring it back once we fix it.
     public partial class ApiManagementServiceData : IUtf8JsonSerializable
     {
         internal static ApiManagementServiceData DeserializeApiManagementServiceData(JsonElement element)
