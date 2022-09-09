@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(MicrosoftSessionIPv4Address))
             {
                 writer.WritePropertyName("microsoftSessionIPv4Address");
-                writer.WriteStringValue(MicrosoftSessionIPv4Address);
+                writer.WriteStringValue(MicrosoftSessionIPv4Address.ToString());
             }
             if (Optional.IsDefined(MicrosoftSessionIPv6Address))
             {
                 writer.WritePropertyName("microsoftSessionIPv6Address");
-                writer.WriteStringValue(MicrosoftSessionIPv6Address);
+                writer.WriteStringValue(MicrosoftSessionIPv6Address.ToString());
             }
             if (Optional.IsDefined(PeerSessionIPv4Address))
             {
                 writer.WritePropertyName("peerSessionIPv4Address");
-                writer.WriteStringValue(PeerSessionIPv4Address);
+                writer.WriteStringValue(PeerSessionIPv4Address.ToString());
             }
             if (Optional.IsDefined(PeerSessionIPv6Address))
             {
                 writer.WritePropertyName("peerSessionIPv6Address");
-                writer.WriteStringValue(PeerSessionIPv6Address);
+                writer.WriteStringValue(PeerSessionIPv6Address.ToString());
             }
             if (Optional.IsDefined(MaxPrefixesAdvertisedV4))
             {
@@ -67,10 +68,10 @@ namespace Azure.ResourceManager.Peering.Models
         {
             Optional<string> sessionPrefixV4 = default;
             Optional<string> sessionPrefixV6 = default;
-            Optional<string> microsoftSessionIPv4Address = default;
-            Optional<string> microsoftSessionIPv6Address = default;
-            Optional<string> peerSessionIPv4Address = default;
-            Optional<string> peerSessionIPv6Address = default;
+            Optional<IPAddress> microsoftSessionIPv4Address = default;
+            Optional<IPAddress> microsoftSessionIPv6Address = default;
+            Optional<IPAddress> peerSessionIPv4Address = default;
+            Optional<IPAddress> peerSessionIPv6Address = default;
             Optional<PeeringSessionStateV4> sessionStateV4 = default;
             Optional<PeeringSessionStateV6> sessionStateV6 = default;
             Optional<int> maxPrefixesAdvertisedV4 = default;
@@ -90,22 +91,42 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftSessionIPv4Address"))
                 {
-                    microsoftSessionIPv4Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    microsoftSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("microsoftSessionIPv6Address"))
                 {
-                    microsoftSessionIPv6Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    microsoftSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("peerSessionIPv4Address"))
                 {
-                    peerSessionIPv4Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    peerSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("peerSessionIPv6Address"))
                 {
-                    peerSessionIPv6Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    peerSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sessionStateV4"))

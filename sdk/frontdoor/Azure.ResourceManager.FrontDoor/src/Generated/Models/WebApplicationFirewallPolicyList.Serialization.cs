@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static WebApplicationFirewallPolicyList DeserializeWebApplicationFirewallPolicyList(JsonElement element)
         {
-            Optional<IReadOnlyList<WebApplicationFirewallPolicyData>> value = default;
+            Optional<IReadOnlyList<FrontDoorWebApplicationFirewallPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WebApplicationFirewallPolicyData> array = new List<WebApplicationFirewallPolicyData>();
+                    List<FrontDoorWebApplicationFirewallPolicyData> array = new List<FrontDoorWebApplicationFirewallPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(item));
+                        array.Add(FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(item));
                     }
                     value = array;
                     continue;

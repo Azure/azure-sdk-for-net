@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Information about the storage blob based dead letter destination. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
         /// <param name="resourceId"> The Azure Resource ID of the storage account that is the destination of the deadletter events. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the destination of the deadletter events. </param>
-        internal StorageBlobDeadLetterDestination(DeadLetterEndPointType endpointType, string resourceId, string blobContainerName) : base(endpointType)
+        internal StorageBlobDeadLetterDestination(DeadLetterEndPointType endpointType, ResourceIdentifier resourceId, string blobContainerName) : base(endpointType)
         {
             ResourceId = resourceId;
             BlobContainerName = blobContainerName;
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The Azure Resource ID of the storage account that is the destination of the deadletter events. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The name of the Storage blob container that is the destination of the deadletter events. </summary>
         public string BlobContainerName { get; set; }
     }

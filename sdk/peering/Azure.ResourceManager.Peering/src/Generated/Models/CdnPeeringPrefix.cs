@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="azureService"> The Azure service. </param>
         /// <param name="isPrimaryRegion"> The flag that indicates whether or not this is the primary region. </param>
         /// <param name="bgpCommunity"> The BGP Community. </param>
-        internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, string azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity) : base(id, name, resourceType, systemData)
+        internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, AzureLocation? azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             AzureRegion = azureRegion;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> The prefix. </summary>
         public string Prefix { get; }
         /// <summary> The Azure region. </summary>
-        public string AzureRegion { get; }
+        public AzureLocation? AzureRegion { get; }
         /// <summary> The Azure service. </summary>
         public string AzureService { get; }
         /// <summary> The flag that indicates whether or not this is the primary region. </summary>
