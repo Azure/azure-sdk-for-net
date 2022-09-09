@@ -267,7 +267,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
-            Assert.AreEqual("Spark", cluster.Value.Data.Properties.ClusterDefinition.Kind);
+            Assert.AreEqual("Hadoop", cluster.Value.Data.Properties.ClusterDefinition.Kind);
+            Assert.AreEqual("1.2", cluster.Value.Data.Properties.MinSupportedTlsVersion);
         }
 
         [RecordedTest]
@@ -306,7 +307,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
-            Assert.AreEqual("Spark", cluster.Value.Data.Properties.ClusterDefinition.Kind);
+            Assert.AreEqual("Hadoop", cluster.Value.Data.Properties.ClusterDefinition.Kind);
+            Assert.AreEqual("standard_a8_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("headnode")).HardwareProfile.VmSize);
+            Assert.AreEqual("standard_a2_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("zookeepernode")).HardwareProfile.VmSize);
         }
 
         [RecordedTest]
@@ -333,6 +336,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string clusterName = "hdisdk-sparkcomponentversions";
             var properties = await PrepareClusterCreateParams(_storageAccount);
             properties.ClusterDefinition.Kind = "Spark";
+            properties.IsEncryptionInTransitEnabled = false;
             properties.ClusterDefinition.ComponentVersion.Add(new KeyValuePair<string, string>("Spark", "2.2"));
 
             var data = new HDInsightClusterCreateOrUpdateContent()
@@ -343,6 +347,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+            Assert.AreEqual(clusterName, cluster.Value.Data.Name);
+            Assert.AreEqual("Spark", cluster.Value.Data.Properties.ClusterDefinition.Kind);
+            Assert.AreEqual(false, cluster.Value.Data.Properties.IsEncryptionInTransitEnabled);
         }
 
         [RecordedTest]
@@ -446,6 +453,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
+            Assert.AreEqual(clusterName, cluster.Value.Data.Name);
+            Assert.AreEqual(2, cluster.Value.Data.Properties.StorageAccounts.Count);
+            Assert.AreEqual($"{_storageAccount.Data.Name}.blob.core.windows.net", cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name);
+            Assert.AreEqual($"{secondaryStorageAccount.Data.Name}.blob.core.windows.net", cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == false).Name);
         }
 
         [RecordedTest]
