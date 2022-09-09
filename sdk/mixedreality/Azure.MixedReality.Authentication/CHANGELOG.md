@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed an issue that prevented proper AAD authentication in regions other than East US 2 using the
+  `mixedreality.azure.com` account domain.
+
 ### Other Changes
 
 ## 1.1.0 (2022-07-28)
