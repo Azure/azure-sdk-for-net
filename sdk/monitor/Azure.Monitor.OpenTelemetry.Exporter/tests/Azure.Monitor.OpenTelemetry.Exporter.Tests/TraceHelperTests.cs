@@ -266,6 +266,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
         }
 
+        [Fact]
+        public void ActivityWithExceptionEventDoesNotCreateExceptionTelemetryWhenTypeNameIsNotPresent()
+        {
+            var exceptionMessage = "Exception Message";
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Server);
+
+            // Type is not null when using RecordException so creating the event manually
+            // similar to https://github.com/open-telemetry/opentelemetry-dotnet/blob/872a52f5291804c7af19e90307b5cc097b2da709/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L96-L113
+            var tagsCollection = new ActivityTagsCollection
+            {
+                { SemanticConventions.AttributeExceptionStacktrace, "StackTrace" },
+            };
+
+            tagsCollection.Add(SemanticConventions.AttributeExceptionMessage, exceptionMessage);
+
+            activity.AddEvent(new ActivityEvent(SemanticConventions.AttributeExceptionEventName, default, tagsCollection));
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
+
+            Assert.Single(telemetryItems);
+            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
+        }
+
         private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())

@@ -227,7 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            if (exceptionMessage == null)
+            if (exceptionMessage == null || exceptionType == null)
             {
                 return null;
             }
@@ -237,7 +237,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 Stack = exceptionStackTrace,
 
                 // TODO: Update swagger schema to mandate typename.
-                TypeName = exceptionType ?? "Unknown"
+                TypeName = exceptionType
             };
 
             List<TelemetryExceptionDetails> exceptions = new()
