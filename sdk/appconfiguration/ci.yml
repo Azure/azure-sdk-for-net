@@ -32,5 +32,3 @@ extends:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-    - name: Azure.ResourceManager.AppConfiguration
-      safeName: AzureResourceManagerAppConfiguration
