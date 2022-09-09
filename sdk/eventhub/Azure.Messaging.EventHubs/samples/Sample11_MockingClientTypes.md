@@ -137,7 +137,7 @@ var consumer = mockConsumer.Object;
 
 // Define a simple method that returns an IAsyncEnumerable to use as the return for
 // ReadEventsAsync above.
-public async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
+private async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
 {
     await Task.CompletedTask;
     yield return samplePartitionEvent;
