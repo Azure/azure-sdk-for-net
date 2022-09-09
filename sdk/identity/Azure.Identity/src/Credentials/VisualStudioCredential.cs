@@ -135,7 +135,7 @@ namespace Azure.Identity
                 }
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in 30 seconds."));
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in {VisualStudioProcessTimeout.TotalSeconds} seconds."));
                 }
                 catch (JsonException exception)
                 {

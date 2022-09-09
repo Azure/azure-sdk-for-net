@@ -115,11 +115,15 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ConfigureCliProcessTimeout()
+        public void ConfigureCliProcessTimeout_ProcessTimeout()
         {
-            TimeSpan cliProcessTimeout = TimeSpan.FromMilliseconds(42);
-            AzureCliCredential credendial = new AzureCliCredential(new AzureCliCredentialOptions() { CliProcessTimeout = cliProcessTimeout });
-            Assert.AreEqual(cliProcessTimeout, credendial.CliProcessTimeout);
+            var testProcess = new TestProcess();
+            AzureCliCredential credential = InstrumentClient(
+                new AzureCliCredential(CredentialPipeline.GetInstance(null),
+                    new TestProcessService(testProcess),
+                    new AzureCliCredentialOptions() { CliProcessTimeout = TimeSpan.Zero }));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.AreEqual(AzureCliCredential.AzureCliTimeoutError, ex.Message);
         }
     }
 }

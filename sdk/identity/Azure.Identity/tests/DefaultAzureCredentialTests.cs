@@ -92,7 +92,7 @@ namespace Azure.Identity.Tests
             string actBrowserTenantId = null;
             string actVsTenantId = null;
             string actCodeTenantId = null;
-            TimeSpan actSubProcessTimeout = TimeSpan.FromSeconds(0);
+            TimeSpan? actSubProcessTimeout = TimeSpan.FromSeconds(0);
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 

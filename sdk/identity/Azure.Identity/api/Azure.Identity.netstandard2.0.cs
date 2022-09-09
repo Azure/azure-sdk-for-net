@@ -140,7 +140,7 @@ namespace Azure.Identity
     public partial class DefaultAzureCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public DefaultAzureCredentialOptions() { }
-        public System.TimeSpan DeveloperCredentialTimeout { get { throw null; } set { } }
+        public System.TimeSpan? DeveloperCredentialTimeout { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzurePowerShellCredential { get { throw null; } set { } }
         public bool ExcludeEnvironmentCredential { get { throw null; } set { } }

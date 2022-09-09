@@ -144,13 +144,16 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ConfigurePowershellProcessTimeout()
+        public void ConfigurePowershellProcessTimeout_ProcessTimeout()
         {
-            TimeSpan powershellProcessTimeout = TimeSpan.FromSeconds(42);
-
-            AzurePowerShellCredential credential = new AzurePowerShellCredential(
-                      new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = powershellProcessTimeout });
-            Assert.AreEqual(powershellProcessTimeout, credential.PowerShellProcessTimeout);
+            var testProcess = new TestProcess();
+            AzurePowerShellCredential credential = InstrumentClient(
+                new AzurePowerShellCredential(
+                    new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = TimeSpan.Zero },
+                    CredentialPipeline.GetInstance(null),
+                    new TestProcessService(testProcess)));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.AreEqual(AzurePowerShellCredential.AzurePowerShellTimeoutError, ex.Message);
         }
 
         [Test]

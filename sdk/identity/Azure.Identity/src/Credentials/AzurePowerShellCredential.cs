@@ -29,7 +29,6 @@ namespace Azure.Identity
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
-        private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
         private const string RunConnectAzAccountToLogin = "Run Connect-AzAccount to login";
         private const string NoAccountsWereFoundInTheCache = "No accounts were found in the cache";
         private const string CannotRetrieveAccessToken = "cannot retrieve access token";
@@ -44,6 +43,7 @@ namespace Azure.Identity
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
         internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
+        internal const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.

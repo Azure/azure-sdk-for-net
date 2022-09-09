@@ -32,16 +32,16 @@ namespace Azure.Identity.Tests.Mock
         public override TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)
             => new InteractiveBrowserCredential(tenantId, clientId ?? Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions(), Pipeline);
 
-        public override TokenCredential CreateAzureCliCredential(TimeSpan cliProcessTimeout)
+        public override TokenCredential CreateAzureCliCredential(TimeSpan? cliProcessTimeout)
             => new AzureCliCredential(Pipeline, _processService, new AzureCliCredentialOptions() { CliProcessTimeout = cliProcessTimeout});
 
-        public override TokenCredential CreateVisualStudioCredential(string tenantId, TimeSpan visualStudioProcessTimeout)
+        public override TokenCredential CreateVisualStudioCredential(string tenantId, TimeSpan? visualStudioProcessTimeout)
             => new VisualStudioCredential(tenantId, Pipeline, _fileSystem, _processService, new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = visualStudioProcessTimeout});
 
         public override TokenCredential CreateVisualStudioCodeCredential(string tenantId)
             => new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, _fileSystem, _vscAdapter);
 
-        public override TokenCredential CreateAzurePowerShellCredential(TimeSpan powershellProcessTimeout)
+        public override TokenCredential CreateAzurePowerShellCredential(TimeSpan? powershellProcessTimeout)
             => new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = powershellProcessTimeout}, Pipeline, _processService);
     }
 }
