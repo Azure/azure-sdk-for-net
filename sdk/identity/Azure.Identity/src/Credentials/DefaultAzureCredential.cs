@@ -216,7 +216,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeVisualStudioCredential)
             {
-                chain[i++] = factory.CreateVisualStudioCredential(options.VisualStudioTenantId);
+                chain[i++] = factory.CreateVisualStudioCredential(options.VisualStudioTenantId, options.DeveloperCredentialTimeout);
             }
 
             if (!options.ExcludeVisualStudioCodeCredential)
@@ -226,12 +226,12 @@ namespace Azure.Identity
 
             if (!options.ExcludeAzureCliCredential)
             {
-                chain[i++] = factory.CreateAzureCliCredential();
+                chain[i++] = factory.CreateAzureCliCredential(options.DeveloperCredentialTimeout);
             }
 
             if (!options.ExcludeAzurePowerShellCredential)
             {
-                chain[i++] = factory.CreateAzurePowerShellCredential();
+                chain[i++] = factory.CreateAzurePowerShellCredential(options.DeveloperCredentialTimeout);
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)
