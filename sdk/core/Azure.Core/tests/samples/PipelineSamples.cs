@@ -73,6 +73,7 @@ namespace Azure.Core.Samples
 
             public RequestFailedDetailsParserSample()
             {
+                options = new();
                 #region Snippet:RequestFailedDetailsParser
                 var pipelineOptions = new HttpPipelineOptions(options)
                 {
@@ -81,7 +82,8 @@ namespace Azure.Core.Samples
 
                 _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
                 #endregion
-                if(_pipeline == null) { throw new Exception(); };
+                if (_pipeline == null)
+                { throw new Exception(); };
             }
         }
 
