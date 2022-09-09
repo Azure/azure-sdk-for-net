@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             await foreach (ServiceAlertResource alert in alerts)
             {
                 // Verify the state change operation was successful
-                Assert.AreEqual(alert.Data.Essentials.MonitorService, monitorServiceFilter);
-                Assert.AreEqual(alert.Data.Essentials.Severity, severityFilter);
-                Assert.AreEqual(alert.Data.Essentials.AlertState.ToString(), "New");
+                Assert.AreEqual(alert.Data.Properties.Essentials.MonitorService, monitorServiceFilter);
+                Assert.AreEqual(alert.Data.Properties.Essentials.Severity, severityFilter);
+                Assert.AreEqual(alert.Data.Properties.Essentials.AlertState.ToString(), "New");
             }
         }
 
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             string groupBy = "severity,alertState";
             var summary = await subscription.GetServiceAlertSummaryAsync(groupBy);
             //summary.GetRawResponse().Content
-            Assert.NotNull(summary.Value.Total);
-            Assert.AreEqual("severity", summary.Value.GroupedBy);
-            IEnumerator<ServiceAlertSummaryGroupItemInfo> enumerator = summary.Value.Values.GetEnumerator();
+            Assert.NotNull(summary.Value.Properties.Total);
+            Assert.AreEqual("severity", summary.Value.Properties.GroupedBy);
+            IEnumerator<ServiceAlertSummaryGroupItemInfo> enumerator = summary.Value.Properties.Values.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 ServiceAlertSummaryGroupItemInfo current = enumerator.Current;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
         {
             bool eventFound = false;
 
-            IList<ServiceAlertModificationItemInfo> modifications = alertHistory.Value.Modifications;
+            IList<ServiceAlertModificationItemInfo> modifications = alertHistory.Value.Properties.Modifications;
             foreach (var item in modifications)
             {
                 if (item.ModificationEvent == ServiceAlertModificationEvent.StateChange)

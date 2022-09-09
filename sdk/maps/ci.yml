@@ -27,7 +27,5 @@ extends:
     ServiceDirectory: maps
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Maps
-      safeName: AzureResourceManagerMaps
     - name: Azure.Maps.Search
       safeName: AzureMapsSearch

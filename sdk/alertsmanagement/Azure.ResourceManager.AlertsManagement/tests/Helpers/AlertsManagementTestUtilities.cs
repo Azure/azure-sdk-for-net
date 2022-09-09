@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                if (exp.Description != null && act.Description != null)
+                if (exp.Properties.Description != null && act.Properties.Description != null)
                 {
-                    Assert.Equals(exp.Description, act.Description);
+                    Assert.Equals(exp.Properties.Description, act.Properties.Description);
                 }
 
-                if (exp.IsEnabled != null && act.IsEnabled != null)
+                if (exp.Properties.IsEnabled != null && act.Properties.IsEnabled != null)
                 {
-                    Assert.AreEqual(exp.IsEnabled, act.IsEnabled);
+                    Assert.AreEqual(exp.Properties.IsEnabled, act.Properties.IsEnabled);
                 }
 
-                AreEqual(exp.Scopes, act.Scopes);
-                AreEqual(exp.Conditions, act.Conditions);
+                AreEqual(exp.Properties.Scopes, act.Properties.Scopes);
+                AreEqual(exp.Properties.Conditions, act.Properties.Conditions);
             }
         }
 

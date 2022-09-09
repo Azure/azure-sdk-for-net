@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,7 +16,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
         public ServiceAlertSummary()
         {
-            Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
         /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
@@ -25,25 +23,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="total"> Total count of the result set. </param>
-        /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
-        /// <param name="groupedBy"> Name of the field aggregated. </param>
-        /// <param name="values"> List of the items. </param>
-        internal ServiceAlertSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Group the result set. </param>
+        internal ServiceAlertSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertSummaryGroup properties) : base(id, name, resourceType, systemData)
         {
-            Total = total;
-            SmartGroupsCount = smartGroupsCount;
-            GroupedBy = groupedBy;
-            Values = values;
+            Properties = properties;
         }
 
-        /// <summary> Total count of the result set. </summary>
-        public long? Total { get; set; }
-        /// <summary> Total count of the smart groups. </summary>
-        public long? SmartGroupsCount { get; set; }
-        /// <summary> Name of the field aggregated. </summary>
-        public string GroupedBy { get; set; }
-        /// <summary> List of the items. </summary>
-        public IList<ServiceAlertSummaryGroupItemInfo> Values { get; }
+        /// <summary> Group the result set. </summary>
+        public ServiceAlertSummaryGroup Properties { get; set; }
     }
 }
