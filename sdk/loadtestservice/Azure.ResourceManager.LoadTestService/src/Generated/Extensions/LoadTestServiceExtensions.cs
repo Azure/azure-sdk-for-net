@@ -27,49 +27,6 @@ namespace Azure.ResourceManager.LoadTestService
             );
         }
 
-        /// <summary> Gets a collection of QuotaResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of QuotaResources and their operations over a QuotaResource. </returns>
-        public static QuotaResourceCollection GetQuotaResources(this SubscriptionResource subscriptionResource, AzureLocation location)
-        {
-            return GetExtensionClient(subscriptionResource).GetQuotaResources(location);
-        }
-
-        /// <summary>
-        /// Get the available quota for a quota bucket per region per subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}
-        /// Operation Id: Quotas_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="quotaBucketName"> Quota Bucket name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<QuotaResource>> GetQuotaResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetQuotaResources(location).GetAsync(quotaBucketName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the available quota for a quota bucket per region per subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}
-        /// Operation Id: Quotas_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="quotaBucketName"> Quota Bucket name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<QuotaResource> GetQuotaResource(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetQuotaResources(location).Get(quotaBucketName, cancellationToken);
-        }
-
         /// <summary>
         /// Lists loadtests resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests
@@ -144,25 +101,6 @@ namespace Azure.ResourceManager.LoadTestService
         {
             return resourceGroupResource.GetLoadTestResources().Get(loadTestName, cancellationToken);
         }
-
-        #region QuotaResource
-        /// <summary>
-        /// Gets an object representing a <see cref="QuotaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaResource.CreateResourceIdentifier" /> to create a <see cref="QuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaResource" /> object. </returns>
-        public static QuotaResource GetQuotaResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                QuotaResource.ValidateResourceId(id);
-                return new QuotaResource(client, id);
-            }
-            );
-        }
-        #endregion
 
         #region LoadTestResource
         /// <summary>

@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: LoadTestService
 namespace: Azure.ResourceManager.LoadTestService
-input-file: D:\Work\MALT\azure-rest-api-specs-pr\specification\loadtestservice\resource-manager\Microsoft.LoadTestService\preview\2022-08-01-preview\loadtestservice.json
+input-file: D:\Work\MALT\azure-rest-api-specs-pr\specification\loadtestservice\resource-manager\Microsoft.LoadTestService\preview\2022-04-15-preview\loadtestservice.json
 #require: D:\Work\MALT\azure-rest-api-specs-pr\specification\loadtestservice\resource-manager\Microsoft.LoadTestService\preview\2022-08-01-preview\loadtestservice.json
 tag: package-2022-04-15-preview
 output-folder: $(this-folder)/Generated

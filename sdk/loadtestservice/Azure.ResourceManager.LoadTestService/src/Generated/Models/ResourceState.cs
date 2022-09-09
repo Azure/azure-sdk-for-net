@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.LoadTestService.Models
 {
-    /// <summary> Resources provisioning states. </summary>
+    /// <summary> Load Test resources provisioning states. </summary>
     public readonly partial struct ResourceState : IEquatable<ResourceState>
     {
         private readonly string _value;

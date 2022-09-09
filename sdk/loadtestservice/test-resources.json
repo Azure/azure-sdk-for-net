@@ -1,11 +1,11 @@
 {
-"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+"$schema": "https://schema.management.azure.com/schemas/2019-08-01/deploymentTemplate.json#",
 "contentVersion": "1.0.0.0",
 "resources": [
     {
     "type": "Microsoft.LoadTestService/loadtests",
     "apiVersion": "2022-04-15-preview",
-    "name": "loadtestsdk-resource-dotnet",
+    "name": "sdk-test-loadtestresource",
     "location": "australiaeast",
     "properties": {
     }

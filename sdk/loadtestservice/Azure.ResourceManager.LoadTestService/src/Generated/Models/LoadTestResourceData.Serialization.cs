@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.LoadTestService
                                 dataPlaneUri = null;
                                 continue;
                             }
-                            dataPlaneUri = new Uri(property0.Value.GetString());
+                            dataPlaneUri = new Uri("https://"+property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                //property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);

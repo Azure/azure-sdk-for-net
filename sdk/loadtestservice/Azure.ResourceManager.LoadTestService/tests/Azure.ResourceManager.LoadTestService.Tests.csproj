@@ -3,6 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.LoadTestService.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ScenarioTests\" />
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>

@@ -9,32 +9,21 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LoadTestService.Tests.Helpers
 {
-    public class LoadTestResourceHelper : LoadTestServiceManagementTestBase
+    public class LoadTestResourceHelper
     {
-        private const string LoadTestResourceDescription = "sample description";
+        public const string DefaultResourceGroupName = "rg-loadtestservice-sdk-tests";
+        public const string DefaultResourceLocation = "westus2";
+        public const string LoadTestRpNamespace = "Microsoft.LoadTestService";
+        public const string LoadTestResourceArmIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/" +
+                                               LoadTestRpNamespace + "/loadtests/{2}";
 
-        private const string LoadTestResourceName = "loadtestsdk-resource-dotnet";
-
-        public LoadTestResourceHelper (bool isAsync) : base(isAsync)
+        public static async Task TryRegisterResourceGroupAsync(ResourceGroupCollection resourceGroupsOperations, string location, string resourceGroupName)
         {
-        }
-
-        public static string GetLoadTestResourceDescription()
-        {
-            return LoadTestResourceDescription;
-        }
-
-        public static ManagedServiceIdentity GetLoadTestResourceIdentity()
-        {
-            return new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
-        }
-
-        public static LoadTestResourceData GenerateLoadTestResourcedata(ResourceIdentifier id, string location)
-        {
-            return new LoadTestResourceData(id, LoadTestResourceName, LoadTestResource.ResourceType, null, new Dictionary<string, string> { }, location, GetLoadTestResourceIdentity(), GetLoadTestResourceDescription(), null, null, null);
+            await resourceGroupsOperations.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, new ResourceGroupData(location));
         }
     }
 }
