@@ -78,6 +78,11 @@ rename-mapping:
   VMInfo: GuestConfigurationVmInfo
   VMInfo.id: -|arm-id
   VMInfo.uuid: -|uuid
+  VmssvmInfo: GuestConfigurationVmssVmInfo
+  VmssvmInfo.lastComplianceChecked: LastComplianceCheckedOn
+  VmssvmInfo.latestReportId: -|uuid
+  VmssvmInfo.vmId: -|uuid
+  VmssvmInfo.vmResourceId: -|arm-id
   AssignmentReportDetails: GuestConfigurationAssignmentReportDetails
   AssignmentReportDetails.jobId: -|uuid
   ConfigurationSetting: LcmConfigurationSetting
@@ -142,12 +147,4 @@ directive:
       $.GuestConfigurationAssignment.allOf[0]['$ref'] = '#/definitions/Resource';
       delete $.GuestConfigurationAssignment.systemData;
     reason: Use directive to re-define the GuestConfigurationResourceData model and ensure GuestConfigurationAssignment inherits from it.
-  - from: guestconfiguration.json
-    where: $.definitions.VMSSVMInfo
-    transform: >
-      $['x-ms-client-name'] = 'GuestConfigurationVmssVmInfo';
-      $.properties.lastComplianceChecked['x-ms-client-name'] = 'LastComplianceCheckedOn';
-      $.properties.latestReportId['format'] = 'uuid';
-      $.properties.vmId['format'] = 'uuid';
-      $.properties.vmResourceId['x-ms-format'] = 'arm-id';
 ```
