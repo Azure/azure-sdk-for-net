@@ -221,12 +221,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ActivityWithExceptionEventCreatesExceptionTelemetry()
         {
+            var exceptionMessage = "Exception Message";
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
                ActivityName,
                ActivityKind.Server);
 
-            activity.RecordException(new Exception("Exception Message"));
+            activity.RecordException(new Exception(exceptionMessage));
 
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;
@@ -237,9 +238,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, telemetryItems.Count());
             Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
             Assert.Equal("Exception", (IEnumerable<char>)telemetryItems[1].Name);
-            Assert.Equal("Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
+            Assert.Equal(exceptionMessage, (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
             Assert.Equal("System.Exception", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().TypeName);
             Assert.Equal("System.Exception: Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Stack);
+        }
+
+        [Fact]
+        public void ActivityWithExceptionEventDoesNotCreateExceptionTelemetryWhenExceptionMessageIsNotPresent()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Server);
+
+            // Checking with empty string here as OTel
+            // adds the exception only if it non-null and non-empty.
+            // https://github.com/open-telemetry/opentelemetry-dotnet/blob/872a52f5291804c7af19e90307b5cc097b2da709/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L102-L104
+            activity.RecordException(new Exception(""));
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
+
+            Assert.Single(telemetryItems);
+            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
         }
 
         private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)

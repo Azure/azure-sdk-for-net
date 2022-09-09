@@ -20,6 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public TelemetryItem(string name, Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
             this(name, FormatUtcTimestamp(activity.StartTimeUtc))
         {
+            // TODO: Move "Exception" to const/enum.
             if (name == "Exception")
             {
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.SpanId.ToHexString();

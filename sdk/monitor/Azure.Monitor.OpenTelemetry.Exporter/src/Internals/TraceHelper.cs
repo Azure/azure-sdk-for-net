@@ -51,8 +51,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 monitorTags.Return();
                 telemetryItems.Add(telemetryItem);
 
-                // Check for Exceptions
-                AddExceptionTelemetryFromActivityExceptionEvents(activity, ref monitorTags, roleName, roleInstance, instrumentationKey, telemetryItems);
+                // Check for Exceptions events
+                if (activity.Events.Any())
+                {
+                    AddExceptionTelemetryFromActivityExceptionEvents(activity, ref monitorTags, roleName, roleInstance, instrumentationKey, telemetryItems);
+                }
             }
 
             return telemetryItems;
@@ -175,11 +178,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
         {
-            if (!activity.Events.Any())
-            {
-                return;
-            }
-
             foreach (var evnt in activity.Events)
             {
                 if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
@@ -196,7 +194,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     catch (Exception ex)
                     {
-                        AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractExceptionFromActivityEvent", ex);
+                        AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractExceptionFromActivityEvent", ex);
                     }
                 }
             }
