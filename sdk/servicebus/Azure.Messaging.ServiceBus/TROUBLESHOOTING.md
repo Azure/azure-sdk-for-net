@@ -92,7 +92,7 @@ The following verification steps are recommended, depending on the type of autho
 - [Verify the SAS token was generated correctly][AuthorizeSAS]
 - [Verify the correct RBAC roles were granted][RBAC]
 
-For more possible solutions, see: [Troubleshoot authentication and authorization issues with Service Bus][TroubleshootAuthenticationAuthorization].
+For more possible solutions, see: [Troubleshooting guide for Azure Service Bus][TroubleshootingGuide].
 
 ## Connectivity issues
 
@@ -112,7 +112,7 @@ To troubleshoot:
 
 - If applicable, verify the proxy configuration. For details, see: [Configuring the transport][TransportSample].
 
-- For more information about troubleshooting network connectivity, see: [Service Bus troubleshooting][TroubleshootingGuide].
+- For more information about troubleshooting network connectivity, see: [Troubleshooting guide for Azure Service Bus][TroubleshootingGuide].
 
 ### SSL handshake failures
 
@@ -274,7 +274,7 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [GetConnectionString]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-portal#get-the-connection-string
 [AuthorizeSAS]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas
 [RBAC]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-managed-service-identity
-[TroubleshootingGuide]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-troubleshooting-guide#connectivity-certificate-or-timeout-issues
+[TroubleshootingGuide]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-troubleshooting-guide
 [ServiceBusIPAddresses]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-faq#what-ip-addresses-do-i-need-to-add-to-allowlist-
 [ServiceBusProcessor]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusprocessor?view=azure-dotnet
 [ServiceBusSessionProcessor]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessor?view=azure-dotnet
