@@ -210,6 +210,39 @@ var bufferedProducer = bufferedProducerMock.Object;
 bufferedProducer.SendEventBatchFailedAsync += sendFailed;
 ```
 
+## Mocking `EventHubBufferedProducerClient` and `PartitionProperties`
+
+Mocking the `PartitionProperties` class is very similar to the `PartitionPublishingProperties` above. The snippet below demonstrates how an application could set up a specific set of properties, and then test different code paths that depend on it. It can be done in the same way for the `EventHubProducerClient` as well.
+
+```C# Snippet:EventHubs_Sample11_BufferedProducerPartitionProps
+// Create the buffered producer mock
+var bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
+
+// Define the partitions and their properties
+var partitions = new Dictionary<string, PartitionProperties>()
+{
+    // Non-empty partition
+    { "0", EventHubsModelFactory.PartitionProperties("eventhub-name", "0", true, 1000, 1100, 500, DateTime.UtcNow) },
+    // Empty partition
+    { "1", EventHubsModelFactory.PartitionProperties("eventhub-name", "1", false, 2000, 2000, 760, DateTime.UtcNow) }
+};
+
+// Set up partition Ids
+bufferedProducerMock.Setup(
+    p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+    .ReturnsAsync(partitions.Keys.ToArray());
+
+// Set up partition properties
+foreach (var partition in partitions)
+{
+    bufferedProducerMock.Setup(
+    p => p.GetPartitionPropertiesAsync(
+        partition.Key,
+        It.IsAny<CancellationToken>()))
+        .ReturnsAsync(partition.Value);
+}
+```
+
 ## Mocking a custom event processor using `EventProcessor<Partition>` 
 
 When implementing a custom event processor built on top of the `EventProcessor`, mocking can be used to test the implementation of each of the application defined methods.

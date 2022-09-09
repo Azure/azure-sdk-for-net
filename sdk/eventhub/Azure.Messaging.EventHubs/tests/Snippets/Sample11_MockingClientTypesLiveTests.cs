@@ -257,6 +257,41 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         }
 
         [Test]
+        public void BufferedProducerPartitionProps()
+        {
+            #region Snippet:EventHubs_Sample11_BufferedProducerPartitionProps
+
+            // Create the buffered producer mock
+            var bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
+
+            // Define the partitions and their properties
+            var partitions = new Dictionary<string, PartitionProperties>()
+            {
+                // Non-empty partition
+                { "0", EventHubsModelFactory.PartitionProperties("eventhub-name", "0", true, 1000, 1100, 500, DateTime.UtcNow) },
+                // Empty partition
+                { "1", EventHubsModelFactory.PartitionProperties("eventhub-name", "1", false, 2000, 2000, 760, DateTime.UtcNow) }
+            };
+
+            // Set up partition Ids
+            bufferedProducerMock.Setup(
+                p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitions.Keys.ToArray());
+
+            // Set up partition properties
+            foreach (var partition in partitions)
+            {
+                bufferedProducerMock.Setup(
+                p => p.GetPartitionPropertiesAsync(
+                    partition.Key,
+                    It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(partition.Value);
+            }
+
+            #endregion
+        }
+
+        [Test]
         public async Task MockingEventProcessor()
         {
 #region Snippet:EventHubs_Sample11_MockingEventProcessor
