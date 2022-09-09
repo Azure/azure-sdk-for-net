@@ -31,10 +31,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData(ActivityStatusCode.Ok, "statusdescription")]
-        [InlineData(ActivityStatusCode.Error, "statusdescription")]
-        [InlineData(ActivityStatusCode.Unset, "statusdescription")]
-        public void ValidateStatusForAzureMonitorTrace(ActivityStatusCode activityStatusCode, string activityStatusDescription)
+        [InlineData(ActivityStatusCode.Ok)]
+        [InlineData(ActivityStatusCode.Error)]
+        [InlineData(ActivityStatusCode.Unset)]
+        public void ValidateStatusForAzureMonitorTrace(ActivityStatusCode activityStatusCode)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
-            activity.SetStatus(activityStatusCode, activityStatusDescription);
+            activity.SetStatus(activityStatusCode);
 
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
 
