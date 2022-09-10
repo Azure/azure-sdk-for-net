@@ -38,21 +38,21 @@ namespace Azure.Maps.Rendering
         /// To override the anchor location of the pin image,
         /// user can designate how to shift or move the anchor location by pixels
         /// </summary>
-        public Point? PinAnchorShiftInPixels { get; set; }
+        public Point? PushpinAnchorShiftInPixels { get; set; }
 
         /// <summary> Pushpin color including opacity information. </summary>
-        public Color? PinColor { get; set; }
+        public Color? PushpinColor { get; set; }
 
         /// <summary>
-        /// Pushpin scale, value should greater than zero. A value of 1 is the standard scale.
+        /// Pushpin scale ratio. Value should greater than zero. A value of 1 is the standard scale.
         /// Values larger than 1 will make the pins larger, and values smaller than 1 will make them smaller.
         /// </summary>
-        public double? PinScale { get; set; }
+        public double? PushpinScaleRatio { get; set; }
 
         /// <summary>
         /// Custom pushpin image, can only be <see cref="Uri" /> format.
         /// </summary>
-        public Uri? CustomPinImageUri { get; set; }
+        public Uri? CustomPushpinImageUri { get; set; }
 
         /// <summary>
         /// The anchor location of label for built-in pushpins is at the top center
@@ -65,10 +65,10 @@ namespace Azure.Maps.Rendering
         public Color? LabelColor { get; set; }
 
         /// <summary>
-        /// Label scale, should greater than 0. A value of 1 is the standard scale.
+        /// Label scale ratio. Should greater than 0. A value of 1 is the standard scale.
         /// Values larger than 1 will make the label larger.
         /// </summary>
-        public double? LabelScale { get; set; }
+        public double? LabelScaleRatio { get; set; }
 
         /// <summary>
         /// A number of degrees of clockwise rotation.
@@ -81,7 +81,7 @@ namespace Azure.Maps.Rendering
         internal string ToQueryString() {
             StringBuilder sb = new StringBuilder(256);
 
-            if (CustomPinImageUri == null)
+            if (CustomPushpinImageUri == null)
             {
                 sb.Append("default");
             }
@@ -90,26 +90,26 @@ namespace Azure.Maps.Rendering
                 sb.Append("custom");
             }
 
-            if (PinColor != null)
+            if (PushpinColor != null)
             {
                 sb.AppendFormat(CultureInfo.InvariantCulture, "|co{0:X2}{1:X2}{2:X2}",
-                    PinColor?.R, PinColor?.G, PinColor?.A);
+                    PushpinColor?.R, PushpinColor?.G, PushpinColor?.A);
 
-                if (PinColor?.A != 255)
+                if (PushpinColor?.A != 255)
                 {
-                    double alpha = Convert.ToInt32(PinColor?.A, CultureInfo.InvariantCulture) / 255.0;
+                    double alpha = Convert.ToInt32(PushpinColor?.A, CultureInfo.InvariantCulture) / 255.0;
                     sb.AppendFormat(CultureInfo.InvariantCulture, "|al{0:0.###}", alpha);
                 }
             }
 
-            if (PinScale != null)
+            if (PushpinScaleRatio != null)
             {
-                sb.AppendFormat(CultureInfo.InvariantCulture, "|sc{0:0.##}", PinScale);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|sc{0:0.##}", PushpinScaleRatio);
             }
 
-            if (PinAnchorShiftInPixels != null)
+            if (PushpinAnchorShiftInPixels != null)
             {
-                sb.Append($"|an{PinAnchorShiftInPixels?.X} {PinAnchorShiftInPixels?.Y}");
+                sb.Append($"|an{PushpinAnchorShiftInPixels?.X} {PushpinAnchorShiftInPixels?.Y}");
             }
 
             if (RotationInDegrees != null)
@@ -123,9 +123,9 @@ namespace Azure.Maps.Rendering
                     LabelColor?.R, LabelColor?.G, LabelColor?.B);
             }
 
-            if (LabelScale != null)
+            if (LabelScaleRatio != null)
             {
-                sb.AppendFormat(CultureInfo.InvariantCulture, "|ls{0:0.##}", LabelScale);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|ls{0:0.##}", LabelScaleRatio);
             }
 
             if (LabelAnchorShiftInPixels != null)
@@ -142,9 +142,9 @@ namespace Azure.Maps.Rendering
             }
 
             // The following is custom pushpin URL
-            if (CustomPinImageUri != null)
+            if (CustomPushpinImageUri != null)
             {
-                sb.Append($"||{CustomPinImageUri.AbsoluteUri}");
+                sb.Append($"||{CustomPushpinImageUri.AbsoluteUri}");
             }
 
             return sb.ToString();

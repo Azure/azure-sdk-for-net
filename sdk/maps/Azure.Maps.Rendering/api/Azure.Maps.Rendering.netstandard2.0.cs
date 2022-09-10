@@ -13,11 +13,11 @@ namespace Azure.Maps.Rendering
         public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } }
         public Azure.Core.GeoJson.GeoPosition? CenterCoordinate { get { throw null; } }
         public int? HeightInPixels { get { throw null; } }
-        public Azure.Maps.Rendering.MapImageLayer? ImageLayer { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> ImagePathStyles { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> ImagePushpinStyles { get { throw null; } set { } }
-        public Azure.Maps.Rendering.MapImageStyle? ImageStyle { get { throw null; } set { } }
         public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public Azure.Maps.Rendering.MapImageLayer? MapImageLayer { get { throw null; } set { } }
+        public Azure.Maps.Rendering.MapImageStyle? MapImageStyle { get { throw null; } set { } }
         public string RenderLanguage { get { throw null; } set { } }
         public int? WidthInPixels { get { throw null; } }
         public int? ZoomLevel { get { throw null; } set { } }
@@ -45,14 +45,14 @@ namespace Azure.Maps.Rendering
     public partial class ImagePushpinStyle
     {
         public ImagePushpinStyle(System.Collections.Generic.IList<Azure.Maps.Rendering.PushpinPosition> pushpinPositions) { }
-        public System.Uri? CustomPinImageUri { get { throw null; } set { } }
+        public System.Uri? CustomPushpinImageUri { get { throw null; } set { } }
         public System.Drawing.Point? LabelAnchorShiftInPixels { get { throw null; } set { } }
         public System.Drawing.Color? LabelColor { get { throw null; } set { } }
-        public double? LabelScale { get { throw null; } set { } }
-        public System.Drawing.Point? PinAnchorShiftInPixels { get { throw null; } set { } }
-        public System.Drawing.Color? PinColor { get { throw null; } set { } }
-        public double? PinScale { get { throw null; } set { } }
+        public double? LabelScaleRatio { get { throw null; } set { } }
+        public System.Drawing.Point? PushpinAnchorShiftInPixels { get { throw null; } set { } }
+        public System.Drawing.Color? PushpinColor { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Rendering.PushpinPosition> PushpinPositions { get { throw null; } }
+        public double? PushpinScaleRatio { get { throw null; } set { } }
         public int? RotationInDegrees { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

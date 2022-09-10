@@ -146,7 +146,7 @@ namespace Azure.Maps.Rendering
                     pushpins = new List<string>();
                     foreach (var pin in options?.ImagePushpinStyles)
                     {
-                        pushpins.Add(pin.ToString());
+                        pushpins.Add(pin.ToQueryString());
                     }
                 }
                 List<string> paths = null;
@@ -155,13 +155,13 @@ namespace Azure.Maps.Rendering
                     pushpins = new List<string>();
                     foreach (var path in options?.ImagePathStyles)
                     {
-                        paths.Add(path.ToString());
+                        paths.Add(path.ToQueryString());
                     }
                 }
                 var response = await restClient.GetMapStaticImageAsync(
                     RasterTileFormat.Png,
-                    options?.ImageLayer,
-                    options?.ImageStyle,
+                    options?.MapImageLayer,
+                    options?.MapImageStyle,
                     options?.ZoomLevel,
                     coordinate,
                     boundingBox,
@@ -220,7 +220,7 @@ namespace Azure.Maps.Rendering
                     pushpins = new List<string>();
                     foreach (var pin in options?.ImagePushpinStyles)
                     {
-                        pushpins.Add(pin.ToString());
+                        pushpins.Add(pin.ToQueryString());
                     }
                 }
                 List<string> paths = null;
@@ -229,13 +229,13 @@ namespace Azure.Maps.Rendering
                     paths = new List<string>();
                     foreach (var path in options?.ImagePathStyles)
                     {
-                        paths.Add(path.ToString());
+                        paths.Add(path.ToQueryString());
                     }
                 }
                 var response = restClient.GetMapStaticImage(
                     RasterTileFormat.Png,
-                    options?.ImageLayer,
-                    options?.ImageStyle,
+                    options?.MapImageLayer,
+                    options?.MapImageStyle,
                     options?.ZoomLevel,
                     coordinate,
                     boundingBox,

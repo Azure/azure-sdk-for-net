@@ -34,8 +34,8 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var options = new GetMapStaticImageOptions(new GeoPosition(10.176, 25.0524), 100, 100)
             {
-                ImageLayer = MapImageLayer.Basic,
-                ImageStyle = MapImageStyle.Dark,
+                MapImageLayer = MapImageLayer.Basic,
+                MapImageStyle = MapImageStyle.Dark,
                 RenderLanguage = "en",
             };
             var imageStream = new MemoryStream();

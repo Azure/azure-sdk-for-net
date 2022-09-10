@@ -38,10 +38,10 @@ namespace Azure.Maps.Rendering.Tests
                 }
             )
             {
-                PinScale = 1.75,
-                PinColor = Color.Beige,
+                PushpinScaleRatio = 1.75,
+                PushpinColor = Color.Beige,
                 RotationInDegrees = -47,
-                LabelScale = 1.1
+                LabelScaleRatio = 1.1
             };
             var complexPinStyle2 = new ImagePushpinStyle(
                 new System.Collections.Generic.List<PushpinPosition>() {
@@ -49,12 +49,12 @@ namespace Azure.Maps.Rendering.Tests
                 }
             )
             {
-                PinAnchorShiftInPixels = new Point(4, -5),
-                PinScale = 1.05,
+                PushpinAnchorShiftInPixels = new Point(4, -5),
+                PushpinScaleRatio = 1.05,
                 LabelColor = Color.FromArgb(47, 128, 45, 223), // A, R, G, B
-                LabelScale = 0.9,
+                LabelScaleRatio = 0.9,
                 LabelAnchorShiftInPixels = new Point(5, -6),
-                CustomPinImageUri = new Uri("http://contoso.com/pushpins/red.png"),
+                CustomPushpinImageUri = new Uri("http://contoso.com/pushpins/red.png"),
             };
 
             Assert.AreEqual("default||12.56 22.56|14.561 19.801|'A label'7.9 44|'B label'11.73 25.02", simplePinStyle.ToQueryString());

@@ -77,8 +77,8 @@ namespace Azure.Maps.Rendering.Tests
             // Prepare static image options
             var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
             {
-                ImageLayer = MapImageLayer.Basic,
-                ImageStyle = MapImageStyle.Dark,
+                MapImageLayer = MapImageLayer.Basic,
+                MapImageStyle = MapImageStyle.Dark,
                 ZoomLevel = 10,
                 RenderLanguage = "en",
             };
@@ -113,19 +113,19 @@ namespace Azure.Maps.Rendering.Tests
                     new PushpinPosition(13.2988, 52.6, "Label end"),
             })
             {
-                PinScale = 0.9,
-                PinColor = Color.Red,
+                PushpinScaleRatio = 0.9,
+                PushpinColor = Color.Red,
                 LabelColor = Color.Blue,
-                LabelScale = 18
+                LabelScaleRatio = 18
             };
             var pushpinSet2 = new ImagePushpinStyle(
                 new List<PushpinPosition>() {new PushpinPosition(13.495, 52.497, "Label 3")}
             )
             {
-                PinScale = 1.2,
-                PinColor = Color.Beige,
+                PushpinScaleRatio = 1.2,
+                PushpinColor = Color.Beige,
                 LabelColor = Color.White,
-                LabelScale = 18
+                LabelScaleRatio = 18
             };
 
             // Prepare path styles
@@ -142,8 +142,8 @@ namespace Azure.Maps.Rendering.Tests
             // Prepare static image options
             var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
             {
-                ImageLayer = MapImageLayer.Basic,
-                ImageStyle = MapImageStyle.Dark,
+                MapImageLayer = MapImageLayer.Basic,
+                MapImageStyle = MapImageStyle.Dark,
                 ZoomLevel = 10,
                 RenderLanguage = "en",
                 ImagePushpinStyles = new List<ImagePushpinStyle>() { pushpinSet1, pushpinSet2 },
