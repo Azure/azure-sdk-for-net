@@ -60,7 +60,7 @@ using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
 
 The imagery will look like:
 
-![BerlinImagery](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinImagery.png?raw=true)
+![BerlinImagery](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinImagery.png?raw=true "Berlin satellite image")
 
 ## Render static images
 
@@ -88,7 +88,7 @@ using (FileStream fileStream = File.Create(".\\BerlinStaticImage.png"))
 
 The image will look like:
 
-![BerlinStaticImage](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinStaticImage.png?raw=true)
+![BerlinStaticImage](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinStaticImage.png?raw=true "Berlin static map image")
 
 In a more complex scenario, we can also add pushpins and paths on the map to make it more vivid:
 
@@ -152,7 +152,7 @@ using (FileStream fileStream = File.Create(".\\BerlinStaticImageWithPinsAndPaths
 
 The rendered image will look like:
 
-![RenderStaticImagesWithPinsAndPaths](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinStaticImageWithPinsAndPaths.png?raw=true)
+![RenderStaticImagesWithPinsAndPaths](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinStaticImageWithPinsAndPaths.png?raw=true "Static map image with pushpin and path")
 
 ## Render tiles
 
@@ -183,4 +183,4 @@ using (FileStream fileStream = File.Create(".\\BerlinMapTile.png"))
 
 The image will look like:
 
-![BerlinMapTile](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinMapTile.png?raw=true)
+![BerlinMapTile](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinMapTile.png?raw=true "Berlin map tile image")

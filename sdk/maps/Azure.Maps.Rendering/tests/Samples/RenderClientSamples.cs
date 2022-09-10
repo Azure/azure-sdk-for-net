@@ -78,7 +78,7 @@ namespace Azure.Maps.Rendering.Tests
         [Test]
         public void RenderingStaticImages()
         {
-            TokenCredential credential = new DefaultAzureCredential();
+            TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsRenderClient client = new MapsRenderClient(credential, clientId);
 
@@ -108,7 +108,7 @@ namespace Azure.Maps.Rendering.Tests
         [Test]
         public void RenderingStaticImagesWithPinsAndPaths()
         {
-            TokenCredential credential = new DefaultAzureCredential();
+            TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsRenderClient client = new MapsRenderClient(credential, clientId);
             Assert.IsNotNull(client);
@@ -178,7 +178,7 @@ namespace Azure.Maps.Rendering.Tests
         [Test]
         public void RenderingMapTiles()
         {
-            TokenCredential credential = new DefaultAzureCredential();
+            TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsRenderClient client = new MapsRenderClient(credential, clientId);
 

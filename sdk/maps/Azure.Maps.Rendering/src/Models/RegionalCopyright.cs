@@ -19,7 +19,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary> Initializes a new instance of RegionalCopyright. </summary>
-        /// <param name="copyrights"> Copyrights array. </param>
+        /// <param name="copyrights"> Copyrights list. </param>
         /// <param name="country"> Country property. </param>
         internal RegionalCopyright(IReadOnlyList<string> copyrights, RegionalCopyrightCountry country)
         {
@@ -27,7 +27,7 @@ namespace Azure.Maps.Rendering
             Country = country;
         }
 
-        /// <summary> Copyrights array. </summary>
+        /// <summary> Copyrights list. </summary>
         public IReadOnlyList<string> Copyrights { get; }
         /// <summary> Country property. </summary>
         public RegionalCopyrightCountry Country { get; }
