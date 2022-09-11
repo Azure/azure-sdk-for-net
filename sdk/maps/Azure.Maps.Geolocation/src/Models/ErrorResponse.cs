@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Geolocation
 {
-    /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
+    /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. This also follows the <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.odata.odataerror?view=odata-core-7.0.">(OData error response format)</see>. </summary>
     [CodeGenModel("ErrorResponse")]
     internal partial class ErrorResponse
     {
