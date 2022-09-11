@@ -8,14 +8,14 @@ using Azure.Maps.Rendering;
 
 ## Create Render Client
 
-Before rendering any images or tiles, create a `MapsRenderClient` first. Either use subscription key or AAD.
+Before rendering any images or tiles, create a `MapsRenderingClient` first. Either use subscription key or AAD.
 
 Instantiate render client with subscription key:
 
 ```C# Snippet:InstantiateRenderClientViaSubscriptionKey
-// Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
+// Create a MapsRenderingClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-MapsRenderClient client = new MapsRenderClient(credential);
+MapsRenderingClient client = new MapsRenderingClient(credential);
 ```
 
 Instantiate render client via AAD authentication:
@@ -34,7 +34,7 @@ For example, if you wants to render a tile in Germany with a specific bounding b
 int zoom = 10, tileSize = 300;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
-MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 ```
 
 ## Render imagery tiles
@@ -162,7 +162,7 @@ To render map tiles, one can decide map tile X, Y index and zoom level and then 
 int zoom = 10, tileSize = 300;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
-MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
 // Fetch map tiles
 GetMapTileOptions GetMapTileOptions = new GetMapTileOptions()

@@ -71,7 +71,7 @@ using Azure.Maps.Route;
 using Azure.Maps.Search;
 ```
 
-In the main function, instantiate `MapsSearchClient`, `MapsRouteClient` and `MapsRenderClient` either via AAD or subscription key authentication. Below is an example of instantiation via AAD:
+In the main function, instantiate `MapsSearchClient`, `MapsRouteClient` and `MapsRenderingClient` either via AAD or subscription key authentication. Below is an example of instantiation via AAD:
 
 ```C#
 // Create a MapsSearchClient and MapsRouteClient that will authenticate through Active Directory
@@ -80,7 +80,7 @@ var clientId = "<My Map Account Client Id>";
 
 MapsSearchClient searchClient = new MapsSearchClient(credential, clientId);
 MapsRouteClient routeClient = new MapsRouteClient(credential, clientId);
-MapsRenderClient routeClient = new MapsRenderClient(credential, clientId);
+MapsRenderingClient routeClient = new MapsRenderingClient(credential, clientId);
 ```
 
 Next, search for my home and amusement park via `MapsSearchClient`, and extract the coordinates from the results:
@@ -130,7 +130,7 @@ foreach (var leg in result.Value.Routes[0].Legs)
 }
 ```
 
-Finally, if you want to save a image photo, `MapsRenderClient` can help to achieve this:
+Finally, if you want to save a image photo, `MapsRenderingClient` can help to achieve this:
 
 ```C#
 // Prepare pushpin styles
@@ -167,7 +167,7 @@ using (var fileStream = File.Create(".\\HomeToWindsOverWashington.png"))
 }
 ```
 
-Voila! That's how we utilize `MapsSearchClient`, `MapsRouteClient` and `MapsRenderClient` at the same time. You can use whatever combinations within Azure Maps SDK or even integrate with other services' SDK. For more examples, please refer to each service's samples.
+Voila! That's how we utilize `MapsSearchClient`, `MapsRouteClient` and `MapsRenderingClient` at the same time. You can use whatever combinations within Azure Maps SDK or even integrate with other services' SDK. For more examples, please refer to each service's samples.
 
 ## Troubleshooting
 

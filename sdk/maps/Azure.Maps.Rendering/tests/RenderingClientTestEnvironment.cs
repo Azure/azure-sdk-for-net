@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Maps.Rendering.Tests
 {
-    public class RenderClientTestEnvironment : TestEnvironment
+    public class RenderingClientTestEnvironment : TestEnvironment
     {
         public Uri Endpoint
         {

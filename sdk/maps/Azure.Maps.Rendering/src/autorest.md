@@ -4,12 +4,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ## AutoRest Configuration
 
-> see https://aka.ms/autorest
+> see <https://aka.ms/autorest>
 
 ``` yaml
 input-file:
 - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/maps/data-plane/Render/preview/1.0/render.json
-title: MapsRenderClient
+title: MapsRenderingClient
 openapi-type: data-plane
 tag: 1.0
 add-credentials: true

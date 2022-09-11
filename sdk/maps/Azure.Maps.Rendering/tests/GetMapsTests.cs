@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Maps.Rendering.Tests
 {
-    public class GetMapsTests : RenderClientLiveTestsBase
+    public class GetMapsTests : RenderingClientLiveTestsBase
     {
         public GetMapsTests(bool isAsync) : base(isAsync)
         {

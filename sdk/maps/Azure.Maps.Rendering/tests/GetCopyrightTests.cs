@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Maps.Rendering.Tests
 {
-    public class GetCopyrightTests : RenderClientLiveTestsBase
+    public class GetCopyrightTests : RenderingClientLiveTestsBase
     {
         public GetCopyrightTests(bool isAsync) : base(isAsync)
         {

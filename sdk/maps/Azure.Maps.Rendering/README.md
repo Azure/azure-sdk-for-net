@@ -34,31 +34,31 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 * Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
 ```C# Snippet:InstantiateRenderClientViaSubscriptionKey
-// Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
+// Create a MapsRenderingClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-MapsRenderClient client = new MapsRenderClient(credential);
+MapsRenderingClient client = new MapsRenderingClient(credential);
 ```
 
 #### Azure AD authentication
 
-In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsRenderClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsRenderingClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use AAD authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsRenderClient`.
+To use AAD authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsRenderingClient`.
 
 We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
 ![AzureMapsPortal](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/images/azure-maps-portal.png?raw=true "Azure Maps portal website")
 
 ```C# Snippet:InstantiateRenderClientViaAAD
-// Create a MapsRenderClient that will authenticate through Active Directory
+// Create a MapsRenderingClient that will authenticate through Active Directory
 TokenCredential credential = new DefaultAzureCredential();
 string clientId = "<Your Map ClientId>";
-MapsRenderClient client = new MapsRenderClient(credential, clientId);
+MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 ```
 
 ## Key concepts
 
-MapsRenderClient is designed for:
+MapsRenderingClient is designed for:
 
 * Communicate with Azure Maps endpoint to get images and tiles
 * Communicate with Azure Maps endpoint to get copyrights for images and tiles
@@ -91,12 +91,12 @@ Here is a simple example of rendering imagery tiles:
 ```C# Snippet:RenderImageryTiles
 TokenCredential credential = new DefaultAzureCredential();
 string clientId = "<Your Map ClientId>";
-MapsRenderClient client = new MapsRenderClient(credential, clientId);
+MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 
 int zoom = 10, tileSize = 300;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
-MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
 // Get imagery tile
 Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));

@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Maps.Rendering
 {
     /// <summary> The Render service client. </summary>
-    public partial class MapsRenderClient
+    public partial class MapsRenderingClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         private readonly HttpPipeline _pipeline;
@@ -26,82 +26,82 @@ namespace Azure.Maps.Rendering
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics _clientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
-        protected MapsRenderClient()
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        protected MapsRenderingClient()
         {
             _clientDiagnostics = null;
             _pipeline = null;
             restClient = null;
         }
 
-        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
-        public MapsRenderClient(AzureKeyCredential credential)
+        public MapsRenderingClient(AzureKeyCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = new Uri("https://atlas.microsoft.com");
-            var options = new MapsRenderClientOptions();
+            var options = new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
             restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MapsRenderClient(AzureKeyCredential credential, MapsRenderClientOptions options)
+        public MapsRenderingClient(AzureKeyCredential credential, MapsRenderingClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = options.Endpoint ?? new Uri("https://atlas.microsoft.com");
-            options ??= new MapsRenderClientOptions();
+            options ??= new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
             restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
-        public MapsRenderClient(TokenCredential credential, string clientId)
+        public MapsRenderingClient(TokenCredential credential, string clientId)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = new Uri("https://atlas.microsoft.com");
-            var options = new MapsRenderClientOptions();
+            var options = new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
             restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MapsRenderClient(TokenCredential credential, string clientId, MapsRenderClientOptions options)
+        public MapsRenderingClient(TokenCredential credential, string clientId, MapsRenderingClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = options.Endpoint ?? new Uri("https://atlas.microsoft.com");
-            options ??= new MapsRenderClientOptions();
+            options ??= new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
             restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal MapsRenderClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, MapsRenderClientOptions.ServiceVersion apiVersion = MapsRenderClientOptions.LatestVersion)
+        internal MapsRenderingClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, MapsRenderingClientOptions.ServiceVersion apiVersion = MapsRenderingClientOptions.LatestVersion)
         {
-            var options = new MapsRenderClientOptions(apiVersion);
+            var options = new MapsRenderingClientOptions(apiVersion);
             restClient = new RenderRestClient(clientDiagnostics, pipeline, endpoint, clientId, options.Version);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -115,7 +115,7 @@ namespace Azure.Maps.Rendering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Stream>> GetMapStaticImageAsync(GetMapStaticImageOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapStaticImage");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapStaticImage");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.Maps.Rendering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Stream> GetMapStaticImage(GetMapStaticImageOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapStaticImage");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapStaticImage");
             scope.Start();
             try
             {
@@ -269,7 +269,7 @@ namespace Azure.Maps.Rendering
         /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         public virtual async Task<Response<Stream>> GetMapImageryTileAsync(MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapImageryTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapImageryTile");
             scope.Start();
             try
             {
@@ -297,7 +297,7 @@ namespace Azure.Maps.Rendering
         /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         public virtual Response<Stream> GetMapImageryTile(MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapImageryTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapImageryTile");
             scope.Start();
             try
             {
@@ -324,7 +324,7 @@ namespace Azure.Maps.Rendering
         /// <exception cref="ArgumentNullException"> <paramref name="stateSetId"/> or <paramref name="mapTileIndex"/> is null. </exception>
         public virtual async Task<Response<Stream>> GetMapStateTileAsync(string stateSetId, MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapStateTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapStateTile");
             scope.Start();
             try
             {
@@ -353,7 +353,7 @@ namespace Azure.Maps.Rendering
         {
             Argument.AssertNotNull(stateSetId, nameof(stateSetId));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapStateTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapStateTile");
             scope.Start();
             try
             {
@@ -378,7 +378,7 @@ namespace Azure.Maps.Rendering
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapTile");
             scope.Start();
             try
             {
@@ -416,7 +416,7 @@ namespace Azure.Maps.Rendering
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetMapTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapTile");
             scope.Start();
             try
             {
@@ -452,7 +452,7 @@ namespace Azure.Maps.Rendering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CopyrightCaption>> GetCopyrightCaptionAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightCaption");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightCaption");
             scope.Start();
             try
             {
@@ -474,7 +474,7 @@ namespace Azure.Maps.Rendering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CopyrightCaption> GetCopyrightCaption(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightCaption");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightCaption");
             scope.Start();
             try
             {
@@ -498,7 +498,7 @@ namespace Azure.Maps.Rendering
         {
             Argument.AssertNotNull(geoBoundingBox, nameof(geoBoundingBox));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightFromBoundingBox");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightFromBoundingBox");
             scope.Start();
             try
             {
@@ -523,7 +523,7 @@ namespace Azure.Maps.Rendering
         {
             Argument.AssertNotNull(geoBoundingBox, nameof(geoBoundingBox));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightFromBoundingBox");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightFromBoundingBox");
             scope.Start();
             try
             {
@@ -551,7 +551,7 @@ namespace Azure.Maps.Rendering
         /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         public virtual async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(MapTileIndex mapTileIndex, bool includeText = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightForTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightForTile");
             scope.Start();
             try
             {
@@ -578,7 +578,7 @@ namespace Azure.Maps.Rendering
         /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         public virtual Response<RenderCopyright> GetCopyrightForTile(MapTileIndex mapTileIndex, bool includeText = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightForTile");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightForTile");
             scope.Start();
             try
             {
@@ -599,7 +599,7 @@ namespace Azure.Maps.Rendering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RenderCopyright>> GetCopyrightForWorldAsync(bool includeText = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightForWorld");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightForWorld");
             scope.Start();
             try
             {
@@ -620,7 +620,7 @@ namespace Azure.Maps.Rendering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RenderCopyright> GetCopyrightForWorld(bool includeText = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderClient.GetCopyrightForWorld");
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetCopyrightForWorld");
             scope.Start();
             try
             {

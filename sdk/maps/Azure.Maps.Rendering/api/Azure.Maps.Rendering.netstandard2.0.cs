@@ -92,13 +92,13 @@ namespace Azure.Maps.Rendering
         public static bool operator !=(Azure.Maps.Rendering.MapImageStyle left, Azure.Maps.Rendering.MapImageStyle right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MapsRenderClient
+    public partial class MapsRenderingClient
     {
-        protected MapsRenderClient() { }
-        public MapsRenderClient(Azure.AzureKeyCredential credential) { }
-        public MapsRenderClient(Azure.AzureKeyCredential credential, Azure.Maps.Rendering.MapsRenderClientOptions options) { }
-        public MapsRenderClient(Azure.Core.TokenCredential credential, string clientId) { }
-        public MapsRenderClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Rendering.MapsRenderClientOptions options) { }
+        protected MapsRenderingClient() { }
+        public MapsRenderingClient(Azure.AzureKeyCredential credential) { }
+        public MapsRenderingClient(Azure.AzureKeyCredential credential, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
+        public MapsRenderingClient(Azure.Core.TokenCredential credential, string clientId) { }
+        public MapsRenderingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
         public virtual Azure.Response<Azure.Maps.Rendering.CopyrightCaption> GetCopyrightCaption(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Rendering.CopyrightCaption>> GetCopyrightCaptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Rendering.RenderCopyright> GetCopyrightForTile(Azure.Maps.Rendering.MapTileIndex mapTileIndex, bool includeText = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -118,15 +118,15 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.MapTileIndex PositionToTileXY(Azure.Core.GeoJson.GeoPosition position, int zoom, int tileSize) { throw null; }
         public static Azure.Core.GeoJson.GeoBoundingBox TileXYToBoundingBox(Azure.Maps.Rendering.MapTileIndex mapTileIndex, int tileSize) { throw null; }
     }
-    public partial class MapsRenderClientOptions : Azure.Core.ClientOptions
+    public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
     {
-        public MapsRenderClientOptions(Azure.Maps.Rendering.MapsRenderClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
         public enum ServiceVersion
         {
             V1_0 = 1,
         }
     }
-    public static partial class MapsRenderModelFactory
+    public static partial class MapsRenderingModelFactory
     {
         public static Azure.Maps.Rendering.CopyrightCaption CopyrightCaption(string formatVersion = null, string copyright = null) { throw null; }
         public static Azure.Maps.Rendering.RegionalCopyright RegionalCopyright(System.Collections.Generic.IEnumerable<string> copyrights = null, Azure.Maps.Rendering.RegionalCopyrightCountry country = null) { throw null; }

@@ -13,4 +13,4 @@ description: Samples for the Azure.Maps.Rendering client library.
 
 For different APIs, please refer the following samples:
 
-[Render tiles, imageries and images](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/samples/MapsRenderTilesImageriesImagesSamples.md)
+[Rendering tiles, imageries and images](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/samples/MapsRenderingTilesImageriesImagesSamples.md)

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Maps.Rendering
 {
     /// <summary> Client options for MapsRenderClient. </summary>
-    public partial class MapsRenderClientOptions : Azure.Core.ClientOptions
+    public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
@@ -28,7 +28,7 @@ namespace Azure.Maps.Rendering
         /// <summary> Initializes new instance of MapsRenderClientOptions. </summary>
         /// <param name="version"> Azure Maps Render API version. </param>
         /// <param name="endpoint"> The endpoint for Azure Maps. </param>
-        public MapsRenderClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
+        public MapsRenderingClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {
             Version = version switch
             {

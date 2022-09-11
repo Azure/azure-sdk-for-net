@@ -16,12 +16,12 @@ using NUnit.Framework;
 
 namespace Azure.Maps.Rendering.Tests
 {
-    public class RenderClientSamples : SamplesBase<RenderClientTestEnvironment>
+    public class RenderingClientSamples : SamplesBase<RenderingClientTestEnvironment>
     {
-        public void RenderClientViaAAD()
+        public void RenderingClientViaAAD()
         {
             #region Snippet:InstantiateRenderClientViaAAD
-            // Create a MapsRenderClient that will authenticate through Active Directory
+            // Create a MapsRenderingClient that will authenticate through Active Directory
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
             string clientId = "<Your Map ClientId>";
@@ -29,16 +29,16 @@ namespace Azure.Maps.Rendering.Tests
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
 #endif
-            MapsRenderClient client = new MapsRenderClient(credential, clientId);
+            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
             #endregion
         }
 
-        public void RenderClientViaSubscriptionKey()
+        public void RenderingClientViaSubscriptionKey()
         {
             #region Snippet:InstantiateRenderClientViaSubscriptionKey
-            // Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
+            // Create a MapsRenderingClient that will authenticate through Subscription Key (Shared key)
             AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-            MapsRenderClient client = new MapsRenderClient(credential);
+            MapsRenderingClient client = new MapsRenderingClient(credential);
             #endregion
         }
 
@@ -53,13 +53,13 @@ namespace Azure.Maps.Rendering.Tests
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
 #endif
-            MapsRenderClient client = new MapsRenderClient(credential, clientId);
+            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 
             #region Snippet:GetTileXY
             int zoom = 10, tileSize = 300;
 
             // Get tile X, Y index by coordinate, zoom and tile size information
-            MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+            MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
             #endregion
 
             #region Snippet:RenderImagery
@@ -80,7 +80,7 @@ namespace Azure.Maps.Rendering.Tests
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
-            MapsRenderClient client = new MapsRenderClient(credential, clientId);
+            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 
             #region Snippet:RenderStaticImages
             // Prepare static image options
@@ -110,7 +110,7 @@ namespace Azure.Maps.Rendering.Tests
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
-            MapsRenderClient client = new MapsRenderClient(credential, clientId);
+            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
             Assert.IsNotNull(client);
 
             #region Snippet:RenderStaticImagesWithPinsAndPaths
@@ -180,13 +180,13 @@ namespace Azure.Maps.Rendering.Tests
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
-            MapsRenderClient client = new MapsRenderClient(credential, clientId);
+            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 
             #region Snippet:RenderMapTiles
             int zoom = 10, tileSize = 300;
 
             // Get tile X, Y index by coordinate, zoom and tile size information
-            MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+            MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
             // Fetch map tiles
             GetMapTileOptions GetMapTileOptions = new GetMapTileOptions()
