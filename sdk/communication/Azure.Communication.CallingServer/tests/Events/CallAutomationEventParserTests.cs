@@ -177,7 +177,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void RecordingStateChangedEventParsed_Test()
         {
-            CallRecordingStateChanged @event = CallAutomationModelFactory.RecordingStateChanged(
+            CallRecordingStateChanged @event = CallAutomationModelFactory.CallRecordingStateChanged(
                 recordingId: "recordingId",
                 state: RecordingState.Active,
                 startDateTime: DateTimeOffset.UtcNow,
