@@ -263,8 +263,9 @@ namespace Azure.Communication.CallingServer.Tests.Events
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            string dtmfTone = JsonSerializer.Serialize(DtmfTone.Eight, jsonOptions);
+
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
             if (parsedEvent is RecognizeCompleted recognizeCompleted)
             {
