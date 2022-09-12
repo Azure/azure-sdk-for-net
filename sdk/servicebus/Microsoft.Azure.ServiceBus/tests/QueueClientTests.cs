@@ -255,6 +255,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task BatchDeleteAPITest()
         {

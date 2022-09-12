@@ -914,7 +914,10 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                this.diagnosticSource.BatchDeleteStop(activity, timeout, messageCount, deleteTask?.Status, messagesDeleted);
+                if (isDiagnosticSourceEnabled)
+                {
+                    this.diagnosticSource.BatchDeleteStop(activity, timeout, messageCount, deleteTask.Status, messagesDeleted);
+                }
             }
 
             MessagingEventSource.Log.MessageBatchDeleteStop(this.ClientId, timeout, messageCount);
