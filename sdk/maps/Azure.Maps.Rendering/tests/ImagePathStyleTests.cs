@@ -5,7 +5,7 @@ using System.Drawing;
 using NUnit.Framework;
 using Azure.Core.GeoJson;
 
-// cspell:ignore fromargb udid
+// cspell:ignore fromargb
 namespace Azure.Maps.Rendering.Tests
 {
     public class ImagePathStyleTests

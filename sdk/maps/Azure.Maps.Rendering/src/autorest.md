@@ -8,17 +8,14 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/maps/data-plane/Render/preview/1.0/render.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c16d792307d64dbd4b283db4672ff25aba31a950/specification/maps/data-plane/Render/stable/2022-08-01/render.json
 title: MapsRenderingClient
 openapi-type: data-plane
-tag: 1.0
+tag: 2.0
 add-credentials: true
 # at some point those credentials will move away to Swagger according to [this](https://github.com/Azure/autorest/issues/3718)
 credential-default-policy-type: BearerTokenCredentialPolicy
 credential-scopes: https://atlas.microsoft.com/.default
-use-extension:
-  "@autorest/modelerfour": "4.22.3"
-
 generation1-convenience-client: true
 model-namespace: false
 sync-methods: None

@@ -84,27 +84,27 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples). Rendering map tiles requires knowledge about zoom levels and tile grid system. Please refer to the [documentation](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid) for more information.
 
-### Render Images
+### Get Imagery Tiles
 
 Here is a simple example of rendering imagery tiles:
 
-```C# Snippet:RenderImageryTiles
-TokenCredential credential = new DefaultAzureCredential();
-string clientId = "<Your Map ClientId>";
-MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
-
-int zoom = 10, tileSize = 300;
+```C# Snippet:GetImageryMapTiles
+int zoom = 10, tileSize = 256;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
 MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
-// Get imagery tile
-Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
+// Fetch imagery map tiles
+GetMapTileOptions GetMapTileOptions = new GetMapTileOptions(
+    MapTileSetId.MicrosoftImagery,
+    new MapTileIndex(tileIndex.X, tileIndex.Y, zoom)
+);
+Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
 
 // Prepare a file stream to save the imagery
 using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
 {
-    imageryTile.Value.CopyTo(fileStream);
+    mapTile.Value.CopyTo(fileStream);
 }
 ```
 
@@ -119,7 +119,12 @@ For example, if you try to get an imagery tile with wrong tile index, an error i
 ```C# Snippet:CatchRenderException
 try
 {
-    Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(12, 12, 2));
+    var options = new GetMapTileOptions(
+        MapTileSetId.MicrosoftBaseHybrid,
+        new MapTileIndex(12, 12, 2)
+    );
+
+    Response<Stream> imageryTile = client.GetMapTile(options);
     using var imageryStream = new MemoryStream();
     imageryTile.Value.CopyTo(imageryStream);
 }

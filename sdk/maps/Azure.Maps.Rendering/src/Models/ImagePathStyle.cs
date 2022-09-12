@@ -11,7 +11,6 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.GeoJson;
 
-// cspell:ignore udid
 namespace Azure.Maps.Rendering
 {
     /// <summary> Path style settings. </summary>

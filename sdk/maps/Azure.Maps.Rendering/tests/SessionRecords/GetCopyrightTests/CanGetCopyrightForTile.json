@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/map/copyright/tile/json?api-version=1.0\u0026zoom=15\u0026x=17439\u0026y=17439\u0026text=yes",
+      "RequestUri": "https://atlas.microsoft.com/map/copyright/tile/json?api-version=2022-08-01\u0026zoom=15\u0026x=17439\u0026y=17439\u0026text=yes",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e83ba4996d8c2a489e4cdf0e21573f24-3d5b9137a9d88544-00",
-        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220911.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-d64e0c06ac23add778f683ee09bbbe3c-baffc0cbc39e8071-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "c1b82a94647a289661091cb8912638f8",
+        "x-ms-client-request-id": "7755a0769707d16166cce2ca1e0ee1e9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,13 +18,13 @@
         "Cache-Control": "max-age=86400",
         "Content-Length": "6045",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 11 Sep 2022 14:37:58 GMT",
+        "Date": "Mon, 12 Sep 2022 11:57:39 GMT",
         "ETag": "W/\u00220acc476926d123b2b0f5fe93736e8c04\u0022",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: B0BB9C16189B4D28A76B1D8526F52D4F Ref B: TPE30EDGE0609 Ref C: 2022-09-11T14:37:58Z"
+        "X-MSEdge-Ref": "Ref A: D40E9BD854E44F21A814B77A5E2F72A0 Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:39Z"
       },
       "ResponseBody": {
         "formatVersion": "0.0.1",
@@ -65,6 +65,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "879250568"
+    "RandomSeed": "1014965010"
   }
 }

@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/map/copyright/bounding/json?api-version=1.0\u0026mincoordinates=52.41064%2C4.84228\u0026maxcoordinates=52.41762%2C4.84923\u0026text=yes",
+      "RequestUri": "https://atlas.microsoft.com/map/copyright/bounding/json?api-version=2022-08-01\u0026mincoordinates=52.41064%2C4.84228\u0026maxcoordinates=52.41762%2C4.84923\u0026text=yes",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-32c599a331f5fc4a97e68445709c52b8-2689ec9f60173849-00",
-        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220911.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-140ce5b948648126de403abc23632f03-16dcc4902be767f6-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "c7cd5e2000fb48fa16fc5bac21b7bf9d",
+        "x-ms-client-request-id": "9f26f277cd9f1f057d359a3889955f44",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,13 +18,13 @@
         "Cache-Control": "max-age=86400",
         "Content-Length": "7582",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 11 Sep 2022 14:38:03 GMT",
+        "Date": "Mon, 12 Sep 2022 11:57:44 GMT",
         "ETag": "W/\u0022d6959e64c4fed1e434c1f802c0669fbe\u0022",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: F68FC671990544A4A887EA03B94AE9E9 Ref B: TPE30EDGE0609 Ref C: 2022-09-11T14:38:04Z"
+        "X-MSEdge-Ref": "Ref A: CBEC0233280546649221FA6E494350B6 Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:44Z"
       },
       "ResponseBody": {
         "formatVersion": "0.0.1",
@@ -70,6 +70,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1563292821"
+    "RandomSeed": "1527072965"
   }
 }

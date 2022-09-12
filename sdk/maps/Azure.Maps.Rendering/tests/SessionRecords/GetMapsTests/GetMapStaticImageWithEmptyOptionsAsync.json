@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/map/static/png?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/map/static/png?api-version=2022-08-01\u0026language=",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, image/jpeg, image/png, image/pbf, application/vnd.mapbox-vector-tile",
         "Authorization": "Sanitized",
-        "traceparent": "00-778cf8db0565dd249f914f3d57c826ae-b86aba568cdf2e9b-00",
-        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220901.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "traceparent": "00-2d05d52a5553f5622e4174843a102b63-16aa89747ae8d76d-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "6229a5930765b27d6e73d06720bff3d3",
+        "x-ms-client-request-id": "b54fc86f902e7fcfd53d4791d61ca20a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,12 +17,12 @@
       "ResponseHeaders": {
         "Content-Length": "81",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 31 Aug 2022 16:04:31 GMT",
+        "Date": "Mon, 12 Sep 2022 11:57:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 30E30228E0A540E58DD4ABF7D30B1AA6 Ref B: TPE30EDGE0911 Ref C: 2022-08-31T16:04:32Z"
+        "X-MSEdge-Ref": "Ref A: 7B6A768727584133852572EF9009D82F Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:47Z"
       },
       "ResponseBody": {
         "error": {
@@ -35,6 +35,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1865345173"
+    "RandomSeed": "324112169"
   }
 }

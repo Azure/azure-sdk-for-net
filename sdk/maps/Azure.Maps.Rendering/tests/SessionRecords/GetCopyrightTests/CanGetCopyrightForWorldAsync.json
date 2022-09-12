@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/map/copyright/world/json?api-version=1.0\u0026text=yes",
+      "RequestUri": "https://atlas.microsoft.com/map/copyright/world/json?api-version=2022-08-01\u0026text=yes",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e57f99f937dcb74dac987f9f7838e6ee-9f7976d27a9c514c-00",
-        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220911.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-7dc2c2d9fd3537ce017f44947d6167bd-6c5092f14879bf05-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "1541fb53fc1f0bfcb40e68ae56e6fdc4",
+        "x-ms-client-request-id": "d093f25d167c133edf9b88e695c24fe7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,13 +18,13 @@
         "Cache-Control": "max-age=86400",
         "Content-Length": "912858",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 11 Sep 2022 14:38:02 GMT",
+        "Date": "Mon, 12 Sep 2022 11:57:43 GMT",
         "ETag": "W/\u00225f623b123f86e7eaac582e7d4b3dbda4\u0022",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: A8D1B91DA6D547249F61982067569AC8 Ref B: TPE30EDGE0609 Ref C: 2022-09-11T14:38:03Z"
+        "X-MSEdge-Ref": "Ref A: 7C2B2E68BF604F8494E0D8C2A370BAA2 Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:43Z"
       },
       "ResponseBody": {
         "formatVersion": "0.0.1",
@@ -3943,6 +3943,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1495340562"
+    "RandomSeed": "1814186411"
   }
 }

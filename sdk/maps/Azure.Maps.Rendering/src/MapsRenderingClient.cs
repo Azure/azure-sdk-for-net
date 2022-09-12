@@ -167,7 +167,7 @@ namespace Azure.Maps.Rendering
                     boundingBox,
                     options?.HeightInPixels,
                     options?.WidthInPixels,
-                    options?.RenderLanguage,
+                    options?.Language.ToString(),
                     localizedMapView,
                     pushpins,
                     paths,
@@ -241,7 +241,7 @@ namespace Azure.Maps.Rendering
                     boundingBox,
                     options?.HeightInPixels,
                     options?.WidthInPixels,
-                    options?.RenderLanguage,
+                    options?.Language.ToString(),
                     localizedMapView,
                     pushpins,
                     paths,
@@ -256,65 +256,9 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// This API returns a map image tile with size 256x256, given the x and y coordinates and zoom
-        /// level. Zoom level ranges from 1 to 19. The current available style value is <c>satellite</c> which provides satellite
-        /// imagery alone.
-        /// </summary>
-        /// <param name="mapTileIndex">
-        /// Zoom level, and coordinate of the tile on zoom grid.
-        /// The value of X and Y coordinate in <c>mapTileIndex</c> must be in the range [0, (2^zoom)-1].
-        /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
-        public virtual async Task<Response<Stream>> GetMapImageryTileAsync(MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapImageryTile");
-            scope.Start();
-            try
-            {
-                var response = await restClient.GetMapImageryTileAsync(mapTileIndex, RasterTileFormat.Png, MapImageryStyle.Satellite, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This API returns a map image tile with size 256x256, given the x and y coordinates and zoom
-        /// level. Zoom level ranges from 1 to 19. The current available style value is &apos;satellite&apos; which provides satellite
-        /// imagery alone.
-        /// </summary>
-        /// <param name="mapTileIndex">
-        /// Zoom level, and coordinate of the tile on zoom grid.
-        /// The value of X and Y coordinate in <c>mapTileIndex</c> must be in the range [0, (2^zoom)-1]].
-        /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
-        public virtual Response<Stream> GetMapImageryTile(MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapImageryTile");
-            scope.Start();
-            try
-            {
-                var response = restClient.GetMapImageryTile(mapTileIndex, RasterTileFormat.Png, MapImageryStyle.Satellite, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling (see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see>)
         /// </summary>
-        /// <param name="stateSetId"> The state set id. </param>
+        /// <param name="stateSetId"> The state set id for indoor map. </param>
         /// <param name="mapTileIndex">
         /// Zoom level, and coordinate of the tile on zoom grid.
         /// The value of X and Y coordinate in <c>mapTileIndex</c> must be in the range [0, (2^zoom)-1].
@@ -388,12 +332,11 @@ namespace Azure.Maps.Rendering
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 var response = await restClient.GetMapTileAsync(
-                    options.MapTileFormat,
-                    options.MapTileLayer,
-                    options.MapTileStyle,
-                    options.MapTileIndex,
-                    options?.TileSize,
-                    options?.RenderLanguage,
+                    options.MapTileSetId,
+                    options?.MapTileIndex,
+                    options?.TimeStamp,
+                    options?.MapTileSize,
+                    options?.Language.ToString(),
                     localizedMapView,
                     cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
@@ -426,14 +369,133 @@ namespace Azure.Maps.Rendering
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 var response = restClient.GetMapTile(
-                    options.MapTileFormat,
-                    options.MapTileLayer,
-                    options.MapTileStyle,
-                    options.MapTileIndex,
-                    options?.TileSize,
-                    options?.RenderLanguage,
+                    options.MapTileSetId,
+                    options?.MapTileIndex,
+                    options?.TimeStamp,
+                    options?.MapTileSize,
+                    options?.Language.ToString(),
                     localizedMapView,
                     cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
+        /// </summary>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="zoom"> Zoom level for the desired map attribution. Available values are 0 to 22. </param>
+        /// <param name="boundingBox"> The <see cref="GeoBoundingBox"/> that represents the rectangular area of a bounding box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tileSetId"/> or <paramref name="boundingBox"/> is null. </exception>
+        public virtual async Task<Response<IReadOnlyList<string>>> GetMapCopyrightAttributionAsync(MapTileSetId tileSetId, GeoBoundingBox boundingBox, int? zoom = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
+
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapCopyrightAttribution");
+            scope.Start();
+            try
+            {
+                List<double> bounds = null;
+                if (boundingBox != null)
+                {
+                    bounds = new List<double>();
+                    bounds.Add(boundingBox.West);
+                    bounds.Add(boundingBox.South);
+                    bounds.Add(boundingBox.East);
+                    bounds.Add(boundingBox.North);
+                }
+                var response = await restClient.GetMapAttributionAsync(
+                    tileSetId, zoom ?? 0, bounds, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Copyrights, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
+        /// </summary>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="zoom"> Zoom level for the desired map attribution. Available values are 0 to 22. </param>
+        /// <param name="boundingBox"> The <see cref="GeoBoundingBox"/> that represents the rectangular area of a bounding box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tileSetId"/> or <paramref name="boundingBox"/> is null. </exception>
+        public virtual Response<IReadOnlyList<string>> GetMapCopyrightAttribution(MapTileSetId tileSetId, GeoBoundingBox boundingBox, int? zoom = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
+
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapCopyrightAttribution");
+            scope.Start();
+            try
+            {
+                List<double> bounds = null;
+                if (boundingBox != null)
+                {
+                    bounds = new List<double>();
+                    bounds.Add(boundingBox.West);
+                    bounds.Add(boundingBox.South);
+                    bounds.Add(boundingBox.East);
+                    bounds.Add(boundingBox.North);
+                }
+                var response = restClient.GetMapAttribution(tileSetId, zoom ?? 0, bounds, cancellationToken);
+                return Response.FromValue(response.Value.Copyrights, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Get Map Tileset API allows users to request metadata for a tileset.
+        /// </summary>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tileSetId"/> is null. </exception>
+        public virtual async Task<Response<MapTileSet>> GetMapTileSetAsync(MapTileSetId tileSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tileSetId, nameof(tileSetId));
+
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapTileSet");
+            scope.Start();
+            try
+            {
+                var response = await restClient.GetMapTilesetAsync(
+                    tileSetId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Get Map Tileset API allows users to request metadata for a tileset.
+        /// </summary>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tileSetId"/> is null. </exception>
+        public virtual Response<MapTileSet> GetMapTileSet(MapTileSetId tileSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tileSetId, nameof(tileSetId));
+
+            using var scope = _clientDiagnostics.CreateScope("MapsRenderingClient.GetMapTileSet");
+            scope.Start();
+            try
+            {
+                var response = restClient.GetMapTileset(tileSetId, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)

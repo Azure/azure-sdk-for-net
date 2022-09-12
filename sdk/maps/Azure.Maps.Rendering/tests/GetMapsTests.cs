@@ -17,15 +17,14 @@ namespace Azure.Maps.Rendering.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetMapImageryTile()
+        public async Task CanGetMapCopyrightAttribution()
         {
             var client = CreateClient();
-            var tile = await client.GetMapImageryTileAsync(new MapTileIndex(14, 14, 10));
-            using var imageryStream = new MemoryStream();
+            var copyrights = await client.GetMapCopyrightAttributionAsync(
+                MapTileSetId.MicrosoftBase, new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629));
 
-            Assert.IsNotNull(tile);
-            tile.Value.CopyTo(imageryStream);
-            Assert.IsTrue(imageryStream.Length > 0);
+            Assert.IsNotNull(copyrights);
+            Assert.IsTrue(copyrights.Value.Count == 1);
         }
 
         [RecordedTest]
@@ -36,7 +35,7 @@ namespace Azure.Maps.Rendering.Tests
             {
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
-                RenderLanguage = "en",
+                Language = RenderingLanguage.EnglishUSA,
             };
             using var imageStream = new MemoryStream();
             var image = await client.GetMapStaticImageAsync(options);
@@ -59,13 +58,10 @@ namespace Azure.Maps.Rendering.Tests
         public async Task CanGetMapTile()
         {
             var client = CreateClient();
-            var options = new GetMapTileOptions()
-            {
-                MapTileFormat = MapTileFormat.Png,
-                MapTileLayer = MapTileLayer.Hybrid,
-                MapTileStyle = MapTileStyle.Main,
-                MapTileIndex = new MapTileIndex(88, 88, 10),
-            };
+            var options = new GetMapTileOptions(
+                MapTileSetId.MicrosoftBaseHybrid,
+                new MapTileIndex(88, 88, 10)
+            );
             using var imageryStream = new MemoryStream();
             var tile = await client.GetMapTileAsync(options);
 
@@ -74,12 +70,19 @@ namespace Azure.Maps.Rendering.Tests
             Assert.IsTrue(imageryStream.Length > 0);
         }
 
-        [Test]
-        public void GetMapTileWithEmptyOptions()
+        [RecordedTest]
+        public async Task CanGetMapTileSet()
         {
             var client = CreateClient();
-            var options = new GetMapTileOptions();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.GetMapTileAsync(options));
+            var tileSet = await client.GetMapTileSetAsync(MapTileSetId.MicrosoftImagery);
+
+            Assert.IsNotNull(tileSet);
+            Assert.AreEqual("2.2.0", tileSet.Value.TileJsonVersion);
+            Assert.AreEqual("1.0.0", tileSet.Value.TileSetVersion);
+            Assert.AreEqual("microsoft.imagery", tileSet.Value.TileSetName);
+            Assert.AreEqual(1, tileSet.Value.TileEndpoints.Count);
+            Assert.AreEqual(0, tileSet.Value.MinZoomLevel);
+            Assert.AreEqual(19, tileSet.Value.MaxZoomLevel);
         }
 
         public void GetMapTileException()
@@ -89,7 +92,12 @@ namespace Azure.Maps.Rendering.Tests
             #region Snippet:CatchRenderException
             try
             {
-                Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(12, 12, 2));
+                var options = new GetMapTileOptions(
+                    MapTileSetId.MicrosoftBaseHybrid,
+                    new MapTileIndex(12, 12, 2)
+                );
+
+                Response<Stream> imageryTile = client.GetMapTile(options);
                 using var imageryStream = new MemoryStream();
                 imageryTile.Value.CopyTo(imageryStream);
             }

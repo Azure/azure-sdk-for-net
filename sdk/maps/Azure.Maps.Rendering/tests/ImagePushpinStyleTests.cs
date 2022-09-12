@@ -5,7 +5,7 @@ using System;
 using System.Drawing;
 using NUnit.Framework;
 
-// cspell:ignore fromargb udid
+// cspell:ignore fromargb
 namespace Azure.Maps.Rendering.Tests
 {
     public class ImagePushpinStyleTests

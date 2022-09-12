@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 #region Snippet:SaveToFile
@@ -43,39 +44,6 @@ namespace Azure.Maps.Rendering.Tests
         }
 
         [Test]
-        public void RenderingImageryTiles()
-        {
-            #region Snippet:RenderImageryTiles
-#if SNIPPET
-            TokenCredential credential = new DefaultAzureCredential();
-            string clientId = "<Your Map ClientId>";
-#else
-            TokenCredential credential = TestEnvironment.Credential;
-            string clientId = TestEnvironment.MapAccountClientId;
-#endif
-            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
-
-            #region Snippet:GetTileXY
-            int zoom = 10, tileSize = 300;
-
-            // Get tile X, Y index by coordinate, zoom and tile size information
-            MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
-            #endregion
-
-            #region Snippet:RenderImagery
-            // Get imagery tile
-            Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
-
-            // Prepare a file stream to save the imagery
-            using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
-            {
-                imageryTile.Value.CopyTo(fileStream);
-            }
-            #endregion
-            #endregion
-        }
-
-        [Test]
         public void RenderingStaticImages()
         {
             TokenCredential credential = TestEnvironment.Credential;
@@ -89,7 +57,7 @@ namespace Azure.Maps.Rendering.Tests
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
                 ZoomLevel = 10,
-                RenderLanguage = "en",
+                Language = RenderingLanguage.EnglishUSA,
             };
 
             // Get static image
@@ -156,7 +124,7 @@ namespace Azure.Maps.Rendering.Tests
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
                 ZoomLevel = 10,
-                RenderLanguage = "en",
+                Language = RenderingLanguage.EnglishUSA,
                 ImagePushpinStyles = new List<ImagePushpinStyle>() { pushpinSet1, pushpinSet2 },
                 ImagePathStyles = new List<ImagePathStyle>() { path1 },
             };
@@ -183,19 +151,18 @@ namespace Azure.Maps.Rendering.Tests
             MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 
             #region Snippet:RenderMapTiles
-            int zoom = 10, tileSize = 300;
+            #region Snippet:GetTileXY
+            int zoom = 10, tileSize = 256;
 
             // Get tile X, Y index by coordinate, zoom and tile size information
             MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+            #endregion
 
             // Fetch map tiles
-            GetMapTileOptions GetMapTileOptions = new GetMapTileOptions()
-            {
-                MapTileFormat = MapTileFormat.Png,
-                MapTileLayer = MapTileLayer.Hybrid,
-                MapTileStyle = MapTileStyle.Main,
-                MapTileIndex = new MapTileIndex(tileIndex.X, tileIndex.Y, zoom),
-            };
+            GetMapTileOptions GetMapTileOptions = new GetMapTileOptions(
+                MapTileSetId.MicrosoftBaseRoad,
+                new MapTileIndex(tileIndex.X, tileIndex.Y, zoom)
+            );
             Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
 
             // Prepare a file stream to save the imagery
@@ -206,6 +173,57 @@ namespace Azure.Maps.Rendering.Tests
             #endregion
 
             Assert.IsNotNull(mapTile);
+        }
+
+        [Test]
+        public void GetImageryMapTiles()
+        {
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
+
+            #region Snippet:GetImageryMapTiles
+            int zoom = 10, tileSize = 256;
+
+            // Get tile X, Y index by coordinate, zoom and tile size information
+            MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+
+            // Fetch imagery map tiles
+            GetMapTileOptions GetMapTileOptions = new GetMapTileOptions(
+                MapTileSetId.MicrosoftImagery,
+                new MapTileIndex(tileIndex.X, tileIndex.Y, zoom)
+            );
+            Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
+
+            // Prepare a file stream to save the imagery
+            using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
+            {
+                mapTile.Value.CopyTo(fileStream);
+            }
+            #endregion
+
+            Assert.IsNotNull(mapTile);
+        }
+
+        [Test]
+        public void GetMapTileSet()
+        {
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
+
+            #region Snippet:GetMapTileSet
+            Response<MapTileSet> tileSetMetadata = client.GetMapTileSet(MapTileSetId.MicrosoftBaseRoad);
+
+            Console.WriteLine("TileSet ID: {0}", tileSetMetadata.Value.TileSetName);
+            Console.WriteLine("Tile scheme: {0}", tileSetMetadata.Value.TileScheme);
+            foreach (string endpoint in tileSetMetadata.Value.TileEndpoints)
+            {
+                Console.WriteLine("TileSet endpoint: {0}", endpoint);
+            }
+            #endregion
+
+            Assert.IsNotNull(tileSetMetadata);
         }
     }
 }

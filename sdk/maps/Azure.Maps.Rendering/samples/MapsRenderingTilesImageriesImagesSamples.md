@@ -31,10 +31,25 @@ Rendering map tiles requires the knowledge about [zoom levels and tile grid syst
 For example, if you wants to render a tile in Germany with a specific bounding box range, one can use utility function `PositionToTileXY` method from `TileMath`. With the desired coordinate, zoom level and tile size, one can get tile X and Y index:
 
 ```C# Snippet:GetTileXY
-int zoom = 10, tileSize = 300;
+int zoom = 10, tileSize = 256;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
 MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+```
+
+## Get Tile Set ID Metadata
+
+We can get Tile set metadata by assigning Tile set ID and utilize the tile information when needed:
+
+```C# Snippet:GetMapTileSet
+Response<MapTileSet> tileSetMetadata = client.GetMapTileSet(MapTileSetId.MicrosoftBaseRoad);
+
+Console.WriteLine("TileSet ID: {0}", tileSetMetadata.Value.TileSetName);
+Console.WriteLine("Tile scheme: {0}", tileSetMetadata.Value.TileScheme);
+foreach (string endpoint in tileSetMetadata.Value.TileEndpoints)
+{
+    Console.WriteLine("TileSet endpoint: {0}", endpoint);
+}
 ```
 
 ## Render imagery tiles
@@ -47,14 +62,23 @@ using System.IO;
 
 Call get Map imagery tile API and save the result to file by previously calculated tile X, Y index:
 
-```C# Snippet:RenderImagery
-// Get imagery tile
-Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
+```C# Snippet:GetImageryMapTiles
+int zoom = 10, tileSize = 256;
+
+// Get tile X, Y index by coordinate, zoom and tile size information
+MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+
+// Fetch imagery map tiles
+GetMapTileOptions GetMapTileOptions = new GetMapTileOptions(
+    MapTileSetId.MicrosoftImagery,
+    new MapTileIndex(tileIndex.X, tileIndex.Y, zoom)
+);
+Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
 
 // Prepare a file stream to save the imagery
 using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
 {
-    imageryTile.Value.CopyTo(fileStream);
+    mapTile.Value.CopyTo(fileStream);
 }
 ```
 
@@ -73,7 +97,7 @@ GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new G
     MapImageLayer = MapImageLayer.Basic,
     MapImageStyle = MapImageStyle.Dark,
     ZoomLevel = 10,
-    RenderLanguage = "en",
+    Language = RenderingLanguage.EnglishUSA,
 };
 
 // Get static image
@@ -135,7 +159,7 @@ GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new G
     MapImageLayer = MapImageLayer.Basic,
     MapImageStyle = MapImageStyle.Dark,
     ZoomLevel = 10,
-    RenderLanguage = "en",
+    Language = RenderingLanguage.EnglishUSA,
     ImagePushpinStyles = new List<ImagePushpinStyle>() { pushpinSet1, pushpinSet2 },
     ImagePathStyles = new List<ImagePathStyle>() { path1 },
 };
@@ -159,19 +183,16 @@ The rendered image will look like:
 To render map tiles, one can decide map tile X, Y index and zoom level and then decide the tile style in `RenderTileOptions`:
 
 ```C# Snippet:RenderMapTiles
-int zoom = 10, tileSize = 300;
+int zoom = 10, tileSize = 256;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
 MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
 // Fetch map tiles
-GetMapTileOptions GetMapTileOptions = new GetMapTileOptions()
-{
-    MapTileFormat = MapTileFormat.Png,
-    MapTileLayer = MapTileLayer.Hybrid,
-    MapTileStyle = MapTileStyle.Main,
-    MapTileIndex = new MapTileIndex(tileIndex.X, tileIndex.Y, zoom),
-};
+GetMapTileOptions GetMapTileOptions = new GetMapTileOptions(
+    MapTileSetId.MicrosoftBaseHybrid,
+    new MapTileIndex(tileIndex.X, tileIndex.Y, zoom)
+);
 Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
 
 // Prepare a file stream to save the imagery
