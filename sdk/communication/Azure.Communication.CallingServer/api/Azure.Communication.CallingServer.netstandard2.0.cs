@@ -238,14 +238,13 @@ namespace Azure.Communication.CallingServer
     }
     public abstract partial class CallMediaRecognizeOptions
     {
-        protected CallMediaRecognizeOptions(Azure.Communication.CallingServer.RecognizeInputType recognizeInputType, Azure.Communication.CommunicationIdentifier targetParticipant) { }
+        protected CallMediaRecognizeOptions(Azure.Communication.CallingServer.RecognizeInputType inputType, Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public System.TimeSpan InitialSilenceTimeout { get { throw null; } set { } }
+        public Azure.Communication.CallingServer.RecognizeInputType InputType { get { throw null; } }
         public bool InterruptCallMediaOperation { get { throw null; } set { } }
-        public bool InterruptPromptAndStartRecognition { get { throw null; } set { } }
+        public bool InterruptPrompt { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallingServer.PlaySource Prompt { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.RecognizeInputType RecognizeInputType { get { throw null; } }
-        public Azure.Communication.CallingServer.RecognizeOptions RecognizeOptions { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class CallParticipant
@@ -376,13 +375,6 @@ namespace Azure.Communication.CallingServer
         internal CreateCallResult() { }
         public Azure.Communication.CallingServer.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallingServer.CallConnectionProperties CallConnectionProperties { get { throw null; } }
-    }
-    public partial class DtmfOptions
-    {
-        public DtmfOptions() { }
-        public System.TimeSpan? InterToneTimeoutInSeconds { get { throw null; } set { } }
-        public int? MaxTonesToCollect { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallingServer.DtmfTone> StopTones { get { throw null; } set { } }
     }
     public partial class DtmfOptionsInternal
     {
@@ -612,14 +604,6 @@ namespace Azure.Communication.CallingServer
         public static implicit operator Azure.Communication.CallingServer.RecognizeInputType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallingServer.RecognizeInputType left, Azure.Communication.CallingServer.RecognizeInputType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RecognizeOptions
-    {
-        public RecognizeOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
-        public Azure.Communication.CallingServer.DtmfOptions DtmfOptions { get { throw null; } set { } }
-        public System.TimeSpan? InitialSilenceTimeoutInSeconds { get { throw null; } set { } }
-        public bool? InterruptPrompt { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordingChannel : System.IEquatable<Azure.Communication.CallingServer.RecordingChannel>
