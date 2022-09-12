@@ -330,22 +330,22 @@ namespace Azure.Core.TestFramework
                     knownMethods.Add(method.Name);
                 }
 
-                //foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
-                //{
-                //    bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
+                foreach (var fileInfo in new DirectoryInfo(GetSessionFileDirectory()).EnumerateFiles())
+                {
+                    bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
 
-                //    if (!used)
-                //    {
-                //        try
-                //        {
-                //            fileInfo.Delete();
-                //        }
-                //        catch
-                //        {
-                //            // Ignore
-                //        }
-                //    }
-                //}
+                    if (!used)
+                    {
+                        try
+                        {
+                            fileInfo.Delete();
+                        }
+                        catch
+                        {
+                            // Ignore
+                        }
+                    }
+                }
             }
         }
 
