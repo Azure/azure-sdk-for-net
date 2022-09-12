@@ -121,23 +121,6 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Initializes a new instance of Call Connected event.
-        /// </summary>
-        public static CallConnected CallConnected(string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new CallConnected(
-                CreateEventSource(callConnectionId),
-                version,
-                operationContext,
-                resultInformation,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(CallConnected)
-                );
-        }
-
-        /// <summary>
         /// Initializes a new instance of Call Disconnected event.
         /// </summary>
         public static CallDisconnected CallDisconnected(string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
@@ -209,22 +192,6 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Initializes a new instance of Play Completed event.
-        /// </summary>
-        public static PlayCompleted PlayCompleted(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new PlayCompleted(operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, CallAutomationEventParser.EventPrefix + nameof(PlayCompleted));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of Play failed event.
-        /// </summary>
-        public static PlayFailed PlayFailed(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new PlayFailed(CreateEventSource(callConnectionId, nameof(PlayFailed)),operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, CallAutomationEventParser.EventPrefix + nameof(PlayFailed));
-        }
-
-        /// <summary>
         /// Initializes a new instance of Recording state changed event.
         /// </summary>
         public static CallRecordingStateChanged RecordingStateChanged(string recordingId = default, RecordingState state = default, DateTimeOffset startDateTime = default,  string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
@@ -241,40 +208,6 @@ namespace Azure.Communication.CallingServer
                 serverCallId,
                 correlationId,
                 CallAutomationEventParser.EventPrefix + nameof(RecordingStateChanged)
-                );
-        }
-
-        /// <summary>
-        /// Initializes a new instance of Recognize Completed event.
-        /// </summary>
-        public static RecognizeCompleted RecognizeCompleted(string operationContext = default, ResultInformation resultInformation = default, RecognitionType recognitionType = default, CollectTonesResult collectTonesResult = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new RecognizeCompleted(
-                operationContext,
-                resultInformation,
-                recognitionType,
-                collectTonesResult,
-                version,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(RecognizeCompleted)
-                );
-        }
-
-        /// <summary>
-        /// Initializes a new instance of Recognize Failed event
-        /// </summary>
-        public static RecognizeFailed RecognizeFailed(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new RecognizeFailed(
-                operationContext,
-                resultInformation,
-                version,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(RecognizeFailed)
                 );
         }
     }

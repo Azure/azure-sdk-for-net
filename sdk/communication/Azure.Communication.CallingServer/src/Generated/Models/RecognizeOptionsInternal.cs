@@ -33,6 +33,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Target participant of DTFM tone recognition. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Defines configurations for DTMF. </summary>
-        public DtmfOptions DtmfOptions { get; set; }
+        public DtmfOptionsInternal DtmfOptions { get; set; }
     }
 }
