@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type0 = property0.Value.GetString().ToMongoRoleDefinitionType();
+                            type0 = property0.Value.GetInt32().ToMongoRoleDefinitionType();
                             continue;
                         }
                         if (property0.NameEquals("databaseName"))
