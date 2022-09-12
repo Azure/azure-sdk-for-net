@@ -314,18 +314,18 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerConfigurations/default/authorizePartner
         /// Operation Id: PartnerConfigurations_AuthorizePartner
         /// </summary>
-        /// <param name="partnerInfo"> The information of the partner to be authorized. </param>
+        /// <param name="content"> The information of the partner to be authorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerInfo"/> is null. </exception>
-        public virtual async Task<Response<PartnerConfigurationResource>> AuthorizePartnerAsync(Partner partnerInfo, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PartnerConfigurationResource>> AuthorizePartnerAsync(EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _partnerConfigurationClientDiagnostics.CreateScope("PartnerConfigurationResource.AuthorizePartner");
             scope.Start();
             try
             {
-                var response = await _partnerConfigurationRestClient.AuthorizePartnerAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerInfo, cancellationToken).ConfigureAwait(false);
+                var response = await _partnerConfigurationRestClient.AuthorizePartnerAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,18 +340,18 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerConfigurations/default/authorizePartner
         /// Operation Id: PartnerConfigurations_AuthorizePartner
         /// </summary>
-        /// <param name="partnerInfo"> The information of the partner to be authorized. </param>
+        /// <param name="content"> The information of the partner to be authorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerInfo"/> is null. </exception>
-        public virtual Response<PartnerConfigurationResource> AuthorizePartner(Partner partnerInfo, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PartnerConfigurationResource> AuthorizePartner(EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _partnerConfigurationClientDiagnostics.CreateScope("PartnerConfigurationResource.AuthorizePartner");
             scope.Start();
             try
             {
-                var response = _partnerConfigurationRestClient.AuthorizePartner(Id.SubscriptionId, Id.ResourceGroupName, partnerInfo, cancellationToken);
+                var response = _partnerConfigurationRestClient.AuthorizePartner(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
                 return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -366,18 +366,18 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerConfigurations/default/unauthorizePartner
         /// Operation Id: PartnerConfigurations_UnauthorizePartner
         /// </summary>
-        /// <param name="partnerInfo"> The information of the partner to be unauthorized. </param>
+        /// <param name="content"> The information of the partner to be unauthorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerInfo"/> is null. </exception>
-        public virtual async Task<Response<PartnerConfigurationResource>> UnauthorizePartnerAsync(Partner partnerInfo, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PartnerConfigurationResource>> UnauthorizePartnerAsync(EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _partnerConfigurationClientDiagnostics.CreateScope("PartnerConfigurationResource.UnauthorizePartner");
             scope.Start();
             try
             {
-                var response = await _partnerConfigurationRestClient.UnauthorizePartnerAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerInfo, cancellationToken).ConfigureAwait(false);
+                var response = await _partnerConfigurationRestClient.UnauthorizePartnerAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,18 +392,18 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerConfigurations/default/unauthorizePartner
         /// Operation Id: PartnerConfigurations_UnauthorizePartner
         /// </summary>
-        /// <param name="partnerInfo"> The information of the partner to be unauthorized. </param>
+        /// <param name="content"> The information of the partner to be unauthorized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerInfo"/> is null. </exception>
-        public virtual Response<PartnerConfigurationResource> UnauthorizePartner(Partner partnerInfo, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PartnerConfigurationResource> UnauthorizePartner(EventGridPartnerContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(partnerInfo, nameof(partnerInfo));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _partnerConfigurationClientDiagnostics.CreateScope("PartnerConfigurationResource.UnauthorizePartner");
             scope.Start();
             try
             {
-                var response = _partnerConfigurationRestClient.UnauthorizePartner(Id.SubscriptionId, Id.ResourceGroupName, partnerInfo, cancellationToken);
+                var response = _partnerConfigurationRestClient.UnauthorizePartner(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
                 return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

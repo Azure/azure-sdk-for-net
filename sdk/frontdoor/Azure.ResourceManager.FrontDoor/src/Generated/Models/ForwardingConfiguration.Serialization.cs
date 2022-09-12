@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             Optional<string> customForwardingPath = default;
             Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
-            Optional<CacheConfiguration> cacheConfiguration = default;
+            Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;
             Optional<WritableSubResource> backendPool = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value);
+                    cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backendPool"))

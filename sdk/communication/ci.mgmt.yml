@@ -1,0 +1,13 @@
+
+trigger: none
+
+pr: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: communication
+    BuildSnippets: true
+    Artifacts:
+    - name: Azure.ResourceManager.Communication
+      safeName: AzureResourceManagerCommunication

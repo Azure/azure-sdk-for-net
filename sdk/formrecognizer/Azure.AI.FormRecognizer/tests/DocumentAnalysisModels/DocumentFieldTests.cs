@@ -12,11 +12,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     public class DocumentFieldTests
     {
         [Test]
+        public void InstantiateDocumentFieldWithAddressAndNoValue()
+        {
+            var field = new DocumentField(DocumentFieldType.Address);
+
+            Assert.AreEqual(DocumentFieldType.Address, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsAddress());
+        }
+
+        [Test]
+        public void InstantiateDocumentFieldWithCountryRegionAndNoValue()
+        {
+            var field = new DocumentField(DocumentFieldType.CountryRegion);
+
+            Assert.AreEqual(DocumentFieldType.CountryRegion, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsCountryRegion());
+        }
+
+        [Test]
         public void InstantiateDocumentFieldWithInt64AndNoValue()
         {
             var field = new DocumentField(DocumentFieldType.Int64);
 
-            Assert.AreEqual(DocumentFieldType.Int64, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Int64, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
             Assert.Throws<InvalidOperationException>(() => field.Value.AsInt64());
         }
 
@@ -25,7 +46,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Double);
 
-            Assert.AreEqual(DocumentFieldType.Double, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Double, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
             Assert.Throws<InvalidOperationException>(() => field.Value.AsDouble());
         }
 
@@ -34,8 +56,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Date);
 
-            Assert.AreEqual(DocumentFieldType.Date, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Date, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
             Assert.Throws<InvalidOperationException>(() => field.Value.AsDate());
+        }
+
+        [Test]
+        public void InstantiateDocumentFieldWithPhoneNumberAndNoValue()
+        {
+            var field = new DocumentField(DocumentFieldType.PhoneNumber);
+
+            Assert.AreEqual(DocumentFieldType.PhoneNumber, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
+            Assert.Throws<InvalidOperationException>(() => field.Value.AsPhoneNumber());
         }
 
         [Test]
@@ -43,7 +76,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Time);
 
-            Assert.AreEqual(DocumentFieldType.Time, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Time, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
             Assert.Throws<InvalidOperationException>(() => field.Value.AsTime());
         }
 
@@ -52,7 +86,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.SelectionMark);
 
-            Assert.AreEqual(DocumentFieldType.SelectionMark, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.SelectionMark, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
             Assert.Throws<InvalidOperationException>(() => field.Value.AsSelectionMarkState());
         }
 
@@ -61,7 +96,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var field = new DocumentField(DocumentFieldType.Signature);
 
-            Assert.AreEqual(DocumentFieldType.Signature, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Signature, field.ExpectedFieldType);
+            Assert.AreEqual(DocumentFieldType.Unknown, field.FieldType);
             Assert.Throws<InvalidOperationException>(() => field.Value.AsSignatureType());
         }
     }

@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8a0921fa267e2ab7cee74bec0f3edbae-0f4b5511c116f04d-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-af402f739270347bef26a11d15d692f1-2c7ddbfe472dc653-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "befe6ed32365397828deac80b85b42e7",
+        "x-ms-client-request-id": "52c4da44beb9b77e190b80d6897d2196",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,22 +17,22 @@
       "ResponseHeaders": {
         "Content-Length": "10143",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Aug 2022 05:39:31 GMT",
+        "Date": "Thu, 08 Sep 2022 18:56:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 8CD736EFA14C46F5BADFE8079BBEEC69 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:32Z"
+        "X-MSEdge-Ref": "Ref A: 6BA1B8C850DF476F9A28BFF0A1D32FC9 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:08Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 10,
+          "queryTime": 11,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 1792342,
+          "totalResults": 1792334,
           "fuzzyLevel": 1,
           "geoBias": {
             "lat": 25.04,
@@ -65,11 +65,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -134,11 +134,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -205,11 +205,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -331,12 +331,12 @@
           },
           {
             "type": "POI",
-            "id": "158009001710928",
+            "id": "158009001771249",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
-            "info": "search:ta:158009001710928-TW",
+            "info": "search:ta:158009001771249-TW",
             "poi": {
-              "name": "ou li jiang ka fei guan",
+              "name": "fa dou ka fei qing shi guan",
               "categorySet": [
                 {
                   "id": 9376006
@@ -402,12 +402,12 @@
           },
           {
             "type": "POI",
-            "id": "158009001771249",
+            "id": "158009001710928",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
-            "info": "search:ta:158009001771249-TW",
+            "info": "search:ta:158009001710928-TW",
             "poi": {
-              "name": "fa dou ka fei qing shi guan",
+              "name": "ou li jiang ka fei guan",
               "categorySet": [
                 {
                   "id": 9376006
@@ -769,6 +769,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1085646779"
+    "RandomSeed": "1767173001"
   }
 }

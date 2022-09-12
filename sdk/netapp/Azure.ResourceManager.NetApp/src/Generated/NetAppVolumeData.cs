@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </param>
         /// <param name="volumeGroupName"> Volume Group Name. </param>
         /// <param name="capacityPoolResourceId"> Pool Resource Id used in case of creating a volume through volume group. </param>
-        /// <param name="proximityPlacementGroup"> Proximity placement group associated with the volume. </param>
+        /// <param name="proximityPlacementGroupId"> Proximity placement group associated with the volume. </param>
         /// <param name="t2Network"> T2 network information. </param>
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
         /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
-        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, Guid? snapshotId, Guid? backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, string networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, bool? isSmbContinuouslyAvailable, float? throughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppAvsDataStore? avsDataStore, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, string proximityPlacementGroup, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, Guid? snapshotId, Guid? backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, bool? isSmbContinuouslyAvailable, float? throughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppAvsDataStore? avsDataStore, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Zones = zones;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetApp
             MaximumNumberOfFiles = maximumNumberOfFiles;
             VolumeGroupName = volumeGroupName;
             CapacityPoolResourceId = capacityPoolResourceId;
-            ProximityPlacementGroup = proximityPlacementGroup;
+            ProximityPlacementGroupId = proximityPlacementGroupId;
             T2Network = t2Network;
             VolumeSpecName = volumeSpecName;
             IsEncrypted = isEncrypted;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Basic network, or Standard features available to the volume. </summary>
         public NetAppNetworkFeature? NetworkFeatures { get; set; }
         /// <summary> Network Sibling Set ID for the the group of volumes sharing networking resources. </summary>
-        public string NetworkSiblingSetId { get; }
+        public Guid? NetworkSiblingSetId { get; }
         /// <summary> Provides storage to network proximity information for the volume. </summary>
         public NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get; }
         /// <summary> List of mount targets. </summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Pool Resource Id used in case of creating a volume through volume group. </summary>
         public ResourceIdentifier CapacityPoolResourceId { get; set; }
         /// <summary> Proximity placement group associated with the volume. </summary>
-        public string ProximityPlacementGroup { get; set; }
+        public ResourceIdentifier ProximityPlacementGroupId { get; set; }
         /// <summary> T2 network information. </summary>
         public string T2Network { get; }
         /// <summary> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </summary>
