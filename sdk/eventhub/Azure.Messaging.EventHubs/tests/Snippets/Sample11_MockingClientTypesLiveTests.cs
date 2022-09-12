@@ -228,7 +228,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
         // Define a simple method that returns an IAsyncEnumerable to use as the return for
         // ReadEventsAsync above.
-        public async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
+        internal async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
         {
             await Task.CompletedTask;
             yield return samplePartitionEvent;
