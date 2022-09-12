@@ -41,9 +41,6 @@ mockProducer.Setup(p => p.SendAsync(
 
 var producer = mockProducer.Object;
 
-// Mocking EventData instances for send
-var eventDataBody = new BinaryData("Sample large event body");
-var eventData = EventHubsModelFactory.EventData(eventDataBody);
 
 // Using the mocked event producer to test that SendAsync was never called
 mockProducer.Verify(bp =>
