@@ -1,8 +1,6 @@
-# Authentication Events Trigger for Azure Functions
+# Authentication Events Trigger for Azure Functions client library for .NET
 
 Authentication Event Trigger for Azure Functions handles all the backend processing, (e.g. token/json schema validation) for incoming Http requests for Authentication events. And provides the developer with a strongly typed, versioned object model to work with, meaning the developer need not have any prior knowledge of the request and response json payloads.
-
-## Features
 
 This project framework provides the following features:
 
@@ -12,7 +10,13 @@ This project framework provides the following features:
 * Versioning
 * No need for boilerplate code.
 
-## Getting Started
+## Getting started
+
+### Install the package
+
+```dotnetcli
+dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents --prerelease
+```
 
 ### Prerequisites
 
@@ -43,36 +47,7 @@ This project framework provides the following features:
   * Visual Studio's Nuget Package Manager
     * You'll be prompted for credentials when accessing the source, so keep you Personal Access Token handy as this would be your password.
 
-### Quickstart
-
-* Visual Studio 2019
-  * Start Visual Studio
-  * Select "Create a new project"
-  * In the template search area search and select "AzureAuthEventsTrigger"
-  * Give your project a meaningful Project Name, Location, Solution and Solution Name.
-
-* Visual Studio Code
-  * Start Visual Studio Code
-  * Run the command "Create Azure Authentication Events Trigger Project" via the command palette
-  * Follow the project creation prompts
-* Please note: that on a first time run it might take awhile to download the the required packages.
-* For development purpose turn of token validation for testing:
-* Add the **AuthenticationEvents__BypassTokenValidation** application key to the "Values" section in the local.settings.json file and set it's value to **true**.  If you do not have a local.settings.json file in your local environment, create one in the root of your Function App.
-
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "AuthenticationEvents__BypassTokenValidation": true
-  }
-}
-```
-
-* Once the project is loaded, you can run the sample code and you should see the Azure functions developer's application load your end point.
-
-### Authentication
+### Authenticate the Client
 
 When Azure AD authentication events service calls your custom extension, it will send an `Authorization` header with a `Bearer {token}`. This token will represent a [service to service authentication](https://review.docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) in which:
 
@@ -138,7 +113,47 @@ If you would like to _not_ authenticate the token while in local development, se
 
 * **AuthenticationEvents__BypassTokenValidation** - value of `true` will make the trigger not check for a validation of the token.
 
-## Demo
+### Quickstart
+
+* Visual Studio 2019
+  * Start Visual Studio
+  * Select "Create a new project"
+  * In the template search area search and select "AzureAuthEventsTrigger"
+  * Give your project a meaningful Project Name, Location, Solution and Solution Name.
+
+* Visual Studio Code
+  * Start Visual Studio Code
+  * Run the command "Create Azure Authentication Events Trigger Project" via the command palette
+  * Follow the project creation prompts
+* Please note: that on a first time run it might take awhile to download the the required packages.
+* For development purpose turn of token validation for testing:
+* Add the **AuthenticationEvents__BypassTokenValidation** application key to the "Values" section in the local.settings.json file and set it's value to **true**.  If you do not have a local.settings.json file in your local environment, create one in the root of your Function App.
+
+```json
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "AuthenticationEvents__BypassTokenValidation": true
+  }
+}
+```
+
+* Once the project is loaded, you can run the sample code and you should see the Azure functions developer's application load your end point.
+
+## Key concepts
+
+Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+
+## Documentation
+
+* One the function has been published, there's some good reading about logging and metrics that can be found [here](https://docs.microsoft.com/azure/azure-functions/functions-monitor-log-analytics?tabs=csharp)
+
+* For API Documentation, please see the (Link TBD)
+* Once this moves to preview, we except no breaking changes and would be as simple as removing the the nuget source that points to the private preview.
+
+## Examples
 
 To Test Token Augmentation, please do the following.
 
@@ -210,7 +225,7 @@ To Test Token Augmentation, please do the following.
         "@odata.type": "microsoft.graph.onTokenIssuanceStartResponseData",
         "actions": [
             {
-                "type": "ProvideClaimsForToken",
+                "@odata.type": "ProvideClaimsForToken",
                 "claims": [
                     {
                         "DateOfBirth": "01/01/2000"
@@ -228,14 +243,6 @@ To Test Token Augmentation, please do the following.
 }
 ```
 
-## Publish
-
-* Follow the instruction here to create and publish your Azure Application. <https://docs.microsoft.com/azure/azure-functions/functions-develop-vs?tabs=in-process#publish-to-azure>
-* To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
-* For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
-* Make sure your production environment has the correct application settings for token authentication.
-* Once again you can test the published function by posting the above payload to the new endpoint.
-
 ## Trouble Shooting
 
 * Visual Studio Code
@@ -244,9 +251,39 @@ To Test Token Augmentation, please do the following.
   * If you see the following error on Windows (it's a bug) when trying to run the created projected.
   * This can be resolved by executing this command in powershell `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine` more info on this can be found [here](https://github.com/Azure/azure-functions-core-tools/issues/1821) and [here](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7)
 
-## Remarks
+## Next steps
 
-* One the function has been published, there's some good reading about logging and metrics that can be found [here](https://docs.microsoft.com/azure/azure-functions/functions-monitor-log-analytics?tabs=csharp)
+For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
 
-* For API Documentation, please see the (Link TBD)
-* Once this moves to preview, we except no breaking changes and would be as simple as removing the the nuget source that points to the private preview.
+## Publish
+
+* Follow the instruction here to create and publish your Azure Application. <https://docs.microsoft.com/azure/azure-functions/functions-develop-vs?tabs=in-process#publish-to-azure>
+* To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
+* For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
+* Make sure your production environment has the correct application settings for token authentication.
+* Once again you can test the published function by posting the above payload to the new endpoint.
+
+## Contributing
+
+For details on contributing to this repository, see the [contributing
+guide][cg].
+
+This project welcomes contributions and suggestions. Most contributions
+require you to agree to a Contributor License Agreement (CLA) declaring
+that you have the right to, and actually do, grant us the rights to use
+your contribution. For details, visit <https://cla.microsoft.com>.
+
+When you submit a pull request, a CLA-bot will automatically determine
+whether you need to provide a CLA and decorate the PR appropriately
+(e.g., label, comment). Simply follow the instructions provided by the
+bot. You will only need to do this once across all repositories using
+our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
+more information see the [Code of Conduct FAQ][coc_faq] or contact
+<opencode@microsoft.com> with any additional questions or comments.
+
+<!-- LINKS -->
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

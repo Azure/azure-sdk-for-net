@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/entra/WebJobs.Extensions.AuthenticationEvents/
+    - sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/
 
 pr:
   branches:
@@ -19,7 +19,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/entra/WebJobs.Extensions.AuthenticationEvents/
+    - sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
