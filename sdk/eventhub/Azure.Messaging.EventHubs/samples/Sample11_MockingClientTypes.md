@@ -2,7 +2,6 @@
 # Mocking Client Types
 Event Hubs is built to be entirely mockable. This is an important feature of the library that allows developers to write tests that are completely focused on their own application logic, even if they are dependent on the Event Hubs types.
 
-The following snippets demonstrate how to mock each client type and relevant data types. 
 
 The examples that follow focus on scenarios likely to occur in applications, and demonstrate how to mock the Event Hubs types typically used in each scenario.
 
