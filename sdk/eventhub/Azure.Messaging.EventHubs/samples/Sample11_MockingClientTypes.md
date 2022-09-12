@@ -4,7 +4,7 @@ Event Hubs is built to be entirely mockable. This is an important feature of the
 
 The following snippets demonstrate how to mock each client type and relevant data types. 
 
-Another important focus of this document is guidance on abstracting . The Event Hubs library has an extensive test suite that verifies all types, clients, and methods work as specified. Each scenario also discusses how to leverage these guarantees provided by our library so that tests can just focus on what an application has layered on top.
+The examples that follow focus on scenarios likely to occur in applications, and demonstrate how to mock the Event Hubs types typically used in each scenario.
 
 ## Mocking `EventDataBatch`, `EventData`, and `EventHubProducerClient`
 
