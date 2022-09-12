@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using System.Globalization;
 using System.Text;
 using Azure.Core.GeoJson;
 
@@ -30,12 +31,12 @@ namespace Azure.Maps.Rendering
 
             if (label != null)
             {
-                sb.Append($"'{label}'");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "'{0}'", label);
             }
 
             if (geoPosition != null)
             {
-                sb.Append($"{geoPosition?.Longitude} {geoPosition?.Latitude}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0} {1}", geoPosition?.Longitude, geoPosition?.Latitude);
             }
 
             return sb.ToString();

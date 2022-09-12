@@ -28,12 +28,14 @@ namespace Azure.Maps.Rendering.Tests
             var pinPosition3 = new PushpinPosition(7.9, 44.0, "A label");
             var pinPosition4 = new PushpinPosition(11.73, 25.02, "B label");
             var simplePinStyle = new ImagePushpinStyle(
-                new System.Collections.Generic.List<PushpinPosition>() {
+                new System.Collections.Generic.List<PushpinPosition>()
+                {
                     pinPosition1, pinPosition2, pinPosition3, pinPosition4
                 }
             );
             var complexPinStyle1 = new ImagePushpinStyle(
-                new System.Collections.Generic.List<PushpinPosition>() {
+                new System.Collections.Generic.List<PushpinPosition>()
+                {
                     pinPosition4, pinPosition2, pinPosition1, pinPosition3
                 }
             )
@@ -44,7 +46,8 @@ namespace Azure.Maps.Rendering.Tests
                 LabelScaleRatio = 1.1
             };
             var complexPinStyle2 = new ImagePushpinStyle(
-                new System.Collections.Generic.List<PushpinPosition>() {
+                new System.Collections.Generic.List<PushpinPosition>()
+                {
                     pinPosition4, pinPosition3
                 }
             )

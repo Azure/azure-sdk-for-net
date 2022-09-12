@@ -1,16 +1,40 @@
 # Render Tiles, Imageries, and Images
 
+## Import the namespaces
+
+```C# Snippet:RenderImportNamespace
+using Azure.Maps.Rendering;
+```
+
+## Create Render Client
+
+Before rendering any images or tiles, create a `MapsRenderClient` first. Either use subscription key or AAD.
+
+Instantiate render client with subscription key:
+
+```C# Snippet:InstantiateRenderClientViaSubscriptionKey
+// Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
+MapsRenderClient client = new MapsRenderClient(credential);
+```
+
+Instantiate render client via AAD authentication:
+
+```C# #region Snippet:InstantiateRenderClientViaAAD
+var client = new MapsRouteClient(credential, clientId);
+```
+
 ## Get correct tile index
 
-Rendering map tiles requires the knowledge about [zoom levels and tile grid system](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid). We provide very convenient APIs for user to find out the correct tile index and zoom level they need.
+Rendering map tiles requires the knowledge about [zoom levels and tile grid system](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid). We provide APIs for you to find out the correct tile index and zoom level they need.
 
-For example, if a user wants to render a tile in Germany with a specific bounding box range, one can use utility function `PositionToTileXY` method from `TileMath`. With the desired coordinate, zoom level and tile size, one can get tile X and Y index:
+For example, if you wants to render a tile in Germany with a specific bounding box range, one can use utility function `PositionToTileXY` method from `TileMath`. With the desired coordinate, zoom level and tile size, one can get tile X and Y index:
 
 ```C# Snippet:GetTileXY
 int zoom = 10, tileSize = 300;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
-var tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 ```
 
 ## Render imagery tiles
@@ -25,28 +49,26 @@ Call get Map imagery tile API and save the result to file by previously calculat
 
 ```C# Snippet:RenderImagery
 // Get imagery tile
-var imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
-Assert.IsNotNull(imageryTile);
+Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
 
 // Prepare a file stream to save the imagery
-using (var fileStream = File.Create(".\\BerlinImagery.png"))
+using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
 {
     imageryTile.Value.CopyTo(fileStream);
-    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 
 The imagery will look like:
 
-![BerlinImagery](../tests/BerlinImagery.png)
+![BerlinImagery](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinImagery.png?raw=true)
 
 ## Render static images
 
-To get static image, one can assign bounding box and zoom level or coordinate and image width and height with `RenderStaticImageOptions`:
+To a get static image, one can assign bounding box and zoom level or coordinate and image width and height with `RenderStaticImageOptions`:
 
 ```C# Snippet:RenderStaticImages
 // Prepare static image options
-var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
+GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
 {
     MapImageLayer = MapImageLayer.Basic,
     MapImageStyle = MapImageStyle.Dark,
@@ -55,36 +77,37 @@ var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,
 };
 
 // Get static image
-var image = client.GetMapStaticImage(staticImageOptions);
+Response<Stream> image = client.GetMapStaticImage(staticImageOptions);
 
 // Prepare a file stream to save the imagery
-using (var fileStream = File.Create(".\\BerlinStaticImage.png"))
+using (FileStream fileStream = File.Create(".\\BerlinStaticImage.png"))
 {
     image.Value.CopyTo(fileStream);
-    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 
 The image will look like:
 
-![BerlinStaticImage](../tests/BerlinStaticImage.png)
+![BerlinStaticImage](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinStaticImage.png?raw=true)
 
 In a more complex scenario, we can also add pushpins and paths on the map to make it more vivid:
 
 ```C# Snippet:RenderStaticImagesWithPinsAndPaths
 // Prepare pushpin styles
-var pushpinSet1 = new ImagePushpinStyle(
-    new List<PushpinPosition>() {
+ImagePushpinStyle pushpinSet1 = new ImagePushpinStyle(
+    new List<PushpinPosition>()
+    {
         new PushpinPosition(13.35, 52.577, "Label start"),
         new PushpinPosition(13.2988, 52.6, "Label end"),
-})
+    }
+)
 {
     PushpinScaleRatio = 0.9,
     PushpinColor = Color.Red,
     LabelColor = Color.Blue,
     LabelScaleRatio = 18
 };
-var pushpinSet2 = new ImagePushpinStyle(
+ImagePushpinStyle pushpinSet2 = new ImagePushpinStyle(
     new List<PushpinPosition>() {new PushpinPosition(13.495, 52.497, "Label 3")}
 )
 {
@@ -95,18 +118,19 @@ var pushpinSet2 = new ImagePushpinStyle(
 };
 
 // Prepare path styles
-var path1 = new ImagePathStyle(
+ImagePathStyle path1 = new ImagePathStyle(
     new List<GeoPosition>() {
         new GeoPosition(13.35, 52.577),
         new GeoPosition(13.2988, 52.6)
-})
+    }
+)
 {
     LineColor = Color.Beige,
     LineWidthInPixels = 5
 };
 
 // Prepare static image options
-var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
+GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
 {
     MapImageLayer = MapImageLayer.Basic,
     MapImageStyle = MapImageStyle.Dark,
@@ -117,19 +141,18 @@ var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,
 };
 
 // Get static image
-var image = client.GetMapStaticImage(staticImageOptions);
+Response<Stream> image = client.GetMapStaticImage(staticImageOptions);
 
 // Prepare a file stream to save the imagery
-using (var fileStream = File.Create(".\\BerlinStaticImageWithPinsAndPaths.png"))
+using (FileStream fileStream = File.Create(".\\BerlinStaticImageWithPinsAndPaths.png"))
 {
     image.Value.CopyTo(fileStream);
-    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 
 The rendered image will look like:
 
-![RenderStaticImagesWithPinsAndPaths](../tests/BerlinStaticImageWithPinsAndPaths.png)
+![RenderStaticImagesWithPinsAndPaths](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinStaticImageWithPinsAndPaths.png?raw=true)
 
 ## Render tiles
 
@@ -139,26 +162,25 @@ To render map tiles, one can decide map tile X, Y index and zoom level and then 
 int zoom = 10, tileSize = 300;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
-var tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
 // Fetch map tiles
-var GetMapTileOptions = new GetMapTileOptions()
+GetMapTileOptions GetMapTileOptions = new GetMapTileOptions()
 {
     MapTileFormat = MapTileFormat.Png,
     MapTileLayer = MapTileLayer.Hybrid,
     MapTileStyle = MapTileStyle.Main,
     MapTileIndex = new MapTileIndex(tileIndex.X, tileIndex.Y, zoom),
 };
-var mapTile = client.GetMapTile(GetMapTileOptions);
+Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
 
 // Prepare a file stream to save the imagery
-using (var fileStream = File.Create(".\\BerlinMapTile.png"))
+using (FileStream fileStream = File.Create(".\\BerlinMapTile.png"))
 {
     mapTile.Value.CopyTo(fileStream);
-    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 
 The image will look like:
 
-![BerlinMapTile](../tests/BerlinMapTile.png)
+![BerlinMapTile](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/tests/BerlinMapTile.png?raw=true)

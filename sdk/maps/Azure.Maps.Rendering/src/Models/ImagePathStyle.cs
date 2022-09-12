@@ -78,12 +78,12 @@ namespace Azure.Maps.Rendering
 
             if (LineWidthInPixels != null)
             {
-                sb.Append($"|lw{LineWidthInPixels}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|lw{0}", LineWidthInPixels);
             }
 
             if (CircleRadiusInMeters != null)
             {
-                sb.Append($"|ra{CircleRadiusInMeters}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|ra{0}", CircleRadiusInMeters);
             }
 
             // The following are path positions composed by a list of GeoPositions
@@ -91,7 +91,7 @@ namespace Azure.Maps.Rendering
 
             foreach (var pos in PathPositions)
             {
-                sb.Append($"|{pos.Longitude} {pos.Latitude}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|{0} {1}", pos.Longitude, pos.Latitude);
             }
 
             return sb.ToString();

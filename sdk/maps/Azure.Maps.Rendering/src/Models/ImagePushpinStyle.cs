@@ -109,12 +109,12 @@ namespace Azure.Maps.Rendering
 
             if (PushpinAnchorShiftInPixels != null)
             {
-                sb.Append($"|an{PushpinAnchorShiftInPixels?.X} {PushpinAnchorShiftInPixels?.Y}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|an{0} {1}", PushpinAnchorShiftInPixels?.X, PushpinAnchorShiftInPixels?.Y);
             }
 
             if (RotationInDegrees != null)
             {
-                sb.Append($"|ro{RotationInDegrees}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|ro{0}", RotationInDegrees);
             }
 
             if (LabelColor != null)
@@ -130,7 +130,7 @@ namespace Azure.Maps.Rendering
 
             if (LabelAnchorShiftInPixels != null)
             {
-                sb.Append($"|la{LabelAnchorShiftInPixels?.X} {LabelAnchorShiftInPixels?.Y}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|la{0} {1}", LabelAnchorShiftInPixels?.X, LabelAnchorShiftInPixels?.Y);
             }
 
             // The following are pin point positions
@@ -138,13 +138,13 @@ namespace Azure.Maps.Rendering
 
             foreach (var pos in PushpinPositions)
             {
-                sb.Append($"|{pos.ToQueryString()}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "|{0}", pos.ToQueryString());
             }
 
             // The following is custom pushpin URL
             if (CustomPushpinImageUri != null)
             {
-                sb.Append($"||{CustomPushpinImageUri.AbsoluteUri}");
+                sb.AppendFormat(CultureInfo.InvariantCulture, "||{0}", CustomPushpinImageUri.AbsoluteUri);
             }
 
             return sb.ToString();

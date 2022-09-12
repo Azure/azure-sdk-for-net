@@ -40,7 +40,7 @@ namespace Azure.Maps.Rendering
         /// <summary> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12. Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details. </summary>
         public int? ZoomLevel { get; set; }
         /// <summary>
-        /// Coordinates of the center point. Format: 'lon,lat'. Projection used EPSG:3857.
+        /// Coordinates of the center point. Format: 'lon,lat'.
         /// Longitude range: -180 to 180. Latitude range: -85 to 85.
         /// Note: Either Center or BoundingBox are required parameters. They are mutually exclusive.
         /// </summary>

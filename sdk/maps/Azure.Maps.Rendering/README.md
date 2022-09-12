@@ -1,6 +1,6 @@
 # Azure Maps Render client library for .NET
 
-Azure Maps Render is a render library that can fetch image tiles and get copyrights.
+Azure Maps Render is a library that can fetch image tiles and copyright information.
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/render) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
@@ -28,29 +28,31 @@ az maps account create --kind "Gen2" --disable-local-auth true --account-name "m
 
 There are 2 ways to authenticate the client: Shared key authentication and Azure AD.
 
-#### Shared Key Authentication
+#### Shared Key authentication
 
 * Go to Azure Maps account > Authentication tab
-* Copy `Primary Key` or `Secondary Key` under **Shared Key Authentication** section
+* Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
 ```C# Snippet:InstantiateRenderClientViaSubscriptionKey
 // Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsRenderClient client = new MapsRenderClient(credential);
 ```
 
-#### Azure AD Authentication
+#### Azure AD authentication
 
 In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsRenderClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
+To use AAD authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsRenderClient`.
 
-We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
+We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
+
+![AzureMapsPortal](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/images/azure-maps-portal.png?raw=true)
 
 ```C# Snippet:InstantiateRenderClientViaAAD
 // Create a MapsRenderClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = new DefaultAzureCredential();
+string clientId = "<Your Map ClientId>";
 MapsRenderClient client = new MapsRenderClient(credential, clientId);
 ```
 
@@ -80,31 +82,29 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples). Rendering map tiles requires the knowledge about zoom levels and tile grid system. Please refer to the [document](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid) for zoom levels and tile grid.
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples). Rendering map tiles requires knowledge about zoom levels and tile grid system. Please refer to the [documentation](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid) for more information.
 
 ### Render Images
 
 Here is a simple example of rendering imagery tiles:
 
 ```C# Snippet:RenderImageryTiles
-var credential = new DefaultAzureCredential();
-var clientId = TestEnvironment.MapAccountClientId;
-var client = new MapsRenderClient(credential, clientId);
+TokenCredential credential = new DefaultAzureCredential();
+string clientId = "<Your Map ClientId>";
+MapsRenderClient client = new MapsRenderClient(credential, clientId);
 
 int zoom = 10, tileSize = 300;
 
 // Get tile X, Y index by coordinate, zoom and tile size information
-var tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
 // Get imagery tile
-var imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
-Assert.IsNotNull(imageryTile);
+Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
 
 // Prepare a file stream to save the imagery
-using (var fileStream = File.Create(".\\BerlinImagery.png"))
+using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
 {
     imageryTile.Value.CopyTo(fileStream);
-    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 
@@ -112,15 +112,15 @@ using (var fileStream = File.Create(".\\BerlinImagery.png"))
 
 ### General
 
-When you interact with the Maps Render service, errors returned by the Render service correspond to the same HTTP status codes returned for REST API requests.
+When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/render).
 
-For example, if you try to get an imagery tile with wrong tile index, an error is returned, indicating "Bad Request" (400).
+For example, if you try to get an imagery tile with wrong tile index, an error is returned, indicating "Bad Request" (HTTP 400).
 
 ```C# Snippet:CatchRenderException
 try
 {
     Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(12, 12, 2));
-    var imageryStream = new MemoryStream();
+    using var imageryStream = new MemoryStream();
     imageryTile.Value.CopyTo(imageryStream);
 }
 catch (RequestFailedException e)
@@ -131,7 +131,7 @@ catch (RequestFailedException e)
 
 ## Next steps
 
-* [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples)
+* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples)
 
 ## Contributing
 

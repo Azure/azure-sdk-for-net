@@ -21,7 +21,7 @@ namespace Azure.Maps.Rendering.Tests
         {
             var client = CreateClient();
             var tile = await client.GetMapImageryTileAsync(new MapTileIndex(14, 14, 10));
-            var imageryStream = new MemoryStream();
+            using var imageryStream = new MemoryStream();
 
             Assert.IsNotNull(tile);
             tile.Value.CopyTo(imageryStream);
@@ -38,7 +38,7 @@ namespace Azure.Maps.Rendering.Tests
                 MapImageStyle = MapImageStyle.Dark,
                 RenderLanguage = "en",
             };
-            var imageStream = new MemoryStream();
+            using var imageStream = new MemoryStream();
             var image = await client.GetMapStaticImageAsync(options);
 
             Assert.IsNotNull(image);
@@ -66,7 +66,7 @@ namespace Azure.Maps.Rendering.Tests
                 MapTileStyle = MapTileStyle.Main,
                 MapTileIndex = new MapTileIndex(88, 88, 10),
             };
-            var imageryStream = new MemoryStream();
+            using var imageryStream = new MemoryStream();
             var tile = await client.GetMapTileAsync(options);
 
             Assert.IsNotNull(tile);
@@ -90,7 +90,7 @@ namespace Azure.Maps.Rendering.Tests
             try
             {
                 Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(12, 12, 2));
-                var imageryStream = new MemoryStream();
+                using var imageryStream = new MemoryStream();
                 imageryTile.Value.CopyTo(imageryStream);
             }
             catch (RequestFailedException e)

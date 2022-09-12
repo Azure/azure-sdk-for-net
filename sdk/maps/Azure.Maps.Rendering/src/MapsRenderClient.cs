@@ -108,8 +108,8 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// The API renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The static image service renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The supported resolution range for the map image is from 1x1 to 8192x8192. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
-        /// Service also provides Image Composition functionality to get a static image back with additional data like; pushpins and geometry overlays with following S0 and S1 capabilities.
+        /// The API renders a user-defined, rectangular image containing a map section using a zoom level. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
+        /// The service also provides Image Composition functionality to get a static image back with additional data.
         /// </summary>
         /// <param name="options"> The options for configuring the static image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,8 +182,8 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// The API renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The static image service renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The supported resolution range for the map image is from 1x1 to 8192x8192. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
-        /// Service also provides Image Composition functionality to get a static image back with additional data like; pushpins and geometry overlays with following S0 and S1 capabilities.
+        /// The API renders a user-defined, rectangular image containing a map section using a zoom level. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
+        /// The service also provides Image Composition functionality to get a static image back with additional data.
         /// </summary>
         /// <param name="options"> The options for configuring the static image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

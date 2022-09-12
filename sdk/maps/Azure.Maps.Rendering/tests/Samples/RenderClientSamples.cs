@@ -9,6 +9,7 @@ using System.IO;
 #region Snippet:RenderImportNamespace
 using Azure.Maps.Rendering;
 #endregion
+using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -21,8 +22,13 @@ namespace Azure.Maps.Rendering.Tests
         {
             #region Snippet:InstantiateRenderClientViaAAD
             // Create a MapsRenderClient that will authenticate through Active Directory
-            var credential = new DefaultAzureCredential();
-            var clientId = "<My Map Account Client Id>";
+#if SNIPPET
+            TokenCredential credential = new DefaultAzureCredential();
+            string clientId = "<Your Map ClientId>";
+#else
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+#endif
             MapsRenderClient client = new MapsRenderClient(credential, clientId);
             #endregion
         }
@@ -31,7 +37,7 @@ namespace Azure.Maps.Rendering.Tests
         {
             #region Snippet:InstantiateRenderClientViaSubscriptionKey
             // Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
-            var credential = new AzureKeyCredential("<My Subscription Key>");
+            AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
             MapsRenderClient client = new MapsRenderClient(credential);
             #endregion
         }
@@ -40,27 +46,30 @@ namespace Azure.Maps.Rendering.Tests
         public void RenderingImageryTiles()
         {
             #region Snippet:RenderImageryTiles
-            var credential = new DefaultAzureCredential();
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, clientId);
+#if SNIPPET
+            TokenCredential credential = new DefaultAzureCredential();
+            string clientId = "<Your Map ClientId>";
+#else
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+#endif
+            MapsRenderClient client = new MapsRenderClient(credential, clientId);
 
             #region Snippet:GetTileXY
             int zoom = 10, tileSize = 300;
 
             // Get tile X, Y index by coordinate, zoom and tile size information
-            var tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+            MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
             #endregion
 
             #region Snippet:RenderImagery
             // Get imagery tile
-            var imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
-            Assert.IsNotNull(imageryTile);
+            Response<Stream> imageryTile = client.GetMapImageryTile(new MapTileIndex(tileIndex.X, tileIndex.Y, zoom));
 
             // Prepare a file stream to save the imagery
-            using (var fileStream = File.Create(".\\BerlinImagery.png"))
+            using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
             {
                 imageryTile.Value.CopyTo(fileStream);
-                Assert.IsTrue(fileStream.Length > 0);
             }
             #endregion
             #endregion
@@ -69,13 +78,13 @@ namespace Azure.Maps.Rendering.Tests
         [Test]
         public void RenderingStaticImages()
         {
-            var credential = new DefaultAzureCredential();
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, clientId);
+            TokenCredential credential = new DefaultAzureCredential();
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRenderClient client = new MapsRenderClient(credential, clientId);
 
             #region Snippet:RenderStaticImages
             // Prepare static image options
-            var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
+            GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
             {
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
@@ -84,13 +93,12 @@ namespace Azure.Maps.Rendering.Tests
             };
 
             // Get static image
-            var image = client.GetMapStaticImage(staticImageOptions);
+            Response<Stream> image = client.GetMapStaticImage(staticImageOptions);
 
             // Prepare a file stream to save the imagery
-            using (var fileStream = File.Create(".\\BerlinStaticImage.png"))
+            using (FileStream fileStream = File.Create(".\\BerlinStaticImage.png"))
             {
                 image.Value.CopyTo(fileStream);
-                Assert.IsTrue(fileStream.Length > 0);
             }
             #endregion
 
@@ -100,25 +108,27 @@ namespace Azure.Maps.Rendering.Tests
         [Test]
         public void RenderingStaticImagesWithPinsAndPaths()
         {
-            var credential = new DefaultAzureCredential();
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, clientId);
+            TokenCredential credential = new DefaultAzureCredential();
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRenderClient client = new MapsRenderClient(credential, clientId);
             Assert.IsNotNull(client);
 
             #region Snippet:RenderStaticImagesWithPinsAndPaths
             // Prepare pushpin styles
-            var pushpinSet1 = new ImagePushpinStyle(
-                new List<PushpinPosition>() {
+            ImagePushpinStyle pushpinSet1 = new ImagePushpinStyle(
+                new List<PushpinPosition>()
+                {
                     new PushpinPosition(13.35, 52.577, "Label start"),
                     new PushpinPosition(13.2988, 52.6, "Label end"),
-            })
+                }
+            )
             {
                 PushpinScaleRatio = 0.9,
                 PushpinColor = Color.Red,
                 LabelColor = Color.Blue,
                 LabelScaleRatio = 18
             };
-            var pushpinSet2 = new ImagePushpinStyle(
+            ImagePushpinStyle pushpinSet2 = new ImagePushpinStyle(
                 new List<PushpinPosition>() {new PushpinPosition(13.495, 52.497, "Label 3")}
             )
             {
@@ -129,18 +139,19 @@ namespace Azure.Maps.Rendering.Tests
             };
 
             // Prepare path styles
-            var path1 = new ImagePathStyle(
+            ImagePathStyle path1 = new ImagePathStyle(
                 new List<GeoPosition>() {
                     new GeoPosition(13.35, 52.577),
                     new GeoPosition(13.2988, 52.6)
-            })
+                }
+            )
             {
                 LineColor = Color.Beige,
                 LineWidthInPixels = 5
             };
 
             // Prepare static image options
-            var staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
+            GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
             {
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
@@ -151,13 +162,12 @@ namespace Azure.Maps.Rendering.Tests
             };
 
             // Get static image
-            var image = client.GetMapStaticImage(staticImageOptions);
+            Response<Stream> image = client.GetMapStaticImage(staticImageOptions);
 
             // Prepare a file stream to save the imagery
-            using (var fileStream = File.Create(".\\BerlinStaticImageWithPinsAndPaths.png"))
+            using (FileStream fileStream = File.Create(".\\BerlinStaticImageWithPinsAndPaths.png"))
             {
                 image.Value.CopyTo(fileStream);
-                Assert.IsTrue(fileStream.Length > 0);
             }
             #endregion
 
@@ -168,31 +178,30 @@ namespace Azure.Maps.Rendering.Tests
         [Test]
         public void RenderingMapTiles()
         {
-            var credential = new DefaultAzureCredential();
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, clientId);
+            TokenCredential credential = new DefaultAzureCredential();
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRenderClient client = new MapsRenderClient(credential, clientId);
 
             #region Snippet:RenderMapTiles
             int zoom = 10, tileSize = 300;
 
             // Get tile X, Y index by coordinate, zoom and tile size information
-            var tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
+            MapTileIndex tileIndex = MapsRenderClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
 
             // Fetch map tiles
-            var GetMapTileOptions = new GetMapTileOptions()
+            GetMapTileOptions GetMapTileOptions = new GetMapTileOptions()
             {
                 MapTileFormat = MapTileFormat.Png,
                 MapTileLayer = MapTileLayer.Hybrid,
                 MapTileStyle = MapTileStyle.Main,
                 MapTileIndex = new MapTileIndex(tileIndex.X, tileIndex.Y, zoom),
             };
-            var mapTile = client.GetMapTile(GetMapTileOptions);
+            Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
 
             // Prepare a file stream to save the imagery
-            using (var fileStream = File.Create(".\\BerlinMapTile.png"))
+            using (FileStream fileStream = File.Create(".\\BerlinMapTile.png"))
             {
                 mapTile.Value.CopyTo(fileStream);
-                Assert.IsTrue(fileStream.Length > 0);
             }
             #endregion
 
