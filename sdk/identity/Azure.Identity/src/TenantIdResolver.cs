@@ -52,7 +52,7 @@ namespace Azure.Identity
 
         public static string[] ResolveAddionallyAllowedTenantIds(IList<string> additionallyAllowedTenants)
         {
-            if (additionallyAllowedTenants == null)
+            if (additionallyAllowedTenants == null || additionallyAllowedTenants.Count == 0)
             {
                 return Array.Empty<string>();
             }
