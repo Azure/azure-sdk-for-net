@@ -8,6 +8,7 @@ namespace Azure.Monitor.Ingestion
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response Upload(string ruleId, string streamName, Azure.Core.RequestContent content, string contentEncoding = "gzip", Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(string ruleId, string streamName, Azure.Core.RequestContent content, string contentEncoding = "gzip", Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Ingestion.UploadLogsResult>> UploadAsync<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logEntries, Azure.Monitor.Ingestion.UploadLogsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Ingestion.UploadLogsResult>> UploadAsync<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logEntries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Monitor.Ingestion.UploadLogsResult> Upload<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logEntries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -24,6 +25,12 @@ namespace Azure.Monitor.Ingestion
         internal UploadLogsError() { }
         public Azure.ResponseError Error { get { throw null; } }
         public System.Collections.Generic.IEnumerable<object> FailedLogs { get { throw null; } }
+    }
+    public partial class UploadLogsOptions
+    {
+        public UploadLogsOptions() { }
+        public int MaxConcurrency { get { throw null; } set { } }
+        public Azure.Core.Serialization.ObjectSerializer ObjectSerializer { get { throw null; } set { } }
     }
     public partial class UploadLogsResult
     {
