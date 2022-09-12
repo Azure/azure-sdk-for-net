@@ -9,6 +9,8 @@ using System.Web;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -59,6 +61,7 @@ namespace Azure.Identity.Tests
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
+            var options = new AuthorizationCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             AuthorizationCodeCredential cred = InstrumentClient(
                 new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockConfidentialMsalClient));
 
@@ -69,6 +72,26 @@ namespace Azure.Identity.Tests
             AccessToken token2 = await cred.GetTokenAsync(context);
 
             Assert.AreEqual(token2.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetAllowedTenantsTestCasesWithRequiredTenantId))]
+        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new AuthorizationCodeCredentialOptions();
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
+
+            var cred = InstrumentClient(new AuthorizationCodeCredential(parameters.TenantId, ClientId, "secret", "authcode", options, msalClientMock));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         [Test]

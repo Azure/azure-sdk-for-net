@@ -22,6 +22,7 @@ namespace Azure.Identity
         internal string TenantId { get; }
         internal string ClientId { get; }
         internal MsalConfidentialClient Client { get; }
+        internal CredentialPipeline Pipeline { get; }
         internal bool AllowMultiTenantAuthentication { get; }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Azure.Identity
             ClientId = clientId;
 
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
-
+            Pipeline = options?.Pipeline ?? Client.Pipeline;
             _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
@@ -64,7 +65,7 @@ namespace Azure.Identity
             ClientId = clientId;
 
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
-
+            Pipeline = options?.Pipeline ?? Client.Pipeline;
             _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
@@ -76,7 +77,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = Client.Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
 
             try
             {
@@ -100,7 +101,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public async override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = Client.Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
 
             try
             {

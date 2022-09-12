@@ -156,14 +156,13 @@ namespace Azure.Identity
 
         internal DefaultAzureCredentialOptions ShallowClone()
         {
-            return new DefaultAzureCredentialOptions
+            var options = new DefaultAzureCredentialOptions
             {
                 TenantId = TenantId,
                 InteractiveBrowserTenantId = InteractiveBrowserTenantId,
                 SharedTokenCacheTenantId = SharedTokenCacheTenantId,
                 VisualStudioTenantId = VisualStudioTenantId,
                 VisualStudioCodeTenantId = VisualStudioCodeTenantId,
-                AdditionallyAllowedTenants = new List<string>(AdditionallyAllowedTenants),
                 SharedTokenCacheUsername = SharedTokenCacheUsername,
                 InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId,
                 ManagedIdentityClientId = ManagedIdentityClientId,
@@ -178,6 +177,13 @@ namespace Azure.Identity
                 ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,
                 AuthorityHost = AuthorityHost
             };
+
+            foreach (var addlTenant in AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            return options;
         }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -22,6 +23,8 @@ namespace Azure.Identity
             _useDefaultCredentialChain = options == null;
 
             Options = options?.ShallowClone() ?? new DefaultAzureCredentialOptions();
+
+            Options.AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList();
         }
 
         public DefaultAzureCredentialOptions Options { get; }
@@ -114,9 +117,14 @@ namespace Azure.Identity
             var options = new InteractiveBrowserCredentialOptions
             {
                 TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore,
-                AuthorityHost = Options.AuthorityHost
+                AuthorityHost = Options.AuthorityHost,
+                TenantId = Options.InteractiveBrowserTenantId
             };
+
+            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
 
             return new InteractiveBrowserCredential(
                 Options.InteractiveBrowserTenantId,
@@ -130,8 +138,12 @@ namespace Azure.Identity
             var options = new AzureCliCredentialOptions
             {
                 TenantId = Options.TenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore
             };
+
+            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
 
             return new AzureCliCredential(Pipeline, default, options);
         }
@@ -141,8 +153,12 @@ namespace Azure.Identity
             var options = new VisualStudioCredentialOptions
             {
                 TenantId = Options.VisualStudioTenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore
             };
+
+            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
 
             return new VisualStudioCredential(Options.VisualStudioTenantId, Pipeline, default, default, options);
         }
@@ -152,8 +168,12 @@ namespace Azure.Identity
             var options = new VisualStudioCodeCredentialOptions
             {
                 TenantId = Options.VisualStudioCodeTenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore
             };
+
+            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
 
             return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
         }
@@ -163,8 +183,12 @@ namespace Azure.Identity
             var options = new AzurePowerShellCredentialOptions
             {
                 TenantId = Options.VisualStudioCodeTenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore
             };
+
+            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
 
             return new AzurePowerShellCredential(options, Pipeline, default);
         }

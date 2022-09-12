@@ -38,13 +38,16 @@ namespace Azure.Identity
             }
 
             ClientId = options.ClientId;
+            ResourceIdentifier = options.ResourceIdentifier;
             Pipeline = options.Pipeline;
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
         }
 
         internal CredentialPipeline Pipeline { get; }
 
-        protected string ClientId { get; }
+        internal protected string ClientId { get; }
+
+        internal ResourceIdentifier ResourceIdentifier { get; }
 
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context,
             CancellationToken cancellationToken)

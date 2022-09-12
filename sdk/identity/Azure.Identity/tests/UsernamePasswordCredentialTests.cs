@@ -75,7 +75,7 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new UsernamePasswordCredentialOptions();
+            var options = new UsernamePasswordCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint }};
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
@@ -85,6 +85,26 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, token.Token);
             Assert.AreEqual(expiresOn, token.ExpiresOn);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetAllowedTenantsTestCasesWithRequiredTenantId))]
+        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new UsernamePasswordCredentialOptions();
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var msalClientMock = new MockMsalPublicClient(AuthenticationResultFactory.Create());
+
+            var cred = InstrumentClient(new UsernamePasswordCredential("username", "password",parameters.TenantId, ClientId, options, null, msalClientMock));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
     }
 }

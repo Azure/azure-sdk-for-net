@@ -20,6 +20,26 @@ namespace Azure.Identity.Tests
             new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
         [Test]
+        [TestCaseSource(nameof(GetAllowedTenantsTestCasesWithRequiredTenantId))]
+        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new ClientSecretCredentialOptions();
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
+
+            var cred = InstrumentClient(new ClientSecretCredential(parameters.TenantId, ClientId, "secret", options, null, msalClientMock));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
+        }
+
+        [Test]
         public void VerifyCtorParametersValidation()
         {
             var tenantId = Guid.NewGuid().ToString();
@@ -39,6 +59,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            var options = new ClientSecretCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             ClientSecretCredential client =
                 InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 

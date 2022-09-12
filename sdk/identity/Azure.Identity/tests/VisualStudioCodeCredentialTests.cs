@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -47,7 +49,7 @@ namespace Azure.Identity.Tests
         {
             using var env = new TestEnvVar(new Dictionary<string, string> { { "TENANT_ID", TenantId } });
             var environment = new IdentityTestEnvironment();
-            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport() };
+            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, AdditionallyAllowedTenants = { TenantIdHint }, Transport = new MockTransport() };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(environment.TenantId, context, TenantIdResolver.AllTenants);
 
@@ -63,6 +65,38 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetAllowedTenantsTestCasesNonRequiredTenantId))]
+        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            using var env = new TestEnvVar(new Dictionary<string, string> { { "TENANT_ID", TenantId } });
+            var environment = new IdentityTestEnvironment();
+            var options = new VisualStudioCodeCredentialOptions
+            {
+                TenantId = parameters.TenantId,
+                Transport = new MockTransport()
+            };
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var msalClientMock = new MockMsalPublicClient(AuthenticationResultFactory.Create());
+
+            var cred =  InstrumentClient(
+                new VisualStudioCodeCredential(
+                    options,
+                    null,
+                    msalClientMock,
+                    CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
+                    new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         [Test]
