@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth");
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

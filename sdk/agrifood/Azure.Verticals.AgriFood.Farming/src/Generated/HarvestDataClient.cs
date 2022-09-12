@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client. The HarvestData service client.
     /// <summary> The HarvestData service client. </summary>
     public partial class HarvestDataClient
     {

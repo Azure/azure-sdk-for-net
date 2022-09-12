@@ -1,16 +1,25 @@
 # Release History
 
-## 12.7.0-beta.1 (Unreleased)
+## 12.7.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- `TableClient.CreateIfNotExists` and `TableServiceClient.CreateTableIfNotExists` no longer log an error or exception to telemetry when the table already exists (response status 409). ([#28084](https://github.com/Azure/azure-sdk-for-net/issues/28084))
-- `TableClient.CreateIfNotExists` and `TableServiceClient.CreateTableIfNotExists` no longer return null when the table already exists. ([#27821](https://github.com/Azure/azure-sdk-for-net/issues/27821))
+- Fixed a OData filter issue with implicit boolean comparisons (for example expressions such as `ent => ent.BooleanProperty`) when calling `TableClient.QueryAsync(Expression<Func<T, bool>> filter, ...)`. ([#30185](https://github.com/Azure/azure-sdk-for-net/issues/30185))
 
 ### Other Changes
+- Custom defined entity models that implement `ITableEntity` explicitly will now be serialized properly ([#26514](https://github.com/Azure/azure-sdk-for-net/issues/26514))
+
+## 12.7.0-beta.1 (2022-09-06)
+
+### Features Added
+- Added `TableClient.GetEntityIfNotExists` which will not throw or log an error to telemetry if the specified entity does not exist in the table.
+
+### Bugs Fixed
+- `TableClient.CreateIfNotExists` and `TableServiceClient.CreateTableIfNotExists` no longer log an error or exception to telemetry when the table already exists (response status 409). ([#28084](https://github.com/Azure/azure-sdk-for-net/issues/28084))
+- `TableClient.CreateIfNotExists` and `TableServiceClient.CreateTableIfNotExists` no longer return null when the table already exists. ([#27821](https://github.com/Azure/azure-sdk-for-net/issues/27821))
 
 ## 12.6.1 (2022-07-07)
 

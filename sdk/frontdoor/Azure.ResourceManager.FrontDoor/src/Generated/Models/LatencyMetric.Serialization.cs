@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         internal static LatencyMetric DeserializeLatencyMetric(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> endDateTimeUTC = default;
+            Optional<DateTimeOffset> endDateTimeUtc = default;
             Optional<float> aValue = default;
             Optional<float> bValue = default;
             Optional<float> delta = default;
@@ -39,7 +40,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (property.NameEquals("endDateTimeUTC"))
                 {
-                    endDateTimeUTC = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endDateTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("aValue"))
@@ -123,7 +129,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new LatencyMetric(name.Value, endDateTimeUTC.Value, Optional.ToNullable(aValue), Optional.ToNullable(bValue), Optional.ToNullable(delta), Optional.ToNullable(deltaPercent), Optional.ToNullable(acLower95CI), Optional.ToNullable(ahUpper95CI), Optional.ToNullable(bcLower95CI), Optional.ToNullable(bUpper95CI));
+            return new LatencyMetric(name.Value, Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aValue), Optional.ToNullable(bValue), Optional.ToNullable(delta), Optional.ToNullable(deltaPercent), Optional.ToNullable(acLower95CI), Optional.ToNullable(ahUpper95CI), Optional.ToNullable(bcLower95CI), Optional.ToNullable(bUpper95CI));
         }
     }
 }

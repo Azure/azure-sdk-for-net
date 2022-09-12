@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionData. </summary>
         /// <param name="properties"> The connection properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DigitalTwinsPrivateEndpointConnectionData(ConnectionProperties properties)
+        public DigitalTwinsPrivateEndpointConnectionData(DigitalTwinsPrivateEndpointConnectionProperties properties)
         {
             if (properties == null)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The connection properties. </param>
-        internal DigitalTwinsPrivateEndpointConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal DigitalTwinsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DigitalTwinsPrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> The connection properties. </summary>
-        public ConnectionProperties Properties { get; set; }
+        public DigitalTwinsPrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

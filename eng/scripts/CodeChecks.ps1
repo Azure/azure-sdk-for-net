@@ -108,17 +108,17 @@ try {
         | % {
             $readmePath = $_
             $readmeContent = Get-Content $readmePath
-            
+
             if ($readmeContent -Match "Install-Package")
             {
                 LogError "README files should use dotnet CLI for installation instructions. '$readmePath'"
             }
-            
+
             if ($readmeContent -Match "dotnet add .*--version")
             {
                 LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
             }
-            
+
             if ($readmeContent -Match "dotnet add")
             {
                 $changelogPath = Join-Path $(Split-Path -Parent $readmePath) "CHANGELOG.md"

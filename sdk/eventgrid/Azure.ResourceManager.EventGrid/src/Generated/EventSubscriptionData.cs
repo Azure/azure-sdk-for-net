@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </param>
         /// <param name="filter"> Information about the filter for the event subscription. </param>
         /// <param name="labels"> List of user defined labels. </param>
-        /// <param name="expirationTimeUtc"> Expiration time of the event subscription. </param>
+        /// <param name="expireOn"> Expiration time of the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="retryPolicy"> The retry policy for events. This can be used to configure maximum number of delivery attempts and time to live for events. </param>
         /// <param name="deadLetterDestination">
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its&apos; destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </param>
-        internal EventSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string topic, EventSubscriptionProvisioningState? provisioningState, EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expirationTimeUtc, EventDeliverySchema? eventDeliverySchema, RetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity) : base(id, name, resourceType, systemData)
+        internal EventSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string topic, EventSubscriptionProvisioningState? provisioningState, EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity) : base(id, name, resourceType, systemData)
         {
             Topic = topic;
             ProvisioningState = provisioningState;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid
             DeliveryWithResourceIdentity = deliveryWithResourceIdentity;
             Filter = filter;
             Labels = labels;
-            ExpirationTimeUtc = expirationTimeUtc;
+            ExpireOn = expireOn;
             EventDeliverySchema = eventDeliverySchema;
             RetryPolicy = retryPolicy;
             DeadLetterDestination = deadLetterDestination;
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> List of user defined labels. </summary>
         public IList<string> Labels { get; }
         /// <summary> Expiration time of the event subscription. </summary>
-        public DateTimeOffset? ExpirationTimeUtc { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The event delivery schema for the event subscription. </summary>
         public EventDeliverySchema? EventDeliverySchema { get; set; }
         /// <summary> The retry policy for events. This can be used to configure maximum number of delivery attempts and time to live for events. </summary>
-        public RetryPolicy RetryPolicy { get; set; }
+        public EventSubscriptionRetryPolicy RetryPolicy { get; set; }
         /// <summary>
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its&apos; destination is sent to the dead letter destination.
         /// Uses Azure Event Grid&apos;s identity to acquire the authentication tokens being used during delivery / dead-lettering.

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId");
-                writer.WriteStringValue(AzureActiveDirectoryTenantId);
+                writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
+            if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri");
-                writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);
+                writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
             if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element)
         {
             EndpointType endpointType = default;
-            Optional<Uri> endpointUrl = default;
-            Optional<Uri> endpointBaseUrl = default;
+            Optional<Uri> endpointUri = default;
+            Optional<Uri> endpointBaseUri = default;
             Optional<int> maxEventsPerBatch = default;
             Optional<int> preferredBatchSizeInKilobytes = default;
-            Optional<string> azureActiveDirectoryTenantId = default;
-            Optional<Uri> azureActiveDirectoryApplicationIdOrUri = default;
+            Optional<Guid> azureActiveDirectoryTenantId = default;
+            Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,20 +90,20 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointUrl = null;
+                                endpointUri = null;
                                 continue;
                             }
-                            endpointUrl = new Uri(property0.Value.GetString());
+                            endpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endpointBaseUrl"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointBaseUrl = null;
+                                endpointBaseUri = null;
                                 continue;
                             }
-                            endpointBaseUrl = new Uri(property0.Value.GetString());
+                            endpointBaseUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxEventsPerBatch"))
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                         }
                         if (property0.NameEquals("azureActiveDirectoryTenantId"))
                         {
-                            azureActiveDirectoryTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            azureActiveDirectoryTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("azureActiveDirectoryApplicationIdOrUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                azureActiveDirectoryApplicationIdOrUri = null;
-                                continue;
-                            }
-                            azureActiveDirectoryApplicationIdOrUri = new Uri(property0.Value.GetString());
+                            azureActiveDirectoryApplicationIdOrUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("deliveryAttributeMappings"))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new WebHookEventSubscriptionDestination(endpointType, endpointUrl.Value, endpointBaseUrl.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), azureActiveDirectoryTenantId.Value, azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings));
+            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings));
         }
     }
 }
