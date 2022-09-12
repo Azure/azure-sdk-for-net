@@ -69,6 +69,12 @@ namespace Azure.Security.KeyVault.Secrets
             this.ConfigureLogging();
         }
 
+        /// <summary>
+        /// Gets or sets whether to verify the authentication challenge resource matches the Key Vault or Managed HSM domain.
+        /// The default is true.
+        /// </summary>
+        public bool VerifyChallengeResource { get; set; } = true;
+
         internal string GetVersionString()
         {
             return Version switch

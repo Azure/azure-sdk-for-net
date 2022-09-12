@@ -1,5 +1,12 @@
 # Release History
 
+## 4.4.0 (2022-09-13)
+
+### Breaking Changes
+
+- Verify the challenge resource matches the vault domain.
+  This should affect few customers who can set `SecretClientOptions.VerifyChallengeResource` to `false` to disable.
+
 ## 4.3.0 (2022-03-24)
 
 Changes from both the last release and the last beta include:

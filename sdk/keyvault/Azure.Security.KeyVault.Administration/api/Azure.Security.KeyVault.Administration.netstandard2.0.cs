@@ -39,6 +39,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
         public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_3) { }
+        public bool VerifyChallengeResource { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
