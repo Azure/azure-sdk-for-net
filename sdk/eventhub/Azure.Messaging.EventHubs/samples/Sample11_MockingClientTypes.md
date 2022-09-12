@@ -8,11 +8,9 @@ Another important focus of this document is guidance on abstracting . The Event 
 
 ## Mocking `EventDataBatch`, `EventData`, and `EventHubProducerClient`
 
-When using batches to send to Event Hubs, many applications have specific needs for creating batches and preparing to send them. When testing, applications only need to focus their testing on the creation of batches, and the call to send. Once any of the send methods found with the `EventHubProducerClient` are called it can be assumed that the library will perform as expected.
+When using batches to publish to Event Hubs, the key interactions with the `EventHubProducerClient` are calling `CreateBatchAsync` to create the batch and `SendAsync` to publish it.   Mocked batches accept a `List<EventData>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected.  The custom `TryAdd` callback can be used to control the decision for whether an event is accepted into the batch or is rejected.   
 
-The following snippet demonstrates how to mock an `EventHubProducerClient` using Moq, and `EventDataBatch` and `EventData` instances using the `EventHubsModelFactory`. Mocked data batches can be used to test that an application is adding events to the batch properly. The custom `TryAdd` callback can be used to test all code paths for adding events to the batch. 
-
-The mocked `EventHubProducerClient` can be used to verify that `SendAsync` was called. The sample below is not a complete test. It can be customized to call an application-defined method that contains a call to `SendAsync`, and the arguments to `Verify` can be adjusted to match the expected outcome.
+This snippet demonstrates mocking the `EventHubProducerClient` using Moq, and creating `EventDataBatch` instances using the `EventHubsModelFactory`.
 
 ```C# Snippet:EventHubs_Sample11_MockingEventDataBatch
 var mockProducer = new Mock<EventHubProducerClient>();
