@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
         public RecognizeInputType InputType { get; }
 
         /// <summary>
-        /// Should stop current Operations?.
+        /// Interrupt current call media operation.
         /// </summary>
         public bool InterruptCallMediaOperation { get; set; }
 
@@ -41,11 +41,19 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         public PlaySource Prompt { get; set; }
 
-        /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
+        /// <summary>
+        /// Determines if we interrupt the prompt and start recognizing.
+        /// </summary>
         public bool InterruptPrompt { get; set; }
-        /// <summary> Time to wait for first input after prompt (if any). </summary>
+
+        /// <summary>
+        /// Time to wait for first input after prompt (if any).
+        /// </summary>
         public TimeSpan InitialSilenceTimeout { get; set; }
-        /// <summary> Target participant of DTFM tone recognition. </summary>
+
+        /// <summary>
+        /// Target participant of DTFM tone recognition.
+        /// </summary>
         public CommunicationIdentifier TargetParticipant { get; }
     }
 }
