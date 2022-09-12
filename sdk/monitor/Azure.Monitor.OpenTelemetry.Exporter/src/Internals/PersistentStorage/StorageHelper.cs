@@ -11,10 +11,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
     internal static class StorageHelper
     {
         private static string s_defaultStorageDirectory;
-        private const string NonWindowsVarTmp = "/var/tmp/";
-
-        // TODO: investigate if /tmp/ should be used.
-        private const string NonWindowsTmp = "/tmp/";
 
         internal static string GetDefaultStorageDirectory()
         {
@@ -29,50 +25,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 
                 if (IsWindowsOS())
                 {
-                    string localAppData = environmentVars["LOCALAPPDATA"]?.ToString();
-                    if (localAppData != null)
-                    {
-                        dirPath = CreateTelemetryDirectory(localAppData);
-                        if (dirPath != null)
-                        {
-                            s_defaultStorageDirectory = dirPath;
-                            return s_defaultStorageDirectory;
-                        }
-                    }
-
-                    string temp = environmentVars["TEMP"]?.ToString();
-                    if (temp != null)
-                    {
-                        dirPath = CreateTelemetryDirectory(temp);
-                        if (dirPath != null)
-                        {
-                            s_defaultStorageDirectory = dirPath;
-                            return s_defaultStorageDirectory;
-                        }
-                    }
-                }
-                else
-                {
-                    string tmpdir = environmentVars["TMPDIR"]?.ToString();
-                    if (tmpdir != null)
-                    {
-                        dirPath = CreateTelemetryDirectory(tmpdir);
-                        if (dirPath != null)
-                        {
-                            s_defaultStorageDirectory = dirPath;
-                            return s_defaultStorageDirectory;
-                        }
-                    }
-
-                    dirPath = CreateTelemetryDirectory(NonWindowsVarTmp);
-                    if (dirPath != null)
+                    if (TryCreateTelemetryDirectory(path: environmentVars["LOCALAPPDATA"]?.ToString(), createdDirectoryPath: out dirPath)
+                        || TryCreateTelemetryDirectory(path: environmentVars["TEMP"]?.ToString(), createdDirectoryPath: out dirPath))
                     {
                         s_defaultStorageDirectory = dirPath;
                         return s_defaultStorageDirectory;
                     }
-
-                    dirPath = CreateTelemetryDirectory(NonWindowsTmp);
-                    if (dirPath != null)
+                }
+                else
+                {
+                    if (TryCreateTelemetryDirectory(path: environmentVars["TMPDIR"]?.ToString(), createdDirectoryPath: out dirPath)
+                        || TryCreateTelemetryDirectory(path: "/var/tmp/", createdDirectoryPath: out dirPath)
+                        || TryCreateTelemetryDirectory(path: "/tmp/", createdDirectoryPath: out dirPath))
                     {
                         s_defaultStorageDirectory = dirPath;
                         return s_defaultStorageDirectory;
@@ -87,30 +51,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
         /// Creates directory for storing telemetry.
         /// </summary>
         /// <param name="path">Base directory.</param>
-        /// <returns>Directory path if it is created else null.</returns>
-        private static string CreateTelemetryDirectory(string path)
+        /// <param name="createdDirectoryPath">Full directory.</param>
+        /// <returns><see langword= "true"/> if directory is created.</returns>
+        private static bool TryCreateTelemetryDirectory(string path, out string createdDirectoryPath)
         {
+            createdDirectoryPath = null;
+            if (path == null)
+            {
+                return false;
+            }
+
             try
             {
-                string telemetryDirPath = Path.Combine(path, "Microsoft", "ApplicationInsights");
-                Directory.CreateDirectory(telemetryDirPath);
-                return telemetryDirPath;
+                createdDirectoryPath = Path.Combine(path, "Microsoft\\AzureMonitor");
+                Directory.CreateDirectory(createdDirectoryPath);
+                return true;
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.WriteError("ErrorCreatingDefaultStorageFolder", ex);
-                return null;
+                return false;
             }
         }
 
-        internal static bool IsWindowsOS()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return true;
-            }
-
-            return false;
-        }
+        internal static bool IsWindowsOS() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     }
 }
