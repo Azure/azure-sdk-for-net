@@ -351,7 +351,7 @@ namespace Microsoft.Azure.ServiceBus
             null);
         }
 
-        internal void BatchDeleteStop(Activity activity, TimeSpan timeout, int messageCount, TaskStatus? status, int messagesDeleted)
+        internal void BatchDeleteStop(Activity activity, TimeSpan timeout, int messageCount, TaskStatus status, int messagesDeleted)
         {
             if (activity != null)
             {
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.ServiceBus
                     RequestedMessageCount = messageCount,
                     Entity = this.entityPath,
                     Endpoint = this.endpoint,
-                    Status = status ?? TaskStatus.Faulted,
+                    Status = status,
                     Messages = messagesDeleted
                 });
             }
