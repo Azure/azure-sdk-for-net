@@ -41,19 +41,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SeasonalFieldsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new FarmBeatsClientOptions())
+        public SeasonalFieldsClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of SeasonalFieldsClient. </summary>
-        /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SeasonalFieldsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
+        public SeasonalFieldsClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new FarmBeatsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -64,14 +64,87 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified seasonal field resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="seasonalFieldId"> Id of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetSeasonalFieldAsync(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetSeasonalFieldAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// Response response = await client.GetSeasonalFieldAsync("<farmerId>", "<seasonalFieldId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("farmId").ToString());
+        /// Console.WriteLine(result.GetProperty("fieldId").ToString());
+        /// Console.WriteLine(result.GetProperty("seasonId").ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalField</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> GetSeasonalFieldAsync(string farmerId, string seasonalFieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -92,14 +165,87 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified seasonal field resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="seasonalFieldId"> Id of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetSeasonalField(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetSeasonalField with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// Response response = client.GetSeasonalField("<farmerId>", "<seasonalFieldId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("farmId").ToString());
+        /// Console.WriteLine(result.GetProperty("fieldId").ToString());
+        /// Console.WriteLine(result.GetProperty("seasonId").ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalField</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response GetSeasonalField(string farmerId, string seasonalFieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -120,19 +266,160 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or Updates a seasonal field resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
+        /// <param name="farmerId"> Id of the associated farmer resource. </param>
+        /// <param name="seasonalFieldId"> Id of the seasonal field resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="seasonalFieldId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// var data = new {
+        ///     farmId = "<farmId>",
+        ///     fieldId = "<fieldId>",
+        ///     seasonId = "<seasonId>",
+        ///     cropVarietyIds = new[] {
+        ///         "<String>"
+        ///     },
+        ///     cropId = "<cropId>",
+        ///     avgYieldValue = 123.45d,
+        ///     avgYieldUnit = "<avgYieldUnit>",
+        ///     avgSeedPopulationValue = 123.45d,
+        ///     avgSeedPopulationUnit = "<avgSeedPopulationUnit>",
+        ///     plantingDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     status = "<status>",
+        ///     source = "<source>",
+        ///     name = "<name>",
+        ///     description = "<description>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("farmId").ToString());
+        /// Console.WriteLine(result.GetProperty("fieldId").ToString());
+        /// Console.WriteLine(result.GetProperty("seasonId").ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SeasonalField</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalField</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string seasonalFieldId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
             Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
@@ -149,19 +436,160 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or Updates a seasonal field resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
+        /// <param name="farmerId"> Id of the associated farmer resource. </param>
+        /// <param name="seasonalFieldId"> Id of the seasonal field resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="seasonalFieldId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// var data = new {
+        ///     farmId = "<farmId>",
+        ///     fieldId = "<fieldId>",
+        ///     seasonId = "<seasonId>",
+        ///     cropVarietyIds = new[] {
+        ///         "<String>"
+        ///     },
+        ///     cropId = "<cropId>",
+        ///     avgYieldValue = 123.45d,
+        ///     avgYieldUnit = "<avgYieldUnit>",
+        ///     avgSeedPopulationValue = 123.45d,
+        ///     avgSeedPopulationUnit = "<avgSeedPopulationUnit>",
+        ///     plantingDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     status = "<status>",
+        ///     source = "<source>",
+        ///     name = "<name>",
+        ///     description = "<description>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("farmId").ToString());
+        /// Console.WriteLine(result.GetProperty("fieldId").ToString());
+        /// Console.WriteLine(result.GetProperty("seasonId").ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        /// Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SeasonalField</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalField</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response CreateOrUpdate(string farmerId, string seasonalFieldId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
             Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
@@ -178,14 +606,27 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="seasonalFieldId"> Id of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// Response response = await client.DeleteAsync("<farmerId>", "<seasonalFieldId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> DeleteAsync(string farmerId, string seasonalFieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -206,14 +647,27 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
+        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="seasonalFieldId"> Id of the seasonal field. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// Response response = client.Delete("<farmerId>", "<seasonalFieldId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response Delete(string farmerId, string seasonalFieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -234,13 +688,61 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get cascade delete job for specified seasonal field. </summary>
-        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
+        /// <code>{
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -260,13 +762,61 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get cascade delete job for specified seasonal field. </summary>
-        /// <param name="jobId"> ID of the job. </param>
+        /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
+        /// <code>{
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -286,7 +836,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of seasonal field resources under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
         /// <param name="farmIds"> Farm Ids of the resource. </param>
         /// <param name="fieldIds"> Field Ids of the resource. </param>
         /// <param name="seasonIds"> Season Ids of the resource. </param>
@@ -321,7 +871,92 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetSeasonalFieldsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetSeasonalFieldsByFarmerIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSeasonalFieldsByFarmerIdAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalFieldListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetSeasonalFieldsByFarmerIdAsync(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -347,7 +982,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of seasonal field resources under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
         /// <param name="farmIds"> Farm Ids of the resource. </param>
         /// <param name="fieldIds"> Field Ids of the resource. </param>
         /// <param name="seasonIds"> Season Ids of the resource. </param>
@@ -382,7 +1017,92 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetSeasonalFieldsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetSeasonalFieldsByFarmerId with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSeasonalFieldsByFarmerId with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalFieldListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetSeasonalFieldsByFarmerId(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -440,7 +1160,92 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetSeasonalFieldsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetSeasonalFieldsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// await foreach (var data in client.GetSeasonalFieldsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSeasonalFieldsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// await foreach (var data in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalFieldListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetSeasonalFieldsAsync(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             return GetSeasonalFieldsImplementationAsync("SeasonalFieldsClient.GetSeasonalFields", farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -496,7 +1301,92 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='GetSeasonalFields(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetSeasonalFields and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// foreach (var data in client.GetSeasonalFields())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSeasonalFields with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// foreach (var data in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SeasonalFieldListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer Id.
+        ///   primaryBoundaryId: string, # Optional. Primary boundary id.
+        ///   boundaryIds: [string], # Optional. Boundary Ids.
+        ///   farmId: string, # Optional. Id of the associated Farm.
+        ///   fieldId: string, # Optional. Id of the associated Field.
+        ///   seasonId: string, # Optional. Id of the season it belongs to.
+        ///   cropVarietyIds: [string], # Optional. CropVariety ids.
+        ///   cropId: string, # Optional. Id of the crop it belongs to.
+        ///   avgYieldValue: number, # Optional. Average yield value of the seasonal field.
+        ///   avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
+        ///   avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
+        ///   avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
+        ///   plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetSeasonalFields(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             return GetSeasonalFieldsImplementation("SeasonalFieldsClient.GetSeasonalFields", farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -529,7 +1419,56 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
+        /// <code>{
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -560,7 +1499,56 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/SeasonalFieldsClient.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SeasonalFieldsClient(credential);
+        /// 
+        /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
+        /// <code>{
+        ///   farmerId: string, # Required. Farmer Id.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -590,139 +1578,6 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
-            uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null)
-            {
-                foreach (var param in farmIds)
-                {
-                    uri.AppendQuery("farmIds", param, true);
-                }
-            }
-            if (fieldIds != null)
-            {
-                foreach (var param in fieldIds)
-                {
-                    uri.AppendQuery("fieldIds", param, true);
-                }
-            }
-            if (seasonIds != null)
-            {
-                foreach (var param in seasonIds)
-                {
-                    uri.AppendQuery("seasonIds", param, true);
-                }
-            }
-            if (cropVarietyIds != null)
-            {
-                foreach (var param in cropVarietyIds)
-                {
-                    uri.AppendQuery("cropVarietyIds", param, true);
-                }
-            }
-            if (cropIds != null)
-            {
-                foreach (var param in cropIds)
-                {
-                    uri.AppendQuery("cropIds", param, true);
-                }
-            }
-            if (minAvgYieldValue != null)
-            {
-                uri.AppendQuery("minAvgYieldValue", minAvgYieldValue.Value, true);
-            }
-            if (maxAvgYieldValue != null)
-            {
-                uri.AppendQuery("maxAvgYieldValue", maxAvgYieldValue.Value, true);
-            }
-            if (avgYieldUnit != null)
-            {
-                uri.AppendQuery("avgYieldUnit", avgYieldUnit, true);
-            }
-            if (minAvgSeedPopulationValue != null)
-            {
-                uri.AppendQuery("minAvgSeedPopulationValue", minAvgSeedPopulationValue.Value, true);
-            }
-            if (maxAvgSeedPopulationValue != null)
-            {
-                uri.AppendQuery("maxAvgSeedPopulationValue", maxAvgSeedPopulationValue.Value, true);
-            }
-            if (avgSeedPopulationUnit != null)
-            {
-                uri.AppendQuery("avgSeedPopulationUnit", avgSeedPopulationUnit, true);
-            }
-            if (minPlantingDateTime != null)
-            {
-                uri.AppendQuery("minPlantingDateTime", minPlantingDateTime.Value, "O", true);
-            }
-            if (maxPlantingDateTime != null)
-            {
-                uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
-            }
-            if (ids != null)
-            {
-                foreach (var param in ids)
-                {
-                    uri.AppendQuery("ids", param, true);
-                }
-            }
-            if (names != null)
-            {
-                foreach (var param in names)
-                {
-                    uri.AppendQuery("names", param, true);
-                }
-            }
-            if (propertyFilters != null)
-            {
-                foreach (var param in propertyFilters)
-                {
-                    uri.AppendQuery("propertyFilters", param, true);
-                }
-            }
-            if (statuses != null)
-            {
-                foreach (var param in statuses)
-                {
-                    uri.AppendQuery("statuses", param, true);
-                }
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetSeasonalFieldsRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
             uri.AppendPath("/seasonal-fields", false);
             if (farmIds != null)
             {
@@ -902,15 +1757,133 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
+        internal HttpMessage CreateGetSeasonalFieldsRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/seasonal-fields/cascade-delete/", false);
-            uri.AppendPath(jobId, true);
+            uri.AppendPath("/seasonal-fields", false);
+            if (farmIds != null)
+            {
+                foreach (var param in farmIds)
+                {
+                    uri.AppendQuery("farmIds", param, true);
+                }
+            }
+            if (fieldIds != null)
+            {
+                foreach (var param in fieldIds)
+                {
+                    uri.AppendQuery("fieldIds", param, true);
+                }
+            }
+            if (seasonIds != null)
+            {
+                foreach (var param in seasonIds)
+                {
+                    uri.AppendQuery("seasonIds", param, true);
+                }
+            }
+            if (cropVarietyIds != null)
+            {
+                foreach (var param in cropVarietyIds)
+                {
+                    uri.AppendQuery("cropVarietyIds", param, true);
+                }
+            }
+            if (cropIds != null)
+            {
+                foreach (var param in cropIds)
+                {
+                    uri.AppendQuery("cropIds", param, true);
+                }
+            }
+            if (minAvgYieldValue != null)
+            {
+                uri.AppendQuery("minAvgYieldValue", minAvgYieldValue.Value, true);
+            }
+            if (maxAvgYieldValue != null)
+            {
+                uri.AppendQuery("maxAvgYieldValue", maxAvgYieldValue.Value, true);
+            }
+            if (avgYieldUnit != null)
+            {
+                uri.AppendQuery("avgYieldUnit", avgYieldUnit, true);
+            }
+            if (minAvgSeedPopulationValue != null)
+            {
+                uri.AppendQuery("minAvgSeedPopulationValue", minAvgSeedPopulationValue.Value, true);
+            }
+            if (maxAvgSeedPopulationValue != null)
+            {
+                uri.AppendQuery("maxAvgSeedPopulationValue", maxAvgSeedPopulationValue.Value, true);
+            }
+            if (avgSeedPopulationUnit != null)
+            {
+                uri.AppendQuery("avgSeedPopulationUnit", avgSeedPopulationUnit, true);
+            }
+            if (minPlantingDateTime != null)
+            {
+                uri.AppendQuery("minPlantingDateTime", minPlantingDateTime.Value, "O", true);
+            }
+            if (maxPlantingDateTime != null)
+            {
+                uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -928,6 +1901,21 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath(jobId, true);
             uri.AppendQuery("farmerId", farmerId, true);
             uri.AppendQuery("seasonalFieldId", seasonalFieldId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/seasonal-fields/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

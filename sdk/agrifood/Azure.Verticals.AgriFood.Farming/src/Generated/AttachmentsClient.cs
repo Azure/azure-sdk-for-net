@@ -41,19 +41,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AttachmentsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new FarmBeatsClientOptions())
+        public AttachmentsClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AttachmentsClient. </summary>
-        /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AttachmentsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
+        public AttachmentsClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new FarmBeatsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -64,14 +64,63 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='GetAttachmentAsync(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetAttachmentAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// Response response = await client.GetAttachmentAsync("<farmerId>", "<attachmentId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> GetAttachmentAsync(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -92,14 +141,63 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='GetAttachment(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetAttachment with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// Response response = client.GetAttachment("<farmerId>", "<attachmentId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response GetAttachment(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -120,15 +218,66 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="attachmentId"> ID of the attachment resource. </param>
+        /// <param name="farmerId"> Id of the associated farmer resource. </param>
+        /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<attachmentId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string attachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -149,15 +298,66 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="attachmentId"> ID of the attachment resource. </param>
+        /// <param name="farmerId"> Id of the associated farmer resource. </param>
+        /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and request content and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", "<attachmentId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response CreateOrUpdate(string farmerId, string attachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -178,14 +378,27 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// Response response = await client.DeleteAsync("<farmerId>", "<attachmentId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> DeleteAsync(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -206,14 +419,27 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// Response response = client.Delete("<farmerId>", "<attachmentId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response Delete(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -234,14 +460,33 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='DownloadAsync(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call DownloadAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// Response response = await client.DownloadAsync("<farmerId>", "<attachmentId>");
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
+        /// ]]></code>
+        /// </example>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -262,14 +507,33 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='Download(String,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call Download with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// Response response = client.Download("<farmerId>", "<attachmentId>");
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
+        /// ]]></code>
+        /// </example>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response Download(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -290,9 +554,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
-        /// <param name="resourceTypes"> Resource Types of the resource. </param>
+        /// <param name="resourceTypes">
+        /// Resource Types of the resource.
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, ApplicationData, HarvestData, TillageData, PlantingData, PlantTissueAnalysis.
+        /// </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -314,7 +581,68 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='GetAttachmentsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetAttachmentsByFarmerIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAttachmentsByFarmerIdAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("resourceType").ToString());
+        ///     Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AttachmentListResponseValue</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetAttachmentsByFarmerIdAsync(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -340,9 +668,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="farmerId"> Id of the associated farmer. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
-        /// <param name="resourceTypes"> Resource Types of the resource. </param>
+        /// <param name="resourceTypes">
+        /// Resource Types of the resource.
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, ApplicationData, HarvestData, TillageData, PlantingData, PlantTissueAnalysis.
+        /// </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -364,7 +695,68 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
         /// <include file="Docs/AttachmentsClient.xml" path="doc/members/member[@name='GetAttachmentsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetAttachmentsByFarmerId with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAttachmentsByFarmerId with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AttachmentsClient(credential);
+        /// 
+        /// foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("resourceType").ToString());
+        ///     Console.WriteLine(result.GetProperty("originalFileName").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AttachmentListResponseValue</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   source: string, # Optional. Source of the resource.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetAttachmentsByFarmerId(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -538,7 +930,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/file", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream, application/json");
+            request.Headers.Add("Accept", "application/json, application/octet-stream");
             return message;
         }
 

@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The Crops service client.
-    /// <summary> The Crops service client. </summary>
-    public partial class CropsClient
+    // Data plane generated client. The SensorMappings service client.
+    /// <summary> The SensorMappings service client. </summary>
+    public partial class SensorMappingsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,25 +32,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of CropsClient for mocking. </summary>
-        protected CropsClient()
+        /// <summary> Initializes a new instance of SensorMappingsClient for mocking. </summary>
+        protected SensorMappingsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of CropsClient. </summary>
+        /// <summary> Initializes a new instance of SensorMappingsClient. </summary>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public CropsClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
+        public SensorMappingsClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of CropsClient. </summary>
+        /// <summary> Initializes a new instance of SensorMappingsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public CropsClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
+        public SensorMappingsClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -63,176 +63,23 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = options.Version;
         }
 
-        /// <summary> Gets a specified crop resource. </summary>
-        /// <param name="cropId"> Id of the crop. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='GetCropAsync(String,RequestContext)']/*" />
-=======
-        /// <example>
-        /// This sample shows how to call GetCropAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
-        /// 
-        /// Response response = await client.GetCropAsync("<cropId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Crop</c>:
-        /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual async Task<Response> GetCropAsync(string cropId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
-
-            using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCropRequest(cropId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a specified crop resource. </summary>
-        /// <param name="cropId"> Id of the crop. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='GetCrop(String,RequestContext)']/*" />
-=======
-        /// <example>
-        /// This sample shows how to call GetCrop with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
-        /// 
-        /// Response response = client.GetCrop("<cropId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Crop</c>:
-        /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual Response GetCrop(string cropId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
-
-            using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCropRequest(cropId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a crop resource. </summary>
-        /// <param name="cropId"> Id of the crop resource. </param>
+        /// <summary> Create a sensor mapping entity. </summary>
+        /// <param name="sensorMappingId"> Id of the sensor mapping. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensorMappingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,RequestContext)']/*" />
-=======
         /// <example>
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
@@ -240,12 +87,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
         /// var data = new {
-        ///     phenotype = "<phenotype>",
+        ///     sensorId = "<sensorId>",
+        ///     sensorPartnerId = "<sensorPartnerId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -253,16 +102,18 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
+        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -273,58 +124,61 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>Crop</c>:
+        /// Schema for <c>SensorMapping</c>:
         /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
         ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>Crop</c>:
+        /// Schema for <c>SensorMapping</c>:
         /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
         ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual async Task<Response> CreateOrUpdateAsync(string cropId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("SensorMappingsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(cropId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(sensorMappingId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -334,26 +188,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a crop resource. </summary>
-        /// <param name="cropId"> Id of the crop resource. </param>
+        /// <summary> Create a sensor mapping entity. </summary>
+        /// <param name="sensorMappingId"> Id of the sensor mapping. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensorMappingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,RequestContext)']/*" />
-=======
         /// <example>
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
@@ -361,12 +212,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
         /// var data = new {
-        ///     phenotype = "<phenotype>",
+        ///     sensorId = "<sensorId>",
+        ///     sensorPartnerId = "<sensorPartnerId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -374,16 +227,18 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
+        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -394,58 +249,61 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>Crop</c>:
+        /// Schema for <c>SensorMapping</c>:
         /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
         ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>Crop</c>:
+        /// Schema for <c>SensorMapping</c>:
         /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
         ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual Response CreateOrUpdate(string cropId, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdate(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("SensorMappingsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(cropId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(sensorMappingId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -455,36 +313,72 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes Crop for given crop id. </summary>
-        /// <param name="cropId"> Id of crop to be deleted. </param>
+        /// <summary> Gets a sensor mapping entity. </summary>
+        /// <param name="sensorMappingId"> Id of the sensor mapping resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensorMappingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='DeleteAsync(String,RequestContext)']/*" />
-=======
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
+        /// This sample shows how to call GetSensorMappingAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
-        /// Response response = await client.DeleteAsync("<cropId>");
-        /// Console.WriteLine(response.Status);
+        /// Response response = await client.GetSensorMappingAsync("<sensorMappingId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
+        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual async Task<Response> DeleteAsync(string cropId, RequestContext context = null)
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SensorMapping</c>:
+        /// <code>{
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetSensorMappingAsync(string sensorMappingId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("SensorMappingsClient.GetSensorMapping");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(cropId, context);
+                using HttpMessage message = CreateGetSensorMappingRequest(sensorMappingId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -494,36 +388,72 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes Crop for given crop id. </summary>
-        /// <param name="cropId"> Id of crop to be deleted. </param>
+        /// <summary> Gets a sensor mapping entity. </summary>
+        /// <param name="sensorMappingId"> Id of the sensor mapping resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensorMappingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='Delete(String,RequestContext)']/*" />
-=======
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call Delete with required parameters.
+        /// This sample shows how to call GetSensorMapping with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
-        /// Response response = client.Delete("<cropId>");
-        /// Console.WriteLine(response.Status);
+        /// Response response = client.GetSensorMapping("<sensorMappingId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("sensorId").ToString());
+        /// Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual Response Delete(string cropId, RequestContext context = null)
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SensorMapping</c>:
+        /// <code>{
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetSensorMapping(string sensorMappingId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("SensorMappingsClient.GetSensorMapping");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(cropId, context);
+                using HttpMessage message = CreateGetSensorMappingRequest(sensorMappingId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -533,8 +463,81 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of crop resources. </summary>
-        /// <param name="phenotypes"> Crop phenotypes of the resource. </param>
+        /// <summary> Deletes a sensor mapping entity. </summary>
+        /// <param name="sensorMappingId"> Id of the sensor mapping resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensorMappingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SensorMappingsClient(credential);
+        /// 
+        /// Response response = await client.DeleteAsync("<sensorMappingId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual async Task<Response> DeleteAsync(string sensorMappingId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+
+            using var scope = ClientDiagnostics.CreateScope("SensorMappingsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(sensorMappingId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a sensor mapping entity. </summary>
+        /// <param name="sensorMappingId"> Id of the sensor mapping resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensorMappingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sensorMappingId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SensorMappingsClient(credential);
+        /// 
+        /// Response response = client.Delete("<sensorMappingId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual Response Delete(string sensorMappingId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+
+            using var scope = ClientDiagnostics.CreateScope("SensorMappingsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(sensorMappingId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns a paginated list of sensor mapping resources. </summary>
+        /// <param name="sensorIds"> Id of the sensors. </param>
+        /// <param name="sensorPartnerIds"> Id of the sensor partners. </param>
+        /// <param name="farmerIds"> Id of the farmers. </param>
+        /// <param name="boundaryIds"> Id of the boundaries. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -554,36 +557,35 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='GetCropsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-=======
         /// <example>
-        /// This sample shows how to call GetCropsAsync and parse the result.
+        /// This sample shows how to call GetSensorMappingsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
-        /// await foreach (var data in client.GetCropsAsync())
+        /// await foreach (var data in client.GetSensorMappingsAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetCropsAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetSensorMappingsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
-        /// await foreach (var data in client.GetCropsAsync(new String[]{"<phenotypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// await foreach (var data in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<farmerIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("phenotype").ToString());
+        ///     Console.WriteLine(result.GetProperty("sensorId").ToString());
+        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -595,33 +597,34 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>CropListResponseValue</c>:
+        /// Schema for <c>SensorMappingListResponseValue</c>:
         /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
         ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual AsyncPageable<BinaryData> GetCropsAsync(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSensorMappingsAsync(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetCropsImplementationAsync("CropsClient.GetCrops", phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSensorMappingsImplementationAsync("SensorMappingsClient.GetSensorMappings", sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetCropsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> phenotypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetSensorMappingsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -629,8 +632,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCropsRequest(phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetCropsNextPageRequest(nextLink, phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -638,8 +641,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of crop resources. </summary>
-        /// <param name="phenotypes"> Crop phenotypes of the resource. </param>
+        /// <summary> Returns a paginated list of sensor mapping resources. </summary>
+        /// <param name="sensorIds"> Id of the sensors. </param>
+        /// <param name="sensorPartnerIds"> Id of the sensor partners. </param>
+        /// <param name="farmerIds"> Id of the farmers. </param>
+        /// <param name="boundaryIds"> Id of the boundaries. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -659,36 +665,35 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/CropsClient.xml" path="doc/members/member[@name='GetCrops(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-=======
         /// <example>
-        /// This sample shows how to call GetCrops and parse the result.
+        /// This sample shows how to call GetSensorMappings and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
-        /// foreach (var data in client.GetCrops())
+        /// foreach (var data in client.GetSensorMappings())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetCrops with all parameters, and how to parse the result.
+        /// This sample shows how to call GetSensorMappings with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropsClient(credential);
+        /// var client = new SensorMappingsClient(credential);
         /// 
-        /// foreach (var data in client.GetCrops(new String[]{"<phenotypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// foreach (var data in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<farmerIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("phenotype").ToString());
+        ///     Console.WriteLine(result.GetProperty("sensorId").ToString());
+        ///     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -700,33 +705,34 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>CropListResponseValue</c>:
+        /// Schema for <c>SensorMappingListResponseValue</c>:
         /// <code>{
-        ///   phenotype: string, # Optional. Crop phenotype.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   sensorId: string, # Optional. Id of the associated sensor.
+        ///   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
+        ///   farmerId: string, # Optional. Id of the associated farmer.
+        ///   boundaryId: string, # Optional. Id of the associated boundary.
+        ///   id: string, # Optional. Id of the resource.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
         ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and
+        /// only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
->>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual Pageable<BinaryData> GetCrops(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSensorMappings(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetCropsImplementation("CropsClient.GetCrops", phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSensorMappingsImplementation("SensorMappingsClient.GetSensorMappings", sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetCropsImplementation(string diagnosticsScopeName, IEnumerable<string> phenotypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetSensorMappingsImplementation(string diagnosticsScopeName, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -734,8 +740,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCropsRequest(phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetCropsNextPageRequest(nextLink, phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -743,19 +749,40 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetCropsRequest(IEnumerable<string> phenotypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSensorMappingsRequest(IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/crops", false);
-            if (phenotypes != null)
+            uri.AppendPath("/sensor-mappings", false);
+            if (sensorIds != null)
             {
-                foreach (var param in phenotypes)
+                foreach (var param in sensorIds)
                 {
-                    uri.AppendQuery("phenotypes", param, true);
+                    uri.AppendQuery("sensorIds", param, true);
+                }
+            }
+            if (sensorPartnerIds != null)
+            {
+                foreach (var param in sensorPartnerIds)
+                {
+                    uri.AppendQuery("sensorPartnerIds", param, true);
+                }
+            }
+            if (farmerIds != null)
+            {
+                foreach (var param in farmerIds)
+                {
+                    uri.AppendQuery("farmerIds", param, true);
+                }
+            }
+            if (boundaryIds != null)
+            {
+                foreach (var param in boundaryIds)
+                {
+                    uri.AppendQuery("boundaryIds", param, true);
                 }
             }
             if (ids != null)
@@ -816,30 +843,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetCropRequest(string cropId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/crops/", false);
-            uri.AppendPath(cropId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string cropId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string sensorMappingId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/crops/", false);
-            uri.AppendPath(cropId, true);
+            uri.AppendPath("/sensor-mappings/", false);
+            uri.AppendPath(sensorMappingId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -848,22 +860,37 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string cropId, RequestContext context)
+        internal HttpMessage CreateGetSensorMappingRequest(string sensorMappingId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
-            request.Method = RequestMethod.Delete;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/crops/", false);
-            uri.AppendPath(cropId, true);
+            uri.AppendPath("/sensor-mappings/", false);
+            uri.AppendPath(sensorMappingId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetCropsNextPageRequest(string nextLink, IEnumerable<string> phenotypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string sensorMappingId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-mappings/", false);
+            uri.AppendPath(sensorMappingId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSensorMappingsNextPageRequest(string nextLink, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
