@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Time to wait between DTMF inputs to stop recognizing. </summary>
         public int? InterToneTimeoutInSeconds { get; set; }
-        /// <summary> Maximum number of DTMFs to be collected. </summary>
+        /// <summary> Maximum number of DTMF tones to be collected. </summary>
         public int? MaxTonesToCollect { get; set; }
     }
 }

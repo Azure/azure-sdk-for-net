@@ -14,7 +14,7 @@ namespace Azure.Communication.CallingServer
     internal partial class RecognizeOptionsInternal
     {
         /// <summary> Initializes a new instance of RecognizeOptionsInternal. </summary>
-        /// <param name="targetParticipant"> Target participant of DTFM tone recognition. </param>
+        /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
         public bool? InterruptPrompt { get; set; }
         /// <summary> Time to wait for first input after prompt (if any). </summary>
         public int? InitialSilenceTimeoutInSeconds { get; set; }
-        /// <summary> Target participant of DTFM tone recognition. </summary>
+        /// <summary> Target participant of DTMF tone recognition. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Defines configurations for DTMF. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }

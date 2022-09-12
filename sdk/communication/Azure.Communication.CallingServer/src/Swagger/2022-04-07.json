@@ -518,7 +518,7 @@
         },
         "x-ms-examples": {
           "Get participants from a call.": {
-            "$ref": "./examples/CallConnections_GetParticipants.json"
+            "$ref": "./examples/CallConnections_ListParticipants.json"
           }
         }
       }
@@ -947,7 +947,7 @@
       }
     },
     "MediaStreamingTransportType": {
-      "description": "The type of tranport to be used for media streaming, eg. Websocket",
+      "description": "The type of transport to be used for media streaming, eg. Websocket",
       "enum": [
         "websocket"
       ],
@@ -1347,13 +1347,13 @@
         "initialSilenceTimeoutInSeconds": {
           "format": "int32",
           "description": "Time to wait for first input after prompt (if any).",
-          "maximum": 2147483647,
+          "maximum": 300,
           "minimum": 0,
           "type": "integer"
         },
         "targetParticipant": {
           "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "Target participant of DTFM tone recognition."
+          "description": "Target participant of DTMF tone recognition."
         },
         "dtmfOptions": {
           "$ref": "#/definitions/DtmfOptions",
@@ -1393,15 +1393,13 @@
         "interToneTimeoutInSeconds": {
           "format": "int32",
           "description": "Time to wait between DTMF inputs to stop recognizing.",
-          "maximum": 2147483647,
+          "maximum": 60,
           "minimum": 0,
           "type": "integer"
         },
         "maxTonesToCollect": {
           "format": "int32",
-          "description": "Maximum number of DTMFs to be collected.",
-          "maximum": 2147483647,
-          "minimum": 1,
+          "description": "Maximum number of DTMF tones to be collected.",
           "type": "integer"
         },
         "stopTones": {
@@ -2126,7 +2124,7 @@
       }
     },
     "RecognitionType": {
-      "description": "Determines the sub-type pf the recognize operation.\r\nIn case of cancel operaion the this field is not set and is returned empty",
+      "description": "Determines the sub-type of the recognize operation.\r\nIn case of cancel operation the this field is not set and is returned empty",
       "enum": [
         "dtmf"
       ],
@@ -2146,7 +2144,7 @@
         },
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
-          "description": "Result information defines the code, subcodes and message",
+          "description": "Result information defines the code, subcode and message",
           "readOnly": true
         },
         "recognitionType": {

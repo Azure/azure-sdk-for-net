@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
+    /// <summary> The type of transport to be used for media streaming, eg. Websocket. </summary>
     public readonly partial struct MediaStreamingTransport : IEquatable<MediaStreamingTransport>
     {
         private readonly string _value;

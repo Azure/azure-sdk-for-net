@@ -11,8 +11,8 @@ using System.ComponentModel;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// Determines the sub-type pf the recognize operation.
-    /// In case of cancel operaion the this field is not set and is returned empty
+    /// Determines the sub-type of the recognize operation.
+    /// In case of cancel operation the this field is not set and is returned empty
     /// </summary>
     public readonly partial struct CallMediaRecognitionType : IEquatable<CallMediaRecognitionType>
     {
