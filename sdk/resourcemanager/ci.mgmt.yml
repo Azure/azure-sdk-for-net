@@ -17,6 +17,7 @@ trigger:
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
     - sdk/authorization/Azure.ResourceManager.Authorization
+    - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
     - sdk/azurestackhci/Azure.ResourceManager.Hci
@@ -134,6 +135,7 @@ pr:
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
     - sdk/authorization/Azure.ResourceManager.Authorization
+    - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
     - sdk/azurestackhci/Azure.ResourceManager.Hci
