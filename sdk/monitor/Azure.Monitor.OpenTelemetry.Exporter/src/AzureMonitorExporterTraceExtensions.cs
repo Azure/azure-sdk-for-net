@@ -1,18 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using System;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
-using System;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
     /// Extension methods to simplify registering of Azure Monitor Trace Exporter.
     /// </summary>
-    public static class AzureMonitorExporterHelperExtensions
+    public static class AzureMonitorExporterTraceExtensions
     {
         /// <summary>
         /// Registers an Azure Monitor trace exporter that will receive <see cref="System.Diagnostics.Activity"/> instances.
@@ -29,12 +27,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
-
-            // TODO: Fallback to default location if location provided via options does not work.
-            if (!options.DisableOfflineStorage && options.StorageDirectory == null)
-            {
-                options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
-            }
 
             // TODO: provide a way to turn off statsbeat
             // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
