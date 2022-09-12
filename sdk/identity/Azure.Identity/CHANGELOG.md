@@ -3,7 +3,7 @@
 ## 1.7.0 (2022-09-13)
 
 ### Features Added
-- Added `AdditionallyAllowedTenants` to the following credential options to force explicit opt-in behavior for multi-tenant authentication.
+- Added `AdditionallyAllowedTenants` to the following credential options to force explicit opt-in behavior for multi-tenant authentication:
     - `AuthorizationCodeCredentialOptions`
     - `AzureCliCredentialOptions`
     - `AzurePowerShellCredentialOptions`
