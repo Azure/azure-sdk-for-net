@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public class MediaStreamingAudio : MediaStreamingPackageBase
     {
-        internal MediaStreamingAudio(BinaryData data, DateTime timestamp, string participantId, bool isSilence)
+        internal MediaStreamingAudio(byte[] data, DateTime timestamp, string participantId, bool isSilence)
         {
             Data = data;
             Timestamp = timestamp;
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The audio data.
         /// </summary>
-        public BinaryData Data { get; }
+        public byte[] Data { get; }
 
         /// <summary>
         /// The timestamp of thwn the media was sourced.

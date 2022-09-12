@@ -5,7 +5,6 @@ using System;
 using System.Text;
 using System.Text.Json;
 using Azure.Communication.CallingServer.Models.MediaStreaming;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -33,36 +32,6 @@ namespace Azure.Communication.CallingServer
         public static MediaStreamingPackageBase Parse(byte[] receivedBytes)
         {
             return Parse(Encoding.UTF8.GetString(receivedBytes));
-        }
-
-        /// <summary>
-        /// Parsing Audio packages from BinaryData.
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns></returns>
-        public static MediaStreamingPackageBase[] ParseMany(BinaryData json)
-        {
-            Argument.AssertNotNull(json, nameof(json));
-
-            MediaStreamingPackageBase[] packages = null;
-            JsonDocument requestDocument = JsonDocument.Parse(json);
-
-            // Parse JsonElement into separate events, deserialize event envelope properties
-            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
-            {
-                packages = new MediaStreamingPackageBase[1];
-                packages[0] = Parse(requestDocument.RootElement.ToString());
-            }
-            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
-            {
-                packages = new MediaStreamingPackageBase[requestDocument.RootElement.GetArrayLength()];
-                int i = 0;
-                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
-                {
-                    packages[i++] = Parse(property.ToString());
-                }
-            }
-            return packages ?? Array.Empty<MediaStreamingPackageBase>();
         }
 
         /// <summary>

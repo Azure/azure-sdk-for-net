@@ -16,8 +16,7 @@ namespace Azure.Communication.CallingServer
         /// The audio data.
         /// </summary>
         [JsonPropertyName("data")]
-        [JsonConverter(typeof(BinaryDataConverter))]
-        public BinaryData Data { get; set; }
+        public byte[] Data { get; set; }
 
         /// <summary>
         /// The timestamp of thwn the media was sourced.
@@ -34,18 +33,5 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         [JsonPropertyName("isSilence")]
         public bool IsSilence { get; set; }
-
-        private class BinaryDataConverter : JsonConverter<BinaryData>
-        {
-            public override BinaryData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                return new BinaryData(reader.GetBytesFromBase64());
-            }
-
-            public override void Write(Utf8JsonWriter writer, BinaryData value, JsonSerializerOptions options)
-            {
-                writer.WriteBase64StringValue(value);
-            }
-        }
     }
 }

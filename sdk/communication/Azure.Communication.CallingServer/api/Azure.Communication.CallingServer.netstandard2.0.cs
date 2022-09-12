@@ -438,7 +438,7 @@ namespace Azure.Communication.CallingServer
     public partial class MediaStreamingAudio : Azure.Communication.CallingServer.MediaStreamingPackageBase
     {
         internal MediaStreamingAudio() { }
-        public System.BinaryData Data { get { throw null; } }
+        public byte[] Data { get { throw null; } }
         public bool IsSilent { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public System.DateTime Timestamp { get { throw null; } }
@@ -517,7 +517,6 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.MediaStreamingPackageBase Parse(System.BinaryData json) { throw null; }
         public static Azure.Communication.CallingServer.MediaStreamingPackageBase Parse(byte[] receivedBytes) { throw null; }
         public static Azure.Communication.CallingServer.MediaStreamingPackageBase Parse(string stringJson) { throw null; }
-        public static Azure.Communication.CallingServer.MediaStreamingPackageBase[] ParseMany(System.BinaryData json) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingTransport : System.IEquatable<Azure.Communication.CallingServer.MediaStreamingTransport>
