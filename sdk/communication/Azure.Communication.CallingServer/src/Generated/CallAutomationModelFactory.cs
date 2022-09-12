@@ -178,9 +178,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
         /// <param name="tones"></param>
         /// <returns> A new <see cref="CallingServer.CollectTonesResult"/> instance for mocking. </returns>
-        public static CollectTonesResult CollectTonesResult(IEnumerable<string> tones = null)
+        public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
         {
-            tones ??= new List<string>();
+            tones ??= new List<DtmfTone>();
 
             return new CollectTonesResult(tones?.ToList());
         }
