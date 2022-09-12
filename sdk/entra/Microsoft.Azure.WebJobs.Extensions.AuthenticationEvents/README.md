@@ -243,7 +243,7 @@ To Test Token Augmentation, please do the following.
 }
 ```
 
-## Trouble Shooting
+## Troubleshooting
 
 * Visual Studio Code
   * If running in Visual Studio Code, you get an error along the lines of the local Azure Storage Emulator is unavailable, you can start the emulator manually.! (Note: Azure Storage emulator is now deprecated and the suggested replacement is [Azurite](https://docs.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio))
