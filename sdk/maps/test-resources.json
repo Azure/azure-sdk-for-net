@@ -9,10 +9,29 @@
                 "description": "The base resource name."
             }
         },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
         "testApplicationOid": {
             "type": "string",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
+            }
+        },
+        "testApplicationId": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client id used to run tests."
+            }
+        },
+        "testApplicationSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client secret used to run tests."
             }
         }
     },
@@ -58,6 +77,26 @@
         }
     ],
     "outputs": {
+        "RESOURCE_GROUP_NAME": {
+            "type": "string",
+            "value": "[resourceGroup().Name]"
+        },
+        "TENANT_ID": {
+            "type": "string",
+            "value": "[parameters('tenantId')]"
+        },
+        "CLIENT_ID": {
+            "type": "string",
+            "value": "[parameters('testApplicationId')]"
+        },
+        "CLIENT_SECRET": {
+            "type": "string",
+            "value": "[parameters('testApplicationSecret')]"
+        },
+        "SUBSCRIPTION_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Maps/accounts',variables('mapsAccountName')), '2021-12-01-preview').primaryKey]"
+        },
         "AZMAPS_CLIENT_ID": {
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Maps/accounts',variables('mapsAccountName'))).uniqueId]"

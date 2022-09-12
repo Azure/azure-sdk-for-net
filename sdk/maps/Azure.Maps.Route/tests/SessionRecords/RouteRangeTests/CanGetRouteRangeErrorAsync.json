@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/route/range/json?api-version=1.0\u0026query=46%2C123.75",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a1a8224bf9017852010eb36d53a56368-0eaa702e309bb244-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220705.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "3343159ca61590fde8b06f6fe79e3be8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "86",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 05 Jul 2022 05:01:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: ED8B01B31D674895A160CA30CA8CA4B9 Ref B: TPE30EDGE0713 Ref C: 2022-07-05T05:01:24Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "Missing required restriction parameter"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1205389387"
+  }
+}

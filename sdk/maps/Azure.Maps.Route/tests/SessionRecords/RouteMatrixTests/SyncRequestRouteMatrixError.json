@@ -1,0 +1,61 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/route/matrix/sync/json?api-version=1.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "140",
+        "Content-Type": "application/json",
+        "traceparent": "00-396a3420c6ba3e498b1298d90477642c-f77105e83ed7474c-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220809.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "fa419c655fdc3d65534a38612ad3143d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "origins": {
+          "coordinates": [
+            [
+              123.751,
+              45.9375
+            ],
+            [
+              123.791,
+              45.96875
+            ]
+          ],
+          "type": "MultiPoint"
+        },
+        "destinations": {
+          "coordinates": [],
+          "type": "MultiPoint"
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "73",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 09 Aug 2022 15:51:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 99E80E008FE5479BA07C0A0AE0F94974 Ref B: TPE30EDGE0613 Ref C: 2022-08-09T15:51:10Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "Invalid coordinates value"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1975391998"
+  }
+}

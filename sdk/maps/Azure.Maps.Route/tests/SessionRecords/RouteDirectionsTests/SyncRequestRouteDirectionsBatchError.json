@@ -1,0 +1,43 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/route/directions/batch/sync/json?api-version=1.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-16b52fccfafd5e7a620b5a659c229272-3d39626fc9183519-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220705.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "297c95cbd440557b6c9c0157f355bfe8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "80",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 05 Jul 2022 05:01:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 7993B4DB9EB14B4DA4B47F76F649D225 Ref B: TPE30EDGE0713 Ref C: 2022-07-05T05:01:10Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "Request body is invalid or empty"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "322981540"
+  }
+}

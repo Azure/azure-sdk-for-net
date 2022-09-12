@@ -1,0 +1,171 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/route/directions/json?api-version=1.0\u0026query=45.9375%2C123.751%3A45.96875%2C123.791%3A45.90625%2C123.767",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bcde1fd29bf57833cf41e10412345a27-c260eded7e5f7be7-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220705.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "f95373186517d2619cb90fa1969ccf1f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-transform, no-cache",
+        "Content-Length": "1688",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 05 Jul 2022 05:01:10 GMT",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 0C1FE348771A479A95B980B4BFCD93BD Ref B: TPE30EDGE0713 Ref C: 2022-07-05T05:01:11Z"
+      },
+      "ResponseBody": {
+        "formatVersion": "0.0.12",
+        "routes": [
+          {
+            "summary": {
+              "lengthInMeters": 14128,
+              "travelTimeInSeconds": 1404,
+              "trafficDelayInSeconds": 0,
+              "trafficLengthInMeters": 0,
+              "departureTime": "2022-07-05T13:01:12\u002B08:00",
+              "arrivalTime": "2022-07-05T13:24:35\u002B08:00"
+            },
+            "legs": [
+              {
+                "summary": {
+                  "lengthInMeters": 4672,
+                  "travelTimeInSeconds": 420,
+                  "trafficDelayInSeconds": 0,
+                  "trafficLengthInMeters": 0,
+                  "departureTime": "2022-07-05T13:01:12\u002B08:00",
+                  "arrivalTime": "2022-07-05T13:08:12\u002B08:00"
+                },
+                "points": [
+                  {
+                    "latitude": 45.93959,
+                    "longitude": 123.7501
+                  },
+                  {
+                    "latitude": 45.94181,
+                    "longitude": 123.76086
+                  },
+                  {
+                    "latitude": 45.94482,
+                    "longitude": 123.76914
+                  },
+                  {
+                    "latitude": 45.94586,
+                    "longitude": 123.77197
+                  },
+                  {
+                    "latitude": 45.94589,
+                    "longitude": 123.77206
+                  },
+                  {
+                    "latitude": 45.96077,
+                    "longitude": 123.79395
+                  },
+                  {
+                    "latitude": 45.96365,
+                    "longitude": 123.79818
+                  }
+                ]
+              },
+              {
+                "summary": {
+                  "lengthInMeters": 9456,
+                  "travelTimeInSeconds": 983,
+                  "trafficDelayInSeconds": 0,
+                  "trafficLengthInMeters": 0,
+                  "departureTime": "2022-07-05T13:08:12\u002B08:00",
+                  "arrivalTime": "2022-07-05T13:24:35\u002B08:00"
+                },
+                "points": [
+                  {
+                    "latitude": 45.96365,
+                    "longitude": 123.79818
+                  },
+                  {
+                    "latitude": 45.96077,
+                    "longitude": 123.79395
+                  },
+                  {
+                    "latitude": 45.94589,
+                    "longitude": 123.77206
+                  },
+                  {
+                    "latitude": 45.94586,
+                    "longitude": 123.77197
+                  },
+                  {
+                    "latitude": 45.94482,
+                    "longitude": 123.76914
+                  },
+                  {
+                    "latitude": 45.94181,
+                    "longitude": 123.76086
+                  },
+                  {
+                    "latitude": 45.93957,
+                    "longitude": 123.75
+                  },
+                  {
+                    "latitude": 45.93802,
+                    "longitude": 123.74247
+                  },
+                  {
+                    "latitude": 45.92285,
+                    "longitude": 123.74905
+                  },
+                  {
+                    "latitude": 45.92065,
+                    "longitude": 123.75
+                  },
+                  {
+                    "latitude": 45.91808,
+                    "longitude": 123.75111
+                  },
+                  {
+                    "latitude": 45.91028,
+                    "longitude": 123.75661
+                  },
+                  {
+                    "latitude": 45.90519,
+                    "longitude": 123.76539
+                  },
+                  {
+                    "latitude": 45.90519,
+                    "longitude": 123.76539
+                  }
+                ]
+              }
+            ],
+            "sections": [
+              {
+                "startPointIndex": 0,
+                "endPointIndex": 20,
+                "sectionType": "TRAVEL_MODE",
+                "travelMode": "car"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1467646404"
+  }
+}
