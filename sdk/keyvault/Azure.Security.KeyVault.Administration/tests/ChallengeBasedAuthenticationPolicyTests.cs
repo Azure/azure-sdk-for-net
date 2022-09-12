@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Tests
             // Construct a new policy so that we can get the Scopes from cache.
             _policy = new ChallengeBasedAuthenticationPolicy(new MockCredentialThrowsWithNoScopes(), true);
 
-            transport = CreateMockTransport(keyvaultChallengeResponse, new MockResponse(200));
+            transport = CreateMockTransport(new MockResponse(200));
             response = await SendGetRequest(transport, _policy, uri: new Uri("https://myvault.vault.azure.net"));
 
             Assert.That(response.Status, Is.EqualTo(200));
