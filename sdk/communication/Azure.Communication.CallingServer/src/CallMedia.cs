@@ -257,12 +257,12 @@ namespace Azure.Communication.CallingServer
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant))
                 {
                     DtmfOptions = dtmfConfigurations,
-                    InterruptPrompt = recognizeDtmfOptions.InterruptPromptAndStartRecognition,
+                    InterruptPrompt = recognizeDtmfOptions.InterruptPrompt,
                 };
                 if (recognizeDtmfOptions.InitialSilenceTimeout != null)
                     recognizeConfigurationsInternal.InitialSilenceTimeoutInSeconds = (int)recognizeDtmfOptions.InitialSilenceTimeout.TotalSeconds;
 
-                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.RecognizeInputType, recognizeConfigurationsInternal);
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.InputType, recognizeConfigurationsInternal);
 
                 if (recognizeDtmfOptions.Prompt != null && recognizeDtmfOptions.Prompt is FileSource fileSource)
                 {

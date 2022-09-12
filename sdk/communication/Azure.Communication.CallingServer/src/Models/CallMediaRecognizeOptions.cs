@@ -13,23 +13,18 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Creates a new instance of the CallMediaRecognizeOptions.
         /// </summary>
-        /// <param name="recognizeInputType"></param>
+        /// <param name="inputType"></param>
         /// <param name="targetParticipant"></param>
-        protected CallMediaRecognizeOptions(RecognizeInputType recognizeInputType, CommunicationIdentifier targetParticipant)
+        protected CallMediaRecognizeOptions(RecognizeInputType inputType, CommunicationIdentifier targetParticipant)
         {
-            RecognizeInputType = recognizeInputType;
+            InputType = inputType;
             TargetParticipant = targetParticipant;
         }
 
         /// <summary>
         /// Recognize Input Type.
         /// </summary>
-        public RecognizeInputType RecognizeInputType { get; }
-
-        /// <summary>
-        /// Recognize Configurations.
-        /// </summary>
-        public RecognizeOptions RecognizeOptions { get; }
+        public RecognizeInputType InputType { get; }
 
         /// <summary>
         /// Should stop current Operations?.
@@ -47,7 +42,7 @@ namespace Azure.Communication.CallingServer
         public PlaySource Prompt { get; set; }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
-        public bool InterruptPromptAndStartRecognition { get; set; }
+        public bool InterruptPrompt { get; set; }
         /// <summary> Time to wait for first input after prompt (if any). </summary>
         public TimeSpan InitialSilenceTimeout { get; set; }
         /// <summary> Target participant of DTFM tone recognition. </summary>
