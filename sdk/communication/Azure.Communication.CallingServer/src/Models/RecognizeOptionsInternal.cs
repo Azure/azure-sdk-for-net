@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("RecognizeConfigurations")]
-    internal partial class RecognizeConfigurationsInternal
+    [CodeGenModel("RecognizeOptions")]
+    internal partial class RecognizeOptionsInternal
     {
     }
 }

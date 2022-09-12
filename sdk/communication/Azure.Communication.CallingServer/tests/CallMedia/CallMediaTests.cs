@@ -21,14 +21,13 @@ namespace Azure.Communication.CallingServer
             Loop = false,
             OperationContext = "context"
         };
-        private static readonly CallMediaRecognizeOptions _recognizeConfigurations = new CallMediaRecognizeDtmfOptions()
+        private static readonly CallMediaRecognizeOptions _recognizeConfigurations = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"))
         {
-            InterruptPromptAndStartRecognition = true,
+            InterruptPrompt = true,
             InterToneTimeout = TimeSpan.FromSeconds(10),
             MaxTonesToCollect = 5,
-            StopTones = new StopTones[] { StopTones.Pound },
-            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
-            TargetParticipant = new CommunicationUserIdentifier("targetUserId")
+            StopTones = new DtmfTone[] { DtmfTone.Pound },
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5)
         };
 
         private static CallMedia? _callMedia;

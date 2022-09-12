@@ -6,7 +6,7 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The Call Media Recognize Configurations.
+    /// The Call Media Recognize Options.
     /// </summary>
     public abstract class CallMediaRecognizeOptions
     {
@@ -17,12 +17,18 @@ namespace Azure.Communication.CallingServer
         protected CallMediaRecognizeOptions(RecognizeInputType recognizeInputType)
         {
             RecognizeInputType = recognizeInputType;
+            RecognizeOptions = recognizeConfigurations;
         }
 
         /// <summary>
         /// Recognize Input Type.
         /// </summary>
         public RecognizeInputType RecognizeInputType { get; }
+
+        /// <summary>
+        /// Recognize Configurations.
+        /// </summary>
+        public RecognizeOptions RecognizeOptions { get; }
 
         /// <summary>
         /// Should stop current Operations?.

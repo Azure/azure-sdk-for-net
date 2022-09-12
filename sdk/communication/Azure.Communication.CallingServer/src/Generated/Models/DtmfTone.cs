@@ -10,14 +10,14 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The StopTones. </summary>
-    public readonly partial struct StopTones : IEquatable<StopTones>
+    /// <summary> The Tone. </summary>
+    public readonly partial struct DtmfTone : IEquatable<DtmfTone>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="StopTones"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DtmfTone"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StopTones(string value)
+        public DtmfTone(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -40,49 +40,49 @@ namespace Azure.Communication.CallingServer
         private const string AsteriskValue = "asterisk";
 
         /// <summary> zero. </summary>
-        public static StopTones Zero { get; } = new StopTones(ZeroValue);
+        public static DtmfTone Zero { get; } = new DtmfTone(ZeroValue);
         /// <summary> one. </summary>
-        public static StopTones One { get; } = new StopTones(OneValue);
+        public static DtmfTone One { get; } = new DtmfTone(OneValue);
         /// <summary> two. </summary>
-        public static StopTones Two { get; } = new StopTones(TwoValue);
+        public static DtmfTone Two { get; } = new DtmfTone(TwoValue);
         /// <summary> three. </summary>
-        public static StopTones Three { get; } = new StopTones(ThreeValue);
+        public static DtmfTone Three { get; } = new DtmfTone(ThreeValue);
         /// <summary> four. </summary>
-        public static StopTones Four { get; } = new StopTones(FourValue);
+        public static DtmfTone Four { get; } = new DtmfTone(FourValue);
         /// <summary> five. </summary>
-        public static StopTones Five { get; } = new StopTones(FiveValue);
+        public static DtmfTone Five { get; } = new DtmfTone(FiveValue);
         /// <summary> six. </summary>
-        public static StopTones Six { get; } = new StopTones(SixValue);
+        public static DtmfTone Six { get; } = new DtmfTone(SixValue);
         /// <summary> seven. </summary>
-        public static StopTones Seven { get; } = new StopTones(SevenValue);
+        public static DtmfTone Seven { get; } = new DtmfTone(SevenValue);
         /// <summary> eight. </summary>
-        public static StopTones Eight { get; } = new StopTones(EightValue);
+        public static DtmfTone Eight { get; } = new DtmfTone(EightValue);
         /// <summary> nine. </summary>
-        public static StopTones Nine { get; } = new StopTones(NineValue);
+        public static DtmfTone Nine { get; } = new DtmfTone(NineValue);
         /// <summary> a. </summary>
-        public static StopTones A { get; } = new StopTones(AValue);
+        public static DtmfTone A { get; } = new DtmfTone(AValue);
         /// <summary> b. </summary>
-        public static StopTones B { get; } = new StopTones(BValue);
+        public static DtmfTone B { get; } = new DtmfTone(BValue);
         /// <summary> c. </summary>
-        public static StopTones C { get; } = new StopTones(CValue);
+        public static DtmfTone C { get; } = new DtmfTone(CValue);
         /// <summary> d. </summary>
-        public static StopTones D { get; } = new StopTones(DValue);
+        public static DtmfTone D { get; } = new DtmfTone(DValue);
         /// <summary> pound. </summary>
-        public static StopTones Pound { get; } = new StopTones(PoundValue);
+        public static DtmfTone Pound { get; } = new DtmfTone(PoundValue);
         /// <summary> asterisk. </summary>
-        public static StopTones Asterisk { get; } = new StopTones(AsteriskValue);
-        /// <summary> Determines if two <see cref="StopTones"/> values are the same. </summary>
-        public static bool operator ==(StopTones left, StopTones right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="StopTones"/> values are not the same. </summary>
-        public static bool operator !=(StopTones left, StopTones right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StopTones"/>. </summary>
-        public static implicit operator StopTones(string value) => new StopTones(value);
+        public static DtmfTone Asterisk { get; } = new DtmfTone(AsteriskValue);
+        /// <summary> Determines if two <see cref="DtmfTone"/> values are the same. </summary>
+        public static bool operator ==(DtmfTone left, DtmfTone right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="DtmfTone"/> values are not the same. </summary>
+        public static bool operator !=(DtmfTone left, DtmfTone right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="DtmfTone"/>. </summary>
+        public static implicit operator DtmfTone(string value) => new DtmfTone(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StopTones other && Equals(other);
+        public override bool Equals(object obj) => obj is DtmfTone other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(StopTones other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DtmfTone other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
