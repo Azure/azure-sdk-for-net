@@ -70,7 +70,7 @@ The exception includes some contextual information to assist in understanding th
   
   - **SessionLockLost**: This indicates that the lock on the session has expired. Callers should attempt to accept the session again. This only applies to session-enabled entities. Note that this error can occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
 
-  - **SessionCannotBeLocked**: This indicates that the requested session cannot be locked. Once the lock expires, the session can be accepted.
+  - **SessionCannotBeLocked**: This indicates that the requested session cannot be locked because the lock is already held elsewhere. Once the lock expires, the session can be accepted.
 
 ### Other common exceptions
 
@@ -120,7 +120,7 @@ This error can occur when an intercepting proxy is used. To verify, it is recomm
 
 ### Socket exhaustion errors
 
-Applications should prefer treating the Service Bus types as singletons, creating and using a single instance through the lifetime of the application. Each new [ServiceBusClient][ServiceBusClient] created results in a new AMQP connection, which uses a socket. The [ServiceBusClient][ServiceBusClient] type manages the connection for all types created from that instance. Each [ServiceBusReceiver][ServiceBusReceiver], [ServiceBusSessionReceiver][ServiceBusSessionReceiver], [ServiceBusSender][ServiceBusSender], and [ServiceBusProcessor][ServiceBusProcessor] manages its own AMQP link with the associated Service Bus entity. When using a [ServiceBusSessionProcessor][ServiceBusSessionProcessor], multiple AMQP links may be established depending on the number of sessions that are being processed concurrently.
+Applications should prefer treating the Service Bus types as singletons, creating and using a single instance through the lifetime of the application. Each new [ServiceBusClient][ServiceBusClient] created results in a new AMQP connection, which uses a socket. The [ServiceBusClient][ServiceBusClient] type manages the connection for all types created from that instance. Each [ServiceBusReceiver][ServiceBusReceiver], [ServiceBusSessionReceiver][ServiceBusSessionReceiver], [ServiceBusSender][ServiceBusSender], and [ServiceBusProcessor][ServiceBusProcessor] manages its own AMQP link for the associated Service Bus entity. When using a [ServiceBusSessionProcessor][ServiceBusSessionProcessor], multiple AMQP links may be established depending on the number of sessions that are being processed concurrently.
 
 The clients are safe to cache when idle; they will ensure efficient management of network, CPU, and memory use, minimizing their impact during periods of inactivity. It is also important that either `CloseAsync` or `DisposeAsync` be called when a client is no longer needed to ensure that network resources are properly cleaned up.
 
@@ -179,7 +179,7 @@ The library creates the following spans:
 `ServiceBusRuleManager.DeleteRule`  
 `ServiceBusRuleManager.GetRules`  
 
-Most of the spans are fairly self-explanatory and are started and stopped during the operation that bears its name. The span that ties the others together is `Message`. The way that the message is traced is via the the `Diagnostic-Id` that is set in the [ServiceBusMessage.ApplicationProperties][ApplicationProperties] property by the library during send and schedule operations. In Application Insights, `Message` spans will be displayed as linking out to the various other spans that were used to interact with the message, e.g. the receive span, the send span, and the complete span would all be linked from the `Message` span. Here is an example of what this looks like in Application Insights.
+Most of the spans are self-explanatory and are started and stopped during the operation that bears its name. The span that ties the others together is `Message`. The way that the message is traced is via the the `Diagnostic-Id` that is set in the [ServiceBusMessage.ApplicationProperties][ApplicationProperties] property by the library during send and schedule operations. In Application Insights, `Message` spans will be displayed as linking out to the various other spans that were used to interact with the message, e.g. the receive span, the send span, and the complete span would all be linked from the `Message` span. Here is an example of what this looks like in Application Insights:
 
 ![image](assets/Tracing.png)
 
@@ -189,7 +189,7 @@ In the above screenshot, we see the end-to-end transaction that can be viewed in
 
 ### Cannot send batch with multiple partition keys
 
-When sending to a partition-enabled entity, all messages included in a single send operation must have the same PartitionKey. If your entity is session-enabled, the same requirement holds true for the SessionId property. In order to send messages with different PartitionKey or SessionId values, group the messages in separate [ServiceBusMessageBatch][ServiceBusMessageBatch] instances or include them in separate calls to the [SendMessagesAsync][SendMessages] overload that takes a set of [ServiceBusMessage] instances.
+When sending to a partition-enabled entity, all messages included in a single send operation must have the same `PartitionKey`. If your entity is session-enabled, the same requirement holds true for the `SessionId` property. In order to send messages with different `PartitionKey` or `SessionId` values, group the messages in separate [ServiceBusMessageBatch][ServiceBusMessageBatch] instances or include them in separate calls to the [SendMessagesAsync][SendMessages] overload that takes a set of [ServiceBusMessage] instances.
 
 ### Batch fails to send
 
@@ -199,11 +199,11 @@ We define a message batch as either [ServiceBusMessageBatch][ServiceBusMessageBa
 
 ### Number of messages returned does not match number requested in batch receive
 
-When attempting to do a batch receive, i.e. passing a `maxMessages` of 2 or greater to the [ReceiveMessagesAsync][ReceiveMessages] method, you are not guaranteed to receive the number of messages requested, even if the queue or subscription has that many messages available at that time, and even if the entire configured `maxWaitTime` has not yet elapsed. The way that it works is once the first message comes over the wire, the receiver will wait an additional 20ms for any additional messages up to the max number of messages requested. The `maxWaitTime` applies to how long the receiver will wait to receive the *first* message - subsequent messages will be waited for 20ms. Therefore your application should not assume that all messages available will be received in one call.
+When attempting to do a batch receive, i.e. passing a `maxMessages` value of 2 or greater to the [ReceiveMessagesAsync][ReceiveMessages] method, you are not guaranteed to receive the number of messages requested, even if the queue or subscription has that many messages available at that time, and even if the entire configured `maxWaitTime` has not yet elapsed. To maximize throughput and avoid lock expiration, once the first message comes over the wire, the receiver will wait an additional 20ms for any additional messages before dispatching the messages for processing.  The `maxWaitTime` applies to how long the receiver will wait to receive the *first* message - subsequent messages will be waited for 20ms. Therefore, your application should not assume that all messages available will be received in one call.
 
 ### Message or session lock is lost before lock expiration time
 
-The Service Bus service leverages the AMQP protocol, which is stateful. Due to the nature of the protocol, if the link that connects the client and the service is detached after a message is received, but before the message is settled, the message is not able to be settled on reconnecting the link. Links can be detached due to a network outage, or due to the service enforced 10 minute idle timeout. The reconnection of the link happens behind the scenes as a part of any operation that requires the link, i.e. settling or receiving messages. Because of this, you may encounter `ServiceBusException` with `Reason` of `MessageLockLost` or `SessionLockLost` even if the lock expiration time has not yet passed. 
+The Service Bus service leverages the AMQP protocol, which is stateful. Due to the nature of the protocol, if the link that connects the client and the service is detached after a message is received, but before the message is settled, the message is not able to be settled on reconnecting the link. Links can be detached due to a short-term transient network failure, a network outage, or due to the service enforced 10-minute idle timeout. The reconnection of the link happens automatically as a part of any operation that requires the link, i.e. settling or receiving messages. Because of this, you may encounter `ServiceBusException` with `Reason` of `MessageLockLost` or `SessionLockLost` even if the lock expiration time has not yet passed. 
 
 ### How to browse scheduled or deferred messages
 
@@ -213,7 +213,7 @@ When working with topics, you cannot peek scheduled messages on the subscription
 
 ### How to browse session messages across all sessions
 
-You can use a regular [ServiceBusReceiver][ServiceBusReceiver] to peek across all sessions. To peek for a specific session you can use the [ServiceBusSessionReceiver][ServiceBusSessionReceiver], but you would need to obtain a session lock.
+You can use a regular [ServiceBusReceiver][ServiceBusReceiver] to peek across all sessions. To peek for a specific session you can use the [ServiceBusSessionReceiver][ServiceBusSessionReceiver], but you will need to obtain a session lock.
 
 ## Troubleshoot processor issues
 
@@ -223,7 +223,7 @@ Autolock renewal relies on the system time to determine when to renew a lock for
 
 ### Processor appears to hang or have latency issues when using high concurrency
 
-This is often caused by thread starvation, particularly when using the session processor and using a very high value for [MaxConcurrentSessions][MaxConcurrentSessions] (e.g. > 50). The first thing to check would be to make sure you are not doing sync-over-async in any of your event handlers. Sync-over-async is an easy way to cause deadlocks and thread starvation. Even if you are not doing sync over async, any pure sync code in your handlers could contribute to thread starvation. If you've determined that this is not the issue, e.g. because you have pure async code, you can try increasing your [TryTimeout][TryTimeout]. This will relieve pressure on the threadpool by reducing the number of context switches and timeouts that may occur when using the session processor in particular. The default value for [TryTimeout][TryTimeout] is 60 seconds, but it can be set all the way up to 1 hour. Try setting it to something like 5 minutes as a starting point, and iterate from there. If none of this works, you may simply need to scale out to multiple instances. Reduce the concurrency in your application, but run the application on multiple instances to achieve the desired overall concurrency.
+This is often caused by thread starvation, particularly when using the session processor and using a very high value for [MaxConcurrentSessions][MaxConcurrentSessions] (e.g. > 50). The first thing to check would be to make sure you are not doing sync-over-async in any of your event handlers. Sync-over-async is an easy way to cause deadlocks and thread starvation. Even if you are not doing sync over async, any pure sync code in your handlers could contribute to thread starvation. If you've determined that this is not the issue, e.g. because you have pure async code, you can try increasing your [TryTimeout][TryTimeout]. This will relieve pressure on the threadpool by reducing the number of context switches and timeouts that may occur when using the session processor in particular. The default value for [TryTimeout][TryTimeout] is 60 seconds, but it can be set all the way up to 1 hour.  We recommend testing with the `TryTimeout` set to 5 minutes as a starting point and iterate from there. If none of these suggestiosn work, you may simply need to scale out to multiple hosts, reducing the concurrency in your application, but running the application on multiple hosts to achieve the desired overall concurrency.
 
 Further reading:
 
@@ -237,7 +237,7 @@ This can be configured using the [SessionIdleTimeout][SessionIdleTimeout], which
 
 ### Processor stops immediately
 
-This typically comes up for demo or testing scenarios. Calling StartProcessingAsync returns immediately after the processor has started. Calling this method will not keep your app alive for as long as the processor is running, so you'll need some other mechanism to keep the app alive until you wish to shut it down. For demos or testing, it may be sufficient to just add a Console.ReadKey() call after you start the processor. For production scenarios, you will likely want to use some sort of framework integration like [BackgroundService][BackgroundService] to provide convenient application lifecycle hooks that can be used for starting and disposing the processor.
+This often is observed for demo or testing scenarios.  `StartProcessingAsync` returns immediately after the processor has started. Calling this method will not block and keep your application alive while the processor is running, so you'll need some other mechanism to do so.  For demos or testing, it may be sufficient to just add a `Console.ReadKey()` call after you start the processor. For production scenarios, you will likely want to use some sort of framework integration like [BackgroundService][BackgroundService] to provide convenient application lifecycle hooks that can be used for starting and disposing the processor.
 
 ## Troubleshoot transactions
 
@@ -253,11 +253,11 @@ A transaction times out after 2 minutes. The transaction timer starts when the f
 
 ### Operations in a transaction are not retried
 
-This is by design. Consider the following scenario - you are attempting to complete a message within a transaction, but there is some transient error that occurs, e.g. ServiceBusException with Reason of ServiceCommunicationProblem. Suppose the request does actually make it to the service. If the client were to retry, the service would see two complete requests. The first complete will not be finalized until the transaction is committed. The second complete is not able to even be evaluated before the first complete finishes. The transaction on the client is waiting for the complete to finish. This creates a deadlock where the service is waiting for the client to complete the transaction, but the client is waiting for the service to acknowledge the second complete operation. The transaction will eventually timeout after 2 minutes, but this is a bad user experience. For this reason, we do not retry operations within a transaction.
+This is by design. Consider the following scenario - you are attempting to complete a message within a transaction, but there is some transient error that occurs, e.g. `ServiceBusException` with a `Reason` of `ServiceCommunicationProblem`. Suppose the request does actually make it to the service. If the client were to retry, the service would see two complete requests. The first complete will not be finalized until the transaction is committed. The second complete is not able to even be evaluated before the first complete finishes. The transaction on the client is waiting for the complete to finish. This creates a deadlock where the service is waiting for the client to complete the transaction, but the client is waiting for the service to acknowledge the second complete operation. The transaction will eventually timeout after 2 minutes, but this is a bad user experience. For this reason, we do not retry operations within a transaction.
 
 ### Transactions across entities are not working
 
-In order to perform transactions that involve multiple entities, you'll need to set the ServiceBusClientOptions.EnableCrossEntityTransactions property to `true`. For details, see the [Transactions across entities][CrossEntityTransactions] sample. 
+In order to perform transactions that involve multiple entities, you'll need to set the `ServiceBusClientOptions.EnableCrossEntityTransactions` property to `true`. For details, see the [Transactions across entities][CrossEntityTransactions] sample. 
 
 ## Quotas
 
@@ -294,7 +294,7 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [SequenceNumber]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceivedmessage.sequencenumber?view=azure-dotnet
 [Logging]: https://docs.microsoft.com/dotnet/azure/sdk/logging
 [ActivitySourceSupport]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#activitysource-support
-[ActivitySource]: https://docs.microsoft.com/dotnet/api/system.diagnostics.activitysource?view=net-6.0
+[ActivitySource]: https://docs.microsoft.com/dotnet/api/system.diagnostics.activitysource?view=dotnet
 [ApplicationProperties]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusmessage.applicationproperties?view=azure-dotnet
 [AppInsights]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#applicationinsights-with-azure-monitor
 [TransactionOperations]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#operations-within-a-transaction-scope
@@ -302,4 +302,4 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [CrossEntityTransactions]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample06_Transactions.md#transactions-across-entities
 [LargeMessageSupport]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging#large-messages-support
 [GitHubDiscussionOnBatching]: https://github.com/Azure/azure-sdk-for-net/issues/25381#issuecomment-1227917960
-[BackgroundService]: https://docs.microsoft.com/dotnet/api/microsoft.extensions.hosting.backgroundservice?view=dotnet-plat-ext-6.0
+[BackgroundService]: https://docs.microsoft.com/dotnet/api/microsoft.extensions.hosting.backgroundservice?view=dotnet
