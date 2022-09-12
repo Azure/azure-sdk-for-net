@@ -121,57 +121,6 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Initializes a new instance of Call Disconnected event.
-        /// </summary>
-        public static CallDisconnected CallDisconnected(string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new CallDisconnected(
-                CreateEventSource(callConnectionId),
-                version,
-                operationContext,
-                resultInformation,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(CallDisconnected)
-                );
-        }
-
-        /// <summary>
-        /// Initializes a new instance of Call Transfer Accepted event.
-        /// </summary>
-        public static CallTransferAccepted CallTransferAccepted(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new CallTransferAccepted(
-                CreateEventSource(callConnectionId),
-                operationContext,
-                resultInformation,
-                version,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(CallTransferAccepted)
-                );
-        }
-
-        /// <summary>
-        /// Initializes a new instance of Call CallTransfer Failed event.
-        /// </summary>
-        public static CallTransferFailed CallTransferFailed(string operationContext = default, ResultInformation resultInformation = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new CallTransferFailed(
-                CreateEventSource(callConnectionId),
-                operationContext,
-                resultInformation,
-                version,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(CallTransferFailed)
-                );
-        }
-
-        /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
         public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
@@ -189,26 +138,6 @@ namespace Azure.Communication.CallingServer
                 );
 
             return new ParticipantsUpdated(internalObject);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of Recording state changed event.
-        /// </summary>
-        public static CallRecordingStateChanged RecordingStateChanged(string recordingId = default, RecordingState state = default, DateTimeOffset startDateTime = default,  string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
-        {
-            return new CallRecordingStateChanged(
-                CreateEventSource(callConnectionId, nameof(CallRecordingStateChanged)),
-                recordingId,
-                state,
-                startDateTime,
-                version,
-                operationContext,
-                resultInformation,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(RecordingStateChanged)
-                );
         }
     }
 }
