@@ -13,17 +13,28 @@ namespace Azure.Maps.Rendering
     {
         /// <summary> Render static image options with bounding box. </summary>
         /// <param name="boundingBox"> Minimum coordinates (west, south, east, north) of bounding box in latitude longitude coordinate system. </param>
-        public GetMapStaticImageOptions(GeoBoundingBox boundingBox)
+        /// <param name="imagePushpinStyles"> Add pushpins with styling on the map image. </param>
+        /// <param name="imagePathStyles"> Add paths with styling on the map image. </param>
+        public GetMapStaticImageOptions(GeoBoundingBox boundingBox, IList<ImagePushpinStyle> imagePushpinStyles = null, IList<ImagePathStyle> imagePathStyles = null)
         {
             BoundingBox = boundingBox;
+            ImagePushpinStyles = imagePushpinStyles;
+            ImagePathStyles = imagePathStyles;
         }
 
         /// <summary> Render static image options with center coordinate and the width and height of the image. </summary>
-        public GetMapStaticImageOptions(GeoPosition centerCoordinate, int widthInPixels, int heightInPixels)
+        /// <param name="centerCoordinate"> Center coordinate of the map image. </param>
+        /// <param name="widthInPixels"> Width in pixels of the map image. </param>
+        /// <param name="heightInPixels"> Height in pixels of the map image. </param>
+        /// <param name="imagePushpinStyles"> Add pushpins with styling on the map image. </param>
+        /// <param name="imagePathStyles"> Add paths with styling on the map image. </param>
+        public GetMapStaticImageOptions(GeoPosition centerCoordinate, int widthInPixels, int heightInPixels, IList<ImagePushpinStyle> imagePushpinStyles = null, IList<ImagePathStyle> imagePathStyles = null)
         {
             CenterCoordinate = centerCoordinate;
             WidthInPixels = widthInPixels;
             HeightInPixels = heightInPixels;
+            ImagePushpinStyles = imagePushpinStyles;
+            ImagePathStyles = imagePathStyles;
         }
 
         /// <summary>
@@ -70,18 +81,16 @@ namespace Azure.Maps.Rendering
         /// </summary>
         public Azure.Maps.LocalizedMapView? LocalizedMapView { get; set; }
 
-#pragma warning disable CA2227 // Collection properties should be read only
         /// <summary>
         /// Pushpin style and instances. Use this parameter to optionally add pushpins to the image.
         /// The pushpin style describes the appearance of the pushpins, and the instances specify
         /// the coordinates of the pushpins and optional labels for each pin.
         /// </summary>
-        public IList<ImagePushpinStyle> ImagePushpinStyles { get; set; }
+        public IList<ImagePushpinStyle> ImagePushpinStyles { get; }
         /// <summary>
         /// Path style and locations. Use this parameter to optionally add lines, polygons or circles to the image.
         /// The path style describes the appearance of the line and fill.
         /// </summary>
-        public IList<ImagePathStyle> ImagePathStyles { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        public IList<ImagePathStyle> ImagePathStyles { get; }
     }
 }

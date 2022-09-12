@@ -154,14 +154,16 @@ ImagePathStyle path1 = new ImagePathStyle(
 };
 
 // Prepare static image options
-GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
+GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(
+    new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629),
+    new List<ImagePushpinStyle>() { pushpinSet1, pushpinSet2 },
+    new List<ImagePathStyle>() { path1 }
+)
 {
     MapImageLayer = MapImageLayer.Basic,
     MapImageStyle = MapImageStyle.Dark,
     ZoomLevel = 10,
-    Language = RenderingLanguage.EnglishUSA,
-    ImagePushpinStyles = new List<ImagePushpinStyle>() { pushpinSet1, pushpinSet2 },
-    ImagePathStyles = new List<ImagePathStyle>() { path1 },
+    Language = RenderingLanguage.EnglishUSA
 };
 
 // Get static image
@@ -190,7 +192,7 @@ MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13
 
 // Fetch map tiles
 GetMapTileOptions GetMapTileOptions = new GetMapTileOptions(
-    MapTileSetId.MicrosoftBaseHybrid,
+    MapTileSetId.MicrosoftBaseRoad,
     new MapTileIndex(tileIndex.X, tileIndex.Y, zoom)
 );
 Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);

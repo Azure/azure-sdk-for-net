@@ -8,13 +8,13 @@ namespace Azure.Maps.Rendering
     }
     public partial class GetMapStaticImageOptions
     {
-        public GetMapStaticImageOptions(Azure.Core.GeoJson.GeoBoundingBox boundingBox) { }
-        public GetMapStaticImageOptions(Azure.Core.GeoJson.GeoPosition centerCoordinate, int widthInPixels, int heightInPixels) { }
+        public GetMapStaticImageOptions(Azure.Core.GeoJson.GeoBoundingBox boundingBox, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> imagePushpinStyles = null, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> imagePathStyles = null) { }
+        public GetMapStaticImageOptions(Azure.Core.GeoJson.GeoPosition centerCoordinate, int widthInPixels, int heightInPixels, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> imagePushpinStyles = null, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> imagePathStyles = null) { }
         public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } }
         public Azure.Core.GeoJson.GeoPosition? CenterCoordinate { get { throw null; } }
         public int? HeightInPixels { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> ImagePathStyles { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> ImagePushpinStyles { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> ImagePathStyles { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> ImagePushpinStyles { get { throw null; } }
         public Azure.Maps.Rendering.RenderingLanguage? Language { get { throw null; } set { } }
         public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
         public Azure.Maps.Rendering.MapImageLayer? MapImageLayer { get { throw null; } set { } }
