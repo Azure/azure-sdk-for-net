@@ -14,10 +14,11 @@ namespace Azure.Communication.CallingServer
         /// Creates a new instance of the CallMediaRecognizeOptions.
         /// </summary>
         /// <param name="recognizeInputType"></param>
-        protected CallMediaRecognizeOptions(RecognizeInputType recognizeInputType)
+        /// <param name="targetParticipant"></param>
+        protected CallMediaRecognizeOptions(RecognizeInputType recognizeInputType, CommunicationIdentifier targetParticipant)
         {
             RecognizeInputType = recognizeInputType;
-            RecognizeOptions = recognizeConfigurations;
+            TargetParticipant = targetParticipant;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Should stop current Operations?.
         /// </summary>
-        public bool StopCurrentOperations { get; set; }
+        public bool InterruptCallMediaOperation { get; set; }
 
         /// <summary>
         /// Operation Context.
@@ -50,6 +51,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Time to wait for first input after prompt (if any). </summary>
         public TimeSpan InitialSilenceTimeout { get; set; }
         /// <summary> Target participant of DTFM tone recognition. </summary>
-        public CommunicationIdentifier TargetParticipant { get; set; }
+        public CommunicationIdentifier TargetParticipant { get; }
     }
 }

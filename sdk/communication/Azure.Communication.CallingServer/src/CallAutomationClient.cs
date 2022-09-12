@@ -190,8 +190,8 @@ namespace Azure.Communication.CallingServer
 
         private static AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
         {
-            AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackEndpoint.AbsoluteUri);
-            request.MediaStreamingConfiguration = CreateMediaStreamingConfigurationInternal(options.MediaStreamingConfiguration);
+            AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
+            request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
         }

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         {
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<RecognitionType> recognitionType = default;
+            Optional<CallMediaRecognitionType> recognitionType = default;
             Optional<CollectTonesResult> collectTonesResult = default;
             Optional<string> version = default;
             Optional<string> callConnectionId = default;
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recognitionType = new RecognitionType(property.Value.GetString());
+                    recognitionType = new CallMediaRecognitionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("collectTonesResult"))

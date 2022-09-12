@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
         };
         private static readonly CallMediaRecognizeOptions _recognizeConfigurations = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"))
         {
-            InterruptPrompt = true,
+            InterruptCallMediaOperation = true,
             InterToneTimeout = TimeSpan.FromSeconds(10),
             MaxTonesToCollect = 5,
             StopTones = new DtmfTone[] { DtmfTone.Pound },

@@ -247,18 +247,17 @@ namespace Azure.Communication.CallingServer
 
             if (recognizeOptions is CallMediaRecognizeDtmfOptions recognizeDtmfOptions)
             {
-                DtmfConfigurationsInternal dtmfConfigurations = new DtmfConfigurationsInternal();
+                DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal();
                 if (recognizeDtmfOptions.InterToneTimeout != null)
                     dtmfConfigurations.InterToneTimeoutInSeconds = (int)recognizeDtmfOptions.InterToneTimeout.TotalSeconds;
                 if (recognizeDtmfOptions.MaxTonesToCollect > 0)
                     dtmfConfigurations.MaxTonesToCollect = recognizeDtmfOptions.MaxTonesToCollect;
-                dtmfConfigurations.StopTones = (IList<StopTones>)recognizeDtmfOptions.StopTones;
+                dtmfConfigurations.StopTones = recognizeDtmfOptions.StopTones;
 
-                RecognizeConfigurationsInternal recognizeConfigurationsInternal = new RecognizeConfigurationsInternal()
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant))
                 {
-                    DtmfConfigurations = dtmfConfigurations,
-                    InterruptPromptAndStartRecognition = recognizeDtmfOptions.InterruptPromptAndStartRecognition,
-                    TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant),
+                    DtmfOptions = dtmfConfigurations,
+                    InterruptPrompt = recognizeDtmfOptions.InterruptPromptAndStartRecognition,
                 };
                 if (recognizeDtmfOptions.InitialSilenceTimeout != null)
                     recognizeConfigurationsInternal.InitialSilenceTimeoutInSeconds = (int)recognizeDtmfOptions.InitialSilenceTimeout.TotalSeconds;
@@ -278,7 +277,7 @@ namespace Azure.Communication.CallingServer
                 {
                     throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
                 }
-                request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext;
 
                 return request;

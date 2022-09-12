@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     public class CallMediaRecognizeDtmfOptions : CallMediaRecognizeOptions
     {
         /// <summary> Initializes a new instance of CallMediaRecognizeDtmfOptions. </summary>
-        public CallMediaRecognizeDtmfOptions() : base(RecognizeInputType.Dtmf)
+        public CallMediaRecognizeDtmfOptions(CommunicationIdentifier targetParticipant) : base(RecognizeInputType.Dtmf, targetParticipant)
         {
         }
 
@@ -21,6 +21,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Maximum number of DTMFs to be collected. </summary>
         public int MaxTonesToCollect { get; set; }
         /// <summary> List of tones that will stop recognizing. </summary>
-        public IEnumerable<StopTones> StopTones { get; set; }
+        public IReadOnlyList<DtmfTone> StopTones { get; set; }
     }
 }
