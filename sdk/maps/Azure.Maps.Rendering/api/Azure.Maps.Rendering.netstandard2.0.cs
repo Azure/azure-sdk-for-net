@@ -284,7 +284,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.RenderingLanguage Malay { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage NeutralGroundTruthLatin { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage NeutralGroundTruthLocal { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage NorwegianBokmal { get { throw null; } }
+        public static Azure.Maps.Rendering.RenderingLanguage Norwegian { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage Polish { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage PortugueseBrazil { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage PortuguesePortugal { get { throw null; } }

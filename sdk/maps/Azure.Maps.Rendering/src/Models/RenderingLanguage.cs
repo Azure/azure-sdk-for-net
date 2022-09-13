@@ -8,7 +8,6 @@
 using System;
 using System.ComponentModel;
 
-// cspell:ignore Bokmal
 namespace Azure.Maps.Rendering
 {
     /// <summary> The rendered langauge showing on the map images or map tiles. </summary>
@@ -43,7 +42,7 @@ namespace Azure.Maps.Rendering
         private const string KoreanValue = "ko-KR";
         private const string LithuanianValue = "lt-LT";
         private const string MalayValue = "ms-MY";
-        private const string NorwegianBokmalValue = "nb-NO";
+        private const string NorwegianValue = "nb-NO";
         private const string NeutralGroundTruthLocalValue = "NGT";
         private const string NeutralGroundTruthLatinValue = "NGT-Latn";
         private const string DutchNetherlandsValue = "nl-NL";
@@ -100,8 +99,8 @@ namespace Azure.Maps.Rendering
         public static RenderingLanguage Lithuanian { get; } = new RenderingLanguage(LithuanianValue);
         /// <summary> Return Malay ("ms-MY"). </summary>
         public static RenderingLanguage Malay { get; } = new RenderingLanguage(MalayValue);
-        /// <summary> Return NorwegianBokmal ("nb-NO"). </summary>
-        public static RenderingLanguage NorwegianBokmal { get; } = new RenderingLanguage(NorwegianBokmalValue);
+        /// <summary> Return Norwegian ("nb-NO"). </summary>
+        public static RenderingLanguage Norwegian { get; } = new RenderingLanguage(NorwegianValue);
         /// <summary> Return Neutral Ground Truth (Local) ("NGT"). </summary>
         public static RenderingLanguage NeutralGroundTruthLocal { get; } = new RenderingLanguage(NeutralGroundTruthLocalValue);
         /// <summary> Return Neutral Ground Truth (Latin) ("NGT-Latn"). </summary>

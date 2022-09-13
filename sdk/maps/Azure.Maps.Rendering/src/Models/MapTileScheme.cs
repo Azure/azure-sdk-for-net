@@ -8,7 +8,6 @@
 using System;
 using System.ComponentModel;
 
-// cspell:ignore Bokmal
 namespace Azure.Maps.Rendering
 {
     /// <summary> The rendered langauge showing on the map images or map tiles. </summary>
