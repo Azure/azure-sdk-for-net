@@ -20,11 +20,20 @@ namespace Azure.Communication.CallingServer
             InterToneTimeout = _defaultInterToneTimeout;
         }
 
-        /// <summary> Time to wait between DTMF inputs to stop recognizing. </summary>
+        /// <summary>
+        /// Time to wait between DTMF inputs to stop recognizing.
+        /// If nothing is set, a default of 2 seconds is set.
+        /// </summary>
         public TimeSpan InterToneTimeout { get; set; }
-        /// <summary> Maximum number of DTMFs to be collected. </summary>
-        public int? MaxTonesToCollect { get; set; }
-        /// <summary> List of tones that will stop recognizing. </summary>
+
+        /// <summary>
+        /// Maximum number of DTMFs to be collected.
+        /// </summary>
+        public int MaxTonesToCollect { get; set; }
+
+        /// <summary>
+        /// List of tones that will stop recognizing.
+        /// </summary>
         public IReadOnlyList<DtmfTone> StopTones { get; set; }
     }
 }

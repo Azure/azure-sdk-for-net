@@ -51,6 +51,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary>
         /// Time to wait for first input after prompt (if any).
+        /// If not provided, a default of 5 seconds is set.
         /// </summary>
         public TimeSpan InitialSilenceTimeout { get; set; }
 
