@@ -23,7 +23,7 @@
 ## 1.7.0-beta.1 (2022-08-09)
 
 ### Features Added
-- `ManagedIdentityCredential` will now internally cache tokens, so applications can call `GetToken` and `GetTokenAsync` directly without needing to cache to avoid throttleling.
+- `ManagedIdentityCredential` will now internally cache tokens. Apps can call `GetToken` or `GetTokenAsync` directly without needing to cache to avoid throttling.
 
 ## 1.6.1 (2022-08-08)
 
