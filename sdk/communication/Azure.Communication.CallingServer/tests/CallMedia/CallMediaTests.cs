@@ -21,16 +21,13 @@ namespace Azure.Communication.CallingServer
             Loop = false,
             OperationContext = "context"
         };
-        private static readonly RecognizeOptions _recognizeConfigurations = new RecognizeOptions(new CommunicationUserIdentifier("targetUserId"))
+        private static readonly CallMediaRecognizeOptions _recognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"))
         {
-            InterruptPrompt = true,
-            DtmfOptions = new DtmfOptions()
-            {
-                InterToneTimeoutInSeconds = TimeSpan.FromSeconds(10),
-                MaxTonesToCollect = 5,
-                StopTones = new DtmfTone[] { DtmfTone.Pound }
-            },
-            InitialSilenceTimeoutInSeconds = TimeSpan.FromSeconds(5),
+            InterruptCallMediaOperation = true,
+            InterToneTimeout = TimeSpan.FromSeconds(10),
+            MaxTonesToCollect = 5,
+            StopTones = new DtmfTone[] { DtmfTone.Pound },
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5)
         };
 
         private static CallMedia? _callMedia;
@@ -109,7 +106,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.RecognizeAsync(new CallMediaRecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
+                   callMedia => callMedia.StartRecognizingAsync(_recognizeOptions)
                 }
             };
         }
@@ -132,7 +129,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.Recognize(new CallMediaRecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
+                   callMedia => callMedia.StartRecognizing(_recognizeOptions)
                 }
             };
         }

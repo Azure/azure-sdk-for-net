@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     [CodeGenModel("RecognitionType", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial struct RecognitionType
+    public partial struct CallMediaRecognitionType
     {
     }
 }

@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     [CodeGenModel("MediaStreamingConfiguration")]
-    internal partial class MediaStreamingConfigurationInternal
+    internal partial class MediaStreamingOptionsInternal
     {
     }
 }

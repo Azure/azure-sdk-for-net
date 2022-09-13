@@ -1,37 +1,35 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// Optional elements for Recognize.
+    /// The Call Media Recognize Options.
     /// </summary>
-    public class CallMediaRecognizeOptions
+    public abstract class CallMediaRecognizeOptions
     {
         /// <summary>
-        /// Initializes a RecognizeOptions object.
+        /// Creates a new instance of the CallMediaRecognizeOptions.
         /// </summary>
-        /// <param name="recognizeInputType"></param>
-        /// <param name="recognizeConfigurations"></param>
-        public CallMediaRecognizeOptions(RecognizeInputType recognizeInputType, RecognizeOptions recognizeConfigurations)
+        /// <param name="inputType"></param>
+        /// <param name="targetParticipant"></param>
+        protected CallMediaRecognizeOptions(RecognizeInputType inputType, CommunicationIdentifier targetParticipant)
         {
-            RecognizeInputType = recognizeInputType;
-            RecognizeOptions = recognizeConfigurations;
+            InputType = inputType;
+            TargetParticipant = targetParticipant;
         }
+
         /// <summary>
         /// Recognize Input Type.
         /// </summary>
-        public RecognizeInputType RecognizeInputType { get; }
+        public RecognizeInputType InputType { get; }
 
         /// <summary>
-        /// Recognize Configurations.
+        /// Interrupt current call media operation.
         /// </summary>
-        public RecognizeOptions RecognizeOptions { get; }
-
-        /// <summary>
-        /// Should stop current Operations?.
-        /// </summary>
-        public bool? InterruptCallMediaOperation { get; set; }
+        public bool InterruptCallMediaOperation { get; set; }
 
         /// <summary>
         /// Operation Context.
@@ -42,5 +40,20 @@ namespace Azure.Communication.CallingServer
         /// PlaySource information.
         /// </summary>
         public PlaySource Prompt { get; set; }
+
+        /// <summary>
+        /// Determines if we interrupt the prompt and start recognizing.
+        /// </summary>
+        public bool InterruptPrompt { get; set; }
+
+        /// <summary>
+        /// Time to wait for first input after prompt (if any).
+        /// </summary>
+        public TimeSpan InitialSilenceTimeout { get; set; }
+
+        /// <summary>
+        /// Target participant of DTFM tone recognition.
+        /// </summary>
+        public CommunicationIdentifier TargetParticipant { get; }
     }
 }

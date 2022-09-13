@@ -10,32 +10,28 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// Streaming audio.
     /// </summary>
-    public class MediaStreamingAudio : MediaStreamingPackageBase
+    internal class MediaStreamingAudioInternal
     {
-        internal MediaStreamingAudio(byte[] data, DateTime timestamp, string participantId, bool isSilence)
-        {
-            Data = data;
-            Timestamp = timestamp;
-            Participant = new CommunicationUserIdentifier(participantId);
-            IsSilent = isSilence;
-        }
-
         /// <summary>
         /// The audio data.
         /// </summary>
-        public byte[] Data { get; }
+        [JsonPropertyName("data")]
+        public byte[] Data { get; set; }
 
         /// <summary>
         /// The timestamp of thwn the media was sourced.
         /// </summary>
-        public DateTime Timestamp { get; }
+        [JsonPropertyName("timestamp")]
+        public DateTime Timestamp { get; set; }
         /// <summary>
         /// Participant ID
         /// </summary>
-        public CommunicationIdentifier Participant { get; }
+        [JsonPropertyName("participantId")]
+        public string ParticipantId { get; set; }
         /// <summary>
         /// Indicates if the received audio buffer contains only silence.
         /// </summary>
-        public bool IsSilent { get; }
+        [JsonPropertyName("isSilence")]
+        public bool IsSilence { get; set; }
     }
 }

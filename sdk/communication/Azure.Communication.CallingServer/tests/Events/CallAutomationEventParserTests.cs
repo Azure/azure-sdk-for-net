@@ -253,8 +253,8 @@ namespace Azure.Communication.CallingServer.Tests.Events
         {
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
                 operationContext: "operationContext",
-                recognitionType: RecognitionType.Dtmf,
-                collectTonesResult: new CollectTonesResult(new string[] { "5" }),
+                recognitionType: CallMediaRecognitionType.Dtmf,
+                collectTonesResult: new CollectTonesResult(new DtmfTone[] { DtmfTone.Five }),
                 resultInformation: new ResultInformation(
                     code: 200,
                     subCode: 8531,
@@ -263,7 +263,9 @@ namespace Azure.Communication.CallingServer.Tests.Events
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
             if (parsedEvent is RecognizeCompleted recognizeCompleted)
             {
@@ -271,6 +273,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
                 Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation.Code);
                 Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
+                Assert.AreEqual(DtmfTone.Five, recognizeCompleted.CollectTonesResult.Tones.First());
             }
             else
             {

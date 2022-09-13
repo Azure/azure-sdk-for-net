@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer
     /// The states of a call.
     /// </summary>
     [CodeGenModel("MediaStreamingContentType", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
-    public readonly partial struct MediaStreamingContentType
+    public readonly partial struct MediaStreamingContent
     {
     }
 }
