@@ -27,7 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+                telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
                 {
@@ -49,6 +50,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 monitorTags.Return();
                 telemetryItems.Add(telemetryItem);
+
+                // Check for Exceptions events
+                if (activity.Events.Any())
+                {
+                    AddExceptionTelemetryFromActivityExceptionEvents(activity, ref monitorTags, roleName, roleInstance, instrumentationKey, telemetryItems);
+                }
             }
 
             return telemetryItems;
@@ -167,6 +174,84 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return activity.DisplayName;
+        }
+
+        private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
+        {
+            foreach (var evnt in activity.Events)
+            {
+                if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                {
+                    try
+                    {
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
+                        if (exceptionData != null)
+                        {
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                            exceptionTelemetryItem.Data = exceptionData;
+                            telemetryItems.Add(exceptionTelemetryItem);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractExceptionFromActivityEvent", ex);
+                    }
+                }
+            }
+        }
+
+        internal static MonitorBase GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags)
+        {
+            string exceptionType = null;
+            string exceptionStackTrace = null;
+            string exceptionMessage = null;
+
+            // TODO: update to use perf improvements in .NET7.0
+            foreach (var tag in activityEventTags)
+            {
+                // TODO: see if these can be cached
+                if (tag.Key == SemanticConventions.AttributeExceptionType)
+                {
+                    exceptionType = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                {
+                    exceptionMessage = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
+                {
+                    exceptionStackTrace = tag.Value.ToString();
+                    continue;
+                }
+            }
+
+            if (exceptionMessage == null || exceptionType == null)
+            {
+                return null;
+            }
+
+            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage)
+            {
+                Stack = exceptionStackTrace,
+
+                // TODO: Update swagger schema to mandate typename.
+                TypeName = exceptionType
+            };
+
+            List<TelemetryExceptionDetails> exceptions = new()
+            {
+                exceptionDetails
+            };
+
+            TelemetryExceptionData exceptionData = new(Version, exceptions);
+
+            return new MonitorBase
+            {
+                BaseType = "ExceptionData",
+                BaseData = exceptionData,
+            };
         }
     }
 }
