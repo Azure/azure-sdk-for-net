@@ -8,7 +8,7 @@ Below are the packages contained in Azure Maps:
 
 - [Azure.Maps.Common][common] provides infrastructure shared by the other Azure Maps client libraries like localized map view enum.
 - [Azure.Maps.Rendering][render] is the rendering SDK that user can get maps images or copyrights.
-- Azure.Maps.Route allows you to get the routing information for multiple origins and destinations.
+- [Azure.Maps.Routing][route] allows you to get the routing information for multiple origins and destinations.
 - [Azure.Maps.Search][search] supports many searching functionalities for entities, point of interests (POI) or streets, and also supports reverse geocode a coordinate to a place or an entity.
 
 ### Install the package
@@ -17,7 +17,7 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Maps.Rendering --prerelease
-dotnet add package Azure.Maps.Route --prerelease
+dotnet add package Azure.Maps.Routing --prerelease
 dotnet add package Azure.Maps.Search --prerelease
 ```
 
@@ -60,27 +60,27 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs under [Samples] directory for each service module. Below demonstrate how to interact with different service.
 
-Imagine we'd like to search a amusement park that is closest to your home. After that, you want to know how to get there via public transfortation. You can interact with `Azure.Maps.Search`, `Azure.Maps.Route` and `Azure.Maps.Rendering` packages (and many more!).
+Imagine we'd like to search a amusement park that is closest to your home. After that, you want to know how to get there via public transfortation. You can interact with `Azure.Maps.Search`, `Azure.Maps.Routing` and `Azure.Maps.Rendering` packages (and many more!).
 
 First, import the necessary namespaces:
 
 ```C#
-// Import Rendering, Route, and Search namespace (alphabetical ordering)
+// Import Rendering, Routing, and Search namespace (alphabetical ordering)
 using Azure.Maps.Rendering;
-using Azure.Maps.Route;
+using Azure.Maps.Routing;
 using Azure.Maps.Search;
 ```
 
-In the main function, instantiate `MapsSearchClient`, `MapsRouteClient` and `MapsRenderingClient` either via AAD or subscription key authentication. Below is an example of instantiation via AAD:
+In the main function, instantiate `MapsSearchClient`, `MapsRoutingClient` and `MapsRenderingClient` either via AAD or subscription key authentication. Below is an example of instantiation via AAD:
 
 ```C#
-// Create a MapsSearchClient and MapsRouteClient that will authenticate through Active Directory
+// Create a MapsSearchClient and MapsRoutingClient that will authenticate through Active Directory
 var credential = new DefaultAzureCredential();
 var clientId = "<My Map Account Client Id>";
 
 MapsSearchClient searchClient = new MapsSearchClient(credential, clientId);
-MapsRouteClient routeClient = new MapsRouteClient(credential, clientId);
-MapsRenderingClient routeClient = new MapsRenderingClient(credential, clientId);
+MapsRoutingClient routingClient = new MapsRoutingClient(credential, clientId);
+MapsRenderingClient renderingClient = new MapsRenderingClient(credential, clientId);
 ```
 
 Next, search for my home and amusement park via `MapsSearchClient`, and extract the coordinates from the results:
@@ -112,8 +112,8 @@ var query = new RouteDirectionQuery(routePoints, new RouteDirectionOptions()
     TravelMode = TravelMode.Car,
 });
 
-// Call MapsRouteClient's GetDirections method to get direction
-var routeResult = routeClient.GetDirections(query);
+// Call MapsRoutingClient's GetDirections method to get direction
+var result = routingClient.GetDirections(query);
 
 // Extract route result
 Console.WriteLine(result.Value.Routes[0].Summary.LengthInMeters);
@@ -158,7 +158,7 @@ var staticImageOptions = new RenderStaticImageOptions(new GeoBoundingBox(-122.43
 };
 
 // Get static image
-var image = client.GetMapStaticImage(staticImageOptions);
+var image = renderingClient.GetMapStaticImage(staticImageOptions);
 
 // Prepare a file stream to save the imagery
 using (var fileStream = File.Create(".\\HomeToWindsOverWashington.png"))
@@ -167,7 +167,7 @@ using (var fileStream = File.Create(".\\HomeToWindsOverWashington.png"))
 }
 ```
 
-Voila! That's how we utilize `MapsSearchClient`, `MapsRouteClient` and `MapsRenderingClient` at the same time. You can use whatever combinations within Azure Maps SDK or even integrate with other services' SDK. For more examples, please refer to each service's samples.
+Voila! That's how we utilize `MapsSearchClient`, `MapsRoutingClient` and `MapsRenderingClient` at the same time. You can use whatever combinations within Azure Maps SDK or even integrate with other services' SDK. For more examples, please refer to each service's samples.
 
 ## Troubleshooting
 
@@ -214,6 +214,7 @@ additional questions or comments.
 <!-- LINKS -->
 [common]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common
 [render]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering
+[route]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Routing
 [search]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
