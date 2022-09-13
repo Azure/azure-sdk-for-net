@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryMbOnHost))
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryMbOnHost");
-                writer.WriteNumberValue(EffectiveAvailableMemoryMbOnHost.Value);
+                writer.WriteNumberValue(EffectiveAvailableMemoryInMBOnHost.Value);
             }
             if (Optional.IsDefined(AvailableGpuCount))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> hostName = default;
             Optional<long> effectiveAvailableMemoryMbOnHost = default;
             Optional<int> availableGpuCount = default;
-            Optional<IDictionary<string, VmMemory>> vmUsedMemory = default;
+            Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
             Optional<string> gpuType = default;
             Optional<IList<NumaNodeData>> numaNodesData = default;
             foreach (var property in element.EnumerateObject())
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, VmMemory> dictionary = new Dictionary<string, VmMemory>();
+                    Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, VmMemory.DeserializeVmMemory(property0.Value));
+                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
                     }
                     vmUsedMemory = dictionary;
                     continue;

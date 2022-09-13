@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static RoleSinkInfo DeserializeRoleSinkInfo(JsonElement element)
         {
-            string roleId = default;
+            ResourceIdentifier roleId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roleId"))
                 {
-                    roleId = property.Value.GetString();
+                    roleId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
