@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Guid> backupId = default;
+            Optional<string> backupId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> provisioningState = default;
             Optional<long> size = default;
@@ -95,12 +95,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         if (property0.NameEquals("backupId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            backupId = property0.Value.GetGuid();
+                            backupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
@@ -167,7 +162,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppBackupData(id, name, type, systemData.Value, location, Optional.ToNullable(backupId), Optional.ToNullable(creationDate), provisioningState.Value, Optional.ToNullable(size), label.Value, Optional.ToNullable(backupType), failureReason.Value, volumeName.Value, Optional.ToNullable(useExistingSnapshot));
+            return new NetAppBackupData(id, name, type, systemData.Value, location, backupId.Value, Optional.ToNullable(creationDate), provisioningState.Value, Optional.ToNullable(size), label.Value, Optional.ToNullable(backupType), failureReason.Value, volumeName.Value, Optional.ToNullable(useExistingSnapshot));
         }
     }
 }
