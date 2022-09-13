@@ -8,6 +8,3 @@ extends:
     TimeoutInMinutes: 180
     Clouds: 'Public'
     SupportedClouds: 'Public,Canary'
-    EnvVars:
-      AZURE_MAPS_TEST_MODE: 'Live'
-      ENDPOINT_URL: 'https://atlas.microsoft.com'
