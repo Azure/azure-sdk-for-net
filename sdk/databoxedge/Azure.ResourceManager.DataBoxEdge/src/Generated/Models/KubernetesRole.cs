@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     ///  Or Demo: https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8S-Cloud-Management-20210323.mp4
     ///  By using this feature, you agree to the preview legal terms. See the https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/
     /// </summary>
-    public partial class KubernetesRole : RoleData
+    public partial class KubernetesRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of KubernetesRole. </summary>
         public KubernetesRole()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="kubernetesClusterInfo"> Kubernetes cluster configuration. </param>
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal KubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, PlatformType? hostPlatform, KubernetesState? provisioningState, HostPlatformType? hostPlatformType, KubernetesClusterInfo kubernetesClusterInfo, KubernetesRoleResources kubernetesRoleResources, RoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal KubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, KubernetesState? provisioningState, HostPlatformType? hostPlatformType, KubernetesClusterInfo kubernetesClusterInfo, KubernetesRoleResources kubernetesRoleResources, RoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
         {
             HostPlatform = hostPlatform;
             ProvisioningState = provisioningState;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Host OS supported by the Kubernetes role. </summary>
-        public PlatformType? HostPlatform { get; set; }
+        public DataBoxEdgeOSPlatformType? HostPlatform { get; set; }
         /// <summary> State of Kubernetes deployment. </summary>
         public KubernetesState? ProvisioningState { get; }
         /// <summary> Platform where the runtime is hosted. </summary>

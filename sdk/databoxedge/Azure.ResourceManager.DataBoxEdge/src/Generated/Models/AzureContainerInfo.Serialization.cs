@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static AzureContainerInfo DeserializeAzureContainerInfo(JsonElement element)
         {
-            string storageAccountCredentialId = default;
+            ResourceIdentifier storageAccountCredentialId = default;
             string containerName = default;
             AzureContainerDataFormat dataFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountCredentialId"))
                 {
-                    storageAccountCredentialId = property.Value.GetString();
+                    storageAccountCredentialId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("containerName"))

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="quotaId"></param>
         /// <param name="serializedDetails"></param>
         /// <param name="registeredFeatures"></param>
-        internal EdgeProfileSubscription(string registrationId, string id, SubscriptionState? state, string registrationDate, string subscriptionId, Guid? tenantId, string locationPlacementId, string quotaId, string serializedDetails, IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures)
+        internal EdgeProfileSubscription(Guid? registrationId, string id, SubscriptionState? state, string registrationDate, string subscriptionId, Guid? tenantId, string locationPlacementId, string quotaId, string serializedDetails, IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures)
         {
             RegistrationId = registrationId;
             Id = id;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Edge Subscription Registration ID. </summary>
-        public string RegistrationId { get; }
+        public Guid? RegistrationId { get; }
         /// <summary> ARM ID of the subscription. </summary>
         public string Id { get; }
         /// <summary> Gets the state. </summary>

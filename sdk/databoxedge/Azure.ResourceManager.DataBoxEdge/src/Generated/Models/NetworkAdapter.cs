@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
         /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
-        internal NetworkAdapter(string adapterId, NetworkAdapterPosition adapterPosition, int? index, string nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, NetworkAdapterStatus? status, NetworkAdapterRdmaStatus? rdmaStatus, NetworkAdapterDhcpStatus? dhcpStatus, IPv4Config ipv4Configuration, IPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers)
+        internal NetworkAdapter(string adapterId, NetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, NetworkAdapterStatus? status, NetworkAdapterRdmaStatus? rdmaStatus, NetworkAdapterDhcpStatus? dhcpStatus, IPv4Config ipv4Configuration, IPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers)
         {
             AdapterId = adapterId;
             AdapterPosition = adapterPosition;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Logical index of the adapter. </summary>
         public int? Index { get; }
         /// <summary> Node ID of the network adapter. </summary>
-        public string NodeId { get; }
+        public Guid? NodeId { get; }
         /// <summary> Network adapter name. </summary>
         public string NetworkAdapterName { get; }
         /// <summary> Hardware label for the adapter. </summary>

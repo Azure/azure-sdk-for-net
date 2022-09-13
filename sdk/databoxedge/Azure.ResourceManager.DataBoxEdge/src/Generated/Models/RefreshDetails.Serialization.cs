@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("inProgressRefreshJobId");
                 writer.WriteStringValue(InProgressRefreshJobId);
             }
-            if (Optional.IsDefined(LastCompletedRefreshJobTimeInUTC))
+            if (Optional.IsDefined(LastCompletedRefreshJobTimeInUtc))
             {
                 writer.WritePropertyName("lastCompletedRefreshJobTimeInUTC");
-                writer.WriteStringValue(LastCompletedRefreshJobTimeInUTC.Value, "O");
+                writer.WriteStringValue(LastCompletedRefreshJobTimeInUtc.Value, "O");
             }
             if (Optional.IsDefined(ErrorManifestFile))
             {
@@ -41,15 +41,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static RefreshDetails DeserializeRefreshDetails(JsonElement element)
         {
-            Optional<string> inProgressRefreshJobId = default;
-            Optional<DateTimeOffset> lastCompletedRefreshJobTimeInUTC = default;
+            Optional<ResourceIdentifier> inProgressRefreshJobId = default;
+            Optional<DateTimeOffset> lastCompletedRefreshJobTimeInUtc = default;
             Optional<string> errorManifestFile = default;
             Optional<string> lastJob = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inProgressRefreshJobId"))
                 {
-                    inProgressRefreshJobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    inProgressRefreshJobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastCompletedRefreshJobTimeInUTC"))
@@ -59,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastCompletedRefreshJobTimeInUTC = property.Value.GetDateTimeOffset("O");
+                    lastCompletedRefreshJobTimeInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("errorManifestFile"))
@@ -73,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new RefreshDetails(inProgressRefreshJobId.Value, Optional.ToNullable(lastCompletedRefreshJobTimeInUTC), errorManifestFile.Value, lastJob.Value);
+            return new RefreshDetails(inProgressRefreshJobId.Value, Optional.ToNullable(lastCompletedRefreshJobTimeInUtc), errorManifestFile.Value, lastJob.Value);
         }
     }
 }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of HostCapacity. </summary>
         /// <param name="hostName"> The name of the host. </param>
-        /// <param name="effectiveAvailableMemoryMbOnHost"> The available memory on the host accounting for VM placement size and any host VM reservations. </param>
+        /// <param name="effectiveAvailableMemoryInMBOnHost"> The available memory on the host accounting for VM placement size and any host VM reservations. </param>
         /// <param name="availableGpuCount"> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </param>
         /// <param name="vmUsedMemory"> The VM used memory per VmId. </param>
         /// <param name="gpuType"> The GPU type of the VM. </param>
         /// <param name="numaNodesData"> The numa nodes information for Hpn VMs. </param>
-        internal HostCapacity(string hostName, long? effectiveAvailableMemoryMbOnHost, int? availableGpuCount, IDictionary<string, VmMemory> vmUsedMemory, string gpuType, IList<NumaNodeData> numaNodesData)
+        internal HostCapacity(string hostName, long? effectiveAvailableMemoryInMBOnHost, int? availableGpuCount, IDictionary<string, VmMemory> vmUsedMemory, string gpuType, IList<NumaNodeData> numaNodesData)
         {
             HostName = hostName;
-            EffectiveAvailableMemoryMbOnHost = effectiveAvailableMemoryMbOnHost;
+            EffectiveAvailableMemoryInMBOnHost = effectiveAvailableMemoryInMBOnHost;
             AvailableGpuCount = availableGpuCount;
             VmUsedMemory = vmUsedMemory;
             GpuType = gpuType;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The name of the host. </summary>
         public string HostName { get; set; }
         /// <summary> The available memory on the host accounting for VM placement size and any host VM reservations. </summary>
-        public long? EffectiveAvailableMemoryMbOnHost { get; set; }
+        public long? EffectiveAvailableMemoryInMBOnHost { get; set; }
         /// <summary> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </summary>
         public int? AvailableGpuCount { get; set; }
         /// <summary> The VM used memory per VmId. </summary>

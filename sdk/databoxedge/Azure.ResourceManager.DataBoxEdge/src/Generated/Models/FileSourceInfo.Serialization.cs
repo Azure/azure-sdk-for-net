@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static FileSourceInfo DeserializeFileSourceInfo(JsonElement element)
         {
-            string shareId = default;
+            ResourceIdentifier shareId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareId"))
                 {
-                    shareId = property.Value.GetString();
+                    shareId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

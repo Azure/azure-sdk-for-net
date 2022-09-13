@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         private const string ShareValue = "Share";
         private const string LocalManagementValue = "LocalManagement";
-        private const string ARMValue = "ARM";
+        private const string ArmValue = "ARM";
 
         /// <summary> Share. </summary>
         public static UserType Share { get; } = new UserType(ShareValue);
         /// <summary> LocalManagement. </summary>
         public static UserType LocalManagement { get; } = new UserType(LocalManagementValue);
         /// <summary> ARM. </summary>
-        public static UserType ARM { get; } = new UserType(ARMValue);
+        public static UserType Arm { get; } = new UserType(ArmValue);
         /// <summary> Determines if two <see cref="UserType"/> values are the same. </summary>
         public static bool operator ==(UserType left, UserType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UserType"/> values are not the same. </summary>

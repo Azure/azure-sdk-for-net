@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of ResourceMoveDetails. </summary>
         /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
-        /// <param name="operationInProgressLockTimeoutInUTC"> Denotes the timeout of the operation to finish. </param>
-        internal ResourceMoveDetails(ResourceMoveStatus? operationInProgress, DateTimeOffset? operationInProgressLockTimeoutInUTC)
+        /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
+        internal ResourceMoveDetails(ResourceMoveStatus? operationInProgress, DateTimeOffset? operationInProgressLockTimeoutInUtc)
         {
             OperationInProgress = operationInProgress;
-            OperationInProgressLockTimeoutInUTC = operationInProgressLockTimeoutInUTC;
+            OperationInProgressLockTimeoutInUtc = operationInProgressLockTimeoutInUtc;
         }
 
         /// <summary> Denotes whether move operation is in progress. </summary>
         public ResourceMoveStatus? OperationInProgress { get; }
         /// <summary> Denotes the timeout of the operation to finish. </summary>
-        public DateTimeOffset? OperationInProgressLockTimeoutInUTC { get; }
+        public DateTimeOffset? OperationInProgressLockTimeoutInUtc { get; }
     }
 }

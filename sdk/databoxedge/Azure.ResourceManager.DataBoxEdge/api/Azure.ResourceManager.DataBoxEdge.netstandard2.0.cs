@@ -1,72 +1,5 @@
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class AddonCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.AddonResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.AddonResource>, System.Collections.IEnumerable
-    {
-        protected AddonCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.AddonResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string addonName, Azure.ResourceManager.DataBoxEdge.AddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.AddonResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string addonName, Azure.ResourceManager.DataBoxEdge.AddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.AddonResource> Get(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.AddonResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.AddonResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.AddonResource>> GetAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.AddonResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.AddonResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.AddonResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.AddonResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AddonData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AddonData() { }
-    }
-    public partial class AddonResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AddonResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.AddonData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string roleName, string addonName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.AddonResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.AddonResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.AddonResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.AddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.AddonResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.AddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.AlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.AlertResource>, System.Collections.IEnumerable
-    {
-        protected AlertCollection() { }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.AlertResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.AlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.AlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.AlertResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.AlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.AlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.AlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.AlertResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AlertData() { }
-        public string AlertType { get { throw null; } }
-        public System.DateTimeOffset? AppearedAtOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> DetailedInformation { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.AlertErrorDetails ErrorDetails { get { throw null; } }
-        public string Recommendation { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.AlertSeverity? Severity { get { throw null; } }
-        public string Title { get { throw null; } }
-    }
-    public partial class AlertResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.AlertData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.AlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.AlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class BandwidthScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource>, System.Collections.IEnumerable
     {
         protected BandwidthScheduleCollection() { }
@@ -84,8 +17,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class BandwidthScheduleData : Azure.ResourceManager.Models.ResourceData
     {
-        public BandwidthScheduleData(string start, string stop, int rateInMbps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek> days) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek> Days { get { throw null; } }
+        public BandwidthScheduleData(string start, string stop, int rateInMbps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> Days { get { throw null; } }
         public int RateInMbps { get { throw null; } set { } }
         public string Start { get { throw null; } set { } }
         public string Stop { get { throw null; } set { } }
@@ -104,44 +37,39 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ContainerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.ContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.ContainerResource>, System.Collections.IEnumerable
+    public partial class DataBoxEdgeAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>, System.Collections.IEnumerable
     {
-        protected ContainerCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ContainerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.DataBoxEdge.ContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ContainerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.DataBoxEdge.ContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.ContainerResource> Get(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.ContainerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.ContainerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.ContainerResource>> GetAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.ContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.ContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.ContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.ContainerResource>.GetEnumerator() { throw null; }
+        protected DataBoxEdgeAlertCollection() { }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ContainerData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataBoxEdgeAlertData : Azure.ResourceManager.Models.ResourceData
     {
-        public ContainerData(Azure.ResourceManager.DataBoxEdge.Models.AzureContainerDataFormat dataFormat) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.ContainerStatus? ContainerStatus { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.AzureContainerDataFormat DataFormat { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.RefreshDetails RefreshDetails { get { throw null; } }
+        public DataBoxEdgeAlertData() { }
+        public string AlertType { get { throw null; } }
+        public System.DateTimeOffset? AppearedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> DetailedInformation { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.AlertErrorDetails ErrorDetails { get { throw null; } }
+        public string Recommendation { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.AlertSeverity? Severity { get { throw null; } }
+        public string Title { get { throw null; } }
     }
-    public partial class ContainerResource : Azure.ResourceManager.ArmResource
+    public partial class DataBoxEdgeAlertResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected ContainerResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.ContainerData Data { get { throw null; } }
+        protected DataBoxEdgeAlertResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.ContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.ContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Refresh(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RefreshAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ContainerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.ContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ContainerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.ContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataBoxEdgeDeviceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>, System.Collections.IEnumerable
     {
@@ -181,44 +109,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public Azure.ResourceManager.DataBoxEdge.Models.ResourceMoveDetails ResourceMoveDetails { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemDataPropertiesSystemData { get { throw null; } }
         public string TimeZone { get { throw null; } }
-    }
-    public partial class DataBoxEdgeDeviceJobCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected DataBoxEdgeDeviceJobCollection() { }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DataBoxEdgeDeviceJobResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DataBoxEdgeDeviceJobResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.JobData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DataBoxEdgeDeviceJobStatusCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected DataBoxEdgeDeviceJobStatusCollection() { }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DataBoxEdgeDeviceJobStatusResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DataBoxEdgeDeviceJobStatusResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.JobData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataBoxEdgeDeviceResource : Azure.ResourceManager.ArmResource
     {
@@ -228,8 +119,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation CheckResourceCreationFeasibilityDeviceCapacityCheck(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CheckResourceCreationFeasibilityDeviceCapacityCheckAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation CheckResourceCreationFeasibility(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CheckResourceCreationFeasibilityAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation CreateOrUpdateSecuritySettings(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.SecuritySettings securitySettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateSecuritySettingsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.SecuritySettings securitySettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
@@ -237,50 +128,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DownloadUpdates(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DownloadUpdatesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResponse> GenerateCertificate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResponse>> GenerateCertificateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult> GenerateCertificate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult>> GenerateCertificateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.AlertResource> GetAlert(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.AlertResource>> GetAlertAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.AlertCollection GetAlerts() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource> GetBandwidthSchedule(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource>> GetBandwidthScheduleAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.BandwidthScheduleCollection GetBandwidthSchedules() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource> GetDataBoxEdgeDeviceJob(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource>> GetDataBoxEdgeDeviceJobAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobCollection GetDataBoxEdgeDeviceJobs() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource> GetDataBoxEdgeDeviceJobStatus(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource>> GetDataBoxEdgeDeviceJobStatusAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusCollection GetDataBoxEdgeDeviceJobStatuses() { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.DeviceCapacityInfoResource GetDeviceCapacityInfo() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> GetDataBoxEdgeAlert(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>> GetDataBoxEdgeAlertAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertCollection GetDataBoxEdgeAlerts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource> GetDataBoxEdgeJob(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource>> GetDataBoxEdgeJobAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobCollection GetDataBoxEdgeJobs() { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource GetDataBoxEdgeOrder() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> GetDataBoxEdgeRole(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> GetDataBoxEdgeRoleAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleCollection GetDataBoxEdgeRoles() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> GetDataBoxEdgeShare(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>> GetDataBoxEdgeShareAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareCollection GetDataBoxEdgeShares() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> GetDataBoxEdgeStorageAccount(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>> GetDataBoxEdgeStorageAccountAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> GetDataBoxEdgeStorageAccountCredential(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>> GetDataBoxEdgeStorageAccountCredentialAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialCollection GetDataBoxEdgeStorageAccountCredentials() { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCollection GetDataBoxEdgeStorageAccounts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> GetDataBoxEdgeTrigger(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>> GetDataBoxEdgeTriggerAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerCollection GetDataBoxEdgeTriggers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> GetDataBoxEdgeUser(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>> GetDataBoxEdgeUserAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserCollection GetDataBoxEdgeUsers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo> GetDeviceCapacityInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo>> GetDeviceCapacityInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting() { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo> GetExtendedInformation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>> GetExtendedInformationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.NetworkSettingResource GetNetworkSetting() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.Node> GetNodesByDataBoxEdgeDevice(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.Node> GetNodesByDataBoxEdgeDeviceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.OrderResource GetOrder() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.RoleResource> GetRole(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.RoleResource>> GetRoleAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.RoleCollection GetRoles() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.ShareResource> GetShare(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.ShareResource>> GetShareAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.ShareCollection GetShares() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> GetStorageAccount(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>> GetStorageAccountAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> GetStorageAccountCredential(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>> GetStorageAccountCredentialAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialCollection GetStorageAccountCredentials() { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.StorageAccountCollection GetStorageAccounts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.TriggerResource> GetTrigger(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.TriggerResource>> GetTriggerAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.TriggerCollection GetTriggers() { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.UpdateSummaryResource GetUpdateSummary() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.UserResource> GetUser(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.UserResource>> GetUserAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.UserCollection GetUsers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings> GetNetworkSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>> GetNetworkSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode> GetNodesByDataBoxEdgeDevice(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode> GetNodesByDataBoxEdgeDeviceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation InstallUpdates(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InstallUpdatesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -289,8 +180,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ScanForUpdatesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation TriggerSupportPackageSupportPackage(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerSupportPackageSupportPackageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation TriggerSupportPackage(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerSupportPackageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> Update(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> UpdateAsync(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -300,51 +191,400 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public static partial class DataBoxEdgeExtensions
     {
-        public static Azure.ResourceManager.DataBoxEdge.AddonResource GetAddonResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.AlertResource GetAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku> GetAvailableSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku> GetAvailableSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource GetBandwidthScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.ContainerResource GetContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource GetDataBoxEdgeDeviceJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource GetDataBoxEdgeDeviceJobStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DeviceCapacityInfoResource GetDeviceCapacityInfoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource GetDataBoxEdgeJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource GetDataBoxEdgeRoleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource GetDataBoxEdgeShareResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource GetDataBoxEdgeStorageAccountCredentialResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource GetDataBoxEdgeStorageAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource GetDataBoxEdgeStorageContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource GetDataBoxEdgeTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource GetDataBoxEdgeUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.NetworkSettingResource GetNetworkSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.OrderResource GetOrderResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.RoleResource GetRoleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.ShareResource GetShareResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource GetStorageAccountCredentialResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.StorageAccountResource GetStorageAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.TriggerResource GetTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.UpdateSummaryResource GetUpdateSummaryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.UserResource GetUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DeviceCapacityInfoData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataBoxEdgeJobCollection : Azure.ResourceManager.ArmCollection
     {
-        public DeviceCapacityInfoData() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.ClusterCapacityViewData ClusterComputeCapacityInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.ClusterStorageViewData ClusterStorageCapacityInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> NodeCapacityInfos { get { throw null; } }
-        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+        protected DataBoxEdgeJobCollection() { }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeviceCapacityInfoResource : Azure.ResourceManager.ArmResource
+    public partial class DataBoxEdgeJobData : Azure.ResourceManager.Models.ResourceData
+    {
+        internal DataBoxEdgeJobData() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage? CurrentStage { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress DownloadProgress { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.JobErrorDetails Error { get { throw null; } }
+        public string ErrorManifestFile { get { throw null; } }
+        public string Folder { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress InstallProgress { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.JobType? JobType { get { throw null; } }
+        public int? PercentComplete { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RefreshedEntityId { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.JobStatus? Status { get { throw null; } }
+        public int? TotalRefreshErrors { get { throw null; } }
+    }
+    public partial class DataBoxEdgeJobResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected DeviceCapacityInfoResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.DeviceCapacityInfoData Data { get { throw null; } }
+        protected DataBoxEdgeJobResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeOrderData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeOrderData() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ContactDetails ContactInformation { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus CurrentStatus { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.TrackingInfo> DeliveryTrackingInfo { get { throw null; } }
+        public string Kind { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus> OrderHistory { get { throw null; } }
+        public string OrderId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.TrackingInfo> ReturnTrackingInfo { get { throw null; } }
+        public string SerialNumber { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.ShipmentType? ShipmentType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress ShippingAddress { get { throw null; } set { } }
+    }
+    public partial class DataBoxEdgeOrderResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeOrderResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DeviceCapacityInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DeviceCapacityInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode> GetDataCenterAccessCode(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode>> GetDataCenterAccessCodeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeRoleAddonCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeRoleAddonCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string addonName, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string addonName, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> Get(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>> GetAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeRoleAddonData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeRoleAddonData() { }
+    }
+    public partial class DataBoxEdgeRoleAddonResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeRoleAddonResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string roleName, string addonName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeRoleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeRoleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeRoleData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeRoleData() { }
+    }
+    public partial class DataBoxEdgeRoleResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeRoleResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> GetDataBoxEdgeRoleAddon(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>> GetDataBoxEdgeRoleAddonAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonCollection GetDataBoxEdgeRoleAddons() { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource GetMonitoringMetricConfiguration() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeShareCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeShareCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeShareData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeShareData(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus shareStatus, Azure.ResourceManager.DataBoxEdge.Models.MonitoringStatus monitoringStatus, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol accessProtocol) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol AccessProtocol { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.AzureContainerInfo AzureContainerInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight> ClientAccessRights { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataPolicy? DataPolicy { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.MonitoringStatus MonitoringStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.RefreshDetails RefreshDetails { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.MountPointMap> ShareMappings { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.ShareStatus ShareStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> UserAccessRights { get { throw null; } }
+    }
+    public partial class DataBoxEdgeShareResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeShareResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Refresh(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RefreshAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeStorageAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeStorageAccountCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string storageAccountName, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string storageAccountName, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> Get(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>> GetAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeStorageAccountCredentialCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeStorageAccountCredentialCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeStorageAccountCredentialData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeStorageAccountCredentialData(string alias, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus sslStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType accountType) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret AccountKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType AccountType { get { throw null; } set { } }
+        public string Alias { get { throw null; } set { } }
+        public string BlobDomainName { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus SslStatus { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
+        public string UserName { get { throw null; } set { } }
+    }
+    public partial class DataBoxEdgeStorageAccountCredentialResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeStorageAccountCredentialResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeStorageAccountData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeStorageAccountData(Azure.ResourceManager.DataBoxEdge.Models.DataPolicy dataPolicy) { }
+        public string BlobEndpoint { get { throw null; } }
+        public int? ContainerCount { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataPolicy DataPolicy { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.StorageAccountStatus? StorageAccountStatus { get { throw null; } set { } }
+    }
+    public partial class DataBoxEdgeStorageAccountResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeStorageAccountResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> GetDataBoxEdgeStorageContainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>> GetDataBoxEdgeStorageContainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerCollection GetDataBoxEdgeStorageContainers() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeStorageContainerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeStorageContainerCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> Get(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>> GetAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeStorageContainerData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeStorageContainerData(Azure.ResourceManager.DataBoxEdge.Models.AzureContainerDataFormat dataFormat) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ContainerStatus? ContainerStatus { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.AzureContainerDataFormat DataFormat { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.RefreshDetails RefreshDetails { get { throw null; } }
+    }
+    public partial class DataBoxEdgeStorageContainerResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeStorageContainerResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Refresh(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RefreshAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeTriggerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeTriggerCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeTriggerData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeTriggerData() { }
+    }
+    public partial class DataBoxEdgeTriggerResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeTriggerResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataBoxEdgeUserCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>, System.Collections.IEnumerable
+    {
+        protected DataBoxEdgeUserCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DataBoxEdgeUserData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeUserData(Azure.ResourceManager.DataBoxEdge.Models.UserType userType) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedPassword { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> ShareAccessRights { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.UserType UserType { get { throw null; } set { } }
+    }
+    public partial class DataBoxEdgeUserResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeUserResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DiagnosticProactiveLogCollectionSettingData : Azure.ResourceManager.Models.ResourceData
     {
@@ -380,23 +620,6 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JobData : Azure.ResourceManager.Models.ResourceData
-    {
-        internal JobData() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage? CurrentStage { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress DownloadProgress { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.JobErrorDetails Error { get { throw null; } }
-        public string ErrorManifestFile { get { throw null; } }
-        public string Folder { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress InstallProgress { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.JobType? JobType { get { throw null; } }
-        public int? PercentComplete { get { throw null; } }
-        public string RefreshedEntityId { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.JobStatus? Status { get { throw null; } }
-        public int? TotalRefreshErrors { get { throw null; } }
-    }
     public partial class MonitoringMetricConfigurationData : Azure.ResourceManager.Models.ResourceData
     {
         public MonitoringMetricConfigurationData(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.MetricConfiguration> metricConfigurations) { }
@@ -416,399 +639,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkSettingData : Azure.ResourceManager.Models.ResourceData
-    {
-        public NetworkSettingData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.NetworkAdapter> NetworkAdapters { get { throw null; } }
-    }
-    public partial class NetworkSettingResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected NetworkSettingResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.NetworkSettingData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.NetworkSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.NetworkSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class OrderData : Azure.ResourceManager.Models.ResourceData
-    {
-        public OrderData() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.ContactDetails ContactInformation { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.OrderStatus CurrentStatus { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.TrackingInfo> DeliveryTrackingInfo { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.OrderStatus> OrderHistory { get { throw null; } }
-        public string OrderId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.TrackingInfo> ReturnTrackingInfo { get { throw null; } }
-        public string SerialNumber { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.ShipmentType? ShipmentType { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.Address ShippingAddress { get { throw null; } set { } }
-    }
-    public partial class OrderResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected OrderResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.OrderData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.OrderResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.OrderData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.OrderResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.OrderData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.OrderResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.OrderResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DCAccessCode> GetDCAccessCode(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DCAccessCode>> GetDCAccessCodeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class RoleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.RoleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.RoleResource>, System.Collections.IEnumerable
-    {
-        protected RoleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.RoleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.RoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.RoleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.RoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.RoleResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.RoleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.RoleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.RoleResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.RoleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.RoleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.RoleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.RoleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class RoleData : Azure.ResourceManager.Models.ResourceData
-    {
-        public RoleData() { }
-    }
-    public partial class RoleResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected RoleResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.RoleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.RoleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.AddonResource> GetAddon(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.AddonResource>> GetAddonAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.AddonCollection GetAddons() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.RoleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource GetMonitoringMetricConfiguration() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.RoleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.RoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.RoleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.RoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ShareCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.ShareResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.ShareResource>, System.Collections.IEnumerable
-    {
-        protected ShareCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ShareResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.ShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ShareResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.ShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.ShareResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.ShareResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.ShareResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.ShareResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.ShareResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.ShareResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.ShareResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.ShareResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ShareData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ShareData(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus shareStatus, Azure.ResourceManager.DataBoxEdge.Models.MonitoringStatus monitoringStatus, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol accessProtocol) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol AccessProtocol { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.AzureContainerInfo AzureContainerInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight> ClientAccessRights { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataPolicy? DataPolicy { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.MonitoringStatus MonitoringStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.RefreshDetails RefreshDetails { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.MountPointMap> ShareMappings { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.ShareStatus ShareStatus { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> UserAccessRights { get { throw null; } }
-    }
-    public partial class ShareResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ShareResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.ShareData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.ShareResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.ShareResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Refresh(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RefreshAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ShareResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.ShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.ShareResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.ShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class StorageAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>, System.Collections.IEnumerable
-    {
-        protected StorageAccountCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string storageAccountName, Azure.ResourceManager.DataBoxEdge.StorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string storageAccountName, Azure.ResourceManager.DataBoxEdge.StorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> Get(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>> GetAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class StorageAccountCredentialCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>, System.Collections.IEnumerable
-    {
-        protected StorageAccountCredentialCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class StorageAccountCredentialData : Azure.ResourceManager.Models.ResourceData
-    {
-        public StorageAccountCredentialData(string alias, Azure.ResourceManager.DataBoxEdge.Models.SSLStatus sslStatus, Azure.ResourceManager.DataBoxEdge.Models.AccountType accountType) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret AccountKey { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.AccountType AccountType { get { throw null; } set { } }
-        public string Alias { get { throw null; } set { } }
-        public string BlobDomainName { get { throw null; } set { } }
-        public string ConnectionString { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.SSLStatus SslStatus { get { throw null; } set { } }
-        public string StorageAccountId { get { throw null; } set { } }
-        public string UserName { get { throw null; } set { } }
-    }
-    public partial class StorageAccountCredentialResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected StorageAccountCredentialResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.StorageAccountCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class StorageAccountData : Azure.ResourceManager.Models.ResourceData
-    {
-        public StorageAccountData(Azure.ResourceManager.DataBoxEdge.Models.DataPolicy dataPolicy) { }
-        public string BlobEndpoint { get { throw null; } }
-        public int? ContainerCount { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataPolicy DataPolicy { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string StorageAccountCredentialId { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.StorageAccountStatus? StorageAccountStatus { get { throw null; } set { } }
-    }
-    public partial class StorageAccountResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected StorageAccountResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.StorageAccountData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.ContainerResource> GetContainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.ContainerResource>> GetContainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.ContainerCollection GetContainers() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.StorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.StorageAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.StorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class TriggerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.TriggerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.TriggerResource>, System.Collections.IEnumerable
-    {
-        protected TriggerCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.TriggerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.TriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.TriggerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.TriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.TriggerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.TriggerResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.TriggerResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.TriggerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.TriggerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.TriggerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.TriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.TriggerResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class TriggerData : Azure.ResourceManager.Models.ResourceData
-    {
-        public TriggerData() { }
-    }
-    public partial class TriggerResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected TriggerResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.TriggerData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.TriggerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.TriggerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.TriggerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.TriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.TriggerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.TriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class UpdateSummaryData : Azure.ResourceManager.Models.ResourceData
-    {
-        public UpdateSummaryData() { }
-        public System.DateTimeOffset? DeviceLastScannedOn { get { throw null; } set { } }
-        public string DeviceVersionNumber { get { throw null; } set { } }
-        public string FriendlyDeviceVersionName { get { throw null; } set { } }
-        public string InProgressDownloadJobId { get { throw null; } }
-        public System.DateTimeOffset? InProgressDownloadJobStartedOn { get { throw null; } }
-        public string InProgressInstallJobId { get { throw null; } }
-        public System.DateTimeOffset? InProgressInstallJobStartedOn { get { throw null; } }
-        public string LastCompletedDownloadJobId { get { throw null; } }
-        public System.DateTimeOffset? LastCompletedDownloadJobOn { get { throw null; } }
-        public string LastCompletedInstallJobId { get { throw null; } }
-        public System.DateTimeOffset? LastCompletedInstallJobOn { get { throw null; } }
-        public System.DateTimeOffset? LastCompletedScanJobOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.JobStatus? LastDownloadJobStatus { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.JobStatus? LastInstallJobStatus { get { throw null; } }
-        public System.DateTimeOffset? LastSuccessfulInstallJobOn { get { throw null; } set { } }
-        public System.DateTimeOffset? LastSuccessfulScanJobOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.UpdateOperation? OngoingUpdateOperation { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
-        public int? TotalNumberOfUpdatesAvailable { get { throw null; } }
-        public int? TotalNumberOfUpdatesPendingDownload { get { throw null; } }
-        public int? TotalNumberOfUpdatesPendingInstall { get { throw null; } }
-        public int? TotalTimeInMinutes { get { throw null; } }
-        public double? TotalUpdateSizeInBytes { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.UpdateDetails> Updates { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> UpdateTitles { get { throw null; } }
-    }
-    public partial class UpdateSummaryResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected UpdateSummaryResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.UpdateSummaryData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.UpdateSummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.UpdateSummaryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class UserCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.UserResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.UserResource>, System.Collections.IEnumerable
-    {
-        protected UserCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.UserResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.UserResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.DataBoxEdge.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.UserResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.UserResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.UserResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.UserResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.UserResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.UserResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.UserResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.UserResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class UserData : Azure.ResourceManager.Models.ResourceData
-    {
-        public UserData(Azure.ResourceManager.DataBoxEdge.Models.UserType userType) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedPassword { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> ShareAccessRights { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.UserType UserType { get { throw null; } set { } }
-    }
-    public partial class UserResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected UserResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.UserData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.UserResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.UserResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.UserResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.UserResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AccessLevel : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.AccessLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AccessLevel(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AccessLevel FullAccess { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AccessLevel None { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AccessLevel ReadOnly { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AccessLevel ReadWrite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.AccessLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.AccessLevel left, Azure.ResourceManager.DataBoxEdge.Models.AccessLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.AccessLevel (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.AccessLevel left, Azure.ResourceManager.DataBoxEdge.Models.AccessLevel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AccountType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.AccountType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AccountType(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AccountType BlobStorage { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AccountType GeneralPurposeStorage { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.AccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.AccountType left, Azure.ResourceManager.DataBoxEdge.Models.AccountType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.AccountType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.AccountType left, Azure.ResourceManager.DataBoxEdge.Models.AccountType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AddonState : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.AddonState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AddonState(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AddonState Created { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AddonState Creating { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AddonState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AddonState Failed { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AddonState Invalid { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AddonState Reconfiguring { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.AddonState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.AddonState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.AddonState left, Azure.ResourceManager.DataBoxEdge.Models.AddonState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.AddonState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.AddonState left, Azure.ResourceManager.DataBoxEdge.Models.AddonState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Address
-    {
-        public Address(string country) { }
-        public string AddressLine1 { get { throw null; } set { } }
-        public string AddressLine2 { get { throw null; } set { } }
-        public string AddressLine3 { get { throw null; } set { } }
-        public string City { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
-        public string PostalCode { get { throw null; } set { } }
-        public string State { get { throw null; } set { } }
-    }
     public partial class AlertErrorDetails
     {
         internal AlertErrorDetails() { }
@@ -835,22 +668,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.AlertSeverity left, Azure.ResourceManager.DataBoxEdge.Models.AlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ArcAddon : Azure.ResourceManager.DataBoxEdge.AddonData
+    public partial class ArcAddon : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData
     {
-        public ArcAddon(string subscriptionId, string resourceGroupName, string resourceName, string resourceLocation) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.PlatformType? HostPlatform { get { throw null; } }
+        public ArcAddon(string subscriptionId, string resourceGroupName, string resourceName, Azure.Core.AzureLocation resourceLocation) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.AddonState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceGroupName { get { throw null; } set { } }
-        public string ResourceLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation ResourceLocation { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
     public partial class AsymmetricEncryptedSecret
     {
-        public AsymmetricEncryptedSecret(string value, Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm encryptionAlgorithm) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
+        public AsymmetricEncryptedSecret(string value, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
         public string EncryptionCertThumbprint { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
@@ -882,7 +715,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Family { get { throw null; } }
         public string Kind { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.SkuLocationInfo> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName? Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.ShipmentType> ShipmentTypes { get { throw null; } }
@@ -912,10 +745,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class AzureContainerInfo
     {
-        public AzureContainerInfo(string storageAccountCredentialId, string containerName, Azure.ResourceManager.DataBoxEdge.Models.AzureContainerDataFormat dataFormat) { }
+        public AzureContainerInfo(Azure.Core.ResourceIdentifier storageAccountCredentialId, string containerName, Azure.ResourceManager.DataBoxEdge.Models.AzureContainerDataFormat dataFormat) { }
         public string ContainerName { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.AzureContainerDataFormat DataFormat { get { throw null; } set { } }
-        public string StorageAccountCredentialId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
     }
     public partial class ClientAccessRight
     {
@@ -942,7 +775,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ClientPermissionType left, Azure.ResourceManager.DataBoxEdge.Models.ClientPermissionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CloudEdgeManagementRole : Azure.ResourceManager.DataBoxEdge.RoleData
+    public partial class CloudEdgeManagementRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
         public CloudEdgeManagementRole() { }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeSubscription { get { throw null; } }
@@ -970,21 +803,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class ClusterMemoryCapacity
     {
         public ClusterMemoryCapacity() { }
-        public double? ClusterFailoverMemoryMb { get { throw null; } set { } }
-        public double? ClusterFragmentationMemoryMb { get { throw null; } set { } }
-        public double? ClusterFreeMemoryMb { get { throw null; } set { } }
+        public double? ClusterFailoverMemoryInMB { get { throw null; } set { } }
+        public double? ClusterFragmentationMemoryInMB { get { throw null; } set { } }
+        public double? ClusterFreeMemoryInMB { get { throw null; } set { } }
         public double? ClusterHyperVReserveMemoryMb { get { throw null; } set { } }
-        public double? ClusterInfraVmMemoryMb { get { throw null; } set { } }
-        public double? ClusterMemoryUsedByVmsMb { get { throw null; } set { } }
-        public double? ClusterNonFailoverVmMb { get { throw null; } set { } }
-        public double? ClusterTotalMemoryMb { get { throw null; } set { } }
-        public double? ClusterUsedMemoryMb { get { throw null; } set { } }
+        public double? ClusterInfraVmMemoryInMB { get { throw null; } set { } }
+        public double? ClusterMemoryUsedByVmsInMB { get { throw null; } set { } }
+        public double? ClusterNonFailoverVmInMB { get { throw null; } set { } }
+        public double? ClusterTotalMemoryInMB { get { throw null; } set { } }
+        public double? ClusterUsedMemoryInMB { get { throw null; } set { } }
     }
     public partial class ClusterStorageViewData
     {
         public ClusterStorageViewData() { }
-        public double? ClusterFreeStorageMb { get { throw null; } set { } }
-        public double? ClusterTotalStorageMb { get { throw null; } set { } }
+        public double? ClusterFreeStorageInMB { get { throw null; } set { } }
+        public double? ClusterTotalStorageInMB { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClusterWitnessType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.ClusterWitnessType>
@@ -1048,18 +881,54 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ContainerStatus left, Azure.ResourceManager.DataBoxEdge.Models.ContainerStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataBoxEdgeDataCenterAccessCode
+    {
+        internal DataBoxEdgeDataCenterAccessCode() { }
+        public string AuthCode { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeDayOfWeek : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeDayOfWeek(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Friday { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Monday { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Saturday { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Sunday { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Thursday { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DataBoxEdgeDeviceCapacityInfo : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeDeviceCapacityInfo() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ClusterCapacityViewData ClusterComputeCapacityInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.ClusterStorageViewData ClusterStorageCapacityInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> NodeCapacityInfos { get { throw null; } }
+        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+    }
     public partial class DataBoxEdgeDeviceExtendedInfo : Azure.ResourceManager.Models.ResourceData
     {
         public DataBoxEdgeDeviceExtendedInfo() { }
         public string ChannelIntegrityKeyName { get { throw null; } set { } }
         public string ChannelIntegrityKeyVersion { get { throw null; } set { } }
-        public string ClientSecretStoreId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ClientSecretStoreId { get { throw null; } set { } }
         public System.Uri ClientSecretStoreUri { get { throw null; } set { } }
         public string CloudWitnessContainerName { get { throw null; } }
         public string CloudWitnessStorageAccountName { get { throw null; } }
         public string CloudWitnessStorageEndpoint { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.ClusterWitnessType? ClusterWitnessType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.Secret> DeviceSecrets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret> DeviceSecrets { get { throw null; } }
         public string EncryptionKey { get { throw null; } set { } }
         public string EncryptionKeyThumbprint { get { throw null; } set { } }
         public string FileShareWitnessLocation { get { throw null; } }
@@ -1072,7 +941,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeDeviceExtendedInfoPatch() { }
         public string ChannelIntegrityKeyName { get { throw null; } set { } }
         public string ChannelIntegrityKeyVersion { get { throw null; } set { } }
-        public string ClientSecretStoreId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ClientSecretStoreId { get { throw null; } set { } }
         public System.Uri ClientSecretStoreUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.KeyVaultSyncStatus? SyncStatus { get { throw null; } set { } }
     }
@@ -1096,12 +965,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataBoxEdgeDeviceNetworkSettings : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeDeviceNetworkSettings() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.NetworkAdapter> NetworkAdapters { get { throw null; } }
+    }
     public partial class DataBoxEdgeDevicePatch
     {
         public DataBoxEdgeDevicePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class DataBoxEdgeDeviceSecret
+    {
+        internal DataBoxEdgeDeviceSecret() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedSecret { get { throw null; } }
+        public string KeyVaultId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxEdgeDeviceStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus>
@@ -1126,6 +1006,180 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataBoxEdgeDeviceUpdateSummary : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeDeviceUpdateSummary() { }
+        public System.DateTimeOffset? DeviceLastScannedOn { get { throw null; } set { } }
+        public string DeviceVersionNumber { get { throw null; } set { } }
+        public string FriendlyDeviceVersionName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InProgressDownloadJobId { get { throw null; } }
+        public System.DateTimeOffset? InProgressDownloadJobStartedOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier InProgressInstallJobId { get { throw null; } }
+        public System.DateTimeOffset? InProgressInstallJobStartedOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LastCompletedDownloadJobId { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedDownloadJobOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LastCompletedInstallJobId { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedInstallJobOn { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedScanJobOn { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.JobStatus? LastDownloadJobStatus { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.JobStatus? LastInstallJobStatus { get { throw null; } }
+        public System.DateTimeOffset? LastSuccessfulInstallJobOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastSuccessfulScanJobOn { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateOperation? OngoingUpdateOperation { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
+        public int? TotalNumberOfUpdatesAvailable { get { throw null; } }
+        public int? TotalNumberOfUpdatesPendingDownload { get { throw null; } }
+        public int? TotalNumberOfUpdatesPendingInstall { get { throw null; } }
+        public int? TotalTimeInMinutes { get { throw null; } }
+        public double? TotalUpdateSizeInBytes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.UpdateDetails> Updates { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> UpdateTitles { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeEncryptionAlgorithm : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeEncryptionAlgorithm(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm Aes256 { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm None { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm RsaesPkcs1V1_5 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DataBoxEdgeNode : Azure.ResourceManager.Models.ResourceData
+    {
+        public DataBoxEdgeNode() { }
+        public string NodeChassisSerialNumber { get { throw null; } }
+        public string NodeDisplayName { get { throw null; } }
+        public string NodeFriendlySoftwareVersion { get { throw null; } }
+        public string NodeHcsVersion { get { throw null; } }
+        public System.Guid? NodeInstanceId { get { throw null; } }
+        public string NodeSerialNumber { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus? NodeStatus { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeNodeStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeNodeStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus Down { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus Rebooting { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus ShuttingDown { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus Unknown { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus Up { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeOrderState : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeOrderState(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Arriving { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingDrop { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingFulfillment { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingPickup { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingPreparation { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingReturnShipment { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingShipment { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState CollectedAtMicrosoft { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Declined { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Delivered { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState LostDevice { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState PickupCompleted { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState ReplacementRequested { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState ReturnInitiated { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Shipped { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState ShippedBack { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Untracked { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DataBoxEdgeOrderStatus
+    {
+        internal DataBoxEdgeOrderStatus() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> AdditionalOrderDetails { get { throw null; } }
+        public string Comments { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Status { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.TrackingInfo TrackingInformation { get { throw null; } }
+        public System.DateTimeOffset? UpdateOn { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeOSPlatformType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeOSPlatformType(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType Linux { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeRoleAddonProvisioningState : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeRoleAddonProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Invalid { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Reconfiguring { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DataBoxEdgeShippingAddress
+    {
+        public DataBoxEdgeShippingAddress(string country) { }
+        public string AddressLine1 { get { throw null; } set { } }
+        public string AddressLine2 { get { throw null; } set { } }
+        public string AddressLine3 { get { throw null; } set { } }
+        public string City { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public string State { get { throw null; } set { } }
+    }
     public partial class DataBoxEdgeSku
     {
         public DataBoxEdgeSku() { }
@@ -1140,33 +1194,33 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeSkuName(string value) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Edge { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgeMRMini { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgeMRTCP { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgeMRTcp { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePBase { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePHigh { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePRBase { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePRBaseUPS { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP21281T4Mx1W { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2128GPU1Mx1W { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP22562T4W { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2256GPU2Mx1 { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2641VpuW { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP264Mx1W { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePRBaseUps { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_128Gpu1Mx1W { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_128_1T4Mx1W { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_256Gpu2Mx1 { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_256_2T4W { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_64_1VpuW { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_64_Mx1W { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Gateway { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName GPU { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Gpu { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Management { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName RCALarge { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName RCASmall { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName RDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TCALarge { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TCASmall { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TEA1Node { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TEA1NodeHeater { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TEA1NodeUPS { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TEA1NodeUPSHeater { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TEA4NodeHeater { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TEA4NodeUPSHeater { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TMA { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName RcaLarge { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName RcaSmall { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Rdc { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TcaLarge { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName TcaSmall { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tdc { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tea1Node { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tea1NodeHeater { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tea1NodeUps { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tea1NodeUpsHeater { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tea4NodeHeater { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tea4NodeUpsHeater { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Tma { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1192,6 +1246,42 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeStorageAccountSslStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeStorageAccountSslStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxEdgeStorageAccountType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxEdgeStorageAccountType(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType BlobStorage { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType GeneralPurposeStorage { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1229,34 +1319,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataResidencyType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataResidencyType left, Azure.ResourceManager.DataBoxEdge.Models.DataResidencyType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DayOfWeek : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DayOfWeek(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek Friday { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek Monday { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek Saturday { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek Sunday { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek Thursday { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek left, Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek left, Azure.ResourceManager.DataBoxEdge.Models.DayOfWeek right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DCAccessCode
-    {
-        internal DCAccessCode() { }
-        public string AuthCode { get { throw null; } }
     }
     public partial class DeviceCapacityRequestContent
     {
@@ -1309,30 +1371,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string QuotaId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures> RegisteredFeatures { get { throw null; } }
         public string RegistrationDate { get { throw null; } }
-        public string RegistrationId { get { throw null; } }
+        public System.Guid? RegistrationId { get { throw null; } }
         public string SerializedDetails { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.SubscriptionState? State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionAlgorithm : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm AES256 { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm None { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm RsaesPkcs1V15 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm left, Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm left, Azure.ResourceManager.DataBoxEdge.Models.EncryptionAlgorithm right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class EtcdInfo
     {
@@ -1340,22 +1383,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string EtcdInfoType { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class FileEventTrigger : Azure.ResourceManager.DataBoxEdge.TriggerData
+    public partial class FileEventTrigger : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData
     {
         public FileEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.FileSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.RoleSinkInfo sinkInfo) { }
         public string CustomContextTag { get { throw null; } set { } }
-        public string SinkInfoRoleId { get { throw null; } set { } }
-        public string SourceInfoShareId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceInfoShareId { get { throw null; } set { } }
     }
     public partial class FileSourceInfo
     {
-        public FileSourceInfo(string shareId) { }
-        public string ShareId { get { throw null; } set { } }
+        public FileSourceInfo(Azure.Core.ResourceIdentifier shareId) { }
+        public Azure.Core.ResourceIdentifier ShareId { get { throw null; } set { } }
     }
-    public partial class GenerateCertResponse
+    public partial class GenerateCertResult
     {
-        internal GenerateCertResponse() { }
-        public string ExpiryTimeInUTC { get { throw null; } }
+        internal GenerateCertResult() { }
+        public string ExpiryTimeInUtc { get { throw null; } }
         public string PrivateKey { get { throw null; } }
         public string PublicKey { get { throw null; } }
     }
@@ -1363,7 +1406,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public HostCapacity() { }
         public int? AvailableGpuCount { get { throw null; } set { } }
-        public long? EffectiveAvailableMemoryMbOnHost { get { throw null; } set { } }
+        public long? EffectiveAvailableMemoryInMBOnHost { get { throw null; } set { } }
         public string GpuType { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeData> NumaNodesData { get { throw null; } }
@@ -1432,40 +1475,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior left, Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IoTAddon : Azure.ResourceManager.DataBoxEdge.AddonData
+    public partial class IotAddon : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData
     {
-        public IoTAddon(Azure.ResourceManager.DataBoxEdge.Models.IoTDeviceInfo ioTDeviceDetails, Azure.ResourceManager.DataBoxEdge.Models.IoTDeviceInfo ioTEdgeDeviceDetails) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.PlatformType? HostPlatform { get { throw null; } }
+        public IotAddon(Azure.ResourceManager.DataBoxEdge.Models.IotDeviceInfo iotDeviceDetails, Azure.ResourceManager.DataBoxEdge.Models.IotDeviceInfo iotEdgeDeviceDetails) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.IoTDeviceInfo IoTDeviceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.IoTDeviceInfo IoTEdgeDeviceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.AddonState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.IotDeviceInfo IotDeviceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.IotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class IoTDeviceInfo
+    public partial class IotDeviceInfo
     {
-        public IoTDeviceInfo(string deviceId, string ioTHostHub) { }
+        public IotDeviceInfo(string deviceId, string iotHostHub) { }
         public string DeviceId { get { throw null; } set { } }
-        public string IoTHostHub { get { throw null; } set { } }
-        public string IoTHostHubId { get { throw null; } set { } }
+        public string IotHostHub { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier IotHostHubId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret SymmetricKeyConnectionString { get { throw null; } set { } }
     }
-    public partial class IoTEdgeAgentInfo
+    public partial class IotEdgeAgentInfo
     {
-        public IoTEdgeAgentInfo(string imageName, string tag) { }
+        public IotEdgeAgentInfo(string imageName, string tag) { }
         public string ImageName { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential ImageRepository { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
     }
-    public partial class IoTRole : Azure.ResourceManager.DataBoxEdge.RoleData
+    public partial class IotRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
-        public IoTRole() { }
+        public IotRole() { }
         public Azure.ResourceManager.DataBoxEdge.Models.ComputeResource ComputeResource { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.PlatformType? HostPlatform { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.IoTDeviceInfo IoTDeviceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.IoTEdgeAgentInfo IoTEdgeAgentInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.IoTDeviceInfo IoTEdgeDeviceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.IotDeviceInfo IotDeviceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo IotEdgeAgentInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.IotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.RoleStatus? RoleStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.MountPointMap> ShareMappings { get { throw null; } }
     }
@@ -1473,7 +1516,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal IPv4Config() { }
         public string Gateway { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public string Subnet { get { throw null; } }
     }
     public partial class IPv6Config
@@ -1571,7 +1614,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public KubernetesClusterInfo(string version) { }
         public Azure.ResourceManager.DataBoxEdge.Models.EtcdInfo EtcdInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.NodeInfo> Nodes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.KubernetesNodeInfo> Nodes { get { throw null; } }
         public string Version { get { throw null; } set { } }
     }
     public partial class KubernetesIPConfiguration
@@ -1579,6 +1622,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal KubernetesIPConfiguration() { }
         public string IPAddress { get { throw null; } }
         public string Port { get { throw null; } }
+    }
+    public partial class KubernetesNodeInfo
+    {
+        internal KubernetesNodeInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.KubernetesIPConfiguration> IPConfiguration { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesNodeType? NodeType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KubernetesNodeType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.KubernetesNodeType>
@@ -1599,10 +1649,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.KubernetesNodeType left, Azure.ResourceManager.DataBoxEdge.Models.KubernetesNodeType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KubernetesRole : Azure.ResourceManager.DataBoxEdge.RoleData
+    public partial class KubernetesRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
         public KubernetesRole() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.PlatformType? HostPlatform { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.KubernetesClusterInfo KubernetesClusterInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.KubernetesRoleResources KubernetesRoleResources { get { throw null; } set { } }
@@ -1671,9 +1721,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string LoadBalancerConfigType { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class MECRole : Azure.ResourceManager.DataBoxEdge.RoleData
+    public partial class MecRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
-        public MECRole() { }
+        public MecRole() { }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret ConnectionString { get { throw null; } set { } }
         public string ControllerEndpoint { get { throw null; } set { } }
         public string ResourceUniqueId { get { throw null; } set { } }
@@ -1726,12 +1776,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class MountPointMap
     {
-        public MountPointMap(string shareId) { }
+        public MountPointMap(Azure.Core.ResourceIdentifier shareId) { }
         public string MountPoint { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.MountType? MountType { get { throw null; } }
-        public string RoleId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.RoleType? RoleType { get { throw null; } }
-        public string ShareId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ShareId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MountType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.MountType>
@@ -1766,7 +1816,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? LinkSpeed { get { throw null; } }
         public string MacAddress { get { throw null; } }
         public string NetworkAdapterName { get { throw null; } }
-        public string NodeId { get { throw null; } }
+        public System.Guid? NodeId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.NetworkAdapterRdmaStatus? RdmaStatus { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.NetworkAdapterStatus? Status { get { throw null; } }
     }
@@ -1849,49 +1899,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.NetworkGroup left, Azure.ResourceManager.DataBoxEdge.Models.NetworkGroup right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Node : Azure.ResourceManager.Models.ResourceData
-    {
-        public Node() { }
-        public string NodeChassisSerialNumber { get { throw null; } }
-        public string NodeDisplayName { get { throw null; } }
-        public string NodeFriendlySoftwareVersion { get { throw null; } }
-        public string NodeHcsVersion { get { throw null; } }
-        public string NodeInstanceId { get { throw null; } }
-        public string NodeSerialNumber { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.NodeStatus? NodeStatus { get { throw null; } }
-    }
-    public partial class NodeInfo
-    {
-        internal NodeInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.KubernetesIPConfiguration> IPConfiguration { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesNodeType? KubernetesNodeType { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NodeStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.NodeStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NodeStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.NodeStatus Down { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.NodeStatus Rebooting { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.NodeStatus ShuttingDown { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.NodeStatus Unknown { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.NodeStatus Up { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.NodeStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.NodeStatus left, Azure.ResourceManager.DataBoxEdge.Models.NodeStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.NodeStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.NodeStatus left, Azure.ResourceManager.DataBoxEdge.Models.NodeStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class NumaNodeData
     {
         public NumaNodeData() { }
-        public long? EffectiveAvailableMemoryInMb { get { throw null; } set { } }
+        public long? EffectiveAvailableMemoryInMB { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> FreeVCpuIndexesForHpn { get { throw null; } }
         public int? LogicalCoreCountPerCore { get { throw null; } set { } }
         public int? NumaNodeIndex { get { throw null; } set { } }
@@ -1899,53 +1910,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Collections.Generic.IList<int> VCpuIndexesForHpn { get { throw null; } }
         public System.Collections.Generic.IList<int> VCpuIndexesForRoot { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OrderState : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.OrderState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OrderState(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState Arriving { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState AwaitingDrop { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState AwaitingFulfillment { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState AwaitingPickup { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState AwaitingPreparation { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState AwaitingReturnShipment { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState AwaitingShipment { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState CollectedAtMicrosoft { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState Declined { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState Delivered { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState LostDevice { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState PickupCompleted { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState ReplacementRequested { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState ReturnInitiated { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState Shipped { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState ShippedBack { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.OrderState Untracked { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.OrderState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.OrderState left, Azure.ResourceManager.DataBoxEdge.Models.OrderState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.OrderState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.OrderState left, Azure.ResourceManager.DataBoxEdge.Models.OrderState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OrderStatus
-    {
-        internal OrderStatus() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> AdditionalOrderDetails { get { throw null; } }
-        public string Comments { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.OrderState Status { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.TrackingInfo TrackingInformation { get { throw null; } }
-        public System.DateTimeOffset? UpdateOn { get { throw null; } }
-    }
-    public partial class PeriodicTimerEventTrigger : Azure.ResourceManager.DataBoxEdge.TriggerData
+    public partial class PeriodicTimerEventTrigger : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData
     {
         public PeriodicTimerEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.RoleSinkInfo sinkInfo) { }
         public string CustomContextTag { get { throw null; } set { } }
-        public string SinkInfoRoleId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo SourceInfo { get { throw null; } set { } }
     }
     public partial class PeriodicTimerSourceInfo
@@ -1954,24 +1923,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Schedule { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PlatformType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.PlatformType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PlatformType(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.PlatformType Linux { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.PlatformType Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.PlatformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.PlatformType left, Azure.ResourceManager.DataBoxEdge.Models.PlatformType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.PlatformType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.PlatformType left, Azure.ResourceManager.DataBoxEdge.Models.PlatformType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PosixComplianceStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus>
@@ -2014,9 +1965,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public RefreshDetails() { }
         public string ErrorManifestFile { get { throw null; } set { } }
-        public string InProgressRefreshJobId { get { throw null; } set { } }
-        public System.DateTimeOffset? LastCompletedRefreshJobTimeInUTC { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InProgressRefreshJobId { get { throw null; } set { } }
+        public System.DateTimeOffset? LastCompletedRefreshJobTimeInUtc { get { throw null; } set { } }
         public string LastJob { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RemoteApplicationAccessLevel : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RemoteApplicationAccessLevel(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel FullAccess { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel None { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel ReadOnly { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel ReadWrite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel left, Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel left, Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RemoteApplicationType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType>
@@ -2027,7 +1998,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType AllApplications { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType LocalUI { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType Powershell { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType WAC { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType Wac { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2041,15 +2012,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class RemoteSupportSettings
     {
         public RemoteSupportSettings() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AccessLevel? AccessLevel { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpirationTimeStampInUTC { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationAccessLevel? AccessLevel { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.RemoteApplicationType? RemoteApplicationType { get { throw null; } set { } }
     }
     public partial class ResourceMoveDetails
     {
         internal ResourceMoveDetails() { }
         public Azure.ResourceManager.DataBoxEdge.Models.ResourceMoveStatus? OperationInProgress { get { throw null; } }
-        public System.DateTimeOffset? OperationInProgressLockTimeoutInUTC { get { throw null; } }
+        public System.DateTimeOffset? OperationInProgressLockTimeoutInUtc { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceMoveStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.ResourceMoveStatus>
@@ -2072,8 +2043,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class RoleSinkInfo
     {
-        public RoleSinkInfo(string roleId) { }
-        public string RoleId { get { throw null; } set { } }
+        public RoleSinkInfo(Azure.Core.ResourceIdentifier roleId) { }
+        public Azure.Core.ResourceIdentifier RoleId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoleStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.RoleStatus>
@@ -2099,13 +2070,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RoleType(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.RoleType ASA { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RoleType Asa { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.RoleType CloudEdgeManagement { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.RoleType Cognitive { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.RoleType Functions { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.RoleType IOT { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RoleType IoT { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.RoleType Kubernetes { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.RoleType MEC { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.RoleType Mec { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.RoleType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2115,12 +2086,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.RoleType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.RoleType left, Azure.ResourceManager.DataBoxEdge.Models.RoleType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Secret
-    {
-        internal Secret() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedSecret { get { throw null; } }
-        public string KeyVaultId { get { throw null; } }
     }
     public partial class SecuritySettings : Azure.ResourceManager.Models.ResourceData
     {
@@ -2133,8 +2098,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ShareAccessProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol NFS { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol SMB { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol Nfs { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol Smb { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2149,7 +2114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal ShareAccessRight() { }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType AccessType { get { throw null; } }
-        public string ShareId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ShareId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareAccessType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType>
@@ -2285,24 +2250,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SSLStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.SSLStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SSLStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.SSLStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.SSLStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.SSLStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.SSLStatus left, Azure.ResourceManager.DataBoxEdge.Models.SSLStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.SSLStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.SSLStatus left, Azure.ResourceManager.DataBoxEdge.Models.SSLStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAccountStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.StorageAccountStatus>
     {
         private readonly object _dummy;
@@ -2374,7 +2321,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.UpdateStatus? Status { get { throw null; } }
         public string TargetVersion { get { throw null; } }
-        public double? UpdateSize { get { throw null; } }
+        public double? UpdateSizeInBytes { get { throw null; } }
         public string UpdateTitle { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.UpdateType? UpdateType { get { throw null; } }
     }
@@ -2499,18 +2446,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal UploadCertificateResponse() { }
         public string AadAudience { get { throw null; } }
         public string AadAuthority { get { throw null; } }
-        public string AadTenantId { get { throw null; } }
+        public System.Guid? AadTenantId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.AuthenticationType? AuthType { get { throw null; } }
         public string AzureManagementEndpointAudience { get { throw null; } }
         public string ResourceId { get { throw null; } }
-        public string ServicePrincipalClientId { get { throw null; } }
-        public string ServicePrincipalObjectId { get { throw null; } }
+        public System.Guid? ServicePrincipalClientId { get { throw null; } }
+        public System.Guid? ServicePrincipalObjectId { get { throw null; } }
     }
     public partial class UserAccessRight
     {
-        public UserAccessRight(string userId, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType accessType) { }
+        public UserAccessRight(Azure.Core.ResourceIdentifier userId, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType accessType) { }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType AccessType { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UserType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.UserType>
@@ -2518,7 +2465,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public UserType(string value) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.UserType ARM { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.UserType Arm { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.UserType LocalManagement { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.UserType Share { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.UserType other) { throw null; }
@@ -2534,8 +2481,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class VmMemory
     {
         public VmMemory() { }
-        public long? CurrentMemoryUsageMB { get { throw null; } set { } }
-        public long? StartupMemoryMB { get { throw null; } set { } }
+        public long? CurrentMemoryUsageInMB { get { throw null; } set { } }
+        public long? StartupMemoryInMB { get { throw null; } set { } }
     }
     public partial class VmPlacementRequestResult
     {

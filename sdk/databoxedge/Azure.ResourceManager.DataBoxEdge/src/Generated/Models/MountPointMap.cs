@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of MountPointMap. </summary>
         /// <param name="shareId"> ID of the share mounted to the role VM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
-        public MountPointMap(string shareId)
+        public MountPointMap(ResourceIdentifier shareId)
         {
             if (shareId == null)
             {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="mountPoint"> Mount point for the share. </param>
         /// <param name="mountType"> Mounting type. </param>
         /// <param name="roleType"> Role type. </param>
-        internal MountPointMap(string shareId, string roleId, string mountPoint, MountType? mountType, RoleType? roleType)
+        internal MountPointMap(ResourceIdentifier shareId, ResourceIdentifier roleId, string mountPoint, MountType? mountType, RoleType? roleType)
         {
             ShareId = shareId;
             RoleId = roleId;
@@ -41,9 +42,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> ID of the share mounted to the role VM. </summary>
-        public string ShareId { get; set; }
+        public ResourceIdentifier ShareId { get; set; }
         /// <summary> ID of the role to which share is mounted. </summary>
-        public string RoleId { get; }
+        public ResourceIdentifier RoleId { get; }
         /// <summary> Mount point for the share. </summary>
         public string MountPoint { get; }
         /// <summary> Mounting type. </summary>

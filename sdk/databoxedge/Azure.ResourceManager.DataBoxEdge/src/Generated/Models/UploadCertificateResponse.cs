@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The upload registration certificate response. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="servicePrincipalObjectId"> Azure Active Directory service principal object ID. </param>
         /// <param name="azureManagementEndpointAudience"> The azure management endpoint audience. </param>
         /// <param name="aadAudience"> Identifier of the target resource that is the recipient of the requested token. </param>
-        internal UploadCertificateResponse(AuthenticationType? authType, string resourceId, string aadAuthority, string aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience)
+        internal UploadCertificateResponse(AuthenticationType? authType, string resourceId, string aadAuthority, Guid? aadTenantId, Guid? servicePrincipalClientId, Guid? servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience)
         {
             AuthType = authType;
             ResourceId = resourceId;
@@ -43,11 +45,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Azure Active Directory tenant authority. </summary>
         public string AadAuthority { get; }
         /// <summary> Azure Active Directory tenant ID. </summary>
-        public string AadTenantId { get; }
+        public Guid? AadTenantId { get; }
         /// <summary> Azure Active Directory service principal client ID. </summary>
-        public string ServicePrincipalClientId { get; }
+        public Guid? ServicePrincipalClientId { get; }
         /// <summary> Azure Active Directory service principal object ID. </summary>
-        public string ServicePrincipalObjectId { get; }
+        public Guid? ServicePrincipalObjectId { get; }
         /// <summary> The azure management endpoint audience. </summary>
         public string AzureManagementEndpointAudience { get; }
         /// <summary> Identifier of the target resource that is the recipient of the requested token. </summary>

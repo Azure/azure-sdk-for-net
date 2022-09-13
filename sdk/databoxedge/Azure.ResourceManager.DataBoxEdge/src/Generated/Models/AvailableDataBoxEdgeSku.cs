@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
         internal AvailableDataBoxEdgeSku()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             ApiVersions = new ChangeTrackingList<string>();
             LocationInfo = new ChangeTrackingList<SkuLocationInfo>();
             Costs = new ChangeTrackingList<SkuCost>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="availability"> Links to the next set of results. </param>
         /// <param name="shipmentTypes"> List of Shipment Types supported by this SKU. </param>
         /// <param name="capabilities"> The capability info of the SKU. </param>
-        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<string> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<SkuLocationInfo> locationInfo, IReadOnlyList<SkuCost> costs, SkuSignupOption? signupOption, SkuVersion? version, SkuAvailability? availability, IReadOnlyList<ShipmentType> shipmentTypes, IReadOnlyList<SkuCapability> capabilities)
+        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<SkuLocationInfo> locationInfo, IReadOnlyList<SkuCost> costs, SkuSignupOption? signupOption, SkuVersion? version, SkuAvailability? availability, IReadOnlyList<ShipmentType> shipmentTypes, IReadOnlyList<SkuCapability> capabilities)
         {
             ResourceType = resourceType;
             Name = name;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The Sku family. </summary>
         public string Family { get; }
         /// <summary> Availability of the Sku for the region. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> The API versions in which Sku is available. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Availability of the Sku for the location/zone/site. </summary>

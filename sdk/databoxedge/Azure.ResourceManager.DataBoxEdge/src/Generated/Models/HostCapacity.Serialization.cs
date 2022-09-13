@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryMbOnHost))
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryMbOnHost");
-                writer.WriteNumberValue(EffectiveAvailableMemoryMbOnHost.Value);
+                writer.WriteNumberValue(EffectiveAvailableMemoryInMBOnHost.Value);
             }
             if (Optional.IsDefined(AvailableGpuCount))
             {

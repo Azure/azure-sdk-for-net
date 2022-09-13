@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Details related to the IPv4 address configuration. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="ipAddress"> The IPv4 address of the network adapter. </param>
         /// <param name="subnet"> The IPv4 subnet of the network adapter. </param>
         /// <param name="gateway"> The IPv4 gateway of the network adapter. </param>
-        internal IPv4Config(string ipAddress, string subnet, string gateway)
+        internal IPv4Config(IPAddress ipAddress, string subnet, string gateway)
         {
             IPAddress = ipAddress;
             Subnet = subnet;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The IPv4 address of the network adapter. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> The IPv4 subnet of the network adapter. </summary>
         public string Subnet { get; }
         /// <summary> The IPv4 gateway of the network adapter. </summary>

@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SystemData> systemData0 = default;
             Optional<DataBoxEdgeDeviceStatus> dataBoxEdgeDeviceStatus = default;
             Optional<string> serialNumber = default;
             Optional<string> description = default;
@@ -184,16 +183,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("systemData"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            systemData0 = JsonSerializer.Deserialize<SystemData>(property0.Value.ToString());
-                            continue;
-                        }
                         if (property0.NameEquals("dataBoxEdgeDeviceStatus"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -328,7 +317,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), systemData0, Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value);
+            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value);
         }
     }
 }

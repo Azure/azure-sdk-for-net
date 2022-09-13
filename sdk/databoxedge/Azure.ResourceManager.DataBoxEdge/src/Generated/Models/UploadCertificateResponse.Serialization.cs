@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<AuthenticationType> authType = default;
             Optional<string> resourceId = default;
             Optional<string> aadAuthority = default;
-            Optional<string> aadTenantId = default;
-            Optional<string> servicePrincipalClientId = default;
-            Optional<string> servicePrincipalObjectId = default;
+            Optional<Guid> aadTenantId = default;
+            Optional<Guid> servicePrincipalClientId = default;
+            Optional<Guid> servicePrincipalObjectId = default;
             Optional<string> azureManagementEndpointAudience = default;
             Optional<string> aadAudience = default;
             foreach (var property in element.EnumerateObject())
@@ -46,17 +47,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("aadTenantId"))
                 {
-                    aadTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aadTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("servicePrincipalClientId"))
                 {
-                    servicePrincipalClientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    servicePrincipalClientId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("servicePrincipalObjectId"))
                 {
-                    servicePrincipalObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    servicePrincipalObjectId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("azureManagementEndpointAudience"))
@@ -70,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, aadTenantId.Value, servicePrincipalClientId.Value, servicePrincipalObjectId.Value, azureManagementEndpointAudience.Value, aadAudience.Value);
+            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Optional.ToNullable(aadTenantId), Optional.ToNullable(servicePrincipalClientId), Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value);
         }
     }
 }

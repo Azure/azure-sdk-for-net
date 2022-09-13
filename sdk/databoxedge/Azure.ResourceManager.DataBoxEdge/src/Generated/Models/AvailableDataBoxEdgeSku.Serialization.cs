@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<IReadOnlyList<SkuLocationInfo>> locationInfo = default;
             Optional<IReadOnlyList<SkuCost>> costs = default;
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

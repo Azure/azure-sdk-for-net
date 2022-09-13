@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class IoTRole : IUtf8JsonSerializable
+    public partial class IotRole : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("hostPlatform");
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (Optional.IsDefined(IoTDeviceDetails))
+            if (Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails");
-                writer.WriteObjectValue(IoTDeviceDetails);
+                writer.WriteObjectValue(IotDeviceDetails);
             }
-            if (Optional.IsDefined(IoTEdgeDeviceDetails))
+            if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails");
-                writer.WriteObjectValue(IoTEdgeDeviceDetails);
+                writer.WriteObjectValue(IotEdgeDeviceDetails);
             }
             if (Optional.IsCollectionDefined(ShareMappings))
             {
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IoTEdgeAgentInfo))
+            if (Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo");
-                writer.WriteObjectValue(IoTEdgeAgentInfo);
+                writer.WriteObjectValue(IotEdgeAgentInfo);
             }
             if (Optional.IsDefined(ComputeResource))
             {
@@ -65,18 +65,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteEndObject();
         }
 
-        internal static IoTRole DeserializeIoTRole(JsonElement element)
+        internal static IotRole DeserializeIotRole(JsonElement element)
         {
             RoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<PlatformType> hostPlatform = default;
-            Optional<IoTDeviceInfo> ioTDeviceDetails = default;
-            Optional<IoTDeviceInfo> ioTEdgeDeviceDetails = default;
+            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
+            Optional<IotDeviceInfo> iotDeviceDetails = default;
+            Optional<IotDeviceInfo> iotEdgeDeviceDetails = default;
             Optional<IList<MountPointMap>> shareMappings = default;
-            Optional<IoTEdgeAgentInfo> ioTEdgeAgentInfo = default;
+            Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
             Optional<HostPlatformType> hostPlatformType = default;
             Optional<ComputeResource> computeResource = default;
             Optional<RoleStatus> roleStatus = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostPlatform = new PlatformType(property0.Value.GetString());
+                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ioTDeviceDetails"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ioTDeviceDetails = IoTDeviceInfo.DeserializeIoTDeviceInfo(property0.Value);
+                            iotDeviceDetails = IotDeviceInfo.DeserializeIotDeviceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ioTEdgeDeviceDetails"))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ioTEdgeDeviceDetails = IoTDeviceInfo.DeserializeIoTDeviceInfo(property0.Value);
+                            iotEdgeDeviceDetails = IotDeviceInfo.DeserializeIotDeviceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("shareMappings"))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ioTEdgeAgentInfo = IoTEdgeAgentInfo.DeserializeIoTEdgeAgentInfo(property0.Value);
+                            iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostPlatformType"))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new IoTRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), ioTDeviceDetails.Value, ioTEdgeDeviceDetails.Value, Optional.ToList(shareMappings), ioTEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus));
+            return new IotRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, Optional.ToList(shareMappings), iotEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus));
         }
     }
 }

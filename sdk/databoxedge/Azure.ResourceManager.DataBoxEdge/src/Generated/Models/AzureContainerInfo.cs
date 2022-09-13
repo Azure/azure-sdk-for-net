@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="containerName"> Container name (Based on the data format specified, this represents the name of Azure Files/Page blob/Block blob). </param>
         /// <param name="dataFormat"> Storage format used for the file represented by the share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountCredentialId"/> or <paramref name="containerName"/> is null. </exception>
-        public AzureContainerInfo(string storageAccountCredentialId, string containerName, AzureContainerDataFormat dataFormat)
+        public AzureContainerInfo(ResourceIdentifier storageAccountCredentialId, string containerName, AzureContainerDataFormat dataFormat)
         {
             if (storageAccountCredentialId == null)
             {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> ID of the storage account credential used to access storage. </summary>
-        public string StorageAccountCredentialId { get; set; }
+        public ResourceIdentifier StorageAccountCredentialId { get; set; }
         /// <summary> Container name (Based on the data format specified, this represents the name of Azure Files/Page blob/Block blob). </summary>
         public string ContainerName { get; set; }
         /// <summary> Storage format used for the file represented by the share. </summary>

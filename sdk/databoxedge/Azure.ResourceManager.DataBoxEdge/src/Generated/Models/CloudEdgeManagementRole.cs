@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// For more information, refer to: https://docs.microsoft.com/en-us/azure/databox-online/azure-stack-edge-gpu-virtual-machine-overview
     /// By using this feature, you agree to the preview legal terms. See the https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/ for additional details.
     /// </summary>
-    public partial class CloudEdgeManagementRole : RoleData
+    public partial class CloudEdgeManagementRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of CloudEdgeManagementRole. </summary>
         public CloudEdgeManagementRole()

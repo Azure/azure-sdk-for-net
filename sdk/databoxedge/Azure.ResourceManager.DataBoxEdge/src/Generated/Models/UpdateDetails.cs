@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of UpdateDetails. </summary>
         /// <param name="updateTitle"> Title of the Update. </param>
-        /// <param name="updateSize"> Size of the update(In Bytes). </param>
+        /// <param name="updateSizeInBytes"> Size of the update(In Bytes). </param>
         /// <param name="updateType"> Type of the Update. </param>
         /// <param name="targetVersion"> Target Version number. </param>
         /// <param name="friendlyVersionNumber"> Friendly Version Number. </param>
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="rebootBehavior"> Indicates if updates are available and at least one of the updates needs a reboot. </param>
         /// <param name="installationImpact"> Impact of Installing an updateType. </param>
         /// <param name="status"> Status of the update. </param>
-        internal UpdateDetails(string updateTitle, double? updateSize, UpdateType? updateType, string targetVersion, string friendlyVersionNumber, int? estimatedInstallTimeInMins, InstallRebootBehavior? rebootBehavior, InstallationImpact? installationImpact, UpdateStatus? status)
+        internal UpdateDetails(string updateTitle, double? updateSizeInBytes, UpdateType? updateType, string targetVersion, string friendlyVersionNumber, int? estimatedInstallTimeInMins, InstallRebootBehavior? rebootBehavior, InstallationImpact? installationImpact, UpdateStatus? status)
         {
             UpdateTitle = updateTitle;
-            UpdateSize = updateSize;
+            UpdateSizeInBytes = updateSizeInBytes;
             UpdateType = updateType;
             TargetVersion = targetVersion;
             FriendlyVersionNumber = friendlyVersionNumber;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Title of the Update. </summary>
         public string UpdateTitle { get; }
         /// <summary> Size of the update(In Bytes). </summary>
-        public double? UpdateSize { get; }
+        public double? UpdateSizeInBytes { get; }
         /// <summary> Type of the Update. </summary>
         public UpdateType? UpdateType { get; }
         /// <summary> Target Version number. </summary>

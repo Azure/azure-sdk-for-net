@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static ResourceMoveDetails DeserializeResourceMoveDetails(JsonElement element)
         {
             Optional<ResourceMoveStatus> operationInProgress = default;
-            Optional<DateTimeOffset> operationInProgressLockTimeoutInUTC = default;
+            Optional<DateTimeOffset> operationInProgressLockTimeoutInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationInProgress"))
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationInProgressLockTimeoutInUTC = property.Value.GetDateTimeOffset("O");
+                    operationInProgressLockTimeoutInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ResourceMoveDetails(Optional.ToNullable(operationInProgress), Optional.ToNullable(operationInProgressLockTimeoutInUTC));
+            return new ResourceMoveDetails(Optional.ToNullable(operationInProgress), Optional.ToNullable(operationInProgressLockTimeoutInUtc));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -19,21 +20,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of RefreshDetails. </summary>
         /// <param name="inProgressRefreshJobId"> If a refresh job is currently in progress on this share or container, this field indicates the ARM resource ID of that job. The field is empty if no job is in progress. </param>
-        /// <param name="lastCompletedRefreshJobTimeInUTC"> Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed job or a successful job. </param>
+        /// <param name="lastCompletedRefreshJobTimeInUtc"> Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed job or a successful job. </param>
         /// <param name="errorManifestFile"> Indicates the relative path of the error xml for the last refresh job on this particular share or container, if any. This could be a failed job or a successful job. </param>
         /// <param name="lastJob"> Indicates the id of the last refresh job on this particular share or container,if any. This could be a failed job or a successful job. </param>
-        internal RefreshDetails(string inProgressRefreshJobId, DateTimeOffset? lastCompletedRefreshJobTimeInUTC, string errorManifestFile, string lastJob)
+        internal RefreshDetails(ResourceIdentifier inProgressRefreshJobId, DateTimeOffset? lastCompletedRefreshJobTimeInUtc, string errorManifestFile, string lastJob)
         {
             InProgressRefreshJobId = inProgressRefreshJobId;
-            LastCompletedRefreshJobTimeInUTC = lastCompletedRefreshJobTimeInUTC;
+            LastCompletedRefreshJobTimeInUtc = lastCompletedRefreshJobTimeInUtc;
             ErrorManifestFile = errorManifestFile;
             LastJob = lastJob;
         }
 
         /// <summary> If a refresh job is currently in progress on this share or container, this field indicates the ARM resource ID of that job. The field is empty if no job is in progress. </summary>
-        public string InProgressRefreshJobId { get; set; }
+        public ResourceIdentifier InProgressRefreshJobId { get; set; }
         /// <summary> Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed job or a successful job. </summary>
-        public DateTimeOffset? LastCompletedRefreshJobTimeInUTC { get; set; }
+        public DateTimeOffset? LastCompletedRefreshJobTimeInUtc { get; set; }
         /// <summary> Indicates the relative path of the error xml for the last refresh job on this particular share or container, if any. This could be a failed job or a successful job. </summary>
         public string ErrorManifestFile { get; set; }
         /// <summary> Indicates the id of the last refresh job on this particular share or container,if any. This could be a failed job or a successful job. </summary>

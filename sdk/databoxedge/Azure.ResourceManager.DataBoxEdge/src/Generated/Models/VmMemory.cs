@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of VmMemory. </summary>
-        /// <param name="startupMemoryMB"> The total amount of RAM in the virtual machine, as seen by the guest  operating system. For a virtual machine with dynamic memory enabled, this represents the initial memory available at startup. </param>
-        /// <param name="currentMemoryUsageMB"> The current memory used by the virtual machine. </param>
-        internal VmMemory(long? startupMemoryMB, long? currentMemoryUsageMB)
+        /// <param name="startupMemoryInMB"> The total amount of RAM in the virtual machine, as seen by the guest  operating system. For a virtual machine with dynamic memory enabled, this represents the initial memory available at startup. </param>
+        /// <param name="currentMemoryUsageInMB"> The current memory used by the virtual machine. </param>
+        internal VmMemory(long? startupMemoryInMB, long? currentMemoryUsageInMB)
         {
-            StartupMemoryMB = startupMemoryMB;
-            CurrentMemoryUsageMB = currentMemoryUsageMB;
+            StartupMemoryInMB = startupMemoryInMB;
+            CurrentMemoryUsageInMB = currentMemoryUsageInMB;
         }
 
         /// <summary> The total amount of RAM in the virtual machine, as seen by the guest  operating system. For a virtual machine with dynamic memory enabled, this represents the initial memory available at startup. </summary>
-        public long? StartupMemoryMB { get; set; }
+        public long? StartupMemoryInMB { get; set; }
         /// <summary> The current memory used by the virtual machine. </summary>
-        public long? CurrentMemoryUsageMB { get; set; }
+        public long? CurrentMemoryUsageInMB { get; set; }
     }
 }

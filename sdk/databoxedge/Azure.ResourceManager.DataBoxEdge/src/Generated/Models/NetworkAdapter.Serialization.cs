@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> adapterId = default;
             Optional<NetworkAdapterPosition> adapterPosition = default;
             Optional<int> index = default;
-            Optional<string> nodeId = default;
+            Optional<Guid> nodeId = default;
             Optional<string> networkAdapterName = default;
             Optional<string> label = default;
             Optional<string> macAddress = default;
@@ -59,7 +60,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("nodeId"))
                 {
-                    nodeId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    nodeId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("networkAdapterName"))
@@ -158,7 +164,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new NetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), nodeId.Value, networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers));
+            return new NetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers));
         }
     }
 }

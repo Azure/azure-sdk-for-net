@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<PlatformType> hostPlatform = default;
+            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
             Optional<KubernetesState> provisioningState = default;
             Optional<HostPlatformType> hostPlatformType = default;
             Optional<KubernetesClusterInfo> kubernetesClusterInfo = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostPlatform = new PlatformType(property0.Value.GetString());
+                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

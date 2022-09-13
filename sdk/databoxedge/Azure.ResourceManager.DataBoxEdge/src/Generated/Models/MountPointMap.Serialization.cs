@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static MountPointMap DeserializeMountPointMap(JsonElement element)
         {
-            string shareId = default;
-            Optional<string> roleId = default;
+            ResourceIdentifier shareId = default;
+            Optional<ResourceIdentifier> roleId = default;
             Optional<string> mountPoint = default;
             Optional<MountType> mountType = default;
             Optional<RoleType> roleType = default;
@@ -31,12 +31,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("shareId"))
                 {
-                    shareId = property.Value.GetString();
+                    shareId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("roleId"))
                 {
-                    roleId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    roleId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("mountPoint"))
