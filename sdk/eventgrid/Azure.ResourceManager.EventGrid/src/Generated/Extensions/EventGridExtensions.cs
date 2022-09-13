@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EventGrid
             );
         }
 
-        /// <summary> Gets a collection of TopicTypeInfoResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TopicTypeInfoResources and their operations over a TopicTypeInfoResource. </returns>
-        public static TopicTypeInfoCollection GetTopicTypeInfos(this TenantResource tenantResource)
+        /// <returns> An object representing collection of TopicTypeResources and their operations over a TopicTypeResource. </returns>
+        public static TopicTypeCollection GetTopicTypes(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetTopicTypeInfos();
+            return GetExtensionClient(tenantResource).GetTopicTypes();
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TopicTypeInfoResource>> GetTopicTypeInfoAsync(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<TopicTypeResource>> GetTopicTypeAsync(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetTopicTypeInfos().GetAsync(topicTypeName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetTopicTypes().GetAsync(topicTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TopicTypeInfoResource> GetTopicTypeInfo(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
+        public static Response<TopicTypeResource> GetTopicType(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetTopicTypeInfos().Get(topicTypeName, cancellationToken);
+            return tenantResource.GetTopicTypes().Get(topicTypeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VerifiedPartnerResources in the TenantResource. </summary>
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DomainResource> GetDomainsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventGridDomainResource> GetEventGridDomainsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDomainsAsync(filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventGridDomainsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DomainResource> GetDomains(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventGridDomainResource> GetEventGridDomains(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDomains(filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventGridDomains(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSubscriptionResource> GetGlobalBySubscriptionForTopicTypeEventSubscriptionsAsync(this SubscriptionResource subscriptionResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicTypeAsync(this SubscriptionResource subscriptionResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetGlobalBySubscriptionForTopicTypeEventSubscriptionsAsync(topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetGlobalEventSubscriptionsForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSubscriptionResource> GetGlobalBySubscriptionForTopicTypeEventSubscriptions(this SubscriptionResource subscriptionResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicType(this SubscriptionResource subscriptionResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetGlobalBySubscriptionForTopicTypeEventSubscriptions(topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetGlobalEventSubscriptionsForTopicType(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSubscriptionResource> GetRegionalBySubscriptionEventSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRegionalBySubscriptionEventSubscriptionsAsync(location, filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsAsync(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSubscriptionResource> GetRegionalBySubscriptionEventSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<EventSubscriptionResource> GetRegionalEventSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRegionalBySubscriptionEventSubscriptions(location, filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptions(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSubscriptionResource> GetRegionalBySubscriptionForTopicTypeEventSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicTypeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetRegionalBySubscriptionForTopicTypeEventSubscriptionsAsync(location, topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSubscriptionResource> GetRegionalBySubscriptionForTopicTypeEventSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicType(this SubscriptionResource subscriptionResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(subscriptionResource).GetRegionalBySubscriptionForTopicTypeEventSubscriptions(location, topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRegionalEventSubscriptionsForTopicType(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -270,10 +270,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TopicResource> GetTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetTopicsAsync(filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventGridTopicsAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TopicResource> GetTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventGridTopicResource> GetEventGridTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetTopics(filter, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -450,12 +450,12 @@ namespace Azure.ResourceManager.EventGrid
             );
         }
 
-        /// <summary> Gets a collection of DomainResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of EventGridDomainResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DomainResources and their operations over a DomainResource. </returns>
-        public static DomainCollection GetDomains(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EventGridDomainResources and their operations over a EventGridDomainResource. </returns>
+        public static EventGridDomainCollection GetEventGridDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDomains();
+            return GetExtensionClient(resourceGroupResource).GetEventGridDomains();
         }
 
         /// <summary>
@@ -469,9 +469,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DomainResource>> GetDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -485,33 +485,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DomainResource> GetDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
+        public static Response<EventGridDomainResource> GetEventGridDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDomains().Get(domainName, cancellationToken);
+            return resourceGroupResource.GetEventGridDomains().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TopicResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TopicResources and their operations over a TopicResource. </returns>
-        public static TopicCollection GetTopics(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
+        public static EventGridTopicCollection GetEventGridTopics(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetTopics();
-        }
-
-        /// <summary>
-        /// Get properties of a topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}
-        /// Operation Id: Topics_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="topicName"> Name of the topic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TopicResource>> GetTopicAsync(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetEventGridTopics();
         }
 
         /// <summary>
@@ -525,9 +509,25 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TopicResource> GetTopic(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetTopics().Get(topicName, cancellationToken);
+            return await resourceGroupResource.GetEventGridTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a topic.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}
+        /// Operation Id: Topics_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EventGridTopicResource> GetEventGridTopic(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetEventGridTopics().Get(topicName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
@@ -993,11 +993,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSubscriptionResource> GetGlobalByResourceGroupForTopicTypeEventSubscriptionsAsync(this ResourceGroupResource resourceGroupResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicTypeAsync(this ResourceGroupResource resourceGroupResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetGlobalByResourceGroupForTopicTypeEventSubscriptionsAsync(topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetGlobalEventSubscriptionsForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1013,11 +1013,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSubscriptionResource> GetGlobalByResourceGroupForTopicTypeEventSubscriptions(this ResourceGroupResource resourceGroupResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<EventSubscriptionResource> GetGlobalEventSubscriptionsForTopicType(this ResourceGroupResource resourceGroupResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetGlobalByResourceGroupForTopicTypeEventSubscriptions(topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetGlobalEventSubscriptionsForTopicType(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1031,9 +1031,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSubscriptionResource> GetRegionalByResourceGroupEventSubscriptionsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetRegionalByResourceGroupEventSubscriptionsAsync(location, filter, top, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsAsync(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1047,9 +1047,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSubscriptionResource> GetRegionalByResourceGroupEventSubscriptions(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<EventSubscriptionResource> GetRegionalEventSubscriptions(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetRegionalByResourceGroupEventSubscriptions(location, filter, top, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptions(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1066,11 +1066,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSubscriptionResource> GetRegionalByResourceGroupForTopicTypeEventSubscriptionsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicTypeAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetRegionalByResourceGroupForTopicTypeEventSubscriptionsAsync(location, topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1087,11 +1087,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSubscriptionResource> GetRegionalByResourceGroupForTopicTypeEventSubscriptions(this ResourceGroupResource resourceGroupResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<EventSubscriptionResource> GetRegionalEventSubscriptionsForTopicType(this ResourceGroupResource resourceGroupResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
-            return GetExtensionClient(resourceGroupResource).GetRegionalByResourceGroupForTopicTypeEventSubscriptions(location, topicTypeName, filter, top, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetRegionalEventSubscriptionsForTopicType(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1106,14 +1106,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/>, <paramref name="resourceTypeName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/>, <paramref name="resourceTypeName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventType" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventType> GetEventTypesTopicsAsync(this ResourceGroupResource resourceGroupResource, string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(this ResourceGroupResource resourceGroupResource, string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceTypeName, nameof(resourceTypeName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetEventTypesTopicsAsync(providerNamespace, resourceTypeName, resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetEventTypesAsync(providerNamespace, resourceTypeName, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1128,14 +1128,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/>, <paramref name="resourceTypeName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/>, <paramref name="resourceTypeName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventType" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventType> GetEventTypesTopics(this ResourceGroupResource resourceGroupResource, string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventTypeUnderTopic> GetEventTypes(this ResourceGroupResource resourceGroupResource, string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
             Argument.AssertNotNullOrEmpty(resourceTypeName, nameof(resourceTypeName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetEventTypesTopics(providerNamespace, resourceTypeName, resourceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetEventTypes(providerNamespace, resourceTypeName, resourceName, cancellationToken);
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
@@ -1208,39 +1208,39 @@ namespace Azure.ResourceManager.EventGrid
             return GetExtensionClient(client, scope).GetExtensionTopic();
         }
 
-        #region ChannelResource
+        #region PartnerNamespaceChannelResource
         /// <summary>
-        /// Gets an object representing a <see cref="ChannelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChannelResource.CreateResourceIdentifier" /> to create a <see cref="ChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PartnerNamespaceChannelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PartnerNamespaceChannelResource.CreateResourceIdentifier" /> to create a <see cref="PartnerNamespaceChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChannelResource" /> object. </returns>
-        public static ChannelResource GetChannelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PartnerNamespaceChannelResource" /> object. </returns>
+        public static PartnerNamespaceChannelResource GetPartnerNamespaceChannelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ChannelResource.ValidateResourceId(id);
-                return new ChannelResource(client, id);
+                PartnerNamespaceChannelResource.ValidateResourceId(id);
+                return new PartnerNamespaceChannelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DomainResource
+        #region EventGridDomainResource
         /// <summary>
-        /// Gets an object representing a <see cref="DomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DomainResource.CreateResourceIdentifier" /> to create a <see cref="DomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EventGridDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridDomainResource.CreateResourceIdentifier" /> to create an <see cref="EventGridDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DomainResource" /> object. </returns>
-        public static DomainResource GetDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridDomainResource" /> object. </returns>
+        public static EventGridDomainResource GetEventGridDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DomainResource.ValidateResourceId(id);
-                return new DomainResource(client, id);
+                EventGridDomainResource.ValidateResourceId(id);
+                return new EventGridDomainResource(client, id);
             }
             );
         }
@@ -1379,20 +1379,20 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region TopicResource
+        #region EventGridTopicResource
         /// <summary>
-        /// Gets an object representing a <see cref="TopicResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TopicResource.CreateResourceIdentifier" /> to create a <see cref="TopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EventGridTopicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridTopicResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TopicResource" /> object. </returns>
-        public static TopicResource GetTopicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridTopicResource" /> object. </returns>
+        public static EventGridTopicResource GetEventGridTopicResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TopicResource.ValidateResourceId(id);
-                return new TopicResource(client, id);
+                EventGridTopicResource.ValidateResourceId(id);
+                return new EventGridTopicResource(client, id);
             }
             );
         }
@@ -1626,20 +1626,20 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region TopicTypeInfoResource
+        #region TopicTypeResource
         /// <summary>
-        /// Gets an object representing a <see cref="TopicTypeInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TopicTypeInfoResource.CreateResourceIdentifier" /> to create a <see cref="TopicTypeInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TopicTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopicTypeResource.CreateResourceIdentifier" /> to create a <see cref="TopicTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TopicTypeInfoResource" /> object. </returns>
-        public static TopicTypeInfoResource GetTopicTypeInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopicTypeResource" /> object. </returns>
+        public static TopicTypeResource GetTopicTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TopicTypeInfoResource.ValidateResourceId(id);
-                return new TopicTypeInfoResource(client, id);
+                TopicTypeResource.ValidateResourceId(id);
+                return new TopicTypeResource(client, id);
             }
             );
         }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -13,19 +14,19 @@ namespace Azure.ResourceManager.Orbital.Models
     internal partial class ContactProfilesPropertiesNetworkConfiguration
     {
         /// <summary> Initializes a new instance of ContactProfilesPropertiesNetworkConfiguration. </summary>
-        /// <param name="subnetId"> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public ContactProfilesPropertiesNetworkConfiguration(string subnetId)
+        /// <param name="networkSubnetId"> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSubnetId"/> is null. </exception>
+        public ContactProfilesPropertiesNetworkConfiguration(ResourceIdentifier networkSubnetId)
         {
-            if (subnetId == null)
+            if (networkSubnetId == null)
             {
-                throw new ArgumentNullException(nameof(subnetId));
+                throw new ArgumentNullException(nameof(networkSubnetId));
             }
 
-            SubnetId = subnetId;
+            NetworkSubnetId = networkSubnetId;
         }
 
         /// <summary> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier NetworkSubnetId { get; set; }
     }
 }

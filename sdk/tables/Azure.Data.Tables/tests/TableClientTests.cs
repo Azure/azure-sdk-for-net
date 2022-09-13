@@ -426,12 +426,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void CreateIfNotExistsThrowsWhenTableBeingDeleted()
         {
-            _transport = new MockTransport(
-                request => throw new RequestFailedException(
-                    (int)HttpStatusCode.Conflict,
-                    null,
-                    TableErrorCode.TableBeingDeleted.ToString(),
-                    null));
+            _transport = TableAlreadyExistsTransport(TableErrorCode.TableBeingDeleted);
             var service_Instrumented = InstrumentClient(
                 new TableServiceClient(
                     new Uri($"https://example.com?{signature}"),
@@ -444,11 +439,11 @@ namespace Azure.Data.Tables.Tests
 
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()
         {
-            var tokenTransport = TableAlreadyExistsTransport();
-            var tokenTransport2 = TableAlreadyExistsTransport();
-            var sharedKeyTransport = TableAlreadyExistsTransport();
-            var connStrTransport = TableAlreadyExistsTransport();
-            var devTransport = TableAlreadyExistsTransport();
+            var tokenTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var tokenTransport2 = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var sharedKeyTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var connStrTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var devTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
 
             var sharedKeyClient = new TableClient(_urlWithTableName, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
             var connStringClient = new TableClient(
@@ -592,13 +587,20 @@ namespace Azure.Data.Tables.Tests
             Assert.That(message, Does.Contain("mySelect"), "Path should not redact 'select");
         }
 
-        private static MockTransport TableAlreadyExistsTransport() =>
-            new(
-                _ => throw new RequestFailedException(
-                    (int)HttpStatusCode.Conflict,
-                    null,
-                    TableErrorCode.TableAlreadyExists.ToString(),
-                    null));
+        private static MockTransport TableAlreadyExistsTransport(TableErrorCode errorCode)
+        {
+            MockResponse conflictResponse = new((int)HttpStatusCode.Conflict);
+            conflictResponse.SetContent(@$"{{
+  ""odata.error"": {{
+    ""code"": ""{errorCode}"",
+    ""message"": {{
+      ""lang"": ""en-US"",
+      ""value"": ""Table is being deleted.\nRequestId:7c2a1319-5002-0065-0b0e-502b52000000\nTime:2022-04-14T14:44:00.1021472Z""
+    }}
+  }}
+}}");
+            return new(_ => conflictResponse);
+        }
 
         public class EnumEntity : ITableEntity
         {

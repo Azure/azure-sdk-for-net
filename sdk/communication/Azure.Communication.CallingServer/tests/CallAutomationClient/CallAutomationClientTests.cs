@@ -11,11 +11,11 @@ namespace Azure.Communication.CallingServer
 {
     public class CallAutomationClientTests : CallAutomationTestBase
     {
-        private readonly MediaStreamingConfiguration _mediaStreamingConfiguration = new MediaStreamingConfiguration(
+        private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
             new Uri("https://websocket"),
-            MediaStreamingTransportType.Websocket,
-            MediaStreamingContentType.Audio,
-            MediaStreamingAudioChannelType.Mixed);
+            MediaStreamingTransport.Websocket,
+            MediaStreamingContent.Audio,
+            MediaStreamingAudioChannel.Mixed);
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
@@ -47,10 +47,9 @@ namespace Azure.Communication.CallingServer
         public async Task AnswerCallWithOptionsAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext)
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
-                CallbackEndpoint = callbackUri,
-                MediaStreamingConfiguration = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
             var response = await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false);
@@ -65,10 +64,9 @@ namespace Azure.Communication.CallingServer
         public void AnswerCallWithOptions_200OK(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext)
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
-                CallbackEndpoint = callbackUri,
-                MediaStreamingConfiguration = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
             var response = callAutomationClient.AnswerCall(options);
@@ -212,12 +210,12 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
-                source: source,
+                callSource: source,
                 targets: targets,
-                callbackEndpoint: callbackUri)
+                callbackUri: callbackUri)
             {
                 Subject = "subject",
-                MediaStreamingConfiguration = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
             var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
@@ -234,12 +232,12 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
-                source: source,
+                callSource: source,
                 targets: targets,
-                callbackEndpoint: callbackUri)
+                callbackUri: callbackUri)
             {
                 Subject = "subject",
-                MediaStreamingConfiguration = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
             var response = callAutomationClient.CreateCall(options);
