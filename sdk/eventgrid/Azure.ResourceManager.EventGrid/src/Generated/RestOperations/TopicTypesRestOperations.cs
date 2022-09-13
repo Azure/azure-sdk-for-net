@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TopicTypeInfoData>> GetAsync(string topicTypeName, CancellationToken cancellationToken = default)
+        public async Task<Response<TopicTypeData>> GetAsync(string topicTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        TopicTypeInfoData value = default;
+                        TopicTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TopicTypeInfoData.DeserializeTopicTypeInfoData(document.RootElement);
+                        value = TopicTypeData.DeserializeTopicTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TopicTypeInfoData)null, message.Response);
+                    return Response.FromValue((TopicTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TopicTypeInfoData> Get(string topicTypeName, CancellationToken cancellationToken = default)
+        public Response<TopicTypeData> Get(string topicTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        TopicTypeInfoData value = default;
+                        TopicTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TopicTypeInfoData.DeserializeTopicTypeInfoData(document.RootElement);
+                        value = TopicTypeData.DeserializeTopicTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TopicTypeInfoData)null, message.Response);
+                    return Response.FromValue((TopicTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

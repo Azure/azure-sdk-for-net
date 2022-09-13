@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-db23a6d141ca9d521dfd59c1eb70eb12-695e485bca07b9e8-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-4fe20dd6627217a33d9afc285ba41cf3-f9315910a6a9122c-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "b95add4d9a7c4e46bb031bd1afb22500",
+        "x-ms-client-request-id": "9a45fec3e47277e054d6b6625b79641e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "833",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Sep 2022 03:06:21 GMT",
+        "Date": "Thu, 08 Sep 2022 18:56:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 0EB82A097199418CBF8751AE9CF18B15 Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:21Z"
+        "X-MSEdge-Ref": "Ref A: C6D3E35DC6A14F8EBBC68E2EEF91345E Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:36Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "closeburn",
           "queryType": "NON_NEAR",
-          "queryTime": 4,
+          "queryTime": 3,
           "numResults": 1,
           "offset": 0,
           "totalResults": 1,
@@ -89,6 +89,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "560944164"
+    "RandomSeed": "69141486"
   }
 }

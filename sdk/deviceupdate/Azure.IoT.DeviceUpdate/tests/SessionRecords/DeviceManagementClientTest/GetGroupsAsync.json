@@ -1,24 +1,24 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/management/groups?api-version=2022-07-01-preview",
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/management/groups?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3fe0214bf691ee4ba69131dc48f69f54-9ff9fda6cf72c24e-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7d003541660374a44ecc2f82f5cbeae7",
+        "traceparent": "00-3861a5da02a4ee459817ec3f0dc34c12-940deae3abdb694c-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220901.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "67a9cda6dba862aaf5fb54aad8ed8276",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "701",
+        "Content-Length": "1095",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 21:48:02 GMT",
-        "mise-correlation-id": "e81eeb89-b6e2-4f13-bb48-ff1b1b9edf72",
-        "traceparent": "00-3fe0214bf691ee4ba69131dc48f69f54-9ff9fda6cf72c24e-00"
+        "Date": "Thu, 01 Sep 2022 20:26:17 GMT",
+        "mise-correlation-id": "0dea8284-96ca-46b1-b1f4-9428380577bb",
+        "traceparent": "00-3861a5da02a4ee459817ec3f0dc34c12-940deae3abdb694c-00"
       },
       "ResponseBody": {
         "value": [
@@ -40,6 +40,18 @@
             "subgroupsWithNewUpdatesAvailableCount": 1,
             "subgroupsWithUpdatesInProgressCount": 0,
             "subgroupsWithOnLatestUpdateCount": 0,
+            "deployments": [
+              "a5f6a54b-938d-44b6-8baa-8dc72017ae54"
+            ]
+          },
+          {
+            "groupId": "testgroup",
+            "groupType": "IoTHubTag",
+            "createdDateTime": "2022-08-09T19:17:24.9549445\u002B00:00",
+            "deviceCount": 1,
+            "subgroupsWithNewUpdatesAvailableCount": 1,
+            "subgroupsWithUpdatesInProgressCount": 0,
+            "subgroupsWithOnLatestUpdateCount": 0,
             "deployments": []
           }
         ]
@@ -47,8 +59,9 @@
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "1183667666"
+    "RandomSeed": "1362743671"
   }
 }

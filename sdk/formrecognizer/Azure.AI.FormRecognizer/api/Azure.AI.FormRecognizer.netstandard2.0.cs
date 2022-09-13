@@ -1331,11 +1331,14 @@ namespace Azure.AI.FormRecognizer.Training
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class FormRecognizerClientBuilderExtensions
+    public static partial class DocumentAnalysisClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClient, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClient, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions> AddDocumentAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClient, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions> AddDocumentAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+    public static partial class FormRecognizerClientBuilderExtensions
+    {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.FormRecognizer.FormRecognizerClient, Azure.AI.FormRecognizer.FormRecognizerClientOptions> AddFormRecognizerClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.FormRecognizer.FormRecognizerClient, Azure.AI.FormRecognizer.FormRecognizerClientOptions> AddFormRecognizerClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.FormRecognizer.FormRecognizerClient, Azure.AI.FormRecognizer.FormRecognizerClientOptions> AddFormRecognizerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

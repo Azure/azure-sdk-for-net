@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of LastMitigationActionOnJob. </summary>
-        /// <param name="actionDateTimeInUtc"> Action performed date time. </param>
+        /// <param name="actionPerformedOn"> Action performed date time. </param>
         /// <param name="isPerformedByCustomer">
         /// Action performed by customer,
         /// possibility is that mitigation might happen by customer or service or by ops
         /// </param>
         /// <param name="customerResolution"> Resolution code provided by customer. </param>
-        internal LastMitigationActionOnJob(DateTimeOffset? actionDateTimeInUtc, bool? isPerformedByCustomer, CustomerResolutionCode? customerResolution)
+        internal LastMitigationActionOnJob(DateTimeOffset? actionPerformedOn, bool? isPerformedByCustomer, CustomerResolutionCode? customerResolution)
         {
-            ActionDateTimeInUtc = actionDateTimeInUtc;
+            ActionPerformedOn = actionPerformedOn;
             IsPerformedByCustomer = isPerformedByCustomer;
             CustomerResolution = customerResolution;
         }
 
         /// <summary> Action performed date time. </summary>
-        public DateTimeOffset? ActionDateTimeInUtc { get; }
+        public DateTimeOffset? ActionPerformedOn { get; }
         /// <summary>
         /// Action performed by customer,
         /// possibility is that mitigation might happen by customer or service or by ops

@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// </summary>
     public partial class GuestConfigurationHcrpAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationHcrpAssignmentResource>, IAsyncEnumerable<GuestConfigurationHcrpAssignmentResource>
     {
-        private readonly ClientDiagnostics _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics;
-        private readonly GuestConfigurationHcrpAssignmentsRestOperations _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics;
+        private readonly GuestConfigurationHcrpAssignmentsRestOperations _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient;
         private readonly string _machineName;
 
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationHcrpAssignmentCollection"/> class for mocking. </summary>
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         internal GuestConfigurationHcrpAssignmentCollection(ArmClient client, ResourceIdentifier id, string machineName) : base(client, id)
         {
             _machineName = machineName;
-            _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHcrpAssignmentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GuestConfigurationHcrpAssignmentResource.ResourceType, out string guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsApiVersion);
-            _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHcrpAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsApiVersion);
+            _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHcrpAssignmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(GuestConfigurationHcrpAssignmentResource.ResourceType, out string guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsApiVersion);
+            _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient = new GuestConfigurationHcrpAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.GuestConfiguration
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.CreateOrUpdate");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.GuestConfiguration
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.CreateOrUpdate");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, data, cancellationToken);
+                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, data, cancellationToken);
                 var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Get");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Get");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken);
+                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             async Task<Page<GuestConfigurationHcrpAssignmentResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
+                using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationHcrpAssignmentResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Page<GuestConfigurationHcrpAssignmentResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
+                using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _machineName, cancellationToken: cancellationToken);
+                    var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _machineName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationHcrpAssignmentResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Exists");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Exists");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken: cancellationToken);
+                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _machineName, guestConfigurationAssignmentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

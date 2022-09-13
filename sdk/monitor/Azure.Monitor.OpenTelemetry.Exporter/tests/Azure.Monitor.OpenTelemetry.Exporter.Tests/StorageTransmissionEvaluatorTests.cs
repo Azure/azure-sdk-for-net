@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Reflection;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests

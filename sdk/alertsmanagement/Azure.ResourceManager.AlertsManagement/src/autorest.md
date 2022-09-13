@@ -18,10 +18,10 @@ modelerfour:
 
 rename-mapping:
   AlertModification.modifiedAt: modifiedOn|datetime
-  AlertProcessingRule.properties.enabled: IsEnabled
+  AlertProcessingRuleProperties.enabled: IsEnabled
   AlertsSortByFields.startDateTime: StartOn
   AlertsSortByFields.lastModifiedDateTime: LastModifiedOn
-  AlertsSummary.properties.groupedby: GroupedBy
+  AlertsSummaryGroup.groupedby: GroupedBy
   AlertsSummaryGroupItem.groupedby: GroupedBy
   Essentials.startDateTime: StartOn|datetime
   Essentials.lastModifiedUserName: lastModifiedBy
@@ -68,6 +68,10 @@ rename-mapping:
   AlertsSummaryGroupByField: GetServiceAlertSummaryGroupByField
   AlertsSummaryGroupItem: ServiceAlertSummaryGroupItemInfo
   MetadataIdentifier: ServiceAlertMetadataIdentifier
+  AlertModificationProperties: ServiceAlertModificationProperties
+  AlertProcessingRuleProperties: ServiceAlertProcessingRuleProperties
+  AlertProperties: ServiceAlertProperties
+  AlertsSummaryGroup: ServiceAlertSummaryGroup
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -112,15 +116,12 @@ directive:
     transform: >
       $.errorResponse['x-ms-client-name'] = 'SmartGroupErrorResponse';
       $.errorResponseBody['x-ms-client-name'] = 'SmartGroupErrorResponseBody';
-      $.smartGroupModification.properties.properties['x-ms-client-flatten'] = true;
-      $.smartGroup.properties.properties['x-ms-client-flatten'] = true;
       $.smartGroupProperties.properties.smartGroupState['x-ms-enum']['name'] = 'SmartGroupState';
   - from: AlertProcessingRules.json
     where: $.definitions
     transform: >
       $.errorResponse['x-ms-client-name'] = 'AlertProcessingRuleErrorResponse';
       $.errorResponseBody['x-ms-client-name'] = 'AlertProcessingRuleErrorResponseBody';
-      $.AlertProcessingRule.properties.properties['x-ms-client-flatten'] = true;
       $.Recurrence.properties.startTime['format'] = 'time';
       $.Recurrence.properties.endTime['format'] = 'time';
   - from: AlertsManagement.json
@@ -128,9 +129,6 @@ directive:
     transform: >
       $.errorResponse['x-ms-client-name'] = 'AlertsManagementErrorResponse';
       $.errorResponseBody['x-ms-client-name'] = 'AlertsManagementErrorResponseBody';
-      $.alert.properties.properties['x-ms-client-flatten'] = true;
-      $.alertModification.properties.properties['x-ms-client-flatten'] = true;
-      $.alertsSummary.properties.properties['x-ms-client-flatten'] = true;
   - from: SmartGroups.json
     where: $.parameters
     transform: >

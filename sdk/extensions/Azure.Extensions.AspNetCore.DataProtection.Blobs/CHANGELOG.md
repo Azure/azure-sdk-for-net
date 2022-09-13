@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.3 (2022-09-12)
+
+### Other Changes
+
+- Updated dependency version of `System.Security.Cryptography` to mitigate [CVE-2022-34716](https://github.com/advisories/GHSA-2m65-m22p-9wjw).
+
 ## 1.2.2 (2022-09-06)
 
 ### Other Changes
