@@ -10,8 +10,6 @@
 
 ### Other Changes
 
-- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
-
 ## 1.0.0 (2022-07-21)
 
 This is the first stable release of the Azure Service Linker management library.
