@@ -9,6 +9,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
+using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Trace;
 using Xunit;
 
@@ -59,12 +60,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
+                .SetSampler(new ApplicationInsightsSampler(1.0F))
                 .AddProcessor(testProcessor)
-                .AddAzureMonitorTraceExporter(o =>
-                {
-                    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-                    o.SamplingRatio = 1F;
-                })
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))

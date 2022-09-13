@@ -118,7 +118,6 @@
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.3.1"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
     <PackageReference Update="OpenTelemetry.Extensions.PersistentStorage" Version="1.0.0-beta.1" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
-	<PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" Version="1.0.0-beta.2" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
   <!--

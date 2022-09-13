@@ -13,7 +13,6 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.Extensions.PersistentStorage" />
-    <PackageReference Include="OpenTelemetry.Extensions.AzureMonitor" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

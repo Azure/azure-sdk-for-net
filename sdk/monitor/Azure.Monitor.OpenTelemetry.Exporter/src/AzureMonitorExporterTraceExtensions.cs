@@ -3,7 +3,6 @@
 
 using System;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -31,8 +30,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             // TODO: provide a way to turn off statsbeat
             // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
-
-            builder.SetSampler(new ApplicationInsightsSampler(options.SamplingRatio));
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
             return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
