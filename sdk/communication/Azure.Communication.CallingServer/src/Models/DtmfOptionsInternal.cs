@@ -6,10 +6,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("DtmfConfigurations")]
-    internal partial class DtmfConfigurationsInternal
+    [CodeGenModel("DtmfOptions")]
+    public partial class DtmfOptionsInternal
     {
+        /// <summary>
+        /// Tones to stop by.
+        /// </summary>
         [CodeGenMember("StopTones")]
-        public IList<StopTones> StopTones { get; set; }
+        public IReadOnlyList<DtmfTone> StopTones { get; set; }
     }
 }

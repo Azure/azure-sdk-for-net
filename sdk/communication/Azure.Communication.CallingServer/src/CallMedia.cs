@@ -202,7 +202,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> RecognizeAsync(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RecognizeAsync(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response Recognize(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        public virtual Response Recognize(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
             scope.Start();
@@ -240,52 +240,52 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        private static RecognizeRequestInternal CreateRecognizeRequest(RecognizeOptions recognizeOptions)
+        private static RecognizeRequestInternal CreateRecognizeRequest(CallMediaRecognizeOptions callMediaRecognizeOptions)
         {
+            if (callMediaRecognizeOptions == null)
+                throw new ArgumentNullException(nameof(callMediaRecognizeOptions));
+
+            RecognizeOptions recognizeOptions = callMediaRecognizeOptions.RecognizeOptions;
+
             if (recognizeOptions == null)
-                throw new ArgumentNullException(nameof(recognizeOptions));
-            RecognizeConfigurations recognizeConfigurations = recognizeOptions.RecognizeConfigurations;
+                throw new ArgumentException(nameof(recognizeOptions));
 
-            if (recognizeConfigurations == null)
-                throw new ArgumentException(nameof(recognizeConfigurations));
-
-            DtmfConfigurationsInternal dtmfConfigurations = null;
-            if (recognizeConfigurations.DtmfConfigurations != null)
+            DtmfOptionsInternal dtmfConfigurations = null;
+            if (recognizeOptions.DtmfOptions != null)
             {
-                dtmfConfigurations = new DtmfConfigurationsInternal()
+                dtmfConfigurations = new DtmfOptionsInternal()
                 {
-                    InterToneTimeoutInSeconds = (int)recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds?.TotalSeconds,
-                    MaxTonesToCollect = recognizeConfigurations.DtmfConfigurations.MaxTonesToCollect,
-                    StopTones = (IList<StopTones>)recognizeConfigurations.DtmfConfigurations.StopTones
+                    InterToneTimeoutInSeconds = (int)recognizeOptions.DtmfOptions.InterToneTimeoutInSeconds?.TotalSeconds,
+                    MaxTonesToCollect = recognizeOptions.DtmfOptions.MaxTonesToCollect,
+                    StopTones = recognizeOptions.DtmfOptions.StopTones
                 };
             }
 
-            RecognizeConfigurationsInternal recognizeConfigurationsInternal = new RecognizeConfigurationsInternal()
+            RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeOptions.TargetParticipant))
             {
-                DtmfConfigurations = dtmfConfigurations,
-                InterruptPromptAndStartRecognition = recognizeConfigurations.InterruptPromptAndStartRecognition,
-                InitialSilenceTimeoutInSeconds = (int)recognizeConfigurations.InitialSilenceTimeoutInSeconds?.TotalSeconds,
-                TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeConfigurations.TargetParticipant)
+                DtmfOptions = dtmfConfigurations,
+                InterruptPrompt = recognizeOptions.InterruptPrompt,
+                InitialSilenceTimeoutInSeconds = (int)recognizeOptions.InitialSilenceTimeoutInSeconds?.TotalSeconds,
             };
 
-            RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeOptions.RecognizeInputType, recognizeConfigurationsInternal);
+            RecognizeRequestInternal request = new RecognizeRequestInternal(RecognizeInputType.Dtmf, recognizeConfigurationsInternal);
 
-            if (recognizeOptions.Prompt != null && recognizeOptions.Prompt is FileSource fileSource)
+            if (callMediaRecognizeOptions.Prompt != null && callMediaRecognizeOptions.Prompt is FileSource fileSource)
             {
                 PlaySourceInternal sourceInternal;
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
                 sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
+                sourceInternal.PlaySourceId = callMediaRecognizeOptions.Prompt.PlaySourceId;
 
                 request.PlayPrompt = sourceInternal;
             }
-            else if (recognizeOptions.Prompt != null)
+            else if (callMediaRecognizeOptions.Prompt != null)
             {
-                throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
+                throw new NotSupportedException(callMediaRecognizeOptions.Prompt.GetType().Name);
             }
 
-            request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
-            request.OperationContext = recognizeOptions.OperationContext;
+            request.InterruptCallMediaOperation = callMediaRecognizeOptions.InterruptCallMediaOperation;
+            request.OperationContext = callMediaRecognizeOptions.OperationContext;
 
             return request;
         }

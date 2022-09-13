@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Determines the sub-type pf the recognize operation. </summary>
+    /// <summary>
+    /// Determines the sub-type pf the recognize operation.
+    /// In case of cancel operaion the this field is not set and is returned empty
+    /// </summary>
     public readonly partial struct RecognitionType : IEquatable<RecognitionType>
     {
         private readonly string _value;

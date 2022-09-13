@@ -9,10 +9,10 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The DtmfConfigurations.
     /// </summary>
-    public class DtmfConfigurations
+    public class DtmfOptions
     {
         /// <summary> Initializes a new instance of DtmfConfigurations. </summary>
-        public DtmfConfigurations()
+        public DtmfOptions()
         {
         }
 
@@ -21,6 +21,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Maximum number of DTMFs to be collected. </summary>
         public int? MaxTonesToCollect { get; set; }
         /// <summary> List of tones that will stop recognizing. </summary>
-        public IEnumerable<StopTones> StopTones { get; set; }
+        public IReadOnlyList<DtmfTone> StopTones { get; set; }
     }
 }

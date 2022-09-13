@@ -182,7 +182,7 @@ namespace Azure.Communication.CallingServer
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
-                var answerResponse = ServerCallingRestClient.AnswerCall(request, cancellationToken);
+                var answerResponse = ServerCallingRestClient.AnswerCall(request, cancellationToken: cancellationToken);
 
                 return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
                     answerResponse.GetRawResponse());
@@ -196,8 +196,7 @@ namespace Azure.Communication.CallingServer
 
         private static AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
         {
-            AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext);
-            request.CallbackUri = options.CallbackEndpoint.AbsoluteUri;
+            AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackEndpoint.AbsoluteUri);
             request.MediaStreamingConfiguration = CreateMediaStreamingConfigurationInternal(options.MediaStreamingConfiguration);
 
             return request;
@@ -345,7 +344,7 @@ namespace Azure.Communication.CallingServer
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = await ServerCallingRestClient.CreateCallAsync(
-                    body: request,
+                    createCallRequest: request,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
@@ -398,7 +397,7 @@ namespace Azure.Communication.CallingServer
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = ServerCallingRestClient.CreateCall(
-                    body: request,
+                    createCallRequest: request,
                     cancellationToken: cancellationToken
                     );
 

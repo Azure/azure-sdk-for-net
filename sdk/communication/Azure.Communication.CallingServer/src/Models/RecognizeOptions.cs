@@ -1,46 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// Optional elements for Recognize.
+    /// Recognize Options
     /// </summary>
     public class RecognizeOptions
     {
         /// <summary>
-        /// Initializes a RecognizeOptions object.
+        /// Initializes Recognize Options.
         /// </summary>
-        /// <param name="recognizeInputType"></param>
-        /// <param name="recognizeConfigurations"></param>
-        public RecognizeOptions(RecognizeInputType recognizeInputType, RecognizeConfigurations recognizeConfigurations)
+        /// <param name="targetParticipant"></param>
+        public RecognizeOptions(CommunicationIdentifier targetParticipant)
         {
-            RecognizeInputType = recognizeInputType;
-            RecognizeConfigurations = recognizeConfigurations;
+            TargetParticipant = targetParticipant;
         }
-        /// <summary>
-        /// Recognize Input Type.
-        /// </summary>
-        public RecognizeInputType RecognizeInputType { get; }
-
-        /// <summary>
-        /// Recognize Configurations.
-        /// </summary>
-        public RecognizeConfigurations RecognizeConfigurations { get; }
-
-        /// <summary>
-        /// Should stop current Operations?.
-        /// </summary>
-        public bool? StopCurrentOperations { get; set; }
-
-        /// <summary>
-        /// Operation Context.
-        /// </summary>
-        public string OperationContext { get; set; }
-
-        /// <summary>
-        /// PlaySource information.
-        /// </summary>
-        public PlaySource Prompt { get; set; }
+        /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
+        public bool? InterruptPrompt { get; set; }
+        /// <summary> Time to wait for first input after prompt (if any). </summary>
+        public TimeSpan? InitialSilenceTimeoutInSeconds { get; set; }
+        /// <summary> Target participant of DTFM tone recognition. </summary>
+        public CommunicationIdentifier TargetParticipant { get; }
+        /// <summary> Defines configurations for DTMF. </summary>
+        public DtmfOptions DtmfOptions { get; set; }
     }
 }
