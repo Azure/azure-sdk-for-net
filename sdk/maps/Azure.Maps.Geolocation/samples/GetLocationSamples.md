@@ -1,6 +1,6 @@
 # Get Location Samples
 
-To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation#getting-started) for details.
+To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.GeoLocation#getting-started) for details.
 
 ## Get Location with IP Address
 

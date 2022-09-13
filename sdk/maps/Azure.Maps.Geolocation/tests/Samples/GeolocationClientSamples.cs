@@ -5,18 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Azure.Core;
-using Azure.Maps.Geolocation;
+using Azure.Maps.GeoLocation;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Maps.Geolocation.Tests
+namespace Azure.Maps.GeoLocation.Tests
 {
-    public class GeolocationClientSamples : SamplesBase<GeolocationClientTestEnvironment>
+    public class GeoLocationClientSamples : SamplesBase<GeoLocationClientTestEnvironment>
     {
-        public void GeolocationClientViaAAD()
+        public void GeoLocationClientViaAAD()
         {
-            #region Snippet:InstantiateGeolocationClientViaAAD
-            // Create a MapsGeolocationClient that will authenticate through Active Directory
+            #region Snippet:InstantiateGeoLocationClientViaAAD
+            // Create a MapsGeoLocationClient that will authenticate through Active Directory
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
             string clientId = "<Your Map ClientId>";
@@ -24,16 +24,16 @@ namespace Azure.Maps.Geolocation.Tests
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
 #endif
-            MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
+            MapsGeoLocationClient client = new MapsGeoLocationClient(credential, clientId);
             #endregion
         }
 
-        public void GeolocationClientViaSubscriptionKey()
+        public void GeoLocationClientViaSubscriptionKey()
         {
-            #region Snippet:InstantiateGeolocationClientViaSubscriptionKey
-            // Create a MapsGeolocationClient that will authenticate through Subscription Key (Shared key)
+            #region Snippet:InstantiateGeoLocationClientViaSubscriptionKey
+            // Create a MapsGeoLocationClient that will authenticate through Subscription Key (Shared key)
             AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-            MapsGeolocationClient client = new MapsGeolocationClient(credential);
+            MapsGeoLocationClient client = new MapsGeoLocationClient(credential);
             #endregion
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Maps.Geolocation.Tests
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
-            MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
+            MapsGeoLocationClient client = new MapsGeoLocationClient(credential, clientId);
 
             #region Snippet:GetLocation
             //Get location by given IP address
@@ -57,13 +57,13 @@ namespace Azure.Maps.Geolocation.Tests
         }
 
         [Test]
-        public void GetGeolocationDirectionsError()
+        public void GetGeoLocationDirectionsError()
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
-            MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
+            MapsGeoLocationClient client = new MapsGeoLocationClient(credential, clientId);
 
-            #region Snippet:CatchGeolocationException
+            #region Snippet:CatchGeoLocationException
             try
             {
                 // An invalid IP address

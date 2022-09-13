@@ -7,7 +7,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-bcc5f27d9af895a7d213f6b81ea86dbb-dbf35481d3bbfa20-00",
-        "User-Agent": "azsdk-net-Maps.Geolocation/1.0.0-alpha.20220819.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "User-Agent": "azsdk-net-Maps.GeoLocation/1.0.0-alpha.20220819.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "af2448e6-f867-486e-b7ae-2d463a73b282",
         "x-ms-client-request-id": "cda067b4e72c3e9507034a7ef6b4eb3f",
         "x-ms-return-client-request-id": "true"

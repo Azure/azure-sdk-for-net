@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     /// <summary> The error detail. </summary>
     [CodeGenModel("ErrorDetail")]

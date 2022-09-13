@@ -4,9 +4,9 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.Maps.Geolocation;
+using Azure.Maps.GeoLocation;
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>
     [CodeGenModel("IpAddressToLocationResult")]

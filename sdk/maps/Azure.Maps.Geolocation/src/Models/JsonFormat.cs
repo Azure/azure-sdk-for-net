@@ -6,7 +6,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     /// <summary> The JsonFormat. </summary>
     [CodeGenModel("JsonFormat")]

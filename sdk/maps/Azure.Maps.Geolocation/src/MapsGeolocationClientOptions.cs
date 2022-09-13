@@ -6,10 +6,10 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
-    /// <summary> Client options for GeolocationClient. </summary>
-    public partial class MapsGeolocationClientOptions : ClientOptions
+    /// <summary> Client options for GeoLocationClient. </summary>
+    public partial class MapsGeoLocationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
@@ -24,9 +24,9 @@ namespace Azure.Maps.Geolocation
 
         internal Uri Endpoint { get; }
 
-        /// <summary> Initializes new instance of GeolocationClientOptions. </summary>
-        /// <param name="version"> Geolocation service version. </param>
-        public MapsGeolocationClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of GeoLocationClientOptions. </summary>
+        /// <param name="version"> GeoLocation service version. </param>
+        public MapsGeoLocationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

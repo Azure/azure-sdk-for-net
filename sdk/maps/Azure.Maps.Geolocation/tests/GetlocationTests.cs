@@ -5,12 +5,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Maps.Geolocation;
+using Azure.Maps.GeoLocation;
 using NUnit.Framework;
 
-namespace Azure.Maps.Geolocation.Tests
+namespace Azure.Maps.GeoLocation.Tests
 {
-    public class GetLocationTests : GeolocationClientLiveTestsBase
+    public class GetLocationTests : GeoLocationClientLiveTestsBase
     {
         public GetLocationTests(bool isAsync) : base(isAsync)
         {

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>
     public partial class IpAddressToLocationResult

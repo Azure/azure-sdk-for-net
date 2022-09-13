@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     /// <summary> The resource management error additional info. </summary>
     internal partial class ErrorAdditionalInfo

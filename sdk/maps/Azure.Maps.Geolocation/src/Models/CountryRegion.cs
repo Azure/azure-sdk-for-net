@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     /// <summary> The object containing the country/region information. </summary>
     [CodeGenModel("CountryRegion")]

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     /// <summary> The JsonFormat. </summary>
     internal readonly partial struct JsonFormat : IEquatable<JsonFormat>

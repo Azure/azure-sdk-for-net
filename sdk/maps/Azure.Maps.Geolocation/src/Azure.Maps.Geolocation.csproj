@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Azure Maps Azure.Maps.Geolocation</Description>
-    <AssemblyTitle>Azure Maps Azure.Maps.Geolocation</AssemblyTitle>
+    <Description>Azure Maps Azure.Maps.GeoLocation</Description>
+    <AssemblyTitle>Azure Maps Azure.Maps.GeoLocation</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Geolocation</PackageTags>
+    <PackageTags>Azure;Azure Maps;Maps Azure.Maps.GeoLocation</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
   </PropertyGroup>

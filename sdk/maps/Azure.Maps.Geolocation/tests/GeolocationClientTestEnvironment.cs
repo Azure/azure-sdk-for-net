@@ -4,9 +4,9 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.Maps.Geolocation.Tests
+namespace Azure.Maps.GeoLocation.Tests
 {
-    public class GeolocationClientTestEnvironment : TestEnvironment
+    public class GeoLocationClientTestEnvironment : TestEnvironment
     {
         public Uri Endpoint
         {

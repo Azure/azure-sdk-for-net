@@ -1,8 +1,8 @@
-# Azure Maps Geolocation client library for .NET
+# Azure Maps GeoLocation client library for .NET
 
-Azure Maps Geolocation is a library that can find geolocation to a location or points of interest.
+Azure Maps GeoLocation is a library that can find geolocation to a location or points of interest.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/geolocation) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.GeoLocation/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/geolocation) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -11,7 +11,7 @@ Azure Maps Geolocation is a library that can find geolocation to a location or p
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Maps.Geolocation --prerelease
+dotnet add package Azure.Maps.GeoLocation --prerelease
 ```
 
 ### Prerequisites
@@ -33,34 +33,34 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 * Go to Azure Maps account > Authentication tab
 * Copy `Primary Key` or `Secondary Key` under **Shared Key Authentication** section
 
-```C# Snippet:InstantiateGeolocationClientViaSubscriptionKey
-// Create a MapsGeolocationClient that will authenticate through Subscription Key (Shared key)
+```C# Snippet:InstantiateGeoLocationClientViaSubscriptionKey
+// Create a MapsGeoLocationClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-MapsGeolocationClient client = new MapsGeolocationClient(credential);
+MapsGeoLocationClient client = new MapsGeoLocationClient(credential);
 ```
 
 #### Azure AD authentication
 
-In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsGeolocationClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsGeoLocationClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
 To use AAD authentication, set the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsRouteClient`.
 
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
-```C# Snippet:InstantiateGeolocationClientViaAAD
-// Create a MapsGeolocationClient that will authenticate through Active Directory
+```C# Snippet:InstantiateGeoLocationClientViaAAD
+// Create a MapsGeoLocationClient that will authenticate through Active Directory
 TokenCredential credential = new DefaultAzureCredential();
 string clientId = "<Your Map ClientId>";
-MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
+MapsGeoLocationClient client = new MapsGeoLocationClient(credential, clientId);
 ```
 
 ## Key concepts
 
-`MapsGeolocationClient` is designed for:
+`MapsGeoLocationClient` is designed for:
 
-* Communicate with Azure Maps Geolocation SDK endpoint to get location from given IP address
+* Communicate with Azure Maps GeoLocation SDK endpoint to get location from given IP address
 
-Learn more about examples in [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/samples)
+Learn more about examples in [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.GeoLocation/samples)
 
 ### Thread safety
 
@@ -79,15 +79,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using our [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/samples).
+You can familiarize yourself with different APIs using our [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.GeoLocation/samples).
 
-Before calling geolocation APIs, instantiate a `MapsGeolocationClient` first. Below example uses AAD to create the client instance:
+Before calling geolocation APIs, instantiate a `MapsGeoLocationClient` first. Below example uses AAD to create the client instance:
 
-```C# Snippet:InstantiateGeolocationClientViaAAD
-// Create a MapsGeolocationClient that will authenticate through Active Directory
+```C# Snippet:InstantiateGeoLocationClientViaAAD
+// Create a MapsGeoLocationClient that will authenticate through Active Directory
 TokenCredential credential = new DefaultAzureCredential();
 string clientId = "<Your Map ClientId>";
-MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
+MapsGeoLocationClient client = new MapsGeoLocationClient(credential, clientId);
 ```
 
 ### Get Location
@@ -103,7 +103,7 @@ Response<IpAddressToLocationResult> result = client.GetLocation(ipAddress);
 Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");
 ```
 
-For more detailed examples, please [geolocation range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Geolocation/samples/GetLocationSamples.md) page.
+For more detailed examples, please [geolocation range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.GeoLocation/samples/GetLocationSamples.md) page.
 
 ## Troubleshooting
 
@@ -113,7 +113,7 @@ When you interact with the Azure Maps services, errors returned by the Language 
 
 For example, if you pass wrong IP address, an error is returned, indicating "Bad Request" (HTTP Status code: 400).
 
-```C# Snippet:CatchGeolocationException
+```C# Snippet:CatchGeoLocationException
 try
 {
     // An invalid IP address
@@ -130,7 +130,7 @@ catch (RequestFailedException e)
 
 ## Next steps
 
-* For more context and additional scenarios, please see: [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation/samples)
+* For more context and additional scenarios, please see: [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.GeoLocation/samples)
 
 ## Contributing
 

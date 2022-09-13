@@ -3,20 +3,20 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Maps.Geolocation.Tests
+namespace Azure.Maps.GeoLocation.Tests
 {
-    public class GeolocationClientLiveTestsBase : RecordedTestBase<GeolocationClientTestEnvironment>
+    public class GeoLocationClientLiveTestsBase : RecordedTestBase<GeoLocationClientTestEnvironment>
     {
-        public GeolocationClientLiveTestsBase(bool isAsync) : base(isAsync)
+        public GeoLocationClientLiveTestsBase(bool isAsync) : base(isAsync)
         {
         }
 
-        protected MapsGeolocationClient CreateClient()
+        protected MapsGeoLocationClient CreateClient()
         {
-            return InstrumentClient(new MapsGeolocationClient(
+            return InstrumentClient(new MapsGeoLocationClient(
                 credential: TestEnvironment.Credential,
                 clientId: TestEnvironment.MapAccountClientId,
-                options: InstrumentClientOptions(new MapsGeolocationClientOptions())
+                options: InstrumentClientOptions(new MapsGeoLocationClientOptions())
             ));
         }
     }

@@ -5,14 +5,14 @@ languages:
 products:
 - azure
 - azure-maps
-name: Azure.Maps.Geolocation samples for .NET
-description: Samples for the Azure.Maps.Geolocation client library.
+name: Azure.Maps.GeoLocation samples for .NET
+description: Samples for the Azure.Maps.GeoLocation client library.
 ---
 
-# Azure.Maps.Geolocation Samples
+# Azure.Maps.GeoLocation Samples
 
 ## Use Cases
 
 For different APIs, please refer the following samples:
 
-[Get Location](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Geolocation/samples/GetLocationSamples.md)
+[Get Location](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.GeoLocation/samples/GetLocationSamples.md)

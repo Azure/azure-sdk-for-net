@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28/specification/maps/data-plane/Geolocation/preview/1.0/geolocation.json
-title: MapsGeolocationClient
+title: MapsGeoLocationClient
 openapi-type: data-plane
 tag: 1.0
 add-credentials: true
@@ -21,7 +21,7 @@ use-extension:
 generation1-convenience-client: true
 sync-methods: None
 license-header: MICROSOFT_MIT_NO_VERSION
-namespace: Azure.Maps.Geolocation
+namespace: Azure.Maps.GeoLocation
 public-clients: false
 clear-output-folder: true
 data-plane: true

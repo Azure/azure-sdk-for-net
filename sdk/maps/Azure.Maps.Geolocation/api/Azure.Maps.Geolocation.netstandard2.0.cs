@@ -1,4 +1,4 @@
-namespace Azure.Maps.Geolocation
+namespace Azure.Maps.GeoLocation
 {
     public partial class IpAddressToLocationResult
     {
@@ -6,19 +6,19 @@ namespace Azure.Maps.Geolocation
         public string IpAddress { get { throw null; } }
         public string IsoCode { get { throw null; } }
     }
-    public partial class MapsGeolocationClient
+    public partial class MapsGeoLocationClient
     {
-        protected MapsGeolocationClient() { }
-        public MapsGeolocationClient(Azure.AzureKeyCredential credential) { }
-        public MapsGeolocationClient(Azure.AzureKeyCredential credential, Azure.Maps.Geolocation.MapsGeolocationClientOptions options) { }
-        public MapsGeolocationClient(Azure.Core.TokenCredential credential, string clientId) { }
-        public MapsGeolocationClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Geolocation.MapsGeolocationClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Geolocation.IpAddressToLocationResult> GetLocation(string ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Geolocation.IpAddressToLocationResult>> GetLocationAsync(string ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected MapsGeoLocationClient() { }
+        public MapsGeoLocationClient(Azure.AzureKeyCredential credential) { }
+        public MapsGeoLocationClient(Azure.AzureKeyCredential credential, Azure.Maps.GeoLocation.MapsGeoLocationClientOptions options) { }
+        public MapsGeoLocationClient(Azure.Core.TokenCredential credential, string clientId) { }
+        public MapsGeoLocationClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.GeoLocation.MapsGeoLocationClientOptions options) { }
+        public virtual Azure.Response<Azure.Maps.GeoLocation.IpAddressToLocationResult> GetLocation(string ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.GeoLocation.IpAddressToLocationResult>> GetLocationAsync(string ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MapsGeolocationClientOptions : Azure.Core.ClientOptions
+    public partial class MapsGeoLocationClientOptions : Azure.Core.ClientOptions
     {
-        public MapsGeolocationClientOptions(Azure.Maps.Geolocation.MapsGeolocationClientOptions.ServiceVersion version = Azure.Maps.Geolocation.MapsGeolocationClientOptions.ServiceVersion.V1) { }
+        public MapsGeoLocationClientOptions(Azure.Maps.GeoLocation.MapsGeoLocationClientOptions.ServiceVersion version = Azure.Maps.GeoLocation.MapsGeoLocationClientOptions.ServiceVersion.V1) { }
         public enum ServiceVersion
         {
             V1 = 1,

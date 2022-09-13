@@ -39,5 +39,5 @@ extends:
       safeName: AzureMapsSearch
     - name: Azure.Maps.Common
       safeName: AzureMapsCommon
-    - name: Azure.Maps.Geolocation
-      safeName: AzureMapsGeolocation
+    - name: Azure.Maps.GeoLocation
+      safeName: AzureMapsGeoLocation
