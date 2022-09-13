@@ -1187,11 +1187,11 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilityAttachedDatabaseConfigurationAsync(KustoAttachedDatabaseConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoAttachedDatabaseConfigurationNameAvailabilityAsync(KustoAttachedDatabaseConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilityAttachedDatabaseConfiguration");
+            using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoAttachedDatabaseConfigurationNameAvailability");
             scope.Start();
             try
             {
@@ -1213,11 +1213,11 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<KustoNameAvailabilityResult> CheckNameAvailabilityAttachedDatabaseConfiguration(KustoAttachedDatabaseConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<KustoNameAvailabilityResult> CheckKustoAttachedDatabaseConfigurationNameAvailability(KustoAttachedDatabaseConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilityAttachedDatabaseConfiguration");
+            using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoAttachedDatabaseConfigurationNameAvailability");
             scope.Start();
             try
             {

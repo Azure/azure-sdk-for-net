@@ -17,7 +17,7 @@ modelerfour:
   flatten-payloads: false
 
 override-operation-name:
-  CheckNameAvailabilityAttachedDatabaseConfiguration: CheckKustoAttachedDatabaseConfigurationNameAvailability
+  AttachedDatabaseConfigurations_CheckNameAvailability: CheckKustoAttachedDatabaseConfigurationNameAvailability
   ClusterPrincipalAssignments_CheckNameAvailability: CheckKustoClusterPrincipalAssignmentNameAvailability
   Databases_CheckNameAvailability: CheckKustoDatabaseNameAvailability
   ManagedPrivateEndpoints_CheckNameAvailability: CheckKustoManagedPrivateEndpointNameAvailability
@@ -89,7 +89,7 @@ rename-mapping:
   Script.properties.continueOnErrors: ShouldContinueOnErrors
   Script.properties.scriptUrlSasToken: ScriptUriSasToken
   ClusterCheckNameRequest: KustoClusterNameAvailabilityContent
-  Type: KustoResourceType
+  Type: KustoDatabaseResourceType
   AzureCapacity: KustoCapacity
   AzureScaleType: KustoScaleType
   AzureSkuName: KustoSkuName

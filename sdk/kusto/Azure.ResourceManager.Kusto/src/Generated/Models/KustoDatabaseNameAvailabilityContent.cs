@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public KustoDatabaseNameAvailabilityContent(string name, KustoResourceType resourceType)
+        public KustoDatabaseNameAvailabilityContent(string name, KustoDatabaseResourceType resourceType)
         {
             if (name == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/databases. </summary>
-        public KustoResourceType ResourceType { get; }
+        public KustoDatabaseResourceType ResourceType { get; }
     }
 }

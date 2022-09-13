@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/databases. </summary>
-    public enum KustoResourceType
+    public enum KustoDatabaseResourceType
     {
         /// <summary> Microsoft.Kusto/clusters/databases. </summary>
         MicrosoftKustoClustersDatabases,

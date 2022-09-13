@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.Kusto
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AddLanguageExtensionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.LanguageExtensionList languageExtensionsToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckKustoAttachedDatabaseConfigurationNameAvailability(Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckKustoAttachedDatabaseConfigurationNameAvailabilityAsync(Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckKustoClusterPrincipalAssignmentNameAvailability(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckKustoClusterPrincipalAssignmentNameAvailabilityAsync(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckKustoDatabaseNameAvailability(Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckKustoDatabaseNameAvailabilityAsync(Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckKustoManagedPrivateEndpointNameAvailability(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckKustoManagedPrivateEndpointNameAvailabilityAsync(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckNameAvailabilityAttachedDatabaseConfiguration(Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckNameAvailabilityAttachedDatabaseConfigurationAsync(Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -830,9 +830,9 @@ namespace Azure.ResourceManager.Kusto.Models
     }
     public partial class KustoDatabaseNameAvailabilityContent
     {
-        public KustoDatabaseNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoResourceType resourceType) { }
+        public KustoDatabaseNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoDatabaseResourceType resourceType) { }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Kusto.Models.KustoResourceType ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseResourceType ResourceType { get { throw null; } }
     }
     public partial class KustoDatabasePrincipal
     {
@@ -908,6 +908,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public enum KustoDatabaseResourceType
+    {
+        MicrosoftKustoClustersDatabases = 0,
+        MicrosoftKustoClustersAttachedDatabaseConfigurations = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KustoDatabaseRouting : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting>
@@ -1222,11 +1227,6 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan? SoftDeletePeriod { get { throw null; } set { } }
         public float? StatisticsSize { get { throw null; } }
-    }
-    public enum KustoResourceType
-    {
-        MicrosoftKustoClustersDatabases = 0,
-        MicrosoftKustoClustersAttachedDatabaseConfigurations = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KustoScaleType : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoScaleType>
