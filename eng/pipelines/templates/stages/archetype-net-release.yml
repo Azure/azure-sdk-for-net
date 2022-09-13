@@ -240,7 +240,7 @@ stages:
 
             - ${{if ne(artifact.skipSmokeTests, 'true')}}:
               - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
-                - template: /eng/pipelines/templates/jobs/smoke.tests.yml
+                - template: /eng/pipelines/templates/jobs/new.smoke.tests.yml
                   parameters:
                     Daily: false
                     Artifact: ${{ artifact }}
