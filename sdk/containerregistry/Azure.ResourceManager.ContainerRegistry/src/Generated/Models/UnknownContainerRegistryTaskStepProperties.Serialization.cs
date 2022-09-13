@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTaskStepProperties : IUtf8JsonSerializable
+    internal partial class UnknownContainerRegistryTaskStepProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,17 +31,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryTaskStepProperties DeserializeContainerRegistryTaskStepProperties(JsonElement element)
+        internal static UnknownContainerRegistryTaskStepProperties DeserializeUnknownContainerRegistryTaskStepProperties(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Docker": return ContainerRegistryDockerBuildStep.DeserializeContainerRegistryDockerBuildStep(element);
-                    case "EncodedTask": return ContainerRegistryEncodedTaskStep.DeserializeContainerRegistryEncodedTaskStep(element);
-                    case "FileTask": return ContainerRegistryFileTaskStep.DeserializeContainerRegistryFileTaskStep(element);
-                }
-            }
             ContainerRegistryTaskStepType type = default;
             Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
             Optional<string> contextPath = default;
