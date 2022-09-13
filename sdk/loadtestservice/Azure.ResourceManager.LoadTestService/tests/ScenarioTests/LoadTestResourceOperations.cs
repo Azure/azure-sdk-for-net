@@ -9,7 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.LoadTestService.Models;
 using Azure.ResourceManager.LoadTestService.Tests.Helpers;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.LoadTestService.Tests
         private LoadTestResource _loadTestResource { get; set; }
         private LoadTestResourceData _loadTestResourceData { get; set; }
 
-        public LoadTestResourceOperations(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public LoadTestResourceOperations(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -63,8 +65,16 @@ namespace Azure.ResourceManager.LoadTestService.Tests
             Assert.IsNotNull(loadTestGetResponseValue);
             Assert.AreEqual(loadTestResourceName, loadTestGetResponseValue.Data.Name);
 
+            //// Patch
+            LoadTestResourcePatch resourcePatchPayload = new LoadTestResourcePatch
+            {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            };
+            ArmOperation<LoadTestResource> loadTestPatchResponse = await loadTestGetResponseValue.UpdateAsync(WaitUntil.Completed,resourcePatchPayload);
+            LoadTestResource loadTestPatchResponseValue = loadTestPatchResponse.Value;
+
             //// Delete
-            var loadTestDeleteResponse = await loadTestGetResponseValue.DeleteAsync(WaitUntil.Completed);
+            var loadTestDeleteResponse = await loadTestPatchResponseValue.DeleteAsync(WaitUntil.Completed);
             await loadTestDeleteResponse.WaitForCompletionResponseAsync();
             Assert.IsTrue(loadTestDeleteResponse.HasCompleted);
         }

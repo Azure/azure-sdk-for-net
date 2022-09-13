@@ -8,9 +8,9 @@ azure-arm: true
 csharp: true
 library-name: LoadTestService
 namespace: Azure.ResourceManager.LoadTestService
-input-file: D:\Work\MALT\azure-rest-api-specs-pr\specification\loadtestservice\resource-manager\Microsoft.LoadTestService\preview\2022-04-15-preview\loadtestservice.json
+input-file: D:\Work\MALT\azure-rest-api-specs-pr\specification\loadtestservice\resource-manager\Microsoft.LoadTestService\preview\2022-08-01-preview\loadtestservice.json
 #require: D:\Work\MALT\azure-rest-api-specs-pr\specification\loadtestservice\resource-manager\Microsoft.LoadTestService\preview\2022-08-01-preview\loadtestservice.json
-tag: package-2022-04-15-preview
+tag: package-2022-08-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -23,6 +23,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'dataPlaneUri': 'string'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -48,5 +49,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+- from: loadtestservice.json
+  where: definitions
+  transform: >
+    $.EncryptionProperties.properties.identity.properties.type['x-ms-client-name'] = 'identityType';
 
 ```

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.LoadTestService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-04-15-preview";
+            _apiVersion = apiVersion ?? "2022-08-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -487,6 +487,85 @@ namespace Azure.ResourceManager.LoadTestService
             }
         }
 
+        internal HttpMessage CreateListOutboundNetworkDependenciesEndpointsRequest(string subscriptionId, string resourceGroupName, string loadTestName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests/", false);
+            uri.AppendPath(loadTestName, true);
+            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists the endpoints that agents may call as part of load testing. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string loadTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+
+            using var message = CreateListOutboundNetworkDependenciesEndpointsRequest(subscriptionId, resourceGroupName, loadTestName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        OutboundEnvironmentEndpointCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists the endpoints that agents may call as part of load testing. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string loadTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+
+            using var message = CreateListOutboundNetworkDependenciesEndpointsRequest(subscriptionId, resourceGroupName, loadTestName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        OutboundEnvironmentEndpointCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -620,6 +699,82 @@ namespace Azure.ResourceManager.LoadTestService
                         LoadTestResourcePageList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = LoadTestResourcePageList.DeserializeLoadTestResourcePageList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string loadTestName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists the endpoints that agents may call as part of load testing. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string loadTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+
+            using var message = CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, subscriptionId, resourceGroupName, loadTestName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        OutboundEnvironmentEndpointCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists the endpoints that agents may call as part of load testing. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string loadTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+
+            using var message = CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, subscriptionId, resourceGroupName, loadTestName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        OutboundEnvironmentEndpointCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -40,8 +40,15 @@ namespace Azure.ResourceManager.LoadTestService.Models
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
-                writer.WriteObjectValue(Encryption);
+                if (Encryption != null)
+                {
+                    writer.WritePropertyName("encryption");
+                    writer.WriteObjectValue(Encryption);
+                }
+                else
+                {
+                    writer.WriteNull("encryption");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

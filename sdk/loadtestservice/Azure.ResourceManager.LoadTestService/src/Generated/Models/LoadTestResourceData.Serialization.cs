@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -47,8 +46,15 @@ namespace Azure.ResourceManager.LoadTestService
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
-                writer.WriteObjectValue(Encryption);
+                if (Encryption != null)
+                {
+                    writer.WritePropertyName("encryption");
+                    writer.WriteObjectValue(Encryption);
+                }
+                else
+                {
+                    writer.WriteNull("encryption");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.LoadTestService
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<ResourceState> provisioningState = default;
-            Optional<Uri> dataPlaneUri = default;
+            Optional<string> dataPlaneUri = default;
             Optional<Models.EncryptionProperties> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -151,19 +157,14 @@ namespace Azure.ResourceManager.LoadTestService
                         }
                         if (property0.NameEquals("dataPlaneURI"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                dataPlaneUri = null;
-                                continue;
-                            }
-                            dataPlaneUri = new Uri("https://"+property0.Value.GetString());
+                            dataPlaneUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                //property0.ThrowNonNullablePropertyIsNull();
+                                encryption = null;
                                 continue;
                             }
                             encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);

@@ -43,6 +43,14 @@ namespace Azure.ResourceManager.LoadTestService
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of QuotaResources in the SubscriptionResource. </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <returns> An object representing collection of QuotaResources and their operations over a QuotaResource. </returns>
+        public virtual QuotaResourceCollection GetQuotaResources(AzureLocation location)
+        {
+            return new QuotaResourceCollection(Client, Id, location);
+        }
+
         /// <summary>
         /// Lists loadtests resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/loadTests

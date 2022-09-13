@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LoadTestService.Models;
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.LoadTestService
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="dataPlaneUri"> Resource data plane URI. </param>
         /// <param name="encryption"> CMK Encryption property. </param>
-        internal LoadTestResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string description, ResourceState? provisioningState, Uri dataPlaneUri, Models.EncryptionProperties encryption) : base(id, name, resourceType, systemData, tags, location)
+        internal LoadTestResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string description, ResourceState? provisioningState, string dataPlaneUri, Models.EncryptionProperties encryption) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Description = description;
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.LoadTestService
         /// <summary> Resource provisioning state. </summary>
         public ResourceState? ProvisioningState { get; }
         /// <summary> Resource data plane URI. </summary>
-        public Uri DataPlaneUri { get; }
+        public string DataPlaneUri { get; }
         /// <summary> CMK Encryption property. </summary>
         public Models.EncryptionProperties Encryption { get; set; }
     }
