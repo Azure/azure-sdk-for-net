@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>
         internal ClusterPrincipalAssignmentListResult()
         {
-            Value = new ChangeTrackingList<ClusterPrincipalAssignmentData>();
+            Value = new ChangeTrackingList<KustoClusterPrincipalAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>
         /// <param name="value"> The list of Kusto cluster principal assignments. </param>
-        internal ClusterPrincipalAssignmentListResult(IReadOnlyList<ClusterPrincipalAssignmentData> value)
+        internal ClusterPrincipalAssignmentListResult(IReadOnlyList<KustoClusterPrincipalAssignmentData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of Kusto cluster principal assignments. </summary>
-        public IReadOnlyList<ClusterPrincipalAssignmentData> Value { get; }
+        public IReadOnlyList<KustoClusterPrincipalAssignmentData> Value { get; }
     }
 }
