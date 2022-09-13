@@ -11,13 +11,13 @@ namespace Azure.Maps.Render.Models
     public class RenderTileOptions
     {
         /// <summary> Desired format of the tile. Possible value: <c>TileFormat.Png</c> and <c>TileFormat.Pbf</c>. </summary>
-        public TileFormat Format { get; set; }
+        public TileFormat TileFormat { get; set; }
         /// <summary>
         /// Map layer requested. Possible value: <c>MapTileLayer.Basic</c>, <c>MapTileLayer.Labels</c>, <c>MapTileLayer.Hybrid</c> or <c>MapTileLayer.Terra</c>
         /// </summary>
-        public MapTileLayer Layer { get; set; }
+        public MapTileLayer TileLayer { get; set; }
         /// <summary> Map style to be returned. Possible values are <c>MapTileStyle.Main</c>, <c>MapTileStyle.Dark</c> or <c>MapTileStyle.ShadedRelief</c>. </summary>
-        public MapTileStyle Style { get; set; }
+        public MapTileStyle TileStyle { get; set; }
         /// <summary>
         /// Zoom level, and coordinate of the tile on zoom grid.
         ///
@@ -34,7 +34,7 @@ namespace Azure.Maps.Render.Models
         ///
         /// Please refer to <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported Languages</see> for details.
         /// </summary>
-        public string Language { get; set; }
+        public string RenderLanguage { get; set; }
         /// <summary>
         /// The View parameter (also called the &quot;user region&quot; parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         ///

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 #region Snippet:RenderImportNamespace
+using Azure.Maps.Render;
 using Azure.Maps.Render.Models;
 #endregion
 using Azure.Core.TestFramework;
@@ -18,10 +19,9 @@ namespace Azure.Maps.Render.Tests
         {
             #region Snippet:InstantiateRenderClientViaAAD
             // Create a MapsRenderClient that will authenticate through Active Directory
-            var endpoint = new Uri("https://atlas.microsoft.com");
             var credential = new DefaultAzureCredential();
             var clientId = "<My Map Account Client Id>";
-            MapsRenderClient client = new MapsRenderClient(credential, endpoint, clientId);
+            MapsRenderClient client = new MapsRenderClient(credential, clientId);
             #endregion
         }
 
@@ -29,9 +29,8 @@ namespace Azure.Maps.Render.Tests
         {
             #region Snippet:InstantiateRenderClientViaSubscriptionKey
             // Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
-            var endpoint = new Uri("https://atlas.microsoft.com");
             var credential = new AzureKeyCredential("<My Subscription Key>");
-            MapsRenderClient client = new MapsRenderClient(credential, endpoint);
+            MapsRenderClient client = new MapsRenderClient(credential);
             #endregion
         }
 
@@ -39,12 +38,9 @@ namespace Azure.Maps.Render.Tests
         public void RenderingImageryTiles()
         {
             #region Snippet:RenderImageryTiles
-            var endpoint = new Uri("https://atlas.microsoft.com");
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
-            #region Snippet:InstantiateRenderClient
-            var client = new MapsRenderClient(credential, endpoint, clientId);
-            #endregion
+            var client = new MapsRenderClient(credential, clientId);
 
             #region Snippet:RenderImagery
             // Get imagery tile
@@ -61,19 +57,18 @@ namespace Azure.Maps.Render.Tests
         [Test]
         public void RenderingStaticImages()
         {
-            var endpoint = new Uri("https://atlas.microsoft.com");
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, endpoint, clientId);
+            var client = new MapsRenderClient(credential, clientId);
 
             #region Snippet:RenderStaticImages
             // Get static image
             var staticImageOptions = new RenderStaticImageOptions()
             {
-                Layer = StaticMapLayer.Basic,
-                Style = MapImageStyle.Dark,
-                Center = new List<double>() { 0.0, 0.0 },
-                Language = "en",
+                TileLayer = StaticMapLayer.Basic,
+                TileStyle = MapImageStyle.Dark,
+                CenterCoordinate = new List<double>() { 0.0, 0.0 },
+                RenderLanguage = "en",
                 Height = 100,
                 Width = 100,
             };
@@ -89,18 +84,17 @@ namespace Azure.Maps.Render.Tests
         [Test]
         public void RenderingMapTiles()
         {
-            var endpoint = new Uri("https://atlas.microsoft.com");
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, endpoint, clientId);
+            var client = new MapsRenderClient(credential, clientId);
 
             #region Snippet:RenderMapTiles
             // Fetch map tiles
             var renderTileOptions = new RenderTileOptions()
             {
-                Format = TileFormat.Png,
-                Layer = MapTileLayer.Hybrid,
-                Style = MapTileStyle.Main,
+                TileFormat = TileFormat.Png,
+                TileLayer = MapTileLayer.Hybrid,
+                TileStyle = MapTileStyle.Main,
                 TileIndex = new TileIndex(10, 88, 88),
             };
             var mapTile = client.GetMapTile(renderTileOptions);

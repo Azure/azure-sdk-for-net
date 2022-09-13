@@ -12,16 +12,16 @@ namespace Azure.Maps.Render.Models
     public class RenderStaticImageOptions
     {
         /// <summary> Desired format of the response. Possible value: <c>RasterTileFormat.Png</c>. </summary>
-        public RasterTileFormat? Format { get; set; }
+        public RasterTileFormat? TileFormat { get; set; }
         /// <summary>
         /// Map layer requested. Possible value: <c>StaticMapLayer.Basic</c>, <c>StaticMapLayer.Labels</c> or <c>StaticMapLayer.Hybrid</c>
         /// If layer is set to <c>StaticMapLayer.Labels</c> or <c>StaticMapLayer.Hybrid</c>, the format should be png.
         /// </summary>
-        public StaticMapLayer? Layer { get; set; }
+        public StaticMapLayer? TileLayer { get; set; }
         /// <summary> Map style to be returned. Possible values are <c>MapImageStyle.Main</c> and <c>MapImageStyle.Dark</c>. </summary>
-        public MapImageStyle? Style { get; set; }
+        public MapImageStyle? TileStyle { get; set; }
         /// <summary> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details. </summary>
-        public int? Zoom { get; set; }
+        public int? ZoomLevel { get; set; }
         /// <summary>
         /// Coordinates of the center point. Format: &apos;lon,lat&apos;. Projection used
         /// - EPSG:3857. Longitude range: -180 to 180. Latitude range: -85 to 85.
@@ -29,7 +29,8 @@ namespace Azure.Maps.Render.Models
         /// Note: Either Center or BoundingBox are required parameters. They are
         /// mutually exclusive.
         /// </summary>
-        public IEnumerable<double> Center { get; set; }
+#pragma warning disable CA2227 // Collection properties should be read only
+        public IList<double> CenterCoordinate { get; set; }
         /// <summary>
         /// Bounding box. Projection used - EPSG:3857. Format : &apos;minLon, minLat,
         /// maxLon, maxLat&apos;.
@@ -41,7 +42,8 @@ namespace Azure.Maps.Render.Models
         /// The maximum allowed ranges for Lat and Lon are defined for each zoom level
         /// in the table at the top of this page.
         /// </summary>
-        public IEnumerable<double> BoundingBox { get; set; }
+        public IList<double> BoundingBox { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
         /// <summary>
         /// Height of the resulting image in pixels. Range is 1 to 8192. Default
         /// is 512. It shouldn’t be used with bbox.
@@ -54,7 +56,7 @@ namespace Azure.Maps.Render.Models
         ///
         /// Please refer to <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported Languages</see> for details.
         /// </summary>
-        public string Language { get; set; }
+        public string RenderLanguage { get; set; }
         /// <summary>
         /// The View parameter (also called the &quot;user region&quot; parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         ///
@@ -214,7 +216,8 @@ namespace Azure.Maps.Render.Models
         /// * X and Y coordinates can be anywhere within pin image or a margin around it.
         /// The margin size is the minimum of the pin width and height.
         /// </summary>
-        public IEnumerable<string> Pins { get; set; }
+#pragma warning disable CA2227 // Collection properties should be read only
+        public IList<string> Pins { get; set; }
         /// <summary>
         /// Path style and locations. Use this parameter to optionally add lines, polygons or circles to the image.
         /// The path style describes the appearance of the line and fill. (Be sure to properly URL-encode values of this
@@ -286,6 +289,7 @@ namespace Azure.Maps.Render.Models
         /// lw        | Line width             | Greater than 0
         /// ra        | Circle radius (meters) | Greater than 0
         /// </summary>
-        public IEnumerable<string> Path { get; set; }
+        public IList<string> Path { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
     }
 }

@@ -47,12 +47,12 @@ namespace Azure.Maps.Render.Models
         }
 
         /// <summary> Initializes a new instance of RegionCopyrightsCountry. </summary>
-        /// <param name="isO3"> ISO3 property. </param>
+        /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
         /// <returns> A new <see cref="Models.RegionCopyrightsCountry"/> instance for mocking. </returns>
-        public static RegionCopyrightsCountry RegionCopyrightsCountry(string isO3 = null, string label = null)
+        public static RegionCopyrightsCountry RegionCopyrightsCountry(string iso3 = null, string label = null)
         {
-            return new RegionCopyrightsCountry(isO3, label);
+            return new RegionCopyrightsCountry(iso3, label);
         }
     }
 }

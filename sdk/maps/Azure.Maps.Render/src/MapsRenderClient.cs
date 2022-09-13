@@ -37,13 +37,12 @@ namespace Azure.Maps.Render
 
         /// <summary> Initializes a new instance of MapsRenderClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        public MapsRenderClient(AzureKeyCredential credential, Uri endpoint)
+        public MapsRenderClient(AzureKeyCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
+            var endpoint = new Uri("https://atlas.microsoft.com");
             var options = new MapsRenderClientOptions();
-            endpoint ??= new Uri("https://atlas.microsoft.com");
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
             restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
@@ -51,9 +50,37 @@ namespace Azure.Maps.Render
 
         /// <summary> Initializes a new instance of MapsRenderClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MapsRenderClient(AzureKeyCredential credential, Uri endpoint = null, MapsRenderClientOptions options = null)
+        public MapsRenderClient(AzureKeyCredential credential, MapsRenderClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            options ??= new MapsRenderClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
+        public MapsRenderClient(Uri endpoint, AzureKeyCredential credential)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            endpoint ??= new Uri("https://atlas.microsoft.com");
+            var options = new MapsRenderClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsRenderClient(Uri endpoint, AzureKeyCredential credential, MapsRenderClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -66,9 +93,40 @@ namespace Azure.Maps.Render
 
         /// <summary> Initializes a new instance of MapsRenderClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
-        public MapsRenderClient(TokenCredential credential, Uri endpoint, string clientId)
+        public MapsRenderClient(TokenCredential credential, string clientId)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsRenderClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsRenderClient(TokenCredential credential, string clientId, MapsRenderClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            options ??= new MapsRenderClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsRenderClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        public MapsRenderClient(Uri endpoint, TokenCredential credential, string clientId)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -81,11 +139,11 @@ namespace Azure.Maps.Render
         }
 
         /// <summary> Initializes a new instance of MapsRenderClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="endpoint"> server parameter. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MapsRenderClient(TokenCredential credential, Uri endpoint = null, string clientId = null, MapsRenderClientOptions options = null)
+        public MapsRenderClient(Uri endpoint, TokenCredential credential, string clientId, MapsRenderClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -125,15 +183,15 @@ namespace Azure.Maps.Render
             try
             {
                 var response = await restClient.GetMapStaticImageAsync(
-                    options?.Format,
-                    options?.Layer,
-                    options?.Style,
-                    options?.Zoom,
-                    options?.Center,
+                    options?.TileFormat,
+                    options?.TileLayer,
+                    options?.TileStyle,
+                    options?.ZoomLevel,
+                    options?.CenterCoordinate,
                     options?.BoundingBox,
                     options?.Height,
                     options?.Width,
-                    options?.Language,
+                    options?.RenderLanguage,
                     options?.LocalizedMapView,
                     options?.Pins,
                     options?.Path,
@@ -160,15 +218,15 @@ namespace Azure.Maps.Render
             try
             {
                 var response = restClient.GetMapStaticImage(
-                    options?.Format,
-                    options?.Layer,
-                    options?.Style,
-                    options?.Zoom,
-                    options?.Center,
+                    options?.TileFormat,
+                    options?.TileLayer,
+                    options?.TileStyle,
+                    options?.ZoomLevel,
+                    options?.CenterCoordinate,
                     options?.BoundingBox,
                     options?.Height,
                     options?.Width,
-                    options?.Language,
+                    options?.RenderLanguage,
                     options?.LocalizedMapView,
                     options?.Pins,
                     options?.Path,
@@ -314,12 +372,12 @@ namespace Azure.Maps.Render
             try
             {
                 var response = await restClient.GetMapTileAsync(
-                    options.Format,
-                    options.Layer,
-                    options.Style,
+                    options.TileFormat,
+                    options.TileLayer,
+                    options.TileStyle,
                     options.TileIndex,
                     options?.TileSize,
-                    options?.Language,
+                    options?.RenderLanguage,
                     options?.LocalizedMapView,
                     cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
@@ -347,12 +405,12 @@ namespace Azure.Maps.Render
             try
             {
                 var response = restClient.GetMapTile(
-                    options.Format,
-                    options.Layer,
-                    options.Style,
+                    options.TileFormat,
+                    options.TileLayer,
+                    options.TileStyle,
                     options.TileIndex,
                     options?.TileSize,
-                    options?.Language,
+                    options?.RenderLanguage,
                     options?.LocalizedMapView,
                     cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());

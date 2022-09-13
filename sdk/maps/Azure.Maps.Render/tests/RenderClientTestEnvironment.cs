@@ -17,6 +17,6 @@ namespace Azure.Maps.Render.Tests
             }
         }
         // cspell:ignore azmaps
-        public string MapAccountClientId => GetRecordedVariable("AZMAPS_CLIENT_ID");
+        public string MapAccountClientId => GetRecordedOptionalVariable("AZMAPS_CLIENT_ID");
     }
 }

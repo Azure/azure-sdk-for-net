@@ -2,13 +2,13 @@
 
 Azure Maps Render is a render library that can fetch image tiles and get copyrights.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Render/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation)[https://docs.microsoft.com/rest/api/maps/render] | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Render/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/render) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
 ### Install the package
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Maps.Render --prerelease
@@ -35,21 +35,23 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 
 ```C# Snippet:InstantiateRenderClientViaSubscriptionKey
 // Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
-var endpoint = new Uri("https://atlas.microsoft.com");
 var credential = new AzureKeyCredential("<My Subscription Key>");
-MapsRenderClient client = new MapsRenderClient(credential, endpoint);
+MapsRenderClient client = new MapsRenderClient(credential);
 ```
 
 #### Azure AD Authentication
 
-In order to interact with the Azure Blobs Storage service, you'll need to create an instance of the BlobServiceClient class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsRenderClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+
+To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
+
+We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
 ```C# Snippet:InstantiateRenderClientViaAAD
 // Create a MapsRenderClient that will authenticate through Active Directory
-var endpoint = new Uri("https://atlas.microsoft.com");
 var credential = new DefaultAzureCredential();
 var clientId = "<My Map Account Client Id>";
-MapsRenderClient client = new MapsRenderClient(credential, endpoint, clientId);
+MapsRenderClient client = new MapsRenderClient(credential, clientId);
 ```
 
 ## Key concepts
@@ -85,10 +87,9 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 Here is a simple example of rendering imagery tiles:
 
 ```C# Snippet:RenderImageryTiles
-var endpoint = new Uri("https://atlas.microsoft.com");
 var credential = new DefaultAzureCredential();
 var clientId = TestEnvironment.MapAccountClientId;
-var client = new MapsRenderClient(credential, endpoint, clientId);
+var client = new MapsRenderClient(credential, clientId);
 
 // Get imagery tile
 var imageryTile = client.GetMapImageryTile(new TileIndex(10, 12, 12));
@@ -104,7 +105,7 @@ When you interact with the Maps Render service, errors returned by the Render se
 
 For example, if you try to get an imagery tile with wrong tile index, an error is returned, indicating "Bad Request" (400).
 
-```C# Snippet:CatchException
+```C# Snippet:CatchRenderException
 try
 {
     Response<Stream> imageryTile = client.GetMapImageryTile(new TileIndex(2, 12, 12));

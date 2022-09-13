@@ -36,10 +36,10 @@ namespace Azure.Maps.Render.Tests
             var client = CreateClient();
             var options = new RenderStaticImageOptions()
             {
-                Layer = StaticMapLayer.Basic,
-                Style = MapImageStyle.Dark,
-                Center = new List<double>() { 0.0, 0.0 },
-                Language = "en",
+                TileLayer = StaticMapLayer.Basic,
+                TileStyle = MapImageStyle.Dark,
+                CenterCoordinate = new List<double>() { 0.0, 0.0 },
+                RenderLanguage = "en",
                 Height = 100,
                 Width = 100,
             };
@@ -66,9 +66,9 @@ namespace Azure.Maps.Render.Tests
             var client = CreateClient();
             var options = new RenderTileOptions()
             {
-                Format = TileFormat.Png,
-                Layer = MapTileLayer.Hybrid,
-                Style = MapTileStyle.Main,
+                TileFormat = TileFormat.Png,
+                TileLayer = MapTileLayer.Hybrid,
+                TileStyle = MapTileStyle.Main,
                 TileIndex = new TileIndex(10, 88, 88),
             };
             var imageryStream = new MemoryStream();
@@ -91,7 +91,7 @@ namespace Azure.Maps.Render.Tests
         {
             var client = CreateClient();
 
-            #region Snippet:CatchException
+            #region Snippet:CatchRenderException
             try
             {
                 Response<Stream> imageryTile = client.GetMapImageryTile(new TileIndex(2, 12, 12));

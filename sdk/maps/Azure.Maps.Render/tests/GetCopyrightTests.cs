@@ -25,9 +25,9 @@ namespace Azure.Maps.Render.Tests
             Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
             Assert.AreEqual(0, copyright.Value.GeneralCopyrights.Count);
             Assert.AreEqual(2, copyright.Value.Regions.Count);
-            Assert.AreEqual("NLD", copyright.Value.Regions[0].Country.ISO3);
+            Assert.AreEqual("NLD", copyright.Value.Regions[0].Country.Iso3);
             Assert.IsNull(copyright.Value.Regions[0].Country.Label);
-            Assert.AreEqual("ONL", copyright.Value.Regions[1].Country.ISO3);
+            Assert.AreEqual("ONL", copyright.Value.Regions[1].Country.Iso3);
             Assert.IsNull(copyright.Value.Regions[1].Country.Label);
         }
 
@@ -40,9 +40,9 @@ namespace Azure.Maps.Render.Tests
             Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
             Assert.AreEqual(0, copyright.Value.GeneralCopyrights.Count);
             Assert.AreEqual(2, copyright.Value.Regions.Count);
-            Assert.AreEqual("AGO", copyright.Value.Regions[0].Country.ISO3);
+            Assert.AreEqual("AGO", copyright.Value.Regions[0].Country.Iso3);
             Assert.IsNull(copyright.Value.Regions[0].Country.Label);
-            Assert.AreEqual("OAT", copyright.Value.Regions[1].Country.ISO3);
+            Assert.AreEqual("OAT", copyright.Value.Regions[1].Country.Iso3);
             Assert.IsNull(copyright.Value.Regions[1].Country.Label);
         }
 
@@ -54,8 +54,8 @@ namespace Azure.Maps.Render.Tests
 
             Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
             Assert.AreEqual(0, copyright.Value.GeneralCopyrights.Count);
-            Assert.AreEqual(287, copyright.Value.Regions.Count);
-            Assert.AreEqual("ABW", copyright.Value.Regions[0].Country.ISO3);
+            Assert.IsTrue(copyright.Value.Regions.Count >= 287);
+            Assert.AreEqual("ABW", copyright.Value.Regions[0].Country.Iso3);
             Assert.IsNull(copyright.Value.Regions[0].Country.Label);
         }
 

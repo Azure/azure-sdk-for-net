@@ -3,10 +3,14 @@ namespace Azure.Maps.Render
     public partial class MapsRenderClient
     {
         protected MapsRenderClient() { }
-        public MapsRenderClient(Azure.AzureKeyCredential credential, System.Uri endpoint) { }
-        public MapsRenderClient(Azure.AzureKeyCredential credential, System.Uri endpoint = null, Azure.Maps.Render.MapsRenderClientOptions options = null) { }
-        public MapsRenderClient(Azure.Core.TokenCredential credential, System.Uri endpoint, string clientId) { }
-        public MapsRenderClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, string clientId = null, Azure.Maps.Render.MapsRenderClientOptions options = null) { }
+        public MapsRenderClient(Azure.AzureKeyCredential credential) { }
+        public MapsRenderClient(Azure.AzureKeyCredential credential, Azure.Maps.Render.MapsRenderClientOptions options) { }
+        public MapsRenderClient(Azure.Core.TokenCredential credential, string clientId) { }
+        public MapsRenderClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Render.MapsRenderClientOptions options) { }
+        public MapsRenderClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public MapsRenderClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Maps.Render.MapsRenderClientOptions options) { }
+        public MapsRenderClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string clientId) { }
+        public MapsRenderClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Render.MapsRenderClientOptions options) { }
         public virtual Azure.Response<Azure.Maps.Render.Models.CopyrightCaption> GetCopyrightCaption(Azure.Maps.Render.Models.ResponseFormat? format = default(Azure.Maps.Render.Models.ResponseFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Render.Models.CopyrightCaption>> GetCopyrightCaptionAsync(Azure.Maps.Render.Models.ResponseFormat? format = default(Azure.Maps.Render.Models.ResponseFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Render.Models.RenderCopyrights> GetCopyrightForTile(Azure.Maps.Render.Models.TileIndex tileIndex, Azure.Maps.Render.Models.ResponseFormat? format = default(Azure.Maps.Render.Models.ResponseFormat?), bool includeText = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -114,7 +118,7 @@ namespace Azure.Maps.Render.Models
     {
         public static Azure.Maps.Render.Models.CopyrightCaption CopyrightCaption(string formatVersion = null, string copyrightsCaption = null) { throw null; }
         public static Azure.Maps.Render.Models.RegionCopyrights RegionCopyrights(System.Collections.Generic.IEnumerable<string> copyrights = null, Azure.Maps.Render.Models.RegionCopyrightsCountry country = null) { throw null; }
-        public static Azure.Maps.Render.Models.RegionCopyrightsCountry RegionCopyrightsCountry(string isO3 = null, string label = null) { throw null; }
+        public static Azure.Maps.Render.Models.RegionCopyrightsCountry RegionCopyrightsCountry(string iso3 = null, string label = null) { throw null; }
         public static Azure.Maps.Render.Models.RenderCopyrights RenderCopyrights(string formatVersion = null, System.Collections.Generic.IEnumerable<string> generalCopyrights = null, System.Collections.Generic.IEnumerable<Azure.Maps.Render.Models.RegionCopyrights> regions = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -200,7 +204,7 @@ namespace Azure.Maps.Render.Models
     public partial class RegionCopyrightsCountry
     {
         internal RegionCopyrightsCountry() { }
-        public string ISO3 { get { throw null; } }
+        public string Iso3 { get { throw null; } }
         public string Label { get { throw null; } }
     }
     public partial class RenderCopyrights
@@ -213,29 +217,29 @@ namespace Azure.Maps.Render.Models
     public partial class RenderStaticImageOptions
     {
         public RenderStaticImageOptions() { }
-        public System.Collections.Generic.IEnumerable<double> BoundingBox { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<double> Center { get { throw null; } set { } }
-        public Azure.Maps.Render.Models.RasterTileFormat? Format { get { throw null; } set { } }
+        public System.Collections.Generic.IList<double> BoundingBox { get { throw null; } set { } }
+        public System.Collections.Generic.IList<double> CenterCoordinate { get { throw null; } set { } }
         public int? Height { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
-        public Azure.Maps.Render.Models.StaticMapLayer? Layer { get { throw null; } set { } }
         public Azure.Maps.Render.Models.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> Path { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> Pins { get { throw null; } set { } }
-        public Azure.Maps.Render.Models.MapImageStyle? Style { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Path { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Pins { get { throw null; } set { } }
+        public string RenderLanguage { get { throw null; } set { } }
+        public Azure.Maps.Render.Models.RasterTileFormat? TileFormat { get { throw null; } set { } }
+        public Azure.Maps.Render.Models.StaticMapLayer? TileLayer { get { throw null; } set { } }
+        public Azure.Maps.Render.Models.MapImageStyle? TileStyle { get { throw null; } set { } }
         public int? Width { get { throw null; } set { } }
-        public int? Zoom { get { throw null; } set { } }
+        public int? ZoomLevel { get { throw null; } set { } }
     }
     public partial class RenderTileOptions
     {
         public RenderTileOptions() { }
-        public Azure.Maps.Render.Models.TileFormat Format { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
-        public Azure.Maps.Render.Models.MapTileLayer Layer { get { throw null; } set { } }
         public Azure.Maps.Render.Models.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-        public Azure.Maps.Render.Models.MapTileStyle Style { get { throw null; } set { } }
+        public string RenderLanguage { get { throw null; } set { } }
+        public Azure.Maps.Render.Models.TileFormat TileFormat { get { throw null; } set { } }
         public Azure.Maps.Render.Models.TileIndex TileIndex { get { throw null; } set { } }
+        public Azure.Maps.Render.Models.MapTileLayer TileLayer { get { throw null; } set { } }
         public Azure.Maps.Render.Models.MapTileSize? TileSize { get { throw null; } set { } }
+        public Azure.Maps.Render.Models.MapTileStyle TileStyle { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseFormat : System.IEquatable<Azure.Maps.Render.Models.ResponseFormat>

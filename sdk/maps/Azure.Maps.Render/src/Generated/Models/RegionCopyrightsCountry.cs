@@ -16,16 +16,13 @@ namespace Azure.Maps.Render.Models
         }
 
         /// <summary> Initializes a new instance of RegionCopyrightsCountry. </summary>
-        /// <param name="isO3"> ISO3 property. </param>
+        /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
-        internal RegionCopyrightsCountry(string isO3, string label)
+        internal RegionCopyrightsCountry(string iso3, string label)
         {
-            ISO3 = isO3;
+            Iso3 = iso3;
             Label = label;
         }
-
-        /// <summary> ISO3 property. </summary>
-        public string ISO3 { get; }
         /// <summary> Label property. </summary>
         public string Label { get; }
     }
