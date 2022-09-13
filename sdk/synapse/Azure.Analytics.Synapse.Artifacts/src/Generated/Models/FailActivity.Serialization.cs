@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(ControlActivityConverter))]
-    public partial class ControlActivity : IUtf8JsonSerializable
+    [JsonConverter(typeof(FailActivityConverter))]
+    public partial class FailActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,6 +48,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("typeProperties");
+            writer.WriteStartObject();
+            writer.WritePropertyName("message");
+            writer.WriteObjectValue(Message);
+            writer.WritePropertyName("errorCode");
+            writer.WriteObjectValue(ErrorCode);
+            writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -56,31 +63,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ControlActivity DeserializeControlActivity(JsonElement element)
+        internal static FailActivity DeserializeFailActivity(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
-                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
-                    case "Fail": return FailActivity.DeserializeFailActivity(element);
-                    case "Filter": return FilterActivity.DeserializeFilterActivity(element);
-                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
-                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
-                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
-                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
-                    case "Until": return UntilActivity.DeserializeUntilActivity(element);
-                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
-                    case "Wait": return WaitActivity.DeserializeWaitActivity(element);
-                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
-                }
-            }
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
+            object message = default;
+            object errorCode = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -130,22 +121,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
+                if (property.NameEquals("typeProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("message"))
+                        {
+                            message = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("errorCode"))
+                        {
+                            errorCode = property0.Value.GetObject();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ControlActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+            return new FailActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, message, errorCode);
         }
 
-        internal partial class ControlActivityConverter : JsonConverter<ControlActivity>
+        internal partial class FailActivityConverter : JsonConverter<FailActivity>
         {
-            public override void Write(Utf8JsonWriter writer, ControlActivity model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, FailActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override ControlActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override FailActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeControlActivity(document.RootElement);
+                return DeserializeFailActivity(document.RootElement);
             }
         }
     }
