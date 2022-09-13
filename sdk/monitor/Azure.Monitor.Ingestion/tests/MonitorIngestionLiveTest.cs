@@ -159,5 +159,18 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(413, response.Value.Errors.FirstOrDefault().Error.Code);
             Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
         }
+
+        [Test]
+        public async Task ConcurrenyMultiThread()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            // Make the request
+            UploadLogsOptions options = new UploadLogsOptions(5);
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false);
+
+            // Check the response
+            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+        }
     }
 }
