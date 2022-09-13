@@ -1,15 +1,14 @@
 # Release History
 
-## 1.1.0 (2022-09-09)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
 
 ### Breaking Changes
 
-- Changed the constructor of `CosmosDBAccountBackupPolicy` from public to protected
+### Bugs Fixed
 
 ### Other Changes
-
-- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
-- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0 (2022-07-21)
 
