@@ -62,13 +62,13 @@ The exception includes some contextual information to assist in understanding th
 
   - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time. This may have been caused by a transient network issue or service problem. The Service Bus service may or may not have successfully completed the request; the status is not known. In the case of accepting the next available session, this exception indicates that there were no unlocked sessions available in the entity.
 
-  - **Quota Exceeded** : This typically indicates that there are too many active receiver operations for a single entity. The limit is 5000 concurrent receive requests. In order to avoid this error, reduce the number of potential concurrent receives. You can use batch receives to attempt to receive multiple messages per receive request. Please see [Service Bus quotas][ServiceBusQuotas] for more information.
+  - **Quota Exceeded** : This typically indicates that there are too many active receiver operations for a single entity. In order to avoid this error, reduce the number of potential concurrent receives. You can use batch receives to attempt to receive multiple messages per receive request. Please see [Service Bus quotas][ServiceBusQuotas] for more information.
 
   - **Message Size Exceeded** : This indicates that the max message size has been exceeded. For standard tier namespaces, a single message may not exceed 256KB. For premium tier namespaces, the max message size is 100MB. This includes the body of the message, as well as any associated metadata and system overhead. The best approach for resolving this error is to reduce the number of messages being sent in a batch or the size of the body included in the message. Because size limits are subject to change, please refer to [Service Bus quotas][ServiceBusQuotas] for specifics.  
   
-  - **MessageLockLost** : This indicates that the lock on the message is lost. Callers should call attempt to receive and process the message again. This only applies to non-session entities. Note that this error can occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
+  - **MessageLockLost** : This indicates that the lock on the message is lost. Callers should call attempt to receive and process the message again. This only applies to non-session entities. This error occurs if processing takes longer than the lock duration and the message lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
   
-  - **SessionLockLost**: This indicates that the lock on the session has expired. Callers should attempt to accept the session again. This only applies to session-enabled entities. Note that this error can occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
+  - **SessionLockLost**: This indicates that the lock on the session has expired. Callers should attempt to accept the session again. This only applies to session-enabled entities. This error occurs if processing takes longer than the lock duration and the session lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
 
   - **SessionCannotBeLocked**: This indicates that the requested session cannot be locked because the lock is already held elsewhere. Once the lock expires, the session can be accepted.
 
@@ -132,7 +132,7 @@ Previous generations of the Service Bus clients allowed for some behavior to be 
 
 #### "TransportType=AmqpWebSockets" Alternative
 
-To configure web socket use, see: [configure web sockets][ConfigureWebSocketsSample].
+To configure web socket use, see: [Configuring the transport][TransportSample].
 
 #### "Authentication=Managed Identity" Alternative
 
@@ -223,13 +223,12 @@ Autolock renewal relies on the system time to determine when to renew a lock for
 
 ### Processor appears to hang or have latency issues when using high concurrency
 
-This is often caused by thread starvation, particularly when using the session processor and using a very high value for [MaxConcurrentSessions][MaxConcurrentSessions] (e.g. > 50). The first thing to check would be to make sure you are not doing sync-over-async in any of your event handlers. Sync-over-async is an easy way to cause deadlocks and thread starvation. Even if you are not doing sync over async, any pure sync code in your handlers could contribute to thread starvation. If you've determined that this is not the issue, e.g. because you have pure async code, you can try increasing your [TryTimeout][TryTimeout]. This will relieve pressure on the threadpool by reducing the number of context switches and timeouts that may occur when using the session processor in particular. The default value for [TryTimeout][TryTimeout] is 60 seconds, but it can be set all the way up to 1 hour.  We recommend testing with the `TryTimeout` set to 5 minutes as a starting point and iterate from there. If none of these suggestiosn work, you may simply need to scale out to multiple hosts, reducing the concurrency in your application, but running the application on multiple hosts to achieve the desired overall concurrency.
+This is often caused by thread starvation, particularly when using the session processor and using a very high value for [MaxConcurrentSessions][MaxConcurrentSessions], relative to the number of cores on the machine. The first thing to check would be to make sure you are not doing sync-over-async in any of your event handlers. Sync-over-async is an easy way to cause deadlocks and thread starvation. Even if you are not doing sync over async, any pure sync code in your handlers could contribute to thread starvation. If you've determined that this is not the issue, e.g. because you have pure async code, you can try increasing your [TryTimeout][TryTimeout]. This will relieve pressure on the threadpool by reducing the number of context switches and timeouts that may occur when using the session processor in particular. The default value for [TryTimeout][TryTimeout] is 60 seconds, but it can be set all the way up to 1 hour.  We recommend testing with the `TryTimeout` set to 5 minutes as a starting point and iterate from there. If none of these suggestions work, you may simply need to scale out to multiple hosts, reducing the concurrency in your application, but running the application on multiple hosts to achieve the desired overall concurrency.
 
 Further reading:
-
-Debug ThreadPool Starvation  
-Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)  
-Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps (video)
+- [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
+- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
+- [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
 ### Session processor takes too long to switch sessions
 
@@ -249,7 +248,7 @@ Not all operations are supported when using transactions. To see the list of sup
 
 ### Timeout
 
-A transaction times out after 2 minutes. The transaction timer starts when the first operation in the transaction starts.
+A transaction times out after a [period of time][TransactionTimeout], so it is important that processing that occurs within a transaction scope adheres to this timeout.
 
 ### Operations in a transaction are not retried
 
@@ -303,3 +302,8 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [LargeMessageSupport]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging#large-messages-support
 [GitHubDiscussionOnBatching]: https://github.com/Azure/azure-sdk-for-net/issues/25381#issuecomment-1227917960
 [BackgroundService]: https://docs.microsoft.com/dotnet/api/microsoft.extensions.hosting.backgroundservice?view=dotnet
+[AuthenticationAndTheAzureSDK]: https://devblogs.microsoft.com/azure-sdk/authentication-and-the-azure-sdk
+[IdentitySample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus#authenticating-with-azureidentity
+[DebugThreadPoolStarvation]: https://docs.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
+[DiagnoseThreadPoolExhaustion]: https://docs.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
+[TransactionTimeout]: https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-transactions#timeout
