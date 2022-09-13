@@ -19,7 +19,7 @@ Mock<EventHubProducerClient> mockProducer = new Mock<EventHubProducerClient>();
 // It does not impact TryAdd on the mocked batch
 long batchSizeInBytes = 500;
 
-// Events added to the batch will be added here, but altering the events in this list will not change the
+// Events added to the batch will be added to this list.  Be aware that but altering the events in the list will also change the batch.
 List<EventData> backingList = new List<EventData>();
 
 // For illustrative purposes allow the batch to hold 3 events before
