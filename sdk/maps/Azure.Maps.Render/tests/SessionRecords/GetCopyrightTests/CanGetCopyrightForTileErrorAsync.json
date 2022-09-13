@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/map/copyright/tile/json?api-version=1.0\u0026zoom=4\u0026x=9999\u0026y=9999\u0026text=no",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2750a7f246ac30420af3968832ed5098-c59cc7a65c47454b-00",
+        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220623.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "ff7e9ed0498f5853b8e5988f0c0a4917",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "114",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 11:30:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 08B0415943B04D7D975F74579A5E7D94 Ref B: TPE30EDGE0514 Ref C: 2022-06-23T11:30:11Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "The provided values in (x, y, zoom) do not constitute a valid tile"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "2098863496"
+  }
+}

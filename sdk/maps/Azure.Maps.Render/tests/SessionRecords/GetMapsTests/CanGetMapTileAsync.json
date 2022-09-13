@@ -1,0 +1,38 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/map/tile/png?api-version=1.0\u0026layer=hybrid\u0026style=main\u0026zoom=10\u0026x=88\u0026y=88",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, image/jpeg, image/png, image/pbf, application/vnd.mapbox-vector-tile",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2fe5092fb56b65896e4a06b27f7ff869-3d7427225dee1bb6-00",
+        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220623.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "12d43ad421313a9d591561e34fd85320",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "max-age=86400",
+        "Content-Length": "334",
+        "Content-Type": "image/png",
+        "Date": "Thu, 23 Jun 2022 11:30:14 GMT",
+        "ETag": "cd37744a985b79ed29bb6269e45da27f",
+        "Expires": "Fri, 24 Jun 2022 11:30:15 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 068F5A23DD5748C6BEECFC101A19AF1E Ref B: TPE30EDGE0514 Ref C: 2022-06-23T11:30:15Z"
+      },
+      "ResponseBody": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAABFUlEQVR4nO3BMQEAAADCoPVP7WsIoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAMBPAABPO1TCQAAAABJRU5ErkJggg=="
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1074666338"
+  }
+}

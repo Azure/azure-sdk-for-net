@@ -1,0 +1,1476 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/map/copyright/world/json?api-version=1.0\u0026text=no",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e0ae7b1a50347ddb28e341244aa8e901-557fd0081f88e1d8-00",
+        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220623.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "8558c534682377a91028f29950cc8cb1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "max-age=86400",
+        "Content-Length": "21864",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 11:30:09 GMT",
+        "ETag": "W/\u002238942dad119b92a16c26ae22f8fe1906\u0022",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 63B15B0A9A6C4ED9BF18387BB8C0B7A9 Ref B: TPE30EDGE0514 Ref C: 2022-06-23T11:30:10Z"
+      },
+      "ResponseBody": {
+        "formatVersion": "0.0.1",
+        "regions": [
+          {
+            "country": {
+              "ISO3": "ABW"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "AFG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "AGO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "AIA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ALB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "AND"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ARE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ARG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ARM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ASM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ATA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ATF"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ATG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "AUS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "AUT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "AZE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BDI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BEL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BEN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BES"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BFA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BGD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BGR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BHR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BHS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BIH"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BLM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BLR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BLZ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BMU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BOL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BRA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BRB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BRN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BTN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BVT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "BWA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CAF"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CAN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CCK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CHE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CHL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CHN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CIV"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CMR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "COD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "COG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "COK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "COL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "COM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CPV"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CRI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CUB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CUW"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CXR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CYM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CYP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "CZE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "DEU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "DJI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "DMA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "DNK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "DOM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "DZA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ECU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "EGY"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ERI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ESP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "EST"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ETH"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "FIN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "FJI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "FLK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "FRA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "FRO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "FSM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GAB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GBR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GEO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GGY"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GHA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GIB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GIN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GLP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GMB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GNB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GNQ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GRC"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GRD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GRL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GTM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GUF"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GUM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "GUY"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "HKG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "HMD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "HND"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "HRV"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "HTI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "HUN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "IDN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "IMN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "IND"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "IRL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "IRN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "IRQ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ISL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ISR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ITA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "JAM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "JEY"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "JOR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "JPN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KAZ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KEN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KGZ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KHM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KIR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KNA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KOR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "KWT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LAO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LBN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LBR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LBY"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LCA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LIE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LKA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LSO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LTU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LUX"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "LVA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MAC"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MAF"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MAR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MCO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MDA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MDG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MDV"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MEX"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MHL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MKD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MLI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MLT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MMR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MNE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MNG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MNP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MOZ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MRT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MSR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MTQ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MUS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MWI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MYS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "MYT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NAM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NCL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NER"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NFK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NGA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NIC"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NIU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NLD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NOR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NPL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NRU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "NZL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OAS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OAT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OBE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OCA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OCP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ODE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ODK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OES"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OFI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OFR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OGB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OGR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OIE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OIN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OIT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OMN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OMX"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ONL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ONO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OPA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OPL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OPT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ORU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OSE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OTR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OUA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "OUP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PAK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PAN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PCN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PER"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PHL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PLW"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PNG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "POL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PRI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PRK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PRT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PRY"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "PYF"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "QAT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "REU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ROU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "RUS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "RWA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SAU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SDN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SEN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SGP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SGS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SHN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SLB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SLE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SLV"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SMR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SOM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SPM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SRB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SSD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "STP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SUR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SVK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SVN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SWE"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SWZ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SXM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SYC"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "SYR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TCA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TCD"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TGO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "THA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TJK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TKL"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TKM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TLS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TON"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TTO"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TUN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TUR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TUV"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TWN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "TZA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "UGA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "UKR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "UMI"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "URY"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "USA"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "UZB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "VAT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "VCT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "VEN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "VGB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "VIR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "VNM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "VUT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "WLF"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "WSM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XAM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XAN"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XCP"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XES"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XHT"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XKS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XKX"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XPX"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XSV"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XSX"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XTU"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XXG"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XXH"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XXJ"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XXK"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XXS"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "XXW"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "YEM"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ZAF"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ZMB"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ZWE"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "89936765"
+  }
+}
