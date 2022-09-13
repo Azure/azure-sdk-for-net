@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public abstract class CallMediaRecognizeOptions
     {
-        private readonly TimeSpan _defaultInitialSilenceTimeout = TimeSpan.FromSeconds(5);
+        private static readonly TimeSpan _defaultInitialSilenceTimeout = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// Creates a new instance of the CallMediaRecognizeOptions.
@@ -21,7 +21,6 @@ namespace Azure.Communication.CallingServer
         {
             InputType = inputType;
             TargetParticipant = targetParticipant;
-            InitialSilenceTimeout = _defaultInitialSilenceTimeout;
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace Azure.Communication.CallingServer
         /// Time to wait for first input after prompt (if any).
         /// If not provided, a default of 5 seconds is set.
         /// </summary>
-        public TimeSpan InitialSilenceTimeout { get; set; }
+        public TimeSpan InitialSilenceTimeout { get; set; } = _defaultInitialSilenceTimeout;
 
         /// <summary>
         /// Target participant of DTFM tone recognition.

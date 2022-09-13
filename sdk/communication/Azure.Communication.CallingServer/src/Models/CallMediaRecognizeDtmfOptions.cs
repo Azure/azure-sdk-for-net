@@ -11,20 +11,19 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public class CallMediaRecognizeDtmfOptions : CallMediaRecognizeOptions
     {
-        private readonly TimeSpan _defaultInterToneTimeout = TimeSpan.FromSeconds(2);
+        private static readonly TimeSpan _defaultInterToneTimeout = TimeSpan.FromSeconds(2);
 
         /// <summary> Initializes a new instance of CallMediaRecognizeDtmfOptions. </summary>
         public CallMediaRecognizeDtmfOptions(CommunicationIdentifier targetParticipant) : base(RecognizeInputType.Dtmf, targetParticipant)
         {
             StopTones = Array.Empty<DtmfTone>();
-            InterToneTimeout = _defaultInterToneTimeout;
         }
 
         /// <summary>
         /// Time to wait between DTMF inputs to stop recognizing.
         /// If nothing is set, a default of 2 seconds is set.
         /// </summary>
-        public TimeSpan InterToneTimeout { get; set; }
+        public TimeSpan InterToneTimeout { get; set; } = _defaultInterToneTimeout;
 
         /// <summary>
         /// Maximum number of DTMFs to be collected.
