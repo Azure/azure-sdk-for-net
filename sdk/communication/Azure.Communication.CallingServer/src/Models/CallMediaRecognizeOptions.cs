@@ -10,6 +10,8 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public abstract class CallMediaRecognizeOptions
     {
+        private readonly TimeSpan _defaultInitialSilenceTimeout = TimeSpan.FromSeconds(5);
+
         /// <summary>
         /// Creates a new instance of the CallMediaRecognizeOptions.
         /// </summary>
@@ -19,6 +21,7 @@ namespace Azure.Communication.CallingServer
         {
             InputType = inputType;
             TargetParticipant = targetParticipant;
+            InitialSilenceTimeout = _defaultInitialSilenceTimeout;
         }
 
         /// <summary>
