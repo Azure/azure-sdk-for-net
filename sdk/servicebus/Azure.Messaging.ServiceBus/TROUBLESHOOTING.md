@@ -306,4 +306,4 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [IdentitySample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus#authenticating-with-azureidentity
 [DebugThreadPoolStarvation]: https://docs.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
 [DiagnoseThreadPoolExhaustion]: https://docs.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
-[TransactionTimeout]: https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-transactions#timeout
+[TransactionTimeout]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#timeout
