@@ -1,14 +1,20 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.0.1 (2022-09-13)
 
 ### Breaking Changes
 
-### Bugs Fixed
+Modified the following classes to abstract classes and changed their constructors from public to protected:
+- `CustomDomainHttpsContent`
+- `DeliveryRuleAction`
+- `DeliveryRuleCondition`
+- `FrontDoorSecretProperties`
+- `SecurityPolicyProperties`
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0 (2022-07-11)
 This is the first stable release of the Azure Cdn management library.
