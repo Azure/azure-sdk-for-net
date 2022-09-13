@@ -20,7 +20,6 @@ Mock<EventHubProducerClient> mockProducer = new Mock<EventHubProducerClient>();
 long batchSizeInBytes = 500;
 
 // Events added to the batch will be added here, but altering the events in this list will not change the
-// events in the batch, since they are stored inside the batch as well
 List<EventData> backingList = new List<EventData>();
 
 // For illustrative purposes allow the batch to hold 3 events before
