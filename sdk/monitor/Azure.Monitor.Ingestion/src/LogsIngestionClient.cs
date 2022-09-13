@@ -181,16 +181,12 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNullOrEmpty(logEntries, nameof(logEntries));
 
-            // Calculate the number of threads to use.
-            // If there are 0 workers or an UploadLogsOptions object was not provided, method will run serially. Otherwise will run in parallel with number of workers given.
-            int _maxWorkerCount = (options == null || options.MaxConcurrency == 0) ? DefaultWorkerCount : options.MaxConcurrency;
-
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
             List<UploadLogsError> errors = new List<UploadLogsError>();
-
+            //TODO: use options.Serializer
             try
             {
                 scope.Start();
@@ -266,7 +262,7 @@ namespace Azure.Monitor.Ingestion
             // Calculate the number of threads to use.
             // If there are 0 workers or an UploadLogsOptions object was not provided, method will run serially. Otherwise will run in parallel with number of workers given.
             int _maxWorkerCount = (options == null || options.MaxConcurrency == 0) ? DefaultWorkerCount : options.MaxConcurrency;
-
+            //TODO: use options.Serializer
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
