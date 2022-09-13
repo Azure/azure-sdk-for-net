@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static KubernetesRoleNetwork DeserializeKubernetesRoleNetwork(JsonElement element)
         {
             Optional<CniConfig> cniConfig = default;
-            Optional<LoadBalancerConfig> loadBalancerConfig = default;
+            Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cniConfig"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    loadBalancerConfig = LoadBalancerConfig.DeserializeLoadBalancerConfig(property.Value);
+                    loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value);
                     continue;
                 }
             }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static KubernetesClusterInfo DeserializeKubernetesClusterInfo(JsonElement element)
         {
-            Optional<EtcdInfo> etcdInfo = default;
+            Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
             Optional<IReadOnlyList<KubernetesNodeInfo>> nodes = default;
             string version = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etcdInfo = EtcdInfo.DeserializeEtcdInfo(property.Value);
+                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodes"))

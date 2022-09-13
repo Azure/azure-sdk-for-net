@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="localManagementStatus"> Local Edge Management Status. </param>
         /// <param name="edgeProfile"> Edge Profile of the resource. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, RoleStatus? localManagementStatus, EdgeProfile edgeProfile, RoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
         {
             LocalManagementStatus = localManagementStatus;
             EdgeProfile = edgeProfile;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Local Edge Management Status. </summary>
-        public RoleStatus? LocalManagementStatus { get; }
+        public DataBoxEdgeRoleStatus? LocalManagementStatus { get; }
         /// <summary> Edge Profile of the resource. </summary>
         internal EdgeProfile EdgeProfile { get; }
         /// <summary> Edge Profile Subscription. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Role status. </summary>
-        public RoleStatus? RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
     }
 }

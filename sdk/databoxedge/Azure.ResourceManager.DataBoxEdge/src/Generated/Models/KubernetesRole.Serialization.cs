@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<HostPlatformType> hostPlatformType = default;
             Optional<KubernetesClusterInfo> kubernetesClusterInfo = default;
             Optional<KubernetesRoleResources> kubernetesRoleResources = default;
-            Optional<RoleStatus> roleStatus = default;
+            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            roleStatus = new RoleStatus(property0.Value.GetString());
+                            roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
                             continue;
                         }
                     }

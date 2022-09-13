@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<SystemData> systemData = default;
             Optional<AsymmetricEncryptedSecret> encryptedPassword = default;
             Optional<IReadOnlyList<ShareAccessRight>> shareAccessRights = default;
-            UserType userType = default;
+            DataBoxEdgeUserType userType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         }
                         if (property0.NameEquals("userType"))
                         {
-                            userType = new UserType(property0.Value.GetString());
+                            userType = new DataBoxEdgeUserType(property0.Value.GetString());
                             continue;
                         }
                     }

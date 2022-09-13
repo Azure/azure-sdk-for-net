@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             ShareStatus shareStatus = default;
-            MonitoringStatus monitoringStatus = default;
-            Optional<AzureContainerInfo> azureContainerInfo = default;
+            DataBoxEdgeShareMonitoringStatus monitoringStatus = default;
+            Optional<DataBoxEdgeStorageContainerInfo> azureContainerInfo = default;
             ShareAccessProtocol accessProtocol = default;
             Optional<IList<UserAccessRight>> userAccessRights = default;
             Optional<IList<ClientAccessRight>> clientAccessRights = default;
-            Optional<RefreshDetails> refreshDetails = default;
-            Optional<IReadOnlyList<MountPointMap>> shareMappings = default;
-            Optional<DataPolicy> dataPolicy = default;
+            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
+            Optional<IReadOnlyList<DataBoxEdgeMountPointMap>> shareMappings = default;
+            Optional<DataBoxEdgeDataPolicy> dataPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         }
                         if (property0.NameEquals("monitoringStatus"))
                         {
-                            monitoringStatus = new MonitoringStatus(property0.Value.GetString());
+                            monitoringStatus = new DataBoxEdgeShareMonitoringStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureContainerInfo"))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureContainerInfo = AzureContainerInfo.DeserializeAzureContainerInfo(property0.Value);
+                            azureContainerInfo = DataBoxEdgeStorageContainerInfo.DeserializeDataBoxEdgeStorageContainerInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessProtocol"))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            refreshDetails = RefreshDetails.DeserializeRefreshDetails(property0.Value);
+                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("shareMappings"))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MountPointMap> array = new List<MountPointMap>();
+                            List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MountPointMap.DeserializeMountPointMap(item));
+                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
                             }
                             shareMappings = array;
                             continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataPolicy = new DataPolicy(property0.Value.GetString());
+                            dataPolicy = new DataBoxEdgeDataPolicy(property0.Value.GetString());
                             continue;
                         }
                     }

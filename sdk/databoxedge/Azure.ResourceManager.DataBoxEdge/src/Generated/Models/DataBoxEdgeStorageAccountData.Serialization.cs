@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<StorageAccountStatus> storageAccountStatus = default;
-            DataPolicy dataPolicy = default;
+            Optional<DataBoxEdgeStorageAccountStatus> storageAccountStatus = default;
+            DataBoxEdgeDataPolicy dataPolicy = default;
             Optional<ResourceIdentifier> storageAccountCredentialId = default;
             Optional<string> blobEndpoint = default;
             Optional<int> containerCount = default;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageAccountStatus = new StorageAccountStatus(property0.Value.GetString());
+                            storageAccountStatus = new DataBoxEdgeStorageAccountStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataPolicy"))
                         {
-                            dataPolicy = new DataPolicy(property0.Value.GetString());
+                            dataPolicy = new DataBoxEdgeDataPolicy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageAccountCredentialId"))

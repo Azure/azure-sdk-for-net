@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
             Optional<IotDeviceInfo> iotDeviceDetails = default;
             Optional<IotDeviceInfo> iotEdgeDeviceDetails = default;
-            Optional<IList<MountPointMap>> shareMappings = default;
+            Optional<IList<DataBoxEdgeMountPointMap>> shareMappings = default;
             Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
             Optional<HostPlatformType> hostPlatformType = default;
-            Optional<ComputeResource> computeResource = default;
-            Optional<RoleStatus> roleStatus = default;
+            Optional<EdgeComputeResourceInfo> computeResource = default;
+            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MountPointMap> array = new List<MountPointMap>();
+                            List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MountPointMap.DeserializeMountPointMap(item));
+                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
                             }
                             shareMappings = array;
                             continue;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            computeResource = ComputeResource.DeserializeComputeResource(property0.Value);
+                            computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            roleStatus = new RoleStatus(property0.Value.GetString());
+                            roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
                             continue;
                         }
                     }

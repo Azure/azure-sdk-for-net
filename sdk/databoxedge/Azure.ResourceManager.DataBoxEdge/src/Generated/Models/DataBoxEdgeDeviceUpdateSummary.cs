@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeDeviceUpdateSummary()
         {
             UpdateTitles = new ChangeTrackingList<string>();
-            Updates = new ChangeTrackingList<UpdateDetails>();
+            Updates = new ChangeTrackingList<DataBoxEdgeUpdateDetails>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceUpdateSummary. </summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="updates"> The list of updates available for install. </param>
         /// <param name="totalUpdateSizeInBytes"> The total size of updates available for download in bytes. </param>
         /// <param name="totalTimeInMinutes"> The total time in Minutes. </param>
-        internal DataBoxEdgeDeviceUpdateSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceVersionNumber, string friendlyDeviceVersionName, DateTimeOffset? deviceLastScannedOn, DateTimeOffset? lastCompletedScanJobOn, DateTimeOffset? lastSuccessfulScanJobOn, DateTimeOffset? lastCompletedDownloadJobOn, ResourceIdentifier lastCompletedDownloadJobId, JobStatus? lastDownloadJobStatus, DateTimeOffset? lastSuccessfulInstallJobOn, DateTimeOffset? lastCompletedInstallJobOn, ResourceIdentifier lastCompletedInstallJobId, JobStatus? lastInstallJobStatus, int? totalNumberOfUpdatesAvailable, int? totalNumberOfUpdatesPendingDownload, int? totalNumberOfUpdatesPendingInstall, InstallRebootBehavior? rebootBehavior, UpdateOperation? ongoingUpdateOperation, ResourceIdentifier inProgressDownloadJobId, ResourceIdentifier inProgressInstallJobId, DateTimeOffset? inProgressDownloadJobStartedOn, DateTimeOffset? inProgressInstallJobStartedOn, IReadOnlyList<string> updateTitles, IReadOnlyList<UpdateDetails> updates, double? totalUpdateSizeInBytes, int? totalTimeInMinutes) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeDeviceUpdateSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceVersionNumber, string friendlyDeviceVersionName, DateTimeOffset? deviceLastScannedOn, DateTimeOffset? lastCompletedScanJobOn, DateTimeOffset? lastSuccessfulScanJobOn, DateTimeOffset? lastCompletedDownloadJobOn, ResourceIdentifier lastCompletedDownloadJobId, DataBoxEdgeJobStatus? lastDownloadJobStatus, DateTimeOffset? lastSuccessfulInstallJobOn, DateTimeOffset? lastCompletedInstallJobOn, ResourceIdentifier lastCompletedInstallJobId, DataBoxEdgeJobStatus? lastInstallJobStatus, int? totalNumberOfUpdatesAvailable, int? totalNumberOfUpdatesPendingDownload, int? totalNumberOfUpdatesPendingInstall, InstallRebootBehavior? rebootBehavior, DataBoxEdgeUpdateOperation? ongoingUpdateOperation, ResourceIdentifier inProgressDownloadJobId, ResourceIdentifier inProgressInstallJobId, DateTimeOffset? inProgressDownloadJobStartedOn, DateTimeOffset? inProgressInstallJobStartedOn, IReadOnlyList<string> updateTitles, IReadOnlyList<DataBoxEdgeUpdateDetails> updates, double? totalUpdateSizeInBytes, int? totalTimeInMinutes) : base(id, name, resourceType, systemData)
         {
             DeviceVersionNumber = deviceVersionNumber;
             FriendlyDeviceVersionName = friendlyDeviceVersionName;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> JobId of the last ran download job.(Can be success/cancelled/failed). </summary>
         public ResourceIdentifier LastCompletedDownloadJobId { get; }
         /// <summary> JobStatus of the last ran download job. </summary>
-        public JobStatus? LastDownloadJobStatus { get; }
+        public DataBoxEdgeJobStatus? LastDownloadJobStatus { get; }
         /// <summary> The time when the Last Install job was completed successfully on the appliance. </summary>
         public DateTimeOffset? LastSuccessfulInstallJobOn { get; set; }
         /// <summary> The time when the last Install job was completed (success/cancelled/failed) on the appliance. </summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> JobId of the last ran install job.(Can be success/cancelled/failed). </summary>
         public ResourceIdentifier LastCompletedInstallJobId { get; }
         /// <summary> JobStatus of the last ran install job. </summary>
-        public JobStatus? LastInstallJobStatus { get; }
+        public DataBoxEdgeJobStatus? LastInstallJobStatus { get; }
         /// <summary> The number of updates available for the current device version as per the last device scan. </summary>
         public int? TotalNumberOfUpdatesAvailable { get; }
         /// <summary> The total number of items pending download. </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Indicates if updates are available and at least one of the updates needs a reboot. </summary>
         public InstallRebootBehavior? RebootBehavior { get; }
         /// <summary> The current update operation. </summary>
-        public UpdateOperation? OngoingUpdateOperation { get; }
+        public DataBoxEdgeUpdateOperation? OngoingUpdateOperation { get; }
         /// <summary> The job ID of the download job in progress. </summary>
         public ResourceIdentifier InProgressDownloadJobId { get; }
         /// <summary> The job ID of the install job in progress. </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The list of updates available for install. </summary>
         public IReadOnlyList<string> UpdateTitles { get; }
         /// <summary> The list of updates available for install. </summary>
-        public IReadOnlyList<UpdateDetails> Updates { get; }
+        public IReadOnlyList<DataBoxEdgeUpdateDetails> Updates { get; }
         /// <summary> The total size of updates available for download in bytes. </summary>
         public double? TotalUpdateSizeInBytes { get; }
         /// <summary> The total time in Minutes. </summary>

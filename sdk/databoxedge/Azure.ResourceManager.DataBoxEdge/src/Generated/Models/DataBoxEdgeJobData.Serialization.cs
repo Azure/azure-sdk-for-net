@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         internal static DataBoxEdgeJobData DeserializeDataBoxEdgeJobData(JsonElement element)
         {
-            Optional<JobStatus> status = default;
+            Optional<DataBoxEdgeJobStatus> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<int> percentComplete = default;
-            Optional<JobErrorDetails> error = default;
+            Optional<DataBoxEdgeJobErrorDetails> error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<JobType> jobType = default;
+            Optional<DataBoxEdgeJobType> jobType = default;
             Optional<UpdateOperationStage> currentStage = default;
             Optional<UpdateDownloadProgress> downloadProgress = default;
             Optional<UpdateInstallProgress> installProgress = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new JobStatus(property.Value.GetString());
+                    status = new DataBoxEdgeJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JobErrorDetails.DeserializeJobErrorDetails(property.Value);
+                    error = DataBoxEdgeJobErrorDetails.DeserializeDataBoxEdgeJobErrorDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            jobType = new JobType(property0.Value.GetString());
+                            jobType = new DataBoxEdgeJobType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("currentStage"))

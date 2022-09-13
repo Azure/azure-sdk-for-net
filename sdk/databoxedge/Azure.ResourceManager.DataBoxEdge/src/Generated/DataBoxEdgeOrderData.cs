@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         public DataBoxEdgeOrderData()
         {
             OrderHistory = new ChangeTrackingList<DataBoxEdgeOrderStatus>();
-            DeliveryTrackingInfo = new ChangeTrackingList<TrackingInfo>();
-            ReturnTrackingInfo = new ChangeTrackingList<TrackingInfo>();
+            DeliveryTrackingInfo = new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
+            ReturnTrackingInfo = new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deliveryTrackingInfo"> Tracking information for the package delivered to the customer whether it has an original or a replacement device. </param>
         /// <param name="returnTrackingInfo"> Tracking information for the package returned from the customer whether it has an original or a replacement device. </param>
         /// <param name="shipmentType"> ShipmentType of the order. </param>
-        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string orderId, ContactDetails contactInformation, DataBoxEdgeShippingAddress shippingAddress, DataBoxEdgeOrderStatus currentStatus, IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory, string serialNumber, IReadOnlyList<TrackingInfo> deliveryTrackingInfo, IReadOnlyList<TrackingInfo> returnTrackingInfo, ShipmentType? shipmentType) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string orderId, DataBoxEdgeContactDetails contactInformation, DataBoxEdgeShippingAddress shippingAddress, DataBoxEdgeOrderStatus currentStatus, IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory, string serialNumber, IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo, IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo, DataBoxEdgeShipmentType? shipmentType) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             OrderId = orderId;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> It specify the order resource id. </summary>
         public string OrderId { get; }
         /// <summary> The contact details. </summary>
-        public ContactDetails ContactInformation { get; set; }
+        public DataBoxEdgeContactDetails ContactInformation { get; set; }
         /// <summary> The shipping address. </summary>
         public DataBoxEdgeShippingAddress ShippingAddress { get; set; }
         /// <summary> Current status of the order. </summary>
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Serial number of the device. </summary>
         public string SerialNumber { get; }
         /// <summary> Tracking information for the package delivered to the customer whether it has an original or a replacement device. </summary>
-        public IReadOnlyList<TrackingInfo> DeliveryTrackingInfo { get; }
+        public IReadOnlyList<DataBoxEdgeTrackingInfo> DeliveryTrackingInfo { get; }
         /// <summary> Tracking information for the package returned from the customer whether it has an original or a replacement device. </summary>
-        public IReadOnlyList<TrackingInfo> ReturnTrackingInfo { get; }
+        public IReadOnlyList<DataBoxEdgeTrackingInfo> ReturnTrackingInfo { get; }
         /// <summary> ShipmentType of the order. </summary>
-        public ShipmentType? ShipmentType { get; set; }
+        public DataBoxEdgeShipmentType? ShipmentType { get; set; }
     }
 }

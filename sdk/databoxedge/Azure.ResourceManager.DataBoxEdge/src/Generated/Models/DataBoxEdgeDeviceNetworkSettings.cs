@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>
         public DataBoxEdgeDeviceNetworkSettings()
         {
-            NetworkAdapters = new ChangeTrackingList<NetworkAdapter>();
+            NetworkAdapters = new ChangeTrackingList<DataBoxEdgeNetworkAdapter>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="networkAdapters"> The network adapter list on the device. </param>
-        internal DataBoxEdgeDeviceNetworkSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<NetworkAdapter> networkAdapters) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeDeviceNetworkSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<DataBoxEdgeNetworkAdapter> networkAdapters) : base(id, name, resourceType, systemData)
         {
             NetworkAdapters = networkAdapters;
         }
 
         /// <summary> The network adapter list on the device. </summary>
-        public IReadOnlyList<NetworkAdapter> NetworkAdapters { get; }
+        public IReadOnlyList<DataBoxEdgeNetworkAdapter> NetworkAdapters { get; }
     }
 }

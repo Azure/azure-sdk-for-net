@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="servicePrincipalObjectId"> Azure Active Directory service principal object ID. </param>
         /// <param name="azureManagementEndpointAudience"> The azure management endpoint audience. </param>
         /// <param name="aadAudience"> Identifier of the target resource that is the recipient of the requested token. </param>
-        internal UploadCertificateResponse(AuthenticationType? authType, string resourceId, string aadAuthority, Guid? aadTenantId, Guid? servicePrincipalClientId, Guid? servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience)
+        internal UploadCertificateResponse(DataBoxEdgeAuthenticationType? authType, string resourceId, string aadAuthority, Guid? aadTenantId, Guid? servicePrincipalClientId, Guid? servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience)
         {
             AuthType = authType;
             ResourceId = resourceId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Specifies authentication type. </summary>
-        public AuthenticationType? AuthType { get; }
+        public DataBoxEdgeAuthenticationType? AuthType { get; }
         /// <summary> The resource ID of the Data Box Edge/Gateway device. </summary>
         public string ResourceId { get; }
         /// <summary> Azure Active Directory tenant authority. </summary>

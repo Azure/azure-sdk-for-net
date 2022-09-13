@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceMoveDetails"> The details of the move operation on this resource. </param>
         /// <param name="edgeProfile"> The details of Edge Profile for this resource. </param>
         /// <param name="dataResidency"> The details of data-residency related properties for this resource. </param>
-        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<RoleType> configuredRoleTypes, int? nodeCount, ResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<RoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> The description of the Data Box Edge/Gateway device model. </summary>
         public string ModelDescription { get; }
         /// <summary> The type of the Data Box Edge/Gateway device. </summary>
-        public DeviceType? DeviceType { get; }
+        public DataBoxEdgeDeviceType? DeviceType { get; }
         /// <summary> The Data Box Edge/Gateway device name. </summary>
         public string FriendlyName { get; }
         /// <summary> The Data Box Edge/Gateway device culture. </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> The number of nodes in the cluster. </summary>
         public int? NodeCount { get; }
         /// <summary> The details of the move operation on this resource. </summary>
-        public ResourceMoveDetails ResourceMoveDetails { get; }
+        public DataBoxEdgeResourceMoveDetails ResourceMoveDetails { get; }
         /// <summary> The details of Edge Profile for this resource. </summary>
         internal EdgeProfile EdgeProfile { get; }
         /// <summary> Edge Profile Subscription. </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> The details of data-residency related properties for this resource. </summary>
         internal DataResidency DataResidency { get; set; }
         /// <summary> DataResidencyType enum. </summary>
-        public DataResidencyType? ResidencyType
+        public DataBoxEdgeDataResidencyType? ResidencyType
         {
             get => DataResidency is null ? default : DataResidency.ResidencyType;
             set

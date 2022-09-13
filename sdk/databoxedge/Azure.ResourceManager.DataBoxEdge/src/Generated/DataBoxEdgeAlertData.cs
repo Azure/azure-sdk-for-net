@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="severity"> Severity of the alert. </param>
         /// <param name="errorDetails"> Error details of the alert. </param>
         /// <param name="detailedInformation"> Alert details. </param>
-        internal DataBoxEdgeAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string alertType, DateTimeOffset? appearedOn, string recommendation, AlertSeverity? severity, AlertErrorDetails errorDetails, IReadOnlyDictionary<string, string> detailedInformation) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string alertType, DateTimeOffset? appearedOn, string recommendation, DataBoxEdgeAlertSeverity? severity, AlertErrorDetails errorDetails, IReadOnlyDictionary<string, string> detailedInformation) : base(id, name, resourceType, systemData)
         {
             Title = title;
             AlertType = alertType;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Alert recommendation. </summary>
         public string Recommendation { get; }
         /// <summary> Severity of the alert. </summary>
-        public AlertSeverity? Severity { get; }
+        public DataBoxEdgeAlertSeverity? Severity { get; }
         /// <summary> Error details of the alert. </summary>
         public AlertErrorDetails ErrorDetails { get; }
         /// <summary> Alert details. </summary>

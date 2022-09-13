@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="etcdInfo"> Etcd configuration. </param>
         /// <param name="nodes"> Kubernetes cluster nodes. </param>
         /// <param name="version"> Kubernetes cluster version. </param>
-        internal KubernetesClusterInfo(EtcdInfo etcdInfo, IReadOnlyList<KubernetesNodeInfo> nodes, string version)
+        internal KubernetesClusterInfo(DataBoxEdgeEtcdInfo etcdInfo, IReadOnlyList<KubernetesNodeInfo> nodes, string version)
         {
             EtcdInfo = etcdInfo;
             Nodes = nodes;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Etcd configuration. </summary>
-        public EtcdInfo EtcdInfo { get; }
+        public DataBoxEdgeEtcdInfo EtcdInfo { get; }
         /// <summary> Kubernetes cluster nodes. </summary>
         public IReadOnlyList<KubernetesNodeInfo> Nodes { get; }
         /// <summary> Kubernetes cluster version. </summary>

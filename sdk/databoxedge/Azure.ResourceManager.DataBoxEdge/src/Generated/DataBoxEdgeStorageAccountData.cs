@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountData. </summary>
         /// <param name="dataPolicy"> Data policy of the storage Account. </param>
-        public DataBoxEdgeStorageAccountData(DataPolicy dataPolicy)
+        public DataBoxEdgeStorageAccountData(DataBoxEdgeDataPolicy dataPolicy)
         {
             DataPolicy = dataPolicy;
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="storageAccountCredentialId"> Storage Account Credential Id. </param>
         /// <param name="blobEndpoint"> BlobEndpoint of Storage Account. </param>
         /// <param name="containerCount"> The Container Count. Present only for Storage Accounts with DataPolicy set to Cloud. </param>
-        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageAccountStatus? storageAccountStatus, DataPolicy dataPolicy, ResourceIdentifier storageAccountCredentialId, string blobEndpoint, int? containerCount) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, DataBoxEdgeStorageAccountStatus? storageAccountStatus, DataBoxEdgeDataPolicy dataPolicy, ResourceIdentifier storageAccountCredentialId, string blobEndpoint, int? containerCount) : base(id, name, resourceType, systemData)
         {
             Description = description;
             StorageAccountStatus = storageAccountStatus;
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Description for the storage Account. </summary>
         public string Description { get; set; }
         /// <summary> Current status of the storage account. </summary>
-        public StorageAccountStatus? StorageAccountStatus { get; set; }
+        public DataBoxEdgeStorageAccountStatus? StorageAccountStatus { get; set; }
         /// <summary> Data policy of the storage Account. </summary>
-        public DataPolicy DataPolicy { get; set; }
+        public DataBoxEdgeDataPolicy DataPolicy { get; set; }
         /// <summary> Storage Account Credential Id. </summary>
         public ResourceIdentifier StorageAccountCredentialId { get; set; }
         /// <summary> BlobEndpoint of Storage Account. </summary>

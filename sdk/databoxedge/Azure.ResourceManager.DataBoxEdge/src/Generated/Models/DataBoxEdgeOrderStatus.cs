@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// Dictionary to hold generic information which is not stored
         /// by the already existing properties
         /// </param>
-        internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status, DateTimeOffset? updateOn, string comments, TrackingInfo trackingInformation, IReadOnlyDictionary<string, string> additionalOrderDetails)
+        internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status, DateTimeOffset? updateOn, string comments, DataBoxEdgeTrackingInfo trackingInformation, IReadOnlyDictionary<string, string> additionalOrderDetails)
         {
             Status = status;
             UpdateOn = updateOn;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Comments related to this status change. </summary>
         public string Comments { get; }
         /// <summary> Tracking information related to the state in the ordering flow. </summary>
-        public TrackingInfo TrackingInformation { get; }
+        public DataBoxEdgeTrackingInfo TrackingInformation { get; }
         /// <summary>
         /// Dictionary to hold generic information which is not stored
         /// by the already existing properties

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<string> serialNumber = default;
             Optional<string> description = default;
             Optional<string> modelDescription = default;
-            Optional<DeviceType> deviceType = default;
+            Optional<DataBoxEdgeDeviceType> deviceType = default;
             Optional<string> friendlyName = default;
             Optional<string> culture = default;
             Optional<string> deviceModel = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<string> deviceHcsVersion = default;
             Optional<IReadOnlyList<RoleType>> configuredRoleTypes = default;
             Optional<int> nodeCount = default;
-            Optional<ResourceMoveDetails> resourceMoveDetails = default;
+            Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
             Optional<EdgeProfile> edgeProfile = default;
             Optional<DataResidency> dataResidency = default;
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deviceType = new DeviceType(property0.Value.GetString());
+                            deviceType = new DataBoxEdgeDeviceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceMoveDetails = ResourceMoveDetails.DeserializeResourceMoveDetails(property0.Value);
+                            resourceMoveDetails = DataBoxEdgeResourceMoveDetails.DeserializeDataBoxEdgeResourceMoveDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("edgeProfile"))

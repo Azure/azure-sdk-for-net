@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DataBoxEdgeOrderState status = default;
             Optional<DateTimeOffset> updateDateTime = default;
             Optional<string> comments = default;
-            Optional<TrackingInfo> trackingInformation = default;
+            Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
             Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    trackingInformation = TrackingInfo.DeserializeTrackingInfo(property.Value);
+                    trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalOrderDetails"))

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element)
         {
-            Optional<AuthenticationType> authType = default;
+            Optional<DataBoxEdgeAuthenticationType> authType = default;
             Optional<string> resourceId = default;
             Optional<string> aadAuthority = default;
             Optional<Guid> aadTenantId = default;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authType = new AuthenticationType(property.Value.GetString());
+                    authType = new DataBoxEdgeAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"))

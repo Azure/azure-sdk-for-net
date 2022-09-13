@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of HostCapacity. </summary>
         public HostCapacity()
         {
-            VmUsedMemory = new ChangeTrackingDictionary<string, VmMemory>();
+            VmUsedMemory = new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>();
             NumaNodesData = new ChangeTrackingList<NumaNodeData>();
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="vmUsedMemory"> The VM used memory per VmId. </param>
         /// <param name="gpuType"> The GPU type of the VM. </param>
         /// <param name="numaNodesData"> The numa nodes information for Hpn VMs. </param>
-        internal HostCapacity(string hostName, long? effectiveAvailableMemoryInMBOnHost, int? availableGpuCount, IDictionary<string, VmMemory> vmUsedMemory, string gpuType, IList<NumaNodeData> numaNodesData)
+        internal HostCapacity(string hostName, long? effectiveAvailableMemoryInMBOnHost, int? availableGpuCount, IDictionary<string, DataBoxEdgeVmMemory> vmUsedMemory, string gpuType, IList<NumaNodeData> numaNodesData)
         {
             HostName = hostName;
             EffectiveAvailableMemoryInMBOnHost = effectiveAvailableMemoryInMBOnHost;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </summary>
         public int? AvailableGpuCount { get; set; }
         /// <summary> The VM used memory per VmId. </summary>
-        public IDictionary<string, VmMemory> VmUsedMemory { get; }
+        public IDictionary<string, DataBoxEdgeVmMemory> VmUsedMemory { get; }
         /// <summary> The GPU type of the VM. </summary>
         public string GpuType { get; set; }
         /// <summary> The numa nodes information for Hpn VMs. </summary>

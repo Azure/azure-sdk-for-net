@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<NetworkAdapter>> networkAdapters = default;
+            Optional<IReadOnlyList<DataBoxEdgeNetworkAdapter>> networkAdapters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkAdapter> array = new List<NetworkAdapter>();
+                            List<DataBoxEdgeNetworkAdapter> array = new List<DataBoxEdgeNetworkAdapter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkAdapter.DeserializeNetworkAdapter(item));
+                                array.Add(DataBoxEdgeNetworkAdapter.DeserializeDataBoxEdgeNetworkAdapter(item));
                             }
                             networkAdapters = array;
                             continue;

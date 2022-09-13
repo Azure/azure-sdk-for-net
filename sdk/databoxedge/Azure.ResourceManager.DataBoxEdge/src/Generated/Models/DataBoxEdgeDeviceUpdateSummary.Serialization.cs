@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DateTimeOffset> lastSuccessfulScanJobTime = default;
             Optional<DateTimeOffset> lastCompletedDownloadJobDateTime = default;
             Optional<ResourceIdentifier> lastCompletedDownloadJobId = default;
-            Optional<JobStatus> lastDownloadJobStatus = default;
+            Optional<DataBoxEdgeJobStatus> lastDownloadJobStatus = default;
             Optional<DateTimeOffset> lastSuccessfulInstallJobDateTime = default;
             Optional<DateTimeOffset> lastCompletedInstallJobDateTime = default;
             Optional<ResourceIdentifier> lastCompletedInstallJobId = default;
-            Optional<JobStatus> lastInstallJobStatus = default;
+            Optional<DataBoxEdgeJobStatus> lastInstallJobStatus = default;
             Optional<int> totalNumberOfUpdatesAvailable = default;
             Optional<int> totalNumberOfUpdatesPendingDownload = default;
             Optional<int> totalNumberOfUpdatesPendingInstall = default;
             Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<UpdateOperation> ongoingUpdateOperation = default;
+            Optional<DataBoxEdgeUpdateOperation> ongoingUpdateOperation = default;
             Optional<ResourceIdentifier> inProgressDownloadJobId = default;
             Optional<ResourceIdentifier> inProgressInstallJobId = default;
             Optional<DateTimeOffset> inProgressDownloadJobStartedDateTime = default;
             Optional<DateTimeOffset> inProgressInstallJobStartedDateTime = default;
             Optional<IReadOnlyList<string>> updateTitles = default;
-            Optional<IReadOnlyList<UpdateDetails>> updates = default;
+            Optional<IReadOnlyList<DataBoxEdgeUpdateDetails>> updates = default;
             Optional<double> totalUpdateSizeInBytes = default;
             Optional<int> totalTimeInMinutes = default;
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastDownloadJobStatus = new JobStatus(property0.Value.GetString());
+                            lastDownloadJobStatus = new DataBoxEdgeJobStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastSuccessfulInstallJobDateTime"))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastInstallJobStatus = new JobStatus(property0.Value.GetString());
+                            lastInstallJobStatus = new DataBoxEdgeJobStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("totalNumberOfUpdatesAvailable"))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ongoingUpdateOperation = new UpdateOperation(property0.Value.GetString());
+                            ongoingUpdateOperation = new DataBoxEdgeUpdateOperation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("inProgressDownloadJobId"))
@@ -343,10 +343,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<UpdateDetails> array = new List<UpdateDetails>();
+                            List<DataBoxEdgeUpdateDetails> array = new List<DataBoxEdgeUpdateDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UpdateDetails.DeserializeUpdateDetails(item));
+                                array.Add(DataBoxEdgeUpdateDetails.DeserializeDataBoxEdgeUpdateDetails(item));
                             }
                             updates = array;
                             continue;

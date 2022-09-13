@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> orderId = default;
-            Optional<ContactDetails> contactInformation = default;
+            Optional<DataBoxEdgeContactDetails> contactInformation = default;
             Optional<DataBoxEdgeShippingAddress> shippingAddress = default;
             Optional<DataBoxEdgeOrderStatus> currentStatus = default;
             Optional<IReadOnlyList<DataBoxEdgeOrderStatus>> orderHistory = default;
             Optional<string> serialNumber = default;
-            Optional<IReadOnlyList<TrackingInfo>> deliveryTrackingInfo = default;
-            Optional<IReadOnlyList<TrackingInfo>> returnTrackingInfo = default;
-            Optional<ShipmentType> shipmentType = default;
+            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
+            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
+            Optional<DataBoxEdgeShipmentType> shipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactInformation = ContactDetails.DeserializeContactDetails(property0.Value);
+                            contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("shippingAddress"))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TrackingInfo> array = new List<TrackingInfo>();
+                            List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrackingInfo.DeserializeTrackingInfo(item));
+                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
                             }
                             deliveryTrackingInfo = array;
                             continue;
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TrackingInfo> array = new List<TrackingInfo>();
+                            List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrackingInfo.DeserializeTrackingInfo(item));
+                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
                             }
                             returnTrackingInfo = array;
                             continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            shipmentType = new ShipmentType(property0.Value.GetString());
+                            shipmentType = new DataBoxEdgeShipmentType(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>
         /// <param name="dataFormat"> DataFormat for Container. </param>
-        public DataBoxEdgeStorageContainerData(AzureContainerDataFormat dataFormat)
+        public DataBoxEdgeStorageContainerData(DataBoxEdgeStorageContainerDataFormat dataFormat)
         {
             DataFormat = dataFormat;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="dataFormat"> DataFormat for Container. </param>
         /// <param name="refreshDetails"> Details of the refresh job on this container. </param>
         /// <param name="createdOn"> The UTC time when container got created. </param>
-        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerStatus? containerStatus, AzureContainerDataFormat dataFormat, RefreshDetails refreshDetails, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeStorageContainerStatus? containerStatus, DataBoxEdgeStorageContainerDataFormat dataFormat, DataBoxEdgeRefreshDetails refreshDetails, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
         {
             ContainerStatus = containerStatus;
             DataFormat = dataFormat;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Current status of the container. </summary>
-        public ContainerStatus? ContainerStatus { get; }
+        public DataBoxEdgeStorageContainerStatus? ContainerStatus { get; }
         /// <summary> DataFormat for Container. </summary>
-        public AzureContainerDataFormat DataFormat { get; set; }
+        public DataBoxEdgeStorageContainerDataFormat DataFormat { get; set; }
         /// <summary> Details of the refresh job on this container. </summary>
-        public RefreshDetails RefreshDetails { get; }
+        public DataBoxEdgeRefreshDetails RefreshDetails { get; }
         /// <summary> The UTC time when container got created. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }

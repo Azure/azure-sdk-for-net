@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="errorManifestFile"> Local share/remote container relative path to the error manifest file of the refresh. </param>
         /// <param name="refreshedEntityId"> ARM ID of the entity that was refreshed. </param>
         /// <param name="folder"> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </param>
-        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, JobErrorDetails error, JobType? jobType, UpdateOperationStage? currentStage, UpdateDownloadProgress downloadProgress, UpdateInstallProgress installProgress, int? totalRefreshErrors, string errorManifestFile, ResourceIdentifier refreshedEntityId, string folder) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, DataBoxEdgeJobType? jobType, UpdateOperationStage? currentStage, UpdateDownloadProgress downloadProgress, UpdateInstallProgress installProgress, int? totalRefreshErrors, string errorManifestFile, ResourceIdentifier refreshedEntityId, string folder) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> The current status of the job. </summary>
-        public JobStatus? Status { get; }
+        public DataBoxEdgeJobStatus? Status { get; }
         /// <summary> The UTC date and time at which the job started. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The UTC date and time at which the job completed. </summary>
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> The percentage of the job that is complete. </summary>
         public int? PercentComplete { get; }
         /// <summary> The error details. </summary>
-        public JobErrorDetails Error { get; }
+        public DataBoxEdgeJobErrorDetails Error { get; }
         /// <summary> The type of the job. </summary>
-        public JobType? JobType { get; }
+        public DataBoxEdgeJobType? JobType { get; }
         /// <summary> Current stage of the update operation. </summary>
         public UpdateOperationStage? CurrentStage { get; }
         /// <summary> The download progress. </summary>

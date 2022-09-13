@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of IotRole. </summary>
         public IotRole()
         {
-            ShareMappings = new ChangeTrackingList<MountPointMap>();
+            ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
             Kind = RoleType.IoT;
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="hostPlatformType"> Platform where the Iot runtime is hosted. </param>
         /// <param name="computeResource"> Resource allocation. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal IotRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, IotDeviceInfo iotDeviceDetails, IotDeviceInfo iotEdgeDeviceDetails, IList<MountPointMap> shareMappings, IotEdgeAgentInfo iotEdgeAgentInfo, HostPlatformType? hostPlatformType, ComputeResource computeResource, RoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal IotRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, IotDeviceInfo iotDeviceDetails, IotDeviceInfo iotEdgeDeviceDetails, IList<DataBoxEdgeMountPointMap> shareMappings, IotEdgeAgentInfo iotEdgeAgentInfo, HostPlatformType? hostPlatformType, EdgeComputeResourceInfo computeResource, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
         {
             HostPlatform = hostPlatform;
             IotDeviceDetails = iotDeviceDetails;
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> IoT edge device to which the IoT role needs to be configured. </summary>
         public IotDeviceInfo IotEdgeDeviceDetails { get; set; }
         /// <summary> Mount points of shares in role(s). </summary>
-        public IList<MountPointMap> ShareMappings { get; }
+        public IList<DataBoxEdgeMountPointMap> ShareMappings { get; }
         /// <summary> Iot edge agent details to download the agent and bootstrap iot runtime. </summary>
         public IotEdgeAgentInfo IotEdgeAgentInfo { get; set; }
         /// <summary> Platform where the Iot runtime is hosted. </summary>
         public HostPlatformType? HostPlatformType { get; }
         /// <summary> Resource allocation. </summary>
-        public ComputeResource ComputeResource { get; set; }
+        public EdgeComputeResourceInfo ComputeResource { get; set; }
         /// <summary> Role status. </summary>
-        public RoleStatus? RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
     }
 }

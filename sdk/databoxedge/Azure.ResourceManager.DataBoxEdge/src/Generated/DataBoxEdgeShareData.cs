@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="shareStatus"> Current status of the share. </param>
         /// <param name="monitoringStatus"> Current monitoring status of the share. </param>
         /// <param name="accessProtocol"> Access protocol to be used by the share. </param>
-        public DataBoxEdgeShareData(ShareStatus shareStatus, MonitoringStatus monitoringStatus, ShareAccessProtocol accessProtocol)
+        public DataBoxEdgeShareData(ShareStatus shareStatus, DataBoxEdgeShareMonitoringStatus monitoringStatus, ShareAccessProtocol accessProtocol)
         {
             ShareStatus = shareStatus;
             MonitoringStatus = monitoringStatus;
             AccessProtocol = accessProtocol;
             UserAccessRights = new ChangeTrackingList<UserAccessRight>();
             ClientAccessRights = new ChangeTrackingList<ClientAccessRight>();
-            ShareMappings = new ChangeTrackingList<MountPointMap>();
+            ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeShareData. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="refreshDetails"> Details of the refresh job on this share. </param>
         /// <param name="shareMappings"> Share mount point to the role. </param>
         /// <param name="dataPolicy"> Data policy of the share. </param>
-        internal DataBoxEdgeShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ShareStatus shareStatus, MonitoringStatus monitoringStatus, AzureContainerInfo azureContainerInfo, ShareAccessProtocol accessProtocol, IList<UserAccessRight> userAccessRights, IList<ClientAccessRight> clientAccessRights, RefreshDetails refreshDetails, IReadOnlyList<MountPointMap> shareMappings, DataPolicy? dataPolicy) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ShareStatus shareStatus, DataBoxEdgeShareMonitoringStatus monitoringStatus, DataBoxEdgeStorageContainerInfo azureContainerInfo, ShareAccessProtocol accessProtocol, IList<UserAccessRight> userAccessRights, IList<ClientAccessRight> clientAccessRights, DataBoxEdgeRefreshDetails refreshDetails, IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings, DataBoxEdgeDataPolicy? dataPolicy) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ShareStatus = shareStatus;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Current status of the share. </summary>
         public ShareStatus ShareStatus { get; set; }
         /// <summary> Current monitoring status of the share. </summary>
-        public MonitoringStatus MonitoringStatus { get; set; }
+        public DataBoxEdgeShareMonitoringStatus MonitoringStatus { get; set; }
         /// <summary> Azure container mapping for the share. </summary>
-        public AzureContainerInfo AzureContainerInfo { get; set; }
+        public DataBoxEdgeStorageContainerInfo AzureContainerInfo { get; set; }
         /// <summary> Access protocol to be used by the share. </summary>
         public ShareAccessProtocol AccessProtocol { get; set; }
         /// <summary> Mapping of users and corresponding access rights on the share (required for SMB protocol). </summary>
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> List of IP addresses and corresponding access rights on the share(required for NFS protocol). </summary>
         public IList<ClientAccessRight> ClientAccessRights { get; }
         /// <summary> Details of the refresh job on this share. </summary>
-        public RefreshDetails RefreshDetails { get; set; }
+        public DataBoxEdgeRefreshDetails RefreshDetails { get; set; }
         /// <summary> Share mount point to the role. </summary>
-        public IReadOnlyList<MountPointMap> ShareMappings { get; }
+        public IReadOnlyList<DataBoxEdgeMountPointMap> ShareMappings { get; }
         /// <summary> Data policy of the share. </summary>
-        public DataPolicy? DataPolicy { get; set; }
+        public DataBoxEdgeDataPolicy? DataPolicy { get; set; }
     }
 }

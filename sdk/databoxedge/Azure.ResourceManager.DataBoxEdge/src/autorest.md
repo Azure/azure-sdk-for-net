@@ -33,6 +33,7 @@ prepend-rp-prefix:
   - Share
   - StorageAccount
   - StorageAccountCredential
+  - StorageAccountStatus
   - Trigger
   - User
   - DayOfWeek
@@ -48,6 +49,36 @@ prepend-rp-prefix:
   - DownloadPhase
   - EtcdInfo
   - LoadBalancerConfig
+  - MetricConfiguration
+  - MetricCounter
+  - MetricCounterSet
+  - MetricDimension
+  - MountPointMap
+  - MountType
+  - NetworkAdapter
+  - NetworkGroup
+  - RefreshDetails
+  - ResourceMoveDetails
+  - ResourceMoveStatus
+  - RoleStatus
+  - RoleType
+  - SecuritySettings
+  - ShipmentType
+  - SkuAvailability
+  - SkuCapability
+  - SkuCost
+  - SkuLocationInfo
+  - SkuSignupOption
+  - SkuVersion
+  - SubscriptionState
+  - SymmetricKey
+  - TrackingInfo
+  - UpdateDetails
+  - UpdateOperation
+  - UpdateStatus
+  - UpdateType
+  - UserType
+  - VmMemory
 
 rename-mapping:
   DataBoxEdgeSku: AvailableDataBoxEdgeSku
@@ -94,6 +125,7 @@ rename-mapping:
   AzureContainerInfo: DataBoxEdgeStorageContainerInfo
   ContainerStatus: DataBoxEdgeStorageContainerStatus
   ComputeResource: EdgeComputeResourceInfo
+  MonitoringStatus: DataBoxEdgeShareMonitoringStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'

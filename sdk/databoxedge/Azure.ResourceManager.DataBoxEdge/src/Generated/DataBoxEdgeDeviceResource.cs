@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="securitySettings"> The security settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securitySettings"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateSecuritySettingsAsync(WaitUntil waitUntil, SecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateSecuritySettingsAsync(WaitUntil waitUntil, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="securitySettings"> The security settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securitySettings"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdateSecuritySettings(WaitUntil waitUntil, SecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdateSecuritySettings(WaitUntil waitUntil, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 

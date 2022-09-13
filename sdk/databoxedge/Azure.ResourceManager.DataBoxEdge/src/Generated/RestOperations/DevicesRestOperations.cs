@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, SecuritySettings securitySettings)
+        internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="securitySettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateSecuritySettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, SecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateSecuritySettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="securitySettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateSecuritySettings(string subscriptionId, string resourceGroupName, string deviceName, SecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateSecuritySettings(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

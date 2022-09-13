@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataResidency DeserializeDataResidency(JsonElement element)
         {
-            Optional<DataResidencyType> type = default;
+            Optional<DataBoxEdgeDataResidencyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new DataResidencyType(property.Value.GetString());
+                    type = new DataBoxEdgeDataResidencyType(property.Value.GetString());
                     continue;
                 }
             }

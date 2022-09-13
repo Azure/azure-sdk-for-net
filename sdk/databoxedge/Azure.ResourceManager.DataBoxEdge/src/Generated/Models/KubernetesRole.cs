@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="kubernetesClusterInfo"> Kubernetes cluster configuration. </param>
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal KubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, KubernetesState? provisioningState, HostPlatformType? hostPlatformType, KubernetesClusterInfo kubernetesClusterInfo, KubernetesRoleResources kubernetesRoleResources, RoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal KubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, KubernetesState? provisioningState, HostPlatformType? hostPlatformType, KubernetesClusterInfo kubernetesClusterInfo, KubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
         {
             HostPlatform = hostPlatform;
             ProvisioningState = provisioningState;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Kubernetes role resources. </summary>
         public KubernetesRoleResources KubernetesRoleResources { get; set; }
         /// <summary> Role status. </summary>
-        public RoleStatus? RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
     }
 }

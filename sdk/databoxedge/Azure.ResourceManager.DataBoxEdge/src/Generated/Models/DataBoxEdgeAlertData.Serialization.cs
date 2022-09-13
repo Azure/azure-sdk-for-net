@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<string> alertType = default;
             Optional<DateTimeOffset> appearedAtDateTime = default;
             Optional<string> recommendation = default;
-            Optional<AlertSeverity> severity = default;
+            Optional<DataBoxEdgeAlertSeverity> severity = default;
             Optional<AlertErrorDetails> errorDetails = default;
             Optional<IReadOnlyDictionary<string, string>> detailedInformation = default;
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            severity = new AlertSeverity(property0.Value.GetString());
+                            severity = new DataBoxEdgeAlertSeverity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("errorDetails"))

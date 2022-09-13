@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ContainerStatus> containerStatus = default;
-            AzureContainerDataFormat dataFormat = default;
-            Optional<RefreshDetails> refreshDetails = default;
+            Optional<DataBoxEdgeStorageContainerStatus> containerStatus = default;
+            DataBoxEdgeStorageContainerDataFormat dataFormat = default;
+            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
             Optional<DateTimeOffset> createdDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            containerStatus = new ContainerStatus(property0.Value.GetString());
+                            containerStatus = new DataBoxEdgeStorageContainerStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataFormat"))
                         {
-                            dataFormat = new AzureContainerDataFormat(property0.Value.GetString());
+                            dataFormat = new DataBoxEdgeStorageContainerDataFormat(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("refreshDetails"))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            refreshDetails = RefreshDetails.DeserializeRefreshDetails(property0.Value);
+                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("createdDateTime"))
