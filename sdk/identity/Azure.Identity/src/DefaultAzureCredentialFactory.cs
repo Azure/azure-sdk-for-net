@@ -52,14 +52,14 @@ namespace Azure.Identity
                 Pipeline);
         }
 
-        public virtual TokenCredential CreateAzureCliCredential()
+        public virtual TokenCredential CreateAzureCliCredential(TimeSpan? cliProcessTimeout)
         {
-            return new AzureCliCredential(Pipeline, default);
+            return new AzureCliCredential(Pipeline, default, new AzureCliCredentialOptions() { CliProcessTimeout = cliProcessTimeout});
         }
 
-        public virtual TokenCredential CreateVisualStudioCredential(string tenantId)
+        public virtual TokenCredential CreateVisualStudioCredential(string tenantId, TimeSpan? visualStudioProcessTimeout)
         {
-            return new VisualStudioCredential(tenantId, Pipeline, default, default);
+            return new VisualStudioCredential(tenantId, Pipeline, default, default, new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = visualStudioProcessTimeout });
         }
 
         public virtual TokenCredential CreateVisualStudioCodeCredential(string tenantId)
@@ -67,9 +67,9 @@ namespace Azure.Identity
             return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, default, default);
         }
 
-        public virtual TokenCredential CreateAzurePowerShellCredential()
+        public virtual TokenCredential CreateAzurePowerShellCredential(TimeSpan? powerShellProcessTimeout)
         {
-            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), Pipeline, default);
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = powerShellProcessTimeout }, Pipeline, default);
         }
     }
 }
