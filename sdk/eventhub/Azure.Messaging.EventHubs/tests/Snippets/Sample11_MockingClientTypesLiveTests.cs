@@ -227,14 +227,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 It.IsAny<CancellationToken>())).Returns(mockReturn(samplePartitionEvent));
 
             var consumer = mockConsumer.Object;
+            #endregion
         }
 
-        #endregion
-
         [Test]
-        public void PartitionReceiverMock()
+        public async Task PartitionReceiverMock()
         {
-#region Snippet:EventHubs_Sample11_PartitionReceiverMock
+            #region Snippet:EventHubs_Sample11_PartitionReceiverMock
 
             // Create a mock of the PartitionReceiver
             var mockReceiver = new Mock<PartitionReceiver>();
@@ -247,6 +246,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // events in the batch, since they are stored inside the batch as well
             var backingList = new List<EventData>();
 
+            var maximumEventCount = 10;
+
             // Create a mock of an EventDataBatch for the receiver to return
             var dataBatchMock = EventHubsModelFactory.EventDataBatch(
                     batchSizeBytes: batchSizeInBytes,
@@ -257,15 +258,27 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     eventData =>
                     {
                         var numElements = backingList.Count();
-                        return numElements < 10;
+                        return numElements < maximumEventCount;
                     });
 
-            var batchList = new List<EventDataBatch>
+            // Adding events to the batch
+            for (var i=0; i < 10; i++)
             {
-                dataBatchMock
-            };
+                // Mocking an EventData instance, different arguments can simulate different potential
+                // outputs from the broker
+                var eventData = EventHubsModelFactory.EventData(
+                    eventBody: new BinaryData($"Sample-Event-{i}"),
+                    systemProperties: default,
+                    partitionKey: "0",
+                    sequenceNumber: default,
+                    offset: default,
+                    enqueuedTime: default);
+
+                Assert.IsTrue(dataBatchMock.TryAdd(eventData));
+            }
 
             // Setup the mock to receive the mocked data batch when ReceiveBatchAsync is called
+            // on a given partition
             mockReceiver.Setup(
                 r => r.ReceiveBatchAsync(
                     It.IsAny<int>(),
@@ -275,7 +288,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var receiver = mockReceiver.Object;
 
-#endregion
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var receivedBatch = await receiver.ReceiveBatchAsync(
+                maximumEventCount: maximumEventCount,
+                TimeSpan.FromSeconds(1),
+                cancellationTokenSource.Token);
+
+            #endregion
         }
 
         [Test]
