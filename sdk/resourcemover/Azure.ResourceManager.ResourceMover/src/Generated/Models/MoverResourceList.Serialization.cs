@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        summaryCollection = null;
                         continue;
                     }
                     summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value);

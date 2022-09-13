@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Identity
 {
     /// <summary>
@@ -18,5 +20,10 @@ namespace Azure.Identity
             get { return _tenantId; }
             set { _tenantId = Validations.ValidateTenantId(value, allowNull: true); }
         }
+
+        /// <summary>
+        /// The VisualStudio process timeout.
+        /// </summary>
+        public TimeSpan? VisualStudioProcessTimeout { get; set; }
     }
 }

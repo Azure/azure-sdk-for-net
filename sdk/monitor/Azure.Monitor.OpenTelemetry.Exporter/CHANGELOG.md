@@ -14,8 +14,16 @@
 * [Add metrics exporter](https://github.com/Azure/azure-sdk-for-net/pull/26651)
 * [Add default storage location and initialization for traces](https://github.com/Azure/azure-sdk-for-net/pull/26494)
 * [Change AzureMonitorExporterLoggingExtensions from internal to public](https://github.com/Azure/azure-sdk-for-net/pull/26355)
+* [Support for exporting Activity exception
+  event](https://github.com/Azure/azure-sdk-for-net/pull/29676)
 
 ### Breaking Changes
+
+* [Request and Dependency Success criteria will now be decided based on
+  `Activity.Status`](https://github.com/Azure/azure-sdk-for-net/pull/31024)
+* [Changed `AzureMonitorTraceExporter` to internal](https://github.com/Azure/azure-sdk-for-net/pull/31067)
+* [Changed default offline storage directory from "Microsoft\ApplicationInsights" to "Microsoft\AzureMonitor"](https://github.com/Azure/azure-sdk-for-net/pull/31073).
+  Users may override the default location by setting `AzureMonitorExporterOptions.StorageDirectory`.
 
 ### Bugs Fixed
 

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -228,6 +229,17 @@ namespace Azure.Identity.Tests
 
             Assert.ThrowsAsync<CredentialUnavailableException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }), CancellationToken.None));
+        }
+
+        [Test]
+        public void ConfigureVisualStudioProcessTimeout_ProcessTimeout()
+        {
+            var testProcess = new TestProcess { Timeout = 10000 };
+            var processService = new TestProcessService(testProcess);
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio(0, 1);
+            VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = TimeSpan.Zero }));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), CancellationToken.None));
+            Assert.True(ex.Message.Contains("has failed to get access token in 0 seconds."));
         }
     }
 }

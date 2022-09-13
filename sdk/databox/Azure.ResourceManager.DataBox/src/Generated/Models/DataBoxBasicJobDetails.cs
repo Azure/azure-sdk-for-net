@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
         /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
         /// <param name="keyEncryptionKey"> Details about which key encryption type is being used. </param>
-        /// <param name="expectedDataSizeInTeraBytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
+        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
         /// <param name="dataCenterAddress">
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode)
+        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode)
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
             ChainOfCustodySasKey = chainOfCustodySasKey;
             DeviceErasureDetails = deviceErasureDetails;
             KeyEncryptionKey = keyEncryptionKey;
-            ExpectedDataSizeInTeraBytes = expectedDataSizeInTeraBytes;
+            ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
             Actions = actions;
             LastMitigationActionOnJob = lastMitigationActionOnJob;
             DataCenterAddress = dataCenterAddress;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Details about which key encryption type is being used. </summary>
         public DataBoxKeyEncryptionKey KeyEncryptionKey { get; set; }
         /// <summary> The expected size of the data, which needs to be transferred in this job, in terabytes. </summary>
-        public int? ExpectedDataSizeInTeraBytes { get; set; }
+        public int? ExpectedDataSizeInTerabytes { get; set; }
         /// <summary> Available actions on the job. </summary>
         public IReadOnlyList<CustomerResolutionCode> Actions { get; }
         /// <summary> Last mitigation action performed on the job. </summary>

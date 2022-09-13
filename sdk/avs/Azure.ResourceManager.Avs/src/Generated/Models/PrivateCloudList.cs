@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of PrivateCloudList. </summary>
         internal PrivateCloudList()
         {
-            Value = new ChangeTrackingList<PrivateCloudData>();
+            Value = new ChangeTrackingList<AvsPrivateCloudData>();
         }
 
         /// <summary> Initializes a new instance of PrivateCloudList. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal PrivateCloudList(IReadOnlyList<PrivateCloudData> value, string nextLink)
+        internal PrivateCloudList(IReadOnlyList<AvsPrivateCloudData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on the page. </summary>
-        public IReadOnlyList<PrivateCloudData> Value { get; }
+        public IReadOnlyList<AvsPrivateCloudData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }
