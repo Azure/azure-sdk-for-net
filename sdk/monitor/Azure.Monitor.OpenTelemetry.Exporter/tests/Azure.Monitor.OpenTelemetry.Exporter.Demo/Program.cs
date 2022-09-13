@@ -35,6 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                             .AddAzureMonitorTraceExporter(o =>
                             {
                                 o.ConnectionString = ConnectionString;
+                                o.SamplingRatio = 0.5F;
                             })
                             .Build();
 

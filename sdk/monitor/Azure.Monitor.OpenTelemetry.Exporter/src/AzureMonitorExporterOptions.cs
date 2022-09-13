@@ -51,5 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public string StorageDirectory { get; set; }
 
         public bool DisableOfflineStorage { get; set; }
+
+        public float SamplingRatio { get; set; } = 1;
     }
 }
