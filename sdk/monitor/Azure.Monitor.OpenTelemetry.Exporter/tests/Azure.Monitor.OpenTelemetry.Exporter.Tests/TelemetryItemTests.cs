@@ -46,7 +46,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
+
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryItem.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -73,7 +75,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryItem.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -99,7 +102,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
+
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryItem.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -142,7 +147,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Equal(expectedOperationName, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
@@ -165,7 +171,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Equal("GET /path", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
@@ -185,7 +192,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Equal("displayname", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
@@ -204,7 +212,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
         }
@@ -223,7 +232,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
         }
@@ -243,7 +253,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Equal(userAgent, telemetryItem.Tags["ai.user.userAgent"]);
         }
@@ -259,7 +270,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Null(telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
         }
@@ -275,7 +288,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
 
             Assert.Null(telemetryItem.Tags["ai.user.userAgent"]);
         }
@@ -295,7 +310,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
@@ -315,7 +331,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, resourceParser.RoleName, resourceParser.RoleInstance, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
@@ -339,7 +356,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
+            var telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
             var requestData = new RequestData(2, activity, ref monitorTags);
 
             Assert.Equal(requestData.Name, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
