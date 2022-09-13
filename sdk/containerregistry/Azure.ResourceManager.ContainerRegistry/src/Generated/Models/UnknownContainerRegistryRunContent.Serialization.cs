@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryRunContent : IUtf8JsonSerializable
+    internal partial class UnknownContainerRegistryRunContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,18 +35,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryRunContent DeserializeContainerRegistryRunContent(JsonElement element)
+        internal static UnknownContainerRegistryRunContent DeserializeUnknownContainerRegistryRunContent(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "DockerBuildRequest": return ContainerRegistryDockerBuildContent.DeserializeContainerRegistryDockerBuildContent(element);
-                    case "EncodedTaskRunRequest": return ContainerRegistryEncodedTaskRunContent.DeserializeContainerRegistryEncodedTaskRunContent(element);
-                    case "FileTaskRunRequest": return ContainerRegistryFileTaskRunContent.DeserializeContainerRegistryFileTaskRunContent(element);
-                    case "TaskRunRequest": return ContainerRegistryTaskRunContent.DeserializeContainerRegistryTaskRunContent(element);
-                }
-            }
             string type = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> agentPoolName = default;
