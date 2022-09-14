@@ -45,7 +45,7 @@ namespace Azure.Identity
         private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
 
         /// <summary>
-        /// The tenant ID the credential will authenticate to by default. If not specified the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authetication method was originally authenticated.
+        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
         /// </summary>
         public string TenantId
         {
