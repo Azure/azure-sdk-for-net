@@ -20,7 +20,7 @@ namespace Azure.Identity.Tests.samples
             #region Snippet:Identity_BreakingChanges_AddExplicitAdditionallyAllowedTenants
             var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
             {
-                AdditionallyAllowedTenants = { "00000000-0000-0000-0000-000000000000", "11111111-1111-1111-1111-111111111111" }
+                AdditionallyAllowedTenants = { "<tenant_id_1>", "<tenant_id_2>" }
             });
             #endregion
         }
