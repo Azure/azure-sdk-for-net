@@ -238,7 +238,7 @@ This can be configured using the [SessionIdleTimeout][SessionIdleTimeout], which
 
 ### Processor stops immediately
 
-This often is observed for demo or testing scenarios.  `StartProcessingAsync` returns immediately after the processor has started. Calling this method will not block and keep your application alive while the processor is running, so you'll need some other mechanism to do so.  For demos or testing, it may be sufficient to just add a `Console.ReadKey()` call after you start the processor. For production scenarios, you will likely want to use some sort of framework integration like [BackgroundService][BackgroundService] to provide convenient application lifecycle hooks that can be used for starting and disposing the processor.
+This is often observed for demo or testing scenarios.  `StartProcessingAsync` returns immediately after the processor has started. Calling this method will not block and keep your application alive while the processor is running, so you'll need some other mechanism to do so.  For demos or testing, it may be sufficient to just add a `Console.ReadKey()` call after you start the processor. For production scenarios, you will likely want to use some sort of framework integration like [BackgroundService][BackgroundService] to provide convenient application lifecycle hooks that can be used for starting and disposing the processor.
 
 ## Troubleshoot transactions
 
