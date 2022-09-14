@@ -103,7 +103,7 @@ Response<IpAddressToLocationResult> result = client.GetLocation(ipAddress);
 Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");
 ```
 
-For more detailed examples, please [geolocation range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.GeoLocation/samples/GetLocationSamples.md) page.
+For more detailed examples, please see [geolocation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.GeoLocation/samples/GetLocationSamples.md) page.
 
 ## Troubleshooting
 
