@@ -62,12 +62,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="smartGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="smartGroupId"/> is null. </exception>
-        public virtual async Task<Response<SmartGroupResource>> GetAsync(string smartGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SmartGroupResource>> GetAsync(Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(smartGroupId, nameof(smartGroupId));
-
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.Get");
             scope.Start();
             try
@@ -91,12 +87,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="smartGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="smartGroupId"/> is null. </exception>
-        public virtual Response<SmartGroupResource> Get(string smartGroupId, CancellationToken cancellationToken = default)
+        public virtual Response<SmartGroupResource> Get(Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(smartGroupId, nameof(smartGroupId));
-
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.Get");
             scope.Start();
             try
@@ -131,7 +123,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SmartGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -184,7 +176,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             Page<SmartGroupResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -226,12 +218,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="smartGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="smartGroupId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string smartGroupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(smartGroupId, nameof(smartGroupId));
-
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.Exists");
             scope.Start();
             try
@@ -253,12 +241,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="smartGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="smartGroupId"/> is null. </exception>
-        public virtual Response<bool> Exists(string smartGroupId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(smartGroupId, nameof(smartGroupId));
-
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.Exists");
             scope.Start();
             try

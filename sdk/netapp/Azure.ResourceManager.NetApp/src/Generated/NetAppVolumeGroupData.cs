@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
         public NetAppVolumeGroupData()
         {
-            Volumes = new ChangeTrackingList<NetAppVolumeGroupData>();
+            Volumes = new ChangeTrackingList<NetAppVolumeGroupVolume>();
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <param name="volumes"> List of volumes from group. </param>
-        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<NetAppVolumeGroupData> volumes) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<NetAppVolumeGroupVolume> volumes) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Volume group details. </summary>
         public NetAppVolumeGroupMetadata GroupMetaData { get; set; }
         /// <summary> List of volumes from group. </summary>
-        public IList<NetAppVolumeGroupData> Volumes { get; }
+        public IList<NetAppVolumeGroupVolume> Volumes { get; }
     }
 }

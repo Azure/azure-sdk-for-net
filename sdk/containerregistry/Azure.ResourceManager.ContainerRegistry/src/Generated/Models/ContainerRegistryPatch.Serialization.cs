@@ -73,11 +73,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("networkRuleBypassOptions");
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
             }
-            if (Optional.IsDefined(IsAnonymousPullEnabled))
-            {
-                writer.WritePropertyName("anonymousPullEnabled");
-                writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

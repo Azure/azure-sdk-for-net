@@ -1,6 +1,6 @@
 # Azure.Core pipeline samples
 
-**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
+**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`.
 
 Before request is sent to the service it travels through the pipeline which consists of a set of policies that get to modify the request before it's being sent and observe the response after it's received and a transport that is responsible for sending request and receiving the response.
 
@@ -69,4 +69,27 @@ public class CustomRequestPolicy : HttpPipelineSynchronousPolicy
         message.Request.Headers.Add("Custom-Header", "Value");
     }
 }
+```
+
+## Customizing error formatting
+
+The pipeline can be configured to utilize a custom error response parser. This is typically needed when a service does not always conform to the standard Azure error format, or when additional information needs to be added to an error.
+
+To configure custom error formatting, a client must implement a `RequestFailedDetailsParser` and provide it to the `HttpPipelineOptions` when building the pipeline.
+
+### Create an implementation
+
+An example implementation can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/02ca346fdff349be0d9181955f36c60497fa5c60/sdk/tables/Azure.Data.Tables/src/TablesRequestFailedDetailsParser.cs)
+
+### Configure the pipeline with a custom `RequestFailedDetailsParser`
+
+Below is an example of how clients would specify their custom parser in the `HttpPiplineOptions`
+
+```C# Snippet:RequestFailedDetailsParser
+var pipelineOptions = new HttpPipelineOptions(options)
+{
+    RequestFailedDetailsParser = new FooClientRequestFailedDetailsParser()
+};
+
+_pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 ```

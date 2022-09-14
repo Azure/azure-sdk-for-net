@@ -15,17 +15,14 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStringValue(Value);
-            }
+            writer.WritePropertyName("value");
+            writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
 
         internal static PhoneNumberIdentifierModel DeserializePhoneNumberIdentifierModel(JsonElement element)
         {
-            Optional<string> value = default;
+            string value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -34,7 +31,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new PhoneNumberIdentifierModel(value.Value);
+            return new PhoneNumberIdentifierModel(value);
         }
     }
 }

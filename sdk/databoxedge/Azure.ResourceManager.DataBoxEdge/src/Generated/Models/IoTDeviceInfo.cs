@@ -6,50 +6,51 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Metadata of IoT device/IoT Edge device to be configured. </summary>
-    public partial class IoTDeviceInfo
+    public partial class IotDeviceInfo
     {
-        /// <summary> Initializes a new instance of IoTDeviceInfo. </summary>
+        /// <summary> Initializes a new instance of IotDeviceInfo. </summary>
         /// <param name="deviceId"> ID of the IoT device/edge device. </param>
-        /// <param name="ioTHostHub"> Host name for the IoT hub associated to the device. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="ioTHostHub"/> is null. </exception>
-        public IoTDeviceInfo(string deviceId, string ioTHostHub)
+        /// <param name="iotHostHub"> Host name for the IoT hub associated to the device. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="iotHostHub"/> is null. </exception>
+        public IotDeviceInfo(string deviceId, string iotHostHub)
         {
             if (deviceId == null)
             {
                 throw new ArgumentNullException(nameof(deviceId));
             }
-            if (ioTHostHub == null)
+            if (iotHostHub == null)
             {
-                throw new ArgumentNullException(nameof(ioTHostHub));
+                throw new ArgumentNullException(nameof(iotHostHub));
             }
 
             DeviceId = deviceId;
-            IoTHostHub = ioTHostHub;
+            IotHostHub = iotHostHub;
         }
 
-        /// <summary> Initializes a new instance of IoTDeviceInfo. </summary>
+        /// <summary> Initializes a new instance of IotDeviceInfo. </summary>
         /// <param name="deviceId"> ID of the IoT device/edge device. </param>
-        /// <param name="ioTHostHub"> Host name for the IoT hub associated to the device. </param>
-        /// <param name="ioTHostHubId"> Id for the IoT hub associated to the device. </param>
+        /// <param name="iotHostHub"> Host name for the IoT hub associated to the device. </param>
+        /// <param name="iotHostHubId"> Id for the IoT hub associated to the device. </param>
         /// <param name="authentication"> Encrypted IoT device/IoT edge device connection string. </param>
-        internal IoTDeviceInfo(string deviceId, string ioTHostHub, string ioTHostHubId, Authentication authentication)
+        internal IotDeviceInfo(string deviceId, string iotHostHub, ResourceIdentifier iotHostHubId, Authentication authentication)
         {
             DeviceId = deviceId;
-            IoTHostHub = ioTHostHub;
-            IoTHostHubId = ioTHostHubId;
+            IotHostHub = iotHostHub;
+            IotHostHubId = iotHostHubId;
             Authentication = authentication;
         }
 
         /// <summary> ID of the IoT device/edge device. </summary>
         public string DeviceId { get; set; }
         /// <summary> Host name for the IoT hub associated to the device. </summary>
-        public string IoTHostHub { get; set; }
+        public string IotHostHub { get; set; }
         /// <summary> Id for the IoT hub associated to the device. </summary>
-        public string IoTHostHubId { get; set; }
+        public ResourceIdentifier IotHostHubId { get; set; }
         /// <summary> Encrypted IoT device/IoT edge device connection string. </summary>
         internal Authentication Authentication { get; set; }
         /// <summary> Connection string based on the symmetric key. </summary>

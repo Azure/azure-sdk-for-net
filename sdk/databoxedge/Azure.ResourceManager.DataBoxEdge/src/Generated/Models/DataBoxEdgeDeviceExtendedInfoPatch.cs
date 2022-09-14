@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The Key Vault ARM Id for client secrets. </summary>
-        public string ClientSecretStoreId { get; set; }
+        public ResourceIdentifier ClientSecretStoreId { get; set; }
         /// <summary> The url to access the Client Key Vault. </summary>
         public Uri ClientSecretStoreUri { get; set; }
         /// <summary> The name for Channel Integrity Key stored in the Client Key Vault. </summary>

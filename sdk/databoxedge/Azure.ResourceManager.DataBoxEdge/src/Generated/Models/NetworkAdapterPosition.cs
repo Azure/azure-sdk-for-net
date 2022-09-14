@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of NetworkAdapterPosition. </summary>
         /// <param name="networkGroup"> The network group. </param>
         /// <param name="port"> The port. </param>
-        internal NetworkAdapterPosition(NetworkGroup? networkGroup, int? port)
+        internal NetworkAdapterPosition(DataBoxEdgeNetworkGroup? networkGroup, int? port)
         {
             NetworkGroup = networkGroup;
             Port = port;
         }
 
         /// <summary> The network group. </summary>
-        public NetworkGroup? NetworkGroup { get; }
+        public DataBoxEdgeNetworkGroup? NetworkGroup { get; }
         /// <summary> The port. </summary>
         public int? Port { get; }
     }

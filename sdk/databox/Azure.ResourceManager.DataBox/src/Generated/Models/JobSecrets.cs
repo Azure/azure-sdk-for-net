@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of JobSecrets. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
-        /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
+        /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        internal JobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error)
+        internal JobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error)
         {
             JobSecretsType = jobSecretsType;
-            DcAccessSecurityCode = dcAccessSecurityCode;
+            DataCenterAccessSecurityCode = dataCenterAccessSecurityCode;
             Error = error;
         }
 
         /// <summary> Used to indicate what type of job secrets object. </summary>
         internal DataBoxOrderType JobSecretsType { get; set; }
         /// <summary> Dc Access Security Code for Customer Managed Shipping. </summary>
-        public DataCenterAccessSecurityCode DcAccessSecurityCode { get; }
+        public DataCenterAccessSecurityCode DataCenterAccessSecurityCode { get; }
         /// <summary> Error while fetching the secrets. </summary>
         public ResponseError Error { get; }
     }

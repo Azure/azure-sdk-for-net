@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerAuthorization. </summary>
         public PartnerAuthorization()
         {
-            AuthorizedPartnersList = new ChangeTrackingList<Partner>();
+            AuthorizedPartnersList = new ChangeTrackingList<EventGridPartnerContent>();
         }
 
         /// <summary> Initializes a new instance of PartnerAuthorization. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// not specified, the default is 7 days. Otherwise, allowed values are between 1 and 365 days.
         /// </param>
         /// <param name="authorizedPartnersList"> The list of authorized partners. </param>
-        internal PartnerAuthorization(int? defaultMaximumExpirationTimeInDays, IList<Partner> authorizedPartnersList)
+        internal PartnerAuthorization(int? defaultMaximumExpirationTimeInDays, IList<EventGridPartnerContent> authorizedPartnersList)
         {
             DefaultMaximumExpirationTimeInDays = defaultMaximumExpirationTimeInDays;
             AuthorizedPartnersList = authorizedPartnersList;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </summary>
         public int? DefaultMaximumExpirationTimeInDays { get; set; }
         /// <summary> The list of authorized partners. </summary>
-        public IList<Partner> AuthorizedPartnersList { get; }
+        public IList<EventGridPartnerContent> AuthorizedPartnersList { get; }
     }
 }

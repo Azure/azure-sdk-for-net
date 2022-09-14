@@ -18,10 +18,6 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-suppress-abstract-base-class:
-- FirewallPolicyRule
-- FirewallPolicyRuleCollectionInfo
-
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor

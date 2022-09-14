@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -22,6 +23,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Tags of the system topic. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Resource identity information. </summary>
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

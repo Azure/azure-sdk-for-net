@@ -15,50 +15,50 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterFreeMemoryMb))
+            if (Optional.IsDefined(ClusterFreeMemoryInMB))
             {
                 writer.WritePropertyName("clusterFreeMemoryMb");
-                writer.WriteNumberValue(ClusterFreeMemoryMb.Value);
+                writer.WriteNumberValue(ClusterFreeMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterUsedMemoryMb))
+            if (Optional.IsDefined(ClusterUsedMemoryInMB))
             {
                 writer.WritePropertyName("clusterUsedMemoryMb");
-                writer.WriteNumberValue(ClusterUsedMemoryMb.Value);
+                writer.WriteNumberValue(ClusterUsedMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterFailoverMemoryMb))
+            if (Optional.IsDefined(ClusterFailoverMemoryInMB))
             {
                 writer.WritePropertyName("clusterFailoverMemoryMb");
-                writer.WriteNumberValue(ClusterFailoverMemoryMb.Value);
+                writer.WriteNumberValue(ClusterFailoverMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterFragmentationMemoryMb))
+            if (Optional.IsDefined(ClusterFragmentationMemoryInMB))
             {
                 writer.WritePropertyName("clusterFragmentationMemoryMb");
-                writer.WriteNumberValue(ClusterFragmentationMemoryMb.Value);
+                writer.WriteNumberValue(ClusterFragmentationMemoryInMB.Value);
             }
             if (Optional.IsDefined(ClusterHyperVReserveMemoryMb))
             {
                 writer.WritePropertyName("clusterHypervReserveMemoryMb");
                 writer.WriteNumberValue(ClusterHyperVReserveMemoryMb.Value);
             }
-            if (Optional.IsDefined(ClusterInfraVmMemoryMb))
+            if (Optional.IsDefined(ClusterInfraVmMemoryInMB))
             {
                 writer.WritePropertyName("clusterInfraVmMemoryMb");
-                writer.WriteNumberValue(ClusterInfraVmMemoryMb.Value);
+                writer.WriteNumberValue(ClusterInfraVmMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterTotalMemoryMb))
+            if (Optional.IsDefined(ClusterTotalMemoryInMB))
             {
                 writer.WritePropertyName("clusterTotalMemoryMb");
-                writer.WriteNumberValue(ClusterTotalMemoryMb.Value);
+                writer.WriteNumberValue(ClusterTotalMemoryInMB.Value);
             }
-            if (Optional.IsDefined(ClusterNonFailoverVmMb))
+            if (Optional.IsDefined(ClusterNonFailoverVmInMB))
             {
                 writer.WritePropertyName("clusterNonFailoverVmMb");
-                writer.WriteNumberValue(ClusterNonFailoverVmMb.Value);
+                writer.WriteNumberValue(ClusterNonFailoverVmInMB.Value);
             }
-            if (Optional.IsDefined(ClusterMemoryUsedByVmsMb))
+            if (Optional.IsDefined(ClusterMemoryUsedByVmsInMB))
             {
                 writer.WritePropertyName("clusterMemoryUsedByVmsMb");
-                writer.WriteNumberValue(ClusterMemoryUsedByVmsMb.Value);
+                writer.WriteNumberValue(ClusterMemoryUsedByVmsInMB.Value);
             }
             writer.WriteEndObject();
         }

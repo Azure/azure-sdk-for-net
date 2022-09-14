@@ -8,9 +8,16 @@
             "metadata": {
                 "description": "The base resource name."
             }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
         }
     },
     "variables": {
+       "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/8f5e0ce6-4f7b-4dcf-bddf-e6f48634a204')]",
        "mapsAccountName": "[guid(resourceGroup().id, deployment().name, parameters('baseName'))]"
     },
     "resources": [
@@ -39,16 +46,21 @@
                     ]
                 }
             }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[variables('roleDefinitionId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
         }
     ],
     "outputs": {
-        "SUBSCRIPTION_KEY": {
+        "AZMAPS_CLIENT_ID": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.Maps/accounts',variables('mapsAccountName')), '2021-12-01-preview').primaryKey]"
-        },
-        "RESOURCE_GROUP_NAME": {
-            "type": "string",
-            "value": "[resourceGroup().Name]"
+            "value": "[reference(resourceId('Microsoft.Maps/accounts',variables('mapsAccountName'))).uniqueId]"
         }
     }
 }

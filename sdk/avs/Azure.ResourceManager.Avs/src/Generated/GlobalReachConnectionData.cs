@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="circuitConnectionStatus"> The connection status of the global reach connection. </param>
         /// <param name="peerExpressRouteCircuit"> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </param>
         /// <param name="expressRouteId"> The ID of the Private Cloud&apos;s ExpressRoute Circuit that is participating in the global reach connection. </param>
-        internal GlobalReachConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, string peerExpressRouteCircuit, string expressRouteId) : base(id, name, resourceType, systemData)
+        internal GlobalReachConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, ResourceIdentifier peerExpressRouteCircuit, ResourceIdentifier expressRouteId) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AddressPrefix = addressPrefix;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Avs
         /// <summary> The connection status of the global reach connection. </summary>
         public GlobalReachConnectionStatus? CircuitConnectionStatus { get; }
         /// <summary> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </summary>
-        public string PeerExpressRouteCircuit { get; set; }
+        public ResourceIdentifier PeerExpressRouteCircuit { get; set; }
         /// <summary> The ID of the Private Cloud&apos;s ExpressRoute Circuit that is participating in the global reach connection. </summary>
-        public string ExpressRouteId { get; set; }
+        public ResourceIdentifier ExpressRouteId { get; set; }
     }
 }

@@ -62,6 +62,7 @@ override-operation-name:
   Volumes_ReplicationStatus: GetReplicationStatus
   Backups_GetStatus: GetBackupStatus
   Backups_GetVolumeRestoreStatus: GetRestoreStatus
+  VolumeGroups_ListByNetAppAccount: GetVolumeGroups
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
@@ -88,12 +89,6 @@ prepend-rp-prefix:
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
-  Backup.properties.backupId: -|uuid
-  Volume.properties.backupId: -|uuid
-  BackupPatch.properties.backupId: -|uuid
-  Volume.properties.snapshotId: -|uuid
-  Volume.properties.fileSystemId: -|uuid
-  Snapshot.properties.snapshotId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
@@ -113,16 +108,30 @@ rename-mapping:
   ExportPolicyRule.kerberos5pReadWrite: IsKerberos5pReadWrite
   ExportPolicyRule.nfsv3: AllowNfsV3Protocol
   ExportPolicyRule.nfsv41: AllowNfsV41Protocol
+  Volume.properties.fileSystemId: -|uuid
+  Volume.properties.networkSiblingSetId: -|uuid
   Volume.properties.coolAccess: IsCoolAccessEnabled
   Volume.properties.keyVaultPrivateEndpointResourceId: -|arm-id
   Volume.properties.subnetId: -|arm-id
   Volume.properties.capacityPoolResourceId: -|arm-id
+  Volume.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
   Volume.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
   Volume.properties.kerberosEnabled: IsKerberosEnabled
   Volume.properties.smbEncryption: IsSmbEncryptionEnabled
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
+  VolumeGroupVolumeProperties.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
+  VolumeGroupVolumeProperties.properties.coolAccess: IsCoolAccessEnabled
+  VolumeGroupVolumeProperties.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
+  VolumeGroupVolumeProperties.properties.kerberosEnabled: IsKerberosEnabled
+  VolumeGroupVolumeProperties.properties.smbEncryption: IsSmbEncryptionEnabled
+  VolumeGroupVolumeProperties.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
+  VolumeGroupVolumeProperties.properties.ldapEnabled: IsLdapEnabled
+  VolumeGroupVolumeProperties.properties.encrypted: IsEncrypted
+  VolumeGroupVolumeProperties.id: -|arm-id
+  VolumeGroupVolumeProperties.type: ResourceType|resource-type
+  VolumeGroupVolumeProperties: NetAppVolumeGroupVolume
   SnapshotPolicy.properties.enabled: IsEnabled
   SnapshotPolicyPatch.properties.enabled: IsEnabled
   ActiveDirectory.aesEncryption: IsAesEncryptionEnabled
@@ -144,7 +153,6 @@ rename-mapping:
   SubvolumeModel.properties.accessedTimeStamp: AccessedOn
   SubvolumeModel.properties.modifiedTimeStamp: ModifiedOn
   SubvolumeModel.properties.changedTimeStamp: ChangedOn
-  VolumeRevert.snapshotId: -|arm-id
   ReplicationObject.remoteVolumeResourceId: -|arm-id
   VolumeBackupProperties.backupPolicyId: -|arm-id
   VolumeBackupProperties.policyEnforced: IsPolicyEnforced
@@ -196,22 +204,12 @@ rename-mapping:
   VolumeRevert: NetAppVolumeRevertContent
   VolumeBackupProperties: NetAppVolumeBackupConfiguration
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
+  VolumeGroup: NetAppVolumeGroupResult
+
+list-exception:
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
-# remove this operation because the Snapshots_Update defines an empty object
+  # remove this operation because the Snapshots_Update defines an empty object
   - remove-operation: Snapshots_Update
-# the list method of volumeGroup `VolumeGroups_ListByNetAppAccount` is returning a model `VolumeGroup` which is very similar to `VolumeGroupDetails` (with one property missing)
-# but this breaks our convention about List method. Here we override the return schema of list method
-  - from: swagger-document
-    where: $.definitions.volumeGroupList.properties.value.items["$ref"]
-    transform: return "#/definitions/volumeGroupDetails"
-# rename the volumeGroup to something else to avoid model name collision because we are using VolumeGroupDetails everywhere in the SDK and it is renamed to VolumeGroup
-# this type will never be generated.
-  - from: swagger-document
-    where: $.definitions.volumeGroup
-    transform: $["x-ms-client-name"] = "DummyVolumeGroup"
-# we have yet another two identical (almost) models volumeGroupVolumeProperties and VolumeGroupDetails. Here we take VolumeGroupDetails because it contains more
-  - from: swagger-document
-    where: $.definitions.volumeGroupProperties.properties.volumes.items["$ref"]
-    transform: return "#/definitions/volumeGroupDetails"
 ```

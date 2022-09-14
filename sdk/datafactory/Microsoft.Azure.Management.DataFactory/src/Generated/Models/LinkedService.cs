@@ -16,9 +16,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// The Azure Data Factory nested object which contains the information and
-    /// credential which can be used to connect with related store or compute
-    /// resource.
+    /// The nested object which contains the information and credential which
+    /// can be used to connect with related store or compute resource.
     /// </summary>
     public partial class LinkedService
     {
