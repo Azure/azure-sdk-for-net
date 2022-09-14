@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// from an instance of <see cref="ArmClient" /> using the GetLocationEnvironmentManagedClusterVersionResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetLocationEnvironmentManagedClusterVersion method.
     /// </summary>
-    public partial class LocationEnvironmentManagedClusterVersionResource : ArmResource
+    public partial class LocationEnvironmentManagedClusterVersionResource : ManagedClusterCodeVersionResultResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LocationEnvironmentManagedClusterVersionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion)
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         private readonly ClientDiagnostics _locationEnvironmentManagedClusterVersionManagedClusterVersionClientDiagnostics;
         private readonly ManagedClusterVersionRestOperations _locationEnvironmentManagedClusterVersionManagedClusterVersionRestClient;
-        private readonly ManagedClusterCodeVersionResultData _data;
 
         /// <summary> Initializes a new instance of the <see cref="LocationEnvironmentManagedClusterVersionResource"/> class for mocking. </summary>
         protected LocationEnvironmentManagedClusterVersionResource()
@@ -45,10 +44,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Initializes a new instance of the <see cref = "LocationEnvironmentManagedClusterVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LocationEnvironmentManagedClusterVersionResource(ArmClient client, ManagedClusterCodeVersionResultData data) : this(client, data.Id)
+        internal LocationEnvironmentManagedClusterVersionResource(ArmClient client, ManagedClusterCodeVersionResultData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="LocationEnvironmentManagedClusterVersionResource"/> class. </summary>
@@ -67,34 +64,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/locations/environments/managedClusterVersions";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagedClusterCodeVersionResultData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Gets information about an available Service Fabric cluster code version by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_GetByEnvironment
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LocationEnvironmentManagedClusterVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<ManagedClusterCodeVersionResultResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _locationEnvironmentManagedClusterVersionManagedClusterVersionClientDiagnostics.CreateScope("LocationEnvironmentManagedClusterVersionResource.Get");
             scope.Start();
@@ -103,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = await _locationEnvironmentManagedClusterVersionManagedClusterVersionRestClient.GetByEnvironmentAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocationEnvironmentManagedClusterVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +96,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Operation Id: ManagedClusterVersion_GetByEnvironment
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LocationEnvironmentManagedClusterVersionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LocationEnvironmentManagedClusterVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((LocationEnvironmentManagedClusterVersionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<ManagedClusterCodeVersionResultResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _locationEnvironmentManagedClusterVersionManagedClusterVersionClientDiagnostics.CreateScope("LocationEnvironmentManagedClusterVersionResource.Get");
             scope.Start();
@@ -127,13 +114,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = _locationEnvironmentManagedClusterVersionManagedClusterVersionRestClient.GetByEnvironment(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocationEnvironmentManagedClusterVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets information about an available Service Fabric cluster code version by environment.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
+        /// Operation Id: ManagedClusterVersion_GetByEnvironment
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<LocationEnvironmentManagedClusterVersionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((LocationEnvironmentManagedClusterVersionResource)value.Value, value.GetRawResponse());
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media
     /// from an instance of <see cref="ArmClient" /> using the GetMediaServicesAccountResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMediaServicesAccount method.
     /// </summary>
-    public partial class MediaServicesAccountResource : ArmResource
+    public partial class MediaServicesAccountResource : BaseMediaServicesAccountResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaServicesAccountResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Media
 
         private readonly ClientDiagnostics _mediaServicesAccountMediaservicesClientDiagnostics;
         private readonly MediaservicesRestOperations _mediaServicesAccountMediaservicesRestClient;
-        private readonly MediaServicesAccountData _data;
 
         /// <summary> Initializes a new instance of the <see cref="MediaServicesAccountResource"/> class for mocking. </summary>
         protected MediaServicesAccountResource()
@@ -46,10 +45,8 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of the <see cref = "MediaServicesAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MediaServicesAccountResource(ArmClient client, MediaServicesAccountData data) : this(client, data.Id)
+        internal MediaServicesAccountResource(ArmClient client, MediaServicesAccountData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="MediaServicesAccountResource"/> class. </summary>
@@ -67,21 +64,6 @@ namespace Azure.ResourceManager.Media
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MediaServicesAccountData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -459,13 +441,9 @@ namespace Azure.ResourceManager.Media
             return GetStreamingEndpoints().Get(streamingEndpointName, cancellationToken);
         }
 
-        /// <summary>
-        /// Get the details of a Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaServicesAccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseMediaServicesAccountResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.Get");
             scope.Start();
@@ -474,7 +452,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _mediaServicesAccountMediaservicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -489,7 +467,16 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: Mediaservices_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaServicesAccountResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<MediaServicesAccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((MediaServicesAccountResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseMediaServicesAccountResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.Get");
             scope.Start();
@@ -498,13 +485,26 @@ namespace Azure.ResourceManager.Media
                 var response = _mediaServicesAccountMediaservicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get the details of a Media Services account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
+        /// Operation Id: Mediaservices_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<MediaServicesAccountResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((MediaServicesAccountResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

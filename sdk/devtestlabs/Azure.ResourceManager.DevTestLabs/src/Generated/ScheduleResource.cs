@@ -191,6 +191,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         protected override async Task<Response<BaseScheduleResource>> UpdateCoreAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(schedule, nameof(schedule));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Update");
             scope.Start();
             try
@@ -226,6 +228,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         protected override Response<BaseScheduleResource> UpdateCore(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(schedule, nameof(schedule));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Update");
             scope.Start();
             try
@@ -365,6 +369,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected override async Task<Response<BaseScheduleResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.AddTag");
             scope.Start();
             try
@@ -420,6 +427,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected override Response<BaseScheduleResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.AddTag");
             scope.Start();
             try
@@ -474,6 +484,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected override async Task<Response<BaseScheduleResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.SetTags");
             scope.Start();
             try
@@ -524,6 +536,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected override Response<BaseScheduleResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.SetTags");
             scope.Start();
             try
@@ -574,6 +588,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected override async Task<Response<BaseScheduleResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.RemoveTag");
             scope.Start();
             try
@@ -627,6 +643,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected override Response<BaseScheduleResource> RemoveTagCore(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.RemoveTag");
             scope.Start();
             try

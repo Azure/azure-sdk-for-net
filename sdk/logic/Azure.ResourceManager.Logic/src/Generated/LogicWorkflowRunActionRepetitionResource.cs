@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic
     /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowRunActionRepetitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunActionResource" /> using the GetLogicWorkflowRunActionRepetition method.
     /// </summary>
-    public partial class LogicWorkflowRunActionRepetitionResource : ArmResource
+    public partial class LogicWorkflowRunActionRepetitionResource : LogicWorkflowRunActionRepetitionDefinitionResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowRunActionRepetitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, string repetitionName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Logic
 
         private readonly ClientDiagnostics _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics;
         private readonly WorkflowRunActionRepetitionsRestOperations _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient;
-        private readonly LogicWorkflowRunActionRepetitionDefinitionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionRepetitionResource"/> class for mocking. </summary>
         protected LogicWorkflowRunActionRepetitionResource()
@@ -44,10 +43,8 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunActionRepetitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogicWorkflowRunActionRepetitionResource(ArmClient client, LogicWorkflowRunActionRepetitionDefinitionData data) : this(client, data.Id)
+        internal LogicWorkflowRunActionRepetitionResource(ArmClient client, LogicWorkflowRunActionRepetitionDefinitionData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionRepetitionResource"/> class. </summary>
@@ -65,21 +62,6 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/repetitions";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LogicWorkflowRunActionRepetitionDefinitionData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -124,13 +106,9 @@ namespace Azure.ResourceManager.Logic
             return GetLogicWorkflowRunActionRepetitionRequestHistories().Get(requestHistoryName, cancellationToken);
         }
 
-        /// <summary>
-        /// Get a workflow run action repetition.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}
-        /// Operation Id: WorkflowRunActionRepetitions_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogicWorkflowRunActionRepetitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<LogicWorkflowRunActionRepetitionDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionResource.Get");
             scope.Start();
@@ -139,7 +117,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +132,16 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: WorkflowRunActionRepetitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogicWorkflowRunActionRepetitionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LogicWorkflowRunActionRepetitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((LogicWorkflowRunActionRepetitionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<LogicWorkflowRunActionRepetitionDefinitionResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionResource.Get");
             scope.Start();
@@ -163,13 +150,26 @@ namespace Azure.ResourceManager.Logic
                 var response = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get a workflow run action repetition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}
+        /// Operation Id: WorkflowRunActionRepetitions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<LogicWorkflowRunActionRepetitionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((LogicWorkflowRunActionRepetitionResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PrivateDns
     /// from an instance of <see cref="ArmClient" /> using the GetRecordSetResource method.
     /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetRecordSet method.
     /// </summary>
-    public partial class RecordSetResource : ArmResource
+    public partial class RecordSetResource : BaseRecordSetResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RecordSetResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string relativeRecordSetName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.PrivateDns
 
         private readonly ClientDiagnostics _recordSetClientDiagnostics;
         private readonly RecordSetsRestOperations _recordSetRestClient;
-        private readonly RecordSetData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RecordSetResource"/> class for mocking. </summary>
         protected RecordSetResource()
@@ -44,10 +43,8 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Initializes a new instance of the <see cref = "RecordSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetResource(ArmClient client, RecordSetData data) : this(client, data.Id)
+        internal RecordSetResource(ArmClient client, RecordSetData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="RecordSetResource"/> class. </summary>
@@ -65,21 +62,6 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/privateDnsZones/A";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RecordSetData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {

@@ -261,17 +261,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertData> GetAlertsByResourceGroupAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AlertResource> GetAlertsByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AlertData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AlertResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = await AlertsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => AlertResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -279,14 +279,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AlertData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = await AlertsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => AlertResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,17 +303,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertData> GetAlertsByResourceGroup(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AlertResource> GetAlertsByResourceGroup(CancellationToken cancellationToken = default)
         {
-            Page<AlertData> FirstPageFunc(int? pageSizeHint)
+            Page<AlertResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = AlertsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => AlertResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AlertData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = AlertsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => AlertResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

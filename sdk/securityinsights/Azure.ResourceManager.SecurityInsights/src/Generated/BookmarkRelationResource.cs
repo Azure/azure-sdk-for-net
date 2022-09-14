@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// from an instance of <see cref="ArmClient" /> using the GetBookmarkRelationResource method.
     /// Otherwise you can get one from its parent resource <see cref="BookmarkResource" /> using the GetBookmarkRelation method.
     /// </summary>
-    public partial class BookmarkRelationResource : ArmResource
+    public partial class BookmarkRelationResource : RelationResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BookmarkRelationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId, string relationName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.SecurityInsights
 
         private readonly ClientDiagnostics _bookmarkRelationClientDiagnostics;
         private readonly BookmarkRelationsRestOperations _bookmarkRelationRestClient;
-        private readonly RelationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BookmarkRelationResource"/> class for mocking. </summary>
         protected BookmarkRelationResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref = "BookmarkRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BookmarkRelationResource(ArmClient client, RelationData data) : this(client, data.Id)
+        internal BookmarkRelationResource(ArmClient client, RelationData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="BookmarkRelationResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/bookmarks/relations";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RelationData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Gets a bookmark relation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/relations/{relationName}
-        /// Operation Id: BookmarkRelations_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BookmarkRelationResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<RelationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = await _bookmarkRelationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BookmarkRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Operation Id: BookmarkRelations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BookmarkRelationResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<BookmarkRelationResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((BookmarkRelationResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<RelationResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationResource.Get");
             scope.Start();
@@ -125,13 +112,26 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = _bookmarkRelationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BookmarkRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a bookmark relation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/relations/{relationName}
+        /// Operation Id: BookmarkRelations_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<BookmarkRelationResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((BookmarkRelationResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

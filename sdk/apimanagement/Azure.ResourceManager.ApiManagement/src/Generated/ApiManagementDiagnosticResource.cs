@@ -187,6 +187,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override async Task<Response<DiagnosticContractResource>> UpdateCoreAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Update");
             scope.Start();
             try
@@ -224,6 +226,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override Response<DiagnosticContractResource> UpdateCore(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Update");
             scope.Start();
             try

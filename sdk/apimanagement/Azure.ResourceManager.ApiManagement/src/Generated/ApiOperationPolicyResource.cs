@@ -193,6 +193,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override async Task<ArmOperation<PolicyContractResource>> UpdateCoreAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Update");
             scope.Start();
             try
@@ -235,6 +237,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override ArmOperation<PolicyContractResource> UpdateCore(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Update");
             scope.Start();
             try

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionGovernanceRuleResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionGovernanceRule method.
     /// </summary>
-    public partial class SubscriptionGovernanceRuleResource : ArmResource
+    public partial class SubscriptionGovernanceRuleResource : GovernanceRuleResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionGovernanceRuleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ruleId)
@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly GovernanceRulesRestOperations _subscriptionGovernanceRuleGovernanceRulesRestClient;
         private readonly ClientDiagnostics _subscriptionGovernanceRulesExecuteStatusClientDiagnostics;
         private readonly SubscriptionGovernanceRulesExecuteStatusRestOperations _subscriptionGovernanceRulesExecuteStatusRestClient;
-        private readonly GovernanceRuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionGovernanceRuleResource"/> class for mocking. </summary>
         protected SubscriptionGovernanceRuleResource()
@@ -47,10 +46,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionGovernanceRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionGovernanceRuleResource(ArmClient client, GovernanceRuleData data) : this(client, data.Id)
+        internal SubscriptionGovernanceRuleResource(ArmClient client, GovernanceRuleData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionGovernanceRuleResource"/> class. </summary>
@@ -71,34 +68,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/governanceRules";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual GovernanceRuleData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionGovernanceRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<GovernanceRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionGovernanceRuleGovernanceRulesClientDiagnostics.CreateScope("SubscriptionGovernanceRuleResource.Get");
             scope.Start();
@@ -107,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _subscriptionGovernanceRuleGovernanceRulesRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionGovernanceRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,7 +100,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: GovernanceRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionGovernanceRuleResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SubscriptionGovernanceRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((SubscriptionGovernanceRuleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<GovernanceRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionGovernanceRuleGovernanceRulesClientDiagnostics.CreateScope("SubscriptionGovernanceRuleResource.Get");
             scope.Start();
@@ -131,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _subscriptionGovernanceRuleGovernanceRulesRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionGovernanceRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,13 +128,22 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Delete a GovernanceRule over a given scope
+        /// Get a specific governanceRule for the requested scope by ruleId
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_Delete
+        /// Operation Id: GovernanceRules_Get
         /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SubscriptionGovernanceRuleResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SubscriptionGovernanceRuleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionGovernanceRuleGovernanceRulesClientDiagnostics.CreateScope("SubscriptionGovernanceRuleResource.Delete");
             scope.Start();
@@ -166,14 +162,10 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary>
-        /// Delete a GovernanceRule over a given scope
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_Delete
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionGovernanceRuleGovernanceRulesClientDiagnostics.CreateScope("SubscriptionGovernanceRuleResource.Delete");
             scope.Start();
@@ -192,16 +184,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary>
-        /// Creates or update a security GovernanceRule on the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
-        /// Operation Id: GovernanceRules_CreateOrUpdate
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> GovernanceRule over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionGovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<GovernanceRuleResource>> UpdateCoreAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -210,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue(new SubscriptionGovernanceRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -231,7 +219,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> GovernanceRule over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionGovernanceRuleResource> Update(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<ArmOperation<SubscriptionGovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        {
+            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken);
+            throw new InvalidOperationException();
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> GovernanceRule over a subscription scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override ArmOperation<GovernanceRuleResource> UpdateCore(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue(new SubscriptionGovernanceRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -250,6 +250,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Creates or update a security GovernanceRule on the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
+        /// Operation Id: GovernanceRules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> GovernanceRule over a subscription scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual ArmOperation<SubscriptionGovernanceRuleResource> Update(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(waitUntil, data, cancellationToken);
+            throw new InvalidOperationException();
         }
 
         /// <summary>

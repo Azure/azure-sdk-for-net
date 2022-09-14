@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
     /// from an instance of <see cref="ArmClient" /> using the GetOfferTypePublisherOfferPlanAgreementResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetOfferTypePublisherOfferPlanAgreement method.
     /// </summary>
-    public partial class OfferTypePublisherOfferPlanAgreementResource : ArmResource
+    public partial class OfferTypePublisherOfferPlanAgreementResource : AgreementTermResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OfferTypePublisherOfferPlanAgreementResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, OfferType offerType, string publisherId, string offerId, string planId)
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 
         private readonly ClientDiagnostics _offerTypePublisherOfferPlanAgreementMarketplaceAgreementsClientDiagnostics;
         private readonly MarketplaceAgreementsRestOperations _offerTypePublisherOfferPlanAgreementMarketplaceAgreementsRestClient;
-        private readonly AgreementTermData _data;
 
         /// <summary> Initializes a new instance of the <see cref="OfferTypePublisherOfferPlanAgreementResource"/> class for mocking. </summary>
         protected OfferTypePublisherOfferPlanAgreementResource()
@@ -45,10 +44,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <summary> Initializes a new instance of the <see cref = "OfferTypePublisherOfferPlanAgreementResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OfferTypePublisherOfferPlanAgreementResource(ArmClient client, AgreementTermData data) : this(client, data.Id)
+        internal OfferTypePublisherOfferPlanAgreementResource(ArmClient client, AgreementTermData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="OfferTypePublisherOfferPlanAgreementResource"/> class. </summary>
@@ -67,34 +64,15 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AgreementTermData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get marketplace terms.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current
-        /// Operation Id: MarketplaceAgreements_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OfferTypePublisherOfferPlanAgreementResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<AgreementTermResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _offerTypePublisherOfferPlanAgreementMarketplaceAgreementsClientDiagnostics.CreateScope("OfferTypePublisherOfferPlanAgreementResource.Get");
             scope.Start();
@@ -103,7 +81,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 var response = await _offerTypePublisherOfferPlanAgreementMarketplaceAgreementsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OfferTypePublisherOfferPlanAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +96,16 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// Operation Id: MarketplaceAgreements_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OfferTypePublisherOfferPlanAgreementResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<OfferTypePublisherOfferPlanAgreementResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((OfferTypePublisherOfferPlanAgreementResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<AgreementTermResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _offerTypePublisherOfferPlanAgreementMarketplaceAgreementsClientDiagnostics.CreateScope("OfferTypePublisherOfferPlanAgreementResource.Get");
             scope.Start();
@@ -127,13 +114,26 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 var response = _offerTypePublisherOfferPlanAgreementMarketplaceAgreementsRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OfferTypePublisherOfferPlanAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get marketplace terms.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current
+        /// Operation Id: MarketplaceAgreements_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<OfferTypePublisherOfferPlanAgreementResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((OfferTypePublisherOfferPlanAgreementResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

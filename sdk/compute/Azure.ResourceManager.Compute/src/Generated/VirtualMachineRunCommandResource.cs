@@ -191,6 +191,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
         protected override async Task<ArmOperation<BaseVirtualMachineRunCommandResource>> UpdateCoreAsync(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Update");
             scope.Start();
             try
@@ -231,6 +233,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
         protected override ArmOperation<BaseVirtualMachineRunCommandResource> UpdateCore(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Update");
             scope.Start();
             try
@@ -271,6 +275,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected override async Task<Response<BaseVirtualMachineRunCommandResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.AddTag");
             scope.Start();
             try
@@ -326,6 +333,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected override Response<BaseVirtualMachineRunCommandResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.AddTag");
             scope.Start();
             try
@@ -380,6 +390,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected override async Task<Response<BaseVirtualMachineRunCommandResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.SetTags");
             scope.Start();
             try
@@ -430,6 +442,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected override Response<BaseVirtualMachineRunCommandResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.SetTags");
             scope.Start();
             try
@@ -480,6 +494,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected override async Task<Response<BaseVirtualMachineRunCommandResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.RemoveTag");
             scope.Start();
             try
@@ -533,6 +549,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected override Response<BaseVirtualMachineRunCommandResource> RemoveTagCore(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.RemoveTag");
             scope.Start();
             try

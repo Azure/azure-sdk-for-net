@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
     /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseColumnResource method.
     /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseTableResource" /> using the GetManagedDatabaseColumn method.
     /// </summary>
-    public partial class ManagedDatabaseColumnResource : ArmResource
+    public partial class ManagedDatabaseColumnResource : DatabaseColumnResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseColumnResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnRestClient;
         private readonly ClientDiagnostics _managedDatabaseSensitivityLabelClientDiagnostics;
         private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelRestClient;
-        private readonly DatabaseColumnData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseColumnResource"/> class for mocking. </summary>
         protected ManagedDatabaseColumnResource()
@@ -46,10 +45,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseColumnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedDatabaseColumnResource(ArmClient client, DatabaseColumnData data) : this(client, data.Id)
+        internal ManagedDatabaseColumnResource(ArmClient client, DatabaseColumnData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseColumnResource"/> class. </summary>
@@ -70,21 +67,6 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas/tables/columns";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DatabaseColumnData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -125,13 +107,9 @@ namespace Azure.ResourceManager.Sql
             return GetManagedDatabaseSensitivityLabels().Get(sensitivityLabelSource, cancellationToken);
         }
 
-        /// <summary>
-        /// Get managed database column
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
-        /// Operation Id: ManagedDatabaseColumns_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedDatabaseColumnResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<DatabaseColumnResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.Get");
             scope.Start();
@@ -140,7 +118,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseColumnRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseColumnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +133,16 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseColumns_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedDatabaseColumnResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ManagedDatabaseColumnResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((ManagedDatabaseColumnResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<DatabaseColumnResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.Get");
             scope.Start();
@@ -164,13 +151,26 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseColumnRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseColumnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get managed database column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
+        /// Operation Id: ManagedDatabaseColumns_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ManagedDatabaseColumnResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ManagedDatabaseColumnResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

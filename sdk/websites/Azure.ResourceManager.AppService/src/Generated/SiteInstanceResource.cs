@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteInstanceResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteInstance method.
     /// </summary>
-    public partial class SiteInstanceResource : ArmResource
+    public partial class SiteInstanceResource : WebSiteInstanceStatusResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteInstanceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteInstanceWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteInstanceWebAppsRestClient;
-        private readonly WebSiteInstanceStatusData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteInstanceResource"/> class for mocking. </summary>
         protected SiteInstanceResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteInstanceResource(ArmClient client, WebSiteInstanceStatusData data) : this(client, data.Id)
+        internal SiteInstanceResource(ArmClient client, WebSiteInstanceStatusData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteInstanceResource"/> class. </summary>
@@ -64,21 +61,6 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/instances";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WebSiteInstanceStatusData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -130,13 +112,9 @@ namespace Azure.ResourceManager.AppService
             return GetSiteInstanceProcesses().Get(processId, cancellationToken);
         }
 
-        /// <summary>
-        /// Description for Gets all scale-out instances of an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
-        /// Operation Id: WebApps_GetInstanceInfo
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<WebSiteInstanceStatusResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceResource.Get");
             scope.Start();
@@ -145,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteInstanceWebAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,7 +138,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceInfo
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteInstanceResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SiteInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((SiteInstanceResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<WebSiteInstanceStatusResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceResource.Get");
             scope.Start();
@@ -169,13 +156,26 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteInstanceWebAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Gets all scale-out instances of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
+        /// Operation Id: WebApps_GetInstanceInfo
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SiteInstanceResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SiteInstanceResource)value.Value, value.GetRawResponse());
         }
     }
 }

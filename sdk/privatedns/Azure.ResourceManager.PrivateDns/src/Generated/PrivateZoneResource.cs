@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.PrivateDns
 
         private readonly ClientDiagnostics _privateZoneClientDiagnostics;
         private readonly PrivateZonesRestOperations _privateZoneRestClient;
-        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetsRestClient;
+        private readonly ClientDiagnostics _recordSetClientDiagnostics;
+        private readonly RecordSetsRestOperations _recordSetRestClient;
         private readonly PrivateZoneData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateZoneResource"/> class for mocking. </summary>
@@ -62,8 +62,9 @@ namespace Azure.ResourceManager.PrivateDns
             _privateZoneClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string privateZoneApiVersion);
             _privateZoneRestClient = new PrivateZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateZoneApiVersion);
-            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _recordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _recordSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", RecordSetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RecordSetResource.ResourceType, out string recordSetApiVersion);
+            _recordSetRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -342,11 +343,11 @@ namespace Azure.ResourceManager.PrivateDns
         {
             async Task<Page<RecordSetResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recordSetRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -357,11 +358,11 @@ namespace Azure.ResourceManager.PrivateDns
             }
             async Task<Page<RecordSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recordSetRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -386,11 +387,11 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Page<RecordSetResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _recordSetRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -401,11 +402,11 @@ namespace Azure.ResourceManager.PrivateDns
             }
             Page<RecordSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetsClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
+                using var scope = _recordSetClientDiagnostics.CreateScope("PrivateZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _recordSetRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

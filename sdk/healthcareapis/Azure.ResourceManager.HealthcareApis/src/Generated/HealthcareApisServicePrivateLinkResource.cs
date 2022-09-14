@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthcareApis
     /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisServicePrivateLinkResource method.
     /// Otherwise you can get one from its parent resource <see cref="HealthcareApisServiceResource" /> using the GetHealthcareApisServicePrivateLinkResource method.
     /// </summary>
-    public partial class HealthcareApisServicePrivateLinkResource : ArmResource
+    public partial class HealthcareApisServicePrivateLinkResource : HealthcareApisPrivateLinkResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthcareApisServicePrivateLinkResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string groupName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.HealthcareApis
 
         private readonly ClientDiagnostics _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesRestClient;
-        private readonly HealthcareApisPrivateLinkResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateLinkResource"/> class for mocking. </summary>
         protected HealthcareApisServicePrivateLinkResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> Initializes a new instance of the <see cref = "HealthcareApisServicePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HealthcareApisServicePrivateLinkResource(ArmClient client, HealthcareApisPrivateLinkResourceData data) : this(client, data.Id)
+        internal HealthcareApisServicePrivateLinkResource(ArmClient client, HealthcareApisPrivateLinkResourceData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateLinkResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services/privateLinkResources";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual HealthcareApisPrivateLinkResourceData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Gets a private link resource that need to be created for a service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}
-        /// Operation Id: PrivateLinkResources_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HealthcareApisServicePrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<HealthcareApisPrivateLinkResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = await _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthcareApisServicePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HealthcareApisServicePrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<HealthcareApisServicePrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((HealthcareApisServicePrivateLinkResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<HealthcareApisPrivateLinkResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResource.Get");
             scope.Start();
@@ -125,13 +112,26 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthcareApisServicePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a private link resource that need to be created for a service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<HealthcareApisServicePrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((HealthcareApisServicePrivateLinkResource)value.Value, value.GetRawResponse());
         }
     }
 }

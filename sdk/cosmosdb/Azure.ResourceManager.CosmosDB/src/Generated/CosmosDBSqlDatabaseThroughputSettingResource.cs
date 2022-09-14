@@ -143,6 +143,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override async Task<ArmOperation<ThroughputSettingResource>> CreateOrUpdateCoreAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
@@ -183,6 +185,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override ArmOperation<ThroughputSettingResource> CreateOrUpdateCore(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
@@ -326,6 +330,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected override async Task<Response<ThroughputSettingResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.AddTag");
             scope.Start();
             try
@@ -381,6 +388,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected override Response<ThroughputSettingResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.AddTag");
             scope.Start();
             try
@@ -435,6 +445,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected override async Task<Response<ThroughputSettingResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.SetTags");
             scope.Start();
             try
@@ -485,6 +497,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected override Response<ThroughputSettingResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.SetTags");
             scope.Start();
             try
@@ -535,6 +549,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected override async Task<Response<ThroughputSettingResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.RemoveTag");
             scope.Start();
             try
@@ -588,6 +604,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected override Response<ThroughputSettingResource> RemoveTagCore(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             using var scope = _cosmosDBSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseThroughputSettingResource.RemoveTag");
             scope.Start();
             try

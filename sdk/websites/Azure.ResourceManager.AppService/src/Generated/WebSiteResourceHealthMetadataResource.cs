@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteResourceHealthMetadataResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteResourceHealthMetadata method.
     /// </summary>
-    public partial class WebSiteResourceHealthMetadataResource : ArmResource
+    public partial class WebSiteResourceHealthMetadataResource : ResourceHealthMetadataResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteResourceHealthMetadataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _webSiteResourceHealthMetadataResourceHealthMetadataClientDiagnostics;
         private readonly ResourceHealthMetadataRestOperations _webSiteResourceHealthMetadataResourceHealthMetadataRestClient;
-        private readonly ResourceHealthMetadataData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteResourceHealthMetadataResource"/> class for mocking. </summary>
         protected WebSiteResourceHealthMetadataResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteResourceHealthMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteResourceHealthMetadataResource(ArmClient client, ResourceHealthMetadataData data) : this(client, data.Id)
+        internal WebSiteResourceHealthMetadataResource(ArmClient client, ResourceHealthMetadataData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteResourceHealthMetadataResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/resourceHealthMetadata";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ResourceHealthMetadataData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default
-        /// Operation Id: ResourceHealthMetadata_GetBySite
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteResourceHealthMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<ResourceHealthMetadataResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateScope("WebSiteResourceHealthMetadataResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteResourceHealthMetadataResourceHealthMetadataRestClient.GetBySiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteResourceHealthMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_GetBySite
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteResourceHealthMetadataResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<WebSiteResourceHealthMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((WebSiteResourceHealthMetadataResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<ResourceHealthMetadataResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateScope("WebSiteResourceHealthMetadataResource.Get");
             scope.Start();
@@ -125,13 +112,26 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteResourceHealthMetadataResourceHealthMetadataRestClient.GetBySite(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteResourceHealthMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default
+        /// Operation Id: ResourceHealthMetadata_GetBySite
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<WebSiteResourceHealthMetadataResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((WebSiteResourceHealthMetadataResource)value.Value, value.GetRawResponse());
         }
     }
 }

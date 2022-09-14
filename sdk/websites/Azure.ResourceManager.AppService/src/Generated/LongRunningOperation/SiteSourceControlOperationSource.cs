@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class WebSiteSourceControlOperationSource : IOperationSource<WebSiteSourceControlResource>
+    internal class SiteSourceControlOperationSource : IOperationSource<SiteSourceControlResource>
     {
         private readonly ArmClient _client;
 
-        internal WebSiteSourceControlOperationSource(ArmClient client)
+        internal SiteSourceControlOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        WebSiteSourceControlResource IOperationSource<WebSiteSourceControlResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteSourceControlResource IOperationSource<SiteSourceControlResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);
-            return new WebSiteSourceControlResource(_client, data);
+            return SiteSourceControlResource.GetResource(_client, data);
         }
 
-        async ValueTask<WebSiteSourceControlResource> IOperationSource<WebSiteSourceControlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteSourceControlResource> IOperationSource<SiteSourceControlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);
-            return new WebSiteSourceControlResource(_client, data);
+            return SiteSourceControlResource.GetResource(_client, data);
         }
     }
 }

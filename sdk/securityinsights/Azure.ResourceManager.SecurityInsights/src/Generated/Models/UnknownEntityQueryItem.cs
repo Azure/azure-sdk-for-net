@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The UnknownEntityQueryItem. </summary>
-    internal partial class UnknownEntityQueryItem : EntityQueryItem
+    internal partial class UnknownEntityQueryItem : ResourceData
     {
         /// <summary> Initializes a new instance of UnknownEntityQueryItem. </summary>
         /// <param name="id"> The id. </param>
@@ -19,9 +19,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity query. </param>
-        internal UnknownEntityQueryItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind) : base(id, name, resourceType, systemData, kind)
+        internal UnknownEntityQueryItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
         }
+
+        /// <summary> The kind of the entity query. </summary>
+        internal EntityQueryKind Kind { get; set; }
     }
 }
