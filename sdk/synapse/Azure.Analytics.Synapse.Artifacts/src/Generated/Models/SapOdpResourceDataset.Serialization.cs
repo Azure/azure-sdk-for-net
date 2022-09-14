@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(ExcelDatasetConverter))]
-    public partial class ExcelDataset : IUtf8JsonSerializable
+    [JsonConverter(typeof(SapOdpResourceDatasetConverter))]
+    public partial class SapOdpResourceDataset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -66,41 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteObjectValue(Location);
-            }
-            if (Optional.IsDefined(SheetName))
-            {
-                writer.WritePropertyName("sheetName");
-                writer.WriteObjectValue(SheetName);
-            }
-            if (Optional.IsDefined(SheetIndex))
-            {
-                writer.WritePropertyName("sheetIndex");
-                writer.WriteObjectValue(SheetIndex);
-            }
-            if (Optional.IsDefined(Range))
-            {
-                writer.WritePropertyName("range");
-                writer.WriteObjectValue(Range);
-            }
-            if (Optional.IsDefined(FirstRowAsHeader))
-            {
-                writer.WritePropertyName("firstRowAsHeader");
-                writer.WriteObjectValue(FirstRowAsHeader);
-            }
-            if (Optional.IsDefined(Compression))
-            {
-                writer.WritePropertyName("compression");
-                writer.WriteObjectValue(Compression);
-            }
-            if (Optional.IsDefined(NullValue))
-            {
-                writer.WritePropertyName("nullValue");
-                writer.WriteObjectValue(NullValue);
-            }
+            writer.WritePropertyName("context");
+            writer.WriteObjectValue(Context);
+            writer.WritePropertyName("objectName");
+            writer.WriteObjectValue(ObjectName);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -110,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ExcelDataset DeserializeExcelDataset(JsonElement element)
+        internal static SapOdpResourceDataset DeserializeSapOdpResourceDataset(JsonElement element)
         {
             string type = default;
             Optional<string> description = default;
@@ -120,13 +89,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<object> sheetName = default;
-            Optional<object> sheetIndex = default;
-            Optional<object> range = default;
-            Optional<object> firstRowAsHeader = default;
-            Optional<DatasetCompression> compression = default;
-            Optional<object> nullValue = default;
+            object context = default;
+            object objectName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -215,74 +179,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("context"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            location = DatasetLocation.DeserializeDatasetLocation(property0.Value);
+                            context = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("sheetName"))
+                        if (property0.NameEquals("objectName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            sheetName = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("sheetIndex"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            sheetIndex = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("range"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            range = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("firstRowAsHeader"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            firstRowAsHeader = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("compression"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            compression = DatasetCompression.DeserializeDatasetCompression(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("nullValue"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            nullValue = property0.Value.GetObject();
+                            objectName = property0.Value.GetObject();
                             continue;
                         }
                     }
@@ -291,19 +195,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExcelDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, sheetName.Value, sheetIndex.Value, range.Value, firstRowAsHeader.Value, compression.Value, nullValue.Value);
+            return new SapOdpResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, context, objectName);
         }
 
-        internal partial class ExcelDatasetConverter : JsonConverter<ExcelDataset>
+        internal partial class SapOdpResourceDatasetConverter : JsonConverter<SapOdpResourceDataset>
         {
-            public override void Write(Utf8JsonWriter writer, ExcelDataset model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, SapOdpResourceDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override ExcelDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override SapOdpResourceDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeExcelDataset(document.RootElement);
+                return DeserializeSapOdpResourceDataset(document.RootElement);
             }
         }
     }

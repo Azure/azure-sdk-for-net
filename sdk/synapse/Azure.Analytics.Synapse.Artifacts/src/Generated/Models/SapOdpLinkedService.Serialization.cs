@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(RestServiceLinkedServiceConverter))]
-    public partial class RestServiceLinkedService : IUtf8JsonSerializable
+    [JsonConverter(typeof(SapOdpLinkedServiceConverter))]
+    public partial class SapOdpLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -54,15 +54,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            writer.WritePropertyName("url");
-            writer.WriteObjectValue(Url);
-            if (Optional.IsDefined(EnableServerCertificateValidation))
+            if (Optional.IsDefined(Server))
             {
-                writer.WritePropertyName("enableServerCertificateValidation");
-                writer.WriteObjectValue(EnableServerCertificateValidation);
+                writer.WritePropertyName("server");
+                writer.WriteObjectValue(Server);
             }
-            writer.WritePropertyName("authenticationType");
-            writer.WriteStringValue(AuthenticationType.ToString());
+            if (Optional.IsDefined(SystemNumber))
+            {
+                writer.WritePropertyName("systemNumber");
+                writer.WriteObjectValue(SystemNumber);
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId");
+                writer.WriteObjectValue(ClientId);
+            }
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language");
+                writer.WriteObjectValue(Language);
+            }
+            if (Optional.IsDefined(SystemId))
+            {
+                writer.WritePropertyName("systemId");
+                writer.WriteObjectValue(SystemId);
+            }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName");
@@ -73,60 +89,60 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("password");
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(ServicePrincipalId))
+            if (Optional.IsDefined(MessageServer))
             {
-                writer.WritePropertyName("servicePrincipalId");
-                writer.WriteObjectValue(ServicePrincipalId);
+                writer.WritePropertyName("messageServer");
+                writer.WriteObjectValue(MessageServer);
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
+            if (Optional.IsDefined(MessageServerService))
             {
-                writer.WritePropertyName("servicePrincipalKey");
-                writer.WriteObjectValue(ServicePrincipalKey);
+                writer.WritePropertyName("messageServerService");
+                writer.WriteObjectValue(MessageServerService);
             }
-            if (Optional.IsDefined(Tenant))
+            if (Optional.IsDefined(SncMode))
             {
-                writer.WritePropertyName("tenant");
-                writer.WriteObjectValue(Tenant);
+                writer.WritePropertyName("sncMode");
+                writer.WriteObjectValue(SncMode);
             }
-            if (Optional.IsDefined(AzureCloudType))
+            if (Optional.IsDefined(SncMyName))
             {
-                writer.WritePropertyName("azureCloudType");
-                writer.WriteObjectValue(AzureCloudType);
+                writer.WritePropertyName("sncMyName");
+                writer.WriteObjectValue(SncMyName);
             }
-            if (Optional.IsDefined(AadResourceId))
+            if (Optional.IsDefined(SncPartnerName))
             {
-                writer.WritePropertyName("aadResourceId");
-                writer.WriteObjectValue(AadResourceId);
+                writer.WritePropertyName("sncPartnerName");
+                writer.WriteObjectValue(SncPartnerName);
+            }
+            if (Optional.IsDefined(SncLibraryPath))
+            {
+                writer.WritePropertyName("sncLibraryPath");
+                writer.WriteObjectValue(SncLibraryPath);
+            }
+            if (Optional.IsDefined(SncQop))
+            {
+                writer.WritePropertyName("sncQop");
+                writer.WriteObjectValue(SncQop);
+            }
+            if (Optional.IsDefined(X509CertificatePath))
+            {
+                writer.WritePropertyName("x509CertificatePath");
+                writer.WriteObjectValue(X509CertificatePath);
+            }
+            if (Optional.IsDefined(LogonGroup))
+            {
+                writer.WritePropertyName("logonGroup");
+                writer.WriteObjectValue(LogonGroup);
+            }
+            if (Optional.IsDefined(SubscriberName))
+            {
+                writer.WritePropertyName("subscriberName");
+                writer.WriteObjectValue(SubscriberName);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
                 writer.WriteObjectValue(EncryptedCredential);
-            }
-            if (Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId");
-                writer.WriteObjectValue(ClientId);
-            }
-            if (Optional.IsDefined(ClientSecret))
-            {
-                writer.WritePropertyName("clientSecret");
-                writer.WriteObjectValue(ClientSecret);
-            }
-            if (Optional.IsDefined(TokenEndpoint))
-            {
-                writer.WritePropertyName("tokenEndpoint");
-                writer.WriteObjectValue(TokenEndpoint);
-            }
-            if (Optional.IsDefined(Resource))
-            {
-                writer.WritePropertyName("resource");
-                writer.WriteObjectValue(Resource);
-            }
-            if (Optional.IsDefined(Scope))
-            {
-                writer.WritePropertyName("scope");
-                writer.WriteObjectValue(Scope);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -137,29 +153,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static RestServiceLinkedService DeserializeRestServiceLinkedService(JsonElement element)
+        internal static SapOdpLinkedService DeserializeSapOdpLinkedService(JsonElement element)
         {
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
-            object url = default;
-            Optional<object> enableServerCertificateValidation = default;
-            RestServiceAuthenticationType authenticationType = default;
+            Optional<object> server = default;
+            Optional<object> systemNumber = default;
+            Optional<object> clientId = default;
+            Optional<object> language = default;
+            Optional<object> systemId = default;
             Optional<object> userName = default;
             Optional<SecretBase> password = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> aadResourceId = default;
+            Optional<object> messageServer = default;
+            Optional<object> messageServerService = default;
+            Optional<object> sncMode = default;
+            Optional<object> sncMyName = default;
+            Optional<object> sncPartnerName = default;
+            Optional<object> sncLibraryPath = default;
+            Optional<object> sncQop = default;
+            Optional<object> x509CertificatePath = default;
+            Optional<object> logonGroup = default;
+            Optional<object> subscriberName = default;
             Optional<object> encryptedCredential = default;
-            Optional<object> clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<object> tokenEndpoint = default;
-            Optional<object> resource = default;
-            Optional<object> scope = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -223,24 +241,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("url"))
-                        {
-                            url = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableServerCertificateValidation"))
+                        if (property0.NameEquals("server"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableServerCertificateValidation = property0.Value.GetObject();
+                            server = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationType"))
+                        if (property0.NameEquals("systemNumber"))
                         {
-                            authenticationType = new RestServiceAuthenticationType(property0.Value.GetString());
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            systemNumber = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("clientId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clientId = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("language"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            language = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("systemId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            systemId = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("userName"))
@@ -263,54 +311,104 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("servicePrincipalId"))
+                        if (property0.NameEquals("messageServer"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalId = property0.Value.GetObject();
+                            messageServer = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("servicePrincipalKey"))
+                        if (property0.NameEquals("messageServerService"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            messageServerService = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("tenant"))
+                        if (property0.NameEquals("sncMode"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tenant = property0.Value.GetObject();
+                            sncMode = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("azureCloudType"))
+                        if (property0.NameEquals("sncMyName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureCloudType = property0.Value.GetObject();
+                            sncMyName = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("aadResourceId"))
+                        if (property0.NameEquals("sncPartnerName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            aadResourceId = property0.Value.GetObject();
+                            sncPartnerName = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("sncLibraryPath"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sncLibraryPath = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("sncQop"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sncQop = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("x509CertificatePath"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            x509CertificatePath = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("logonGroup"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            logonGroup = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("subscriberName"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subscriberName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -323,75 +421,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("clientId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            clientId = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("clientSecret"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("tokenEndpoint"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            tokenEndpoint = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("resource"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            resource = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("scope"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            scope = property0.Value.GetObject();
-                            continue;
-                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, clientId.Value, clientSecret.Value, tokenEndpoint.Value, resource.Value, scope.Value);
+            return new SapOdpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);
         }
 
-        internal partial class RestServiceLinkedServiceConverter : JsonConverter<RestServiceLinkedService>
+        internal partial class SapOdpLinkedServiceConverter : JsonConverter<SapOdpLinkedService>
         {
-            public override void Write(Utf8JsonWriter writer, RestServiceLinkedService model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, SapOdpLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override RestServiceLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override SapOdpLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeRestServiceLinkedService(document.RootElement);
+                return DeserializeSapOdpLinkedService(document.RootElement);
             }
         }
     }
