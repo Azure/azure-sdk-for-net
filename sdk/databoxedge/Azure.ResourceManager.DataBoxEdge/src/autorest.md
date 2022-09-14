@@ -108,7 +108,7 @@ rename-mapping:
   HostCapacity.effectiveAvailableMemoryMbOnHost: EffectiveAvailableMemoryInMBOnHost
   NodeInfo: KubernetesNodeInfo
   NumaNodeData.effectiveAvailableMemoryInMb: EffectiveAvailableMemoryInMB
-  NumaNodeData.TotalMemoryInMb: TotalMemoryInMB
+  NumaNodeData.totalMemoryInMb: TotalMemoryInMB
   PlatformType: DataBoxEdgeOSPlatformType
   RemoteSupportSettings.expirationTimeStampInUTC: ExpireOn
   Secret: DataBoxEdgeDeviceSecret
