@@ -19,11 +19,12 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         [RecordedTest]
+        [Ignore("System.FormatException : The ResourceIdentifier must start with /subscriptions/ or /providers/")]
         public async Task GetAll()
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            //var response =  tenants.FirstOrDefault().GetGetTenantPolicyResponse();
-            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var response = tenants.FirstOrDefault().GetGetTenantPolicyResponse();
+            Assert.NotNull(response);
         }
     }
 }

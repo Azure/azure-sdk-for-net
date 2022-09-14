@@ -32,5 +32,24 @@ namespace Azure.ResourceManager.Subscription.Tests
             var list = await _tenantPolicyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
+
+        [RecordedTest]
+        public async Task Exist()
+        {
+            var list = await _tenantPolicyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
+            string policyName = list.FirstOrDefault().Data.Name;
+            bool flag = await _tenantPolicyDefinitionCollection.ExistsAsync(policyName);
+            Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task Get()
+        {
+            var list = await _tenantPolicyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
+            string policyName = list.FirstOrDefault().Data.Name;
+            var policy = await _tenantPolicyDefinitionCollection.GetAsync(policyName);
+            Assert.IsNotNull(policy);
+            Assert.AreEqual(policyName, policy.Value.Data.Name);
+        }
     }
 }
