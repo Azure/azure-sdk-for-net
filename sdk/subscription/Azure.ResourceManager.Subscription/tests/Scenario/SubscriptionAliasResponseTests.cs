@@ -84,17 +84,6 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         [RecordedTest]
-        public async Task GetAll()
-        {
-            string aliasName = Recording.GenerateAssetName("test-alias-");
-            await CreateAliasResponse(aliasName);
-            var list = await _aliasCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            ValidateAliasResponse(list.FirstOrDefault());
-            Assert.AreEqual(aliasName, list.FirstOrDefault().Data.Name);
-        }
-
-        [RecordedTest]
         public async Task Delete()
         {
             string aliasName = Recording.GenerateAssetName("test-alias-");
