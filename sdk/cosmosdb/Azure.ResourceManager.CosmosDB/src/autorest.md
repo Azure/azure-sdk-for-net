@@ -108,6 +108,7 @@ rename-rules:
   Etag: ETag|etag
   Mongodb: MongoDB
   VNet: Vnet
+  API: Api
 
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases

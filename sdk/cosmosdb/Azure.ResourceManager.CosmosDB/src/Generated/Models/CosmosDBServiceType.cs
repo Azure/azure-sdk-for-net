@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         private const string SqlDedicatedGatewayValue = "SqlDedicatedGateway";
         private const string DataTransferValue = "DataTransfer";
-        private const string GraphAPIComputeValue = "GraphAPICompute";
+        private const string GraphApiComputeValue = "GraphAPICompute";
         private const string MaterializedViewsBuilderValue = "MaterializedViewsBuilder";
 
         /// <summary> SqlDedicatedGateway. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> DataTransfer. </summary>
         public static CosmosDBServiceType DataTransfer { get; } = new CosmosDBServiceType(DataTransferValue);
         /// <summary> GraphAPICompute. </summary>
-        public static CosmosDBServiceType GraphAPICompute { get; } = new CosmosDBServiceType(GraphAPIComputeValue);
+        public static CosmosDBServiceType GraphApiCompute { get; } = new CosmosDBServiceType(GraphApiComputeValue);
         /// <summary> MaterializedViewsBuilder. </summary>
         public static CosmosDBServiceType MaterializedViewsBuilder { get; } = new CosmosDBServiceType(MaterializedViewsBuilderValue);
         /// <summary> Determines if two <see cref="CosmosDBServiceType"/> values are the same. </summary>

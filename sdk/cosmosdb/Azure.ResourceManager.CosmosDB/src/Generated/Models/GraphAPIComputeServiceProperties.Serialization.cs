@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GraphAPIComputeServiceProperties : IUtf8JsonSerializable
+    public partial class GraphApiComputeServiceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static GraphAPIComputeServiceProperties DeserializeGraphAPIComputeServiceProperties(JsonElement element)
+        internal static GraphApiComputeServiceProperties DeserializeGraphApiComputeServiceProperties(JsonElement element)
         {
             Optional<string> graphApiComputeEndpoint = default;
-            Optional<IReadOnlyList<GraphAPIComputeRegionalService>> locations = default;
+            Optional<IReadOnlyList<GraphApiComputeRegionalService>> locations = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<CosmosDBServiceSize> instanceSize = default;
             Optional<int> instanceCount = default;
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GraphAPIComputeRegionalService> array = new List<GraphAPIComputeRegionalService>();
+                    List<GraphApiComputeRegionalService> array = new List<GraphApiComputeRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphAPIComputeRegionalService.DeserializeGraphAPIComputeRegionalService(item));
+                        array.Add(GraphApiComputeRegionalService.DeserializeGraphApiComputeRegionalService(item));
                     }
                     locations = array;
                     continue;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GraphAPIComputeServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, Optional.ToList(locations));
+            return new GraphApiComputeServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, Optional.ToList(locations));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="properties">
         /// Services response resource.
         /// Please note <see cref="CosmosDBServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataTransferServiceProperties"/>, <see cref="GraphAPIComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/> and <see cref="SqlDedicatedGatewayServiceProperties"/>.
+        /// The available derived classes include <see cref="DataTransferServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/> and <see cref="SqlDedicatedGatewayServiceProperties"/>.
         /// </param>
         internal CosmosDBServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBServiceProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary>
         /// Services response resource.
         /// Please note <see cref="CosmosDBServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataTransferServiceProperties"/>, <see cref="GraphAPIComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/> and <see cref="SqlDedicatedGatewayServiceProperties"/>.
+        /// The available derived classes include <see cref="DataTransferServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/> and <see cref="SqlDedicatedGatewayServiceProperties"/>.
         /// </summary>
         public CosmosDBServiceProperties Properties { get; set; }
     }

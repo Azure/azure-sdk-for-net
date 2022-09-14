@@ -12,16 +12,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Properties for GraphAPIComputeServiceResource. </summary>
-    public partial class GraphAPIComputeServiceProperties : CosmosDBServiceProperties
+    public partial class GraphApiComputeServiceProperties : CosmosDBServiceProperties
     {
-        /// <summary> Initializes a new instance of GraphAPIComputeServiceProperties. </summary>
-        public GraphAPIComputeServiceProperties()
+        /// <summary> Initializes a new instance of GraphApiComputeServiceProperties. </summary>
+        public GraphApiComputeServiceProperties()
         {
-            Locations = new ChangeTrackingList<GraphAPIComputeRegionalService>();
-            ServiceType = CosmosDBServiceType.GraphAPICompute;
+            Locations = new ChangeTrackingList<GraphApiComputeRegionalService>();
+            ServiceType = CosmosDBServiceType.GraphApiCompute;
         }
 
-        /// <summary> Initializes a new instance of GraphAPIComputeServiceProperties. </summary>
+        /// <summary> Initializes a new instance of GraphApiComputeServiceProperties. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="graphApiComputeEndpoint"> GraphAPICompute endpoint for the service. </param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        internal GraphAPIComputeServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, string graphApiComputeEndpoint, IReadOnlyList<GraphAPIComputeRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
+        internal GraphApiComputeServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, string graphApiComputeEndpoint, IReadOnlyList<GraphApiComputeRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             GraphApiComputeEndpoint = graphApiComputeEndpoint;
             Locations = locations;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> GraphAPICompute endpoint for the service. </summary>
         public string GraphApiComputeEndpoint { get; set; }
         /// <summary> An array that contains all of the locations for the service. </summary>
-        public IReadOnlyList<GraphAPIComputeRegionalService> Locations { get; }
+        public IReadOnlyList<GraphApiComputeRegionalService> Locations { get; }
     }
 }

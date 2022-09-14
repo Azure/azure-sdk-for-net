@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GraphAPIComputeRegionalService
+    public partial class GraphApiComputeRegionalService
     {
-        internal static GraphAPIComputeRegionalService DeserializeGraphAPIComputeRegionalService(JsonElement element)
+        internal static GraphApiComputeRegionalService DeserializeGraphApiComputeRegionalService(JsonElement element)
         {
             Optional<string> graphApiComputeEndpoint = default;
             Optional<string> name = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new GraphAPIComputeRegionalService(name.Value, Optional.ToNullable(location), Optional.ToNullable(status), graphApiComputeEndpoint.Value);
+            return new GraphApiComputeRegionalService(name.Value, Optional.ToNullable(location), Optional.ToNullable(status), graphApiComputeEndpoint.Value);
         }
     }
 }
