@@ -36,6 +36,8 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
 
+        private readonly string[] _additionallyAllowedTenantIds;
+
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
@@ -160,6 +162,8 @@ namespace Azure.Identity
                          certificateProvider,
                          certCredOptions?.SendCertificateChain ?? false,
                          options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>
@@ -174,7 +178,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _additionallyAllowedTenantIds);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -197,7 +201,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _additionallyAllowedTenantIds);
                 AuthenticationResult result = await Client
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken)
                     .ConfigureAwait(false);

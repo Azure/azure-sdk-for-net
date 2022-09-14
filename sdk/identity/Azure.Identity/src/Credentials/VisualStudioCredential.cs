@@ -27,7 +27,8 @@ namespace Azure.Identity
         private const string TenantArgumentName = "--tenant";
 
         private readonly CredentialPipeline _pipeline;
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
         private readonly bool _logPII;
@@ -42,7 +43,7 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default, options)
         {
         }
 
@@ -50,10 +51,11 @@ namespace Azure.Identity
         {
             _logPII = options?.IsLoggingPIIEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            _tenantId = tenantId;
+            TenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <inheritdoc />
@@ -70,7 +72,7 @@ namespace Azure.Identity
 
             try
             {
-                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                if (string.Equals(TenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
                     throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
                 }
@@ -91,7 +93,7 @@ namespace Azure.Identity
                 if (_logAccountDetails)
                 {
                     var accountDetails = TokenHelper.ParseAccountInfoFromToken(accessToken.Token);
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
 
                 return scope.Succeeded(accessToken);
@@ -174,7 +176,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);

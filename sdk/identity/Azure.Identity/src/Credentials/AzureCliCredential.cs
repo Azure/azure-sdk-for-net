@@ -46,9 +46,10 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
-        private readonly string _tenantId;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -72,7 +73,8 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            _tenantId = options?.TenantId;
+            TenantId = options?.TenantId;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
-            string tenantId = TenantIdResolver.Resolve(_tenantId, context);
+            string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
 
             ScopeUtilities.ValidateScope(resource);
 
@@ -167,7 +169,7 @@ namespace Azure.Identity
             if (_logAccountDetails)
             {
                 var accountDetails = TokenHelper.ParseAccountInfoFromToken(token.Token);
-                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
             }
 
             return token;
