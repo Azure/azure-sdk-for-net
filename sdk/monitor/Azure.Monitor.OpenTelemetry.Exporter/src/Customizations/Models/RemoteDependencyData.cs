@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Duration = activity.Duration < SchemaConstants.RemoteDependencyData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;
-            Success = activity.GetStatus().StatusCode != StatusCode.Error;
+            Success = activity.Status != ActivityStatusCode.Error;
 
             switch (monitorTags.activityType)
             {

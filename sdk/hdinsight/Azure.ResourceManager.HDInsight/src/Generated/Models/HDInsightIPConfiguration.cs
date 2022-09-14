@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateIPAddress"> The IP address. </param>
         /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
         /// <param name="subnet"> The subnet resource id. </param>
-        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceIdentifier resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, string privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
+        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
         {
             Id = id;
             Name = name;
@@ -53,13 +54,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The name of private link IP configuration. </summary>
         public string Name { get; set; }
         /// <summary> The type of the private link IP configuration. </summary>
-        public ResourceIdentifier ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The private link configuration provisioning state, which only appears in the response. </summary>
         public HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates whether this IP configuration is primary for the corresponding NIC. </summary>
         public bool? IsPrimary { get; set; }
         /// <summary> The IP address. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
         /// <summary> The method that private IP address is allocated. </summary>
         public HDInsightPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The subnet resource id. </summary>

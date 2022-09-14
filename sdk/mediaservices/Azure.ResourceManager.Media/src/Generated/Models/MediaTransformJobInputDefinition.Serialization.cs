@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaTransformJobInputDefinition(odataType, Optional.ToList(includedTracks));
+            return new UnknownMediaTransformJobInputDefinition(odataType, Optional.ToList(includedTracks));
         }
     }
 }

@@ -24,7 +24,7 @@
         "operationId": "ServerCalling_CreateCall",
         "parameters": [
           {
-            "name": "body",
+            "name": "createCallRequest",
             "in": "body",
             "description": "The create call request.",
             "required": true,
@@ -34,13 +34,26 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
           "201": {
             "description": "Returns the create call response.",
             "schema": {
-              "$ref": "#/definitions/CallConnectionPropertiesDto"
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -71,13 +84,26 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Returns the answer call response.",
             "schema": {
-              "$ref": "#/definitions/CallConnectionPropertiesDto"
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -108,6 +134,19 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
@@ -142,6 +181,19 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
@@ -179,7 +231,7 @@
           "200": {
             "description": "Returns the get call response.",
             "schema": {
-              "$ref": "#/definitions/CallConnectionPropertiesDto"
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -238,6 +290,19 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
@@ -279,6 +344,19 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
@@ -369,6 +447,47 @@
         }
       }
     },
+    "/calling/callConnections/{callConnectionId}:recognize": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Recognize media from call.",
+        "description": "Recognize media from call.",
+        "operationId": "Content_Recognize",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "recognizeRequest",
+            "in": "body",
+            "description": "The media recognize request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecognizeRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the recognize response."
+          }
+        },
+        "x-ms-examples": {
+          "Recognize media from call.": {
+            "$ref": "./examples/Content_Recognize.json"
+          }
+        }
+      }
+    },
     "/calling/callConnections/{callConnectionId}/participants": {
       "get": {
         "tags": [
@@ -399,7 +518,7 @@
         },
         "x-ms-examples": {
           "Get participants from a call.": {
-            "$ref": "./examples/CallConnections_GetParticipants.json"
+            "$ref": "./examples/CallConnections_ListParticipants.json"
           }
         }
       }
@@ -431,6 +550,19 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
@@ -475,6 +607,19 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
@@ -523,7 +668,7 @@
           "200": {
             "description": "Returns the get participant response.",
             "schema": {
-              "$ref": "#/definitions/AcsCallParticipantDto"
+              "$ref": "#/definitions/AcsCallParticipant"
             }
           }
         },
@@ -553,13 +698,26 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "Repeatability-Request-ID",
+            "in": "header",
+            "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "Repeatability-First-Sent",
+            "in": "header",
+            "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Returns the start call recording response.",
             "schema": {
-              "$ref": "#/definitions/RecordingStatusResponse"
+              "$ref": "#/definitions/RecordingStateResponse"
             }
           }
         },
@@ -593,7 +751,7 @@
           "200": {
             "description": "Returns the recording properties.",
             "schema": {
-              "$ref": "#/definitions/RecordingStatusResponse"
+              "$ref": "#/definitions/RecordingStateResponse"
             }
           }
         },
@@ -713,7 +871,7 @@
           }
         },
         "source": {
-          "$ref": "#/definitions/CallSourceDto",
+          "$ref": "#/definitions/CallSource",
           "description": "The source of the call."
         },
         "subject": {
@@ -723,6 +881,10 @@
         "callbackUri": {
           "description": "The callback URI.",
           "type": "string"
+        },
+        "mediaStreamingConfiguration": {
+          "$ref": "#/definitions/MediaStreamingConfiguration",
+          "description": "Media Streaming Configuration."
         }
       }
     },
@@ -764,7 +926,7 @@
         }
       }
     },
-    "CallSourceDto": {
+    "CallSource": {
       "required": [
         "identifier"
       ],
@@ -774,13 +936,78 @@
           "$ref": "#/definitions/PhoneNumberIdentifierModel",
           "description": "The alternate identity of the source of the call if dialing out to a pstn number"
         },
+        "displayName": {
+          "description": "Display name of the call if dialing out to a pstn number",
+          "type": "string"
+        },
         "identifier": {
           "$ref": "#/definitions/CommunicationIdentifierModel",
           "description": "The identifier of the source of the call"
         }
       }
     },
+    "MediaStreamingTransportType": {
+      "description": "The type of transport to be used for media streaming, eg. Websocket",
+      "enum": [
+        "websocket"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingTransportType",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingContentType": {
+      "description": "Content type to stream, eg. audio, audio/video",
+      "enum": [
+        "audio"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingContentType",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingAudioChannelType": {
+      "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
+      "enum": [
+        "mixed",
+        "unmixed"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingAudioChannelType",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingConfiguration": {
+      "required": [
+        "transportUrl",
+        "transportType",
+        "contentType",
+        "audioChannelType"
+      ],
+      "type": "object",
+      "properties": {
+        "transportUrl": {
+          "description": "Transport URL for media streaming",
+          "type": "string"
+        },
+        "transportType": {
+          "$ref": "#/definitions/MediaStreamingTransportType"
+        },
+        "contentType": {
+          "$ref": "#/definitions/MediaStreamingContentType"
+        },
+        "audioChannelType": {
+          "$ref": "#/definitions/MediaStreamingAudioChannelType"
+        }
+      }
+    },
     "CommunicationUserIdentifierModel": {
+      "required": [
+        "id"
+      ],
       "type": "object",
       "properties": {
         "id": {
@@ -789,6 +1016,9 @@
       }
     },
     "PhoneNumberIdentifierModel": {
+      "required": [
+        "value"
+      ],
       "type": "object",
       "properties": {
         "value": {
@@ -842,7 +1072,7 @@
         "modelAsString": true
       }
     },
-    "CallConnectionPropertiesDto": {
+    "CallConnectionProperties": {
       "type": "object",
       "properties": {
         "callConnectionId": {
@@ -854,7 +1084,7 @@
           "type": "string"
         },
         "source": {
-          "$ref": "#/definitions/CallSourceDto",
+          "$ref": "#/definitions/CallSource",
           "description": "The source of the call."
         },
         "targets": {
@@ -874,13 +1104,18 @@
         "callbackUri": {
           "description": "The callback URI.",
           "type": "string"
+        },
+        "mediaSubscriptionId": {
+          "description": "SubscriptionId for media streaming",
+          "type": "string"
         }
       }
     },
     "AnswerCallRequest": {
       "description": "The request payload for answering the call.",
       "required": [
-        "incomingCallContext"
+        "incomingCallContext",
+        "callbackUri"
       ],
       "type": "object",
       "properties": {
@@ -891,6 +1126,10 @@
         "callbackUri": {
           "description": "The callback uri.",
           "type": "string"
+        },
+        "mediaStreamingConfiguration": {
+          "$ref": "#/definitions/MediaStreamingConfiguration",
+          "description": "Media Streaming Configuration."
         }
       }
     },
@@ -1056,13 +1295,129 @@
         }
       }
     },
+    "RecognizeInputType": {
+      "description": "Determines the type of the recognition.",
+      "enum": [
+        "dtmf"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecognizeInputType",
+        "modelAsString": true
+      }
+    },
+    "RecognizeRequest": {
+      "required": [
+        "recognizeInputType",
+        "recognizeOptions"
+      ],
+      "type": "object",
+      "properties": {
+        "recognizeInputType": {
+          "$ref": "#/definitions/RecognizeInputType"
+        },
+        "playPrompt": {
+          "$ref": "#/definitions/PlaySource",
+          "description": "The source of the audio to be played for recognition."
+        },
+        "interruptCallMediaOperation": {
+          "description": "If set recognize can barge into other existing queued-up/currently-processing requests.",
+          "type": "boolean"
+        },
+        "recognizeOptions": {
+          "$ref": "#/definitions/RecognizeOptions",
+          "description": "Defines options for recognition."
+        },
+        "operationContext": {
+          "description": "The value to identify context of the operation.",
+          "type": "string"
+        }
+      }
+    },
+    "RecognizeOptions": {
+      "required": [
+        "targetParticipant"
+      ],
+      "type": "object",
+      "properties": {
+        "interruptPrompt": {
+          "description": "Determines if we interrupt the prompt and start recognizing.",
+          "type": "boolean"
+        },
+        "initialSilenceTimeoutInSeconds": {
+          "format": "int32",
+          "description": "Time to wait for first input after prompt (if any).",
+          "maximum": 300,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "targetParticipant": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "Target participant of DTMF tone recognition."
+        },
+        "dtmfOptions": {
+          "$ref": "#/definitions/DtmfOptions",
+          "description": "Defines configurations for DTMF."
+        }
+      }
+    },
+    "Tone": {
+      "enum": [
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "a",
+        "b",
+        "c",
+        "d",
+        "pound",
+        "asterisk"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "Tone",
+        "modelAsString": true
+      }
+    },
+    "DtmfOptions": {
+      "description": "Options for DTMF recognition",
+      "type": "object",
+      "properties": {
+        "interToneTimeoutInSeconds": {
+          "format": "int32",
+          "description": "Time to wait between DTMF inputs to stop recognizing.",
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "maxTonesToCollect": {
+          "format": "int32",
+          "description": "Maximum number of DTMF tones to be collected.",
+          "type": "integer"
+        },
+        "stopTones": {
+          "description": "List of tones that will stop recognizing.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tone"
+          }
+        }
+      }
+    },
     "GetParticipantsResponse": {
       "type": "object",
       "properties": {
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AcsCallParticipantDto"
+            "$ref": "#/definitions/AcsCallParticipant"
           }
         },
         "nextLink": {
@@ -1070,7 +1425,7 @@
         }
       }
     },
-    "AcsCallParticipantDto": {
+    "AcsCallParticipant": {
       "type": "object",
       "properties": {
         "identifier": {
@@ -1103,6 +1458,8 @@
         "invitationTimeoutInSeconds": {
           "format": "int32",
           "description": "Gets or sets the timeout to wait for the invited participant to pickup.\r\nThe maximum value of this is 180 seconds",
+          "maximum": 180,
+          "minimum": 0,
           "type": "integer"
         },
         "operationContext": {
@@ -1117,7 +1474,7 @@
         "participants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AcsCallParticipantDto"
+            "$ref": "#/definitions/AcsCallParticipant"
           }
         },
         "operationContext": {
@@ -1215,6 +1572,13 @@
         },
         "recordingFormatType": {
           "$ref": "#/definitions/RecordingFormatType"
+        },
+        "channelAffinity": {
+          "description": "The channel affinity of call recording.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChannelAffinity"
+          }
         }
       }
     },
@@ -1247,76 +1611,89 @@
         }
       }
     },
-    "RecordingStatus": {
+    "ChannelAffinity": {
+      "description": "Channel affinity for a participant",
+      "type": "object",
+      "properties": {
+        "channel": {
+          "format": "int32",
+          "description": "Channel number to which bitstream from a particular participant will be written.",
+          "type": "integer"
+        },
+        "participant": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "The identifier for the participant whose bitstream will be written to the channel \r\nrepresented by the channel number."
+        }
+      }
+    },
+    "RecordingState": {
       "enum": [
         "active",
         "inactive"
       ],
       "type": "string",
       "x-ms-enum": {
-        "name": "RecordingStatus",
+        "name": "RecordingState",
         "modelAsString": true
       }
     },
-    "RecordingStatusResponse": {
+    "RecordingStateResponse": {
       "type": "object",
       "properties": {
         "recordingId": {
           "type": "string"
         },
-        "recordingStatus": {
-          "$ref": "#/definitions/RecordingStatus"
+        "recordingState": {
+          "$ref": "#/definitions/RecordingState"
         }
-      }
-    },
-    "AcsEventType": {
-      "enum": [
-        "unknown",
-        "callConnected",
-        "callDisconnected",
-        "callTransferAccepted",
-        "callTransferFailed",
-        "addParticipantsSucceeded",
-        "addParticipantsFailed",
-        "participantsUpdated"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "AcsEventType",
-        "modelAsString": true
       }
     },
     "AddParticipantsFailedEvent": {
       "type": "object",
       "properties": {
-        "operationContext": {
-          "description": "Operation context",
-          "type": "string"
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
         },
-        "resultInfo": {
-          "$ref": "#/definitions/ResultInformation"
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
         },
         "participants": {
-          "description": "Participants failed to be added",
           "type": "array",
           "items": {
             "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
+          },
+          "readOnly": true
         },
-        "type": {
-          "$ref": "#/definitions/AcsEventType"
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
         },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -1339,155 +1716,519 @@
     "AddParticipantsSucceededEvent": {
       "type": "object",
       "properties": {
-        "operationContext": {
-          "description": "Operation context",
-          "type": "string"
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
         },
-        "resultInfo": {
-          "$ref": "#/definitions/ResultInformation"
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
         },
         "participants": {
-          "description": "Participants added",
           "type": "array",
           "items": {
             "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
+          },
+          "readOnly": true
         },
-        "type": {
-          "$ref": "#/definitions/AcsEventType"
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
         },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
         }
       }
     },
     "CallConnectedEvent": {
       "type": "object",
       "properties": {
-        "type": {
-          "$ref": "#/definitions/AcsEventType"
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
         },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
         }
       }
     },
     "CallDisconnectedEvent": {
       "type": "object",
       "properties": {
-        "type": {
-          "$ref": "#/definitions/AcsEventType"
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
         },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
         }
       }
     },
     "CallTransferAcceptedEvent": {
       "type": "object",
       "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
         "operationContext": {
-          "description": "Operation context",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
-        "resultInfo": {
-          "$ref": "#/definitions/ResultInformation"
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
         },
-        "type": {
-          "$ref": "#/definitions/AcsEventType"
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
         },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
         }
       }
     },
     "CallTransferFailedEvent": {
       "type": "object",
       "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
         "operationContext": {
-          "description": "Operation context",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
-        "resultInfo": {
-          "$ref": "#/definitions/ResultInformation"
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
         },
-        "type": {
-          "$ref": "#/definitions/AcsEventType"
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
         },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
         }
       }
     },
     "ParticipantsUpdatedEvent": {
       "type": "object",
       "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
         "participants": {
-          "description": "List of current participants in the call.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
+          },
+          "readOnly": true
         },
-        "type": {
-          "$ref": "#/definitions/AcsEventType"
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
         },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string"
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "RecordingStateChangedEvent": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "recordingId": {
+          "description": "The call recording id",
+          "type": "string",
+          "readOnly": true
+        },
+        "state": {
+          "$ref": "#/definitions/RecordingState"
+        },
+        "startDateTime": {
+          "format": "date-time",
+          "description": "The time of the recording started",
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "PlayCompleted": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "PlayFailed": {
+      "type": "object",
+      "properties": {
+        "eventSource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "RecognitionType": {
+      "description": "Determines the sub-type of the recognize operation.\r\nIn case of cancel operation the this field is not set and is returned empty",
+      "enum": [
+        "dtmf"
+      ],
+      "type": "string",
+      "readOnly": true,
+      "x-ms-enum": {
+        "name": "RecognitionType",
+        "modelAsString": true
+      }
+    },
+    "RecognizeCompleted": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Result information defines the code, subcode and message",
+          "readOnly": true
+        },
+        "recognitionType": {
+          "$ref": "#/definitions/RecognitionType"
+        },
+        "collectTonesResult": {
+          "$ref": "#/definitions/CollectTonesResult",
+          "description": "Defines the result for RecognitionType = Dtmf",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CollectTonesResult": {
+      "type": "object",
+      "properties": {
+        "tones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tone"
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "RecognizeFailed": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Used to determine the version of the event.",
+          "type": "string",
+          "readOnly": true
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicEventType": {
+          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+          "type": "string",
+          "readOnly": true
         }
       }
     },

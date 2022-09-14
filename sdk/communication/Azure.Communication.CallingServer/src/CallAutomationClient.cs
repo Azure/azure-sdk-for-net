@@ -13,7 +13,7 @@ using Azure.Communication.Pipeline;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The Azure Communication Services Calling Server client.
+    /// The Azure Communication Services Call Automation client.
     /// </summary>
     public class CallAutomationClient
     {
@@ -53,6 +53,17 @@ namespace Azure.Communication.CallingServer
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CallAutomationClientOptions())
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/> with custom PMA endpoint.</summary>
+        /// <param name="pmaEndpoint">Endpoint for PMA</param>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
+        : this(
+        pmaEndpoint,
+        options ?? new CallAutomationClientOptions(),
+        ConnectionString.Parse(connectionString))
         { }
         #endregion
 
@@ -97,18 +108,32 @@ namespace Azure.Communication.CallingServer
 
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callbackEndpoint"> The callback Uri to receive status notifications. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackEndpoint, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri);
+
+            return await AnswerCallAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Answer an incoming call.
+        /// </summary>
+        /// <param name="options">Options for the Answer Call operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(AnswerCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(AnswerCall)}");
             scope.Start();
             try
             {
-                AnswerCallRequestInternal request = new AnswerCallRequestInternal(incomingCallContext);
-                request.CallbackUri = callbackEndpoint?.AbsoluteUri;
+                if (options == null) throw new ArgumentNullException(nameof(options));
+
+                AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
                 var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -124,21 +149,34 @@ namespace Azure.Communication.CallingServer
 
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callbackEndpoint"> The callback Uri to receive status notifications. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackEndpoint, CancellationToken cancellationToken = default)
+        public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri);
+
+            return AnswerCall(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Answer an incoming call.
+        /// </summary>
+        /// <param name="options">Options for the AnswerCall operations.</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <returns></returns>
+        public virtual Response<AnswerCallResult> AnswerCall(AnswerCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(AnswerCall)}");
             scope.Start();
             try
             {
-                AnswerCallRequestInternal request = new AnswerCallRequestInternal(incomingCallContext);
-                request.CallbackUri = callbackEndpoint?.AbsoluteUri;
+                if (options == null) throw new ArgumentNullException(nameof(options));
 
-                var answerResponse = ServerCallingRestClient.AnswerCall(request,
-                    cancellationToken: cancellationToken);
+                AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
+
+                var answerResponse = ServerCallingRestClient.AnswerCall(request, cancellationToken: cancellationToken);
 
                 return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
                     answerResponse.GetRawResponse());
@@ -148,6 +186,14 @@ namespace Azure.Communication.CallingServer
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private static AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
+        {
+            AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
+            request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
+
+            return request;
         }
 
         /// Redirect an incoming call to the target identities.
@@ -259,26 +305,40 @@ namespace Azure.Communication.CallingServer
         /// Create an outgoing call from source to target identities.
         /// <param name="source"> The source identity. </param>
         /// <param name="targets"> The target identities. </param>
-        /// <param name="callbackEndpoint"> The callback Uri to receive status notifications. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="subject"> Optional subject of the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackEndpoint, string subject = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, string subject = default, CancellationToken cancellationToken = default)
+        {
+            CreateCallOptions options = new CreateCallOptions(source, targets, callbackUri)
+            {
+                Subject = subject
+            };
+            return await CreateCallAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create an outgoing call from source to target identities.
+        /// </summary>
+        /// <param name="options">Options for the CreateCall request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CreateCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
-                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
-                 sourceDto.CallerId = source.CallerId == null ? null : new PhoneNumberIdentifierModel(source.CallerId.PhoneNumber);
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
-                CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackEndpoint?.AbsoluteUri);
-                request.Subject = subject;
+                CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = await ServerCallingRestClient.CreateCallAsync(
-                    body: request,
+                    createCallRequest: request,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
@@ -295,26 +355,43 @@ namespace Azure.Communication.CallingServer
         /// Create an outgoing call from source to target identities.
         /// <param name="source"> The source identity. </param>
         /// <param name="targets"> The target identities. </param>
-        /// <param name="callbackEndpoint"> The callback Uri to receive status notifications. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="subject"> Optional subject of the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        public virtual Response<CreateCallResult> CreateCall(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackEndpoint, string subject = default, CancellationToken cancellationToken = default)
+        public virtual Response<CreateCallResult> CreateCall(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, string subject = default, CancellationToken cancellationToken = default)
+        {
+            CreateCallOptions options = new CreateCallOptions(source, targets, callbackUri)
+            {
+                Subject = subject
+            };
+            return CreateCall(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create an outgoing call from source to target identities.
+        /// </summary>
+        /// <param name="options">Options for the CreateCall request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+
+        public virtual Response<CreateCallResult> CreateCall(CreateCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
-                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
-                sourceDto.CallerId = source.CallerId == null ? null : new PhoneNumberIdentifierModel(source.CallerId.PhoneNumber);
+                if (options == null) throw new ArgumentNullException(nameof(options));
 
-                CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackEndpoint?.AbsoluteUri);
-                request.Subject = subject;
+                CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
+                sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
+
+                CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = ServerCallingRestClient.CreateCall(
-                    body: request,
+                    createCallRequest: request,
                     cancellationToken: cancellationToken
                     );
 
@@ -326,6 +403,29 @@ namespace Azure.Communication.CallingServer
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private static CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
+        {
+            CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
+            sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
+
+            CreateCallRequestInternal request = new CreateCallRequestInternal(
+                options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                sourceDto,
+                options.CallbackUri.AbsoluteUri);
+            request.Subject = options.Subject;
+            request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
+
+            return request;
+        }
+
+        private static MediaStreamingOptionsInternal CreateMediaStreamingOptionsInternal(MediaStreamingOptions configuration)
+        {
+            return configuration == default
+                ? default
+                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport, configuration.MediaStreamingContent,
+                configuration.MediaStreamingAudioChannel);
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

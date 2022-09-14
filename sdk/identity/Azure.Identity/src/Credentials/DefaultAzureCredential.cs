@@ -87,8 +87,11 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>,
-        /// and <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order
+        /// <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>, and
+        /// <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. Acquired tokens
+        /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
+        /// instances to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
@@ -102,8 +105,11 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>,
-        /// and <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order
+        /// <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>, and
+        /// <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. Acquired tokens
+        /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
+        /// instances to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
@@ -210,7 +216,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeVisualStudioCredential)
             {
-                chain[i++] = factory.CreateVisualStudioCredential(options.VisualStudioTenantId);
+                chain[i++] = factory.CreateVisualStudioCredential(options.VisualStudioTenantId, options.DeveloperCredentialTimeout);
             }
 
             if (!options.ExcludeVisualStudioCodeCredential)
@@ -220,12 +226,12 @@ namespace Azure.Identity
 
             if (!options.ExcludeAzureCliCredential)
             {
-                chain[i++] = factory.CreateAzureCliCredential();
+                chain[i++] = factory.CreateAzureCliCredential(options.DeveloperCredentialTimeout);
             }
 
             if (!options.ExcludeAzurePowerShellCredential)
             {
-                chain[i++] = factory.CreateAzurePowerShellCredential();
+                chain[i++] = factory.CreateAzurePowerShellCredential(options.DeveloperCredentialTimeout);
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)

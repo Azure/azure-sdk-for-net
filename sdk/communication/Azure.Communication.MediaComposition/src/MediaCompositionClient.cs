@@ -136,7 +136,7 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                return await RestClient.CreateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, new CompositionStreamState(StreamStatus.NotStarted), cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -156,7 +156,7 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                return RestClient.Create(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, new CompositionStreamState(StreamStatus.NotStarted), cancellationToken);
+                return RestClient.Create(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken);
             }
             catch (Exception e)
             {

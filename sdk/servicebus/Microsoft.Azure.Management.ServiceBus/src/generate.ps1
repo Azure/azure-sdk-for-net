@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "servicebus/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2021-11
+Start-AutoRestCodeGeneration -ResourceProvider "servicebus/resource-manager" -AutoRestVersion "v2"

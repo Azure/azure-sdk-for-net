@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPlatformProperties platform = default;
             Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
             Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryRunCredentials> credentials = default;
+            Optional<ContainerRegistryCredentials> credentials = default;
             string type = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> agentPoolName = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    credentials = ContainerRegistryRunCredentials.DeserializeContainerRegistryRunCredentials(property.Value);
+                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))

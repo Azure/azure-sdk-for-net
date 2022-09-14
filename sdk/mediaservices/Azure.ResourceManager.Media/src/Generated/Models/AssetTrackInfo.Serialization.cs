@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AssetTrackInfo(odataType);
+            return new UnknownAssetTrackInfo(odataType);
         }
     }
 }

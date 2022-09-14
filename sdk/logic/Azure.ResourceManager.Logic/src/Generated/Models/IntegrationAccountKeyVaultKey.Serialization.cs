@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,15 +15,20 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationAccountKeyVaultKey DeserializeIntegrationAccountKeyVaultKey(JsonElement element)
         {
-            Optional<string> kid = default;
+            Optional<Uri> kid = default;
             Optional<bool> enabled = default;
-            Optional<long> created = default;
-            Optional<long> updated = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kid"))
                 {
-                    kid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        kid = null;
+                        continue;
+                    }
+                    kid = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("attributes"))
@@ -51,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            created = property0.Value.GetInt64();
+                            created = property0.Value.GetDateTimeOffset("U");
                             continue;
                         }
                         if (property0.NameEquals("updated"))
@@ -61,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updated = property0.Value.GetInt64();
+                            updated = property0.Value.GetDateTimeOffset("U");
                             continue;
                         }
                     }

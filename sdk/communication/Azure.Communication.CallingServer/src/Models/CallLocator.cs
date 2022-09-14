@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
 #pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
         /// <summary> The call id. </summary>
-        public string Id { get; set; }
+        public string Id { get; internal set; }
 
         /// <inheritdoc />
         public abstract bool Equals(CallLocator other);

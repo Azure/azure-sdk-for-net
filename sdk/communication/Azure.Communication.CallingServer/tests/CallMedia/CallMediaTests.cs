@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    public class CallMediaTests : CallingServerTestBase
+    public class CallMediaTests : CallAutomationTestBase
     {
         private static readonly IEnumerable<CommunicationIdentifier> _target = new CommunicationIdentifier[]
         {
@@ -21,14 +21,26 @@ namespace Azure.Communication.CallingServer
             Loop = false,
             OperationContext = "context"
         };
+        private static readonly CallMediaRecognizeOptions _fullRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"))
+        {
+            InterruptCallMediaOperation = true,
+            InterToneTimeout = TimeSpan.FromSeconds(10),
+            MaxTonesToCollect = 5,
+            StopTones = new DtmfTone[] { DtmfTone.Pound },
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new FileSource(new Uri("https://localhost"))
+        };
+        private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"));
 
         private static CallMedia? _callMedia;
 
         [SetUp]
         public void Setup()
         {
-            CallAutomationClient callingServerClient = CreateMockCallingServerClient(202);
-            _callMedia = callingServerClient.GetCallConnection("callConnectionId").GetCallMedia();
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(202);
+            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
             _fileSource.PlaySourceId = "playSourceId";
         }
 
@@ -59,8 +71,8 @@ namespace Azure.Communication.CallingServer
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
         public void MediaOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
-            CallAutomationClient callingServerClient = CreateMockCallingServerClient(404);
-            _callMedia = callingServerClient.GetCallConnection("callConnectionId").GetCallMedia();
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
+            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
@@ -71,8 +83,8 @@ namespace Azure.Communication.CallingServer
         [TestCaseSource(nameof(TestData_PlayOperations))]
         public void MediaOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
-            CallAutomationClient callingServerClient = CreateMockCallingServerClient(404);
-            _callMedia = callingServerClient.GetCallConnection("callConnectionId").GetCallMedia();
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
+            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
@@ -95,6 +107,14 @@ namespace Azure.Communication.CallingServer
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.CancelAllMediaOperationsAsync()
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_fullRecognizeOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_emptyRecognizeOptions)
                 }
             };
         }
@@ -114,6 +134,14 @@ namespace Azure.Communication.CallingServer
                 new Func<CallMedia, Response>?[]
                 {
                    callMedia => callMedia.CancelAllMediaOperations()
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_fullRecognizeOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
                 }
             };
         }

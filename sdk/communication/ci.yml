@@ -24,8 +24,11 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: communication
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Communication.JobRouter
+      safeName: AzureCommunicationJobRouter
     - name: Azure.Communication.CallingServer
       safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
@@ -36,6 +39,8 @@ extends:
       safeName: AzureCommunicationEmail
     - name: Azure.Communication.Sms
       safeName: AzureCommunicationSms
+    - name: Azure.Communication.Rooms
+      safeName: AzureCommunicationRooms
     - name: Azure.Communication.Identity
       safeName: AzureCommunicationIdentity
     - name: Azure.Communication.MediaComposition
@@ -45,8 +50,9 @@ extends:
       safeName: AzureCommunicationNetworkTraversal
     - name: Azure.Communication.PhoneNumbers
       safeName: AzureCommunicationPhoneNumbers
-    - name: Azure.ResourceManager.Communication
-      safeName: AzureResourceManagerCommunication
     - name: Azure.Communication.ShortCodes
       safeName: AzureCommunicationShortCodes
+      skipReleaseStage: true
+    - name: Azure.Communication.AlphaIds
+      safeName: AzureCommunicationAlphaIds
       skipReleaseStage: true

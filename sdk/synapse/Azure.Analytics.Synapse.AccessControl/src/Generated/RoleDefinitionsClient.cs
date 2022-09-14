@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
+    // Data plane generated client. The RoleDefinitions service client.
     /// <summary> The RoleDefinitions service client. </summary>
     public partial class RoleDefinitionsClient
     {
@@ -277,8 +278,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
@@ -286,7 +287,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -349,8 +350,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
@@ -358,7 +359,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -382,8 +383,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </example>
         public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
         {
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
@@ -391,7 +392,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -415,8 +416,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </example>
         public virtual Response GetScopes(RequestContext context = null)
         {
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
@@ -424,7 +425,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

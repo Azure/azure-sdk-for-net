@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Mail;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -15,13 +16,17 @@ namespace Azure.Storage
     {
         private readonly string _secondaryStorageHost;
 
-        public GeoRedundantReadPolicy(Uri secondaryStorageUri)
+        private readonly GeoRedundantReadMode _mode;
+
+        public GeoRedundantReadPolicy(Uri secondaryStorageUri, GeoRedundantReadMode mode)
         {
             if (secondaryStorageUri == null)
             {
                 throw Errors.ArgumentNull(nameof(secondaryStorageUri));
             }
+            Argument.AssertEnumDefined(typeof(GeoRedundantReadMode), mode, nameof(mode));
             _secondaryStorageHost = secondaryStorageUri.Host;
+            _mode = mode;
         }
 
         public override void OnSendingRequest(HttpMessage message)
@@ -39,10 +44,28 @@ namespace Azure.Storage
                     out var alternateHostObj)
                 ? alternateHostObj as string
                 : null;
+            // first message
             if (alternateHost == null)
             {
-                // queue up the secondary host for subsequent retries
-                message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, _secondaryStorageHost);
+                string primaryHost = message.Request.Uri.Host;
+
+                // set appropriate first host
+                message.Request.Uri.Host = _mode switch
+                {
+                    GeoRedundantReadMode.PrimaryThenSecondary => primaryHost,
+                    GeoRedundantReadMode.SecondaryThenPrimary => _secondaryStorageHost,
+                    _ => throw BadModeError()
+                };
+
+                // queue up the appropriate host for subsequent retry
+                message.SetProperty(
+                    Constants.GeoRedundantRead.AlternateHostKey,
+                    _mode switch
+                    {
+                        GeoRedundantReadMode.PrimaryThenSecondary => _secondaryStorageHost,
+                        GeoRedundantReadMode.SecondaryThenPrimary => primaryHost,
+                        _ => throw BadModeError()
+                    });
                 return;
             }
 
@@ -75,5 +98,8 @@ namespace Azure.Storage
             message.Request.Uri.Host = alternateHost;
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, lastTriedHost);
         }
+
+        private InvalidOperationException BadModeError() => new(
+                $"Unexpected mode {Enum.GetName(typeof(GeoRedundantReadMode), _mode)} when alternating between primary and secondary endpoints.");
     }
 }

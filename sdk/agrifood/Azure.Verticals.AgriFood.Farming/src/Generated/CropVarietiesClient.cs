@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client. The CropVarieties service client.
     /// <summary> The CropVarieties service client. </summary>
     public partial class CropVarietiesClient
     {

@@ -5,20 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication
 {
     /// <summary> The CommunicationUserIdentifierModel. </summary>
     internal partial class CommunicationUserIdentifierModel
     {
         /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
-        public CommunicationUserIdentifierModel()
-        {
-        }
-
-        /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
         /// <param name="id"></param>
-        internal CommunicationUserIdentifierModel(string id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public CommunicationUserIdentifierModel(string id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             Id = id;
         }
 
