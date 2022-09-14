@@ -10,6 +10,7 @@ Below are the packages contained in Azure Maps:
 - [Azure.Maps.Rendering][render] is the rendering SDK that user can get maps images or copyrights.
 - [Azure.Maps.Routing][route] allows you to get the routing information for multiple origins and destinations.
 - [Azure.Maps.Search][search] supports many searching functionalities for entities, point of interests (POI) or streets, and also supports reverse geocode a coordinate to a place or an entity.
+- [Azure.Maps.GeoLocation][geolocation] allows you to get the ISO country code for the provided IP address.
 
 ### Install the package
 
@@ -19,6 +20,7 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/):
 dotnet add package Azure.Maps.Rendering --prerelease
 dotnet add package Azure.Maps.Routing --prerelease
 dotnet add package Azure.Maps.Search --prerelease
+dotnet add package Azure.Maps.GeoLocation --prerelease
 ```
 
 Azure.Maps.Common will be automatically installed when you install other packages.
@@ -215,6 +217,7 @@ additional questions or comments.
 [common]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common
 [render]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering
 [route]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Routing
+[geolocation]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.GeoLocation
 [search]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
