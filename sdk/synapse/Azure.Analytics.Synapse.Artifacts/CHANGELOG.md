@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.17 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.16 (2022-09-13)
 - Updated LinkConnection for Synapse Link
 - Added TargetSparkConfiguration property for SparkJobDefinition and Notebook

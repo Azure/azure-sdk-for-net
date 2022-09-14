@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes all the settings to be used when encoding the input video with the Standard Encoder. </summary>
-    public partial class StandardEncoderPreset : MediaPreset
+    public partial class StandardEncoderPreset : MediaTransformPreset
     {
         /// <summary> Initializes a new instance of StandardEncoderPreset. </summary>
         /// <param name="codecs">
