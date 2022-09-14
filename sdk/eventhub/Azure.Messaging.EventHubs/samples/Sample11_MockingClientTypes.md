@@ -69,7 +69,7 @@ for (int i=0; i<4; i++)
     }
 }
 
-// Illustrating the use of the try add callback
+// Since the batch is full, according to the callback, adding another event will fail.
 EventData eventData4 = new EventData(eventBody: new BinaryData("Sample-Event-4-will-fail"));
 Assert.IsFalse(batch.TryAdd(eventData4));
 
