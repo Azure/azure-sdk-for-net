@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Subscription.Tests
                 {
                     Workload = "Production",
                     SubscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID"),
-                    AdditionalProperties = new PutAliasRequestAdditionalProperties()
                 }
             };
             // TODO: Pipeline playback issue. Request parameters in some env not same with record file
+            //data.Properties.AdditionalProperties = new PutAliasRequestAdditionalProperties();
             //data.Properties.AdditionalProperties.Tags.Add(new KeyValuePair<string, string>("tag1", "test1"));
             //data.Properties.AdditionalProperties.Tags.Add(new KeyValuePair<string, string>("tag2", "test2"));
             var alias = await _aliasCollection.CreateOrUpdateAsync(WaitUntil.Completed, aliasName, data);
