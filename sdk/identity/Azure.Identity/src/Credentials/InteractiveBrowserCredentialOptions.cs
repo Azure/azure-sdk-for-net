@@ -32,7 +32,7 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
-        /// If no value is specified for <see cref="TenantId"/> this option will have no effect, and the credential will acquire tokens for any requested tenant.
+        /// If no value is specified for <see cref="TenantId"/>, this option will have no effect, and the credential will acquire tokens for any requested tenant.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
 
