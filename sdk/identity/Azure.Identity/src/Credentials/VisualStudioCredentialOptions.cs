@@ -13,7 +13,7 @@ namespace Azure.Identity
         private string _tenantId;
 
         /// <summary>
-        /// The tenant ID the credential will be authenticated to by default. If not specified the credential will authenticate to any requested tenant, and will default to the tenant the user originally authenticated to via the Visual Studio Azure Service Account dialog.
+        /// The tenant ID the credential will be authenticated to by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant the user originally authenticated to via the Visual Studio Azure Service Account dialog.
         /// </summary>
         public string TenantId
         {
