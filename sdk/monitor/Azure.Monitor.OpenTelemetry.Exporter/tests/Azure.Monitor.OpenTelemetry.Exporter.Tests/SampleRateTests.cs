@@ -20,6 +20,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private const string ActivitySourceName = "SampleRateTests";
         private const string ActivityName = "TestActivity";
 
+        static SampleRateTests()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
+
         [Theory]
         [InlineData(50.0F)]
         [InlineData("somestring")]
@@ -30,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
 
             // Valid SampleRate.
-            var activity = activitySource.StartActivity(
+            using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: default,
@@ -38,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName: "RoleName", roleInstance: "RoleInstance", instrumentationKey:"00000000-0000-0000-0000-000000000000");
 
             if (SampleRate is float)
             {
