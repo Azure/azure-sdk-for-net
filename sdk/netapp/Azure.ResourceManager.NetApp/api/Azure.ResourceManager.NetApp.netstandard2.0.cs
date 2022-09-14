@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp
     public partial class NetAppBackupData : Azure.ResourceManager.Models.ResourceData
     {
         public NetAppBackupData(Azure.Core.AzureLocation location) { }
-        public System.Guid? BackupId { get { throw null; } }
+        public string BackupId { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppBackupType? BackupType { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string FailureReason { get { throw null; } }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetApp
     {
         public NetAppVolumeData(Azure.Core.AzureLocation location, string creationToken, long usageThreshold, Azure.Core.ResourceIdentifier subnetId) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? AvsDataStore { get { throw null; } set { } }
-        public System.Guid? BackupId { get { throw null; } set { } }
+        public string BackupId { get { throw null; } set { } }
         public string BaremetalTenantId { get { throw null; } }
         public Azure.Core.ResourceIdentifier CapacityPoolResourceId { get { throw null; } set { } }
         public int? CloneProgress { get { throw null; } }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.NetApp
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? SecurityStyle { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
-        public System.Guid? SnapshotId { get { throw null; } set { } }
+        public string SnapshotId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public string T2Network { get { throw null; } }
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.NetApp
         public System.DateTimeOffset? Created { get { throw null; } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public System.Guid? SnapshotId { get { throw null; } }
+        public string SnapshotId { get { throw null; } }
     }
     public partial class NetAppVolumeSnapshotResource : Azure.ResourceManager.ArmResource
     {
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumeBackupPatch
     {
         public NetAppVolumeBackupPatch() { }
-        public System.Guid? BackupId { get { throw null; } }
+        public string BackupId { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppBackupType? BackupType { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string FailureReason { get { throw null; } }
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, Azure.Core.ResourceIdentifier subnetId) { }
         public Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? AvsDataStore { get { throw null; } set { } }
-        public System.Guid? BackupId { get { throw null; } set { } }
+        public string BackupId { get { throw null; } set { } }
         public string BaremetalTenantId { get { throw null; } }
         public Azure.Core.ResourceIdentifier CapacityPoolResourceId { get { throw null; } set { } }
         public int? CloneProgress { get { throw null; } }
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? SecurityStyle { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
-        public System.Guid? SnapshotId { get { throw null; } set { } }
+        public string SnapshotId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public string T2Network { get { throw null; } }
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumeRevertContent
     {
         public NetAppVolumeRevertContent() { }
-        public Azure.Core.ResourceIdentifier SnapshotId { get { throw null; } set { } }
+        public string SnapshotId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetAppVolumeSecurityStyle : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle>
