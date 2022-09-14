@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("logicalCoreCountPerCore");
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryInMb))
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryInMb");
-                writer.WriteNumberValue(EffectiveAvailableMemoryInMb.Value);
+                writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
             if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {

@@ -14,13 +14,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-suppress-abstract-base-class:
-- CustomDomainHttpsContent
-- DeliveryRuleAction
-- DeliveryRuleCondition
-- FrontDoorSecretProperties
-- SecurityPolicyProperties
-
 operation-id-mappings:
   CdnEndpoint:
       profileName: Microsoft.Cdn/operationresults/profileresults

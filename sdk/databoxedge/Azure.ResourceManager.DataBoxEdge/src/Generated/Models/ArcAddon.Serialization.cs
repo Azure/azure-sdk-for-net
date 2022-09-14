@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string subscriptionId = default;
             string resourceGroupName = default;
             string resourceName = default;
-            string resourceLocation = default;
+            AzureLocation resourceLocation = default;
             Optional<string> version = default;
-            Optional<PlatformType> hostPlatform = default;
+            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
             Optional<HostPlatformType> hostPlatformType = default;
-            Optional<AddonState> provisioningState = default;
+            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         }
                         if (property0.NameEquals("resourceLocation"))
                         {
-                            resourceLocation = property0.Value.GetString();
+                            resourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("version"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostPlatform = new PlatformType(property0.Value.GetString());
+                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostPlatformType"))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new AddonState(property0.Value.GetString());
+                            provisioningState = new DataBoxEdgeRoleAddonProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -14,6 +14,9 @@
 * [Add metrics exporter](https://github.com/Azure/azure-sdk-for-net/pull/26651)
 * [Add default storage location and initialization for traces](https://github.com/Azure/azure-sdk-for-net/pull/26494)
 * [Change AzureMonitorExporterLoggingExtensions from internal to public](https://github.com/Azure/azure-sdk-for-net/pull/26355)
+* [Support for exporting Activity exception
+  event](https://github.com/Azure/azure-sdk-for-net/pull/29676)
+* [Update SampleRate in Request/Dependency telemetry](https://github.com/Azure/azure-sdk-for-net/pull/31118)
 
 ### Breaking Changes
 

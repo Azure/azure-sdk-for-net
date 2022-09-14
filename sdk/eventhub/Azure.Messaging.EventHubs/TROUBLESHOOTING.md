@@ -37,7 +37,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 
 ## Handle Event Hubs exceptions
 
-The Event Hubs client library will surface exceptions when en error is encountered by a service operation or within the client.  When possible, standard .NET exception types are used to convey error information.  For scenarios specific to Event Hubs, an [EventHubsException][EventHubsException] is thrown; this is the most common exception type that applications will encounter. 
+The Event Hubs client library will surface exceptions when an error is encountered by a service operation or within the client.  When possible, standard .NET exception types are used to convey error information.  For scenarios specific to Event Hubs, an [EventHubsException][EventHubsException] is thrown; this is the most common exception type that applications will encounter. 
 
 The Event Hubs clients will implicitly retry exceptions that are considered transient, following the configured [retry options][EventHubsRetryOptions].  When an exception is surfaced to the application, either all retries were applied unsuccessfully, or the exception was considered non-transient.  More information on configuring retry options can be found in the [Configuring the client retry thresholds][ConfigureRetrySample] sample.
 

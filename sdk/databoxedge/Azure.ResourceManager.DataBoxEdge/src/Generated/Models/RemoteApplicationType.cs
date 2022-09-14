@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         private const string PowershellValue = "Powershell";
-        private const string WACValue = "WAC";
+        private const string WacValue = "WAC";
         private const string LocalUIValue = "LocalUI";
         private const string AllApplicationsValue = "AllApplications";
 
         /// <summary> Powershell. </summary>
         public static RemoteApplicationType Powershell { get; } = new RemoteApplicationType(PowershellValue);
         /// <summary> WAC. </summary>
-        public static RemoteApplicationType WAC { get; } = new RemoteApplicationType(WACValue);
+        public static RemoteApplicationType Wac { get; } = new RemoteApplicationType(WacValue);
         /// <summary> LocalUI. </summary>
         public static RemoteApplicationType LocalUI { get; } = new RemoteApplicationType(LocalUIValue);
         /// <summary> AllApplications. </summary>

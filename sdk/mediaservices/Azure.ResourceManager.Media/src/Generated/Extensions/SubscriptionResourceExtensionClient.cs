@@ -52,13 +52,6 @@ namespace Azure.ResourceManager.Media
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MediaServicesOperationResultResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of MediaServicesOperationResultResources and their operations over a MediaServicesOperationResultResource. </returns>
-        public virtual MediaServicesOperationResultCollection GetMediaServicesOperationResults()
-        {
-            return GetCachedClient(Client => new MediaServicesOperationResultCollection(Client, Id));
-        }
-
         /// <summary>
         /// List Media Services accounts in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
