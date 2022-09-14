@@ -45,7 +45,7 @@ namespace Azure.Identity
         private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
 
         /// <summary>
-        /// The tenant ID the credential will authenticate to by default. If not specified the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authetication method was originally authenticated.
+        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
         /// </summary>
         public string TenantId
         {
@@ -143,7 +143,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
+        /// The tenant ID of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
         /// <see cref="VisualStudioCodeCredential"/>. The default is null and will authenticate users to their default tenant.
         /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies tenants in addition to the specified <see cref="InteractiveBrowserTenantId"/>, <see cref="VisualStudioTenantId"/>, <see cref="VisualStudioCodeTenantId"/>, <see cref="SharedTokenCacheTenantId"/>, for which the credential may acquire tokens.
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
-        /// If no value is specified for any of the above tenant this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
+        /// If no value is specified for any of the above tenants, this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
         /// This value can also be set by setting the environment variable AZURE_ADDITOINAL_ALLOWED_TENANTS.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants { get; private set; } = EnvironmentVariables.AdditionallyAllowedTenants;
