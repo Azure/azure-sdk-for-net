@@ -10,8 +10,6 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Extensions.AzureMonitor;
-using System.Threading.Tasks;
-using System;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 {
