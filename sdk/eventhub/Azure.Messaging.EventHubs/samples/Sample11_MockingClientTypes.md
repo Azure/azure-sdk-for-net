@@ -19,7 +19,8 @@ Mock<EventHubProducerClient> mockProducer = new Mock<EventHubProducerClient>();
 // It does not impact TryAdd on the mocked batch
 long batchSizeInBytes = 500;
 
-// Events added to the batch will be added to this list.  Be aware that but altering the events in the list will also change the batch.
+// Events added to the batch will be added here, but altering the events in this list will not change the
+// events in the batch, since they are stored inside the batch as well
 List<EventData> backingList = new List<EventData>();
 
 // For illustrative purposes allow the batch to hold 3 events before
@@ -93,6 +94,8 @@ Assert.AreEqual(backingList.Count, eventList.Count);
 
 Many applications make decisions for publishing based on the properties of the Event Hub itself or the properties of its partitions. Both can be mocked using the `EventHubsModelFactory`. The following example demonstrates how to mock an `EventHubProducerClient` that is publishing to an Event Hub with a set of two partitions with different ownership levels.
 
+These mocked properties can be used to test expected application behavior given a specific set of Event Hub properties. These property types can be mocked in the same way for the `EventHubConsumerClient` and the `EventHubBufferedProducerClient`.
+
 ```C# Snippet:EventHubs_Sample11_MockingEventHubProperties
 // Create a mock of the EventHubProducerClient
 Mock<EventHubProducerClient> mockProducer = new Mock<EventHubProducerClient>();
@@ -123,22 +126,25 @@ EventHubProperties eventHubProperties =
         partitionIds : partitions.Keys.ToArray());
 
 // Setting up to return the mocked properties
-mockProducer.Setup(p => p.GetEventHubPropertiesAsync(
-    It.IsAny<CancellationToken>()))
+mockProducer
+    .Setup(p => p.GetEventHubPropertiesAsync(
+        It.IsAny<CancellationToken>()))
     .ReturnsAsync(eventHubProperties);
 
 // Setting up to return the mocked partition ids
-mockProducer.Setup(p => p.GetPartitionIdsAsync(
-    It.IsAny<CancellationToken>()))
+mockProducer
+    .Setup(p => p.GetPartitionIdsAsync(
+        It.IsAny<CancellationToken>()))
     .ReturnsAsync(partitions.Keys.ToArray());
 
 foreach (var partition in partitions)
 {
     // Setting up to return the mocked properties for each partition input
-    mockProducer.Setup(p => p.GetPartitionPublishingPropertiesAsync(
-    partition.Key,
-    It.IsAny<CancellationToken>()))
-    .ReturnsAsync(partition.Value);
+    mockProducer
+        .Setup(p => p.GetPartitionPublishingPropertiesAsync(
+            partition.Key,
+            It.IsAny<CancellationToken>()))
+        .ReturnsAsync(partition.Value);
 }
 
 EventHubProducerClient producer = mockProducer.Object;
@@ -146,31 +152,31 @@ EventHubProducerClient producer = mockProducer.Object;
 
 ## Mocking access to the properties of an `EventHubConsumerClient`
 
-When testing code that is dependent on the `EventHubConsumerClient`, an application may want to determine a representative set of events, event properties, and contexts that their application could potentially see. Tests can mock each data type, and then set up the consumer client to output these representative scenarios, verifying the resulting behavior is as expected.
+When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to determine a representative set of events, event properties, and contexts that their application could potentially see as outputs from the `EventHubConsumerClient`. Tests can mock each data type, and then set up the consumer client to output these representative scenarios, verifying the resulting behavior is as expected.
 
 ```C# Snippet:EventHubs_Sample11_MockingConsumerClient
 // Create a mock of the EventHubConsumerClient
 Mock<EventHubConsumerClient> mockConsumer = new Mock<EventHubConsumerClient>();
 
-var receivedEvents = new List<EventData>();
-var cancellationTokenSource = new CancellationTokenSource();
+List<EventData> receivedEvents = new List<EventData>();
+CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
 // Create a mock of LastEnqueuedEventProperties using the model factory, these can
 // be set depending on the scenario that is important for the application
-var lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
+LastEnqueuedEventProperties lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
     lastSequenceNumber : default,
     lastOffset : default,
     lastEnqueuedTime : default,
     lastReceivedTime : default);
 
 // Create a mock of PartitionContext using the model factory
-var partitionContext = EventHubsModelFactory.PartitionContext(
+PartitionContext partitionContext = EventHubsModelFactory.PartitionContext(
     partitionId : "0",
     lastEnqueuedEventProperties : lastEnqueueEventProperties);
 
 // Mock an EventData instance, different arguments can simulate different potential
 // outputs from the broker
-var eventData = EventHubsModelFactory.EventData(
+EventData eventData = EventHubsModelFactory.EventData(
     eventBody : new BinaryData("Sample-Event"),
     systemProperties : default,
     partitionKey : default,
@@ -179,8 +185,8 @@ var eventData = EventHubsModelFactory.EventData(
     enqueuedTime : default);
 
 // Create a mock of a partition event
-var samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
-var partitionEventList = new List<PartitionEvent>(new PartitionEvent[] { samplePartitionEvent });
+PartitionEvent samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
+List<PartitionEvent> partitionEventList = new List<PartitionEvent>(new PartitionEvent[] { samplePartitionEvent });
 
 // Define a simple local method that returns an IAsyncEnumerable to use as the return for
 // ReadEventsAsync below
@@ -192,34 +198,36 @@ async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartition
 
 // Use this PartitionEvent to mock a return from the consumer, because ReadEvents returns an IAsyncEnumerable a separate
 // method is needed to properly set up this method
-mockConsumer.Setup(
-    c => c.ReadEventsAsync(
-    It.IsAny<CancellationToken>()))
+mockConsumer
+    .Setup(c => c.ReadEventsAsync(
+        It.IsAny<CancellationToken>()))
     .Returns(mockReturn(samplePartitionEvent));
 
-var consumer = mockConsumer.Object;
+EventHubConsumerClient consumer = mockConsumer.Object;
 ```
 
-## Mocking `PartitionReceiver`
+## Receiving Batches using the `PartitionReceiver`
 
-The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return an empty batch. Mocked partition receivers can be set up for more complex scenarios using `SetUp(...).CallBack(...)` as well.
+The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch. 
+
+Given the purpose of the `PartitionReceiver`, it is anticipated that most applications will have complex code surrounding their receivers, meaning mocking these data types can be especially helpful.
 
 ```C# Snippet:EventHubs_Sample11_PartitionReceiverMock
 // Create a mock of the PartitionReceiver
-var mockReceiver = new Mock<PartitionReceiver>();
+Mock<PartitionReceiver> mockReceiver = new Mock<PartitionReceiver>();
 
 // This sets the value returned by the EventDataBatch when accessing the Size property
 // It does not impact TryAdd on the mocked batch
-var batchSizeInBytes = 500;
+long batchSizeInBytes = 500;
 
 // Events added to the batch will be added here, but altering the events in this list will not change the
 // events in the batch, since they are stored inside the batch as well
-var backingList = new List<EventData>();
+List<EventData> backingList = new List<EventData>();
 
-var maximumEventCount = 10;
+int maximumEventCount = 10;
 
 // Create a mock of an EventDataBatch for the receiver to return
-var dataBatchMock = EventHubsModelFactory.EventDataBatch(
+EventDataBatch dataBatchMock = EventHubsModelFactory.EventDataBatch(
         batchSizeBytes: batchSizeInBytes,
         batchEventStore: backingList,
         batchOptions: new CreateBatchOptions() { },
@@ -232,11 +240,11 @@ var dataBatchMock = EventHubsModelFactory.EventDataBatch(
         });
 
 // Adding events to the batch
-for (var i=0; i < 10; i++)
+for (int i=0; i<10; i++)
 {
     // Mocking an EventData instance, different arguments can simulate different potential
     // outputs from the broker
-    var eventData = EventHubsModelFactory.EventData(
+    EventData eventData = EventHubsModelFactory.EventData(
         eventBody: new BinaryData($"Sample-Event-{i}"),
         systemProperties: default,
         partitionKey: "0",
@@ -249,24 +257,24 @@ for (var i=0; i < 10; i++)
 
 // Setup the mock to receive the mocked data batch when ReceiveBatchAsync is called
 // on a given partition
-mockReceiver.Setup(
-    r => r.ReceiveBatchAsync(
+mockReceiver
+    .Setup(r => r.ReceiveBatchAsync(
         It.IsAny<int>(),
         It.IsAny<TimeSpan>(),
         It.IsAny<CancellationToken>()))
     .ReturnsAsync(backingList.ToArray());
 
-var receiver = mockReceiver.Object;
+PartitionReceiver receiver = mockReceiver.Object;
 
-var cancellationTokenSource = new CancellationTokenSource();
+CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-var receivedBatch = await receiver.ReceiveBatchAsync(
+IEnumerable<EventData> receivedBatch = await receiver.ReceiveBatchAsync(
     maximumEventCount: maximumEventCount,
     TimeSpan.FromSeconds(1),
     cancellationTokenSource.Token);
 ```
 
-## Mocking `EventHubBufferedProducerClient` and `EventData`
+## Enqueuing Events with a Mocked `EventHubBufferedProducerClient`
 
 The following snippet demonstrates how to mock the `EventHubBufferedProducerClient`. In this scenario, the failed handler decides to add events to the end of the queue after failing to send. A test could then verify that `EnqueueEventAsync` was called to make sure that their failed handler was working as expected.
 
@@ -274,12 +282,12 @@ A mock of the `EventHubBufferedProducer` client could also be used in the same w
 
 ```C# Snippet:EventHubs_Sample11_MockingBufferedProducer
 // Create a mock buffered producer
-var bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
+Mock<EventHubBufferedProducerClient> bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
 
 // Define a failed handler for the mock
-var sendFailed = new Func<SendEventBatchFailedEventArgs, Task>(async args =>
+Func<SendEventBatchFailedEventArgs, Task> sendFailed = new Func<SendEventBatchFailedEventArgs, Task>(async args =>
 {
-    foreach (var eventData in args.EventBatch)
+    foreach (EventData eventData in args.EventBatch)
     {
         if (eventData.Body.Length != 0)
         {
@@ -289,39 +297,43 @@ var sendFailed = new Func<SendEventBatchFailedEventArgs, Task>(async args =>
 });
 
 // Create a mock event to fail send
-var eventToEnqueue = EventHubsModelFactory.EventData(new BinaryData("Sample-Event"));
-var eventList = new List<EventData>();
+EventData eventToEnqueue = EventHubsModelFactory.EventData(new BinaryData("Sample-Event"));
+List<EventData> eventList = new List<EventData>();
 eventList.Add(eventToEnqueue);
 
 // Create a set of args to send to the SendEventBatchFailedAsync handler
-var args = new SendEventBatchFailedEventArgs(eventList, new Exception(), "0", default);
+SendEventBatchFailedEventArgs args = new SendEventBatchFailedEventArgs(eventList, new Exception(), "0", default);
 
 // Setup EnqueueEventAsync to always pass and return 1
-bufferedProducerMock.Setup(bp => bp.EnqueueEventAsync(
-    It.IsAny<EventData>(),
-    It.IsAny<CancellationToken>())).ReturnsAsync(1);
+bufferedProducerMock
+    .Setup(bp => bp.EnqueueEventAsync(
+        It.IsAny<EventData>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(1);
 
 // Set up EnqueueEventsAsync to fail and call the defined fail handler using the
 // above created args
-bufferedProducerMock.Setup(bp => bp.EnqueueEventsAsync(
-    It.IsAny<List<EventData>>(),
-    It.IsAny<CancellationToken>())).Callback(() => sendFailed(args));
+bufferedProducerMock
+    .Setup(bp => bp.EnqueueEventsAsync(
+        It.IsAny<List<EventData>>(),
+        It.IsAny<CancellationToken>()))
+    .Callback(() => sendFailed(args));
 
-var bufferedProducer = bufferedProducerMock.Object;
+EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
 
 bufferedProducer.SendEventBatchFailedAsync += sendFailed;
 ```
 
-## Mocking `EventHubBufferedProducerClient` and `PartitionProperties`
+## Mocking access to Event Hub Properties through the `EventHubBufferedProducerClient`
 
 Mocking the `PartitionProperties` class is very similar to the `PartitionPublishingProperties` above. The snippet below demonstrates how an application could set up a specific set of properties, and then test different code paths that depend on it. It can be done in the same way for the `EventHubProducerClient` as well.
 
 ```C# Snippet:EventHubs_Sample11_BufferedProducerPartitionProps
 // Create the buffered producer mock
-var bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
+Mock<EventHubBufferedProducerClient> bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
 
 // Define the partitions and their properties
-var partitions = new Dictionary<string, PartitionProperties>()
+Dictionary<string, PartitionProperties> partitions = new Dictionary<string, PartitionProperties>()
 {
     // Non-empty partition
     { "0", EventHubsModelFactory.PartitionProperties(
@@ -381,7 +393,7 @@ When testing each method, the focus is again just on the application-defined cod
 ```C# Snippet:EventHubs_Sample11_MockingEventProcessor
 // TestableCustomProcessor is a wrapper class around a CustomProcessor class that exposes
 // protected methods so that they can be tested
-var eventProcessorMock =
+Mock<TestableCustomProcessor> eventProcessorMock =
     new Mock<TestableCustomProcessor>(
         5, //eventBatchMaximumCount
         "consumerGroup",
@@ -391,14 +403,14 @@ var eventProcessorMock =
         new EventProcessorOptions())
     { CallBase = true };
 
-var eventList = new List<EventData>()
+List<EventData> eventList = new List<EventData>()
 {
     new EventData(new BinaryData("Sample-Event-1")),
     new EventData(new BinaryData("Sample-Event-2")),
     new EventData(new BinaryData("Sample-Event-3"))
 };
 
-var eventProcessor = eventProcessorMock.Object;
+TestableCustomProcessor eventProcessor = eventProcessorMock.Object;
 
 // Call the wrapper method in order to reach proctected method within a custom processor
 // Using It.Is allows the test to set the PartitionId value, even though the setter is protected
