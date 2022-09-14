@@ -8,21 +8,21 @@ As of `Azure.Identity` 1.7.0, the default behavior of credentials supporting mul
 
 - Add all IDs, of tenants from which tokens should be acquired, to the `AdditionallyAllowedTenants` list in the credential options. For example:
 
-    ```C# Snippet:Identity_BreakingChanges_AddExplicitAdditionallyAllowedTenants
-    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
-    {
-        AdditionallyAllowedTenants = { "<tenant_id_1>", "<tenant_id_2>" }
-    });
-    ```
+```C# Snippet:Identity_BreakingChanges_AddExplicitAdditionallyAllowedTenants
+var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+{
+    AdditionallyAllowedTenants = { "<tenant_id_1>", "<tenant_id_2>" }
+});
+```
 
 - Add `*` to enable token acquisition from any tenant. This is the original behavior and is compatible with versions 1.5.0 through 1.6.1. For example:
 
-    ```C# Snippet:Identity_BreakingChanges_AddAllAdditionallyAllowedTenants
-    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
-    {
-        AdditionallyAllowedTenants = { "*" }
-    });
-    ```
+```C# Snippet:Identity_BreakingChanges_AddAllAdditionallyAllowedTenants
+var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+{
+    AdditionallyAllowedTenants = { "*" }
+});
+```
 
 Note: Credential types which do not require a `TenantId` on construction will only throw `AuthenticationFailedException` when the application has provided a value for `TenantId` either in the options or via a constructor overload. If no `TenantId` is specified when constructing the credential, the credential will acquire tokens for any requested `TenantId` regardless of the value of `AdditionallyAllowedTenants`.
 
