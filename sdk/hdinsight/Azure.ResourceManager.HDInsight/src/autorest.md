@@ -225,4 +225,13 @@ directive:
           'description': 'The error details.'
         }
       };
+# nullable
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.StorageAccount.properties.msiResourceId['x-nullable'] = true;
+      $.StorageAccount.properties.resourceId['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.encryptionAlgorithm['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.msiResourceId['x-nullable'] = true;
+
 ```

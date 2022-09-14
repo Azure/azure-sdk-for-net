@@ -8,17 +8,12 @@ csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
 require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/containerregistry/resource-manager/readme.md
-tag: package-2022-02-preview
+tag: package-2021-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-suppress-abstract-base-class:
-- ContainerRegistryRunContent
-- ContainerRegistryTaskStepProperties
-- ContainerRegistryTaskStepUpdateContent
 
 format-by-name-rules:
   'tenantId': 'uuid'

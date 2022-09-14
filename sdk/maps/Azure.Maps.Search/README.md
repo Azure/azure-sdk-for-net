@@ -56,13 +56,13 @@ MapsSearchClient client = new MapsSearchClient(credential, clientId);
 
 ## Key concepts
 
-`MapsSearchClient` is designed for:
+`MapsSearchClient` is designed to:
 
 * Communicate with Azure Maps endpoint to query addresses or points of locations
 * Communicate with Azure Maps endpoint to request the geometry data such as a city or country outline for a set of entities
 * Communicate with Azure Maps endpoint to perform a free form search inside a single geometry or many of them
 
-Learn more about examples in [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples)
+Learn more by viewing our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples)
 
 ### Thread safety
 
@@ -81,9 +81,10 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples).
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples).
 
 ### Example Get Polygons
+
 ```C# Snippet:GetPolygons
 // Get Addresses
 var searchResult = await client.SearchAddressAsync("Seattle");

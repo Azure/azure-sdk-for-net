@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static ScriptListResult DeserializeScriptListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ScriptData>> value = default;
+            Optional<IReadOnlyList<KustoScriptData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScriptData> array = new List<ScriptData>();
+                    List<KustoScriptData> array = new List<KustoScriptData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptData.DeserializeScriptData(item));
+                        array.Add(KustoScriptData.DeserializeKustoScriptData(item));
                     }
                     value = array;
                     continue;
