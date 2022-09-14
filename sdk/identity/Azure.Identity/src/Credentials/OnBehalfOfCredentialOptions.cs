@@ -21,7 +21,7 @@ namespace Azure.Identity
         public bool SendCertificateChain { get; set; }
 
         /// <summary>
-        /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the application is installed.
+        /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
     }
