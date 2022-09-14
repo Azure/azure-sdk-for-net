@@ -170,37 +170,6 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         }
 
         [Test]
-        public async Task CanListRoleAssignments()
-        {
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
-
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
-
-            // TODO: This will change to pageable with https://github.com/azure/azure-sdk-for-net/issues/24680
-            Response listReponse = await assignmentsClient.GetRoleAssignmentsAsync();
-            var listContent = listReponse.Content;
-            using var outerJson = JsonDocument.Parse(listContent.ToMemory());
-            var roleAssignmentsJson = outerJson.RootElement.GetProperty("value");
-
-            foreach (var expectedRoleAssignmentJson in roleAssignmentsJson.EnumerateArray())
-            {
-                string id = expectedRoleAssignmentJson.GetProperty("id").ToString();
-
-                var roleAssignmentResponse = await assignmentsClient.GetRoleAssignmentByIdAsync(id, new());
-                var roleAssignmentContent = roleAssignmentResponse.Content;
-                using var actualRoleDefinitionJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
-
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("id").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("id").ToString());
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("roleDefinitionId").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("roleDefinitionId").ToString());
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("principalId").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("principalId").ToString());
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("scope").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("scope").ToString());
-            }
-
-            Assert.GreaterOrEqual(roleAssignmentsJson.GetArrayLength(), 1);
-        }
-
-        [Test]
         public async Task CanDeleteRoleAssignments()
         {
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
@@ -212,92 +181,6 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             Response deleteResponse = await assignmentsClient.DeleteRoleAssignmentByIdAsync(roleAssignmentDetailsJson.RootElement.GetProperty("id").GetString());
             deleteResponse.AssertSuccess();
-        }
-
-        [Test]
-        public async Task CanCheckPrincipalAccess()
-        {
-            // Arrange
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
-
-            string scope = "workspaces/" + TestEnvironment.WorkspaceName;
-            string actionId = "Microsoft.Synapse/workspaces/read";
-
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
-
-            // Act
-            var accessRequest = new
-            {
-                subject = new
-                {
-                    principalId = role.RoleAssignmentPrincipalId,
-                    groupIds = new string[] { },
-                },
-                scope = scope,
-                actions = new[]
-                {
-                    new
-                    {
-                        id = actionId,
-                        isDataAction = true
-                    }
-                }
-            };
-
-            var response = await assignmentsClient.CheckPrincipalAccessAsync(RequestContent.Create(accessRequest), ContentType.ApplicationJson);
-
-            // Assert
-            var content = response.Content;
-            using var accessDecisionsJson = JsonDocument.Parse(content.ToMemory());
-            var accessDecisionsEnumerator = accessDecisionsJson.RootElement.GetProperty("AccessDecisions").EnumerateArray();
-
-            Assert.AreEqual(1, accessDecisionsEnumerator.Count());
-
-            var accessDecisionJson = accessDecisionsEnumerator.First();
-
-            Assert.AreEqual("Allowed", accessDecisionJson.GetProperty("accessDecision").ToString());
-            Assert.AreEqual(actionId, accessDecisionJson.GetProperty("actionId").ToString());
-
-            var roleAssignmentJson = accessDecisionJson.GetProperty("roleAssignment");
-            Assert.AreEqual(role.RoleAssignmentId, roleAssignmentJson.GetProperty("id").ToString());
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, roleAssignmentJson.GetProperty("roleDefinitionId").ToString());
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, roleAssignmentJson.GetProperty("principalId").ToString());
-            Assert.AreEqual(scope, roleAssignmentJson.GetProperty("scope").ToString());
-        }
-
-        [Test]
-        public async Task CanCheckPrincipalAccessViaGrowUpHelper()
-        {
-            // Arrange
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
-
-            string scope = "workspaces/" + TestEnvironment.WorkspaceName;
-            string actionId = "Microsoft.Synapse/workspaces/read";
-
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
-
-            // Act
-            CheckPrincipalAccessRequest checkAccessRequest = new CheckPrincipalAccessRequest(
-                new SubjectInfo(new Guid(role.RoleAssignmentPrincipalId)),
-                new List<RequiredAction>() { new RequiredAction(actionId, isDataAction: true) },
-                scope);
-
-            Response<CheckPrincipalAccessResponse> response = await assignmentsClient.CheckPrincipalAccessAsync(checkAccessRequest);
-
-            // Assert
-            var decisions = response.Value.AccessDecisions;
-            Assert.AreEqual(1, decisions.Count);
-
-            var decision = decisions[0];
-
-            Assert.AreEqual("Allowed", decision.AccessDecision);
-            Assert.AreEqual(actionId, decision.ActionId);
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, decision.RoleAssignment.PrincipalId.ToString());
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, decision.RoleAssignment.RoleDefinitionId.ToString());
-            Assert.AreEqual(scope, decision.RoleAssignment.Scope);
-            Assert.AreEqual(role.RoleAssignmentId, decision.RoleAssignment.Id);
         }
     }
 }
