@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// from an instance of <see cref="ArmClient" /> using the GetApiTagResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiResource" /> using the GetApiTag method.
     /// </summary>
-    public partial class ApiTagResource : ArmResource
+    public partial class ApiTagResource : TagContractResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiTagResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiTagTagClientDiagnostics;
         private readonly TagRestOperations _apiTagTagRestClient;
-        private readonly TagContractData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiTagResource"/> class for mocking. </summary>
         protected ApiTagResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiTagResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiTagResource(ArmClient client, TagContractData data) : this(client, data.Id)
+        internal ApiTagResource(ArmClient client, TagContractData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApiTagResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/tags";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual TagContractData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get tag associated with the API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}
-        /// Operation Id: Tag_GetByApi
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiTagResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<TagContractResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _apiTagTagClientDiagnostics.CreateScope("ApiTagResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiTagTagRestClient.GetByApiAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiTagResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: Tag_GetByApi
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiTagResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ApiTagResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((ApiTagResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<TagContractResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _apiTagTagClientDiagnostics.CreateScope("ApiTagResource.Get");
             scope.Start();
@@ -125,13 +112,26 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiTagTagRestClient.GetByApi(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiTagResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get tag associated with the API.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}
+        /// Operation Id: Tag_GetByApi
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ApiTagResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ApiTagResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

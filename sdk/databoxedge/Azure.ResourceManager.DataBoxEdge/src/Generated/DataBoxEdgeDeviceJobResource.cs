@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeDeviceJobResource method.
     /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeDeviceJob method.
     /// </summary>
-    public partial class DataBoxEdgeDeviceJobResource : ArmResource
+    public partial class DataBoxEdgeDeviceJobResource : JobResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeDeviceJobResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         private readonly ClientDiagnostics _dataBoxEdgeDeviceJobJobsClientDiagnostics;
         private readonly JobsRestOperations _dataBoxEdgeDeviceJobJobsRestClient;
-        private readonly JobData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceJobResource"/> class for mocking. </summary>
         protected DataBoxEdgeDeviceJobResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeDeviceJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataBoxEdgeDeviceJobResource(ArmClient client, JobData data) : this(client, data.Id)
+        internal DataBoxEdgeDeviceJobResource(ArmClient client, JobData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceJobResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual JobData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/jobs/{name}
-        /// Operation Id: Jobs_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoxEdgeDeviceJobResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<JobResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoxEdgeDeviceJobJobsClientDiagnostics.CreateScope("DataBoxEdgeDeviceJobResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = await _dataBoxEdgeDeviceJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeDeviceJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Operation Id: Jobs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoxEdgeDeviceJobResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<DataBoxEdgeDeviceJobResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((DataBoxEdgeDeviceJobResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<JobResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _dataBoxEdgeDeviceJobJobsClientDiagnostics.CreateScope("DataBoxEdgeDeviceJobResource.Get");
             scope.Start();
@@ -125,13 +112,26 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = _dataBoxEdgeDeviceJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeDeviceJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/jobs/{name}
+        /// Operation Id: Jobs_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<DataBoxEdgeDeviceJobResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((DataBoxEdgeDeviceJobResource)value.Value, value.GetRawResponse());
         }
     }
 }

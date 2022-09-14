@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid
     /// from an instance of <see cref="ArmClient" /> using the GetEventGridDomainPrivateLinkResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEventGridDomainPrivateLinkResource method.
     /// </summary>
-    public partial class EventGridDomainPrivateLinkResource : ArmResource
+    public partial class EventGridDomainPrivateLinkResource : EventGridPrivateLinkResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventGridDomainPrivateLinkResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateLinkResourceName)
@@ -33,9 +33,8 @@ namespace Azure.ResourceManager.EventGrid
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
-        private readonly EventGridPrivateLinkResourceData _data;
+        private readonly ClientDiagnostics _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EventGridDomainPrivateLinkResource"/> class for mocking. </summary>
         protected EventGridDomainPrivateLinkResource()
@@ -45,10 +44,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref = "EventGridDomainPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EventGridDomainPrivateLinkResource(ArmClient client, EventGridPrivateLinkResourceData data) : this(client, data.Id)
+        internal EventGridDomainPrivateLinkResource(ArmClient client, EventGridPrivateLinkResourceData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="EventGridDomainPrivateLinkResource"/> class. </summary>
@@ -56,8 +53,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EventGridDomainPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string eventGridDomainPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainPrivateLinkResourcePrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,46 +64,24 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/privateLinkResources";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EventGridPrivateLinkResourceData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get properties of a private link resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
-        /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> is null. </exception>
-        public virtual async Task<Response<EventGridPrivateLinkResourceData>> GetAsync(string parentName, CancellationToken cancellationToken = default)
+        protected override async Task<Response<EventGridPrivateLinkResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
-
-            using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.Get");
+            using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", parentName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                var response = await _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,26 +95,45 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> is null. </exception>
-        public virtual Response<EventGridPrivateLinkResourceData> Get(string parentName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<EventGridDomainPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((EventGridDomainPrivateLinkResource)value.Value, value.GetRawResponse());
+        }
 
-            using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.Get");
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<EventGridPrivateLinkResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "domains", parentName, Id.Name, cancellationToken);
-                return response;
+                var response = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<EventGridDomainPrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((EventGridDomainPrivateLinkResource)value.Value, value.GetRawResponse());
         }
     }
 }

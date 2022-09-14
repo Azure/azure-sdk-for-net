@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// from an instance of <see cref="ArmClient" /> using the GetLabVirtualmachineScheduleResource method.
     /// Otherwise you can get one from its parent resource <see cref="LabVirtualMachineResource" /> using the GetLabVirtualmachineSchedule method.
     /// </summary>
-    public partial class LabVirtualmachineScheduleResource : ArmResource
+    public partial class LabVirtualmachineScheduleResource : BaseScheduleResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LabVirtualmachineScheduleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, string name)
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.DevTestLabs
 
         private readonly ClientDiagnostics _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics;
         private readonly VirtualMachineSchedulesRestOperations _labVirtualmachineScheduleVirtualMachineSchedulesRestClient;
-        private readonly ScheduleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="LabVirtualmachineScheduleResource"/> class for mocking. </summary>
         protected LabVirtualmachineScheduleResource()
@@ -45,10 +44,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of the <see cref = "LabVirtualmachineScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LabVirtualmachineScheduleResource(ArmClient client, ScheduleData data) : this(client, data.Id)
+        internal LabVirtualmachineScheduleResource(ArmClient client, ScheduleData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="LabVirtualmachineScheduleResource"/> class. </summary>
@@ -67,35 +64,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/virtualmachines/schedules";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ScheduleData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LabVirtualmachineScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseScheduleResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Get");
             scope.Start();
@@ -104,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualmachineScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +98,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LabVirtualmachineScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LabVirtualmachineScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(expand, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseScheduleResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Get");
             scope.Start();
@@ -129,7 +117,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualmachineScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,13 +127,23 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Delete schedule.
+        /// Get schedule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Delete
+        /// Operation Id: VirtualMachineSchedules_Get
         /// </summary>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<LabVirtualmachineScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(expand, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Delete");
             scope.Start();
@@ -164,14 +162,10 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Delete schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Delete
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Delete");
             scope.Start();
@@ -190,24 +184,18 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Allows modifying tags of schedules. All other properties will be ignored.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Update
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="schedule"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        public virtual async Task<Response<LabVirtualmachineScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseScheduleResource>> UpdateCoreAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
-
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Update");
             scope.Start();
             try
             {
                 var response = await _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, schedule, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LabVirtualmachineScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,16 +212,25 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="schedule"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        public virtual Response<LabVirtualmachineScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LabVirtualmachineScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            var value = await UpdateCoreAsync(schedule, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="schedule"> A schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
+        protected override Response<BaseScheduleResource> UpdateCore(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Update");
             scope.Start();
             try
             {
                 var response = _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, schedule, cancellationToken);
-                return Response.FromValue(new LabVirtualmachineScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,13 +240,24 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Execute a schedule. This operation can take a while to complete.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}/execute
-        /// Operation Id: VirtualMachineSchedules_Execute
+        /// Allows modifying tags of schedules. All other properties will be ignored.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
+        /// Operation Id: VirtualMachineSchedules_Update
         /// </summary>
+        /// <param name="schedule"> A schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<LabVirtualmachineScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(schedule, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> ExecuteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Execute");
             scope.Start();
@@ -268,14 +276,10 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Execute a schedule. This operation can take a while to complete.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}/execute
-        /// Operation Id: VirtualMachineSchedules_Execute
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Execute(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation ExecuteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Execute");
             scope.Start();
@@ -294,20 +298,13 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<LabVirtualmachineScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseScheduleResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.AddTag");
             scope.Start();
             try
@@ -318,7 +315,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LabVirtualmachineScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -349,11 +346,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<LabVirtualmachineScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LabVirtualmachineScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            var value0 = await AddTagCoreAsync(key, value, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value0.Value, value0.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        protected override Response<BaseScheduleResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default)
+        {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.AddTag");
             scope.Start();
             try
@@ -364,7 +370,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new LabVirtualmachineScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -387,17 +393,27 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
         /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<LabVirtualmachineScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            var value0 = AddTagCore(key, value, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value0.Value, value0.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<LabVirtualmachineScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseScheduleResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
-
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.SetTags");
             scope.Start();
             try
@@ -409,7 +425,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LabVirtualmachineScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -435,10 +451,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<LabVirtualmachineScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LabVirtualmachineScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            var value = await SetTagsCoreAsync(tags, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        protected override Response<BaseScheduleResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.SetTags");
             scope.Start();
             try
@@ -450,7 +475,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new LabVirtualmachineScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -469,17 +494,26 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
         /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<LabVirtualmachineScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            var value = SetTagsCore(tags, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<LabVirtualmachineScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseScheduleResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.RemoveTag");
             scope.Start();
             try
@@ -490,7 +524,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LabVirtualmachineScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -520,10 +554,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<LabVirtualmachineScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LabVirtualmachineScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            var value = await RemoveTagCoreAsync(key, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        protected override Response<BaseScheduleResource> RemoveTagCore(string key, CancellationToken cancellationToken = default)
+        {
             using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.RemoveTag");
             scope.Start();
             try
@@ -534,7 +577,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _labVirtualmachineScheduleVirtualMachineSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new LabVirtualmachineScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -554,6 +597,21 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
+        /// Operation Id: VirtualMachineSchedules_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<LabVirtualmachineScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            var value = RemoveTagCore(key, cancellationToken);
+            return Response.FromValue((LabVirtualmachineScheduleResource)value.Value, value.GetRawResponse());
         }
     }
 }

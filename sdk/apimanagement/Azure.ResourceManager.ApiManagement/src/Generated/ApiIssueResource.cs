@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// from an instance of <see cref="ArmClient" /> using the GetApiIssueResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiResource" /> using the GetApiIssue method.
     /// </summary>
-    public partial class ApiIssueResource : ArmResource
+    public partial class ApiIssueResource : IssueContractResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiIssueResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiIssueClientDiagnostics;
         private readonly ApiIssueRestOperations _apiIssueRestClient;
-        private readonly IssueContractData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiIssueResource"/> class for mocking. </summary>
         protected ApiIssueResource()
@@ -44,10 +43,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiIssueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiIssueResource(ArmClient client, IssueContractData data) : this(client, data.Id)
+        internal ApiIssueResource(ArmClient client, IssueContractData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApiIssueResource"/> class. </summary>
@@ -65,21 +62,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/issues";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual IssueContractData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {

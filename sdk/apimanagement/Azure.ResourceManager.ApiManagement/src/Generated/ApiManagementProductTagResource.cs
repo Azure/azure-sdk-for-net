@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// from an instance of <see cref="ArmClient" /> using the GetApiManagementProductTagResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource" /> using the GetApiManagementProductTag method.
     /// </summary>
-    public partial class ApiManagementProductTagResource : ArmResource
+    public partial class ApiManagementProductTagResource : TagContractResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementProductTagResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementProductTagTagClientDiagnostics;
         private readonly TagRestOperations _apiManagementProductTagTagRestClient;
-        private readonly TagContractData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementProductTagResource"/> class for mocking. </summary>
         protected ApiManagementProductTagResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiManagementProductTagResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementProductTagResource(ArmClient client, TagContractData data) : this(client, data.Id)
+        internal ApiManagementProductTagResource(ArmClient client, TagContractData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementProductTagResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/products/tags";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual TagContractData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get tag associated with the Product.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}
-        /// Operation Id: Tag_GetByProduct
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementProductTagResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<TagContractResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementProductTagTagClientDiagnostics.CreateScope("ApiManagementProductTagResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementProductTagTagRestClient.GetByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementProductTagResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: Tag_GetByProduct
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementProductTagResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ApiManagementProductTagResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((ApiManagementProductTagResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<TagContractResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementProductTagTagClientDiagnostics.CreateScope("ApiManagementProductTagResource.Get");
             scope.Start();
@@ -125,13 +112,26 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementProductTagTagRestClient.GetByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementProductTagResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get tag associated with the Product.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}
+        /// Operation Id: Tag_GetByProduct
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ApiManagementProductTagResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ApiManagementProductTagResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

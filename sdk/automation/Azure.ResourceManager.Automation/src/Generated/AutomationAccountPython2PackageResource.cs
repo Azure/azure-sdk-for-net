@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
     /// from an instance of <see cref="ArmClient" /> using the GetAutomationAccountPython2PackageResource method.
     /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationAccountPython2Package method.
     /// </summary>
-    public partial class AutomationAccountPython2PackageResource : ArmResource
+    public partial class AutomationAccountPython2PackageResource : ModuleResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomationAccountPython2PackageResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName)
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Automation
 
         private readonly ClientDiagnostics _automationAccountPython2PackagePython2PackageClientDiagnostics;
         private readonly Python2PackageRestOperations _automationAccountPython2PackagePython2PackageRestClient;
-        private readonly ModuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountPython2PackageResource"/> class for mocking. </summary>
         protected AutomationAccountPython2PackageResource()
@@ -45,10 +44,8 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of the <see cref = "AutomationAccountPython2PackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutomationAccountPython2PackageResource(ArmClient client, ModuleData data) : this(client, data.Id)
+        internal AutomationAccountPython2PackageResource(ArmClient client, ModuleData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountPython2PackageResource"/> class. </summary>
@@ -67,34 +64,15 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/python2Packages";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ModuleData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Retrieve the python 2 package identified by package name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
-        /// Operation Id: Python2Package_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<ModuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.Get");
             scope.Start();
@@ -103,7 +81,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _automationAccountPython2PackagePython2PackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +96,16 @@ namespace Azure.ResourceManager.Automation
         /// Operation Id: Python2Package_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutomationAccountPython2PackageResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<ModuleResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.Get");
             scope.Start();
@@ -127,7 +114,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _automationAccountPython2PackagePython2PackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,13 +124,22 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Delete the python 2 package by name.
+        /// Retrieve the python 2 package identified by package name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
-        /// Operation Id: Python2Package_Delete
+        /// Operation Id: Python2Package_Get
         /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<AutomationAccountPython2PackageResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.Delete");
             scope.Start();
@@ -162,14 +158,10 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Delete the python 2 package by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
-        /// Operation Id: Python2Package_Delete
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.Delete");
             scope.Start();
@@ -239,21 +231,13 @@ namespace Azure.ResourceManager.Automation
                 throw;
             }
         }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
-        /// Operation Id: Python2Package_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AutomationAccountPython2PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        protected override async Task<Response<ModuleResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.AddTag");
             scope.Start();
             try
@@ -264,7 +248,7 @@ namespace Azure.ResourceManager.Automation
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _automationAccountPython2PackagePython2PackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountPython2PackageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -295,11 +279,20 @@ namespace Azure.ResourceManager.Automation
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AutomationAccountPython2PackageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            var value0 = await AddTagCoreAsync(key, value, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value0.Value, value0.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        protected override Response<ModuleResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default)
+        {
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.AddTag");
             scope.Start();
             try
@@ -310,7 +303,7 @@ namespace Azure.ResourceManager.Automation
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _automationAccountPython2PackagePython2PackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountPython2PackageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -333,17 +326,27 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
         /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<AutomationAccountPython2PackageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            var value0 = AddTagCore(key, value, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value0.Value, value0.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AutomationAccountPython2PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        protected override async Task<Response<ModuleResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
-
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.SetTags");
             scope.Start();
             try
@@ -355,7 +358,7 @@ namespace Azure.ResourceManager.Automation
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _automationAccountPython2PackagePython2PackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountPython2PackageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -381,10 +384,19 @@ namespace Azure.ResourceManager.Automation
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AutomationAccountPython2PackageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            var value = await SetTagsCoreAsync(tags, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        protected override Response<ModuleResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.SetTags");
             scope.Start();
             try
@@ -396,7 +408,7 @@ namespace Azure.ResourceManager.Automation
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _automationAccountPython2PackagePython2PackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountPython2PackageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -415,17 +427,26 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
         /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<AutomationAccountPython2PackageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            var value = SetTagsCore(tags, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AutomationAccountPython2PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        protected override async Task<Response<ModuleResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.RemoveTag");
             scope.Start();
             try
@@ -436,7 +457,7 @@ namespace Azure.ResourceManager.Automation
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _automationAccountPython2PackagePython2PackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountPython2PackageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -466,10 +487,19 @@ namespace Azure.ResourceManager.Automation
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AutomationAccountPython2PackageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            var value = await RemoveTagCoreAsync(key, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        protected override Response<ModuleResource> RemoveTagCore(string key, CancellationToken cancellationToken = default)
+        {
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.RemoveTag");
             scope.Start();
             try
@@ -480,7 +510,7 @@ namespace Azure.ResourceManager.Automation
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _automationAccountPython2PackagePython2PackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountPython2PackageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -500,6 +530,21 @@ namespace Azure.ResourceManager.Automation
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
+        /// Operation Id: Python2Package_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<AutomationAccountPython2PackageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            var value = RemoveTagCore(key, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
         }
     }
 }

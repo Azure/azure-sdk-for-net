@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// from an instance of <see cref="ArmClient" /> using the GetApiManagementDiagnosticResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementDiagnostic method.
     /// </summary>
-    public partial class ApiManagementDiagnosticResource : ArmResource
+    public partial class ApiManagementDiagnosticResource : DiagnosticContractResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementDiagnosticResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string diagnosticId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementDiagnosticDiagnosticClientDiagnostics;
         private readonly DiagnosticRestOperations _apiManagementDiagnosticDiagnosticRestClient;
-        private readonly DiagnosticContractData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementDiagnosticResource"/> class for mocking. </summary>
         protected ApiManagementDiagnosticResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiManagementDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementDiagnosticResource(ArmClient client, DiagnosticContractData data) : this(client, data.Id)
+        internal ApiManagementDiagnosticResource(ArmClient client, DiagnosticContractData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementDiagnosticResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/diagnostics";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DiagnosticContractData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Gets the details of the Diagnostic specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}
-        /// Operation Id: Diagnostic_Get
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<DiagnosticContractResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementDiagnosticDiagnosticRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: Diagnostic_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ApiManagementDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken);
+            return Response.FromValue((ApiManagementDiagnosticResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<DiagnosticContractResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Get");
             scope.Start();
@@ -125,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementDiagnosticDiagnosticRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +122,23 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Deletes the specified Diagnostic.
+        /// Gets the details of the Diagnostic specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}
-        /// Operation Id: Diagnostic_Delete
+        /// Operation Id: Diagnostic_Get
         /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ApiManagementDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ApiManagementDiagnosticResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Delete");
             scope.Start();
@@ -161,15 +157,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary>
-        /// Deletes the specified Diagnostic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}
-        /// Operation Id: Diagnostic_Delete
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Delete");
             scope.Start();
@@ -188,25 +180,19 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary>
-        /// Updates the details of the Diagnostic specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}
-        /// Operation Id: Diagnostic_Update
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Diagnostic Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementDiagnosticResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        protected override async Task<Response<DiagnosticContractResource>> UpdateCoreAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Update");
             scope.Start();
             try
             {
                 var response = await _apiManagementDiagnosticDiagnosticRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,16 +210,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Diagnostic Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ApiManagementDiagnosticResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ApiManagementDiagnosticResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            var value = await UpdateCoreAsync(ifMatch, data, cancellationToken);
+            return Response.FromValue((ApiManagementDiagnosticResource)value.Value, value.GetRawResponse());
+        }
 
+        /// <summary> placeholder. </summary>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="data"> Diagnostic Update parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override Response<DiagnosticContractResource> UpdateCore(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        {
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.Update");
             scope.Start();
             try
             {
                 var response = _apiManagementDiagnosticDiagnosticRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data, cancellationToken);
-                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,12 +239,24 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the entity state (Etag) version of the Diagnostic specified by its identifier.
+        /// Updates the details of the Diagnostic specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}
-        /// Operation Id: Diagnostic_GetEntityTag
+        /// Operation Id: Diagnostic_Update
         /// </summary>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="data"> Diagnostic Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<ApiManagementDiagnosticResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(ifMatch, data, cancellationToken);
+            return Response.FromValue((ApiManagementDiagnosticResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> placeholder. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override async Task<Response<bool>> GetEntityTagCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.GetEntityTag");
             scope.Start();
@@ -264,13 +272,9 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary>
-        /// Gets the entity state (Etag) version of the Diagnostic specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}
-        /// Operation Id: Diagnostic_GetEntityTag
-        /// </summary>
+        /// <summary> placeholder. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
+        protected override Response<bool> GetEntityTagCore(CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticResource.GetEntityTag");
             scope.Start();
