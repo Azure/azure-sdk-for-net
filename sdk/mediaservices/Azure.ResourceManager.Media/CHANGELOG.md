@@ -14,10 +14,6 @@
 - Renamed `MediaPreset` to `MediaTransformPreset`.
 - Removed all get LRO operation status / result methods which is nativly supported by the LRO object ArmOperation.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2022-08-29)
 
 ### Breaking Changes
