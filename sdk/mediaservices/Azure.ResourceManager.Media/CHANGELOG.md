@@ -4,15 +4,15 @@
 
 ### Features Added
 
-- Upgrade to `package-metadata-2022-08`
+- Upgraded the API version to `2022-08-01`
 
 ### Breaking Changes
 
 - Renamed `TransformOutputsPriority` to `MediaTransformOutputsPriority`.
-- Renamed `ContentKeyPolicyPreference` to `ContentKeyPolicyOption:`.
-- Renamed `GetContainerSasContent` to `GetStorageContainersContent:`.
-- Renamed `MediaPreset` to `MediaTransformPreset:`.
-- Remove all get LRO operation status / result methods which is nativly supported by the LRO object ArmOperation.
+- Renamed `ContentKeyPolicyPreference` to `ContentKeyPolicyOption`.
+- Renamed `GetContainerSasContent` to `GetStorageContainersContent`.
+- Renamed `MediaPreset` to `MediaTransformPreset`.
+- Removed all get LRO operation status / result methods which is nativly supported by the LRO object ArmOperation.
 
 ### Bugs Fixed
 
