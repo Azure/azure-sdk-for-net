@@ -252,8 +252,7 @@ namespace Azure.Core.TestFramework
                 GetSessionFileDirectory(),
                 fileName);
 
-            var actualResult = Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
-            return result;
+            return Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
         }
 
         private class DirectoryEvaluation
