@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Media.Tests
 
         public LiveEventTests(bool isAsync) : base(isAsync)
         {
-            JsonPathSanitizers.Add("$..accessToken");
         }
 
         [SetUp]
