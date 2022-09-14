@@ -1,6 +1,14 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2022-09-14)
+
+### Breaking Changes
+
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.BotService` to `Azure.ResourceManager.BotService`.
 
 ### General New Features
 
