@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckAtSubscriptionScopeRequest(string subscriptionId, CheckRestrictionsRequest checkRestrictionsRequest)
+        internal HttpMessage CreateCheckAtSubscriptionScopeRequest(string subscriptionId, CheckPolicyRestrictionsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,33 +51,33 @@ namespace Azure.ResourceManager.PolicyInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkRestrictionsRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks what restrictions Azure Policy will place on a resource within a subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="checkRestrictionsRequest"> The check policy restrictions parameters. </param>
+        /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkRestrictionsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckRestrictionsResult>> CheckAtSubscriptionScopeAsync(string subscriptionId, CheckRestrictionsRequest checkRestrictionsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckPolicyRestrictionsResult>> CheckAtSubscriptionScopeAsync(string subscriptionId, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkRestrictionsRequest, nameof(checkRestrictionsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAtSubscriptionScopeRequest(subscriptionId, checkRestrictionsRequest);
+            using var message = CreateCheckAtSubscriptionScopeRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckRestrictionsResult value = default;
+                        CheckPolicyRestrictionsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckRestrictionsResult.DeserializeCheckRestrictionsResult(document.RootElement);
+                        value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Checks what restrictions Azure Policy will place on a resource within a subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="checkRestrictionsRequest"> The check policy restrictions parameters. </param>
+        /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkRestrictionsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckRestrictionsResult> CheckAtSubscriptionScope(string subscriptionId, CheckRestrictionsRequest checkRestrictionsRequest, CancellationToken cancellationToken = default)
+        public Response<CheckPolicyRestrictionsResult> CheckAtSubscriptionScope(string subscriptionId, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkRestrictionsRequest, nameof(checkRestrictionsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAtSubscriptionScopeRequest(subscriptionId, checkRestrictionsRequest);
+            using var message = CreateCheckAtSubscriptionScopeRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckRestrictionsResult value = default;
+                        CheckPolicyRestrictionsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckRestrictionsResult.DeserializeCheckRestrictionsResult(document.RootElement);
+                        value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateCheckAtResourceGroupScopeRequest(string subscriptionId, string resourceGroupName, CheckRestrictionsRequest checkRestrictionsRequest)
+        internal HttpMessage CreateCheckAtResourceGroupScopeRequest(string subscriptionId, string resourceGroupName, CheckPolicyRestrictionsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.PolicyInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkRestrictionsRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -138,25 +138,25 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Checks what restrictions Azure Policy will place on a resource within a resource group. Use this when the resource group the resource will be created in is already known. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="checkRestrictionsRequest"> The check policy restrictions parameters. </param>
+        /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="checkRestrictionsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckRestrictionsResult>> CheckAtResourceGroupScopeAsync(string subscriptionId, string resourceGroupName, CheckRestrictionsRequest checkRestrictionsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckPolicyRestrictionsResult>> CheckAtResourceGroupScopeAsync(string subscriptionId, string resourceGroupName, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(checkRestrictionsRequest, nameof(checkRestrictionsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAtResourceGroupScopeRequest(subscriptionId, resourceGroupName, checkRestrictionsRequest);
+            using var message = CreateCheckAtResourceGroupScopeRequest(subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckRestrictionsResult value = default;
+                        CheckPolicyRestrictionsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckRestrictionsResult.DeserializeCheckRestrictionsResult(document.RootElement);
+                        value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,25 +167,25 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Checks what restrictions Azure Policy will place on a resource within a resource group. Use this when the resource group the resource will be created in is already known. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="checkRestrictionsRequest"> The check policy restrictions parameters. </param>
+        /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="checkRestrictionsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckRestrictionsResult> CheckAtResourceGroupScope(string subscriptionId, string resourceGroupName, CheckRestrictionsRequest checkRestrictionsRequest, CancellationToken cancellationToken = default)
+        public Response<CheckPolicyRestrictionsResult> CheckAtResourceGroupScope(string subscriptionId, string resourceGroupName, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(checkRestrictionsRequest, nameof(checkRestrictionsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckAtResourceGroupScopeRequest(subscriptionId, resourceGroupName, checkRestrictionsRequest);
+            using var message = CreateCheckAtResourceGroupScopeRequest(subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckRestrictionsResult value = default;
+                        CheckPolicyRestrictionsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckRestrictionsResult.DeserializeCheckRestrictionsResult(document.RootElement);
+                        value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateCheckAtManagementGroupScopeRequest(string managementGroupId, CheckManagementGroupRestrictionsContent content)
+        internal HttpMessage CreateCheckAtManagementGroupScopeRequest(string managementGroupId, CheckManagementGroupPolicyRestrictionsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckRestrictionsResult>> CheckAtManagementGroupScopeAsync(string managementGroupId, CheckManagementGroupRestrictionsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckPolicyRestrictionsResult>> CheckAtManagementGroupScopeAsync(string managementGroupId, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNull(content, nameof(content));
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        CheckRestrictionsResult value = default;
+                        CheckPolicyRestrictionsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckRestrictionsResult.DeserializeCheckRestrictionsResult(document.RootElement);
+                        value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckRestrictionsResult> CheckAtManagementGroupScope(string managementGroupId, CheckManagementGroupRestrictionsContent content, CancellationToken cancellationToken = default)
+        public Response<CheckPolicyRestrictionsResult> CheckAtManagementGroupScope(string managementGroupId, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNull(content, nameof(content));
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        CheckRestrictionsResult value = default;
+                        CheckPolicyRestrictionsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckRestrictionsResult.DeserializeCheckRestrictionsResult(document.RootElement);
+                        value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

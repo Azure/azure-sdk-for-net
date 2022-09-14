@@ -13,7 +13,7 @@ namespace Azure.Identity.Tests.Mock
 
         public Action<Mock<EnvironmentCredential>> OnCreateEnvironmentCredential { get; set; }
         private Mock<EnvironmentCredential> mockEnvironmentCredential = new();
-        public Action<Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
+        public Action<TimeSpan?, Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
         private Mock<AzureCliCredential> mockAzureCliCredential = new();
         public Action<DefaultAzureCredentialOptions, Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
@@ -21,11 +21,11 @@ namespace Azure.Identity.Tests.Mock
         private Mock<SharedTokenCacheCredential> mockSharedTokenCacheCredential = new();
         public Action<string, string, Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
         private Mock<InteractiveBrowserCredential> mockInteractiveBrowserCredential = new();
-        public Action<string, Mock<VisualStudioCredential>> OnCreateVisualStudioCredential { get; set; }
+        public Action<string, TimeSpan?, Mock<VisualStudioCredential>> OnCreateVisualStudioCredential { get; set; }
         private Mock<VisualStudioCredential> mockVisualStudioCredential = new();
         public Action<string, Mock<VisualStudioCodeCredential>> OnCreateVisualStudioCodeCredential { get; set; }
         private Mock<VisualStudioCodeCredential> mockVisualStudioCodeCredential = new();
-        public Action<Mock<AzurePowerShellCredential>> OnCreateAzurePowerShellCredential { get; set; }
+        public Action<TimeSpan?, Mock<AzurePowerShellCredential>> OnCreateAzurePowerShellCredential { get; set; }
         private Mock<AzurePowerShellCredential> mockAzurePowershellCredential = new();
 
         public override TokenCredential CreateEnvironmentCredential()
@@ -46,15 +46,15 @@ namespace Azure.Identity.Tests.Mock
             return mockSharedTokenCacheCredential.Object;
         }
 
-        public override TokenCredential CreateAzureCliCredential()
+        public override TokenCredential CreateAzureCliCredential(TimeSpan? cliProcessTimeout)
         {
-            OnCreateAzureCliCredential?.Invoke(mockAzureCliCredential);
+            OnCreateAzureCliCredential?.Invoke(cliProcessTimeout, mockAzureCliCredential);
             return mockAzureCliCredential.Object;
         }
 
-        public override TokenCredential CreateAzurePowerShellCredential()
+        public override TokenCredential CreateAzurePowerShellCredential(TimeSpan? powershellProcesTimeout)
         {
-            OnCreateAzurePowerShellCredential?.Invoke(mockAzurePowershellCredential);
+            OnCreateAzurePowerShellCredential?.Invoke(powershellProcesTimeout, mockAzurePowershellCredential);
             return mockAzurePowershellCredential.Object;
         }
 
@@ -64,9 +64,9 @@ namespace Azure.Identity.Tests.Mock
             return mockInteractiveBrowserCredential.Object;
         }
 
-        public override TokenCredential CreateVisualStudioCredential(string tenantId)
+        public override TokenCredential CreateVisualStudioCredential(string tenantId, TimeSpan? visualStudioProcessTimeout)
         {
-            OnCreateVisualStudioCredential?.Invoke(tenantId, mockVisualStudioCredential);
+            OnCreateVisualStudioCredential?.Invoke(tenantId, visualStudioProcessTimeout, mockVisualStudioCredential);
             return mockVisualStudioCredential.Object;
         }
 

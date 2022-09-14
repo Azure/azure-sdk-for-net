@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class IoTEdgeAgentInfo : IUtf8JsonSerializable
+    public partial class IotEdgeAgentInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteEndObject();
         }
 
-        internal static IoTEdgeAgentInfo DeserializeIoTEdgeAgentInfo(JsonElement element)
+        internal static IotEdgeAgentInfo DeserializeIotEdgeAgentInfo(JsonElement element)
         {
             string imageName = default;
             string tag = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new IoTEdgeAgentInfo(imageName, tag, imageRepository.Value);
+            return new IotEdgeAgentInfo(imageName, tag, imageRepository.Value);
         }
     }
 }

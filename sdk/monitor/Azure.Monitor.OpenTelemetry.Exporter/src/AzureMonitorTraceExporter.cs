@@ -7,12 +7,12 @@ using System.Threading;
 
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class AzureMonitorTraceExporter : BaseExporter<Activity>
+    internal class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;

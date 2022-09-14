@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Identity
 {
     /// <summary>
@@ -12,5 +14,10 @@ namespace Azure.Identity
         /// The Azure Active Directory tenant (directory) Id of the service principal
         /// </summary>
         public string TenantId { get; set; }
+
+        /// <summary>
+        /// The Powershell process timeout.
+        /// </summary>
+        public TimeSpan? PowerShellProcessTimeout { get; set; } = TimeSpan.FromSeconds(10);
     }
 }

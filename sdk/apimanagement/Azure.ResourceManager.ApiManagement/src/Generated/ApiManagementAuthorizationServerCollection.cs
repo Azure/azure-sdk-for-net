@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementAuthorizationServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementAuthorizationServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
             Argument.AssertNotNull(data, nameof(data));
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementAuthorizationServerResource> CreateOrUpdate(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementAuthorizationServerResource> CreateOrUpdate(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
             Argument.AssertNotNull(data, nameof(data));

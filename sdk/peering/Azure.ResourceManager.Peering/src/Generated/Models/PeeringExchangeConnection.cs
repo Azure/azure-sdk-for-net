@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define an exchange connection. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="bgpSession"> The BGP session associated with the connection. </param>
         /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
         /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
-        internal PeeringExchangeConnection(int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, string connectionIdentifier, string errorMessage)
+        internal PeeringExchangeConnection(int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, Guid? connectionIdentifier, string errorMessage)
         {
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> The BGP session associated with the connection. </summary>
         public PeeringBgpSession BgpSession { get; set; }
         /// <summary> The unique identifier (GUID) for the connection. </summary>
-        public string ConnectionIdentifier { get; set; }
+        public Guid? ConnectionIdentifier { get; set; }
         /// <summary> The error message related to the connection state, if any. </summary>
         public string ErrorMessage { get; }
     }

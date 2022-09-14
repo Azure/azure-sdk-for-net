@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,25 +16,35 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element)
         {
-            Optional<string> mountTargetId = default;
-            string fileSystemId = default;
-            Optional<string> ipAddress = default;
+            Optional<Guid> mountTargetId = default;
+            Guid fileSystemId = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<string> smbServerFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mountTargetId"))
                 {
-                    mountTargetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    mountTargetId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("fileSystemId"))
                 {
-                    fileSystemId = property.Value.GetString();
+                    fileSystemId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("ipAddress"))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("smbServerFqdn"))
@@ -41,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeMountTarget(mountTargetId.Value, fileSystemId, ipAddress.Value, smbServerFqdn.Value);
+            return new NetAppVolumeMountTarget(Optional.ToNullable(mountTargetId), fileSystemId, ipAddress.Value, smbServerFqdn.Value);
         }
     }
 }

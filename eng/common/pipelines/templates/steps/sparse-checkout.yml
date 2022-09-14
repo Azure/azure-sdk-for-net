@@ -8,13 +8,17 @@ parameters:
       - Name: $(Build.Repository.Name)
         Commitish: $(Build.SourceVersion)
         WorkingDirectory: $(System.DefaultWorkingDirectory)
+  # NOTE: SkipDefaultCheckout is being deprecated in favor of SkipCheckoutNone
   - name: SkipDefaultCheckout
+    type: boolean
+    default: false
+  - name: SkipCheckoutNone
     type: boolean
     default: false
 
 steps:
-  - ${{ if not(parameters.SkipDefaultCheckout) }}:
-    - checkout: none
+  - ${{ if and(not(parameters.SkipDefaultCheckout), not(parameters.SkipCheckoutNone)) }}:
+      - checkout: none
 
   - task: PowerShell@2
     displayName: 'Sparse checkout repositories'

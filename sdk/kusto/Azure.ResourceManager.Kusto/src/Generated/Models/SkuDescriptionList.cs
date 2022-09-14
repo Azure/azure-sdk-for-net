@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of SkuDescriptionList. </summary>
         internal SkuDescriptionList()
         {
-            Value = new ChangeTrackingList<SkuDescription>();
+            Value = new ChangeTrackingList<KustoSkuDescription>();
         }
 
         /// <summary> Initializes a new instance of SkuDescriptionList. </summary>
         /// <param name="value"> SKU descriptions. </param>
-        internal SkuDescriptionList(IReadOnlyList<SkuDescription> value)
+        internal SkuDescriptionList(IReadOnlyList<KustoSkuDescription> value)
         {
             Value = value;
         }
 
         /// <summary> SKU descriptions. </summary>
-        public IReadOnlyList<SkuDescription> Value { get; }
+        public IReadOnlyList<KustoSkuDescription> Value { get; }
     }
 }
