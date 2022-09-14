@@ -10,6 +10,8 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Extensions.AzureMonitor;
+using System.Threading.Tasks;
+using System;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 {
@@ -45,6 +47,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                 activity?.SetTag("foo", 1);
                 activity?.SetTag("baz", new int[] { 1, 2, 3 });
                 activity?.SetStatus(ActivityStatusCode.Ok);
+                Task.Delay(2000).Wait();
+                activity.RecordException(new Exception("test message"));
 
                 using (var nestedActivity = source.StartActivity("SayHelloAgain"))
                 {
