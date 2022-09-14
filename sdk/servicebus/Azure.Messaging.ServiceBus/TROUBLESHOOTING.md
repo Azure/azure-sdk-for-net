@@ -37,7 +37,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Quotas](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quotas)
 
 ## Handle Service Bus Exceptions
-The Service Bus client library will surface exceptions when en error is encountered by a service operation or within the client. When possible, standard .NET exception types are used to convey error information. For scenarios specific to Service Bus, a [ServiceBusException][ServiceBusException] is thrown; this is the most common exception type that applications will encounter.
+The Service Bus client library will surface exceptions when an error is encountered by a service operation or within the client. When possible, standard .NET exception types are used to convey error information. For scenarios specific to Service Bus, a [ServiceBusException][ServiceBusException] is thrown; this is the most common exception type that applications will encounter.
 
 The Service Bus clients will automatically retry exceptions that are considered transient, following the configured [retry options][ServiceBusRetryOptions]. When an exception is surfaced to the application, either all retries were applied unsuccessfully, or the exception was considered non-transient. More information on configuring retry options can be found in the [Customizing the retry options][RetryOptionsSample] sample.
 
@@ -62,11 +62,11 @@ The exception includes some contextual information to assist in understanding th
 
   - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time. This may have been caused by a transient network issue or service problem. The Service Bus service may or may not have successfully completed the request; the status is not known. In the case of accepting the next available session, this exception indicates that there were no unlocked sessions available in the entity.
 
-  - **Quota Exceeded** : This typically indicates that there are too many active receiver operations for a single entity. In order to avoid this error, reduce the number of potential concurrent receives. You can use batch receives to attempt to receive multiple messages per receive request. Please see [Service Bus quotas][ServiceBusQuotas] for more information.
+  - **Quota Exceeded** : This typically indicates that there are too many active receive operations for a single entity. In order to avoid this error, reduce the number of potential concurrent receives. You can use batch receives to attempt to receive multiple messages per receive request. Please see [Service Bus quotas][ServiceBusQuotas] for more information.
 
   - **Message Size Exceeded** : This indicates that the max message size has been exceeded. For standard tier namespaces, a single message may not exceed 256KB. For premium tier namespaces, the max message size is 100MB. This includes the body of the message, as well as any associated metadata and system overhead. The best approach for resolving this error is to reduce the number of messages being sent in a batch or the size of the body included in the message. Because size limits are subject to change, please refer to [Service Bus quotas][ServiceBusQuotas] for specifics.  
   
-  - **MessageLockLost** : This indicates that the lock on the message is lost. Callers should call attempt to receive and process the message again. This only applies to non-session entities. This error occurs if processing takes longer than the lock duration and the message lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
+  - **MessageLockLost** : This indicates that the lock on the message is lost. Callers should attempt to receive and process the message again. This only applies to non-session entities. This error occurs if processing takes longer than the lock duration and the message lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
   
   - **SessionLockLost**: This indicates that the lock on the session has expired. Callers should attempt to accept the session again. This only applies to session-enabled entities. This error occurs if processing takes longer than the lock duration and the session lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
 
@@ -152,7 +152,7 @@ For more information, see: [Logging with the Azure SDK for .NET][Logging].
 
 ### Distributed tracing
 
-The Service Bus client library supports distributed tracing though integration with the Application Insights SDK. It also supports **experimental** support for the the OpenTelemetry specification via the .NET [ActivitySource][ActivitySource] type introduced in .NET 5. In order to enable `ActivitySource` support for use with OpenTelemetry, see [ActivitySource support][ActivitySourceSupport].
+The Service Bus client library supports distributed tracing though integration with the Application Insights SDK. It also has **experimental** support for the the OpenTelemetry specification via the .NET [ActivitySource][ActivitySource] type introduced in .NET 5. In order to enable `ActivitySource` support for use with OpenTelemetry, see [ActivitySource support][ActivitySourceSupport].
 
 In order to use the GA DiagnosticActivity support, you can integrate with the Application Insights SDK. More details can be found in [ApplicationInsights with Azure Monitor][AppInsights].
 
@@ -179,7 +179,7 @@ The library creates the following spans:
 `ServiceBusRuleManager.DeleteRule`  
 `ServiceBusRuleManager.GetRules`  
 
-Most of the spans are self-explanatory and are started and stopped during the operation that bears its name. The span that ties the others together is `Message`. The way that the message is traced is via the the `Diagnostic-Id` that is set in the [ServiceBusMessage.ApplicationProperties][ApplicationProperties] property by the library during send and schedule operations. In Application Insights, `Message` spans will be displayed as linking out to the various other spans that were used to interact with the message, e.g. the receive span, the send span, and the complete span would all be linked from the `Message` span. Here is an example of what this looks like in Application Insights:
+Most of the spans are self-explanatory and are started and stopped during the operation that bears its name. The span that ties the others together is `Message`. The way that the message is traced is via the the `Diagnostic-Id` that is set in the [ServiceBusMessage.ApplicationProperties][ApplicationProperties] property by the library during send and schedule operations. In Application Insights, `Message` spans will be displayed as linking out to the various other spans that were used to interact with the message, e.g. the `ServiceBusReceiver.Receive` span, the `ServiceBusSender.Send` span, and the `ServiceBusReceiver.Complete` span would all be linked from the `Message` span. Here is an example of what this looks like in Application Insights:
 
 ![image](assets/Tracing.png)
 
@@ -193,13 +193,13 @@ When sending to a partition-enabled entity, all messages included in a single se
 
 ### Batch fails to send
 
-We define a message batch as either [ServiceBusMessageBatch][ServiceBusMessageBatch] containing 2 or more messages, or a call to [SendMessagesAsync][SendMessages] where 2 or more messages are passed in. The service does not allow a message batch to exceed 1MB. This is true whether or not the [Premium large message support][LargeMessageSupport] feature is enabled. If you intend to send a message greater than 1MB, it must be sent individually rather than grouped with other messages. Unfortunately, the [ServiceBusMessageBatch][ServiceBusMessageBatch] type does not currently support validating that a batch does not contain any messages greater than 1MB as we try to avoid hardcoding things in the client. So if you intend to use the premium large message support feature, you will need to ensure you send the messages that over 1MB individually. See this [GitHub discussion][GitHubDiscussionOnBatching] for more info.
+We define a message batch as either [ServiceBusMessageBatch][ServiceBusMessageBatch] containing 2 or more messages, or a call to [SendMessagesAsync][SendMessages] where 2 or more messages are passed in. The service does not allow a message batch to exceed 1MB. This is true whether or not the [Premium large message support][LargeMessageSupport] feature is enabled. If you intend to send a message greater than 1MB, it must be sent individually rather than grouped with other messages. Unfortunately, the [ServiceBusMessageBatch][ServiceBusMessageBatch] type does not currently support validating that a batch does not contain any messages greater than 1MB as we try to avoid hardcoding things in the client. So if you intend to use the premium large message support feature, you will need to ensure you send messages over 1MB individually. See this [GitHub discussion][GitHubDiscussionOnBatching] for more info.
 
 ## Troubleshoot receiver issues
 
 ### Number of messages returned does not match number requested in batch receive
 
-When attempting to do a batch receive, i.e. passing a `maxMessages` value of 2 or greater to the [ReceiveMessagesAsync][ReceiveMessages] method, you are not guaranteed to receive the number of messages requested, even if the queue or subscription has that many messages available at that time, and even if the entire configured `maxWaitTime` has not yet elapsed. To maximize throughput and avoid lock expiration, once the first message comes over the wire, the receiver will wait an additional 20ms for any additional messages before dispatching the messages for processing.  The `maxWaitTime` applies to how long the receiver will wait to receive the *first* message - subsequent messages will be waited for 20ms. Therefore, your application should not assume that all messages available will be received in one call.
+When attempting to do a batch receive, i.e. passing a `maxMessages` value of 2 or greater to the [ReceiveMessagesAsync][ReceiveMessages] method, you are not guaranteed to receive the number of messages requested, even if the queue or subscription has that many messages available at that time, and even if the entire configured `maxWaitTime` has not yet elapsed. To maximize throughput and avoid lock expiration, once the first message comes over the wire, the receiver will wait an additional 20ms for any additional messages before dispatching the messages for processing.  The `maxWaitTime` controls how long the receiver will wait to receive the *first* message - subsequent messages will be waited for 20ms. Therefore, your application should not assume that all messages available will be received in one call.
 
 ### Message or session lock is lost before lock expiration time
 
