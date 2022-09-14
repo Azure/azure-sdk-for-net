@@ -132,15 +132,15 @@ namespace Azure.Communication.Identity
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="tokenExpiresAfter">Custom validity period of the token within [1,24] hours range.</param>
+        /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresAfter, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
                 return RestClient.Create(scopes, expiresAfter, cancellationToken);
             }
@@ -161,15 +161,15 @@ namespace Azure.Communication.Identity
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="tokenExpiresAfter">Custom validity period of the token within [1,24] hours range.</param>
+        /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresAfter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
                 return await RestClient.CreateAsync(scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
             }
@@ -228,16 +228,16 @@ namespace Azure.Communication.Identity
         /// <summary>Gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.</param>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="tokenExpiresAfter">Custom validity period of the token within [1,24] hours range.</param>
+        /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<AccessToken> GetToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresAfter, CancellationToken cancellationToken = default)
+        public virtual Response<AccessToken> GetToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetToken)}");
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
                 Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresAfter, cancellationToken);
 
@@ -263,15 +263,15 @@ namespace Azure.Communication.Identity
         /// <summary>Asynchronously gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.</param>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="tokenExpiresAfter">Custom validity period of the token within [1,24] hours range.</param>
+        /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<AccessToken>> GetTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresAfter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessToken>> GetTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetToken)}");
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresAfter, nameof(tokenExpiresAfter));
+                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
                 Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
 
@@ -369,11 +369,11 @@ namespace Azure.Communication.Identity
             }
         }
 
-        private static int? GetTokenExpirationInMinutes(TimeSpan tokenExpiresAfter, string paramName)
+        private static int? GetTokenExpirationInMinutes(TimeSpan tokenExpiresIn, string paramName)
         {
             try
             {
-                return tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                return tokenExpiresIn == default ? null : Convert.ToInt32(tokenExpiresIn.TotalMinutes);
             }
             catch (OverflowException ex)
             {
