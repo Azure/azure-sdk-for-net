@@ -69,7 +69,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var transmitter = new MockTransmitter();
 
-            // Additional test processor is used with MockTransmitter to validate TelemetryItems.
             var testProcessor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
@@ -86,6 +85,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotEmpty(transmitter.TelemetryItems);
             Assert.Equal(100F, transmitter.TelemetryItems.FirstOrDefault().SampleRate);
+        }
+
+        [Fact]
+        public void NoTelemetryCreatedOnZeroSampleRate()
+        {
+            var transmitter = new MockTransmitter();
+
+            var testProcessor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
+            using var activitySource = new ActivitySource(ActivitySourceName);
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(ActivitySourceName)
+                .SetSampler(new ApplicationInsightsSampler(0.0F))
+                .AddProcessor(testProcessor)
+                .Build();
+
+            using (var activity = activitySource.StartActivity("SayHello"))
+            {
+            }
+
+            tracerProvider.ForceFlush();
+
+            Assert.Empty(transmitter.TelemetryItems);
         }
     }
 }
