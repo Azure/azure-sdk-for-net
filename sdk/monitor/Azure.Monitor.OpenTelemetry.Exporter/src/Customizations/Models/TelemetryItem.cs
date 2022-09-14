@@ -48,6 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                         this("Exception", FormatUtcTimestamp(activityEventTimeStamp.DateTime))
         {
             Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
+            Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
 
             // todo: update swagger to include this key.
             Tags["ai.user.userAgent"] = telemetryItem.Tags["ai.user.userAgent"];
@@ -63,6 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            InstrumentationKey = telemetryItem.InstrumentationKey;
         }
 
         public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :
