@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
         /// </param>
         /// <param name="restrictionTokenType"> The type of token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="issuer"/>, <paramref name="audience"/> or <paramref name="primaryVerificationKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="issuer"/> or <paramref name="audience"/> is null. </exception>
         public ContentKeyPolicyTokenRestriction(string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, ContentKeyPolicyRestrictionTokenType restrictionTokenType)
         {
             if (issuer == null)
@@ -33,10 +33,6 @@ namespace Azure.ResourceManager.Media.Models
             if (audience == null)
             {
                 throw new ArgumentNullException(nameof(audience));
-            }
-            if (primaryVerificationKey == null)
-            {
-                throw new ArgumentNullException(nameof(primaryVerificationKey));
             }
 
             Issuer = issuer;
