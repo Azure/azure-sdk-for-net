@@ -11,7 +11,7 @@ namespace Azure.Identity
     public class AzureCliCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
-        /// The tenant ID the credential will authenticate to by default. If not specified the credential will authenticate to any requested tenant, and will default to the tenant specified to the 'az login' command.
+        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant provided to the 'az login' command.
         /// </summary>
         public string TenantId { get; set; }
 
