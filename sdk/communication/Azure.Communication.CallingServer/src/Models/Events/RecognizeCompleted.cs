@@ -2,24 +2,39 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Communication.CallingServer.Converters;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The play completed event.
+    /// The recognize completed event.
     /// </summary>
-    [CodeGenModel("RecognizeCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class RecognizeCompleted : CallAutomationEventBase
+    public class RecognizeCompleted : CallAutomationEventBase
     {
+        /// <summary> Initializes a new instance of RecognizeCompleted event.</summary>
+        /// <param name="internalEvent"> Internal Representation of the RecognizeCompleted event. </param>
+        internal RecognizeCompleted(RecognizeCompletedInternal internalEvent)
+        {
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+            RecognitionType = internalEvent.RecognitionType;
+            CollectTonesResult = internalEvent.CollectTonesResult;
+        }
+
+        /// <summary> Operation context. </summary>
+        public override string OperationContext { get; internal set; }
+        /// <summary> Gets the result info. </summary>
+        public override ResultInformation ResultInformation { get; internal set; }
+        /// <summary>
+        /// Defines the result for RecognitionType = Dtmf
+        /// </summary>
+        public CollectTonesResult CollectTonesResult { get; internal set; }
         /// <summary>
         /// The recognition type.
         /// </summary>
-        [CodeGenMember("RecognitionType")]
-        [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
-        public CallMediaRecognitionType RecognitionType { get; set; }
+        public CallMediaRecognitionType RecognitionType { get; internal set; }
 
         /// <summary>
         /// Deserialize <see cref="RecognizeCompleted"/> event.
@@ -31,7 +46,8 @@ namespace Azure.Communication.CallingServer
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeRecognizeCompleted(element);
+            var internalEvent = RecognizeCompletedInternal.DeserializeRecognizeCompletedInternal(element);
+            return new RecognizeCompleted(internalEvent);
         }
     }
 }

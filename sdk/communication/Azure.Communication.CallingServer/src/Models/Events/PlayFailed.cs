@@ -9,9 +9,24 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The Play Failed event.
     /// </summary>
-    [CodeGenModel("PlayFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class PlayFailed : CallAutomationEventBase
+    public class PlayFailed : CallAutomationEventBase
     {
+        /// <summary> Initializes a new instance of PlayFailed.</summary>
+        /// <param name="internalEvent"> Internal Representation of the PlayFailed event. </param>
+        internal PlayFailed(PlayFailedInternal internalEvent)
+        {
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+        }
+
+        /// <summary> Operation context. </summary>
+        public override string OperationContext { get; internal set; }
+        /// <summary> Gets the result info. </summary>
+        public override ResultInformation ResultInformation { get; internal set; }
+
         /// <summary>
         /// Deserialize <see cref="PlayFailed"/> event.
         /// </summary>
@@ -22,7 +37,8 @@ namespace Azure.Communication.CallingServer
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializePlayFailed(element);
+            var internalEvent = PlayFailedInternal.DeserializePlayFailedInternal(element);
+            return new PlayFailed(internalEvent);
         }
     }
 }

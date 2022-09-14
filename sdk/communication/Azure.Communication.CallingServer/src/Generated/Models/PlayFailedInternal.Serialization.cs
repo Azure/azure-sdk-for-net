@@ -5,23 +5,19 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallRecordingStateChanged
+    internal partial class PlayFailedInternal
     {
-        internal static CallRecordingStateChanged DeserializeCallRecordingStateChanged(JsonElement element)
+        internal static PlayFailedInternal DeserializePlayFailedInternal(JsonElement element)
         {
             Optional<string> eventSource = default;
-            Optional<string> recordingId = default;
-            Optional<RecordingState> state = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<string> version = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
+            Optional<string> version = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
@@ -31,36 +27,6 @@ namespace Azure.Communication.CallingServer
                 if (property.NameEquals("eventSource"))
                 {
                     eventSource = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("recordingId"))
-                {
-                    recordingId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("state"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    state = new RecordingState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("startDateTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    startDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -76,6 +42,11 @@ namespace Azure.Communication.CallingServer
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("version"))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"))
@@ -99,7 +70,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallRecordingStateChanged(eventSource.Value, recordingId.Value, state, Optional.ToNullable(startDateTime), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new PlayFailedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

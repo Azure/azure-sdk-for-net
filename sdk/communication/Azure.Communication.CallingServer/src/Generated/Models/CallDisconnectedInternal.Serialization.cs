@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallTransferAccepted
+    internal partial class CallDisconnectedInternal
     {
-        internal static CallTransferAccepted DeserializeCallTransferAccepted(JsonElement element)
+        internal static CallDisconnectedInternal DeserializeCallDisconnectedInternal(JsonElement element)
         {
             Optional<string> eventSource = default;
+            Optional<string> version = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<string> version = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
@@ -27,6 +27,11 @@ namespace Azure.Communication.CallingServer
                 if (property.NameEquals("eventSource"))
                 {
                     eventSource = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -42,11 +47,6 @@ namespace Azure.Communication.CallingServer
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"))
@@ -70,7 +70,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallTransferAccepted(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallDisconnectedInternal(eventSource.Value, version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

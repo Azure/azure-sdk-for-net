@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -64,37 +63,21 @@ namespace Azure.Communication.CallingServer
             return new CreateCallResult(callConnection, callConnectionProperties);
         }
 
-        /// <summary> Create an EventSource. </summary>
-        /// <param name="callConnectionId"> Call connection id for the event. </param>
-        /// <param name="eventName"> Optional event name; used for events related to content. </param>
-        /// <returns> A new <see cref="CallingServer.CreateCallResult"/> instance for mocking. </returns>
-        private static string CreateEventSource(string callConnectionId, string eventName = "")
-        {
-            var eventSourcePrefix = "calling/callConnections/";
-            StringBuilder eventSource = new StringBuilder();
-            eventSource.Append(eventSourcePrefix + "/" + callConnectionId);
-            if (eventName.Length > 0)
-            {
-                eventSource.Append("/" + eventName);
-            }
-            return eventSource.ToString();
-        }
-
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantsFailed AddParticipantsFailed(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static AddParticipantsFailed AddParticipantsFailed(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
             var internalObject = new AddParticipantsFailedInternal(
-                CreateEventSource(callConnectionId),
+                "",
                 operationContext,
                 resultInformation,
                 participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                version,
+                "",
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                ""
                 );
 
             return new AddParticipantsFailed(internalObject);
@@ -103,41 +86,214 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
             var internalObject = new AddParticipantsSucceededInternal(
-                CreateEventSource(callConnectionId),
+                "",
                 operationContext,
                 resultInformation,
                 participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                version,
+                "",
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                ""
                 );
 
             return new AddParticipantsSucceeded(internalObject);
         }
 
         /// <summary>
-        /// Initializes a new instance of Participants Updated event.
+        /// Initializes a new instance of Call Connected event.
         /// </summary>
-        public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static CallConnected CallConnected(string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            var internalObject = new ParticipantsUpdatedInternal(
-                CreateEventSource(callConnectionId),
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                version,
-                operationContext,
-                resultInformation,
+            var internalObject = new CallConnectedInternal(
+                "",
+                "",
+                "",
+                new ResultInformation(),
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(ParticipantsUpdated)
+                ""
+                );
+
+            return new CallConnected(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call Disconnected event.
+        /// </summary>
+        public static CallDisconnected CallDisconnected(string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new CallDisconnectedInternal(
+                "",
+                "",
+                "",
+                new ResultInformation(),
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new CallDisconnected(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call Transfer Accepted event.
+        /// </summary>
+        public static CallTransferAccepted CallTransferAccepted(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new CallTransferAcceptedInternal(
+                "",
+                operationContext,
+                resultInformation,
+                "",
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new CallTransferAccepted(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call CallTransfer Failed event.
+        /// </summary>
+        public static CallTransferFailed CallTransferFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new CallTransferFailedInternal(
+                "",
+                operationContext,
+                resultInformation,
+                "",
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new CallTransferFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Participants Updated event.
+        /// </summary>
+        public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new ParticipantsUpdatedInternal(
+                "",
+                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
+                "",
+                "",
+                new ResultInformation(),
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
                 );
 
             return new ParticipantsUpdated(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Play Completed event.
+        /// </summary>
+        public static PlayCompleted PlayCompleted(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject =  new PlayCompletedInternal(
+                operationContext,
+                resultInformation,
+                "",
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new PlayCompleted(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Play failed event.
+        /// </summary>
+        public static PlayFailed PlayFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new PlayFailedInternal(
+                "",
+                operationContext,
+                resultInformation,
+                "",
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new PlayFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Recognize Completed event.
+        /// </summary>
+        public static RecognizeCompleted RecognizeCompleted(string operationContext = default, ResultInformation resultInformation = default, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new RecognizeCompletedInternal(
+                operationContext,
+                resultInformation,
+                recognitionType,
+                collectTonesResult,
+                "",
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new RecognizeCompleted(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Recognize Failed event
+        /// </summary>
+        public static RecognizeFailed RecognizeFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new RecognizeFailedInternal(
+                operationContext,
+                resultInformation,
+                "",
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new RecognizeFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call Recording State Changed Event
+        /// </summary>
+        public static CallRecordingStateChanged CallRecordingStateChanged(string recordingId = default, RecordingState state = default, DateTimeOffset startDateTime = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new CallRecordingStateChangedInternal(
+                "",
+                recordingId,
+                state,
+                startDateTime,
+                "",
+                "",
+                new ResultInformation(),
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                ""
+                );
+
+            return new CallRecordingStateChanged(internalObject);
         }
     }
 }

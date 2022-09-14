@@ -1,24 +1,42 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Communication.CallingServer.Converters;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// The Call Recording state changed event
     /// </summary>
-    [CodeGenModel("RecordingStateChangedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallRecordingStateChanged : CallAutomationEventBase
+    public class CallRecordingStateChanged : CallAutomationEventBase
     {
+        /// <summary> Initializes a new instance of CallRecordingStateChangedInternal. </summary>
+        /// <param name="internalEvent"></param>
+        internal CallRecordingStateChanged(CallRecordingStateChangedInternal internalEvent)
+        {
+            RecordingId = internalEvent.RecordingId;
+            State = internalEvent.State;
+            StartDateTime = internalEvent.StartDateTime;
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+        }
+
         /// <summary>
-        /// THe recording state
+        /// The call recording id
         /// </summary>
-        [JsonConverter(typeof(EquatableEnumJsonConverter<RecordingState>))]
+        public string RecordingId { get; internal set; }
+
+        /// <summary>
+        /// The call recording state.
+        /// </summary>
         public RecordingState State { get; set; }
+
+        /// <summary>
+        /// The time of the recording started
+        /// </summary>
+        public DateTimeOffset? StartDateTime { get; internal set; }
 
         /// <summary>
         /// Deserialize <see cref="CallRecordingStateChanged"/> event.
@@ -30,7 +48,8 @@ namespace Azure.Communication.CallingServer
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeCallRecordingStateChanged(element);
+            var internalEvent = CallRecordingStateChangedInternal.DeserializeCallRecordingStateChangedInternal(element);
+            return new CallRecordingStateChanged(internalEvent);
         }
     }
 }

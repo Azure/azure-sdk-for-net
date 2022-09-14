@@ -5,16 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallConnected
+    internal partial class CallRecordingStateChangedInternal
     {
-        internal static CallConnected DeserializeCallConnected(JsonElement element)
+        internal static CallRecordingStateChangedInternal DeserializeCallRecordingStateChangedInternal(JsonElement element)
         {
             Optional<string> eventSource = default;
+            Optional<string> recordingId = default;
+            Optional<RecordingState> state = default;
+            Optional<DateTimeOffset> startDateTime = default;
             Optional<string> version = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
@@ -27,6 +31,31 @@ namespace Azure.Communication.CallingServer
                 if (property.NameEquals("eventSource"))
                 {
                     eventSource = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recordingId"))
+                {
+                    recordingId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new RecordingState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("startDateTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -70,7 +99,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnected(eventSource.Value, version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallRecordingStateChangedInternal(eventSource.Value, recordingId.Value, state, Optional.ToNullable(startDateTime), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

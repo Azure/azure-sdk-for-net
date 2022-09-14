@@ -75,7 +75,7 @@ Your app will receive mid-connection call back events via the callbackEndpoint y
             if (events != null)
             {
                 // Helper function to parse CloudEvent to a CallingServer event.
-                CallAutomationEventBase callBackEvent = EventParser.Parse(events.FirstOrDefault());
+                CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(events.FirstOrDefault());
             
                 switch (callBackEvent)
                 {

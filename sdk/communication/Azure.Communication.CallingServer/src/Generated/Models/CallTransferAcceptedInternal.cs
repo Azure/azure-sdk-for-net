@@ -8,14 +8,14 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallTransferAcceptedEvent. </summary>
-    public partial class CallTransferAccepted
+    internal partial class CallTransferAcceptedInternal
     {
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        internal CallTransferAccepted()
+        /// <summary> Initializes a new instance of CallTransferAcceptedInternal. </summary>
+        internal CallTransferAcceptedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <summary> Initializes a new instance of CallTransferAcceptedInternal. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal CallTransferAccepted(string eventSource, string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal CallTransferAcceptedInternal(string eventSource, string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             EventSource = eventSource;
             OperationContext = operationContext;
@@ -44,6 +44,12 @@ namespace Azure.Communication.CallingServer
         public ResultInformation ResultInformation { get; }
         /// <summary> Used to determine the version of the event. </summary>
         public string Version { get; }
+        /// <summary> Call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
+        public string CorrelationId { get; }
         /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
         public string PublicEventType { get; }
     }

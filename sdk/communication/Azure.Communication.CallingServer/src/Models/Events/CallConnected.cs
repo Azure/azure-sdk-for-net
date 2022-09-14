@@ -2,16 +2,23 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// The call connected event.
     /// </summary>
-    [CodeGenModel("CallConnectedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallConnected: CallAutomationEventBase
+    public class CallConnected : CallAutomationEventBase
     {
+        /// <summary> Initializes a new instance of CallConnected Event. </summary>
+        /// <param name="internalEvent"> Internal Representation of the CallConnected Event. </param>
+        internal CallConnected(CallConnectedInternal internalEvent)
+        {
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+        }
+
         /// <summary>
         /// Deserialize <see cref="CallConnected"/> event.
         /// </summary>
@@ -22,7 +29,8 @@ namespace Azure.Communication.CallingServer
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeCallConnected(element);
+            var internalEvent = CallConnectedInternal.DeserializeCallConnectedInternal(element);
+            return new CallConnected(internalEvent);
         }
     }
 }

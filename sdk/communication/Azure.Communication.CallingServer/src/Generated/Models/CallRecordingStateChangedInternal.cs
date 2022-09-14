@@ -5,18 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The CallConnectedEvent. </summary>
-    public partial class CallConnected
+    /// <summary> The RecordingStateChangedEvent. </summary>
+    internal partial class CallRecordingStateChangedInternal
     {
-        /// <summary> Initializes a new instance of CallConnected. </summary>
-        internal CallConnected()
+        /// <summary> Initializes a new instance of CallRecordingStateChangedInternal. </summary>
+        internal CallRecordingStateChangedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Initializes a new instance of CallRecordingStateChangedInternal. </summary>
         /// <param name="eventSource"></param>
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <param name="state"></param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
@@ -24,9 +29,12 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal CallConnected(string eventSource, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal CallRecordingStateChangedInternal(string eventSource, string recordingId, RecordingState state, DateTimeOffset? startDateTime, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             EventSource = eventSource;
+            RecordingId = recordingId;
+            State = state;
+            StartDateTime = startDateTime;
             Version = version;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
@@ -38,12 +46,22 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Gets the event source. </summary>
         public string EventSource { get; }
+        /// <summary> The call recording id. </summary>
+        public string RecordingId { get; }
+        /// <summary> The time of the recording started. </summary>
+        public DateTimeOffset? StartDateTime { get; }
         /// <summary> Used to determine the version of the event. </summary>
         public string Version { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
+        /// <summary> Call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
+        public string CorrelationId { get; }
         /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
         public string PublicEventType { get; }
     }

@@ -2,27 +2,42 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The play completed event.
+    /// The recognize failed event.
     /// </summary>
-    [CodeGenModel("RecognizeFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class RecognizeFailed : CallAutomationEventBase
+    public class RecognizeFailed : CallAutomationEventBase
     {
+        /// <summary> Initializes a new instance of RecognizeFailed event.</summary>
+        /// <param name="internalEvent"> Internal Representation of the RecognizeFailed event. </param>
+        internal RecognizeFailed(RecognizeFailedInternal internalEvent)
+        {
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+        }
+
+        /// <summary> Operation context. </summary>
+        public override string OperationContext { get; internal set; }
+        /// <summary> Gets the result info. </summary>
+        public override ResultInformation ResultInformation { get; internal set; }
+
         /// <summary>
         /// Deserialize <see cref="RecognizeFailed"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
         /// <returns>The new <see cref="RecognizeFailed"/> object.</returns>
-        public static RecognizeFailed Deserialize(string content)
+            public static RecognizeFailed Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeRecognizeFailed(element);
+            var internalEvent = RecognizeFailedInternal.DeserializeRecognizeFailedInternal(element);
+            return new RecognizeFailed(internalEvent);
         }
     }
 }

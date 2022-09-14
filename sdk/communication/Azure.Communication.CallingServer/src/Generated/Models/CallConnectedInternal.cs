@@ -7,15 +7,15 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The CallDisconnectedEvent. </summary>
-    public partial class CallDisconnected
+    /// <summary> The CallConnectedEvent. </summary>
+    internal partial class CallConnectedInternal
     {
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
-        internal CallDisconnected()
+        /// <summary> Initializes a new instance of CallConnectedInternal. </summary>
+        internal CallConnectedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of CallConnectedInternal. </summary>
         /// <param name="eventSource"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal CallDisconnected(string eventSource, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal CallConnectedInternal(string eventSource, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             EventSource = eventSource;
             Version = version;
@@ -44,6 +44,12 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
+        /// <summary> Call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
+        public string CorrelationId { get; }
         /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
         public string PublicEventType { get; }
     }

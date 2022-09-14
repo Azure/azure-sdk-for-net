@@ -10,19 +10,30 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class PlayCompleted
+    internal partial class CallConnectedInternal
     {
-        internal static PlayCompleted DeserializePlayCompleted(JsonElement element)
+        internal static CallConnectedInternal DeserializeCallConnectedInternal(JsonElement element)
         {
+            Optional<string> eventSource = default;
+            Optional<string> version = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<string> version = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("eventSource"))
+                {
+                    eventSource = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
@@ -36,11 +47,6 @@ namespace Azure.Communication.CallingServer
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"))
@@ -64,7 +70,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new PlayCompleted(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallConnectedInternal(eventSource.Value, version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

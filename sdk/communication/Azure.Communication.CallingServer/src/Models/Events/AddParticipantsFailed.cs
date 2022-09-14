@@ -13,39 +13,29 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public class AddParticipantsFailed : CallAutomationEventBase
     {
-        /// <summary> Initializes a new instance of AddParticipantsFailedEvent. </summary>
+        /// <summary> Initializes a new instance of AddParticipantsFailed event. </summary>
         internal AddParticipantsFailed()
         {
             Participants = new ChangeTrackingList<CommunicationIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsFailedEvent. </summary>
-        /// <param name="internalEvent">Internal Representation of the AddParticipantsFailedEvent. </param>
+        /// <summary> Initializes a new instance of AddParticipantsFailed event. </summary>
+        /// <param name="internalEvent">Internal Representation of the AddParticipantsFailed event. </param>
         internal AddParticipantsFailed(AddParticipantsFailedInternal internalEvent)
         {
-            EventSource = internalEvent.EventSource;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
             Participants = internalEvent.Participants.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
-            Version = internalEvent.Version;
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
-            PublicEventType = internalEvent.PublicEventType;
         }
-
-        /// <summary> EventSource. </summary>
-        public string EventSource { get; }
         /// <summary> Operation context. </summary>
-        public string OperationContext { get; }
+        public override string OperationContext { get; internal set; }
         /// <summary> Gets the result info. </summary>
-        public ResultInformation ResultInformation { get; }
+        public override ResultInformation ResultInformation { get; internal set; }
         /// <summary> Participants failed to be added. </summary>
         public IReadOnlyList<CommunicationIdentifier> Participants { get; }
-        /// <summary> Used to determine the version of the event. </summary>
-        public string Version { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
-        public string PublicEventType { get; }
 
         /// <summary>
         /// Deserialize <see cref="AddParticipantsFailed"/> event.

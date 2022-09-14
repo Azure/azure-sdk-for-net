@@ -19,9 +19,10 @@ namespace Azure.Communication.CallingServer.Tests.Events
             var callConnectionId = Guid.NewGuid().ToString();
             var serverCallId = Guid.NewGuid().ToString();
             var correlationId = Guid.NewGuid().ToString();
-            var resultInformation = new ResultInformation(200, 0, "success");
-            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            CallConnected @event = CallAutomationModelFactory.CallConnected(resultInformation: resultInformation, callConnectionId: callConnectionId, serverCallId: serverCallId, correlationId: correlationId);
+            JsonSerializerOptions jsonOptions = new() {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            CallConnected @event = CallAutomationModelFactory.CallConnected(callConnectionId, serverCallId, correlationId);
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
 
             // act
@@ -183,8 +184,8 @@ namespace Azure.Communication.CallingServer.Tests.Events
                 startDateTime: DateTimeOffset.UtcNow,
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
-                correlationId: "correlationId",
-                resultInformation: new ResultInformation(200, 0, "success"));
+                correlationId: "correlationId"
+                );
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CallRecordingStateChanged");

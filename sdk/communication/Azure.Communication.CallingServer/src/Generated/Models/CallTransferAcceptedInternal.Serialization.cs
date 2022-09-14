@@ -10,10 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class RecognizeFailed
+    internal partial class CallTransferAcceptedInternal
     {
-        internal static RecognizeFailed DeserializeRecognizeFailed(JsonElement element)
+        internal static CallTransferAcceptedInternal DeserializeCallTransferAcceptedInternal(JsonElement element)
         {
+            Optional<string> eventSource = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<string> version = default;
@@ -23,6 +24,11 @@ namespace Azure.Communication.CallingServer
             Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("eventSource"))
+                {
+                    eventSource = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
@@ -64,7 +70,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new RecognizeFailed(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallTransferAcceptedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

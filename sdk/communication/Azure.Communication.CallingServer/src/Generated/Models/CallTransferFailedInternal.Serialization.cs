@@ -10,14 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class RecognizeCompleted
+    internal partial class CallTransferFailedInternal
     {
-        internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
+        internal static CallTransferFailedInternal DeserializeCallTransferFailedInternal(JsonElement element)
         {
+            Optional<string> eventSource = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<CallMediaRecognitionType> recognitionType = default;
-            Optional<CollectTonesResult> collectTonesResult = default;
             Optional<string> version = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
@@ -25,6 +24,11 @@ namespace Azure.Communication.CallingServer
             Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("eventSource"))
+                {
+                    eventSource = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
@@ -38,26 +42,6 @@ namespace Azure.Communication.CallingServer
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("recognitionType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    recognitionType = new CallMediaRecognitionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("collectTonesResult"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -86,7 +70,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new RecognizeCompleted(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallTransferFailedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }
