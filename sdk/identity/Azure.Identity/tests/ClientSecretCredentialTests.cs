@@ -19,11 +19,15 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
-        [Test]
-        [TestCaseSource(nameof(GetAllowedTenantsTestCasesWithRequiredTenantId))]
-        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
+
+            // no need to test with null TenantId since we can't construct this credential without it
+            if (parameters.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
 
             var options = new ClientSecretCredentialOptions();
 

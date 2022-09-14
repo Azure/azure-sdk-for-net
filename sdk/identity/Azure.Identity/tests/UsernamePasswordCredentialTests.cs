@@ -87,11 +87,15 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, token.ExpiresOn);
         }
 
-        [Test]
-        [TestCaseSource(nameof(GetAllowedTenantsTestCasesWithRequiredTenantId))]
-        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
+
+            // no need to test with null TenantId since we can't construct this credential without it
+            if (parameters.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
 
             var options = new UsernamePasswordCredentialOptions();
 

@@ -84,22 +84,13 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCasesWithRequiredTenantId() => GetAllowedTenantsTestCases(true);
-
-        public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCasesNonRequiredTenantId() => GetAllowedTenantsTestCases(false);
-
-        public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCases(bool requireTenantId)
+        public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCases()
         {
             string tenant = Guid.NewGuid().ToString();
             string addlTenantA = Guid.NewGuid().ToString();
             string addlTenantB = Guid.NewGuid().ToString();
 
-            List<string> tenantValues = new List<string>() { tenant };
-
-            if (!requireTenantId)
-            {
-                tenantValues.Add(null);
-            }
+            List<string> tenantValues = new List<string>() { tenant, null };
 
             List<List<string>> additionalAllowedTenantsValues = new List<List<string>>()
             {
@@ -130,7 +121,10 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public async Task AssertAllowedTenantIdsEnforcedAsync(AllowedTenantsTestParameters parameters, TokenCredential credential)
+        [TestCaseSource(nameof(GetAllowedTenantsTestCases))]
+        public abstract Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters);
+
+        public static async Task AssertAllowedTenantIdsEnforcedAsync(AllowedTenantsTestParameters parameters, TokenCredential credential)
         {
             bool expAllowed = parameters.TenantId == null
                 || parameters.TokenRequestContext.TenantId == null

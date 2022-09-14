@@ -81,9 +81,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken);
         }
 
-        [Test]
-        [TestCaseSource(nameof(GetAllowedTenantsTestCasesNonRequiredTenantId))]
-        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 

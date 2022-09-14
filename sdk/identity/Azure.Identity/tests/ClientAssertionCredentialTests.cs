@@ -24,11 +24,15 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new ClientAssertionCredential(expectedTenantId, ClientId, () => "assertion", clientAssertionOptions));
         }
 
-        [Test]
-        [TestCaseSource(nameof(GetAllowedTenantsTestCasesWithRequiredTenantId))]
-        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
+
+            // no need to test with null TenantId since we can't construct this credential without it
+            if (parameters.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
 
             var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
 

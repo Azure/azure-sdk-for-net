@@ -72,9 +72,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
-        [TestCaseSource(nameof(GetAllowedTenantsTestCasesNonRequiredTenantId))]
-        public async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
         {
             Console.WriteLine(parameters.ToDebugString());
 

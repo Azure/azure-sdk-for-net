@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Microsoft.Extensions.Azure;
@@ -51,6 +52,12 @@ namespace Azure.Identity.Tests
         [Test]
         public void ValidateSharedTokenCacheOptionsHonored([Values] bool setTenantId, [Values] bool setSharedTokenCacheTenantId, [Values] bool setSharedTokenCacheUsername)
         {
+            // ignore when both setTenantId and setSharedTokenCacheTenantId are true since we cannot set both
+            if (setTenantId && setSharedTokenCacheTenantId)
+            {
+                Assert.Ignore("Test variation ignored since TenantId and SharedTokenCacheTenantId cannot both be set");
+            }
+
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_CLIENT_ID", null },
@@ -89,6 +96,12 @@ namespace Azure.Identity.Tests
         [Test]
         public void ValidateVisualStudioOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioTenantId, [Values] bool setAdditionallyAllowedTenants)
         {
+            // ignore when both setTenantId and setVisualStudioTenantId are true since we cannot set both
+            if (setTenantId && setVisualStudioTenantId)
+            {
+                Assert.Ignore("Test variation ignored since TenantId and VisualStudioTenantId cannot both be set");
+            }
+
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_CLIENT_ID", null },
@@ -123,13 +136,19 @@ namespace Azure.Identity.Tests
                 VisualStudioCredential cred = (VisualStudioCredential)factory.CreateVisualStudioCredential();
 
                 Assert.AreEqual(expVisualStudioTenantId ?? expTenantId, cred.TenantId);
-                CollectionAssert.AreEqual(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
         }
 
         [Test]
         public void ValidateVisualStudioCodeOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioCodeTenantId, [Values] bool setAdditionallyAllowedTenants)
         {
+            // ignore when both setTenantId and setVisualStudioCodeTenantId are true since we cannot set both
+            if (setTenantId && setVisualStudioCodeTenantId)
+            {
+                Assert.Ignore("Test variation ignored since TenantId and VisualStudioCodeTenantId cannot both be set");
+            }
+
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_CLIENT_ID", null },
@@ -164,7 +183,7 @@ namespace Azure.Identity.Tests
                 VisualStudioCodeCredential cred = (VisualStudioCodeCredential)factory.CreateVisualStudioCodeCredential();
 
                 Assert.AreEqual(expVisualStudioCodeTenantId ?? expTenantId, cred.TenantId);
-                CollectionAssert.AreEqual(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
         }
 
@@ -197,7 +216,7 @@ namespace Azure.Identity.Tests
                 AzureCliCredential cred = (AzureCliCredential)factory.CreateAzureCliCredential();
 
                 Assert.AreEqual(expTenantId, cred.TenantId);
-                CollectionAssert.AreEqual(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
         }
 
@@ -230,13 +249,19 @@ namespace Azure.Identity.Tests
                 AzurePowerShellCredential cred = (AzurePowerShellCredential)factory.CreateAzurePowerShellCredential();
 
                 Assert.AreEqual(expTenantId, cred.TenantId);
-                CollectionAssert.AreEqual(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
         }
 
         [Test]
         public void ValidateInteractiveBrowserOptionsHonored([Values] bool setTenantId, [Values] bool setClientId, [Values] bool setInteractiveBrowserTenantId, [Values] bool setAdditionallyAllowedTenants)
         {
+            // ignore when both setTenantId and setInteractiveBrowserTenantId are true since we cannot set both
+            if (setTenantId && setInteractiveBrowserTenantId)
+            {
+                Assert.Ignore("Test variation ignored since TenantId and InteractiveBrowserTenantId cannot both be set");
+            }
+
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_CLIENT_ID", null },
@@ -278,7 +303,7 @@ namespace Azure.Identity.Tests
 
                 Assert.AreEqual(expInteractiveBrowserTenantId ?? expTenantId, cred.TenantId);
                 Assert.AreEqual(expClientId, cred.ClientId);
-                CollectionAssert.AreEqual(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
         }
 

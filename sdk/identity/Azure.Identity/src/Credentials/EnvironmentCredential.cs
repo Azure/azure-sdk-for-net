@@ -67,6 +67,10 @@ namespace Azure.Identity
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
+            // Since the AdditionallyAllowedTenantsCore is internal it cannot be set by the application.
+            // Currently this is only set by the DefaultAzureCredential where it will default to the value
+            // of EnvironmentVariables.AdditionallyAllowedTenants, but can also be altered by the application.
+            // In either case we don't want to alter it.
             if (_options.AdditionallyAllowedTenantsCore.Count == 0)
             {
                 _options.AdditionallyAllowedTenantsCore = EnvironmentVariables.AdditionallyAllowedTenants;
