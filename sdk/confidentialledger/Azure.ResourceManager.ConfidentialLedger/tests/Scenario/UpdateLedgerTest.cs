@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         /// <param name="properties"></param>
         /// <param name="securityPrincipals"></param>
         /// <returns></returns>
-        private LedgerProperties AddTestSecurityPrincipal(LedgerProperties properties,
+        private ConfidentialLedgerProperties AddTestSecurityPrincipal(ConfidentialLedgerProperties properties,
             IList<AadBasedSecurityPrincipal> securityPrincipals)
         {
-            return new LedgerProperties(properties.LedgerName, properties.LedgerUri,
+            return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.LedgerType,
                 properties.ProvisioningState, securityPrincipals, properties.CertBasedSecurityPrincipals);
         }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             IList<AadBasedSecurityPrincipal> securityPrincipals = new List<AadBasedSecurityPrincipal>();
             securityPrincipals.Add(new AadBasedSecurityPrincipal(new Guid(TestEnvironment.TestUserObjectId),
-                new Guid(TestEnvironment.TenantId), new LedgerRoleName("Contributor")));
+                new Guid(TestEnvironment.TenantId), new ConfidentialLedgerRoleName("Contributor")));
             return securityPrincipals;
         }
     }

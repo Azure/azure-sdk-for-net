@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [RecordedTest]
         public async Task TestNameAvailabilityBeforeCreating()
         {
-            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
+            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
             Assert.True(response.IsNameAvailable);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [RecordedTest]
         public async Task TestNameAvailabilityAfterCreating()
         {
-            LedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
+            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
             Assert.False(response.IsNameAvailable);
         }
 
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         /// </summary>
         /// <param name="ledgerName"></param>
         /// <returns></returns>
-        private async Task<LedgerNameAvailabilityResult> GetLedgerNameAvailability(string ledgerName)
+        private async Task<ConfidentialLedgerNameAvailabilityResult> GetLedgerNameAvailability(string ledgerName)
         {
-            LedgerNameAvailabilityContent ledgerNameAvailabilityContent = new() {
+            ConfidentialLedgerNameAvailabilityContent ledgerNameAvailabilityContent = new() {
                 Name = ledgerName,
                 ResourceType = new ResourceType("Microsoft.ConfidentialLedger/ledgers")
             };
-            return await Subscription.CheckLedgerNameAvailabilityAsync(ledgerNameAvailabilityContent);
+            return await Subscription.CheckConfidentialLedgerNameAvailabilityAsync(ledgerNameAvailabilityContent);
         }
     }
 }
