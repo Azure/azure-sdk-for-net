@@ -26,7 +26,7 @@ This is an example of explicitly adding tenants to allow acquiring tokens.
 ```C# Snippet:Identity_BreakingChanges_AddExplicitAdditionallyAllowedTenants
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
 {
-    AdditionallyAllowedTenants = { "0000-0000-0000-0000", "1111-1111-1111-1111" }
+    AdditionallyAllowedTenants = { "00000000-0000-0000-0000-000000000000", "11111111-1111-1111-1111-111111111111" }
 });
 ```
 
