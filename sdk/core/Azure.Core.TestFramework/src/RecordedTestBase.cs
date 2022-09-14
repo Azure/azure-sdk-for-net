@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Azure.Core.TestFramework.Models;
@@ -251,8 +252,7 @@ namespace Azure.Core.TestFramework
                 GetSessionFileDirectory(),
                 fileName);
 
-            var actualResult = result.Replace(repoRoot, String.Empty);
-
+            var actualResult = Regex.Replace(result.Replace(repoRoot, String.Empty), @"^[\\/]*", string.Empty);
             return result;
         }
 
