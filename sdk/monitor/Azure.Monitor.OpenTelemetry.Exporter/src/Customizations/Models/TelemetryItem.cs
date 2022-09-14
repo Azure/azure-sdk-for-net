@@ -43,6 +43,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+            if (AzMonList.GetTagValue(ref monitorTags.MappedTags, "sampleRate") is float sampleRate)
+            {
+                SampleRate = sampleRate;
+            }
         }
 
         public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :
