@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // TagOperation
             await apiManagementService.AddTagAsync("testkey", "testvalue");
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Key, "testkey");
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Value, "testvalue");
+            Assert.IsTrue(apiManagementService.Data.Tags.ContainsKey("testkey"));
+            Assert.AreEqual(apiManagementService.Data.Tags["testkey"], "testvalue");
 
             var tags = new Dictionary<string, string>() { { "newkey", "newvalue" } };
             await apiManagementService.SetTagsAsync(tags);
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Key, "newkey");
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Value, "newvalue");
+            Assert.IsTrue(apiManagementService.Data.Tags.ContainsKey("newkey"));
+            Assert.AreEqual(apiManagementService.Data.Tags["newkey"], "newvalue");
 
             await apiManagementService.RemoveTagAsync("newkey");
             apiManagementService = (await apiManagementService.GetAsync()).Value;
@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // Update
             var patch = new ApiManagementServicePatch() { Tags = { { "newkey", "newvalue" } } };
             var updated = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(updated.Value.Data.Tags.FirstOrDefault().Key, "newkey");
+            Assert.IsTrue(apiManagementService.Data.Tags.ContainsKey("newkey"));
+            Assert.AreEqual(apiManagementService.Data.Tags["newkey"], "newvalue");
 
             // Delete
             await apiManagementService.DeleteAsync(WaitUntil.Completed);

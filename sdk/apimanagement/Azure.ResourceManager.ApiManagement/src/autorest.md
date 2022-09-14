@@ -328,6 +328,7 @@ directive:
       $.SubscriptionContractProperties.properties.endDate["x-nullable"] = true;
       $.SubscriptionContractProperties.properties.notificationDate["x-nullable"] = true;
       $.PortalSettingsContractProperties.properties.termsOfService["x-nullable"] = true;
+# policyDescriptions scope could be int: 268435487, string: "product" 
       $.PolicyDescriptionContractProperties.properties.scope = {
           "description": "Binary OR value of the Snippet scope.",
           "readOnly": true
