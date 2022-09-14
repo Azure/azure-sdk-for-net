@@ -262,6 +262,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // to log here.
                 throw;
             }
+            catch (AmqpException amqpException)
+                when (_isSessionReceiver && amqpException.Error.Condition.Equals(AmqpClientConstants.TimeoutError))
+            {
+                // When this occurs during accepting a session, it will be logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync so it would be redundant
+                // to log here. This exception occurs if we get back a timeout error from the service before the client timeout.
+                // Both exceptions would be translated to a ServiceBusException with ServiceBusFailureReason.ServiceTimeout before being
+                // thrown to the user.
+                throw;
+            }
+            catch (OperationCanceledException opEx)
+                when (_isSessionReceiver && opEx is not TaskCanceledException)
+            {
+                // Do not log as this will be translated to a TimeoutException and logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync.
+                throw;
+            }
             catch (OperationCanceledException)
                 when (_isProcessor && cancellationToken.IsCancellationRequested)
             {

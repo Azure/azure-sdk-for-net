@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Avs
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PrivateCloudResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateCloudResources and their operations over a PrivateCloudResource. </returns>
-        public virtual PrivateCloudCollection GetPrivateClouds()
+        /// <summary> Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
+        public virtual AvsPrivateCloudCollection GetAvsPrivateClouds()
         {
-            return GetCachedClient(Client => new PrivateCloudCollection(Client, Id));
+            return GetCachedClient(Client => new AvsPrivateCloudCollection(Client, Id));
         }
     }
 }

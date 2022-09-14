@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         /// of the operation.
         /// Returns data for batch document methods only.
         /// </summary>
-        public bool IncludeStatistics { get; set; }
+        public bool? IncludeStatistics { get; set; }
 
         /// <summary>
         /// The default value of this property is <c>false</c>.

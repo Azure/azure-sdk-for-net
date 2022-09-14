@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter", "src\Azure.Monitor.OpenTelemetry.Exporter.csproj", "{00677EDC-1C5C-4C62-BEFD-9CF1D87195EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing", "tests\Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing\Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing.csproj", "{966EFB72-64D7-46D8-B592-9C141C5703F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Demo", "tests\Azure.Monitor.OpenTelemetry.Exporter.Demo\Azure.Monitor.OpenTelemetry.Exporter.Demo.csproj", "{966EFB72-64D7-46D8-B592-9C141C5703F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Tests", "tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\Azure.Monitor.OpenTelemetry.Exporter.Tests.csproj", "{14546496-6144-49A5-9431-09611F38D30E}"
 EndProject

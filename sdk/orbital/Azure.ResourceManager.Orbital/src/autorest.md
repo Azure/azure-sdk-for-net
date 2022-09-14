@@ -18,7 +18,7 @@ modelerfour:
 
 rename-mapping:
   EndPoint.ipAddress: -|ip-address
-  networkConfiguration.subnetId: NetworkSubnetId|arm-id
+  ContactProfilesPropertiesNetworkConfiguration.subnetId: NetworkSubnetId|arm-id
   AuthorizedGroundstation.groundStation: GroundStationName
   AuthorizedGroundstation: AuthorizedGroundStation
   CapabilityParameter: GroundStationCapability

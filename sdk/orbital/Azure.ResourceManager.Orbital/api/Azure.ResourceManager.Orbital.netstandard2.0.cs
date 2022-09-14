@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Orbital
         public System.Collections.Generic.IList<Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink> Links { get { throw null; } }
         public float? MinimumElevationDegrees { get { throw null; } set { } }
         public System.TimeSpan? MinimumViableContactDuration { get { throw null; } set { } }
-        public string NetworkSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Orbital.Models.OrbitalProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
     public partial class OrbitalContactProfileResource : Azure.ResourceManager.ArmResource

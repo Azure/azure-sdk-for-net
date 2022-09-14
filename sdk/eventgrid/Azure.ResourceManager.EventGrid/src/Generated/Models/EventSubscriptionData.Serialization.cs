@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExpirationTimeUtc))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc");
-                writer.WriteStringValue(ExpirationTimeUtc.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<IList<string>> labels = default;
             Optional<DateTimeOffset> expirationTimeUtc = default;
             Optional<EventDeliverySchema> eventDeliverySchema = default;
-            Optional<RetryPolicy> retryPolicy = default;
+            Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
             Optional<DeadLetterDestination> deadLetterDestination = default;
             Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventGrid
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value);
+                            retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deadLetterDestination"))
