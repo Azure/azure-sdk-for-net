@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static TriggerList DeserializeTriggerList(JsonElement element)
         {
-            Optional<IReadOnlyList<TriggerData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeTriggerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TriggerData> array = new List<TriggerData>();
+                    List<DataBoxEdgeTriggerData> array = new List<DataBoxEdgeTriggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerData.DeserializeTriggerData(item));
+                        array.Add(DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(item));
                     }
                     value = array;
                     continue;

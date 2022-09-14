@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Confluent management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.Confluent --prerelease
+dotnet add package Azure.ResourceManager.Confluent
 ```
 
 ### Prerequisites
