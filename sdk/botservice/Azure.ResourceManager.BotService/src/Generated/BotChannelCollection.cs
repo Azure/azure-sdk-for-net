@@ -121,14 +121,10 @@ namespace Azure.ResourceManager.BotService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
         /// Operation Id: Channels_Get
         /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        public virtual async Task<Response<BotChannelResource>> GetAsync(string channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetAsync(ChannelName channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
-
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Get");
             scope.Start();
             try
@@ -150,14 +146,10 @@ namespace Azure.ResourceManager.BotService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
         /// Operation Id: Channels_Get
         /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        public virtual Response<BotChannelResource> Get(string channelName, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> Get(ChannelName channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
-
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Get");
             scope.Start();
             try
@@ -263,14 +255,10 @@ namespace Azure.ResourceManager.BotService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
         /// Operation Id: Channels_Get
         /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(ChannelName channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
-
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Exists");
             scope.Start();
             try
@@ -290,14 +278,10 @@ namespace Azure.ResourceManager.BotService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
         /// Operation Id: Channels_Get
         /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        public virtual Response<bool> Exists(string channelName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(ChannelName channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
-
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Exists");
             scope.Start();
             try

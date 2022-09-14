@@ -46,4 +46,16 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - from: botservice.json
+    where: $.paths..parameters[?(@.name=='channelName')]
+    transform: >
+      $ = {
+            "$ref": "#/parameters/channelNameParameter"
+          };
+  - from: botservice.json
+    where: $.definitions
+    transform: >
+      $.EmailChannelAuthMethod['type'] = 'integer';
+
 ```

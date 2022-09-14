@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.BotService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authMethod = property.Value.GetSingle().ToEmailChannelAuthMethod();
+                    authMethod = property.Value.GetInt32().ToEmailChannelAuthMethod();
                     continue;
                 }
                 if (property.NameEquals("password"))

@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.BotService
 
         private readonly ClientDiagnostics _botClientDiagnostics;
         private readonly BotsRestOperations _botRestClient;
-        private readonly ClientDiagnostics _botChannelChannelsClientDiagnostics;
-        private readonly ChannelsRestOperations _botChannelChannelsRestClient;
         private readonly ClientDiagnostics _directLineClientDiagnostics;
         private readonly DirectLineRestOperations _directLineRestClient;
         private readonly ClientDiagnostics _emailClientDiagnostics;
@@ -68,9 +66,6 @@ namespace Azure.ResourceManager.BotService
             _botClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string botApiVersion);
             _botRestClient = new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion);
-            _botChannelChannelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotChannelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BotChannelResource.ResourceType, out string botChannelChannelsApiVersion);
-            _botChannelChannelsRestClient = new ChannelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botChannelChannelsApiVersion);
             _directLineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _directLineRestClient = new DirectLineRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _emailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -118,12 +113,10 @@ namespace Azure.ResourceManager.BotService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
         /// Operation Id: Channels_Get
         /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(string channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(ChannelName channelName, CancellationToken cancellationToken = default)
         {
             return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
         }
@@ -133,12 +126,10 @@ namespace Azure.ResourceManager.BotService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}
         /// Operation Id: Channels_Get
         /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BotChannelResource> GetBotChannel(string channelName, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannel(ChannelName channelName, CancellationToken cancellationToken = default)
         {
             return GetBotChannels().Get(channelName, cancellationToken);
         }
@@ -361,52 +352,6 @@ namespace Azure.ResourceManager.BotService
             {
                 var response = _botRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new BotResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists a Channel registration for a Bot Service including secrets
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/listChannelWithKeys
-        /// Operation Id: Channels_ListWithKeys
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListChannelWithKeysResponse>> GetWithKeysChannelAsync(ChannelName channelName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotResource.GetWithKeysChannel");
-            scope.Start();
-            try
-            {
-                var response = await _botChannelChannelsRestClient.ListWithKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists a Channel registration for a Bot Service including secrets
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/listChannelWithKeys
-        /// Operation Id: Channels_ListWithKeys
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListChannelWithKeysResponse> GetWithKeysChannel(ChannelName channelName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotResource.GetWithKeysChannel");
-            scope.Start();
-            try
-            {
-                var response = _botChannelChannelsRestClient.ListWithKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {
