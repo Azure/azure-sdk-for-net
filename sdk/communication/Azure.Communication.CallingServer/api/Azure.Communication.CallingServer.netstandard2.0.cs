@@ -227,9 +227,9 @@ namespace Azure.Communication.CallingServer
     }
     public partial class CallMediaRecognizeDtmfOptions : Azure.Communication.CallingServer.CallMediaRecognizeOptions
     {
-        public CallMediaRecognizeDtmfOptions(Azure.Communication.CommunicationIdentifier targetParticipant) : base (default(Azure.Communication.CallingServer.RecognizeInputType), default(Azure.Communication.CommunicationIdentifier)) { }
+        public CallMediaRecognizeDtmfOptions(Azure.Communication.CommunicationIdentifier targetParticipant, int maxTonesToCollect) : base (default(Azure.Communication.CallingServer.RecognizeInputType), default(Azure.Communication.CommunicationIdentifier)) { }
         public System.TimeSpan InterToneTimeout { get { throw null; } set { } }
-        public int MaxTonesToCollect { get { throw null; } set { } }
+        public int MaxTonesToCollect { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallingServer.DtmfTone> StopTones { get { throw null; } set { } }
     }
     public abstract partial class CallMediaRecognizeOptions
