@@ -11,7 +11,7 @@ namespace Azure.Identity
     public class AzurePowerShellCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
-        /// The tenant ID the credential will authenticate to by default. If not specified the credential will authenticate to any requested tenant, and will default to the tenant specified to the 'Connect-AzAccount' cmdlet.
+        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant provided to the 'Connect-AzAccount' cmdlet.
         /// </summary>
         public string TenantId { get; set; }
 
