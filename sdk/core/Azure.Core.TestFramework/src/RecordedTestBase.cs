@@ -246,6 +246,33 @@ namespace Azure.Core.TestFramework
                 fileName);
         }
 
+        private string AscendToRepoRoot()
+        {
+            //    def ascend_to_root(start_dir_or_file: str) -> str:
+            //    """
+            //    Given a path, ascend until encountering a folder with a `.git` folder present within it. Return that directory.
+
+            //    :param str start_dir_or_file: The starting directory or file. Either is acceptable.
+            //    """
+            //    if os.path.isfile(start_dir_or_file):
+            //        current_dir = os.path.dirname(start_dir_or_file)
+            //    else:
+            //        current_dir = start_dir_or_file
+
+            //    while current_dir is not None and not (os.path.dirname(current_dir) == current_dir):
+            //        possible_root = os.path.join(current_dir, ".git")
+
+            //        # we need to check for assets.json first!
+            //# we need the git check to prevent ascending out of the repo
+            //        if os.path.exists(possible_root):
+            //            if current_dir not in discovered_roots:
+            //            discovered_roots.append(current_dir)
+            //            return current_dir
+            //        else:
+            //          current_dir = os.path.dirname(current_dir)
+            return string.Empty;
+        }
+
         private string GetSessionFileDirectory()
         {
             // Use the current class name instead of the name of the class that declared a test.
