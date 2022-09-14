@@ -128,20 +128,6 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         }
 
         [Test]
-        public async Task CanGetRoleAssignmentViaGrowUpHelper()
-        {
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
-
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
-
-            Response<RoleAssignmentDetails> response = await assignmentsClient.GetRoleAssignmentByIdAsync(role.RoleAssignmentId);
-
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, response.Value.RoleDefinitionId.ToString());
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, response.Value.PrincipalId.ToString());
-        }
-
-        [Test]
         public async Task CanListRoleDefinitions()
         {
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
