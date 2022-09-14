@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="kind"> Kind of synchronization setting on share. </param>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizationOn"> Synchronization time. </param>
-        internal ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind kind, RecurrenceInterval? recurrenceInterval, DateTimeOffset? synchronizationOn) : base(kind)
+        internal ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind kind, DataShareSynchronizationRecurrenceInterval? recurrenceInterval, DateTimeOffset? synchronizationOn) : base(kind)
         {
             RecurrenceInterval = recurrenceInterval;
             SynchronizationOn = synchronizationOn;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Recurrence Interval. </summary>
-        public RecurrenceInterval? RecurrenceInterval { get; }
+        public DataShareSynchronizationRecurrenceInterval? RecurrenceInterval { get; }
         /// <summary> Synchronization time. </summary>
         public DateTimeOffset? SynchronizationOn { get; }
     }

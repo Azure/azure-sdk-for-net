@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.DataShare
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> expirationDate = default;
-            string invitationId = default;
+            Guid invitationId = default;
             Optional<string> providerEmail = default;
             Optional<string> providerName = default;
             Optional<string> providerTenantName = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             Optional<string> shareDescription = default;
-            Optional<ShareKind> shareKind = default;
+            Optional<DataShareKind> shareKind = default;
             Optional<string> shareName = default;
             Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
             Optional<string> shareTerms = default;
-            string sourceShareLocation = default;
+            AzureLocation sourceShareLocation = default;
             Optional<string> userEmail = default;
             Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataShare
                         }
                         if (property0.NameEquals("invitationId"))
                         {
-                            invitationId = property0.Value.GetString();
+                            invitationId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("providerEmail"))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataShare
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataShareProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("shareDescription"))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataShare
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            shareKind = new ShareKind(property0.Value.GetString());
+                            shareKind = new DataShareKind(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("shareName"))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataShare
                         }
                         if (property0.NameEquals("sourceShareLocation"))
                         {
-                            sourceShareLocation = property0.Value.GetString();
+                            sourceShareLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userEmail"))

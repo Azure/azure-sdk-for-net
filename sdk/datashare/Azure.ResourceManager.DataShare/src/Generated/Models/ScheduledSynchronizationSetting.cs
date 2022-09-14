@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A type of synchronization setting based on schedule. </summary>
-    public partial class ScheduledSynchronizationSetting : SynchronizationSettingData
+    public partial class ScheduledSynchronizationSetting : DataShareSynchronizationSettingData
     {
         /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizationOn"> Synchronization time. </param>
-        public ScheduledSynchronizationSetting(RecurrenceInterval recurrenceInterval, DateTimeOffset synchronizationOn)
+        public ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizationOn)
         {
             RecurrenceInterval = recurrenceInterval;
             SynchronizationOn = synchronizationOn;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizationOn"> Synchronization time. </param>
         /// <param name="userName"> Name of the user who created the synchronization setting. </param>
-        internal ScheduledSynchronizationSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynchronizationSettingKind kind, DateTimeOffset? createdOn, ProvisioningState? provisioningState, RecurrenceInterval recurrenceInterval, DateTimeOffset synchronizationOn, string userName) : base(id, name, resourceType, systemData, kind)
+        internal ScheduledSynchronizationSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynchronizationSettingKind kind, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizationOn, string userName) : base(id, name, resourceType, systemData, kind)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Time at which the synchronization setting was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Gets or sets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
         /// <summary> Recurrence Interval. </summary>
-        public RecurrenceInterval RecurrenceInterval { get; set; }
+        public DataShareSynchronizationRecurrenceInterval RecurrenceInterval { get; set; }
         /// <summary> Synchronization time. </summary>
         public DateTimeOffset SynchronizationOn { get; set; }
         /// <summary> Name of the user who created the synchronization setting. </summary>
