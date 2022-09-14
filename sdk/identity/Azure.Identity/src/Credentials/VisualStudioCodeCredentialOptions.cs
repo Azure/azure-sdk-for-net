@@ -15,7 +15,7 @@ namespace Azure.Identity
         private string _tenantId;
 
         /// <summary>
-        /// The tenant ID the user will be authenticated to. If not specified the user will be authenticated to any requested tenant, and by default to the tenant the user originally authenticated to via the Visual Studio Code Azure Account plugin.
+        /// The tenant ID the user will be authenticated to. If not specified, the user will be authenticated to any requested tenant, and by default to the tenant the user originally authenticated to via the Visual Studio Code Azure Account extension.
         /// </summary>
         public string TenantId
         {
