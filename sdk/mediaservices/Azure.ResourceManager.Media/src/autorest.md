@@ -283,4 +283,5 @@ directive:
       $.LiveEventEncoding.properties.keyFrameInterval["x-nullable"] = true;
       $.LiveEventPreview.properties.accessControl["x-nullable"] = true;
       $.LiveEventInput.properties.accessControl["x-nullable"] = true;
+      $.LiveOutputProperties.properties.rewindWindowLength["x-nullable"] = true;
 ```

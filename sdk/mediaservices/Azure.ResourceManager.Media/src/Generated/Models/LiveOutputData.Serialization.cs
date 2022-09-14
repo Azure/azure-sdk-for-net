@@ -37,8 +37,15 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(RewindWindowLength))
             {
-                writer.WritePropertyName("rewindWindowLength");
-                writer.WriteStringValue(RewindWindowLength.Value, "P");
+                if (RewindWindowLength != null)
+                {
+                    writer.WritePropertyName("rewindWindowLength");
+                    writer.WriteStringValue(RewindWindowLength.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("rewindWindowLength");
+                }
             }
             if (Optional.IsDefined(ManifestName))
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Media
             Optional<string> description = default;
             Optional<string> assetName = default;
             Optional<TimeSpan> archiveWindowLength = default;
-            Optional<TimeSpan> rewindWindowLength = default;
+            Optional<TimeSpan?> rewindWindowLength = default;
             Optional<string> manifestName = default;
             Optional<Hls> hls = default;
             Optional<long> outputSnapTime = default;
@@ -136,7 +143,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                rewindWindowLength = null;
                                 continue;
                             }
                             rewindWindowLength = property0.Value.GetTimeSpan("P");

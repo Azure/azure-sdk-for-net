@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         public LiveOutputTests(bool isAsync) : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..accessToken");
         }
 
         [SetUp]
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Media.Tests
         {
             var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
             var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
-            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaservice"), storage.Id);
+            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaforlo"), storage.Id);
             _liveEvent = await CreateLiveEvent(_mediaService, Recording.GenerateAssetName("liveEvent"));
         }
 
@@ -61,59 +62,24 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
-        public async Task CreateOrUpdate()
+        public async Task LiveOutputBasicTests()
         {
+            // Create
             string liveOutPutName = Recording.GenerateAssetName("liveoutput");
             var liveoutput = await CreateLiveOutPut(liveOutPutName);
             Assert.IsNotNull(liveoutput);
             Assert.AreEqual(liveOutPutName, liveoutput.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
-        public async Task Exist()
-        {
-            string liveOutPutName = Recording.GenerateAssetName("liveoutput");
-            await CreateLiveOutPut(liveOutPutName);
+            // Check exists
             bool flag = await liveOutputCollection.ExistsAsync(liveOutPutName);
             Assert.IsTrue(flag);
-        }
-
-        [Test]
-        [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
-        public async Task Get()
-        {
-            string liveOutPutName = Recording.GenerateAssetName("liveoutput");
-            await CreateLiveOutPut(liveOutPutName);
-            var liveoutput = await liveOutputCollection.GetAsync(liveOutPutName);
+            // Get
+            var resutl = await liveOutputCollection.GetAsync(liveOutPutName);
             Assert.IsNotNull(liveoutput);
-            Assert.AreEqual(liveOutPutName, liveoutput.Value.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
-        public async Task GetAll()
-        {
-            string liveOutPutName = Recording.GenerateAssetName("liveoutput");
-            await CreateLiveOutPut(liveOutPutName);
+            Assert.AreEqual(liveOutPutName, resutl.Value.Data.Name);
+            // Get all
             var list = await liveOutputCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-        }
-
-        [Test]
-        [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
-        public async Task Delete()
-        {
-            string liveOutPutName = Recording.GenerateAssetName("liveoutput");
-            var liveoutput = await CreateLiveOutPut(liveOutPutName);
-            bool flag = await liveOutputCollection.ExistsAsync(liveOutPutName);
-            Assert.IsTrue(flag);
-
+            // Delete
             await liveoutput.DeleteAsync(WaitUntil.Completed);
             flag = await liveOutputCollection.ExistsAsync(liveOutPutName);
             Assert.IsFalse(flag);
