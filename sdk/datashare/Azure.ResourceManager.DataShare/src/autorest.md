@@ -75,8 +75,9 @@ rename-mapping:
   OperationResponse: DataShareOperationResult
   Status: DataShareOperationStatus
   OutputType: DataShareOutputType
-  ScheduledSourceSynchronizationSetting.synchronizationTime: SynchronizeOn
-  ScheduledSynchronizationSetting.synchronizationTime: SynchronizeOn
+  ScheduledSourceSynchronizationSetting.properties.synchronizationTime: SynchronizeOn
+  ScheduledSynchronizationSetting.properties.synchronizationTime: SynchronizeOn
+  ScheduledTrigger.properties.synchronizationTime: SynchronizeOn
   ShareSubscriptionSynchronization.durationMs: DurationInMilliSeconds
   ShareSynchronization.durationMs: DurationInMilliSeconds
   SynchronizationDetails.durationMs: DurationInMilliSeconds

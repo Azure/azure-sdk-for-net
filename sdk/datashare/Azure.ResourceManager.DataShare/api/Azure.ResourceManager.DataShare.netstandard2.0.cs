@@ -873,25 +873,25 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal ScheduledSourceSynchronizationSetting() { }
         public Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval? RecurrenceInterval { get { throw null; } }
-        public System.DateTimeOffset? SynchronizationOn { get { throw null; } }
+        public System.DateTimeOffset? SynchronizeOn { get { throw null; } }
     }
     public partial class ScheduledSynchronizationSetting : Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData
     {
-        public ScheduledSynchronizationSetting(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval recurrenceInterval, System.DateTimeOffset synchronizationOn) { }
+        public ScheduledSynchronizationSetting(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval recurrenceInterval, System.DateTimeOffset synchronizeOn) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval RecurrenceInterval { get { throw null; } set { } }
-        public System.DateTimeOffset SynchronizationOn { get { throw null; } set { } }
+        public System.DateTimeOffset SynchronizeOn { get { throw null; } set { } }
         public string UserName { get { throw null; } }
     }
     public partial class ScheduledTrigger : Azure.ResourceManager.DataShare.DataShareTriggerData
     {
-        public ScheduledTrigger(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval recurrenceInterval, System.DateTimeOffset synchronizationOn) { }
+        public ScheduledTrigger(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval recurrenceInterval, System.DateTimeOffset synchronizeOn) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval RecurrenceInterval { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.SynchronizationMode? SynchronizationMode { get { throw null; } set { } }
-        public System.DateTimeOffset SynchronizationOn { get { throw null; } set { } }
+        public System.DateTimeOffset SynchronizeOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus? TriggerStatus { get { throw null; } }
         public string UserName { get { throw null; } }
     }

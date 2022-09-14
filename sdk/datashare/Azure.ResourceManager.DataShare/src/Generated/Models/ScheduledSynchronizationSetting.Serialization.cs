@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("recurrenceInterval");
             writer.WriteStringValue(RecurrenceInterval.ToString());
             writer.WritePropertyName("synchronizationTime");
-            writer.WriteStringValue(SynchronizationOn, "O");
+            writer.WriteStringValue(SynchronizeOn, "O");
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

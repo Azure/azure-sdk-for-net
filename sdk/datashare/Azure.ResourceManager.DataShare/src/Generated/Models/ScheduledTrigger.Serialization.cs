@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
             }
             writer.WritePropertyName("synchronizationTime");
-            writer.WriteStringValue(SynchronizationOn, "O");
+            writer.WriteStringValue(SynchronizeOn, "O");
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

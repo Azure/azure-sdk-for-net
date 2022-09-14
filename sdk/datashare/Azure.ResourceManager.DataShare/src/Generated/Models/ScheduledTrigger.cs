@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         /// <summary> Initializes a new instance of ScheduledTrigger. </summary>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
-        /// <param name="synchronizationOn"> Synchronization time. </param>
-        public ScheduledTrigger(DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizationOn)
+        /// <param name="synchronizeOn"> Synchronization time. </param>
+        public ScheduledTrigger(DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizeOn)
         {
             RecurrenceInterval = recurrenceInterval;
-            SynchronizationOn = synchronizationOn;
+            SynchronizeOn = synchronizeOn;
             Kind = TriggerKind.ScheduleBased;
         }
 
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizationMode"> Synchronization mode. </param>
-        /// <param name="synchronizationOn"> Synchronization time. </param>
+        /// <param name="synchronizeOn"> Synchronization time. </param>
         /// <param name="triggerStatus"> Gets the trigger state. </param>
         /// <param name="userName"> Name of the user who created the trigger. </param>
-        internal ScheduledTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerKind kind, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, DataShareSynchronizationRecurrenceInterval recurrenceInterval, SynchronizationMode? synchronizationMode, DateTimeOffset synchronizationOn, DataShareTriggerStatus? triggerStatus, string userName) : base(id, name, resourceType, systemData, kind)
+        internal ScheduledTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerKind kind, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, DataShareSynchronizationRecurrenceInterval recurrenceInterval, SynchronizationMode? synchronizationMode, DateTimeOffset synchronizeOn, DataShareTriggerStatus? triggerStatus, string userName) : base(id, name, resourceType, systemData, kind)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             RecurrenceInterval = recurrenceInterval;
             SynchronizationMode = synchronizationMode;
-            SynchronizationOn = synchronizationOn;
+            SynchronizeOn = synchronizeOn;
             TriggerStatus = triggerStatus;
             UserName = userName;
             Kind = kind;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Synchronization mode. </summary>
         public SynchronizationMode? SynchronizationMode { get; set; }
         /// <summary> Synchronization time. </summary>
-        public DateTimeOffset SynchronizationOn { get; set; }
+        public DateTimeOffset SynchronizeOn { get; set; }
         /// <summary> Gets the trigger state. </summary>
         public DataShareTriggerStatus? TriggerStatus { get; }
         /// <summary> Name of the user who created the trigger. </summary>
