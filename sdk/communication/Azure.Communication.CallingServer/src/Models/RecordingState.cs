@@ -7,9 +7,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("RecognitionType", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
-    public partial struct CallMediaRecognitionType
+    [CodeGenModel("RecordingState", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [JsonConverter(typeof(EquatableEnumJsonConverter<RecordingState>))]
+    public readonly partial struct RecordingState
     {
     }
 }
