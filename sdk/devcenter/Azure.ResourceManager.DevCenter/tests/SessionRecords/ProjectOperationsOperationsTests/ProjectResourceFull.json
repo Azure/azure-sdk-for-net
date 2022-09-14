@@ -623,7 +623,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "DefaultDevCenterId": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter",
+    "DEFAULT_DEVCENTER_ID": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter",
     "LOCATION": "AustraliaEast",
     "RandomSeed": "1596940801",
     "RESOURCE_GROUP": "sdkrg-devcenter",

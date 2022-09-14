@@ -9,15 +9,15 @@ namespace Azure.ResourceManager.DevCenter.Tests
 {
     public class DevCenterManagementTestEnvironment : TestEnvironment
     {
-        public string DefaultDevCenterId => GetRecordedOptionalVariable("DefaultDevCenterId");
+        public string DefaultDevCenterId => GetRecordedOptionalVariable("DEFAULT_DEVCENTER_ID");
 
-        public string DefaultProjectId => GetRecordedOptionalVariable("DefaultProjectId");
-        public string DefaultMarketplaceDefinitionId => GetRecordedOptionalVariable("DefaultMarketplaceDefinitionId");
+        public string DefaultProjectId => GetRecordedOptionalVariable("DEFAULT_PROJECT_ID");
+        public string DefaultMarketplaceDefinitionId => GetRecordedOptionalVariable("DEFAULT_MARKETPLACE_DEFINITION_ID");
 
-        public string DefaultNetworkConnectionId => GetRecordedOptionalVariable("DefaultNetworkConnectionId");
+        public string DefaultNetworkConnectionId => GetRecordedOptionalVariable("DEFAULT_NETWORKCONNECTION_ID");
 
-        public string DefaultAttachedNetworkName => GetRecordedOptionalVariable("DefaultAttachedNetworkName");
+        public string DefaultAttachedNetworkName => GetRecordedOptionalVariable("DEFAULT_ATTACHED_NETWORK_NAME");
 
-        public string DefaultNetworkConnection2Id => GetRecordedOptionalVariable("DefaultNetworkConnection2Id");
+        public string DefaultNetworkConnection2Id => GetRecordedOptionalVariable("DEFAULT_NETWORK_CONNECTION_ID");
     }
 }

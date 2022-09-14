@@ -9,7 +9,6 @@ var defaultMarketplaceDefinition = 'sdk-default-devboxdefinition'
 var devBoxSkuName = 'general_a_8c32gb_v1'
 var devBoxStorage = 'ssd_1024gb'
 var marketplaceImageName = 'MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
-// var localAdminStatus = 'Enabled'
 
 resource devcenter 'Microsoft.DevCenter/devcenters@2022-08-01-preview' = {
   name: defaultDevCenterName
@@ -138,9 +137,9 @@ resource marketplaceDefinition 'Microsoft.DevCenter/devcenters/devboxdefinitions
   }
 }
 
-output DefaultDevCenterId string = devcenter.id
-output DefaultProjectId string = project.id
-output DefaultMarketplaceDefinitionId string = marketplaceDefinition.id
-output DefaultNetworkConnectionId string = networkConnection1.id
-output DefaultAttachedNetworkName string = networkConnection1.name
-output DefaultNetworkConnection2Id string = networkConnection2.id
+output DEFAULT_DEVCENTER_ID string = devcenter.id
+output DEFAULT_PROJECT_ID string = project.id
+output DEFAULT_MARKETPLACE_DEFINITION_ID string = marketplaceDefinition.id
+output DEFAULT_NETWORKCONNECTION_ID string = networkConnection1.id
+output DEFAULT_ATTACHED_NETWORK_NAME string = networkConnection1.name
+output DEFAULT_NETWORK_CONNECTION_ID string = networkConnection2.id
