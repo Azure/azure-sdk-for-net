@@ -7,8 +7,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -43,6 +45,7 @@ namespace Azure.Core.TestFramework
         protected override DateTime TestStartTime => _testStartTime;
 
         public const string SanitizeValue = "Sanitized";
+        public const string AssetsJson = "assets.json";
 
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
@@ -241,36 +244,81 @@ namespace Azure.Core.TestFramework
 
             string fileName = $"{name}{version}{async}.json";
 
-            return Path.Combine(
+            var repoRoot = GetRepoRoot();
+
+            // this needs to be updated to purely relative to repo root
+            var result = Path.Combine(
                 GetSessionFileDirectory(),
                 fileName);
+
+            var actualResult = result.Replace(repoRoot, String.Empty);
+
+            return result;
         }
 
-        private string AscendToRepoRoot()
+        private class DirectoryEvaluation
         {
-            //    def ascend_to_root(start_dir_or_file: str) -> str:
-            //    """
-            //    Given a path, ascend until encountering a folder with a `.git` folder present within it. Return that directory.
+            public bool IsRoot;
+            public bool IsGitRoot;
+            public bool AssetsJsonPresent;
+        }
 
-            //    :param str start_dir_or_file: The starting directory or file. Either is acceptable.
-            //    """
-            //    if os.path.isfile(start_dir_or_file):
-            //        current_dir = os.path.dirname(start_dir_or_file)
-            //    else:
-            //        current_dir = start_dir_or_file
+        private DirectoryEvaluation EvaluateDirectory(string directoryPath)
+        {
+            var assetsJsonLocation = Path.Combine(directoryPath, AssetsJson);
+            var gitLocation = Path.Combine(directoryPath, ".git");
 
-            //    while current_dir is not None and not (os.path.dirname(current_dir) == current_dir):
-            //        possible_root = os.path.join(current_dir, ".git")
+            return new DirectoryEvaluation()
+            {
+                AssetsJsonPresent = File.Exists(assetsJsonLocation),
+                IsGitRoot = Directory.Exists(gitLocation),
+                IsRoot = new DirectoryInfo(directoryPath).Parent == null
+            };
+        }
 
-            //        # we need to check for assets.json first!
-            //# we need the git check to prevent ascending out of the repo
-            //        if os.path.exists(possible_root):
-            //            if current_dir not in discovered_roots:
-            //            discovered_roots.append(current_dir)
-            //            return current_dir
-            //        else:
-            //          current_dir = os.path.dirname(current_dir)
-            return string.Empty;
+        public string GetRepoRoot()
+        {
+            var path = GetSessionFileDirectory();
+
+            while (true)
+            {
+                var evaluation = EvaluateDirectory(path);
+
+                if (evaluation.IsGitRoot)
+                {
+                    return path;
+                }
+                else if (evaluation.IsRoot)
+                {
+                    // talk to JoshLove about what exception should actually be thrown here when this isn't a proto
+                    throw new Exception("Search for assets.json failed. Reached system root without finding one.");
+                }
+
+                path = Path.GetDirectoryName(path);
+            }
+        }
+
+        public string GetAssetsJson(string testFile)
+        {
+            var path = GetSessionFileDirectory();
+
+            while (true)
+            {
+                var evaluation = EvaluateDirectory(path);
+
+                if (evaluation.AssetsJsonPresent)
+                {
+                    return Path.Combine(path, AssetsJson);
+                }
+                else if (evaluation.IsGitRoot || evaluation.IsRoot)
+                {
+                    // talk to JoshLove about what exception should actually be thrown here when this isn't a proto
+                    // and how to make this optional
+                    return null;
+                }
+
+                path = Path.GetDirectoryName(path);
+            }
         }
 
         private string GetSessionFileDirectory()

@@ -25,7 +25,25 @@ namespace Azure.Core.TestFramework.Models
             XRecordingFile = xRecordingFile;
         }
 
+        /// <summary> Initializes a new instance of StartInformation. </summary>
+        /// <param name="xRecordingFile"></param>
+        /// <param name="xRecordingAssetsFile"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
+        public StartInformation(string xRecordingFile, string xRecordingAssetsFile)
+        {
+            if (xRecordingFile == null)
+            {
+                throw new ArgumentNullException(nameof(xRecordingFile));
+            }
+
+            XRecordingFile = xRecordingFile;
+            XRecordingAssetsFile = xRecordingAssetsFile;
+        }
+
+
         /// <summary> Gets the x recording file. </summary>
         public string XRecordingFile { get; }
+
+        public string XRecordingAssetsFile { get; }
     }
 }
