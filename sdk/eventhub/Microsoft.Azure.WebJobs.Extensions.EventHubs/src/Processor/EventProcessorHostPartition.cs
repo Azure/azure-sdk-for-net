@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
@@ -12,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal class EventProcessorHostPartition : EventProcessorPartition
     {
-        private PartitionContext _partitionContext;
+        private TriggerPartitionContext _partitionContext;
 
         public EventProcessorHostPartition()
         {
@@ -23,8 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             PartitionId = partitionId;
         }
 
-        public CheckpointContext CheckpointContext { get; set; }
-        public PartitionContext PartitionContext => _partitionContext ??= new EventProcessorHostPartitionContext(this);
+        public TriggerPartitionContext PartitionContext => _partitionContext ??= new EventProcessorHostPartitionContext(this);
 
         public string Owner => ProcessorHost.Identifier;
         public string EventHubPath => ProcessorHost.EventHubName;
@@ -58,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             Checkpoint = new CheckpointInfo(checkpointEvent.Offset, checkpointEvent.SequenceNumber);
         }
 
-        private class EventProcessorHostPartitionContext : PartitionContext
+        private class EventProcessorHostPartitionContext : TriggerPartitionContext
         {
             private readonly EventProcessorHostPartition _hostPartition;
 
