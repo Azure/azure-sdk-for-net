@@ -13,44 +13,44 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> IoT Addon. </summary>
-    public partial class IoTAddon : AddonData
+    public partial class IotAddon : DataBoxEdgeRoleAddonData
     {
-        /// <summary> Initializes a new instance of IoTAddon. </summary>
-        /// <param name="ioTDeviceDetails"> IoT device metadata to which appliance needs to be connected. </param>
-        /// <param name="ioTEdgeDeviceDetails"> IoT edge device to which the IoT Addon needs to be configured. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ioTDeviceDetails"/> or <paramref name="ioTEdgeDeviceDetails"/> is null. </exception>
-        public IoTAddon(IoTDeviceInfo ioTDeviceDetails, IoTDeviceInfo ioTEdgeDeviceDetails)
+        /// <summary> Initializes a new instance of IotAddon. </summary>
+        /// <param name="iotDeviceDetails"> IoT device metadata to which appliance needs to be connected. </param>
+        /// <param name="iotEdgeDeviceDetails"> IoT edge device to which the IoT Addon needs to be configured. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="iotDeviceDetails"/> or <paramref name="iotEdgeDeviceDetails"/> is null. </exception>
+        public IotAddon(IotDeviceInfo iotDeviceDetails, IotDeviceInfo iotEdgeDeviceDetails)
         {
-            if (ioTDeviceDetails == null)
+            if (iotDeviceDetails == null)
             {
-                throw new ArgumentNullException(nameof(ioTDeviceDetails));
+                throw new ArgumentNullException(nameof(iotDeviceDetails));
             }
-            if (ioTEdgeDeviceDetails == null)
+            if (iotEdgeDeviceDetails == null)
             {
-                throw new ArgumentNullException(nameof(ioTEdgeDeviceDetails));
+                throw new ArgumentNullException(nameof(iotEdgeDeviceDetails));
             }
 
-            IoTDeviceDetails = ioTDeviceDetails;
-            IoTEdgeDeviceDetails = ioTEdgeDeviceDetails;
+            IotDeviceDetails = iotDeviceDetails;
+            IotEdgeDeviceDetails = iotEdgeDeviceDetails;
             Kind = AddonType.IotEdge;
         }
 
-        /// <summary> Initializes a new instance of IoTAddon. </summary>
+        /// <summary> Initializes a new instance of IotAddon. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Addon type. </param>
-        /// <param name="ioTDeviceDetails"> IoT device metadata to which appliance needs to be connected. </param>
-        /// <param name="ioTEdgeDeviceDetails"> IoT edge device to which the IoT Addon needs to be configured. </param>
+        /// <param name="iotDeviceDetails"> IoT device metadata to which appliance needs to be connected. </param>
+        /// <param name="iotEdgeDeviceDetails"> IoT edge device to which the IoT Addon needs to be configured. </param>
         /// <param name="version"> Version of IoT running on the appliance. </param>
         /// <param name="hostPlatform"> Host OS supported by the IoT addon. </param>
         /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
         /// <param name="provisioningState"> Addon Provisioning State. </param>
-        internal IoTAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, IoTDeviceInfo ioTDeviceDetails, IoTDeviceInfo ioTEdgeDeviceDetails, string version, PlatformType? hostPlatform, HostPlatformType? hostPlatformType, AddonState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        internal IotAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, IotDeviceInfo iotDeviceDetails, IotDeviceInfo iotEdgeDeviceDetails, string version, DataBoxEdgeOSPlatformType? hostPlatform, HostPlatformType? hostPlatformType, DataBoxEdgeRoleAddonProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
         {
-            IoTDeviceDetails = ioTDeviceDetails;
-            IoTEdgeDeviceDetails = ioTEdgeDeviceDetails;
+            IotDeviceDetails = iotDeviceDetails;
+            IotEdgeDeviceDetails = iotEdgeDeviceDetails;
             Version = version;
             HostPlatform = hostPlatform;
             HostPlatformType = hostPlatformType;
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> IoT device metadata to which appliance needs to be connected. </summary>
-        public IoTDeviceInfo IoTDeviceDetails { get; set; }
+        public IotDeviceInfo IotDeviceDetails { get; set; }
         /// <summary> IoT edge device to which the IoT Addon needs to be configured. </summary>
-        public IoTDeviceInfo IoTEdgeDeviceDetails { get; set; }
+        public IotDeviceInfo IotEdgeDeviceDetails { get; set; }
         /// <summary> Version of IoT running on the appliance. </summary>
         public string Version { get; }
         /// <summary> Host OS supported by the IoT addon. </summary>
-        public PlatformType? HostPlatform { get; }
+        public DataBoxEdgeOSPlatformType? HostPlatform { get; }
         /// <summary> Platform where the runtime is hosted. </summary>
         public HostPlatformType? HostPlatformType { get; }
         /// <summary> Addon Provisioning State. </summary>
-        public AddonState? ProvisioningState { get; }
+        public DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get; }
     }
 }

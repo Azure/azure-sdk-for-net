@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> id0 = default;
             Optional<string> name0 = default;
             Optional<string> description = default;
-            Optional<string> endpointA = default;
-            Optional<string> endpointB = default;
+            Optional<Uri> endpointA = default;
+            Optional<Uri> endpointB = default;
             Optional<DateTimeOffset> startDateTimeUtc = default;
             Optional<DateTimeOffset> endDateTimeUtc = default;
             Optional<string> country = default;
@@ -137,12 +137,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         }
                         if (property0.NameEquals("endpointA"))
                         {
-                            endpointA = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                endpointA = null;
+                                continue;
+                            }
+                            endpointA = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endpointB"))
                         {
-                            endpointB = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                endpointB = null;
+                                continue;
+                            }
+                            endpointB = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startDateTimeUTC"))

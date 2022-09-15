@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     case "Microsoft.Network/networkInterfaces": return NetworkInterfaceResourceSettings.DeserializeNetworkInterfaceResourceSettings(element);
                     case "Microsoft.Network/networkSecurityGroups": return NetworkSecurityGroupResourceSettings.DeserializeNetworkSecurityGroupResourceSettings(element);
                     case "Microsoft.Network/publicIPAddresses": return PublicIPAddressResourceSettings.DeserializePublicIPAddressResourceSettings(element);
-                    case "Microsoft.Network/virtualNetworks": return VirtualNetworkResourceSettings.DeserializeVirtualNetworkResourceSettings(element);
+                    case "Microsoft.Network/virtualNetworks": return MoverVirtualNetworkResourceSettings.DeserializeMoverVirtualNetworkResourceSettings(element);
                     case "Microsoft.Sql/servers": return SqlServerResourceSettings.DeserializeSqlServerResourceSettings(element);
                     case "Microsoft.Sql/servers/databases": return SqlDatabaseResourceSettings.DeserializeSqlDatabaseResourceSettings(element);
                     case "Microsoft.Sql/servers/elasticPools": return SqlElasticPoolResourceSettings.DeserializeSqlElasticPoolResourceSettings(element);

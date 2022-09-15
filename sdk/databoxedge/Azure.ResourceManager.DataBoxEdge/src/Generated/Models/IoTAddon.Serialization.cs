@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class IoTAddon : IUtf8JsonSerializable
+    public partial class IotAddon : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("ioTDeviceDetails");
-            writer.WriteObjectValue(IoTDeviceDetails);
+            writer.WriteObjectValue(IotDeviceDetails);
             writer.WritePropertyName("ioTEdgeDeviceDetails");
-            writer.WriteObjectValue(IoTEdgeDeviceDetails);
+            writer.WriteObjectValue(IotEdgeDeviceDetails);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static IoTAddon DeserializeIoTAddon(JsonElement element)
+        internal static IotAddon DeserializeIotAddon(JsonElement element)
         {
             AddonType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            IoTDeviceInfo ioTDeviceDetails = default;
-            IoTDeviceInfo ioTEdgeDeviceDetails = default;
+            IotDeviceInfo iotDeviceDetails = default;
+            IotDeviceInfo iotEdgeDeviceDetails = default;
             Optional<string> version = default;
-            Optional<PlatformType> hostPlatform = default;
+            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
             Optional<HostPlatformType> hostPlatformType = default;
-            Optional<AddonState> provisioningState = default;
+            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("ioTDeviceDetails"))
                         {
-                            ioTDeviceDetails = IoTDeviceInfo.DeserializeIoTDeviceInfo(property0.Value);
+                            iotDeviceDetails = IotDeviceInfo.DeserializeIotDeviceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ioTEdgeDeviceDetails"))
                         {
-                            ioTEdgeDeviceDetails = IoTDeviceInfo.DeserializeIoTDeviceInfo(property0.Value);
+                            iotEdgeDeviceDetails = IotDeviceInfo.DeserializeIotDeviceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("version"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostPlatform = new PlatformType(property0.Value.GetString());
+                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostPlatformType"))
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new AddonState(property0.Value.GetString());
+                            provisioningState = new DataBoxEdgeRoleAddonProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new IoTAddon(id, name, type, systemData.Value, kind, ioTDeviceDetails, ioTEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            return new IotAddon(id, name, type, systemData.Value, kind, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
         }
     }
 }

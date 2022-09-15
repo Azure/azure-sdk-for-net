@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, string scorecardEndpointA, string scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
+        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, Uri scorecardEndpointA, Uri scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
         {
             LatencyScorecardId = latencyScorecardId;
             LatencyScorecardName = latencyScorecardName;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The description of the Latency Scorecard. </summary>
         public string Description { get; }
         /// <summary> The A endpoint in the scorecard. </summary>
-        public string ScorecardEndpointA { get; }
+        public Uri ScorecardEndpointA { get; }
         /// <summary> The B endpoint in the scorecard. </summary>
-        public string ScorecardEndpointB { get; }
+        public Uri ScorecardEndpointB { get; }
         /// <summary> The start time of the Latency Scorecard in UTC. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>

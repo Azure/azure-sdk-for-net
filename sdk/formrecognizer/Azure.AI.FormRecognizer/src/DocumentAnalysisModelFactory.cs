@@ -139,7 +139,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithAddressFieldType(AddressValue value = null)
+        public static DocumentFieldValue DocumentFieldValueWithAddressFieldType(AddressValue value)
         {
             return new DocumentFieldValue(DocumentFieldType.Address, valueAddress: value);
         }
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithCountryRegionFieldType(string value = null)
+        public static DocumentFieldValue DocumentFieldValueWithCountryRegionFieldType(string value)
         {
             return new DocumentFieldValue(DocumentFieldType.CountryRegion, valueCountryRegion: value);
         }
@@ -155,7 +155,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithCurrencyFieldType(CurrencyValue? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithCurrencyFieldType(CurrencyValue value)
         {
             return new DocumentFieldValue(DocumentFieldType.Currency, valueCurrency: value);
         }
@@ -163,7 +163,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithDateFieldType(DateTimeOffset? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithDateFieldType(DateTimeOffset value)
         {
             return new DocumentFieldValue(DocumentFieldType.Date, valueDate: value);
         }
@@ -171,7 +171,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithDictionaryFieldType(IReadOnlyDictionary<string, DocumentField> value = null)
+        public static DocumentFieldValue DocumentFieldValueWithDictionaryFieldType(IReadOnlyDictionary<string, DocumentField> value)
         {
             return new DocumentFieldValue(DocumentFieldType.Dictionary, valueObject: value);
         }
@@ -179,7 +179,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithDoubleFieldType(double? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithDoubleFieldType(double value)
         {
             return new DocumentFieldValue(DocumentFieldType.Double, valueNumber: value);
         }
@@ -187,7 +187,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithInt64FieldType(int? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithInt64FieldType(int value)
         {
             return new DocumentFieldValue(DocumentFieldType.Int64, valueInteger: value);
         }
@@ -195,7 +195,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithListFieldType(IEnumerable<DocumentField> value = null)
+        public static DocumentFieldValue DocumentFieldValueWithListFieldType(IEnumerable<DocumentField> value)
         {
             return new DocumentFieldValue(DocumentFieldType.List, valueArray: value.ToList());
         }
@@ -203,7 +203,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithPhoneNumberFieldType(string value = null)
+        public static DocumentFieldValue DocumentFieldValueWithPhoneNumberFieldType(string value)
         {
             return new DocumentFieldValue(DocumentFieldType.Date, valuePhoneNumber: value);
         }
@@ -211,7 +211,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithSelectionMarkFieldType(SelectionMarkState? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithSelectionMarkFieldType(DocumentSelectionMarkState value)
         {
             return new DocumentFieldValue(value);
         }
@@ -219,7 +219,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithSignatureFieldType(DocumentSignatureType? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithSignatureFieldType(DocumentSignatureType value)
         {
             return new DocumentFieldValue(DocumentFieldType.Signature, valueSignature: value);
         }
@@ -227,7 +227,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithStringFieldType(string value = null)
+        public static DocumentFieldValue DocumentFieldValueWithStringFieldType(string value)
         {
             return new DocumentFieldValue(DocumentFieldType.String, valueString: value);
         }
@@ -235,9 +235,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithTimeFieldType(TimeSpan? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithTimeFieldType(TimeSpan value)
         {
             return new DocumentFieldValue(DocumentFieldType.Time, valueTime: value);
+        }
+
+        /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
+        /// <param name="expectedFieldType"> The expected type of the field. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
+        public static DocumentFieldValue DocumentFieldValueWithUnknownFieldType(DocumentFieldType expectedFieldType)
+        {
+            return new DocumentFieldValue(expectedFieldType);
         }
 
         /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
@@ -279,12 +287,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
         /// <param name="boundingPolygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
+        /// <param name="words"> The words that compose this line. Returned by the <see cref="DocumentLine.GetWords"/> method. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentLine"/> instance for mocking. </returns>
-        public static DocumentLine DocumentLine(string content = null, IReadOnlyList<PointF> boundingPolygon = default, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentLine DocumentLine(string content = null, IReadOnlyList<PointF> boundingPolygon = default, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null)
         {
             spans ??= new List<DocumentSpan>();
+            words ??= new List<DocumentWord>();
 
-            return new DocumentLine(content, boundingPolygon, spans?.ToList());
+            return new DocumentLine(content, boundingPolygon, spans?.ToList(), words?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
@@ -380,7 +390,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, LengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
+        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, DocumentPageLengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
         {
             spans ??= new List<DocumentSpan>();
             words ??= new List<DocumentWord>();
@@ -410,7 +420,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
         {
             return new DocumentSelectionMark(state, boundingPolygon, span, confidence);
         }

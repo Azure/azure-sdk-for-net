@@ -79,7 +79,7 @@ namespace Azure.Communication.CallingServer
                     }
                 };
 
-                return contentRestClient.Recording(request, cancellationToken);
+                return contentRestClient.Recording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -121,7 +121,7 @@ namespace Azure.Communication.CallingServer
                     }
                 };
 
-                return await contentRestClient.RecordingAsync(request, cancellationToken).ConfigureAwait(false);
+                return await contentRestClient.RecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

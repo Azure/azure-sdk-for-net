@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="userId"> User ID (already existing in the device). </param>
         /// <param name="accessType"> Type of access to be allowed for the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public UserAccessRight(string userId, ShareAccessType accessType)
+        public UserAccessRight(ResourceIdentifier userId, ShareAccessType accessType)
         {
             if (userId == null)
             {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> User ID (already existing in the device). </summary>
-        public string UserId { get; set; }
+        public ResourceIdentifier UserId { get; set; }
         /// <summary> Type of access to be allowed for the user. </summary>
         public ShareAccessType AccessType { get; set; }
     }

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of CustomerManagedEncryption. </summary>
         /// <param name="status"> Status of customer managed encryption key. </param>
         /// <param name="keyVaultProperties"> The key vault where the encryption key is stored. </param>
-        internal CustomerManagedEncryption(EncryptionState? status, AvsEncryptionKeyVaultProperties keyVaultProperties)
+        internal CustomerManagedEncryption(AvsEncryptionState? status, AvsEncryptionKeyVaultProperties keyVaultProperties)
         {
             Status = status;
             KeyVaultProperties = keyVaultProperties;
         }
 
         /// <summary> Status of customer managed encryption key. </summary>
-        public EncryptionState? Status { get; set; }
+        public AvsEncryptionState? Status { get; set; }
         /// <summary> The key vault where the encryption key is stored. </summary>
         public AvsEncryptionKeyVaultProperties KeyVaultProperties { get; set; }
     }

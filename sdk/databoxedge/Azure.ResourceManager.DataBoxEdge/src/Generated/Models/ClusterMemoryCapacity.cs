@@ -16,45 +16,45 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of ClusterMemoryCapacity. </summary>
-        /// <param name="clusterFreeMemoryMb"> The free memory in the cluster in MB. </param>
-        /// <param name="clusterUsedMemoryMb"> The used memory in the cluster in MB. </param>
-        /// <param name="clusterFailoverMemoryMb"> The failover memory in the cluster in MB. </param>
-        /// <param name="clusterFragmentationMemoryMb"> The fragmentation memory in the cluster in MB. </param>
+        /// <param name="clusterFreeMemoryInMB"> The free memory in the cluster in MB. </param>
+        /// <param name="clusterUsedMemoryInMB"> The used memory in the cluster in MB. </param>
+        /// <param name="clusterFailoverMemoryInMB"> The failover memory in the cluster in MB. </param>
+        /// <param name="clusterFragmentationMemoryInMB"> The fragmentation memory in the cluster in MB. </param>
         /// <param name="clusterHyperVReserveMemoryMb"> The memory reserved for Hyper-V in the cluster in MB. </param>
-        /// <param name="clusterInfraVmMemoryMb"> The memory of the Infra VM in the cluster in MB. </param>
-        /// <param name="clusterTotalMemoryMb"> The total memory in the cluster in MB. </param>
-        /// <param name="clusterNonFailoverVmMb"> The non-failover memory in the cluster in MB. </param>
-        /// <param name="clusterMemoryUsedByVmsMb"> The memory used by VMs in the cluster in MB. </param>
-        internal ClusterMemoryCapacity(double? clusterFreeMemoryMb, double? clusterUsedMemoryMb, double? clusterFailoverMemoryMb, double? clusterFragmentationMemoryMb, double? clusterHyperVReserveMemoryMb, double? clusterInfraVmMemoryMb, double? clusterTotalMemoryMb, double? clusterNonFailoverVmMb, double? clusterMemoryUsedByVmsMb)
+        /// <param name="clusterInfraVmMemoryInMB"> The memory of the Infra VM in the cluster in MB. </param>
+        /// <param name="clusterTotalMemoryInMB"> The total memory in the cluster in MB. </param>
+        /// <param name="clusterNonFailoverVmInMB"> The non-failover memory in the cluster in MB. </param>
+        /// <param name="clusterMemoryUsedByVmsInMB"> The memory used by VMs in the cluster in MB. </param>
+        internal ClusterMemoryCapacity(double? clusterFreeMemoryInMB, double? clusterUsedMemoryInMB, double? clusterFailoverMemoryInMB, double? clusterFragmentationMemoryInMB, double? clusterHyperVReserveMemoryMb, double? clusterInfraVmMemoryInMB, double? clusterTotalMemoryInMB, double? clusterNonFailoverVmInMB, double? clusterMemoryUsedByVmsInMB)
         {
-            ClusterFreeMemoryMb = clusterFreeMemoryMb;
-            ClusterUsedMemoryMb = clusterUsedMemoryMb;
-            ClusterFailoverMemoryMb = clusterFailoverMemoryMb;
-            ClusterFragmentationMemoryMb = clusterFragmentationMemoryMb;
+            ClusterFreeMemoryInMB = clusterFreeMemoryInMB;
+            ClusterUsedMemoryInMB = clusterUsedMemoryInMB;
+            ClusterFailoverMemoryInMB = clusterFailoverMemoryInMB;
+            ClusterFragmentationMemoryInMB = clusterFragmentationMemoryInMB;
             ClusterHyperVReserveMemoryMb = clusterHyperVReserveMemoryMb;
-            ClusterInfraVmMemoryMb = clusterInfraVmMemoryMb;
-            ClusterTotalMemoryMb = clusterTotalMemoryMb;
-            ClusterNonFailoverVmMb = clusterNonFailoverVmMb;
-            ClusterMemoryUsedByVmsMb = clusterMemoryUsedByVmsMb;
+            ClusterInfraVmMemoryInMB = clusterInfraVmMemoryInMB;
+            ClusterTotalMemoryInMB = clusterTotalMemoryInMB;
+            ClusterNonFailoverVmInMB = clusterNonFailoverVmInMB;
+            ClusterMemoryUsedByVmsInMB = clusterMemoryUsedByVmsInMB;
         }
 
         /// <summary> The free memory in the cluster in MB. </summary>
-        public double? ClusterFreeMemoryMb { get; set; }
+        public double? ClusterFreeMemoryInMB { get; set; }
         /// <summary> The used memory in the cluster in MB. </summary>
-        public double? ClusterUsedMemoryMb { get; set; }
+        public double? ClusterUsedMemoryInMB { get; set; }
         /// <summary> The failover memory in the cluster in MB. </summary>
-        public double? ClusterFailoverMemoryMb { get; set; }
+        public double? ClusterFailoverMemoryInMB { get; set; }
         /// <summary> The fragmentation memory in the cluster in MB. </summary>
-        public double? ClusterFragmentationMemoryMb { get; set; }
+        public double? ClusterFragmentationMemoryInMB { get; set; }
         /// <summary> The memory reserved for Hyper-V in the cluster in MB. </summary>
         public double? ClusterHyperVReserveMemoryMb { get; set; }
         /// <summary> The memory of the Infra VM in the cluster in MB. </summary>
-        public double? ClusterInfraVmMemoryMb { get; set; }
+        public double? ClusterInfraVmMemoryInMB { get; set; }
         /// <summary> The total memory in the cluster in MB. </summary>
-        public double? ClusterTotalMemoryMb { get; set; }
+        public double? ClusterTotalMemoryInMB { get; set; }
         /// <summary> The non-failover memory in the cluster in MB. </summary>
-        public double? ClusterNonFailoverVmMb { get; set; }
+        public double? ClusterNonFailoverVmInMB { get; set; }
         /// <summary> The memory used by VMs in the cluster in MB. </summary>
-        public double? ClusterMemoryUsedByVmsMb { get; set; }
+        public double? ClusterMemoryUsedByVmsInMB { get; set; }
     }
 }

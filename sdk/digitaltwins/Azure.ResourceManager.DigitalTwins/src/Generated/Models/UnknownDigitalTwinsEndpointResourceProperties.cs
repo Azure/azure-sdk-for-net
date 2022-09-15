@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
-        internal UnknownDigitalTwinsEndpointResourceProperties(EndpointType endpointType, EndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, AuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
+        internal UnknownDigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
         {
             EndpointType = endpointType;
         }

@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.NetApp
         private readonly AccountsRestOperations _netAppAccountAccountsRestClient;
         private readonly ClientDiagnostics _vaultsClientDiagnostics;
         private readonly VaultsRestOperations _vaultsRestClient;
+        private readonly ClientDiagnostics _netAppVolumeGroupVolumeGroupsClientDiagnostics;
+        private readonly VolumeGroupsRestOperations _netAppVolumeGroupVolumeGroupsRestClient;
         private readonly NetAppAccountData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class for mocking. </summary>
@@ -64,6 +66,9 @@ namespace Azure.ResourceManager.NetApp
             _netAppAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountAccountsApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _vaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _netAppVolumeGroupVolumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetAppVolumeGroupResource.ResourceType, out string netAppVolumeGroupVolumeGroupsApiVersion);
+            _netAppVolumeGroupVolumeGroupsRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeGroupVolumeGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -481,6 +486,60 @@ namespace Azure.ResourceManager.NetApp
                 try
                 {
                     var response = _vaultsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// List all volume groups for given account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups
+        /// Operation Id: VolumeGroups_ListByNetAppAccount
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<NetAppVolumeGroupResult>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroups");
+                scope.Start();
+                try
+                {
+                    var response = await _netAppVolumeGroupVolumeGroupsRestClient.ListByNetAppAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// List all volume groups for given account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups
+        /// Operation Id: VolumeGroups_ListByNetAppAccount
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
+        {
+            Page<NetAppVolumeGroupResult> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppAccountResource.GetVolumeGroups");
+                scope.Start();
+                try
+                {
+                    var response = _netAppVolumeGroupVolumeGroupsRestClient.ListByNetAppAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

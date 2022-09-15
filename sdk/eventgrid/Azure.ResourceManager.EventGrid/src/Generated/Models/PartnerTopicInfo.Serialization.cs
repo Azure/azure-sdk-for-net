@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId");
-                writer.WriteStringValue(AzureSubscriptionId);
+                writer.WriteStringValue(AzureSubscriptionId.Value);
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
@@ -45,16 +46,21 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerTopicInfo DeserializePartnerTopicInfo(JsonElement element)
         {
-            Optional<string> azureSubscriptionId = default;
+            Optional<Guid> azureSubscriptionId = default;
             Optional<string> resourceGroupName = default;
             Optional<string> name = default;
-            Optional<EventTypeInfo> eventTypeInfo = default;
+            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
             Optional<string> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureSubscriptionId"))
                 {
-                    azureSubscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    azureSubscriptionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("resourceGroupName"))
@@ -74,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eventTypeInfo = EventTypeInfo.DeserializeEventTypeInfo(property.Value);
+                    eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("source"))
@@ -83,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new PartnerTopicInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, eventTypeInfo.Value, source.Value);
+            return new PartnerTopicInfo(Optional.ToNullable(azureSubscriptionId), resourceGroupName.Value, name.Value, eventTypeInfo.Value, source.Value);
         }
     }
 }

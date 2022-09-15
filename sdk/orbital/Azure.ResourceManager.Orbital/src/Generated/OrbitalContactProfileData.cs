@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Orbital
         /// <summary> Network configuration of customer virtual network. </summary>
         internal ContactProfilesPropertiesNetworkConfiguration NetworkConfiguration { get; set; }
         /// <summary> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </summary>
-        public string NetworkSubnetId
+        public ResourceIdentifier NetworkSubnetId
         {
-            get => NetworkConfiguration is null ? default : NetworkConfiguration.SubnetId;
+            get => NetworkConfiguration is null ? default : NetworkConfiguration.NetworkSubnetId;
             set => NetworkConfiguration = new ContactProfilesPropertiesNetworkConfiguration(value);
         }
 

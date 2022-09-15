@@ -29,6 +29,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var monitorTags = EnumerateActivityTags(activity);
                 telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
 
+                // Check for Exceptions events
+                if (activity.Events.Any())
+                {
+                    AddExceptionTelemetryFromActivityExceptionEvents(activity, telemetryItem, telemetryItems);
+                }
+
                 switch (activity.GetTelemetryType())
                 {
                     case TelemetryType.Request:
@@ -167,6 +173,84 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return activity.DisplayName;
+        }
+
+        private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
+        {
+            foreach (var evnt in activity.Events)
+            {
+                if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                {
+                    try
+                    {
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
+                        if (exceptionData != null)
+                        {
+                            var exceptionTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            exceptionTelemetryItem.Data = exceptionData;
+                            telemetryItems.Add(exceptionTelemetryItem);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractExceptionFromActivityEvent", ex);
+                    }
+                }
+            }
+        }
+
+        internal static MonitorBase GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags)
+        {
+            string exceptionType = null;
+            string exceptionStackTrace = null;
+            string exceptionMessage = null;
+
+            // TODO: update to use perf improvements in .NET7.0
+            foreach (var tag in activityEventTags)
+            {
+                // TODO: see if these can be cached
+                if (tag.Key == SemanticConventions.AttributeExceptionType)
+                {
+                    exceptionType = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                {
+                    exceptionMessage = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
+                {
+                    exceptionStackTrace = tag.Value.ToString();
+                    continue;
+                }
+            }
+
+            if (exceptionMessage == null || exceptionType == null)
+            {
+                return null;
+            }
+
+            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage)
+            {
+                Stack = exceptionStackTrace,
+
+                // TODO: Update swagger schema to mandate typename.
+                TypeName = exceptionType
+            };
+
+            List<TelemetryExceptionDetails> exceptions = new()
+            {
+                exceptionDetails
+            };
+
+            TelemetryExceptionData exceptionData = new(Version, exceptions);
+
+            return new MonitorBase
+            {
+                BaseType = "ExceptionData",
+                BaseData = exceptionData,
+            };
         }
     }
 }

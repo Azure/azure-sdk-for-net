@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> is null. </exception>
-        public VmPlacementPolicyProperties(IEnumerable<string> vmMembers, AffinityType affinityType)
+        public VmPlacementPolicyProperties(IEnumerable<ResourceIdentifier> vmMembers, AvsPlacementPolicyAffinityType affinityType)
         {
             if (vmMembers == null)
             {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
-        internal VmPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<string> vmMembers, AffinityType affinityType) : base(policyType, state, displayName, provisioningState)
+        internal VmPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<ResourceIdentifier> vmMembers, AvsPlacementPolicyAffinityType affinityType) : base(policyType, state, displayName, provisioningState)
         {
             VmMembers = vmMembers;
             AffinityType = affinityType;
@@ -45,8 +46,8 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Virtual machine members list. </summary>
-        public IList<string> VmMembers { get; }
+        public IList<ResourceIdentifier> VmMembers { get; }
         /// <summary> placement policy affinity type. </summary>
-        public AffinityType AffinityType { get; set; }
+        public AvsPlacementPolicyAffinityType AffinityType { get; set; }
     }
 }

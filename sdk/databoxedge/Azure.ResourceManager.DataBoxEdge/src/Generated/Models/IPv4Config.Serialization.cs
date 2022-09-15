@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,14 +15,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static IPv4Config DeserializeIPv4Config(JsonElement element)
         {
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<string> subnet = default;
             Optional<string> gateway = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnet"))
