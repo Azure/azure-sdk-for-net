@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Scope for this rule. The scope and filter determine which clients match the rule. </summary>
+    /// <summary>
+    /// Scope for this rule. The scope and filter determine which clients match the rule.
+    /// Serialized Name: NfsAccessRuleScope
+    /// </summary>
     public readonly partial struct NfsAccessRuleScope : IEquatable<NfsAccessRuleScope>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string NetworkValue = "network";
         private const string HostValue = "host";
 
-        /// <summary> default. </summary>
+        /// <summary>
+        /// default
+        /// Serialized Name: NfsAccessRuleScope.default
+        /// </summary>
         public static NfsAccessRuleScope Default { get; } = new NfsAccessRuleScope(DefaultValue);
-        /// <summary> network. </summary>
+        /// <summary>
+        /// network
+        /// Serialized Name: NfsAccessRuleScope.network
+        /// </summary>
         public static NfsAccessRuleScope Network { get; } = new NfsAccessRuleScope(NetworkValue);
-        /// <summary> host. </summary>
+        /// <summary>
+        /// host
+        /// Serialized Name: NfsAccessRuleScope.host
+        /// </summary>
         public static NfsAccessRuleScope Host { get; } = new NfsAccessRuleScope(HostValue);
         /// <summary> Determines if two <see cref="NfsAccessRuleScope"/> values are the same. </summary>
         public static bool operator ==(NfsAccessRuleScope left, NfsAccessRuleScope right) => left.Equals(right);

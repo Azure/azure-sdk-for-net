@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Properties pertaining to the UnknownTarget. </summary>
+    /// <summary>
+    /// Properties pertaining to the UnknownTarget
+    /// Serialized Name: UnknownTarget
+    /// </summary>
     internal partial class UnknownTarget
     {
         /// <summary> Initializes a new instance of UnknownTarget. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of UnknownTarget. </summary>
-        /// <param name="attributes"> Dictionary of string-&gt;string pairs containing information about the Storage Target. </param>
+        /// <param name="attributes">
+        /// Dictionary of string-&gt;string pairs containing information about the Storage Target.
+        /// Serialized Name: UnknownTarget.attributes
+        /// </param>
         internal UnknownTarget(IDictionary<string, string> attributes)
         {
             Attributes = attributes;
         }
 
-        /// <summary> Dictionary of string-&gt;string pairs containing information about the Storage Target. </summary>
+        /// <summary>
+        /// Dictionary of string-&gt;string pairs containing information about the Storage Target.
+        /// Serialized Name: UnknownTarget.attributes
+        /// </summary>
         public IDictionary<string, string> Attributes { get; }
     }
 }

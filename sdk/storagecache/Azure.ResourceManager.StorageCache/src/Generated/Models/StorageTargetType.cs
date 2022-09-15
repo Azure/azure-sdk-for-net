@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Type of the Storage Target. </summary>
+    /// <summary>
+    /// Type of the Storage Target.
+    /// Serialized Name: StorageTargetType
+    /// </summary>
     public readonly partial struct StorageTargetType : IEquatable<StorageTargetType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string UnknownValue = "unknown";
         private const string BlobNfsValue = "blobNfs";
 
-        /// <summary> nfs3. </summary>
+        /// <summary>
+        /// nfs3
+        /// Serialized Name: StorageTargetType.nfs3
+        /// </summary>
         public static StorageTargetType Nfs3 { get; } = new StorageTargetType(Nfs3Value);
-        /// <summary> clfs. </summary>
+        /// <summary>
+        /// clfs
+        /// Serialized Name: StorageTargetType.clfs
+        /// </summary>
         public static StorageTargetType Clfs { get; } = new StorageTargetType(ClfsValue);
-        /// <summary> unknown. </summary>
+        /// <summary>
+        /// unknown
+        /// Serialized Name: StorageTargetType.unknown
+        /// </summary>
         public static StorageTargetType Unknown { get; } = new StorageTargetType(UnknownValue);
-        /// <summary> blobNfs. </summary>
+        /// <summary>
+        /// blobNfs
+        /// Serialized Name: StorageTargetType.blobNfs
+        /// </summary>
         public static StorageTargetType BlobNfs { get; } = new StorageTargetType(BlobNfsValue);
         /// <summary> Determines if two <see cref="StorageTargetType"/> values are the same. </summary>
         public static bool operator ==(StorageTargetType left, StorageTargetType right) => left.Equals(right);

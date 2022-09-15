@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> The state of the priming operation. </summary>
+    /// <summary>
+    /// The state of the priming operation.
+    /// Serialized Name: PrimingJobState
+    /// </summary>
     public readonly partial struct PrimingJobState : IEquatable<PrimingJobState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string PausedValue = "Paused";
         private const string CompleteValue = "Complete";
 
-        /// <summary> Queued. </summary>
+        /// <summary>
+        /// Queued
+        /// Serialized Name: PrimingJobState.Queued
+        /// </summary>
         public static PrimingJobState Queued { get; } = new PrimingJobState(QueuedValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: PrimingJobState.Running
+        /// </summary>
         public static PrimingJobState Running { get; } = new PrimingJobState(RunningValue);
-        /// <summary> Paused. </summary>
+        /// <summary>
+        /// Paused
+        /// Serialized Name: PrimingJobState.Paused
+        /// </summary>
         public static PrimingJobState Paused { get; } = new PrimingJobState(PausedValue);
-        /// <summary> Complete. </summary>
+        /// <summary>
+        /// Complete
+        /// Serialized Name: PrimingJobState.Complete
+        /// </summary>
         public static PrimingJobState Complete { get; } = new PrimingJobState(CompleteValue);
         /// <summary> Determines if two <see cref="PrimingJobState"/> values are the same. </summary>
         public static bool operator ==(PrimingJobState left, PrimingJobState right) => left.Equals(right);

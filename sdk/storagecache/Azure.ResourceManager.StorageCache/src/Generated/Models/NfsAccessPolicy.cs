@@ -11,12 +11,21 @@ using System.Linq;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> A set of rules describing access policies applied to NFSv3 clients of the cache. </summary>
+    /// <summary>
+    /// A set of rules describing access policies applied to NFSv3 clients of the cache.
+    /// Serialized Name: NfsAccessPolicy
+    /// </summary>
     public partial class NfsAccessPolicy
     {
         /// <summary> Initializes a new instance of NfsAccessPolicy. </summary>
-        /// <param name="name"> Name identifying this policy. Access Policy names are not case sensitive. </param>
-        /// <param name="accessRules"> The set of rules describing client accesses allowed under this policy. </param>
+        /// <param name="name">
+        /// Name identifying this policy. Access Policy names are not case sensitive.
+        /// Serialized Name: NfsAccessPolicy.name
+        /// </param>
+        /// <param name="accessRules">
+        /// The set of rules describing client accesses allowed under this policy.
+        /// Serialized Name: NfsAccessPolicy.accessRules
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accessRules"/> is null. </exception>
         public NfsAccessPolicy(string name, IEnumerable<NfsAccessRule> accessRules)
         {
@@ -34,17 +43,29 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of NfsAccessPolicy. </summary>
-        /// <param name="name"> Name identifying this policy. Access Policy names are not case sensitive. </param>
-        /// <param name="accessRules"> The set of rules describing client accesses allowed under this policy. </param>
+        /// <param name="name">
+        /// Name identifying this policy. Access Policy names are not case sensitive.
+        /// Serialized Name: NfsAccessPolicy.name
+        /// </param>
+        /// <param name="accessRules">
+        /// The set of rules describing client accesses allowed under this policy.
+        /// Serialized Name: NfsAccessPolicy.accessRules
+        /// </param>
         internal NfsAccessPolicy(string name, IList<NfsAccessRule> accessRules)
         {
             Name = name;
             AccessRules = accessRules;
         }
 
-        /// <summary> Name identifying this policy. Access Policy names are not case sensitive. </summary>
+        /// <summary>
+        /// Name identifying this policy. Access Policy names are not case sensitive.
+        /// Serialized Name: NfsAccessPolicy.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The set of rules describing client accesses allowed under this policy. </summary>
+        /// <summary>
+        /// The set of rules describing client accesses allowed under this policy.
+        /// Serialized Name: NfsAccessPolicy.accessRules
+        /// </summary>
         public IList<NfsAccessRule> AccessRules { get; }
     }
 }
