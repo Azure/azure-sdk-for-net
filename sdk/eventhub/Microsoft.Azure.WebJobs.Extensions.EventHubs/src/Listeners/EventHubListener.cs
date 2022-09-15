@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Extensions.EventHubs;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -162,6 +163,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         ProcessorPartition = context
                     };
 
+                    UpdateCheckpointContext(events, context);
+
                     if (_singleDispatch)
                     {
                         // Single dispatch
@@ -212,26 +215,39 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
+            private void UpdateCheckpointContext(IEnumerable<EventData> events, EventProcessorHostPartition context)
             {
-                bool checkpointed = false;
-                if (_batchCheckpointFrequency == 1)
+                var isCheckpointingAfterInvocation = false;
+
+                if (events.LastOrDefault() != null)
                 {
-                    await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
-                    checkpointed = true;
-                }
-                else
-                {
-                    // only checkpoint every N batches
-                    if (++_batchCounter >= _batchCheckpointFrequency)
+                    if (_batchCheckpointFrequency == 1)
                     {
-                        _batchCounter = 0;
-                        await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
-                        checkpointed = true;
+                        isCheckpointingAfterInvocation = true;
+                    }
+                    else
+                    {
+                        // only checkpoint every N batches
+                        if (_batchCounter + 1 >= _batchCheckpointFrequency)
+                        {
+                            isCheckpointingAfterInvocation = true;
+                        }
                     }
                 }
-                if (checkpointed)
+
+                context.CheckpointContext = new CheckpointContext(isCheckpointingAfterInvocation);
+            }
+
+            private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
+            {
+                _batchCounter++;
+
+                if (context.CheckpointContext.IsCheckpointingAfterInvocation)
                 {
+                    await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
+
+                    _batchCounter = 0;
+
                     _logger.LogDebug(GetOperationDetails(context, "CheckpointAsync"));
                 }
             }

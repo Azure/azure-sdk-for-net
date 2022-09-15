@@ -2,10 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Microsoft.Azure.WebJobs.Extensions.EventHubs;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
@@ -22,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             PartitionId = partitionId;
         }
 
+        public CheckpointContext CheckpointContext { get; set; }
         public PartitionContext PartitionContext => _partitionContext ??= new EventProcessorHostPartitionContext(this);
 
         public string Owner => ProcessorHost.Identifier;
