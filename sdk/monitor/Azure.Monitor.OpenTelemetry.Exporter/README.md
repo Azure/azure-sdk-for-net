@@ -37,16 +37,42 @@ This exporter sends traces to the configured Azure Monitor Resource using HTTPS.
 
 Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Program.cs) for a complete demo.
 
+### Traces
+
 ```csharp
 using Azure.Monitor.OpenTelemetry.Exporter;
 using OpenTelemetry.Trace;
 
 OpenTelemetry.Sdk.CreateTracerProviderBuilder()
-    .AddSource("Demo.DemoClient")
-    .AddAzureMonitorTraceExporter(o => {
-        o.ConnectionString = "<Your Connection String>";
-    })
+    .AddAzureMonitorTraceExporter(o => o.ConnectionString = "<Your Connection String>")
     .Build();
+```
+
+### Metrics
+
+```csharp
+using Azure.Monitor.OpenTelemetry.Exporter;
+using OpenTelemetry.Metrics;
+
+OpenTelemetry.Sdk.CreateMeterProviderBuilder()
+    .AddAzureMonitorMetricExporter(o => o.ConnectionString = "<Your Connection String>")
+    .Build();
+```
+
+### Logs
+
+```csharp
+using Azure.Monitor.OpenTelemetry.Exporter;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Logs;
+
+LoggerFactory.Create(builder =>
+{
+    builder.AddOpenTelemetry(options =>
+    {
+        options.AddAzureMonitorLogExporter(o => o.ConnectionString = "<Your Connection String>");
+    });
+});
 ```
 
 ## Troubleshooting
