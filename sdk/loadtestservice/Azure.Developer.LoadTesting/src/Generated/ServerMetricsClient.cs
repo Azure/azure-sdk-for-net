@@ -15,7 +15,7 @@ namespace Azure.Developer.LoadTesting
 {
     // Data plane generated client. The ServerMetrics service client.
     /// <summary> The ServerMetrics service client. </summary>
-    public partial class ServerMetricsClient
+    internal partial class ServerMetricsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -69,19 +69,19 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<name>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
@@ -105,7 +105,7 @@ namespace Azure.Developer.LoadTesting
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<name>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -148,16 +148,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.CreateOrUpdateServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(name, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -176,19 +176,19 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
+        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.CreateOrUpdateServerMetricsConfig("<name>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
@@ -212,7 +212,7 @@ namespace Azure.Developer.LoadTesting
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateOrUpdateServerMetricsConfig("<name>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -255,16 +255,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response CreateOrUpdateServerMetricsConfig(string name, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdate(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.CreateOrUpdateServerMetricsConfig");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(name, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -282,12 +282,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetServerMetricsByNameAsync with required parameters and parse the result.
+        /// This sample shows how to call GetByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetServerMetricsByNameAsync("<name>");
+        /// Response response = await client.GetByNameAsync("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -319,15 +319,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetServerMetricsByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetByNameAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetServerMetricsByName");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsByNameRequest(name, context);
+                using HttpMessage message = CreateGetByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -345,12 +345,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetServerMetricsByName with required parameters and parse the result.
+        /// This sample shows how to call GetByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetServerMetricsByName("<name>");
+        /// Response response = client.GetByName("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -382,15 +382,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetServerMetricsByName(string name, RequestContext context = null)
+        public virtual Response GetByName(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetServerMetricsByName");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsByNameRequest(name, context);
+                using HttpMessage message = CreateGetByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -408,24 +408,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteServerMetricsAsync with required parameters.
+        /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.DeleteServerMetricsAsync("<name>");
+        /// Response response = await client.DeleteAsync("<name>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteServerMetricsAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.DeleteServerMetrics");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteServerMetricsRequest(name, context);
+                using HttpMessage message = CreateDeleteRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -443,24 +443,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteServerMetrics with required parameters.
+        /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.DeleteServerMetrics("<name>");
+        /// Response response = client.Delete("<name>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteServerMetrics(string name, RequestContext context = null)
+        public virtual Response Delete(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.DeleteServerMetrics");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteServerMetricsRequest(name, context);
+                using HttpMessage message = CreateDeleteRequest(name, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -615,12 +615,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetServerDefaultMetricsAsync and parse the result.
+        /// This sample shows how to call GetDefaultAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetServerDefaultMetricsAsync();
+        /// Response response = await client.GetDefaultAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("metricnamespace").ToString());
@@ -643,13 +643,13 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetServerDefaultMetricsAsync(RequestContext context = null)
+        public virtual async Task<Response> GetDefaultAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetServerDefaultMetrics");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetDefault");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerDefaultMetricsRequest(context);
+                using HttpMessage message = CreateGetDefaultRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -664,12 +664,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetServerDefaultMetrics and parse the result.
+        /// This sample shows how to call GetDefault and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetServerDefaultMetrics();
+        /// Response response = client.GetDefault();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("metricnamespace").ToString());
@@ -692,13 +692,13 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetServerDefaultMetrics(RequestContext context = null)
+        public virtual Response GetDefault(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetServerDefaultMetrics");
+            using var scope = ClientDiagnostics.CreateScope("ServerMetricsClient.GetDefault");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerDefaultMetricsRequest(context);
+                using HttpMessage message = CreateGetDefaultRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -796,7 +796,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateServerMetricsConfigRequest(string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string name, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -814,7 +814,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetServerMetricsByNameRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetByNameRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -830,7 +830,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteServerMetricsRequest(string name, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -869,7 +869,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetServerDefaultMetricsRequest(RequestContext context)
+        internal HttpMessage CreateGetDefaultRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

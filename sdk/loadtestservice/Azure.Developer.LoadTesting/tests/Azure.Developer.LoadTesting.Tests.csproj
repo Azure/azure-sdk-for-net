@@ -9,7 +9,6 @@
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Developer.LoadTesting.csproj" />
   </ItemGroup>
   
   <ItemGroup>

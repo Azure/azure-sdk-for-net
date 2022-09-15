@@ -38,7 +38,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AppComponentClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        internal AppComponentClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
         {
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
@@ -84,14 +84,14 @@ namespace Azure.Developer.LoadTesting
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateAppComponentsAsync("<name>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
         /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAppComponentsAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
@@ -110,7 +110,7 @@ namespace Azure.Developer.LoadTesting
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateAppComponentsAsync("<name>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -154,16 +154,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.CreateOrUpdateAppComponents");
+            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(name, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -182,7 +182,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
@@ -197,14 +197,14 @@ namespace Azure.Developer.LoadTesting
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateOrUpdateAppComponents("<name>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
         /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAppComponents with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
@@ -223,7 +223,7 @@ namespace Azure.Developer.LoadTesting
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateOrUpdateAppComponents("<name>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<name>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -267,16 +267,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response CreateOrUpdateAppComponents(string name, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdate(string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.CreateOrUpdateAppComponents");
+            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(name, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(name, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -294,24 +294,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteAppComponentAsync with required parameters.
+        /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.DeleteAppComponentAsync("<name>");
+        /// Response response = await client.DeleteAsync("<name>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteAppComponentAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.DeleteAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteAppComponentRequest(name, context);
+                using HttpMessage message = CreateDeleteRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -329,24 +329,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteAppComponent with required parameters.
+        /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.DeleteAppComponent("<name>");
+        /// Response response = client.Delete("<name>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteAppComponent(string name, RequestContext context = null)
+        public virtual Response Delete(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.DeleteAppComponent");
+            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteAppComponentRequest(name, context);
+                using HttpMessage message = CreateDeleteRequest(name, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -364,12 +364,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAppComponentByNameAsync with required parameters and parse the result.
+        /// This sample shows how to call GetByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetAppComponentByNameAsync("<name>");
+        /// Response response = await client.GetByNameAsync("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -401,15 +401,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetAppComponentByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetByNameAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.GetAppComponentByName");
+            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.GetByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAppComponentByNameRequest(name, context);
+                using HttpMessage message = CreateGetByNameRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -427,12 +427,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAppComponentByName with required parameters and parse the result.
+        /// This sample shows how to call GetByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetAppComponentByName("<name>");
+        /// Response response = client.GetByName("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -464,15 +464,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetAppComponentByName(string name, RequestContext context = null)
+        public virtual Response GetByName(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.GetAppComponentByName");
+            using var scope = ClientDiagnostics.CreateScope("AppComponentClient.GetByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAppComponentByNameRequest(name, context);
+                using HttpMessage message = CreateGetByNameRequest(name, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -626,7 +626,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateAppComponentsRequest(string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string name, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -644,7 +644,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteAppComponentRequest(string name, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -660,7 +660,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetAppComponentByNameRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetByNameRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

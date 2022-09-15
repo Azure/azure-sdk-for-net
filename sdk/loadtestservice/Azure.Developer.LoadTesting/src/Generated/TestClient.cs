@@ -15,7 +15,7 @@ namespace Azure.Developer.LoadTesting
 {
     // Data plane generated client. The Test service client.
     /// <summary> The Test service client. </summary>
-    public partial class TestClient
+    internal partial class TestClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -69,19 +69,19 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateTestAsync with required parameters and parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateTestAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
@@ -119,7 +119,7 @@ namespace Azure.Developer.LoadTesting
         ///     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -264,16 +264,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> CreateOrUpdateTestAsync(string testId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.CreateOrUpdateTest");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -292,19 +292,19 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateTest with required parameters and parse the result.
+        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateTest with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
@@ -342,7 +342,7 @@ namespace Azure.Developer.LoadTesting
         ///     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
         /// };
         /// 
-        /// Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -487,16 +487,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response CreateOrUpdateTest(string testId, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdate(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.CreateOrUpdateTest");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -514,24 +514,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteLoadTestAsync with required parameters.
+        /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.DeleteLoadTestAsync("<testId>");
+        /// Response response = await client.DeleteAsync("<testId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteLoadTestAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteLoadTest");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
+                using HttpMessage message = CreateDeleteRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -549,24 +549,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteLoadTest with required parameters.
+        /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.DeleteLoadTest("<testId>");
+        /// Response response = client.Delete("<testId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteLoadTest(string testId, RequestContext context = null)
+        public virtual Response Delete(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteLoadTest");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
+                using HttpMessage message = CreateDeleteRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -584,12 +584,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetLoadTestAsync with required parameters and parse the result.
+        /// This sample shows how to call GetTestAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetLoadTestAsync("<testId>");
+        /// Response response = await client.GetTestAsync("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -693,15 +693,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetLoadTestAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetLoadTest");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.GetTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
+                using HttpMessage message = CreateGetTestRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -719,12 +719,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetLoadTest with required parameters and parse the result.
+        /// This sample shows how to call GetTest with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetLoadTest("<testId>");
+        /// Response response = client.GetTest("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -828,15 +828,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetLoadTest(string testId, RequestContext context = null)
+        public virtual Response GetTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetLoadTest");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.GetTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
+                using HttpMessage message = CreateGetTestRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -857,22 +857,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetLoadTestSearchesAsync and parse the result.
+        /// This sample shows how to call SearchAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetLoadTestSearchesAsync();
+        /// Response response = await client.SearchAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call GetLoadTestSearchesAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call SearchAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetLoadTestSearchesAsync("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
+        /// Response response = await client.SearchAsync("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("testId").ToString());
@@ -982,13 +982,13 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetLoadTestSearchesAsync(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
+        public virtual async Task<Response> SearchAsync(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetLoadTestSearches");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.Search");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestSearchesRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
+                using HttpMessage message = CreateSearchRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1009,22 +1009,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetLoadTestSearches and parse the result.
+        /// This sample shows how to call Search and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetLoadTestSearches();
+        /// Response response = client.Search();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call GetLoadTestSearches with all parameters, and how to parse the result.
+        /// This sample shows how to call Search with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetLoadTestSearches("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
+        /// Response response = client.Search("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("testId").ToString());
@@ -1134,13 +1134,13 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetLoadTestSearches(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
+        public virtual Response Search(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetLoadTestSearches");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.Search");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadTestSearchesRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
+                using HttpMessage message = CreateSearchRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1161,26 +1161,26 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadFileAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data));
+        /// Response response = await client.UploadFileAsync("<testId>", "<fileId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadFileAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data), 1234);
+        /// Response response = await client.UploadFileAsync("<testId>", "<fileId>", RequestContent.Create(data), 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1208,17 +1208,17 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
+        public virtual async Task<Response> UploadFileAsync(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.UploadTestFile");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.UploadFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1239,26 +1239,26 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadFile with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data));
+        /// Response response = client.UploadFile("<testId>", "<fileId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadFile with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data), 1234);
+        /// Response response = client.UploadFile("<testId>", "<fileId>", RequestContent.Create(data), 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1286,17 +1286,17 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response UploadTestFile(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
+        public virtual Response UploadFile(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.UploadTestFile");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.UploadFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1315,12 +1315,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetTestFileAsync with required parameters and parse the result.
+        /// This sample shows how to call GetFileAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetTestFileAsync("<testId>", "<fileId>");
+        /// Response response = await client.GetFileAsync("<testId>", "<fileId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1348,16 +1348,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetTestFileAsync(string testId, string fileId, RequestContext context = null)
+        public virtual async Task<Response> GetFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetTestFile");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.GetFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1376,12 +1376,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetTestFile with required parameters and parse the result.
+        /// This sample shows how to call GetFile with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetTestFile("<testId>", "<fileId>");
+        /// Response response = client.GetFile("<testId>", "<fileId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1409,16 +1409,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetTestFile(string testId, string fileId, RequestContext context = null)
+        public virtual Response GetFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetTestFile");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.GetFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1437,25 +1437,25 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteTestFileAsync with required parameters.
+        /// This sample shows how to call DeleteFileAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.DeleteTestFileAsync("<testId>", "<fileId>");
+        /// Response response = await client.DeleteFileAsync("<testId>", "<fileId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileId, RequestContext context = null)
+        public virtual async Task<Response> DeleteFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteTestFile");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1474,25 +1474,25 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteTestFile with required parameters.
+        /// This sample shows how to call DeleteFile with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.DeleteTestFile("<testId>", "<fileId>");
+        /// Response response = client.DeleteFile("<testId>", "<fileId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteTestFile(string testId, string fileId, RequestContext context = null)
+        public virtual Response DeleteFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteTestFile");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1511,22 +1511,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAllTestFilesAsync with required parameters and parse the result.
+        /// This sample shows how to call GetAllFilesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetAllTestFilesAsync("<testId>");
+        /// Response response = await client.GetAllFilesAsync("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call GetAllTestFilesAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetAllFilesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetAllTestFilesAsync("<testId>", "<continuationToken>");
+        /// Response response = await client.GetAllFilesAsync("<testId>", "<continuationToken>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
@@ -1560,15 +1560,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetAllTestFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
+        public virtual async Task<Response> GetAllFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetAllTestFiles");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.GetAllFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllTestFilesRequest(testId, continuationToken, context);
+                using HttpMessage message = CreateGetAllFilesRequest(testId, continuationToken, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1587,22 +1587,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAllTestFiles with required parameters and parse the result.
+        /// This sample shows how to call GetAllFiles with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetAllTestFiles("<testId>");
+        /// Response response = client.GetAllFiles("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call GetAllTestFiles with all parameters, and how to parse the result.
+        /// This sample shows how to call GetAllFiles with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new TestClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetAllTestFiles("<testId>", "<continuationToken>");
+        /// Response response = client.GetAllFiles("<testId>", "<continuationToken>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
@@ -1636,15 +1636,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetAllTestFiles(string testId, string continuationToken = null, RequestContext context = null)
+        public virtual Response GetAllFiles(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetAllTestFiles");
+            using var scope = ClientDiagnostics.CreateScope("TestClient.GetAllFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllTestFilesRequest(testId, continuationToken, context);
+                using HttpMessage message = CreateGetAllFilesRequest(testId, continuationToken, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1654,7 +1654,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string testId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -1672,7 +1672,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteLoadTestRequest(string testId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -1688,7 +1688,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadTestRequest(string testId, RequestContext context)
+        internal HttpMessage CreateGetTestRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1704,7 +1704,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadTestSearchesRequest(string orderBy, string search, DateTimeOffset? lastUpdatedStartTime, DateTimeOffset? lastUpdatedEndTime, string continuationToken, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateSearchRequest(string orderBy, string search, DateTimeOffset? lastUpdatedStartTime, DateTimeOffset? lastUpdatedEndTime, string continuationToken, int? maxPageSize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1743,7 +1743,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateUploadTestFileRequest(string testId, string fileId, RequestContent content, int? fileType, RequestContext context)
+        internal HttpMessage CreateUploadFileRequest(string testId, string fileId, RequestContent content, int? fileType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -1767,7 +1767,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateGetFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1785,7 +1785,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteTestFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateDeleteFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -1803,7 +1803,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetAllTestFilesRequest(string testId, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetAllFilesRequest(string testId, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
