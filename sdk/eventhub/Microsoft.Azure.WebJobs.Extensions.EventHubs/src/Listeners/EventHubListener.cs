@@ -216,25 +216,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             private void UpdateCheckpointContext(EventData[] events, EventProcessorHostPartition context)
             {
-                var isCheckpointingAfterInvocation = false;
-
                 if (events != null && events.Length > 0)
                 {
                     if (_batchCheckpointFrequency == 1)
                     {
-                        isCheckpointingAfterInvocation = true;
+                        context.PartitionContext.IsCheckpointingAfterInvocation = true;
                     }
                     else
                     {
                         // only checkpoint every N batches
                         if (_batchCounter + 1 >= _batchCheckpointFrequency)
                         {
-                            isCheckpointingAfterInvocation = true;
+                            context.PartitionContext.IsCheckpointingAfterInvocation = true;
                         }
                     }
                 }
-
-                context.PartitionContext.IsCheckpointingAfterInvocation = isCheckpointingAfterInvocation;
             }
 
             private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
