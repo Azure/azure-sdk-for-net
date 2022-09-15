@@ -140,9 +140,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
+                int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                return RestClient.Create(scopes, expiresAfter, cancellationToken);
+                return RestClient.Create(scopes, expiresIn, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -169,9 +169,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
+                int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                return await RestClient.CreateAsync(scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(scopes, expiresIn, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -237,9 +237,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
+                int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresAfter, cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresIn, cancellationToken);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
@@ -271,9 +271,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int? expiresAfter = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
+                int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresIn, cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
@@ -377,7 +377,7 @@ namespace Azure.Communication.Identity
             }
             catch (OverflowException ex)
             {
-                throw new ArgumentException($"The {paramName} argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.", paramName, ex);
+                throw new ArgumentException($"The {paramName} argument is out of permitted bounds [1,24] hours. Please refer to the documentation and set the value accordingly.", paramName, ex);
             }
         }
     }

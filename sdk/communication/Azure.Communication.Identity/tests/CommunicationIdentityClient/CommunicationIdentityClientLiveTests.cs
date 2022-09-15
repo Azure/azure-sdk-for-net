@@ -26,7 +26,8 @@ namespace Azure.Communication.Identity.Tests
         /// </summary>
         private GetTokenForTeamsUserOptions CTEOptions = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
 
-        private const string TOKEN_EXPIRATION_OVERFLOW_MESSAGE = "The tokenExpiresIn argument is out of permitted bounds. Please refer to the documentation and set the value accordingly.";
+        private const string TOKEN_EXPIRATION_OVERFLOW_MESSAGE = "The tokenExpiresIn argument is out of permitted bounds [1,24] hours. Please refer to the documentation and set the value accordingly.";
+        private const double ALLOWED_DEVIATION = 0.05;
 
         private const string MIN_VALID_EXPIRATION_TIME = "minValidExpirationTime";
         private const string MAX_VALID_EXPIRATION_TIME = "maxValidExpirationTime";
@@ -125,9 +126,9 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         [TestCase(MIN_VALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMinValidCustomExpiration")]
         [TestCase(MAX_VALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMaxValidCustomExpiration")]
-        public async Task CreateUserAndTokenWithValidCustomExpiration(string expiresAfter)
+        public async Task CreateUserAndTokenWithValidCustomExpiration(string expiresIn)
         {
-            TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresAfter];
+            TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresIn];
 
             CommunicationIdentityClient client = CreateClientWithConnectionString();
             Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
@@ -137,19 +138,19 @@ namespace Azure.Communication.Identity.Tests
 
             if (Mode == RecordedTestMode.Live)
             {
-                var tokenExpirationValid = IsTokenExpirationValid(tokenExpiresIn, accessToken.Value.AccessToken.ExpiresOn);
-                Assert.True(tokenExpirationValid);
+                var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.AccessToken.ExpiresOn, ALLOWED_DEVIATION);
+                Assert.True(tokenExpirationWithinAllowedDeviation, $"Token expiration is outside of allowed {ALLOWED_DEVIATION * 100}% deviation.");
             }
         }
 
         [Test]
         [TestCase(MIN_INVALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMinInvalidCustomExpiration")]
         [TestCase(MAX_INVALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMaxInvalidCustomExpiration")]
-        public async Task CreateUserAndTokenWithInvalidCustomExpirationShouldThrow(string expiresAfter)
+        public async Task CreateUserAndTokenWithInvalidCustomExpirationShouldThrow(string expiresIn)
         {
             try
             {
-                TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresAfter];
+                TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresIn];
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
             }
@@ -167,7 +168,8 @@ namespace Azure.Communication.Identity.Tests
         {
             try
             {
-                TimeSpan tokenExpiresIn = new TimeSpan(int.MaxValue/20, 0, 0);
+                // int.MaxValue / 20 as hours argument is used to simulate situation when subsequent flow tries to convert minutes value of the TimeSpan instance to int type and overflows
+                TimeSpan tokenExpiresIn = new TimeSpan(int.MaxValue / 20, 0, 0);
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
             }
@@ -184,9 +186,9 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         [TestCase(MIN_VALID_EXPIRATION_TIME, TestName = "GetTokenWithMinValidCustomExpiration")]
         [TestCase(MAX_VALID_EXPIRATION_TIME, TestName = "GetTokenWithMaxValidCustomExpiration")]
-        public async Task GetTokenWithValidCustomExpiration(string expiresAfter)
+        public async Task GetTokenWithValidCustomExpiration(string expiresIn)
         {
-            TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresAfter];
+            TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresIn];
 
             CommunicationIdentityClient client = CreateClientWithConnectionString();
             CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
@@ -197,19 +199,19 @@ namespace Azure.Communication.Identity.Tests
 
             if (Mode == RecordedTestMode.Live)
             {
-                var tokenExpirationValid = IsTokenExpirationValid(tokenExpiresIn, accessToken.Value.ExpiresOn);
-                Assert.True(tokenExpirationValid);
+                var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.ExpiresOn, ALLOWED_DEVIATION);
+                Assert.True(tokenExpirationWithinAllowedDeviation, $"Token expiration is outside of allowed {ALLOWED_DEVIATION * 100}% deviation.");
             }
         }
 
         [Test]
         [TestCase(MIN_INVALID_EXPIRATION_TIME, TestName = "GetTokenWithMinInvalidCustomExpiration")]
         [TestCase(MAX_INVALID_EXPIRATION_TIME, TestName = "GetTokenWithMaxInvalidCustomExpiration")]
-        public async Task GetTokenWithInvalidCustomExpirationShouldThrow(string expiresAfter)
+        public async Task GetTokenWithInvalidCustomExpirationShouldThrow(string expiresIn)
         {
             try
             {
-                TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresAfter];
+                TimeSpan tokenExpiresIn = TokenCustomExpirationTimes[expiresIn];
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
                 Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
@@ -228,6 +230,7 @@ namespace Azure.Communication.Identity.Tests
         {
             try
             {
+                // int.MaxValue / 20 as hours argument is used to simulate situation when subsequent flow tries to convert minutes value of the TimeSpan instance to int type and overflows
                 TimeSpan tokenExpiresIn = new TimeSpan(int.MaxValue / 20, 0, 0);
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
@@ -448,13 +451,13 @@ namespace Azure.Communication.Identity.Tests
             Assert.Fail("An exception should have been thrown.");
         }
 
-        private bool IsTokenExpirationValid(TimeSpan expectedTokenExpiration, DateTimeOffset tokenExpiresIn)
+        private bool TokenExpirationWithinAllowedDeviation(TimeSpan expectedTokenExpiration, DateTimeOffset tokenExpiresIn, double allowedDeviation)
         {
             var tokenTimeSpan = tokenExpiresIn - DateTimeOffset.UtcNow;
             var tokenSeconds = tokenTimeSpan.TotalSeconds;
             var expectedSeconds = expectedTokenExpiration.TotalSeconds;
             var timeDiff = Math.Abs(expectedSeconds - tokenSeconds);
-            var allowedTimeDiff = expectedSeconds * 0.05;
+            var allowedTimeDiff = expectedSeconds * allowedDeviation;
             return timeDiff < allowedTimeDiff;
         }
     }
