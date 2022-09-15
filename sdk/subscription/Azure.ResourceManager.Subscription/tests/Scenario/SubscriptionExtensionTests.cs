@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         [RecordedTest]
-        [Ignore("Dangerous operations")]
+        //[Ignore("Dangerous operations")]
         public async Task CancelSubscription()
         {
             var response = await _subscription.CancelSubscriptionAsync();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         [RecordedTest]
-        [Ignore("Dangerous operations")]
+        //[Ignore("Dangerous operations")]
         public async Task RenameSubscription()
         {
             SubscriptionName data = new SubscriptionName()
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         [RecordedTest]
-        [Ignore("Dangerous operations")]
+        [Ignore("400. NotAllowed. Reactivation is not supported for subscription")]
         public async Task EnableSubscription()
         {
             var response = await _subscription.EnableSubscriptionAsync();
