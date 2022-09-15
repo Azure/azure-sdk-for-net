@@ -1251,6 +1251,10 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, System.Guid instanceId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceData(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceDataAsync(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlResourceData> GetAllRestorableSqlResourceData(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlResourceData> GetAllRestorableSqlResourceDataAsync(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2338,7 +2342,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private readonly int _dummyPrimitive;
         public CosmosDBServiceType(string value) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType DataTransfer { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType GraphAPICompute { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType GraphApiCompute { get { throw null; } }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType MaterializedViewsBuilder { get { throw null; } }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType SqlDedicatedGateway { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType other) { throw null; }
@@ -2690,16 +2694,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
-    public partial class GraphAPIComputeRegionalService : Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService
+    public partial class GraphApiComputeRegionalService : Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService
     {
-        internal GraphAPIComputeRegionalService() { }
+        internal GraphApiComputeRegionalService() { }
         public string GraphApiComputeEndpoint { get { throw null; } }
     }
-    public partial class GraphAPIComputeServiceProperties : Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties
+    public partial class GraphApiComputeServiceProperties : Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties
     {
-        public GraphAPIComputeServiceProperties() { }
+        public GraphApiComputeServiceProperties() { }
         public string GraphApiComputeEndpoint { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.GraphAPIComputeRegionalService> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.GraphApiComputeRegionalService> Locations { get { throw null; } }
     }
     public partial class GremlinDatabaseCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
