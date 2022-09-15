@@ -214,11 +214,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            private void UpdateCheckpointContext(IEnumerable<EventData> events, EventProcessorHostPartition context)
+            private void UpdateCheckpointContext(EventData[] events, EventProcessorHostPartition context)
             {
                 var isCheckpointingAfterInvocation = false;
 
-                if (events.LastOrDefault() != null)
+                if (events != null && events.Length > 0)
                 {
                     if (_batchCheckpointFrequency == 1)
                     {
