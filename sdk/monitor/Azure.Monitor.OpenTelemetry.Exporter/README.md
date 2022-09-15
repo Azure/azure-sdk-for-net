@@ -40,37 +40,43 @@ Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk
 ### Traces
 
 ```csharp
-using Azure.Monitor.OpenTelemetry.Exporter;
+using System.Diagnostics;
+using OpenTelemetry;
 using OpenTelemetry.Trace;
 
-OpenTelemetry.Sdk.CreateTracerProviderBuilder()
-    .AddAzureMonitorTraceExporter(o => o.ConnectionString = "<Your Connection String>")
+ActivitySource activitySource = new("MyCompany.MyProduct.MyLibrary");
+
+Sdk.CreateTracerProviderBuilder()
+    .AddSource("MyCompany.MyProduct.MyLibrary")
+    .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
     .Build();
 ```
 
 ### Metrics
 
 ```csharp
-using Azure.Monitor.OpenTelemetry.Exporter;
+using System.Diagnostics.Metrics;
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
-OpenTelemetry.Sdk.CreateMeterProviderBuilder()
-    .AddAzureMonitorMetricExporter(o => o.ConnectionString = "<Your Connection String>")
+Meter meter = new("MyCompany.MyProduct.MyLibrary");
+
+Sdk.CreateMeterProviderBuilder()
+    .AddMeter("MyCompany.MyProduct.MyLibrary")
+    .AddAzureMonitorMetricExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
     .Build();
 ```
 
 ### Logs
 
 ```csharp
-using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry.Logs;
 
 LoggerFactory.Create(builder =>
 {
     builder.AddOpenTelemetry(options =>
     {
-        options.AddAzureMonitorLogExporter(o => o.ConnectionString = "<Your Connection String>");
+        options.AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
     });
 });
 ```
