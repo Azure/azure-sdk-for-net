@@ -971,7 +971,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await processorA.StartProcessingAsync();
             await tcs.Task;
-            await processorA.StopProcessingAsync();
+            await processorA.CloseAsync();
 
             // transaction wasn't committed - verify that it was rolled back
             ServiceBusSessionReceiver receiverA = await client.AcceptNextSessionAsync(queueA.QueueName);
