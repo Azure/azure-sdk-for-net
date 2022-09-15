@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/channels/", false);
-            uri.AppendPath(channelName.ToSerialString(), true);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/channels/", false);
-            uri.AppendPath(channelName.ToSerialString(), true);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/channels/", false);
-            uri.AppendPath(channelName.ToSerialString(), true);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/channels/", false);
-            uri.AppendPath(channelName.ToSerialString(), true);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/channels/", false);
-            uri.AppendPath(channelName.ToSerialString(), true);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendPath("/listChannelWithKeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

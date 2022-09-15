@@ -5,42 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The ChannelName. </summary>
-    public enum ChannelName
+    public readonly partial struct ChannelName : IEquatable<ChannelName>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ChannelName"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ChannelName(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AlexaChannelValue = "AlexaChannel";
+        private const string FacebookChannelValue = "FacebookChannel";
+        private const string EmailChannelValue = "EmailChannel";
+        private const string KikChannelValue = "KikChannel";
+        private const string TelegramChannelValue = "TelegramChannel";
+        private const string SlackChannelValue = "SlackChannel";
+        private const string MsTeamsChannelValue = "MsTeamsChannel";
+        private const string SkypeChannelValue = "SkypeChannel";
+        private const string WebChatChannelValue = "WebChatChannel";
+        private const string DirectLineChannelValue = "DirectLineChannel";
+        private const string SmsChannelValue = "SmsChannel";
+        private const string LineChannelValue = "LineChannel";
+        private const string DirectLineSpeechChannelValue = "DirectLineSpeechChannel";
+        private const string OutlookChannelValue = "OutlookChannel";
+        private const string OmnichannelValue = "Omnichannel";
+        private const string TelephonyChannelValue = "TelephonyChannel";
+
         /// <summary> AlexaChannel. </summary>
-        AlexaChannel,
+        public static ChannelName AlexaChannel { get; } = new ChannelName(AlexaChannelValue);
         /// <summary> FacebookChannel. </summary>
-        FacebookChannel,
+        public static ChannelName FacebookChannel { get; } = new ChannelName(FacebookChannelValue);
         /// <summary> EmailChannel. </summary>
-        EmailChannel,
+        public static ChannelName EmailChannel { get; } = new ChannelName(EmailChannelValue);
         /// <summary> KikChannel. </summary>
-        KikChannel,
+        public static ChannelName KikChannel { get; } = new ChannelName(KikChannelValue);
         /// <summary> TelegramChannel. </summary>
-        TelegramChannel,
+        public static ChannelName TelegramChannel { get; } = new ChannelName(TelegramChannelValue);
         /// <summary> SlackChannel. </summary>
-        SlackChannel,
+        public static ChannelName SlackChannel { get; } = new ChannelName(SlackChannelValue);
         /// <summary> MsTeamsChannel. </summary>
-        MsTeamsChannel,
+        public static ChannelName MsTeamsChannel { get; } = new ChannelName(MsTeamsChannelValue);
         /// <summary> SkypeChannel. </summary>
-        SkypeChannel,
+        public static ChannelName SkypeChannel { get; } = new ChannelName(SkypeChannelValue);
         /// <summary> WebChatChannel. </summary>
-        WebChatChannel,
+        public static ChannelName WebChatChannel { get; } = new ChannelName(WebChatChannelValue);
         /// <summary> DirectLineChannel. </summary>
-        DirectLineChannel,
+        public static ChannelName DirectLineChannel { get; } = new ChannelName(DirectLineChannelValue);
         /// <summary> SmsChannel. </summary>
-        SmsChannel,
+        public static ChannelName SmsChannel { get; } = new ChannelName(SmsChannelValue);
         /// <summary> LineChannel. </summary>
-        LineChannel,
+        public static ChannelName LineChannel { get; } = new ChannelName(LineChannelValue);
         /// <summary> DirectLineSpeechChannel. </summary>
-        DirectLineSpeechChannel,
+        public static ChannelName DirectLineSpeechChannel { get; } = new ChannelName(DirectLineSpeechChannelValue);
         /// <summary> OutlookChannel. </summary>
-        OutlookChannel,
+        public static ChannelName OutlookChannel { get; } = new ChannelName(OutlookChannelValue);
         /// <summary> Omnichannel. </summary>
-        Omnichannel,
+        public static ChannelName Omnichannel { get; } = new ChannelName(OmnichannelValue);
         /// <summary> TelephonyChannel. </summary>
-        TelephonyChannel
+        public static ChannelName TelephonyChannel { get; } = new ChannelName(TelephonyChannelValue);
+        /// <summary> Determines if two <see cref="ChannelName"/> values are the same. </summary>
+        public static bool operator ==(ChannelName left, ChannelName right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ChannelName"/> values are not the same. </summary>
+        public static bool operator !=(ChannelName left, ChannelName right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ChannelName"/>. </summary>
+        public static implicit operator ChannelName(string value) => new ChannelName(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ChannelName other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ChannelName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

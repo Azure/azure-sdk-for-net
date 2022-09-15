@@ -57,5 +57,9 @@ directive:
     where: $.definitions
     transform: >
       $.EmailChannelAuthMethod['type'] = 'integer';
+  - from: botservice.json
+    where: $.parameters
+    transform: >
+      $.channelNameParameter['x-ms-enum']['modelAsString'] = true;
 
 ```

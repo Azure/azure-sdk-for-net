@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken).ConfigureAwait(false);
+                var response = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken);
+                var response = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken).ConfigureAwait(false);
+                var response = await _botChannelChannelsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new BotServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken);
+                var response = _botChannelChannelsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new BotServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), data, cancellationToken).ConfigureAwait(false);
+                var response = await _botChannelChannelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), data, cancellationToken);
+                var response = _botChannelChannelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.ListWithKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken).ConfigureAwait(false);
+                var response = await _botChannelChannelsRestClient.ListWithKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.ListWithKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken);
+                var response = _botChannelChannelsRestClient.ListWithKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BotChannelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken);
+                    var originalResponse = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new BotChannelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BotChannelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken);
+                    var originalResponse = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new BotChannelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BotChannelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToChannelName(), cancellationToken);
+                    var originalResponse = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new BotChannelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
