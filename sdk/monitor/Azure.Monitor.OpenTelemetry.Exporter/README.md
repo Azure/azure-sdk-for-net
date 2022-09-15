@@ -25,6 +25,35 @@ dotnet add package Azure.Monitor.OpenTelemetry.Exporter --prerelease
 Nightly builds are available from this repo's [dev feed](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
 These are provided without support and are not intended for production workloads.
 
+### Add the Exporter
+
+The following examples demonstrate how to add the `AzureMonitorExporter` to either Traces, Metrics, or Logs.
+
+- Traces
+    ```csharp
+    Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
+        .Build();
+    ```
+
+- Metrics
+    ```csharp
+    Sdk.CreateMeterProviderBuilder()
+        .AddAzureMonitorMetricExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
+        .Build();
+    ```
+
+- Logs
+    ```csharp
+    LoggerFactory.Create(builder =>
+    {
+        builder.AddOpenTelemetry(options =>
+        {
+            options.AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+        });
+    });
+    ```
+
 ### Authenticate the client
 
 Exporter does not use authentication. 
@@ -36,50 +65,6 @@ This exporter sends traces to the configured Azure Monitor Resource using HTTPS.
 ## Examples
 
 Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Program.cs) for a complete demo.
-
-### Traces
-
-```csharp
-using System.Diagnostics;
-using OpenTelemetry;
-using OpenTelemetry.Trace;
-
-ActivitySource activitySource = new("MyCompany.MyProduct.MyLibrary");
-
-Sdk.CreateTracerProviderBuilder()
-    .AddSource("MyCompany.MyProduct.MyLibrary")
-    .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
-    .Build();
-```
-
-### Metrics
-
-```csharp
-using System.Diagnostics.Metrics;
-using OpenTelemetry;
-using OpenTelemetry.Metrics;
-
-Meter meter = new("MyCompany.MyProduct.MyLibrary");
-
-Sdk.CreateMeterProviderBuilder()
-    .AddMeter("MyCompany.MyProduct.MyLibrary")
-    .AddAzureMonitorMetricExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
-    .Build();
-```
-
-### Logs
-
-```csharp
-using Microsoft.Extensions.Logging;
-
-LoggerFactory.Create(builder =>
-{
-    builder.AddOpenTelemetry(options =>
-    {
-        options.AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
-    });
-});
-```
 
 ## Troubleshooting
 
