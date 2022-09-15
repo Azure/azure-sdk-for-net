@@ -9,6 +9,7 @@ using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Extensions.EventHubs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var contract = strategy.GetBindingContract();
 
-            Assert.AreEqual(7, contract.Count);
+            Assert.AreEqual(8, contract.Count);
+            Assert.AreEqual(typeof(CheckpointContext), contract["CheckpointContext"]);
             Assert.AreEqual(typeof(PartitionContext), contract["PartitionContext"]);
             Assert.AreEqual(typeof(string), contract["Offset"]);
             Assert.AreEqual(typeof(long), contract["SequenceNumber"]);
@@ -42,7 +44,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var contract = strategy.GetBindingContract(true);
 
-            Assert.AreEqual(7, contract.Count);
+            Assert.AreEqual(8, contract.Count);
+            Assert.AreEqual(typeof(CheckpointContext), contract["CheckpointContext"]);
             Assert.AreEqual(typeof(PartitionContext), contract["PartitionContext"]);
             Assert.AreEqual(typeof(string), contract["Offset"]);
             Assert.AreEqual(typeof(long), contract["SequenceNumber"]);
@@ -57,7 +60,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var contract = strategy.GetBindingContract(false);
 
-            Assert.AreEqual(7, contract.Count);
+            Assert.AreEqual(8, contract.Count);
+            Assert.AreEqual(typeof(CheckpointContext), contract["CheckpointContext"]);
             Assert.AreEqual(typeof(PartitionContext), contract["PartitionContext"]);
             Assert.AreEqual(typeof(string[]), contract["PartitionKeyArray"]);
             Assert.AreEqual(typeof(string[]), contract["OffsetArray"]);
@@ -78,7 +82,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.AreEqual(7, bindingData.Count);
+            Assert.AreEqual(8, bindingData.Count);
+            Assert.AreSame(input.ProcessorPartition.CheckpointContext, bindingData["CheckpointContext"]);
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
             Assert.AreEqual(evt.PartitionKey, bindingData["PartitionKey"]);
             Assert.AreEqual(evt.Offset, bindingData["Offset"]);
@@ -123,7 +128,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.AreEqual(7, bindingData.Count);
+            Assert.AreEqual(8, bindingData.Count);
+            Assert.AreSame(input.ProcessorPartition.CheckpointContext, bindingData["CheckpointContext"]);
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
 
             // verify an array was created for each binding data type
