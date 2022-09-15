@@ -113,7 +113,8 @@ rename-rules:
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
-  RestorableMongodbResources_List: GetRestorableMongoDBResources
+  RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
+  RestorableSqlResources_List: GetAllRestorableSqlResourceData
 
 rename-mapping:
   SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
@@ -253,7 +254,7 @@ rename-mapping:
   ServiceResourceListResult: CosmosDBServiceListResult
   DataTransferServiceResourceProperties: DataTransferServiceProperties
   SqlDedicatedGatewayServiceResourceProperties: SqlDedicatedGatewayServiceProperties
-  GraphAPIComputeServiceResourceProperties: GraphAPIComputeServiceProperties
+  GraphAPIComputeServiceResourceProperties: GraphApiComputeServiceProperties
   MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
   RegionalServiceResource: CosmosDBRegionalService
   SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
