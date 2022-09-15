@@ -37,6 +37,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
+    public partial class CheckpointContext
+    {
+        public CheckpointContext(bool isCheckpointingAfterInvocation) { }
+        public bool IsCheckpointingAfterInvocation { get { throw null; } }
+    }
     public partial class InitialOffsetOptions
     {
         public InitialOffsetOptions() { }
