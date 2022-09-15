@@ -60,10 +60,9 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Gets or sets whether to verify the authentication challenge resource matches the Key Vault or Managed HSM domain.
-        /// The default is true.
+        /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault or Managed HSM domain.
         /// </summary>
-        public bool VerifyChallengeResource { get; set; } = true;
+        public bool DisableChallengeResourceVerification { get; set; }
 
         internal string GetVersionString()
         {

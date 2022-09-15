@@ -5,7 +5,7 @@
 ### Breaking Changes
 
 - Verify the challenge resource matches the vault domain.
-  This should affect few customers who can set `SecretClientOptions.VerifyChallengeResource` to `false` to disable.
+  This should affect few customers who can set `SecretClientOptions.DisableChallengeResourceVerification` to `true` to disable.
 
 ## 4.3.0 (2022-03-24)
 

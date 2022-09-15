@@ -5,7 +5,7 @@
 ### Breaking Changes
 
 - Verify the challenge resource matches the vault domain.
-  This should affect few customers who can set `KeyClientOptions.VerifyChallengeResource` or `CryptographyClientOptions.VerifyChallengeResource` to `false` to disable.
+  This should affect few customers who can set `KeyClientOptions.DisableChallengeResourceVerification` or `CryptographyClientOptions.DisableChallengeResourceVerification` to `true` to disable.
 
 ## 4.3.0 (2022-03-24)
 

@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             string apiVersion = options.GetVersionString();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.VerifyChallengeResource));
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             Pipeline = new KeyVaultPipeline(keyId, apiVersion, pipeline, new ClientDiagnostics(options));
         }
