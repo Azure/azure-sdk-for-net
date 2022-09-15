@@ -17,15 +17,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
 
-        public TelemetryItem(string name, Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
-            this(name, FormatUtcTimestamp(activity.StartTimeUtc))
+        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
+            this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
-            // TODO: Move "Exception" to const/enum.
-            if (name == "Exception")
-            {
-                Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.SpanId.ToHexString();
-            }
-            else if (activity.ParentSpanId != default)
+            if (activity.ParentSpanId != default)
             {
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
             }
@@ -47,6 +42,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 SampleRate = sampleRate;
             }
+        }
+
+        public TelemetryItem(TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
+                        this("Exception", FormatUtcTimestamp(activityEventTimeStamp.DateTime))
+        {
+            Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
+            Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
+
+            // todo: update swagger to include this key.
+            Tags["ai.user.userAgent"] = telemetryItem.Tags["ai.user.userAgent"];
+
+            // we only have mapping for server spans
+            // todo: non-server spans
+            if (kind == ActivityKind.Server)
+            {
+                Tags[ContextTagKeys.AiOperationName.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()];
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()];
+            }
+
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            InstrumentationKey = telemetryItem.InstrumentationKey;
         }
 
         public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :
