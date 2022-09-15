@@ -21,7 +21,7 @@ dotnet add package Azure.Maps.Search --prerelease
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
 ```powershell
-az maps account create --kind "Gen2" --disable-local-auth true --account-name "myMapAccountName" --resource-group "<resource group>" --sku "G2" --accept-tos
+az maps account create --kind "Gen2" --account-name "myMapAccountName" --resource-group "<resource group>" --sku "G2" --accept-tos
 ```
 
 ### Authenticate the client
