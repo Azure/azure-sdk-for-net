@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     }
     public partial class TriggerPartitionContext : Azure.Messaging.EventHubs.Consumer.PartitionContext
     {
-        public TriggerPartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId) : base(default(string), default(string), default(string), default(string)) { }
+        public TriggerPartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId) : base (default(string), default(string), default(string), default(string)) { }
         public bool IsCheckpointingAfterInvocation { get { throw null; } }
     }
 }
