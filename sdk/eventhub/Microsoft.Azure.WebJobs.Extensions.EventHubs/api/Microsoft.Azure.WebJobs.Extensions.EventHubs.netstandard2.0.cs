@@ -20,11 +20,6 @@ namespace Microsoft.Azure.WebJobs
 }
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
-    public partial class CheckpointContext
-    {
-        public CheckpointContext(bool isCheckpointingAfterInvocation) { }
-        public bool IsCheckpointingAfterInvocation { get { throw null; } }
-    }
     public partial class EventHubOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
         public EventHubOptions() { }
@@ -53,6 +48,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         FromStart = 0,
         FromEnd = 1,
         FromEnqueuedTime = 2,
+    }
+    public partial class TriggerPartitionContext : Azure.Messaging.EventHubs.Consumer.PartitionContext
+    {
+        public TriggerPartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId) { }
+        public bool IsCheckpointingAfterInvocation { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Hosting
