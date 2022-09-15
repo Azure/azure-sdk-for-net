@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.DataLake.Analytics.Tests
 {
-    public class DataLake.AnalyticsManagementTestBase : ManagementRecordedTestBase<DataLake.AnalyticsManagementTestEnvironment>
+    public class DataLakeAnalyticsManagementTestBase : ManagementRecordedTestBase<DataLakeAnalyticsManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
 
-        protected DataLake.AnalyticsManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected DataLakeAnalyticsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected DataLake.AnalyticsManagementTestBase(bool isAsync)
+        protected DataLakeAnalyticsManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.DataLake.Analytics.Tests
 {
-    public class DataLake.AnalyticsManagementTestEnvironment : TestEnvironment
+    public class DataLakeAnalyticsManagementTestEnvironment : TestEnvironment
     {
     }
 }
