@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NodeList>> ListByDataBoxEdgeDeviceAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxEdgeNodeList>> ListByDataBoxEdgeDeviceAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        NodeList value = default;
+                        DataBoxEdgeNodeList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NodeList.DeserializeNodeList(document.RootElement);
+                        value = DataBoxEdgeNodeList.DeserializeDataBoxEdgeNodeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NodeList> ListByDataBoxEdgeDevice(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response<DataBoxEdgeNodeList> ListByDataBoxEdgeDevice(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        NodeList value = default;
+                        DataBoxEdgeNodeList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NodeList.DeserializeNodeList(document.RootElement);
+                        value = DataBoxEdgeNodeList.DeserializeDataBoxEdgeNodeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NodeList>> ListByDataBoxEdgeDeviceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxEdgeNodeList>> ListByDataBoxEdgeDeviceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        NodeList value = default;
+                        DataBoxEdgeNodeList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NodeList.DeserializeNodeList(document.RootElement);
+                        value = DataBoxEdgeNodeList.DeserializeDataBoxEdgeNodeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NodeList> ListByDataBoxEdgeDeviceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response<DataBoxEdgeNodeList> ListByDataBoxEdgeDeviceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        NodeList value = default;
+                        DataBoxEdgeNodeList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NodeList.DeserializeNodeList(document.RootElement);
+                        value = DataBoxEdgeNodeList.DeserializeDataBoxEdgeNodeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

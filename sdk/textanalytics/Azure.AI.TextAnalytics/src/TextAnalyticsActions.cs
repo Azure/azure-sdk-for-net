@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/customentityrecognition">documentation</see>.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
         /// </remarks>
         public IReadOnlyCollection<RecognizeCustomEntitiesAction> RecognizeCustomEntitiesActions { get; set; }
 
@@ -63,7 +63,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see>.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
         /// </remarks>
         public IReadOnlyCollection<SingleLabelClassifyAction> SingleLabelClassifyActions { get; set; }
 
@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see>.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
         /// </remarks>
         public IReadOnlyCollection<MultiLabelClassifyAction> MultiLabelClassifyActions { get; set; }
 

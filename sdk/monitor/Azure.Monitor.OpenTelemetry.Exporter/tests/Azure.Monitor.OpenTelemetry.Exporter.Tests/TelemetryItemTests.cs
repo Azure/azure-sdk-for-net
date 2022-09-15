@@ -141,7 +141,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
 
             Assert.Equal(expectedOperationName, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
@@ -164,7 +163,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/path?id=1");
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
 
             Assert.Equal("GET /path", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
@@ -184,7 +182,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.DisplayName = "displayname";
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
 
             Assert.Equal("displayname", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
@@ -203,7 +200,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
 
             Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
@@ -222,7 +218,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeNetPeerIp, "127.0.0.1");
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
 
             Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
@@ -242,7 +237,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUserAgent, userAgent);
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
 
             Assert.Equal(userAgent, telemetryItem.Tags["ai.user.userAgent"]);
@@ -338,7 +332,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
             }
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
             var requestData = new RequestData(2, activity, ref monitorTags);
 

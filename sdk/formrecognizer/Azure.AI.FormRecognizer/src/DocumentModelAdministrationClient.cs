@@ -146,28 +146,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="prefix">A case-sensitive prefix string to filter documents in the source path for building a model. For example, you may use the prefix to restrict subfolders.</param>
         /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// A <see cref="BuildDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual BuildModelOperation BuildModel(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual BuildDocumentModelOperation BuildDocumentModel(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, string prefix = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
 
-            options ??= new BuildModelOptions();
+            options ??= new BuildDocumentModelOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentModel)}");
             scope.Start();
 
             try
             {
                 var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(options.Prefix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    source.Prefix = options.Prefix;
+                    source.Prefix = prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
@@ -183,7 +184,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = ServiceClient.BuildDocumentModel(request, cancellationToken);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new BuildDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -234,27 +235,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="prefix">A case-sensitive prefix string to filter documents in the source path for building a model. For example, you may use the prefix to restrict subfolders.</param>
         /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// A <see cref="BuildDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual async Task<BuildModelOperation> BuildModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildDocumentModelOperation> BuildDocumentModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, string prefix = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
-            options ??= new BuildModelOptions();
+            options ??= new BuildDocumentModelOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentModel)}");
             scope.Start();
 
             try
             {
                 var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(options.Prefix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    source.Prefix = options.Prefix;
+                    source.Prefix = prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
@@ -270,7 +272,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = await ServiceClient.BuildDocumentModelAsync(request, cancellationToken).ConfigureAwait(false);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new BuildDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -296,11 +298,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual Response<DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentModelDetails> GetDocumentModel(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentModel)}");
             scope.Start();
 
             try
@@ -322,11 +324,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual async Task<Response<DocumentModelDetails>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentModelDetails>> GetDocumentModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentModel)}");
             scope.Start();
 
             try
@@ -347,11 +349,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">The ID of the model to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
-        public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteDocumentModel(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(DeleteModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(DeleteDocumentModel)}");
             scope.Start();
 
             try
@@ -371,11 +373,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">The ID of the model to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
-        public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteDocumentModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(DeleteModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(DeleteDocumentModel)}");
             scope.Start();
 
             try
@@ -394,11 +396,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentModelSummary"/> items.</returns>
-        public virtual Pageable<DocumentModelSummary> GetModels(CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentModelSummary> GetDocumentModels(CancellationToken cancellationToken = default)
         {
             Page<DocumentModelSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentModels)}");
                 scope.Start();
 
                 try
@@ -415,7 +417,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Page<DocumentModelSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentModels)}");
                 scope.Start();
 
                 try
@@ -438,11 +440,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentModelSummary"/> items.</returns>
-        public virtual AsyncPageable<DocumentModelSummary> GetModelsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentModelSummary> GetDocumentModelsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentModelSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentModels)}");
                 scope.Start();
 
                 try
@@ -459,7 +461,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             async Task<Page<DocumentModelSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
+                using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetDocumentModels)}");
                 scope.Start();
 
                 try
@@ -532,9 +534,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelOperationDetails"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="OperationDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual Response<DocumentModelOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -558,9 +560,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelOperationDetails"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="OperationDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual async Task<Response<DocumentModelOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -583,10 +585,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Lists all document model operations associated with the Form Recognizer resource. Note that operation information only persists for 24 hours.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DocumentModelOperationSummary"/> items.</returns>
-        public virtual Pageable<DocumentModelOperationSummary> GetOperations(CancellationToken cancellationToken = default)
+        /// <returns>A collection of <see cref="OperationSummary"/> items.</returns>
+        public virtual Pageable<OperationSummary> GetOperations(CancellationToken cancellationToken = default)
         {
-            Page<DocumentModelOperationSummary> FirstPageFunc(int? pageSizeHint)
+            Page<OperationSummary> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();
@@ -603,7 +605,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
 
-            Page<DocumentModelOperationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OperationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();
@@ -627,10 +629,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Lists all document model operations associated with the Form Recognizer resource. Note that operation information only persists for 24 hours.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DocumentModelOperationSummary"/> items.</returns>
-        public virtual AsyncPageable<DocumentModelOperationSummary> GetOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns>A collection of <see cref="OperationSummary"/> items.</returns>
+        public virtual AsyncPageable<OperationSummary> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DocumentModelOperationSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OperationSummary>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();
@@ -647,7 +649,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
 
-            async Task<Page<DocumentModelOperationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OperationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetOperations)}");
                 scope.Start();
@@ -679,22 +681,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
-        /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
+        /// <param name="target">A <see cref="DocumentModelCopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
+        /// <returns>A <see cref="CopyDocumentModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyDocumentModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual CopyModelToOperation CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual CopyDocumentModelToOperation CopyDocumentModelTo(WaitUntil waitUntil, string modelId, DocumentModelCopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(CopyModelTo)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(CopyDocumentModelTo)}");
             scope.Start();
 
             try
             {
                 var response = ServiceClient.CopyDocumentModelTo(modelId, target, cancellationToken);
-                var operation = new CopyModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new CopyDocumentModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -719,22 +721,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
-        /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
+        /// <param name="target">A <see cref="DocumentModelCopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
+        /// <returns>A <see cref="CopyDocumentModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyDocumentModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual async Task<CopyModelToOperation> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual async Task<CopyDocumentModelToOperation> CopyDocumentModelToAsync(WaitUntil waitUntil, string modelId, DocumentModelCopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(CopyModelTo)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(CopyDocumentModelTo)}");
             scope.Start();
 
             try
             {
                 var response = await ServiceClient.CopyDocumentModelToAsync(modelId, target, cancellationToken).ConfigureAwait(false);
-                var operation = new CopyModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new CopyDocumentModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -757,9 +759,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="DocumentModelCopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        public virtual Response<CopyAuthorization> GetCopyAuthorization(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentModelCopyAuthorization> GetCopyAuthorization(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             modelId ??= Guid.NewGuid().ToString();
 
@@ -798,9 +800,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="DocumentModelCopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentModelCopyAuthorization>> GetCopyAuthorizationAsync(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             modelId ??= Guid.NewGuid().ToString();
 
@@ -852,14 +854,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual ComposeModelOperation ComposeModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual ComposeDocumentModelOperation ComposeDocumentModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(ComposeModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(ComposeDocumentModel)}");
             scope.Start();
 
             try
@@ -879,7 +881,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = ServiceClient.ComposeDocumentModel(composeRequest, cancellationToken);
-                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -911,14 +913,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual async Task<ComposeModelOperation> ComposeModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ComposeDocumentModelOperation> ComposeDocumentModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(ComposeModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(ComposeDocumentModel)}");
             scope.Start();
 
             try
@@ -938,7 +940,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = await ServiceClient.ComposeDocumentModelAsync(composeRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {

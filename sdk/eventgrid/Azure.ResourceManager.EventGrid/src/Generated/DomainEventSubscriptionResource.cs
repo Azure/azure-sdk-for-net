@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid
     /// A Class representing a DomainEventSubscription along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DomainEventSubscriptionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetDomainEventSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DomainResource" /> using the GetDomainEventSubscription method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource" /> using the GetDomainEventSubscription method.
     /// </summary>
     public partial class DomainEventSubscriptionResource : ArmResource
     {
@@ -193,19 +193,19 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: DomainEventSubscriptions_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionUpdateParameters"> Updated event subscription information. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionUpdateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<DomainEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<DomainEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(eventSubscriptionUpdateParameters, nameof(eventSubscriptionUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _domainEventSubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _domainEventSubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,19 +223,19 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: DomainEventSubscriptions_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionUpdateParameters"> Updated event subscription information. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<DomainEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<DomainEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(eventSubscriptionUpdateParameters, nameof(eventSubscriptionUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _domainEventSubscriptionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters, cancellationToken);
-                var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionUpdateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _domainEventSubscriptionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -307,13 +307,13 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: DomainEventSubscriptions_GetFullUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUrl");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
-                var response = await _domainEventSubscriptionRestClient.GetFullUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _domainEventSubscriptionRestClient.GetFullUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -329,13 +329,13 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: DomainEventSubscriptions_GetFullUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EventSubscriptionFullUri> GetFullUrl(CancellationToken cancellationToken = default)
+        public virtual Response<EventSubscriptionFullUri> GetFullUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUrl");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
-                var response = _domainEventSubscriptionRestClient.GetFullUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _domainEventSubscriptionRestClient.GetFullUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

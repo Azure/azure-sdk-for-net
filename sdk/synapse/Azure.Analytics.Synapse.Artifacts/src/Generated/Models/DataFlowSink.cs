@@ -30,12 +30,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        internal DataFlowSink(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        /// <param name="rejectedDataLinkedService"> Rejected data linked service reference. </param>
+        internal DataFlowSink(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService, LinkedServiceReference rejectedDataLinkedService) : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
+            RejectedDataLinkedService = rejectedDataLinkedService;
         }
 
         /// <summary> Schema linked service reference. </summary>
         public LinkedServiceReference SchemaLinkedService { get; set; }
+        /// <summary> Rejected data linked service reference. </summary>
+        public LinkedServiceReference RejectedDataLinkedService { get; set; }
     }
 }

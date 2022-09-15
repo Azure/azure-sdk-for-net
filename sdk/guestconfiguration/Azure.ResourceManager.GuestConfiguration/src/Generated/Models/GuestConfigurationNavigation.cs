@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="configurationParameter"> The configuration parameters for the guest configuration. </param>
         /// <param name="configurationProtectedParameter"> The protected configuration parameters for the guest configuration. </param>
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
-        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, AssignmentType? assignmentType, string assignmentSource, string contentType, IList<ConfigurationParameter> configurationParameter, IList<ConfigurationParameter> configurationProtectedParameter, ConfigurationSetting configurationSetting)
+        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<ConfigurationParameter> configurationParameter, IList<ConfigurationParameter> configurationProtectedParameter, LcmConfigurationSetting configurationSetting)
         {
             Kind = kind;
             Name = name;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Combined hash of the guest configuration package and configuration parameters. </summary>
         public string ContentHash { get; set; }
         /// <summary> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </summary>
-        public AssignmentType? AssignmentType { get; set; }
+        public GuestConfigurationAssignmentType? AssignmentType { get; set; }
         /// <summary> Specifies the origin of the configuration. </summary>
         public string AssignmentSource { get; }
         /// <summary> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </summary>
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> The protected configuration parameters for the guest configuration. </summary>
         public IList<ConfigurationParameter> ConfigurationProtectedParameter { get; }
         /// <summary> The configuration setting for the guest configuration. </summary>
-        public ConfigurationSetting ConfigurationSetting { get; }
+        public LcmConfigurationSetting ConfigurationSetting { get; }
     }
 }

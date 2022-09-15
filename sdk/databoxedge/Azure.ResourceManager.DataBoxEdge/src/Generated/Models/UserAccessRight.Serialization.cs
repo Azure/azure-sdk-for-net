@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static UserAccessRight DeserializeUserAccessRight(JsonElement element)
         {
-            string userId = default;
+            ResourceIdentifier userId = default;
             ShareAccessType accessType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"))
                 {
-                    userId = property.Value.GetString();
+                    userId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accessType"))

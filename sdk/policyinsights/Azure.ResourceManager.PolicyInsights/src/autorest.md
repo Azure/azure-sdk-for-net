@@ -21,6 +21,21 @@ request-path-to-parent:
 
 override-operation-name:
   PolicyMetadata_List: GetAll
+  PolicyRestrictions_CheckAtManagementGroupScope: CheckPolicyRestrictions
+  PolicyRestrictions_CheckAtResourceGroupScope: CheckPolicyRestrictions
+  PolicyRestrictions_CheckAtSubscriptionScope: CheckPolicyRestrictions
+  PolicyEvents_ListQueryResultsForSubscription: GetPolicyEventQueryResults
+  PolicyEvents_ListQueryResultsForResourceGroup: GetPolicyEventQueryResults
+  PolicyEvents_ListQueryResultsForManagementGroup: GetPolicyEventQueryResults
+  PolicyStates_ListQueryResultsForSubscription: GetPolicyStateQueryResults
+  PolicyStates_ListQueryResultsForResourceGroup: GetPolicyStateQueryResults
+  PolicyStates_ListQueryResultsForManagementGroup: GetPolicyStateQueryResults
+  PolicyStates_SummarizeForManagementGroup: SummarizePolicyState
+  PolicyStates_SummarizeForSubscription: SummarizePolicyState
+  PolicyStates_TriggerResourceGroupEvaluation: TriggerPolicyStateEvaluation
+  PolicyStates_TriggerSubscriptionEvaluation: TriggerPolicyStateEvaluation
+  Remediations_ListDeploymentsAtResource: GetDeployments
+
 operation-positions:
   PolicyMetadata_List: collection
 
@@ -30,6 +45,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'locations': 'azure-location'
 
 rename-rules:
   CPU: Cpu
@@ -53,6 +69,39 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  ComplianceState: PolicyComplianceState
+  Attestation.properties.expiresOn: ExpireOn
+  Attestation.properties.policyAssignmentId: -|arm-id
+  Remediation.properties.policyAssignmentId: -|arm-id
+  CheckRestrictionsResult: CheckPolicyRestrictionsResult
+  CheckRestrictionsRequest: CheckPolicyRestrictionsContent
+  CheckManagementGroupRestrictionsRequest: CheckManagementGroupPolicyRestrictionsContent
+  Summary: PolicySummary
+  Remediation.properties.filters: Filter
+  PolicyAssignmentSummary.policyAssignmentId: -|arm-id
+  PolicyAssignmentSummary.policySetDefinitionId: -|arm-id
+  SummaryResults: PolicySummaryResults
+  PolicyDetails.policyDefinitionId: -|arm-id
+  PolicyDetails.policyAssignmentId: -|arm-id
+  PolicyDetails.policySetDefinitionId: -|arm-id
+  PolicyEvent.policyAssignmentId: -|arm-id
+  PolicyEvent.policyDefinitionId: -|arm-id
+  PolicyEvent.resourceId: -|arm-id
+  PolicyEvent.policySetDefinitionId: -|arm-id
+  PolicyEvent.resourceLocation: -|azure-location
+  PolicyEventsResourceType: PolicyEventType
+  PolicyReference.policyDefinitionId: -|arm-id
+  PolicyReference.policySetDefinitionId: -|arm-id
+  PolicyReference.policyAssignmentId: -|arm-id
+  PolicyState.resourceId: -|arm-id
+  PolicyState.policyAssignmentId: -|arm-id
+  PolicyState.policyDefinitionId: -|arm-id
+  PolicyState.policySetDefinitionId: -|arm-id
+  PolicyState.resourceLocation: -|azure-location
+  PolicyStatesResource: PolicyStateType
+  PolicyStatesSummaryResourceType: PolicyStateSummaryType
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.
@@ -79,16 +128,19 @@ directive:
       delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}'];
       delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations'];
       delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}'];
+# resolving duplicate schemas
   - from: remediations.json
     where: $.definitions
     transform: >
       $.ErrorResponse['x-ms-client-name'] = 'RemediationErrorResponse';
       $.ErrorDefinition['x-ms-client-name'] = 'RemediationErrorDefinition';
+# resolving duplicate schemas
   - from: attestations.json
     where: $.definitions
     transform: >
       $.ErrorResponse['x-ms-client-name'] = 'AttestationErrorResponse';
       $.ErrorDefinition['x-ms-client-name'] = 'AttestationErrorDefinition';
+# resolving duplicate schemas
   - from: policyMetadata.json
     where: $.definitions
     transform: >
