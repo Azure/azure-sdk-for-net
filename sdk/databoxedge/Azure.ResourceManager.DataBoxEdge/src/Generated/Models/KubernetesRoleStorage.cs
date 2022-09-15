@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public KubernetesRoleStorage()
         {
             StorageClasses = new ChangeTrackingList<KubernetesRoleStorageClassInfo>();
-            Endpoints = new ChangeTrackingList<MountPointMap>();
+            Endpoints = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
         }
 
         /// <summary> Initializes a new instance of KubernetesRoleStorage. </summary>
         /// <param name="storageClasses"> Kubernetes storage class info. </param>
         /// <param name="endpoints"> Mount points of shares in role(s). </param>
-        internal KubernetesRoleStorage(IReadOnlyList<KubernetesRoleStorageClassInfo> storageClasses, IList<MountPointMap> endpoints)
+        internal KubernetesRoleStorage(IReadOnlyList<KubernetesRoleStorageClassInfo> storageClasses, IList<DataBoxEdgeMountPointMap> endpoints)
         {
             StorageClasses = storageClasses;
             Endpoints = endpoints;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Kubernetes storage class info. </summary>
         public IReadOnlyList<KubernetesRoleStorageClassInfo> StorageClasses { get; }
         /// <summary> Mount points of shares in role(s). </summary>
-        public IList<MountPointMap> Endpoints { get; }
+        public IList<DataBoxEdgeMountPointMap> Endpoints { get; }
     }
 }

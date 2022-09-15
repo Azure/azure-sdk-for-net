@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media
     /// from an instance of <see cref="ArmClient" /> using the GetMediaAssetTrackResource method.
     /// Otherwise you can get one from its parent resource <see cref="MediaAssetResource" /> using the GetMediaAssetTrack method.
     /// </summary>
-    public partial class MediaAssetTrackResource : BaseMediaAssetTrackResource
+    public partial class MediaAssetTrackResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaAssetTrackResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName)
@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Media
         private readonly TracksRestOperations _mediaAssetTrackTracksRestClient;
         private readonly ClientDiagnostics _operationStatusesClientDiagnostics;
         private readonly OperationStatusesRestOperations _operationStatusesRestClient;
+        private readonly MediaAssetTrackData _data;
 
         /// <summary> Initializes a new instance of the <see cref="MediaAssetTrackResource"/> class for mocking. </summary>
         protected MediaAssetTrackResource()
@@ -45,8 +46,10 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of the <see cref = "MediaAssetTrackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MediaAssetTrackResource(ArmClient client, MediaAssetTrackData data) : base(client, data)
+        internal MediaAssetTrackResource(ArmClient client, MediaAssetTrackData data) : this(client, data.Id)
         {
+            HasData = true;
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="MediaAssetTrackResource"/> class. </summary>
@@ -67,52 +70,34 @@ namespace Azure.ResourceManager.Media
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/assets/tracks";
 
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual MediaAssetTrackData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MediaAssetTrackOperationResultResources in the MediaAssetTrack. </summary>
-        /// <returns> An object representing collection of MediaAssetTrackOperationResultResources and their operations over a MediaAssetTrackOperationResultResource. </returns>
-        public virtual MediaAssetTrackOperationResultCollection GetMediaAssetTrackOperationResults()
-        {
-            return GetCachedClient(Client => new MediaAssetTrackOperationResultCollection(Client, Id));
-        }
-
         /// <summary>
-        /// Get asset track operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
+        /// Get the details of a Track in the Asset
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
+        /// Operation Id: Tracks_Get
         /// </summary>
-        /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MediaAssetTrackOperationResultResource>> GetMediaAssetTrackOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            return await GetMediaAssetTrackOperationResults().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get asset track operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MediaAssetTrackOperationResultResource> GetMediaAssetTrackOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            return GetMediaAssetTrackOperationResults().Get(operationId, cancellationToken);
-        }
-
-        /// <summary> placeholder. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<BaseMediaAssetTrackResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaAssetTrackResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackResource.Get");
             scope.Start();
@@ -121,7 +106,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _mediaAssetTrackTracksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,16 +121,7 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: Tracks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new virtual async Task<Response<MediaAssetTrackResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            var value = await GetCoreAsync(cancellationToken);
-            return Response.FromValue((MediaAssetTrackResource)value.Value, value.GetRawResponse());
-        }
-
-        /// <summary> placeholder. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<BaseMediaAssetTrackResource> GetCore(CancellationToken cancellationToken = default)
+        public virtual Response<MediaAssetTrackResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackResource.Get");
             scope.Start();
@@ -154,26 +130,13 @@ namespace Azure.ResourceManager.Media
                 var response = _mediaAssetTrackTracksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get the details of a Track in the Asset
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
-        /// Operation Id: Tracks_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new virtual Response<MediaAssetTrackResource> Get(CancellationToken cancellationToken = default)
-        {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((MediaAssetTrackResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

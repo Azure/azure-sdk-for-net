@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             string start = default;
             string stop = default;
             int rateInMbps = default;
-            IList<DayOfWeek> days = default;
+            IList<DataBoxEdgeDayOfWeek> days = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                         }
                         if (property0.NameEquals("days"))
                         {
-                            List<DayOfWeek> array = new List<DayOfWeek>();
+                            List<DataBoxEdgeDayOfWeek> array = new List<DataBoxEdgeDayOfWeek>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new DayOfWeek(item.GetString()));
+                                array.Add(new DataBoxEdgeDayOfWeek(item.GetString()));
                             }
                             days = array;
                             continue;

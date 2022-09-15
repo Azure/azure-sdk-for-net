@@ -86,9 +86,9 @@ namespace Azure.Communication.Email.Tests
             emailContent.PlainText = "Test";
 
             var emailMessage = new EmailMessage(
-                TestEnvironment.AzureManagedFromEmailAddress,
+                TestEnvironment.SenderAddress,
                 emailContent,
-                new EmailRecipients(new List<EmailAddress> { new EmailAddress(TestEnvironment.ToEmailAddress) { DisplayName = "ToAddress" } }));
+                new EmailRecipients(new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "ToAddress" } }));
 
             Response<SendEmailResult>? response = emailClient.Send(emailMessage);
             return response;
@@ -100,9 +100,9 @@ namespace Azure.Communication.Email.Tests
             emailContent.PlainText = "Test";
 
             var emailMessage = new EmailMessage(
-                TestEnvironment.AzureManagedFromEmailAddress,
+                TestEnvironment.SenderAddress,
                 emailContent,
-                new EmailRecipients(new List<EmailAddress> { new EmailAddress(TestEnvironment.ToEmailAddress) { DisplayName = "ToAddress" } }));
+                new EmailRecipients(new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "ToAddress" } }));
 
             Response<SendEmailResult>? response = await emailClient.SendAsync(emailMessage);
             return response;

@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="numaNodeIndex"> The NUMA node index. </param>
         /// <param name="totalMemoryInMb"> The total memory on the NUMA node. </param>
         /// <param name="logicalCoreCountPerCore"> The logical cores per core count. </param>
-        /// <param name="effectiveAvailableMemoryInMb"> The effective available memory on the NUMA node in MB. </param>
+        /// <param name="effectiveAvailableMemoryInMB"> The effective available memory on the NUMA node in MB. </param>
         /// <param name="freeVCpuIndexesForHpn"> The free VCPU indices for the Hpn VMs. </param>
         /// <param name="vCpuIndexesForHpn"> The VCPU indices for Hpn VMs. </param>
         /// <param name="vCpuIndexesForRoot"> The VCPU indices for the root. </param>
-        internal NumaNodeData(int? numaNodeIndex, long? totalMemoryInMb, int? logicalCoreCountPerCore, long? effectiveAvailableMemoryInMb, IList<int> freeVCpuIndexesForHpn, IList<int> vCpuIndexesForHpn, IList<int> vCpuIndexesForRoot)
+        internal NumaNodeData(int? numaNodeIndex, long? totalMemoryInMb, int? logicalCoreCountPerCore, long? effectiveAvailableMemoryInMB, IList<int> freeVCpuIndexesForHpn, IList<int> vCpuIndexesForHpn, IList<int> vCpuIndexesForRoot)
         {
             NumaNodeIndex = numaNodeIndex;
             TotalMemoryInMb = totalMemoryInMb;
             LogicalCoreCountPerCore = logicalCoreCountPerCore;
-            EffectiveAvailableMemoryInMb = effectiveAvailableMemoryInMb;
+            EffectiveAvailableMemoryInMB = effectiveAvailableMemoryInMB;
             FreeVCpuIndexesForHpn = freeVCpuIndexesForHpn;
             VCpuIndexesForHpn = vCpuIndexesForHpn;
             VCpuIndexesForRoot = vCpuIndexesForRoot;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The logical cores per core count. </summary>
         public int? LogicalCoreCountPerCore { get; set; }
         /// <summary> The effective available memory on the NUMA node in MB. </summary>
-        public long? EffectiveAvailableMemoryInMb { get; set; }
+        public long? EffectiveAvailableMemoryInMB { get; set; }
         /// <summary> The free VCPU indices for the Hpn VMs. </summary>
         public IList<int> FreeVCpuIndexesForHpn { get; }
         /// <summary> The VCPU indices for Hpn VMs. </summary>

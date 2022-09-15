@@ -35,6 +35,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
             writer.WriteEndObject();
         }
 
@@ -44,6 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> name = default;
             Optional<string> type = default;
             LinkConnection properties = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -66,8 +72,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     properties = LinkConnection.DeserializeLinkConnection(property.Value);
                     continue;
                 }
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
             }
-            return new LinkConnectionResource(id.Value, name.Value, type.Value, properties);
+            return new LinkConnectionResource(id.Value, name.Value, type.Value, properties, description.Value);
         }
 
         internal partial class LinkConnectionResourceConverter : JsonConverter<LinkConnectionResource>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static KubernetesRoleStorage DeserializeKubernetesRoleStorage(JsonElement element)
         {
             Optional<IReadOnlyList<KubernetesRoleStorageClassInfo>> storageClasses = default;
-            Optional<IList<MountPointMap>> endpoints = default;
+            Optional<IList<DataBoxEdgeMountPointMap>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageClasses"))
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MountPointMap> array = new List<MountPointMap>();
+                    List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MountPointMap.DeserializeMountPointMap(item));
+                        array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
                     }
                     endpoints = array;
                     continue;

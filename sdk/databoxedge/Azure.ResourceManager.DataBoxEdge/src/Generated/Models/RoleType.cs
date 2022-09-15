@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string IOTValue = "IOT";
-        private const string ASAValue = "ASA";
+        private const string IoTValue = "IOT";
+        private const string AsaValue = "ASA";
         private const string FunctionsValue = "Functions";
         private const string CognitiveValue = "Cognitive";
-        private const string MECValue = "MEC";
+        private const string MecValue = "MEC";
         private const string CloudEdgeManagementValue = "CloudEdgeManagement";
         private const string KubernetesValue = "Kubernetes";
 
         /// <summary> IOT. </summary>
-        public static RoleType IOT { get; } = new RoleType(IOTValue);
+        public static RoleType IoT { get; } = new RoleType(IoTValue);
         /// <summary> ASA. </summary>
-        public static RoleType ASA { get; } = new RoleType(ASAValue);
+        public static RoleType Asa { get; } = new RoleType(AsaValue);
         /// <summary> Functions. </summary>
         public static RoleType Functions { get; } = new RoleType(FunctionsValue);
         /// <summary> Cognitive. </summary>
         public static RoleType Cognitive { get; } = new RoleType(CognitiveValue);
         /// <summary> MEC. </summary>
-        public static RoleType MEC { get; } = new RoleType(MECValue);
+        public static RoleType Mec { get; } = new RoleType(MecValue);
         /// <summary> CloudEdgeManagement. </summary>
         public static RoleType CloudEdgeManagement { get; } = new RoleType(CloudEdgeManagementValue);
         /// <summary> Kubernetes. </summary>

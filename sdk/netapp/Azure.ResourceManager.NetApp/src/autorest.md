@@ -89,9 +89,6 @@ prepend-rp-prefix:
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
-  Backup.properties.backupId: -|uuid
-  BackupPatch.properties.backupId: -|uuid
-  Snapshot.properties.snapshotId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
@@ -111,9 +108,7 @@ rename-mapping:
   ExportPolicyRule.kerberos5pReadWrite: IsKerberos5pReadWrite
   ExportPolicyRule.nfsv3: AllowNfsV3Protocol
   ExportPolicyRule.nfsv41: AllowNfsV41Protocol
-  Volume.properties.snapshotId: -|uuid
   Volume.properties.fileSystemId: -|uuid
-  Volume.properties.backupId: -|uuid
   Volume.properties.networkSiblingSetId: -|uuid
   Volume.properties.coolAccess: IsCoolAccessEnabled
   Volume.properties.keyVaultPrivateEndpointResourceId: -|arm-id
@@ -158,7 +153,6 @@ rename-mapping:
   SubvolumeModel.properties.accessedTimeStamp: AccessedOn
   SubvolumeModel.properties.modifiedTimeStamp: ModifiedOn
   SubvolumeModel.properties.changedTimeStamp: ChangedOn
-  VolumeRevert.snapshotId: -|arm-id
   ReplicationObject.remoteVolumeResourceId: -|arm-id
   VolumeBackupProperties.backupPolicyId: -|arm-id
   VolumeBackupProperties.policyEnforced: IsPolicyEnforced

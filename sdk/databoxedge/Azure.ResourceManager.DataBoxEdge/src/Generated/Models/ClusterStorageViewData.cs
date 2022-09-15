@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of ClusterStorageViewData. </summary>
-        /// <param name="clusterTotalStorageMb"> Total storage on the cluster in MB. </param>
-        /// <param name="clusterFreeStorageMb"> The available or free storage on the cluster in MB. </param>
-        internal ClusterStorageViewData(double? clusterTotalStorageMb, double? clusterFreeStorageMb)
+        /// <param name="clusterTotalStorageInMB"> Total storage on the cluster in MB. </param>
+        /// <param name="clusterFreeStorageInMB"> The available or free storage on the cluster in MB. </param>
+        internal ClusterStorageViewData(double? clusterTotalStorageInMB, double? clusterFreeStorageInMB)
         {
-            ClusterTotalStorageMb = clusterTotalStorageMb;
-            ClusterFreeStorageMb = clusterFreeStorageMb;
+            ClusterTotalStorageInMB = clusterTotalStorageInMB;
+            ClusterFreeStorageInMB = clusterFreeStorageInMB;
         }
 
         /// <summary> Total storage on the cluster in MB. </summary>
-        public double? ClusterTotalStorageMb { get; set; }
+        public double? ClusterTotalStorageInMB { get; set; }
         /// <summary> The available or free storage on the cluster in MB. </summary>
-        public double? ClusterFreeStorageMb { get; set; }
+        public double? ClusterFreeStorageInMB { get; set; }
     }
 }
