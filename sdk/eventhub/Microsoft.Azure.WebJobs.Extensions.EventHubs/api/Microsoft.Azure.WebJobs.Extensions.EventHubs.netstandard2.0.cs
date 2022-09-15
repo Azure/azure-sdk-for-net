@@ -20,6 +20,11 @@ namespace Microsoft.Azure.WebJobs
 }
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
+    public partial class CheckpointContext
+    {
+        public CheckpointContext(bool isCheckpointingAfterInvocation) { }
+        public bool IsCheckpointingAfterInvocation { get { throw null; } }
+    }
     public partial class EventHubOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
         public EventHubOptions() { }
@@ -36,11 +41,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
-    }
-    public partial class CheckpointContext
-    {
-        public CheckpointContext(bool isCheckpointingAfterInvocation) { }
-        public bool IsCheckpointingAfterInvocation { get { throw null; } }
     }
     public partial class InitialOffsetOptions
     {
