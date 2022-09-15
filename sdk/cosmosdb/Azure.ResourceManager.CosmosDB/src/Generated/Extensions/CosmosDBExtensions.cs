@@ -634,6 +634,44 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region MongoRoleDefinitionGetResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoRoleDefinitionGetResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoRoleDefinitionGetResultResource.CreateResourceIdentifier" /> to create a <see cref="MongoRoleDefinitionGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MongoRoleDefinitionGetResultResource" /> object. </returns>
+        public static MongoRoleDefinitionGetResultResource GetMongoRoleDefinitionGetResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MongoRoleDefinitionGetResultResource.ValidateResourceId(id);
+                return new MongoRoleDefinitionGetResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MongoUserDefinitionGetResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoUserDefinitionGetResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoUserDefinitionGetResultResource.CreateResourceIdentifier" /> to create a <see cref="MongoUserDefinitionGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MongoUserDefinitionGetResultResource" /> object. </returns>
+        public static MongoUserDefinitionGetResultResource GetMongoUserDefinitionGetResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MongoUserDefinitionGetResultResource.ValidateResourceId(id);
+                return new MongoUserDefinitionGetResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region CosmosDBTableResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBTableResource" /> along with the instance operations that can be performed on it but with no data.
