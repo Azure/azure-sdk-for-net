@@ -166,7 +166,7 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions(5);
+            //UploadLogsOptions options = new UploadLogsOptions(5);
             var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response

@@ -89,18 +89,28 @@ namespace Azure.Monitor.Ingestion
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="logEntries"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries)
+        internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
         {
             //TODO: use Array pool instead
             MemoryStream stream = new MemoryStream(SingleUploadThreshold);
             WriteMemory(stream, BinaryData.FromString("[").ToMemory());
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
-
             foreach (var log in logEntries)
             {
-                BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
+                BinaryData entry;
+                //TODO: simplify if
+                if (options == null || options.Serializer == null)
+                {
+                    entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
+                }
+                else
+                {
+                    entry = options.Serializer.Serialize(log);
+                }
+
                 var memory = entry.ToMemory();
                 if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
                 {
@@ -128,7 +138,7 @@ namespace Azure.Monitor.Ingestion
                     WriteMemory(stream, memory);
                     if ((entryCount + 1) == logEntries.Count())
                     {
-                        // reached end of logEntries and we haven't returned yet
+                        // reached end of logs and we haven't returned yet
                         WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                         stream.Position = 0;
                         currentLogList.Add(log);
@@ -152,10 +162,10 @@ namespace Azure.Monitor.Ingestion
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
-        /// <param name="logEntries"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="logs"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="options"> The options model to configure the request to upload logs to Azure Monitor. </param>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logEntries"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-Success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -175,26 +185,23 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response<UploadLogsResult> Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<UploadLogsResult> Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
-            Argument.AssertNotNullOrEmpty(logEntries, nameof(logEntries));
+            Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
             List<UploadLogsError> errors = new List<UploadLogsError>();
-            //TODO: use options.Serializer
             try
             {
                 scope.Start();
-                // A list of tasks that are currently executing which will
-                // always be smaller than MaxWorkerCount
-                List<Task<RunningTask<T>>> runningTasks = new();
+
                 // Partition the stream into individual blocks
-                foreach (BatchedLogs<T> batch in Batch(logEntries))
+                foreach (BatchedLogs<T> batch in Batch(logs, options))
                 {
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
                     RunningTask<T> task = CommitBatchListSyncOrAsync(
@@ -203,20 +210,12 @@ namespace Azure.Monitor.Ingestion
                         streamName,
                         false,
                         cancellationToken).EnsureCompleted();
-                }
 
-                // Process all errors after tasks are done to determine status
-                // Will run on a single thread
-                foreach (Task<RunningTask<T>> task in runningTasks)
-                {
-                    // go through errors from each task and add to error list the response will be generated from
-                    foreach (UploadLogsError logsError in task.Result.ErrorList)
+                    // Add errors from response into errors list which represents the errors from all the batches
+                    foreach (UploadLogsError error in task.ErrorList)
                     {
-                        errors.Add(logsError);
+                        errors.Add(error);
                     }
-                    // calculate the status using the helper method Status
-                    UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logEntries, errors));
-                    return Response.FromValue(finalResult, response);
                 }
             }
             catch (Exception ex)
@@ -224,16 +223,19 @@ namespace Azure.Monitor.Ingestion
                 scope.Failed(ex);
                 throw;
             }
-            return null;
+
+            // Calculate the status using the helper method Status
+            UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logs, errors));
+            return Response.FromValue(finalResult, response);
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
-        /// <param name="logEntries"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="logs"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="options">  The options model to configure the request to upload logs to Azure Monitor. </param>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logEntries"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-Success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -253,16 +255,15 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response<UploadLogsResult>> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logEntries, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadLogsResult>> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
-            Argument.AssertNotNullOrEmpty(logEntries, nameof(logEntries));
+            Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             // Calculate the number of threads to use.
             // If there are 0 workers or an UploadLogsOptions object was not provided, method will run serially. Otherwise will run in parallel with number of workers given.
-            int _maxWorkerCount = (options == null || options.MaxConcurrency == 0) ? DefaultWorkerCount : options.MaxConcurrency;
-            //TODO: use options.Serializer
+            int _maxWorkerCount = (options == null || options.MaxConcurrency <= 0) ? DefaultWorkerCount : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
@@ -273,10 +274,10 @@ namespace Azure.Monitor.Ingestion
             {
                 scope.Start();
                 // A list of tasks that are currently executing which will
-                // always be smaller than MaxWorkerCount
+                // always be smaller than or equal to MaxWorkerCount
                 List<Task<RunningTask<T>>> runningTasks = new();
                 // Partition the stream into individual blocks
-                foreach (BatchedLogs<T> batch in Batch(logEntries))
+                foreach (BatchedLogs<T> batch in Batch(logs, options))
                 {
                     // Start staging the next batch (but don't await the Task!)
                     Task<RunningTask<T>> task = CommitBatchListSyncOrAsync(
@@ -310,8 +311,7 @@ namespace Azure.Monitor.Ingestion
                     }
                 }
 
-                // Wait for all the remaining blocks to finish staging and then
-                // commit the block list to complete the upload
+                // Wait for all the remaining blocks to finish uploading
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
 
                 // Process all errors after tasks are done to determine status
@@ -323,9 +323,6 @@ namespace Azure.Monitor.Ingestion
                     {
                         errors.Add(logsError);
                     }
-                    // calculate the status using the helper method Status
-                    UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logEntries, errors));
-                    return Response.FromValue(finalResult, response);
                 }
             }
             catch (Exception ex)
@@ -333,7 +330,10 @@ namespace Azure.Monitor.Ingestion
                 scope.Failed(ex);
                 throw;
             }
-            return null;
+
+            // Calculate the status using the helper method Status
+            UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logs, errors));
+            return Response.FromValue(finalResult, response);
         }
 
         private async Task<RunningTask<T>> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
@@ -389,7 +389,7 @@ namespace Azure.Monitor.Ingestion
             {
                 status = UploadLogsStatus.Success;
             }
-            // If the number of total failed logs is equal to the logEntries count this means all the uploads failed
+            // If the number of total failed logs is equal to the logs count this means all the uploads failed
             else if (totalLogsFailed == logEntries.Count())
             {
                 status = UploadLogsStatus.Failure;
