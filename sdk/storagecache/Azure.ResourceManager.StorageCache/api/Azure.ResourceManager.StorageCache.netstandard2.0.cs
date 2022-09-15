@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         private readonly int _dummyPrimitive;
         public NfsAccessRuleAccess(string value) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess No { get { throw null; } }
-        public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess RO { get { throw null; } }
-        public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess RW { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess ReadOnly { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageCache.Models.NfsAccessRuleAccess other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

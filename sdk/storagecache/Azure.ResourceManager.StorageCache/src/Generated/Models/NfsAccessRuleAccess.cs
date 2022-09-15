@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         private const string NoValue = "no";
-        private const string ROValue = "ro";
-        private const string RWValue = "rw";
+        private const string ReadOnlyValue = "ro";
+        private const string ReadWriteValue = "rw";
 
         /// <summary> no. </summary>
         public static NfsAccessRuleAccess No { get; } = new NfsAccessRuleAccess(NoValue);
         /// <summary> ro. </summary>
-        public static NfsAccessRuleAccess RO { get; } = new NfsAccessRuleAccess(ROValue);
+        public static NfsAccessRuleAccess ReadOnly { get; } = new NfsAccessRuleAccess(ReadOnlyValue);
         /// <summary> rw. </summary>
-        public static NfsAccessRuleAccess RW { get; } = new NfsAccessRuleAccess(RWValue);
+        public static NfsAccessRuleAccess ReadWrite { get; } = new NfsAccessRuleAccess(ReadWriteValue);
         /// <summary> Determines if two <see cref="NfsAccessRuleAccess"/> values are the same. </summary>
         public static bool operator ==(NfsAccessRuleAccess left, NfsAccessRuleAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsAccessRuleAccess"/> values are not the same. </summary>

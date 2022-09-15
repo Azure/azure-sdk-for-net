@@ -30,8 +30,8 @@ rename-mapping:
   NfsAccessRule.suid: AllowSuid
   NfsAccessRule.submountAccess: AllowSubmountAccess
   NfsAccessRule.rootSquash: EnableRootSquash
-  NfsAccessRuleAccess.ro: RO
-  NfsAccessRuleAccess.rw: RW
+  NfsAccessRuleAccess.ro: ReadOnly
+  NfsAccessRuleAccess.rw: ReadWrite
   CacheActiveDirectorySettings: StorageCacheActiveDirectorySettings
   CacheActiveDirectorySettingsCredentials: StorageCacheActiveDirectorySettingsCredentials
   CacheDirectorySettings: StorageCacheDirectorySettings
