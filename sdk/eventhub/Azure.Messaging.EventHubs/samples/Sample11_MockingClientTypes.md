@@ -56,15 +56,17 @@ EventHubProducerClient producer = mockProducer.Object;
 
 // Attempting to add events to the batch
 EventDataBatch batch = await producer.CreateBatchAsync();
-List<EventData> eventList = new List<EventData>();
 
-for (int i=0; i<4; i++)
+// Keep track of what events we successfully added to the batch
+List<EventData> sourceEvents = new List<EventData>();
+
+for (int i=0; i<3; i++)
 {
     var eventData = new EventData(eventBody: new BinaryData($"Sample-Event-{i}"));
     if (batch.TryAdd(eventData))
     {
         // Track all of the events that were successfully added to the batch
-        eventList.Add(eventData);
+        sourceEvents.Add(eventData);
     }
 }
 
@@ -85,9 +87,9 @@ mockProducer
 // Verify that the events in the batch match what the application expects
 foreach (EventData eventData in backingList)
 {
-    Assert.IsTrue(eventList.Contains(eventData));
+    Assert.IsTrue(sourceEvents.Contains(eventData));
 }
-Assert.AreEqual(backingList.Count, eventList.Count);
+Assert.AreEqual(backingList.Count, sourceEvents.Count);
 ```
 
 ## Mocking access to the properties of an `EventHubProducerClient`
@@ -115,12 +117,18 @@ mockProducer
     .Setup(p => p.GetEventHubPropertiesAsync(It.IsAny<CancellationToken>()))
     .ReturnsAsync(eventHubProperties);
 
-// Setting up to return the mocked partition ids
+// Setting up to return the mocked partition Ids.
 mockProducer
     .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
     .ReturnsAsync(partitions.ToArray());
 
 EventHubProducerClient producer = mockProducer.Object;
+
+// Demonstrating accessing mocked EventHubProperties.
+EventHubProperties properties = await producer.GetEventHubPropertiesAsync();
+
+string eventHubName = properties.Name;
+Debug.WriteLine($"Sending Events to: {eventHubName}");
 ```
 
 ## Enqueuing Events with a Mocked `EventHubBufferedProducerClient`
@@ -231,8 +239,14 @@ Mock<EventHubConsumerClient> mockConsumer = new Mock<EventHubConsumerClient>();
 
 List<EventData> receivedEvents = new List<EventData>();
 
-// Create a mock of LastEnqueuedEventProperties using the model factory, these can
-// be set depending on the scenario that is important for the application
+// Setting the TrackLastEnqueuedEventProperties flag to receive LastEnqueuedEventProperties
+// when reading events
+ReadEventOptions options = new ReadEventOptions
+{
+    TrackLastEnqueuedEventProperties = true
+};
+
+// Create a mock of LastEnqueuedEventProperties using the model factory
 LastEnqueuedEventProperties lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
     lastSequenceNumber : default,
     lastOffset : default,
@@ -259,7 +273,7 @@ PartitionEvent samplePartitionEvent = new PartitionEvent(partitionContext, event
 List<PartitionEvent> partitionEventList = new List<PartitionEvent>{ samplePartitionEvent };
 
 // Define a simple local method that returns an IAsyncEnumerable to use as the return for
-// ReadEventsAsync below
+// ReadEventsAsync below.
 async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
 {
     await Task.Yield();
@@ -267,16 +281,19 @@ async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartition
 }
 
 // Use this PartitionEvent to mock a return from the consumer, because ReadEvents returns an IAsyncEnumerable a separate
-// method is needed to properly set up this method
+// method is needed to properly set up this method. Return the partition event that includes the last enqueued event properties
+// if the tracking flag is set in the options.
 mockConsumer
-    .Setup(c => c.ReadEventsAsync(It.IsAny<CancellationToken>()))
+    .Setup(c => c.ReadEventsAsync(
+        It.Is<ReadEventOptions>(opts => opts.TrackLastEnqueuedEventProperties),
+        It.IsAny<CancellationToken>()))
     .Returns(mockReturn(samplePartitionEvent));
 
 EventHubConsumerClient consumer = mockConsumer.Object;
 
 using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync(cancellationTokenSource.Token))
+await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync(options, cancellationTokenSource.Token))
 {
     Assert.AreEqual(receivedEvent.Data, eventData);
 }
