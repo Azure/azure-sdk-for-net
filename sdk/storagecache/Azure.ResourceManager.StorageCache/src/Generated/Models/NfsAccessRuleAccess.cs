@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Access allowed by this rule.
-    /// Serialized Name: NfsAccessRuleAccess
-    /// </summary>
+    /// <summary> Access allowed by this rule. </summary>
     public readonly partial struct NfsAccessRuleAccess : IEquatable<NfsAccessRuleAccess>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string ROValue = "ro";
         private const string RWValue = "rw";
 
-        /// <summary>
-        /// no
-        /// Serialized Name: NfsAccessRuleAccess.no
-        /// </summary>
+        /// <summary> no. </summary>
         public static NfsAccessRuleAccess No { get; } = new NfsAccessRuleAccess(NoValue);
-        /// <summary>
-        /// ro
-        /// Serialized Name: NfsAccessRuleAccess.ro
-        /// </summary>
+        /// <summary> ro. </summary>
         public static NfsAccessRuleAccess RO { get; } = new NfsAccessRuleAccess(ROValue);
-        /// <summary>
-        /// rw
-        /// Serialized Name: NfsAccessRuleAccess.rw
-        /// </summary>
+        /// <summary> rw. </summary>
         public static NfsAccessRuleAccess RW { get; } = new NfsAccessRuleAccess(RWValue);
         /// <summary> Determines if two <see cref="NfsAccessRuleAccess"/> values are the same. </summary>
         public static bool operator ==(NfsAccessRuleAccess left, NfsAccessRuleAccess right) => left.Equals(right);

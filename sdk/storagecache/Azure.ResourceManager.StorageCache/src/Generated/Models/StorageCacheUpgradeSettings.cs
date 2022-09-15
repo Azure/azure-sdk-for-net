@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Cache Upgrade Settings.
-    /// Serialized Name: CacheUpgradeSettings
-    /// </summary>
+    /// <summary> Cache Upgrade Settings. </summary>
     public partial class StorageCacheUpgradeSettings
     {
         /// <summary> Initializes a new instance of StorageCacheUpgradeSettings. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUpgradeSettings. </summary>
-        /// <param name="enableUpgradeSchedule">
-        /// True if the user chooses to select an installation time between now and firmwareUpdateDeadline. Else the firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation.
-        /// Serialized Name: CacheUpgradeSettings.upgradeScheduleEnabled
-        /// </param>
-        /// <param name="scheduledOn">
-        /// When upgradeScheduleEnabled is true, this field holds the user-chosen upgrade time. At the user-chosen time, the firmware update will automatically be installed on the cache.
-        /// Serialized Name: CacheUpgradeSettings.scheduledTime
-        /// </param>
+        /// <param name="enableUpgradeSchedule"> True if the user chooses to select an installation time between now and firmwareUpdateDeadline. Else the firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
+        /// <param name="scheduledOn"> When upgradeScheduleEnabled is true, this field holds the user-chosen upgrade time. At the user-chosen time, the firmware update will automatically be installed on the cache. </param>
         internal StorageCacheUpgradeSettings(bool? enableUpgradeSchedule, DateTimeOffset? scheduledOn)
         {
             EnableUpgradeSchedule = enableUpgradeSchedule;
             ScheduledOn = scheduledOn;
         }
 
-        /// <summary>
-        /// True if the user chooses to select an installation time between now and firmwareUpdateDeadline. Else the firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation.
-        /// Serialized Name: CacheUpgradeSettings.upgradeScheduleEnabled
-        /// </summary>
+        /// <summary> True if the user chooses to select an installation time between now and firmwareUpdateDeadline. Else the firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </summary>
         public bool? EnableUpgradeSchedule { get; set; }
-        /// <summary>
-        /// When upgradeScheduleEnabled is true, this field holds the user-chosen upgrade time. At the user-chosen time, the firmware update will automatically be installed on the cache.
-        /// Serialized Name: CacheUpgradeSettings.scheduledTime
-        /// </summary>
+        /// <summary> When upgradeScheduleEnabled is true, this field holds the user-chosen upgrade time. At the user-chosen time, the firmware update will automatically be installed on the cache. </summary>
         public DateTimeOffset? ScheduledOn { get; set; }
     }
 }

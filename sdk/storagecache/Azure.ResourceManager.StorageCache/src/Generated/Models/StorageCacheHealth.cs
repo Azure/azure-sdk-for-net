@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// An indication of Cache health. Gives more information about health than just that related to provisioning.
-    /// Serialized Name: CacheHealth
-    /// </summary>
+    /// <summary> An indication of Cache health. Gives more information about health than just that related to provisioning. </summary>
     public partial class StorageCacheHealth
     {
         /// <summary> Initializes a new instance of StorageCacheHealth. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheHealth. </summary>
-        /// <param name="state">
-        /// List of Cache health states.
-        /// Serialized Name: CacheHealth.state
-        /// </param>
-        /// <param name="statusDescription">
-        /// Describes explanation of state.
-        /// Serialized Name: CacheHealth.statusDescription
-        /// </param>
-        /// <param name="conditions">
-        /// Outstanding conditions that need to be investigated and resolved.
-        /// Serialized Name: CacheHealth.conditions
-        /// </param>
+        /// <param name="state"> List of Cache health states. </param>
+        /// <param name="statusDescription"> Describes explanation of state. </param>
+        /// <param name="conditions"> Outstanding conditions that need to be investigated and resolved. </param>
         internal StorageCacheHealth(StorageCacheHealthStateType? state, string statusDescription, IReadOnlyList<OutstandingCondition> conditions)
         {
             State = state;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             Conditions = conditions;
         }
 
-        /// <summary>
-        /// List of Cache health states.
-        /// Serialized Name: CacheHealth.state
-        /// </summary>
+        /// <summary> List of Cache health states. </summary>
         public StorageCacheHealthStateType? State { get; }
-        /// <summary>
-        /// Describes explanation of state.
-        /// Serialized Name: CacheHealth.statusDescription
-        /// </summary>
+        /// <summary> Describes explanation of state. </summary>
         public string StatusDescription { get; }
-        /// <summary>
-        /// Outstanding conditions that need to be investigated and resolved.
-        /// Serialized Name: CacheHealth.conditions
-        /// </summary>
+        /// <summary> Outstanding conditions that need to be investigated and resolved. </summary>
         public IReadOnlyList<OutstandingCondition> Conditions { get; }
     }
 }

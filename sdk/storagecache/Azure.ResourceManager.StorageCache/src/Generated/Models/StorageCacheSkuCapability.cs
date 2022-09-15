@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// A resource SKU capability.
-    /// Serialized Name: ResourceSkuCapabilities
-    /// </summary>
+    /// <summary> A resource SKU capability. </summary>
     public partial class StorageCacheSkuCapability
     {
         /// <summary> Initializes a new instance of StorageCacheSkuCapability. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheSkuCapability. </summary>
-        /// <param name="name">
-        /// Name of a capability, such as ops/sec.
-        /// Serialized Name: ResourceSkuCapabilities.name
-        /// </param>
-        /// <param name="value">
-        /// Quantity, if the capability is measured by quantity.
-        /// Serialized Name: ResourceSkuCapabilities.value
-        /// </param>
+        /// <param name="name"> Name of a capability, such as ops/sec. </param>
+        /// <param name="value"> Quantity, if the capability is measured by quantity. </param>
         internal StorageCacheSkuCapability(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary>
-        /// Name of a capability, such as ops/sec.
-        /// Serialized Name: ResourceSkuCapabilities.name
-        /// </summary>
+        /// <summary> Name of a capability, such as ops/sec. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Quantity, if the capability is measured by quantity.
-        /// Serialized Name: ResourceSkuCapabilities.value
-        /// </summary>
+        /// <summary> Quantity, if the capability is measured by quantity. </summary>
         public string Value { get; }
     }
 }

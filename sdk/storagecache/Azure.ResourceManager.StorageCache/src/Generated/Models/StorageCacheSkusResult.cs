@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// The response from the List Cache SKUs operation.
-    /// Serialized Name: ResourceSkusResult
-    /// </summary>
+    /// <summary> The response from the List Cache SKUs operation. </summary>
     internal partial class StorageCacheSkusResult
     {
         /// <summary> Initializes a new instance of StorageCacheSkusResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheSkusResult. </summary>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page of Cache SKUs.
-        /// Serialized Name: ResourceSkusResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// The list of SKUs available for the subscription.
-        /// Serialized Name: ResourceSkusResult.value
-        /// </param>
+        /// <param name="nextLink"> The URI to fetch the next page of Cache SKUs. </param>
+        /// <param name="value"> The list of SKUs available for the subscription. </param>
         internal StorageCacheSkusResult(string nextLink, IReadOnlyList<StorageCacheSku> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The URI to fetch the next page of Cache SKUs.
-        /// Serialized Name: ResourceSkusResult.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page of Cache SKUs. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// The list of SKUs available for the subscription.
-        /// Serialized Name: ResourceSkusResult.value
-        /// </summary>
+        /// <summary> The list of SKUs available for the subscription. </summary>
         public IReadOnlyList<StorageCacheSku> Value { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// This setting determines how the cache gets username and group names for clients.
-    /// Serialized Name: UsernameSource
-    /// </summary>
+    /// <summary> This setting determines how the cache gets username and group names for clients. </summary>
     public readonly partial struct StorageCacheUsernameSourceType : IEquatable<StorageCacheUsernameSourceType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string FileValue = "File";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// AD
-        /// Serialized Name: UsernameSource.AD
-        /// </summary>
+        /// <summary> AD. </summary>
         public static StorageCacheUsernameSourceType AD { get; } = new StorageCacheUsernameSourceType(ADValue);
-        /// <summary>
-        /// LDAP
-        /// Serialized Name: UsernameSource.LDAP
-        /// </summary>
+        /// <summary> LDAP. </summary>
         public static StorageCacheUsernameSourceType Ldap { get; } = new StorageCacheUsernameSourceType(LdapValue);
-        /// <summary>
-        /// File
-        /// Serialized Name: UsernameSource.File
-        /// </summary>
+        /// <summary> File. </summary>
         public static StorageCacheUsernameSourceType File { get; } = new StorageCacheUsernameSourceType(FileValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: UsernameSource.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static StorageCacheUsernameSourceType None { get; } = new StorageCacheUsernameSourceType(NoneValue);
         /// <summary> Determines if two <see cref="StorageCacheUsernameSourceType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheUsernameSourceType left, StorageCacheUsernameSourceType right) => left.Equals(right);

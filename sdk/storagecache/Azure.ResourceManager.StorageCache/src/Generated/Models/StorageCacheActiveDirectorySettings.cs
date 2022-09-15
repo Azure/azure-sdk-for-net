@@ -10,29 +10,14 @@ using System.Net;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Active Directory settings used to join a cache to a domain.
-    /// Serialized Name: CacheActiveDirectorySettings
-    /// </summary>
+    /// <summary> Active Directory settings used to join a cache to a domain. </summary>
     public partial class StorageCacheActiveDirectorySettings
     {
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
-        /// <param name="primaryDnsIPAddress">
-        /// Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name.
-        /// Serialized Name: CacheActiveDirectorySettings.primaryDnsIpAddress
-        /// </param>
-        /// <param name="domainName">
-        /// The fully qualified domain name of the Active Directory domain controller.
-        /// Serialized Name: CacheActiveDirectorySettings.domainName
-        /// </param>
-        /// <param name="domainNetBiosName">
-        /// The Active Directory domain&apos;s NetBIOS name.
-        /// Serialized Name: CacheActiveDirectorySettings.domainNetBiosName
-        /// </param>
-        /// <param name="cacheNetBiosName">
-        /// The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z].
-        /// Serialized Name: CacheActiveDirectorySettings.cacheNetBiosName
-        /// </param>
+        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
+        /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>
+        /// <param name="domainNetBiosName"> The Active Directory domain&apos;s NetBIOS name. </param>
+        /// <param name="cacheNetBiosName"> The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryDnsIPAddress"/>, <paramref name="domainName"/>, <paramref name="domainNetBiosName"/> or <paramref name="cacheNetBiosName"/> is null. </exception>
         public StorageCacheActiveDirectorySettings(IPAddress primaryDnsIPAddress, string domainName, string domainNetBiosName, string cacheNetBiosName)
         {
@@ -60,34 +45,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
-        /// <param name="primaryDnsIPAddress">
-        /// Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name.
-        /// Serialized Name: CacheActiveDirectorySettings.primaryDnsIpAddress
-        /// </param>
-        /// <param name="secondaryDnsIPAddress">
-        /// Secondary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name.
-        /// Serialized Name: CacheActiveDirectorySettings.secondaryDnsIpAddress
-        /// </param>
-        /// <param name="domainName">
-        /// The fully qualified domain name of the Active Directory domain controller.
-        /// Serialized Name: CacheActiveDirectorySettings.domainName
-        /// </param>
-        /// <param name="domainNetBiosName">
-        /// The Active Directory domain&apos;s NetBIOS name.
-        /// Serialized Name: CacheActiveDirectorySettings.domainNetBiosName
-        /// </param>
-        /// <param name="cacheNetBiosName">
-        /// The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z].
-        /// Serialized Name: CacheActiveDirectorySettings.cacheNetBiosName
-        /// </param>
-        /// <param name="domainJoined">
-        /// True if the HPC Cache is joined to the Active Directory domain.
-        /// Serialized Name: CacheActiveDirectorySettings.domainJoined
-        /// </param>
-        /// <param name="credentials">
-        /// Active Directory admin credentials used to join the HPC Cache to a domain.
-        /// Serialized Name: CacheActiveDirectorySettings.credentials
-        /// </param>
+        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
+        /// <param name="secondaryDnsIPAddress"> Secondary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
+        /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>
+        /// <param name="domainNetBiosName"> The Active Directory domain&apos;s NetBIOS name. </param>
+        /// <param name="cacheNetBiosName"> The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z]. </param>
+        /// <param name="domainJoined"> True if the HPC Cache is joined to the Active Directory domain. </param>
+        /// <param name="credentials"> Active Directory admin credentials used to join the HPC Cache to a domain. </param>
         internal StorageCacheActiveDirectorySettings(IPAddress primaryDnsIPAddress, IPAddress secondaryDnsIPAddress, string domainName, string domainNetBiosName, string cacheNetBiosName, DomainJoinedType? domainJoined, StorageCacheActiveDirectorySettingsCredentials credentials)
         {
             PrimaryDnsIPAddress = primaryDnsIPAddress;
@@ -99,40 +63,19 @@ namespace Azure.ResourceManager.StorageCache.Models
             Credentials = credentials;
         }
 
-        /// <summary>
-        /// Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name.
-        /// Serialized Name: CacheActiveDirectorySettings.primaryDnsIpAddress
-        /// </summary>
+        /// <summary> Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </summary>
         public IPAddress PrimaryDnsIPAddress { get; set; }
-        /// <summary>
-        /// Secondary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name.
-        /// Serialized Name: CacheActiveDirectorySettings.secondaryDnsIpAddress
-        /// </summary>
+        /// <summary> Secondary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </summary>
         public IPAddress SecondaryDnsIPAddress { get; set; }
-        /// <summary>
-        /// The fully qualified domain name of the Active Directory domain controller.
-        /// Serialized Name: CacheActiveDirectorySettings.domainName
-        /// </summary>
+        /// <summary> The fully qualified domain name of the Active Directory domain controller. </summary>
         public string DomainName { get; set; }
-        /// <summary>
-        /// The Active Directory domain&apos;s NetBIOS name.
-        /// Serialized Name: CacheActiveDirectorySettings.domainNetBiosName
-        /// </summary>
+        /// <summary> The Active Directory domain&apos;s NetBIOS name. </summary>
         public string DomainNetBiosName { get; set; }
-        /// <summary>
-        /// The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z].
-        /// Serialized Name: CacheActiveDirectorySettings.cacheNetBiosName
-        /// </summary>
+        /// <summary> The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z]. </summary>
         public string CacheNetBiosName { get; set; }
-        /// <summary>
-        /// True if the HPC Cache is joined to the Active Directory domain.
-        /// Serialized Name: CacheActiveDirectorySettings.domainJoined
-        /// </summary>
+        /// <summary> True if the HPC Cache is joined to the Active Directory domain. </summary>
         public DomainJoinedType? DomainJoined { get; }
-        /// <summary>
-        /// Active Directory admin credentials used to join the HPC Cache to a domain.
-        /// Serialized Name: CacheActiveDirectorySettings.credentials
-        /// </summary>
+        /// <summary> Active Directory admin credentials used to join the HPC Cache to a domain. </summary>
         public StorageCacheActiveDirectorySettingsCredentials Credentials { get; set; }
     }
 }

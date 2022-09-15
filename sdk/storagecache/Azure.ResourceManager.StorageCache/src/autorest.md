@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   Cache.properties.mountAddresses: -|ip-address
   Cache: StorageCache

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Resource SKU location information.
-    /// Serialized Name: ResourceSkuLocationInfo
-    /// </summary>
+    /// <summary> Resource SKU location information. </summary>
     public partial class StorageCacheSkuLocationInfo
     {
         /// <summary> Initializes a new instance of StorageCacheSkuLocationInfo. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheSkuLocationInfo. </summary>
-        /// <param name="location">
-        /// Location where this SKU is available.
-        /// Serialized Name: ResourceSkuLocationInfo.location
-        /// </param>
-        /// <param name="zones">
-        /// Zones if any.
-        /// Serialized Name: ResourceSkuLocationInfo.zones
-        /// </param>
+        /// <param name="location"> Location where this SKU is available. </param>
+        /// <param name="zones"> Zones if any. </param>
         internal StorageCacheSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones)
         {
             Location = location;
             Zones = zones;
         }
 
-        /// <summary>
-        /// Location where this SKU is available.
-        /// Serialized Name: ResourceSkuLocationInfo.location
-        /// </summary>
+        /// <summary> Location where this SKU is available. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// Zones if any.
-        /// Serialized Name: ResourceSkuLocationInfo.zones
-        /// </summary>
+        /// <summary> Zones if any. </summary>
         public IReadOnlyList<string> Zones { get; }
     }
 }

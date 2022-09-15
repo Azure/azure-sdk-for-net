@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// A usage model.
-    /// Serialized Name: UsageModel
-    /// </summary>
+    /// <summary> A usage model. </summary>
     public partial class StorageCacheUsageModel
     {
         /// <summary> Initializes a new instance of StorageCacheUsageModel. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUsageModel. </summary>
-        /// <param name="display">
-        /// Localized information describing this usage model.
-        /// Serialized Name: UsageModel.display
-        /// </param>
-        /// <param name="modelName">
-        /// Non-localized keyword name for this usage model.
-        /// Serialized Name: UsageModel.modelName
-        /// </param>
-        /// <param name="targetType">
-        /// The type of Storage Target to which this model is applicable (only nfs3 as of this version).
-        /// Serialized Name: UsageModel.targetType
-        /// </param>
+        /// <param name="display"> Localized information describing this usage model. </param>
+        /// <param name="modelName"> Non-localized keyword name for this usage model. </param>
+        /// <param name="targetType"> The type of Storage Target to which this model is applicable (only nfs3 as of this version). </param>
         internal StorageCacheUsageModel(StorageCacheUsageModelDisplay display, string modelName, string targetType)
         {
             Display = display;
@@ -38,29 +26,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             TargetType = targetType;
         }
 
-        /// <summary>
-        /// Localized information describing this usage model.
-        /// Serialized Name: UsageModel.display
-        /// </summary>
+        /// <summary> Localized information describing this usage model. </summary>
         internal StorageCacheUsageModelDisplay Display { get; }
-        /// <summary>
-        /// String to display for this usage model.
-        /// Serialized Name: UsageModelDisplay.description
-        /// </summary>
+        /// <summary> String to display for this usage model. </summary>
         public string DisplayDescription
         {
             get => Display?.Description;
         }
 
-        /// <summary>
-        /// Non-localized keyword name for this usage model.
-        /// Serialized Name: UsageModel.modelName
-        /// </summary>
+        /// <summary> Non-localized keyword name for this usage model. </summary>
         public string ModelName { get; }
-        /// <summary>
-        /// The type of Storage Target to which this model is applicable (only nfs3 as of this version).
-        /// Serialized Name: UsageModel.targetType
-        /// </summary>
+        /// <summary> The type of Storage Target to which this model is applicable (only nfs3 as of this version). </summary>
         public string TargetType { get; }
     }
 }

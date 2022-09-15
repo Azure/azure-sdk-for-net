@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// The usage and limit (quota) for a resource.
-    /// Serialized Name: ResourceUsage
-    /// </summary>
+    /// <summary> The usage and limit (quota) for a resource. </summary>
     public partial class StorageCacheUsage
     {
         /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
-        /// <param name="limit">
-        /// The limit (quota) for this resource.
-        /// Serialized Name: ResourceUsage.limit
-        /// </param>
-        /// <param name="unit">
-        /// Unit that the limit and usages are expressed in, such as &apos;Count&apos;.
-        /// Serialized Name: ResourceUsage.unit
-        /// </param>
-        /// <param name="currentValue">
-        /// The current usage of this resource.
-        /// Serialized Name: ResourceUsage.currentValue
-        /// </param>
-        /// <param name="name">
-        /// Naming information for this resource type.
-        /// Serialized Name: ResourceUsage.name
-        /// </param>
+        /// <param name="limit"> The limit (quota) for this resource. </param>
+        /// <param name="unit"> Unit that the limit and usages are expressed in, such as &apos;Count&apos;. </param>
+        /// <param name="currentValue"> The current usage of this resource. </param>
+        /// <param name="name"> Naming information for this resource type. </param>
         internal StorageCacheUsage(int? limit, string unit, int? currentValue, StorageCacheUsageName name)
         {
             Limit = limit;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.StorageCache.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The limit (quota) for this resource.
-        /// Serialized Name: ResourceUsage.limit
-        /// </summary>
+        /// <summary> The limit (quota) for this resource. </summary>
         public int? Limit { get; }
-        /// <summary>
-        /// Unit that the limit and usages are expressed in, such as &apos;Count&apos;.
-        /// Serialized Name: ResourceUsage.unit
-        /// </summary>
+        /// <summary> Unit that the limit and usages are expressed in, such as &apos;Count&apos;. </summary>
         public string Unit { get; }
-        /// <summary>
-        /// The current usage of this resource.
-        /// Serialized Name: ResourceUsage.currentValue
-        /// </summary>
+        /// <summary> The current usage of this resource. </summary>
         public int? CurrentValue { get; }
-        /// <summary>
-        /// Naming information for this resource type.
-        /// Serialized Name: ResourceUsage.name
-        /// </summary>
+        /// <summary> Naming information for this resource type. </summary>
         public StorageCacheUsageName Name { get; }
     }
 }

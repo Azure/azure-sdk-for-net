@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Outstanding conditions that will need to be resolved.
-    /// Serialized Name: Condition
-    /// </summary>
+    /// <summary> Outstanding conditions that will need to be resolved. </summary>
     public partial class OutstandingCondition
     {
         /// <summary> Initializes a new instance of OutstandingCondition. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of OutstandingCondition. </summary>
-        /// <param name="timestamp">
-        /// The time when the condition was raised.
-        /// Serialized Name: Condition.timestamp
-        /// </param>
-        /// <param name="message">
-        /// The issue requiring attention.
-        /// Serialized Name: Condition.message
-        /// </param>
+        /// <param name="timestamp"> The time when the condition was raised. </param>
+        /// <param name="message"> The issue requiring attention. </param>
         internal OutstandingCondition(DateTimeOffset? timestamp, string message)
         {
             Timestamp = timestamp;
             Message = message;
         }
 
-        /// <summary>
-        /// The time when the condition was raised.
-        /// Serialized Name: Condition.timestamp
-        /// </summary>
+        /// <summary> The time when the condition was raised. </summary>
         public DateTimeOffset? Timestamp { get; }
-        /// <summary>
-        /// The issue requiring attention.
-        /// Serialized Name: Condition.message
-        /// </summary>
+        /// <summary> The issue requiring attention. </summary>
         public string Message { get; }
     }
 }

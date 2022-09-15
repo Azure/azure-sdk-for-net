@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Cache security settings.
-    /// Serialized Name: CacheSecuritySettings
-    /// </summary>
+    /// <summary> Cache security settings. </summary>
     internal partial class StorageCacheSecuritySettings
     {
         /// <summary> Initializes a new instance of StorageCacheSecuritySettings. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheSecuritySettings. </summary>
-        /// <param name="accessPolicies">
-        /// NFS access policies defined for this cache.
-        /// Serialized Name: CacheSecuritySettings.accessPolicies
-        /// </param>
+        /// <param name="accessPolicies"> NFS access policies defined for this cache. </param>
         internal StorageCacheSecuritySettings(IList<NfsAccessPolicy> accessPolicies)
         {
             AccessPolicies = accessPolicies;
         }
 
-        /// <summary>
-        /// NFS access policies defined for this cache.
-        /// Serialized Name: CacheSecuritySettings.accessPolicies
-        /// </summary>
+        /// <summary> NFS access policies defined for this cache. </summary>
         public IList<NfsAccessPolicy> AccessPolicies { get; }
     }
 }

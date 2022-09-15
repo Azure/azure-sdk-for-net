@@ -11,10 +11,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// A list of Storage Targets.
-    /// Serialized Name: StorageTargetsResult
-    /// </summary>
+    /// <summary> A list of Storage Targets. </summary>
     internal partial class StorageTargetsResult
     {
         /// <summary> Initializes a new instance of StorageTargetsResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageTargetsResult. </summary>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page of Storage Targets.
-        /// Serialized Name: StorageTargetsResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// The list of Storage Targets defined for the Cache.
-        /// Serialized Name: StorageTargetsResult.value
-        /// </param>
+        /// <param name="nextLink"> The URI to fetch the next page of Storage Targets. </param>
+        /// <param name="value"> The list of Storage Targets defined for the Cache. </param>
         internal StorageTargetsResult(string nextLink, IReadOnlyList<StorageTargetData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The URI to fetch the next page of Storage Targets.
-        /// Serialized Name: StorageTargetsResult.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page of Storage Targets. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// The list of Storage Targets defined for the Cache.
-        /// Serialized Name: StorageTargetsResult.value
-        /// </summary>
+        /// <summary> The list of Storage Targets defined for the Cache. </summary>
         public IReadOnlyList<StorageTargetData> Value { get; }
     }
 }

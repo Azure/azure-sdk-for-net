@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter.
-    /// Serialized Name: ReasonCode
-    /// </summary>
+    /// <summary> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter. </summary>
     public readonly partial struct StorageCacheRestrictionReasonCode : IEquatable<StorageCacheRestrictionReasonCode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string QuotaIdValue = "QuotaId";
         private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
-        /// <summary>
-        /// QuotaId
-        /// Serialized Name: ReasonCode.QuotaId
-        /// </summary>
+        /// <summary> QuotaId. </summary>
         public static StorageCacheRestrictionReasonCode QuotaId { get; } = new StorageCacheRestrictionReasonCode(QuotaIdValue);
-        /// <summary>
-        /// NotAvailableForSubscription
-        /// Serialized Name: ReasonCode.NotAvailableForSubscription
-        /// </summary>
+        /// <summary> NotAvailableForSubscription. </summary>
         public static StorageCacheRestrictionReasonCode NotAvailableForSubscription { get; } = new StorageCacheRestrictionReasonCode(NotAvailableForSubscriptionValue);
         /// <summary> Determines if two <see cref="StorageCacheRestrictionReasonCode"/> values are the same. </summary>
         public static bool operator ==(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => left.Equals(right);

@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// A priming job instance.
-    /// Serialized Name: PrimingJob
-    /// </summary>
+    /// <summary> A priming job instance. </summary>
     public partial class PrimingJob
     {
         /// <summary> Initializes a new instance of PrimingJob. </summary>
-        /// <param name="primingJobName">
-        /// The priming job name.
-        /// Serialized Name: PrimingJob.primingJobName
-        /// </param>
-        /// <param name="primingManifestUri">
-        /// The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob.
-        /// Serialized Name: PrimingJob.primingManifestUrl
-        /// </param>
+        /// <param name="primingJobName"> The priming job name. </param>
+        /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobName"/> or <paramref name="primingManifestUri"/> is null. </exception>
         public PrimingJob(string primingJobName, Uri primingManifestUri)
         {
@@ -41,34 +32,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of PrimingJob. </summary>
-        /// <param name="primingJobName">
-        /// The priming job name.
-        /// Serialized Name: PrimingJob.primingJobName
-        /// </param>
-        /// <param name="primingManifestUri">
-        /// The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob.
-        /// Serialized Name: PrimingJob.primingManifestUrl
-        /// </param>
-        /// <param name="primingJobId">
-        /// The unique identifier of the priming job.
-        /// Serialized Name: PrimingJob.primingJobId
-        /// </param>
-        /// <param name="primingJobState">
-        /// The state of the priming operation.
-        /// Serialized Name: PrimingJob.primingJobState
-        /// </param>
-        /// <param name="primingJobStatus">
-        /// The status code of the priming job.
-        /// Serialized Name: PrimingJob.primingJobStatus
-        /// </param>
-        /// <param name="primingJobDetails">
-        /// The job details or error information if any.
-        /// Serialized Name: PrimingJob.primingJobDetails
-        /// </param>
-        /// <param name="primingJobPercentComplete">
-        /// The current progress of the priming job, as a percentage.
-        /// Serialized Name: PrimingJob.primingJobPercentComplete
-        /// </param>
+        /// <param name="primingJobName"> The priming job name. </param>
+        /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
+        /// <param name="primingJobId"> The unique identifier of the priming job. </param>
+        /// <param name="primingJobState"> The state of the priming operation. </param>
+        /// <param name="primingJobStatus"> The status code of the priming job. </param>
+        /// <param name="primingJobDetails"> The job details or error information if any. </param>
+        /// <param name="primingJobPercentComplete"> The current progress of the priming job, as a percentage. </param>
         internal PrimingJob(string primingJobName, Uri primingManifestUri, string primingJobId, PrimingJobState? primingJobState, string primingJobStatus, string primingJobDetails, double? primingJobPercentComplete)
         {
             PrimingJobName = primingJobName;
@@ -80,40 +50,19 @@ namespace Azure.ResourceManager.StorageCache.Models
             PrimingJobPercentComplete = primingJobPercentComplete;
         }
 
-        /// <summary>
-        /// The priming job name.
-        /// Serialized Name: PrimingJob.primingJobName
-        /// </summary>
+        /// <summary> The priming job name. </summary>
         public string PrimingJobName { get; set; }
-        /// <summary>
-        /// The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob.
-        /// Serialized Name: PrimingJob.primingManifestUrl
-        /// </summary>
+        /// <summary> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </summary>
         public Uri PrimingManifestUri { get; set; }
-        /// <summary>
-        /// The unique identifier of the priming job.
-        /// Serialized Name: PrimingJob.primingJobId
-        /// </summary>
+        /// <summary> The unique identifier of the priming job. </summary>
         public string PrimingJobId { get; }
-        /// <summary>
-        /// The state of the priming operation.
-        /// Serialized Name: PrimingJob.primingJobState
-        /// </summary>
+        /// <summary> The state of the priming operation. </summary>
         public PrimingJobState? PrimingJobState { get; }
-        /// <summary>
-        /// The status code of the priming job.
-        /// Serialized Name: PrimingJob.primingJobStatus
-        /// </summary>
+        /// <summary> The status code of the priming job. </summary>
         public string PrimingJobStatus { get; }
-        /// <summary>
-        /// The job details or error information if any.
-        /// Serialized Name: PrimingJob.primingJobDetails
-        /// </summary>
+        /// <summary> The job details or error information if any. </summary>
         public string PrimingJobDetails { get; }
-        /// <summary>
-        /// The current progress of the priming job, as a percentage.
-        /// Serialized Name: PrimingJob.primingJobPercentComplete
-        /// </summary>
+        /// <summary> The current progress of the priming job, as a percentage. </summary>
         public double? PrimingJobPercentComplete { get; }
     }
 }

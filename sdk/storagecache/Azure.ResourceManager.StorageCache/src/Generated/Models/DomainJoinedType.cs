@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// True if the HPC Cache is joined to the Active Directory domain.
-    /// Serialized Name: DomainJoinedType
-    /// </summary>
+    /// <summary> True if the HPC Cache is joined to the Active Directory domain. </summary>
     public readonly partial struct DomainJoinedType : IEquatable<DomainJoinedType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string NoValue = "No";
         private const string ErrorValue = "Error";
 
-        /// <summary>
-        /// Yes
-        /// Serialized Name: DomainJoinedType.Yes
-        /// </summary>
+        /// <summary> Yes. </summary>
         public static DomainJoinedType Yes { get; } = new DomainJoinedType(YesValue);
-        /// <summary>
-        /// No
-        /// Serialized Name: DomainJoinedType.No
-        /// </summary>
+        /// <summary> No. </summary>
         public static DomainJoinedType No { get; } = new DomainJoinedType(NoValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: DomainJoinedType.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static DomainJoinedType Error { get; } = new DomainJoinedType(ErrorValue);
         /// <summary> Determines if two <see cref="DomainJoinedType"/> values are the same. </summary>
         public static bool operator ==(DomainJoinedType left, DomainJoinedType right) => left.Equals(right);

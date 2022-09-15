@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Properties pertaining to the BlobNfsTarget.
-    /// Serialized Name: BlobNfsTarget
-    /// </summary>
+    /// <summary> Properties pertaining to the BlobNfsTarget. </summary>
     public partial class BlobNfsTarget
     {
         /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
-        /// <param name="target">
-        /// Resource ID of the storage container.
-        /// Serialized Name: BlobNfsTarget.target
-        /// </param>
-        /// <param name="usageModel">
-        /// Identifies the StorageCache usage model to be used for this storage target.
-        /// Serialized Name: BlobNfsTarget.usageModel
-        /// </param>
+        /// <param name="target"> Resource ID of the storage container. </param>
+        /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
         internal BlobNfsTarget(ResourceIdentifier target, string usageModel)
         {
             Target = target;
             UsageModel = usageModel;
         }
 
-        /// <summary>
-        /// Resource ID of the storage container.
-        /// Serialized Name: BlobNfsTarget.target
-        /// </summary>
+        /// <summary> Resource ID of the storage container. </summary>
         public ResourceIdentifier Target { get; set; }
-        /// <summary>
-        /// Identifies the StorageCache usage model to be used for this storage target.
-        /// Serialized Name: BlobNfsTarget.usageModel
-        /// </summary>
+        /// <summary> Identifies the StorageCache usage model to be used for this storage target. </summary>
         public string UsageModel { get; set; }
     }
 }

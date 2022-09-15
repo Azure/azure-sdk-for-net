@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Indicates whether or not the HPC Cache has performed the username download successfully.
-    /// Serialized Name: UsernameDownloadedType
-    /// </summary>
+    /// <summary> Indicates whether or not the HPC Cache has performed the username download successfully. </summary>
     public readonly partial struct StorageCacheUsernameDownloadedType : IEquatable<StorageCacheUsernameDownloadedType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string NoValue = "No";
         private const string ErrorValue = "Error";
 
-        /// <summary>
-        /// Yes
-        /// Serialized Name: UsernameDownloadedType.Yes
-        /// </summary>
+        /// <summary> Yes. </summary>
         public static StorageCacheUsernameDownloadedType Yes { get; } = new StorageCacheUsernameDownloadedType(YesValue);
-        /// <summary>
-        /// No
-        /// Serialized Name: UsernameDownloadedType.No
-        /// </summary>
+        /// <summary> No. </summary>
         public static StorageCacheUsernameDownloadedType No { get; } = new StorageCacheUsernameDownloadedType(NoValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: UsernameDownloadedType.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static StorageCacheUsernameDownloadedType Error { get; } = new StorageCacheUsernameDownloadedType(ErrorValue);
         /// <summary> Determines if two <see cref="StorageCacheUsernameDownloadedType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheUsernameDownloadedType left, StorageCacheUsernameDownloadedType right) => left.Equals(right);

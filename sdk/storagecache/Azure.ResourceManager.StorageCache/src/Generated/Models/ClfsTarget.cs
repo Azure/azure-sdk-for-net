@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Properties pertaining to the ClfsTarget
-    /// Serialized Name: ClfsTarget
-    /// </summary>
+    /// <summary> Properties pertaining to the ClfsTarget. </summary>
     internal partial class ClfsTarget
     {
         /// <summary> Initializes a new instance of ClfsTarget. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of ClfsTarget. </summary>
-        /// <param name="target">
-        /// Resource ID of storage container.
-        /// Serialized Name: ClfsTarget.target
-        /// </param>
+        /// <param name="target"> Resource ID of storage container. </param>
         internal ClfsTarget(ResourceIdentifier target)
         {
             Target = target;
         }
 
-        /// <summary>
-        /// Resource ID of storage container.
-        /// Serialized Name: ClfsTarget.target
-        /// </summary>
+        /// <summary> Resource ID of storage container. </summary>
         public ResourceIdentifier Target { get; set; }
     }
 }

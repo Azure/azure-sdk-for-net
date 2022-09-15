@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property
-    /// Serialized Name: ProvisioningStateType
-    /// </summary>
+    /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
     public readonly partial struct StorageCacheProvisioningStateType : IEquatable<StorageCacheProvisioningStateType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningStateType.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static StorageCacheProvisioningStateType Succeeded { get; } = new StorageCacheProvisioningStateType(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningStateType.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static StorageCacheProvisioningStateType Failed { get; } = new StorageCacheProvisioningStateType(FailedValue);
-        /// <summary>
-        /// Cancelled
-        /// Serialized Name: ProvisioningStateType.Cancelled
-        /// </summary>
+        /// <summary> Cancelled. </summary>
         public static StorageCacheProvisioningStateType Cancelled { get; } = new StorageCacheProvisioningStateType(CancelledValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningStateType.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static StorageCacheProvisioningStateType Creating { get; } = new StorageCacheProvisioningStateType(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningStateType.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static StorageCacheProvisioningStateType Deleting { get; } = new StorageCacheProvisioningStateType(DeletingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningStateType.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static StorageCacheProvisioningStateType Updating { get; } = new StorageCacheProvisioningStateType(UpdatingValue);
         /// <summary> Determines if two <see cref="StorageCacheProvisioningStateType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheProvisioningStateType left, StorageCacheProvisioningStateType right) => left.Equals(right);

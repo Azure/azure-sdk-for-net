@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Storage target operational state.
-    /// Serialized Name: OperationalStateType
-    /// </summary>
+    /// <summary> Storage target operational state. </summary>
     public readonly partial struct StorageTargetOperationalStateType : IEquatable<StorageTargetOperationalStateType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string SuspendedValue = "Suspended";
         private const string FlushingValue = "Flushing";
 
-        /// <summary>
-        /// Ready
-        /// Serialized Name: OperationalStateType.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         public static StorageTargetOperationalStateType Ready { get; } = new StorageTargetOperationalStateType(ReadyValue);
-        /// <summary>
-        /// Busy
-        /// Serialized Name: OperationalStateType.Busy
-        /// </summary>
+        /// <summary> Busy. </summary>
         public static StorageTargetOperationalStateType Busy { get; } = new StorageTargetOperationalStateType(BusyValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: OperationalStateType.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static StorageTargetOperationalStateType Suspended { get; } = new StorageTargetOperationalStateType(SuspendedValue);
-        /// <summary>
-        /// Flushing
-        /// Serialized Name: OperationalStateType.Flushing
-        /// </summary>
+        /// <summary> Flushing. </summary>
         public static StorageTargetOperationalStateType Flushing { get; } = new StorageTargetOperationalStateType(FlushingValue);
         /// <summary> Determines if two <see cref="StorageTargetOperationalStateType"/> values are the same. </summary>
         public static bool operator ==(StorageTargetOperationalStateType left, StorageTargetOperationalStateType right) => left.Equals(right);

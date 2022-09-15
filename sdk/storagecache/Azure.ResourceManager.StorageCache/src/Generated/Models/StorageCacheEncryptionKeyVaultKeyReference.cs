@@ -11,21 +11,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Describes a reference to Key Vault Key.
-    /// Serialized Name: KeyVaultKeyReference
-    /// </summary>
+    /// <summary> Describes a reference to Key Vault Key. </summary>
     public partial class StorageCacheEncryptionKeyVaultKeyReference
     {
         /// <summary> Initializes a new instance of StorageCacheEncryptionKeyVaultKeyReference. </summary>
-        /// <param name="keyUri">
-        /// The URL referencing a key encryption key in Key Vault.
-        /// Serialized Name: KeyVaultKeyReference.keyUrl
-        /// </param>
-        /// <param name="sourceVault">
-        /// Describes a resource Id to source Key Vault.
-        /// Serialized Name: KeyVaultKeyReference.sourceVault
-        /// </param>
+        /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
+        /// <param name="sourceVault"> Describes a resource Id to source Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
         public StorageCacheEncryptionKeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault)
         {
@@ -42,15 +33,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             SourceVault = sourceVault;
         }
 
-        /// <summary>
-        /// The URL referencing a key encryption key in Key Vault.
-        /// Serialized Name: KeyVaultKeyReference.keyUrl
-        /// </summary>
+        /// <summary> The URL referencing a key encryption key in Key Vault. </summary>
         public Uri KeyUri { get; set; }
-        /// <summary>
-        /// Describes a resource Id to source Key Vault.
-        /// Serialized Name: KeyVaultKeyReference.sourceVault
-        /// </summary>
+        /// <summary> Describes a resource Id to source Key Vault. </summary>
         internal WritableSubResource SourceVault { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SourceVaultId

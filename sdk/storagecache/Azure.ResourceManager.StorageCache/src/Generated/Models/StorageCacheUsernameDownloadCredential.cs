@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// When present, these are the credentials for the secure LDAP connection.
-    /// Serialized Name: CacheUsernameDownloadSettingsCredentials
-    /// </summary>
+    /// <summary> When present, these are the credentials for the secure LDAP connection. </summary>
     public partial class StorageCacheUsernameDownloadCredential
     {
         /// <summary> Initializes a new instance of StorageCacheUsernameDownloadCredential. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUsernameDownloadCredential. </summary>
-        /// <param name="bindDistinguishedName">
-        /// The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheUsernameDownloadSettingsCredentials.bindDn
-        /// </param>
-        /// <param name="bindPassword">
-        /// The Bind password to be used in the secure LDAP connection. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheUsernameDownloadSettingsCredentials.bindPassword
-        /// </param>
+        /// <param name="bindDistinguishedName"> The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
+        /// <param name="bindPassword"> The Bind password to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
         internal StorageCacheUsernameDownloadCredential(string bindDistinguishedName, string bindPassword)
         {
             BindDistinguishedName = bindDistinguishedName;
             BindPassword = bindPassword;
         }
 
-        /// <summary>
-        /// The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheUsernameDownloadSettingsCredentials.bindDn
-        /// </summary>
+        /// <summary> The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </summary>
         public string BindDistinguishedName { get; set; }
-        /// <summary>
-        /// The Bind password to be used in the secure LDAP connection. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheUsernameDownloadSettingsCredentials.bindPassword
-        /// </summary>
+        /// <summary> The Bind password to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </summary>
         public string BindPassword { get; set; }
     }
 }

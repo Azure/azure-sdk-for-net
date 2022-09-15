@@ -26,46 +26,16 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="junctions">
-        /// List of Cache namespace junctions to target for namespace associations.
-        /// Serialized Name: StorageTarget.properties.junctions
-        /// </param>
-        /// <param name="targetType">
-        /// Type of the Storage Target.
-        /// Serialized Name: StorageTarget.properties.targetType
-        /// </param>
-        /// <param name="provisioningState">
-        /// ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property
-        /// Serialized Name: StorageTarget.properties.provisioningState
-        /// </param>
-        /// <param name="state">
-        /// Storage target operational state.
-        /// Serialized Name: StorageTarget.properties.state
-        /// </param>
-        /// <param name="nfs3">
-        /// Properties when targetType is nfs3.
-        /// Serialized Name: StorageTarget.properties.nfs3
-        /// </param>
-        /// <param name="clfs">
-        /// Properties when targetType is clfs.
-        /// Serialized Name: StorageTarget.properties.clfs
-        /// </param>
-        /// <param name="unknown">
-        /// Properties when targetType is unknown.
-        /// Serialized Name: StorageTarget.properties.unknown
-        /// </param>
-        /// <param name="blobNfs">
-        /// Properties when targetType is blobNfs.
-        /// Serialized Name: StorageTarget.properties.blobNfs
-        /// </param>
-        /// <param name="allocationPercentage">
-        /// The percentage of cache space allocated for this storage target
-        /// Serialized Name: StorageTarget.properties.allocationPercentage
-        /// </param>
-        /// <param name="location">
-        /// Region name string.
-        /// Serialized Name: StorageTargetResource.location
-        /// </param>
+        /// <param name="junctions"> List of Cache namespace junctions to target for namespace associations. </param>
+        /// <param name="targetType"> Type of the Storage Target. </param>
+        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
+        /// <param name="state"> Storage target operational state. </param>
+        /// <param name="nfs3"> Properties when targetType is nfs3. </param>
+        /// <param name="clfs"> Properties when targetType is clfs. </param>
+        /// <param name="unknown"> Properties when targetType is unknown. </param>
+        /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
+        /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
+        /// <param name="location"> Region name string. </param>
         internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, StorageCacheProvisioningStateType? provisioningState, StorageTargetOperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Junctions = junctions;
@@ -80,40 +50,19 @@ namespace Azure.ResourceManager.StorageCache
             Location = location;
         }
 
-        /// <summary>
-        /// List of Cache namespace junctions to target for namespace associations.
-        /// Serialized Name: StorageTarget.properties.junctions
-        /// </summary>
+        /// <summary> List of Cache namespace junctions to target for namespace associations. </summary>
         public IList<NamespaceJunction> Junctions { get; }
-        /// <summary>
-        /// Type of the Storage Target.
-        /// Serialized Name: StorageTarget.properties.targetType
-        /// </summary>
+        /// <summary> Type of the Storage Target. </summary>
         public StorageTargetType? TargetType { get; set; }
-        /// <summary>
-        /// ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property
-        /// Serialized Name: StorageTarget.properties.provisioningState
-        /// </summary>
+        /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
         public StorageCacheProvisioningStateType? ProvisioningState { get; }
-        /// <summary>
-        /// Storage target operational state.
-        /// Serialized Name: StorageTarget.properties.state
-        /// </summary>
+        /// <summary> Storage target operational state. </summary>
         public StorageTargetOperationalStateType? State { get; set; }
-        /// <summary>
-        /// Properties when targetType is nfs3.
-        /// Serialized Name: StorageTarget.properties.nfs3
-        /// </summary>
+        /// <summary> Properties when targetType is nfs3. </summary>
         public Nfs3Target Nfs3 { get; set; }
-        /// <summary>
-        /// Properties when targetType is clfs.
-        /// Serialized Name: StorageTarget.properties.clfs
-        /// </summary>
+        /// <summary> Properties when targetType is clfs. </summary>
         internal ClfsTarget Clfs { get; set; }
-        /// <summary>
-        /// Resource ID of storage container.
-        /// Serialized Name: ClfsTarget.target
-        /// </summary>
+        /// <summary> Resource ID of storage container. </summary>
         public ResourceIdentifier ClfsTarget
         {
             get => Clfs is null ? default : Clfs.Target;
@@ -125,15 +74,9 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Properties when targetType is unknown.
-        /// Serialized Name: StorageTarget.properties.unknown
-        /// </summary>
+        /// <summary> Properties when targetType is unknown. </summary>
         internal UnknownTarget Unknown { get; set; }
-        /// <summary>
-        /// Dictionary of string-&gt;string pairs containing information about the Storage Target.
-        /// Serialized Name: UnknownTarget.attributes
-        /// </summary>
+        /// <summary> Dictionary of string-&gt;string pairs containing information about the Storage Target. </summary>
         public IDictionary<string, string> UnknownAttributes
         {
             get
@@ -144,20 +87,11 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Properties when targetType is blobNfs.
-        /// Serialized Name: StorageTarget.properties.blobNfs
-        /// </summary>
+        /// <summary> Properties when targetType is blobNfs. </summary>
         public BlobNfsTarget BlobNfs { get; set; }
-        /// <summary>
-        /// The percentage of cache space allocated for this storage target
-        /// Serialized Name: StorageTarget.properties.allocationPercentage
-        /// </summary>
+        /// <summary> The percentage of cache space allocated for this storage target. </summary>
         public int? AllocationPercentage { get; }
-        /// <summary>
-        /// Region name string.
-        /// Serialized Name: StorageTargetResource.location
-        /// </summary>
+        /// <summary> Region name string. </summary>
         public AzureLocation? Location { get; }
     }
 }

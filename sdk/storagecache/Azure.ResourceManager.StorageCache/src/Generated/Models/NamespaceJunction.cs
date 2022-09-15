@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// A namespace junction.
-    /// Serialized Name: NamespaceJunction
-    /// </summary>
+    /// <summary> A namespace junction. </summary>
     public partial class NamespaceJunction
     {
         /// <summary> Initializes a new instance of NamespaceJunction. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of NamespaceJunction. </summary>
-        /// <param name="namespacePath">
-        /// Namespace path on a Cache for a Storage Target.
-        /// Serialized Name: NamespaceJunction.namespacePath
-        /// </param>
-        /// <param name="targetPath">
-        /// Path in Storage Target to which namespacePath points.
-        /// Serialized Name: NamespaceJunction.targetPath
-        /// </param>
-        /// <param name="nfsExport">
-        /// NFS export where targetPath exists.
-        /// Serialized Name: NamespaceJunction.nfsExport
-        /// </param>
-        /// <param name="nfsAccessPolicy">
-        /// Name of the access policy applied to this junction.
-        /// Serialized Name: NamespaceJunction.nfsAccessPolicy
-        /// </param>
+        /// <param name="namespacePath"> Namespace path on a Cache for a Storage Target. </param>
+        /// <param name="targetPath"> Path in Storage Target to which namespacePath points. </param>
+        /// <param name="nfsExport"> NFS export where targetPath exists. </param>
+        /// <param name="nfsAccessPolicy"> Name of the access policy applied to this junction. </param>
         internal NamespaceJunction(string namespacePath, string targetPath, string nfsExport, string nfsAccessPolicy)
         {
             NamespacePath = namespacePath;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.StorageCache.Models
             NfsAccessPolicy = nfsAccessPolicy;
         }
 
-        /// <summary>
-        /// Namespace path on a Cache for a Storage Target.
-        /// Serialized Name: NamespaceJunction.namespacePath
-        /// </summary>
+        /// <summary> Namespace path on a Cache for a Storage Target. </summary>
         public string NamespacePath { get; set; }
-        /// <summary>
-        /// Path in Storage Target to which namespacePath points.
-        /// Serialized Name: NamespaceJunction.targetPath
-        /// </summary>
+        /// <summary> Path in Storage Target to which namespacePath points. </summary>
         public string TargetPath { get; set; }
-        /// <summary>
-        /// NFS export where targetPath exists.
-        /// Serialized Name: NamespaceJunction.nfsExport
-        /// </summary>
+        /// <summary> NFS export where targetPath exists. </summary>
         public string NfsExport { get; set; }
-        /// <summary>
-        /// Name of the access policy applied to this junction.
-        /// Serialized Name: NamespaceJunction.nfsAccessPolicy
-        /// </summary>
+        /// <summary> Name of the access policy applied to this junction. </summary>
         public string NfsAccessPolicy { get; set; }
     }
 }

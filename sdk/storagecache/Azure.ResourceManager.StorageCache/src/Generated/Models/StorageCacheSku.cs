@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// A resource SKU.
-    /// Serialized Name: ResourceSku
-    /// </summary>
+    /// <summary> A resource SKU. </summary>
     public partial class StorageCacheSku
     {
         /// <summary> Initializes a new instance of StorageCacheSku. </summary>
@@ -26,30 +23,12 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheSku. </summary>
-        /// <param name="resourceType">
-        /// The type of resource the SKU applies to.
-        /// Serialized Name: ResourceSku.resourceType
-        /// </param>
-        /// <param name="capabilities">
-        /// A list of capabilities of this SKU, such as throughput or ops/sec.
-        /// Serialized Name: ResourceSku.capabilities
-        /// </param>
-        /// <param name="locations">
-        /// The set of locations where the SKU is available. This is the supported and registered Azure Geo Regions (e.g., West US, East US, Southeast Asia, etc.).
-        /// Serialized Name: ResourceSku.locations
-        /// </param>
-        /// <param name="locationInfo">
-        /// The set of locations where the SKU is available.
-        /// Serialized Name: ResourceSku.locationInfo
-        /// </param>
-        /// <param name="name">
-        /// The name of this SKU.
-        /// Serialized Name: ResourceSku.name
-        /// </param>
-        /// <param name="restrictions">
-        /// The restrictions preventing this SKU from being used. This is empty if there are no restrictions.
-        /// Serialized Name: ResourceSku.restrictions
-        /// </param>
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="capabilities"> A list of capabilities of this SKU, such as throughput or ops/sec. </param>
+        /// <param name="locations"> The set of locations where the SKU is available. This is the supported and registered Azure Geo Regions (e.g., West US, East US, Southeast Asia, etc.). </param>
+        /// <param name="locationInfo"> The set of locations where the SKU is available. </param>
+        /// <param name="name"> The name of this SKU. </param>
+        /// <param name="restrictions"> The restrictions preventing this SKU from being used. This is empty if there are no restrictions. </param>
         internal StorageCacheSku(string resourceType, IReadOnlyList<StorageCacheSkuCapability> capabilities, IReadOnlyList<string> locations, IReadOnlyList<StorageCacheSkuLocationInfo> locationInfo, string name, IReadOnlyList<StorageCacheRestriction> restrictions)
         {
             ResourceType = resourceType;
@@ -60,35 +39,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             Restrictions = restrictions;
         }
 
-        /// <summary>
-        /// The type of resource the SKU applies to.
-        /// Serialized Name: ResourceSku.resourceType
-        /// </summary>
+        /// <summary> The type of resource the SKU applies to. </summary>
         public string ResourceType { get; }
-        /// <summary>
-        /// A list of capabilities of this SKU, such as throughput or ops/sec.
-        /// Serialized Name: ResourceSku.capabilities
-        /// </summary>
+        /// <summary> A list of capabilities of this SKU, such as throughput or ops/sec. </summary>
         public IReadOnlyList<StorageCacheSkuCapability> Capabilities { get; }
-        /// <summary>
-        /// The set of locations where the SKU is available. This is the supported and registered Azure Geo Regions (e.g., West US, East US, Southeast Asia, etc.).
-        /// Serialized Name: ResourceSku.locations
-        /// </summary>
+        /// <summary> The set of locations where the SKU is available. This is the supported and registered Azure Geo Regions (e.g., West US, East US, Southeast Asia, etc.). </summary>
         public IReadOnlyList<string> Locations { get; }
-        /// <summary>
-        /// The set of locations where the SKU is available.
-        /// Serialized Name: ResourceSku.locationInfo
-        /// </summary>
+        /// <summary> The set of locations where the SKU is available. </summary>
         public IReadOnlyList<StorageCacheSkuLocationInfo> LocationInfo { get; }
-        /// <summary>
-        /// The name of this SKU.
-        /// Serialized Name: ResourceSku.name
-        /// </summary>
+        /// <summary> The name of this SKU. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The restrictions preventing this SKU from being used. This is empty if there are no restrictions.
-        /// Serialized Name: ResourceSku.restrictions
-        /// </summary>
+        /// <summary> The restrictions preventing this SKU from being used. This is empty if there are no restrictions. </summary>
         public IReadOnlyList<StorageCacheRestriction> Restrictions { get; }
     }
 }

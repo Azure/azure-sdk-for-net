@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// True if there is a firmware update ready to install on this Cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation.
-    /// Serialized Name: FirmwareStatusType
-    /// </summary>
+    /// <summary> True if there is a firmware update ready to install on this Cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </summary>
     public readonly partial struct StorageCacheFirmwareStatusType : IEquatable<StorageCacheFirmwareStatusType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string AvailableValue = "available";
         private const string UnavailableValue = "unavailable";
 
-        /// <summary>
-        /// available
-        /// Serialized Name: FirmwareStatusType.available
-        /// </summary>
+        /// <summary> available. </summary>
         public static StorageCacheFirmwareStatusType Available { get; } = new StorageCacheFirmwareStatusType(AvailableValue);
-        /// <summary>
-        /// unavailable
-        /// Serialized Name: FirmwareStatusType.unavailable
-        /// </summary>
+        /// <summary> unavailable. </summary>
         public static StorageCacheFirmwareStatusType Unavailable { get; } = new StorageCacheFirmwareStatusType(UnavailableValue);
         /// <summary> Determines if two <see cref="StorageCacheFirmwareStatusType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheFirmwareStatusType left, StorageCacheFirmwareStatusType right) => left.Equals(right);

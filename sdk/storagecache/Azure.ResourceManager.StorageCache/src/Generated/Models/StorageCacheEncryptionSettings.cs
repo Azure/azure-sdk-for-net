@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Cache encryption settings.
-    /// Serialized Name: CacheEncryptionSettings
-    /// </summary>
+    /// <summary> Cache encryption settings. </summary>
     public partial class StorageCacheEncryptionSettings
     {
         /// <summary> Initializes a new instance of StorageCacheEncryptionSettings. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheEncryptionSettings. </summary>
-        /// <param name="keyEncryptionKey">
-        /// Specifies the location of the key encryption key in Key Vault.
-        /// Serialized Name: CacheEncryptionSettings.keyEncryptionKey
-        /// </param>
-        /// <param name="enableRotationToLatestKeyVersion">
-        /// Specifies whether the service will automatically rotate to the newest version of the key in the Key Vault.
-        /// Serialized Name: CacheEncryptionSettings.rotationToLatestKeyVersionEnabled
-        /// </param>
+        /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in Key Vault. </param>
+        /// <param name="enableRotationToLatestKeyVersion"> Specifies whether the service will automatically rotate to the newest version of the key in the Key Vault. </param>
         internal StorageCacheEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, bool? enableRotationToLatestKeyVersion)
         {
             KeyEncryptionKey = keyEncryptionKey;
             EnableRotationToLatestKeyVersion = enableRotationToLatestKeyVersion;
         }
 
-        /// <summary>
-        /// Specifies the location of the key encryption key in Key Vault.
-        /// Serialized Name: CacheEncryptionSettings.keyEncryptionKey
-        /// </summary>
+        /// <summary> Specifies the location of the key encryption key in Key Vault. </summary>
         public StorageCacheEncryptionKeyVaultKeyReference KeyEncryptionKey { get; set; }
-        /// <summary>
-        /// Specifies whether the service will automatically rotate to the newest version of the key in the Key Vault.
-        /// Serialized Name: CacheEncryptionSettings.rotationToLatestKeyVersionEnabled
-        /// </summary>
+        /// <summary> Specifies whether the service will automatically rotate to the newest version of the key in the Key Vault. </summary>
         public bool? EnableRotationToLatestKeyVersion { get; set; }
     }
 }

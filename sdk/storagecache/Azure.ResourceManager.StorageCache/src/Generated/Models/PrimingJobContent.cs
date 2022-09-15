@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Object containing the priming job ID.
-    /// Serialized Name: PrimingJobIdParameter
-    /// </summary>
+    /// <summary> Object containing the priming job ID. </summary>
     public partial class PrimingJobContent
     {
         /// <summary> Initializes a new instance of PrimingJobContent. </summary>
-        /// <param name="primingJobId">
-        /// The unique identifier of the priming job.
-        /// Serialized Name: PrimingJobIdParameter.primingJobId
-        /// </param>
+        /// <param name="primingJobId"> The unique identifier of the priming job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobId"/> is null. </exception>
         public PrimingJobContent(string primingJobId)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             PrimingJobId = primingJobId;
         }
 
-        /// <summary>
-        /// The unique identifier of the priming job.
-        /// Serialized Name: PrimingJobIdParameter.primingJobId
-        /// </summary>
+        /// <summary> The unique identifier of the priming job. </summary>
         public string PrimingJobId { get; }
     }
 }

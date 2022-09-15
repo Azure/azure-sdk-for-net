@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Naming information for this resource type.
-    /// Serialized Name: ResourceUsageName
-    /// </summary>
+    /// <summary> Naming information for this resource type. </summary>
     public partial class StorageCacheUsageName
     {
         /// <summary> Initializes a new instance of StorageCacheUsageName. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUsageName. </summary>
-        /// <param name="value">
-        /// Canonical name for this resource type.
-        /// Serialized Name: ResourceUsageName.value
-        /// </param>
-        /// <param name="localizedValue">
-        /// Localized name for this resource type.
-        /// Serialized Name: ResourceUsageName.localizedValue
-        /// </param>
+        /// <param name="value"> Canonical name for this resource type. </param>
+        /// <param name="localizedValue"> Localized name for this resource type. </param>
         internal StorageCacheUsageName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary>
-        /// Canonical name for this resource type.
-        /// Serialized Name: ResourceUsageName.value
-        /// </summary>
+        /// <summary> Canonical name for this resource type. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Localized name for this resource type.
-        /// Serialized Name: ResourceUsageName.localizedValue
-        /// </summary>
+        /// <summary> Localized name for this resource type. </summary>
         public string LocalizedValue { get; }
     }
 }

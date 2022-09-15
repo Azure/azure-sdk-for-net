@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Localized information describing this usage model.
-    /// Serialized Name: UsageModelDisplay
-    /// </summary>
+    /// <summary> Localized information describing this usage model. </summary>
     internal partial class StorageCacheUsageModelDisplay
     {
         /// <summary> Initializes a new instance of StorageCacheUsageModelDisplay. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUsageModelDisplay. </summary>
-        /// <param name="description">
-        /// String to display for this usage model.
-        /// Serialized Name: UsageModelDisplay.description
-        /// </param>
+        /// <param name="description"> String to display for this usage model. </param>
         internal StorageCacheUsageModelDisplay(string description)
         {
             Description = description;
         }
 
-        /// <summary>
-        /// String to display for this usage model.
-        /// Serialized Name: UsageModelDisplay.description
-        /// </summary>
+        /// <summary> String to display for this usage model. </summary>
         public string Description { get; }
     }
 }

@@ -33,70 +33,22 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity of the cache, if configured.
-        /// Serialized Name: Cache.identity
-        /// </param>
-        /// <param name="sku">
-        /// SKU for the Cache.
-        /// Serialized Name: Cache.sku
-        /// </param>
-        /// <param name="cacheSizeGB">
-        /// The size of this Cache, in GB.
-        /// Serialized Name: Cache.properties.cacheSizeGB
-        /// </param>
-        /// <param name="health">
-        /// Health of the Cache.
-        /// Serialized Name: Cache.properties.health
-        /// </param>
-        /// <param name="mountAddresses">
-        /// Array of IP addresses that can be used by clients mounting this Cache.
-        /// Serialized Name: Cache.properties.mountAddresses
-        /// </param>
-        /// <param name="provisioningState">
-        /// ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property
-        /// Serialized Name: Cache.properties.provisioningState
-        /// </param>
-        /// <param name="subnet">
-        /// Subnet used for the Cache.
-        /// Serialized Name: Cache.properties.subnet
-        /// </param>
-        /// <param name="upgradeStatus">
-        /// Upgrade status of the Cache.
-        /// Serialized Name: Cache.properties.upgradeStatus
-        /// </param>
-        /// <param name="upgradeSettings">
-        /// Upgrade settings of the Cache.
-        /// Serialized Name: Cache.properties.upgradeSettings
-        /// </param>
-        /// <param name="networkSettings">
-        /// Specifies network settings of the cache.
-        /// Serialized Name: Cache.properties.networkSettings
-        /// </param>
-        /// <param name="encryptionSettings">
-        /// Specifies encryption settings of the cache.
-        /// Serialized Name: Cache.properties.encryptionSettings
-        /// </param>
-        /// <param name="securitySettings">
-        /// Specifies security settings of the cache.
-        /// Serialized Name: Cache.properties.securitySettings
-        /// </param>
-        /// <param name="directoryServicesSettings">
-        /// Specifies Directory Services settings of the cache.
-        /// Serialized Name: Cache.properties.directoryServicesSettings
-        /// </param>
-        /// <param name="zones">
-        /// Availability zones for resources. This field should only contain a single element in the array.
-        /// Serialized Name: Cache.properties.zones
-        /// </param>
-        /// <param name="primingJobs">
-        /// Specifies the priming jobs defined in the cache.
-        /// Serialized Name: Cache.properties.primingJobs
-        /// </param>
-        /// <param name="spaceAllocation">
-        /// Specifies the space allocation percentage for each storage target in the cache.
-        /// Serialized Name: Cache.properties.spaceAllocation
-        /// </param>
+        /// <param name="identity"> The identity of the cache, if configured. </param>
+        /// <param name="sku"> SKU for the Cache. </param>
+        /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
+        /// <param name="health"> Health of the Cache. </param>
+        /// <param name="mountAddresses"> Array of IP addresses that can be used by clients mounting this Cache. </param>
+        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
+        /// <param name="subnet"> Subnet used for the Cache. </param>
+        /// <param name="upgradeStatus"> Upgrade status of the Cache. </param>
+        /// <param name="upgradeSettings"> Upgrade settings of the Cache. </param>
+        /// <param name="networkSettings"> Specifies network settings of the cache. </param>
+        /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
+        /// <param name="securitySettings"> Specifies security settings of the cache. </param>
+        /// <param name="directoryServicesSettings"> Specifies Directory Services settings of the cache. </param>
+        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
+        /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
+        /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
         internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuInfo sku, int? cacheSizeGB, StorageCacheHealth health, IReadOnlyList<IPAddress> mountAddresses, StorageCacheProvisioningStateType? provisioningState, ResourceIdentifier subnet, StorageCacheUpgradeStatus upgradeStatus, StorageCacheUpgradeSettings upgradeSettings, StorageCacheNetworkSettings networkSettings, StorageCacheEncryptionSettings encryptionSettings, StorageCacheSecuritySettings securitySettings, StorageCacheDirectorySettings directoryServicesSettings, IList<string> zones, IReadOnlyList<PrimingJob> primingJobs, IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -117,20 +69,11 @@ namespace Azure.ResourceManager.StorageCache
             SpaceAllocation = spaceAllocation;
         }
 
-        /// <summary>
-        /// The identity of the cache, if configured.
-        /// Serialized Name: Cache.identity
-        /// </summary>
+        /// <summary> The identity of the cache, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// SKU for the Cache.
-        /// Serialized Name: Cache.sku
-        /// </summary>
+        /// <summary> SKU for the Cache. </summary>
         internal StorageCacheSkuInfo Sku { get; set; }
-        /// <summary>
-        /// SKU name for this Cache.
-        /// Serialized Name: CacheSku.name
-        /// </summary>
+        /// <summary> SKU name for this Cache. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -142,60 +85,27 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// The size of this Cache, in GB.
-        /// Serialized Name: Cache.properties.cacheSizeGB
-        /// </summary>
+        /// <summary> The size of this Cache, in GB. </summary>
         public int? CacheSizeGB { get; set; }
-        /// <summary>
-        /// Health of the Cache.
-        /// Serialized Name: Cache.properties.health
-        /// </summary>
+        /// <summary> Health of the Cache. </summary>
         public StorageCacheHealth Health { get; }
-        /// <summary>
-        /// Array of IP addresses that can be used by clients mounting this Cache.
-        /// Serialized Name: Cache.properties.mountAddresses
-        /// </summary>
+        /// <summary> Array of IP addresses that can be used by clients mounting this Cache. </summary>
         public IReadOnlyList<IPAddress> MountAddresses { get; }
-        /// <summary>
-        /// ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property
-        /// Serialized Name: Cache.properties.provisioningState
-        /// </summary>
+        /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
         public StorageCacheProvisioningStateType? ProvisioningState { get; }
-        /// <summary>
-        /// Subnet used for the Cache.
-        /// Serialized Name: Cache.properties.subnet
-        /// </summary>
+        /// <summary> Subnet used for the Cache. </summary>
         public ResourceIdentifier Subnet { get; set; }
-        /// <summary>
-        /// Upgrade status of the Cache.
-        /// Serialized Name: Cache.properties.upgradeStatus
-        /// </summary>
+        /// <summary> Upgrade status of the Cache. </summary>
         public StorageCacheUpgradeStatus UpgradeStatus { get; }
-        /// <summary>
-        /// Upgrade settings of the Cache.
-        /// Serialized Name: Cache.properties.upgradeSettings
-        /// </summary>
+        /// <summary> Upgrade settings of the Cache. </summary>
         public StorageCacheUpgradeSettings UpgradeSettings { get; set; }
-        /// <summary>
-        /// Specifies network settings of the cache.
-        /// Serialized Name: Cache.properties.networkSettings
-        /// </summary>
+        /// <summary> Specifies network settings of the cache. </summary>
         public StorageCacheNetworkSettings NetworkSettings { get; set; }
-        /// <summary>
-        /// Specifies encryption settings of the cache.
-        /// Serialized Name: Cache.properties.encryptionSettings
-        /// </summary>
+        /// <summary> Specifies encryption settings of the cache. </summary>
         public StorageCacheEncryptionSettings EncryptionSettings { get; set; }
-        /// <summary>
-        /// Specifies security settings of the cache.
-        /// Serialized Name: Cache.properties.securitySettings
-        /// </summary>
+        /// <summary> Specifies security settings of the cache. </summary>
         internal StorageCacheSecuritySettings SecuritySettings { get; set; }
-        /// <summary>
-        /// NFS access policies defined for this cache.
-        /// Serialized Name: CacheSecuritySettings.accessPolicies
-        /// </summary>
+        /// <summary> NFS access policies defined for this cache. </summary>
         public IList<NfsAccessPolicy> SecurityAccessPolicies
         {
             get
@@ -206,25 +116,13 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Specifies Directory Services settings of the cache.
-        /// Serialized Name: Cache.properties.directoryServicesSettings
-        /// </summary>
+        /// <summary> Specifies Directory Services settings of the cache. </summary>
         public StorageCacheDirectorySettings DirectoryServicesSettings { get; set; }
-        /// <summary>
-        /// Availability zones for resources. This field should only contain a single element in the array.
-        /// Serialized Name: Cache.properties.zones
-        /// </summary>
+        /// <summary> Availability zones for resources. This field should only contain a single element in the array. </summary>
         public IList<string> Zones { get; }
-        /// <summary>
-        /// Specifies the priming jobs defined in the cache.
-        /// Serialized Name: Cache.properties.primingJobs
-        /// </summary>
+        /// <summary> Specifies the priming jobs defined in the cache. </summary>
         public IReadOnlyList<PrimingJob> PrimingJobs { get; }
-        /// <summary>
-        /// Specifies the space allocation percentage for each storage target in the cache.
-        /// Serialized Name: Cache.properties.spaceAllocation
-        /// </summary>
+        /// <summary> Specifies the space allocation percentage for each storage target in the cache. </summary>
         public IReadOnlyList<StorageTargetSpaceAllocation> SpaceAllocation { get; }
     }
 }

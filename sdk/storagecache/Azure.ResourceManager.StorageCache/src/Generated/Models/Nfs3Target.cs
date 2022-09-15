@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Properties pertaining to the Nfs3Target
-    /// Serialized Name: Nfs3Target
-    /// </summary>
+    /// <summary> Properties pertaining to the Nfs3Target. </summary>
     public partial class Nfs3Target
     {
         /// <summary> Initializes a new instance of Nfs3Target. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of Nfs3Target. </summary>
-        /// <param name="target">
-        /// IP address or host name of an NFSv3 host (e.g., 10.0.44.44).
-        /// Serialized Name: Nfs3Target.target
-        /// </param>
-        /// <param name="usageModel">
-        /// Identifies the StorageCache usage model to be used for this storage target.
-        /// Serialized Name: Nfs3Target.usageModel
-        /// </param>
+        /// <param name="target"> IP address or host name of an NFSv3 host (e.g., 10.0.44.44). </param>
+        /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
         internal Nfs3Target(string target, string usageModel)
         {
             Target = target;
             UsageModel = usageModel;
         }
 
-        /// <summary>
-        /// IP address or host name of an NFSv3 host (e.g., 10.0.44.44).
-        /// Serialized Name: Nfs3Target.target
-        /// </summary>
+        /// <summary> IP address or host name of an NFSv3 host (e.g., 10.0.44.44). </summary>
         public string Target { get; set; }
-        /// <summary>
-        /// Identifies the StorageCache usage model to be used for this storage target.
-        /// Serialized Name: Nfs3Target.usageModel
-        /// </summary>
+        /// <summary> Identifies the StorageCache usage model to be used for this storage target. </summary>
         public string UsageModel { get; set; }
     }
 }

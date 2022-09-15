@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Cache Directory Services settings.
-    /// Serialized Name: CacheDirectorySettings
-    /// </summary>
+    /// <summary> Cache Directory Services settings. </summary>
     public partial class StorageCacheDirectorySettings
     {
         /// <summary> Initializes a new instance of StorageCacheDirectorySettings. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheDirectorySettings. </summary>
-        /// <param name="activeDirectory">
-        /// Specifies settings for joining the HPC Cache to an Active Directory domain.
-        /// Serialized Name: CacheDirectorySettings.activeDirectory
-        /// </param>
-        /// <param name="usernameDownload">
-        /// Specifies settings for Extended Groups. Extended Groups allows users to be members of more than 16 groups.
-        /// Serialized Name: CacheDirectorySettings.usernameDownload
-        /// </param>
+        /// <param name="activeDirectory"> Specifies settings for joining the HPC Cache to an Active Directory domain. </param>
+        /// <param name="usernameDownload"> Specifies settings for Extended Groups. Extended Groups allows users to be members of more than 16 groups. </param>
         internal StorageCacheDirectorySettings(StorageCacheActiveDirectorySettings activeDirectory, StorageCacheUsernameDownloadSettings usernameDownload)
         {
             ActiveDirectory = activeDirectory;
             UsernameDownload = usernameDownload;
         }
 
-        /// <summary>
-        /// Specifies settings for joining the HPC Cache to an Active Directory domain.
-        /// Serialized Name: CacheDirectorySettings.activeDirectory
-        /// </summary>
+        /// <summary> Specifies settings for joining the HPC Cache to an Active Directory domain. </summary>
         public StorageCacheActiveDirectorySettings ActiveDirectory { get; set; }
-        /// <summary>
-        /// Specifies settings for Extended Groups. Extended Groups allows users to be members of more than 16 groups.
-        /// Serialized Name: CacheDirectorySettings.usernameDownload
-        /// </summary>
+        /// <summary> Specifies settings for Extended Groups. Extended Groups allows users to be members of more than 16 groups. </summary>
         public StorageCacheUsernameDownloadSettings UsernameDownload { get; set; }
     }
 }

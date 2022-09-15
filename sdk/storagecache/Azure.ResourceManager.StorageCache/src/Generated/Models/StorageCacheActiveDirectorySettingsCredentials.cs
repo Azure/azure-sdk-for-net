@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// Active Directory admin credentials used to join the HPC Cache to a domain.
-    /// Serialized Name: CacheActiveDirectorySettingsCredentials
-    /// </summary>
+    /// <summary> Active Directory admin credentials used to join the HPC Cache to a domain. </summary>
     public partial class StorageCacheActiveDirectorySettingsCredentials
     {
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettingsCredentials. </summary>
-        /// <param name="username">
-        /// Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheActiveDirectorySettingsCredentials.username
-        /// </param>
-        /// <param name="password">
-        /// Plain text password of the Active Directory domain administrator. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheActiveDirectorySettingsCredentials.password
-        /// </param>
+        /// <param name="username"> Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
+        /// <param name="password"> Plain text password of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public StorageCacheActiveDirectorySettingsCredentials(string username, string password)
         {
@@ -40,15 +31,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             Password = password;
         }
 
-        /// <summary>
-        /// Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheActiveDirectorySettingsCredentials.username
-        /// </summary>
+        /// <summary> Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </summary>
         public string Username { get; set; }
-        /// <summary>
-        /// Plain text password of the Active Directory domain administrator. This value is stored encrypted and not returned on response.
-        /// Serialized Name: CacheActiveDirectorySettingsCredentials.password
-        /// </summary>
+        /// <summary> Plain text password of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </summary>
         public string Password { get; set; }
     }
 }

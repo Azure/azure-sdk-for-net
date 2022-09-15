@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary>
-    /// The restrictions preventing this SKU from being used.
-    /// Serialized Name: Restriction
-    /// </summary>
+    /// <summary> The restrictions preventing this SKU from being used. </summary>
     public partial class StorageCacheRestriction
     {
         /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>
-        /// <param name="restrictionType">
-        /// The type of restrictions. In this version, the only possible value for this is location.
-        /// Serialized Name: Restriction.type
-        /// </param>
-        /// <param name="values">
-        /// The value of restrictions. If the restriction type is set to location, then this would be the different locations where the SKU is restricted.
-        /// Serialized Name: Restriction.values
-        /// </param>
-        /// <param name="reasonCode">
-        /// The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter.
-        /// Serialized Name: Restriction.reasonCode
-        /// </param>
+        /// <param name="restrictionType"> The type of restrictions. In this version, the only possible value for this is location. </param>
+        /// <param name="values"> The value of restrictions. If the restriction type is set to location, then this would be the different locations where the SKU is restricted. </param>
+        /// <param name="reasonCode"> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter. </param>
         internal StorageCacheRestriction(string restrictionType, IReadOnlyList<string> values, StorageCacheRestrictionReasonCode? reasonCode)
         {
             RestrictionType = restrictionType;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             ReasonCode = reasonCode;
         }
 
-        /// <summary>
-        /// The type of restrictions. In this version, the only possible value for this is location.
-        /// Serialized Name: Restriction.type
-        /// </summary>
+        /// <summary> The type of restrictions. In this version, the only possible value for this is location. </summary>
         public string RestrictionType { get; }
-        /// <summary>
-        /// The value of restrictions. If the restriction type is set to location, then this would be the different locations where the SKU is restricted.
-        /// Serialized Name: Restriction.values
-        /// </summary>
+        /// <summary> The value of restrictions. If the restriction type is set to location, then this would be the different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
-        /// <summary>
-        /// The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter.
-        /// Serialized Name: Restriction.reasonCode
-        /// </summary>
+        /// <summary> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. &quot;QuotaId&quot; is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. &quot;NotAvailableForSubscription&quot; is related to capacity at the datacenter. </summary>
         public StorageCacheRestrictionReasonCode? ReasonCode { get; }
     }
 }
