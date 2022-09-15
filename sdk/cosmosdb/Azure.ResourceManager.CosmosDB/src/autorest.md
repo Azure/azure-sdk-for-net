@@ -258,7 +258,7 @@ rename-mapping:
   MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
   RegionalServiceResource: CosmosDBRegionalService
   SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
-  GraphAPIComputeRegionalServiceResource: GraphAPIComputeRegionalService
+  GraphAPIComputeRegionalServiceResource: GraphApiComputeRegionalService
   DataTransferRegionalServiceResource: DataTransferRegionalService
   MaterializedViewsBuilderRegionalServiceResource: MaterializedViewsBuilderRegionalService
   ServiceStatus: CosmosDBServiceStatus
