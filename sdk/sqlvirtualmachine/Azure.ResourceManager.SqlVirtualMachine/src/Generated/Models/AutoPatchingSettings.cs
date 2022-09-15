@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Initializes a new instance of AutoPatchingSettings. </summary>
-        /// <param name="enable"> Enable or disable autopatching on SQL virtual machine. </param>
+        /// <param name="isEnabled"> Enable or disable autopatching on SQL virtual machine. </param>
         /// <param name="dayOfWeek"> Day of week to apply the patch on. </param>
         /// <param name="maintenanceWindowStartingHour"> Hour of the day when patching is initiated. Local VM time. </param>
         /// <param name="maintenanceWindowDuration"> Duration of patching. </param>
-        internal AutoPatchingSettings(bool? enable, DayOfWeek? dayOfWeek, int? maintenanceWindowStartingHour, int? maintenanceWindowDuration)
+        internal AutoPatchingSettings(bool? isEnabled, AutoPatchingDayOfWeek? dayOfWeek, int? maintenanceWindowStartingHour, int? maintenanceWindowDuration)
         {
-            Enable = enable;
+            IsEnabled = isEnabled;
             DayOfWeek = dayOfWeek;
             MaintenanceWindowStartingHour = maintenanceWindowStartingHour;
             MaintenanceWindowDuration = maintenanceWindowDuration;
         }
 
         /// <summary> Enable or disable autopatching on SQL virtual machine. </summary>
-        public bool? Enable { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Day of week to apply the patch on. </summary>
-        public DayOfWeek? DayOfWeek { get; set; }
+        public AutoPatchingDayOfWeek? DayOfWeek { get; set; }
         /// <summary> Hour of the day when patching is initiated. Local VM time. </summary>
         public int? MaintenanceWindowStartingHour { get; set; }
         /// <summary> Duration of patching. </summary>

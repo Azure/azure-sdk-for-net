@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="partnerType"> The partner type. </param>
         /// <param name="content"> The partner content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public IntegrationAccountPartnerData(AzureLocation location, PartnerType partnerType, PartnerContent content) : base(location)
+        public IntegrationAccountPartnerData(AzureLocation location, IntegrationAccountPartnerType partnerType, IntegrationAccountPartnerContent content) : base(location)
         {
             if (content == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="changedOn"> The changed time. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="content"> The partner content. </param>
-        internal IntegrationAccountPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerType partnerType, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, PartnerContent content) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountPartnerType partnerType, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountPartnerContent content) : base(id, name, resourceType, systemData, tags, location)
         {
             PartnerType = partnerType;
             CreatedOn = createdOn;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary> The partner type. </summary>
-        public PartnerType PartnerType { get; set; }
+        public IntegrationAccountPartnerType PartnerType { get; set; }
         /// <summary> The created time. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The changed time. </summary>
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The metadata. </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> The partner content. </summary>
-        internal PartnerContent Content { get; set; }
+        internal IntegrationAccountPartnerContent Content { get; set; }
         /// <summary> The list of partner business identities. </summary>
-        public IList<BusinessIdentity> B2BBusinessIdentities
+        public IList<IntegrationAccountBusinessIdentity> B2BBusinessIdentities
         {
             get
             {
                 if (Content is null)
-                    Content = new PartnerContent();
+                    Content = new IntegrationAccountPartnerContent();
                 return Content.B2BBusinessIdentities;
             }
         }

@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Various naming changes according to review comments.
+
 ### Bugs Fixed
 
 ### Other Changes

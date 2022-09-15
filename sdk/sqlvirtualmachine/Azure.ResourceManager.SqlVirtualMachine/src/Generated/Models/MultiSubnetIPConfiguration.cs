@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="sqlVirtualMachineInstance"> SQL virtual machine instance resource id that are enrolled into the availability group listener. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateIPAddress"/> or <paramref name="sqlVirtualMachineInstance"/> is null. </exception>
-        public MultiSubnetIPConfiguration(PrivateIPAddress privateIPAddress, string sqlVirtualMachineInstance)
+        public MultiSubnetIPConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, string sqlVirtualMachineInstance)
         {
             if (privateIPAddress == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Private IP address. </summary>
-        public PrivateIPAddress PrivateIPAddress { get; set; }
+        public AvailabilityGroupListenerPrivateIPAddress PrivateIPAddress { get; set; }
         /// <summary> SQL virtual machine instance resource id that are enrolled into the availability group listener. </summary>
         public string SqlVirtualMachineInstance { get; set; }
     }

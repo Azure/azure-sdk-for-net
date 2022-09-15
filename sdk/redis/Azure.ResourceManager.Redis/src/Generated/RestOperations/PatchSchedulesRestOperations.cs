@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleData>> CreateOrUpdateAsync(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisPatchScheduleData>> CreateOrUpdateAsync(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleData> CreateOrUpdate(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public Response<RedisPatchScheduleData> CreateOrUpdate(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name)
+        internal HttpMessage CreateDeleteRequest(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response Delete(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal HttpMessage CreateGetRequest(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name)
+        internal HttpMessage CreateGetRequest(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleData>> GetAsync(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisPatchScheduleData>> GetAsync(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleData> Get(DefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<RedisPatchScheduleData> Get(RedisPatchScheduleDefaultName defaultName, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

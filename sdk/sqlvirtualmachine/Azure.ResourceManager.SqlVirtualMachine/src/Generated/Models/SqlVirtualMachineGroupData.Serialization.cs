@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<string> provisioningState = default;
             Optional<string> sqlImageOffer = default;
             Optional<SqlVmGroupImageSku> sqlImageSku = default;
-            Optional<ScaleType> scaleType = default;
+            Optional<SqlVirtualMachineGroupScaleType> scaleType = default;
             Optional<ClusterManagerType> clusterManagerType = default;
-            Optional<ClusterConfiguration> clusterConfiguration = default;
+            Optional<SqlVirtualMachineClusterConfiguration> clusterConfiguration = default;
             Optional<WsfcDomainProfile> wsfcDomainProfile = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            scaleType = new ScaleType(property0.Value.GetString());
+                            scaleType = new SqlVirtualMachineGroupScaleType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterManagerType"))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterConfiguration = new ClusterConfiguration(property0.Value.GetString());
+                            clusterConfiguration = new SqlVirtualMachineClusterConfiguration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("wsfcDomainProfile"))

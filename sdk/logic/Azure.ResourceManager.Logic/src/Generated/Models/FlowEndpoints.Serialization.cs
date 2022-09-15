@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element)
         {
-            Optional<IList<IPAddress>> outgoingIPAddresses = default;
-            Optional<IList<IPAddress>> accessEndpointIPAddresses = default;
+            Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
+            Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outgoingIpAddresses"))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.DeserializeIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
                     }
                     outgoingIPAddresses = array;
                     continue;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.DeserializeIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
                     }
                     accessEndpointIPAddresses = array;
                     continue;

@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string name = "caa";
             var recordSetCaaResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new CaaRecordSetData() { });
             Assert.IsNotNull(recordSetCaaResource);
+            Assert.IsNotNull(recordSetCaaResource.Value.Data.ETag);
             Assert.AreEqual(name, recordSetCaaResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetCaaResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/CAA", recordSetCaaResource.Value.Data.ResourceType.Type);

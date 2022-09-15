@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="data"> The parameters for the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApplicationPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, ApplicationPackageData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApplicationPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, ApplicationPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _applicationPackageClientDiagnostics.CreateScope("ApplicationPackageCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="data"> The parameters for the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual ArmOperation<ApplicationPackageResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, ApplicationPackageData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ApplicationPackageResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, ApplicationPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _applicationPackageClientDiagnostics.CreateScope("ApplicationPackageCollection.CreateOrUpdate");
             scope.Start();

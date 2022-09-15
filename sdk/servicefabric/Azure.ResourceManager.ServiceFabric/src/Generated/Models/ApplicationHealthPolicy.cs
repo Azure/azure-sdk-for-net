@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary>
     /// Defines a health policy used to evaluate the health of an application or one of its children entities.
     /// 
+    /// Serialized Name: ApplicationHealthPolicy
     /// </summary>
     public partial class ApplicationHealthPolicy
     {
@@ -23,19 +24,29 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
-        /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
-        /// <param name="serviceTypeHealthPolicies"> The map with service type health policy per service type name. The map is empty by default. </param>
+        /// <param name="defaultServiceTypeHealthPolicy">
+        /// The health policy used by default to evaluate the health of a service type.
+        /// Serialized Name: ApplicationHealthPolicy.defaultServiceTypeHealthPolicy
+        /// </param>
+        /// <param name="serviceTypeHealthPolicies">
+        /// The map with service type health policy per service type name. The map is empty by default.
+        /// Serialized Name: ApplicationHealthPolicy.serviceTypeHealthPolicies
+        /// </param>
         internal ApplicationHealthPolicy(ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies)
         {
             DefaultServiceTypeHealthPolicy = defaultServiceTypeHealthPolicy;
             ServiceTypeHealthPolicies = serviceTypeHealthPolicies;
         }
 
-        /// <summary> The health policy used by default to evaluate the health of a service type. </summary>
+        /// <summary>
+        /// The health policy used by default to evaluate the health of a service type.
+        /// Serialized Name: ApplicationHealthPolicy.defaultServiceTypeHealthPolicy
+        /// </summary>
         internal ServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get; set; }
         /// <summary>
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
         /// 
+        /// Serialized Name: ServiceTypeHealthPolicy.maxPercentUnhealthyServices
         /// </summary>
         public int? MaxPercentUnhealthyServices
         {
@@ -48,7 +59,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
         }
 
-        /// <summary> The map with service type health policy per service type name. The map is empty by default. </summary>
+        /// <summary>
+        /// The map with service type health policy per service type name. The map is empty by default.
+        /// Serialized Name: ApplicationHealthPolicy.serviceTypeHealthPolicies
+        /// </summary>
         public IDictionary<string, ServiceTypeHealthPolicy> ServiceTypeHealthPolicies { get; }
     }
 }

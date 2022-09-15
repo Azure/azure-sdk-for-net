@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="clusterManagerType"> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </param>
         /// <param name="clusterConfiguration"> Cluster type. </param>
         /// <param name="wsfcDomainProfile"> Cluster Active Directory domain profile. </param>
-        internal SqlVirtualMachineGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string sqlImageOffer, SqlVmGroupImageSku? sqlImageSku, ScaleType? scaleType, ClusterManagerType? clusterManagerType, ClusterConfiguration? clusterConfiguration, WsfcDomainProfile wsfcDomainProfile) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlVirtualMachineGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string sqlImageOffer, SqlVmGroupImageSku? sqlImageSku, SqlVirtualMachineGroupScaleType? scaleType, ClusterManagerType? clusterManagerType, SqlVirtualMachineClusterConfiguration? clusterConfiguration, WsfcDomainProfile wsfcDomainProfile) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             SqlImageOffer = sqlImageOffer;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> SQL image sku. </summary>
         public SqlVmGroupImageSku? SqlImageSku { get; set; }
         /// <summary> Scale type. </summary>
-        public ScaleType? ScaleType { get; }
+        public SqlVirtualMachineGroupScaleType? ScaleType { get; }
         /// <summary> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </summary>
         public ClusterManagerType? ClusterManagerType { get; }
         /// <summary> Cluster type. </summary>
-        public ClusterConfiguration? ClusterConfiguration { get; }
+        public SqlVirtualMachineClusterConfiguration? ClusterConfiguration { get; }
         /// <summary> Cluster Active Directory domain profile. </summary>
         public WsfcDomainProfile WsfcDomainProfile { get; set; }
     }

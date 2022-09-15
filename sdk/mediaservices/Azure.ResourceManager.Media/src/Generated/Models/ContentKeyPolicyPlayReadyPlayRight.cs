@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="imageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="imageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="allowPassingVideoContentToUnknownOutput"> Configures Unknown output handling settings of the license. </param>
-        public ContentKeyPolicyPlayReadyPlayRight(bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput)
+        public ContentKeyPolicyPlayReadyPlayRight(bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput)
         {
             DigitalVideoOnlyContentRestriction = digitalVideoOnlyContentRestriction;
             ImageConstraintForAnalogComponentVideoRestriction = imageConstraintForAnalogComponentVideoRestriction;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="analogVideoOpl"> Specifies the output protection level for compressed digital audio. </param>
         /// <param name="compressedDigitalAudioOpl"> Specifies the output protection level for compressed digital audio. </param>
         /// <param name="uncompressedDigitalAudioOpl"> Specifies the output protection level for uncompressed digital audio. </param>
-        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOpl, int? compressedDigitalVideoOpl, int? analogVideoOpl, int? compressedDigitalAudioOpl, int? uncompressedDigitalAudioOpl)
+        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOpl, int? compressedDigitalVideoOpl, int? analogVideoOpl, int? compressedDigitalAudioOpl, int? uncompressedDigitalAudioOpl)
         {
             FirstPlayExpiration = firstPlayExpiration;
             ScmsRestriction = scmsRestriction;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Enables the Image Constraint For Analog Component Video Restriction in the license. </summary>
         public bool ImageConstraintForAnalogComputerMonitorRestriction { get; set; }
         /// <summary> Configures Unknown output handling settings of the license. </summary>
-        public ContentKeyPolicyPlayReadyUnknownOutputPassingOption AllowPassingVideoContentToUnknownOutput { get; set; }
+        public ContentKeyPolicyPlayReadyUnknownOutputPassingSetting AllowPassingVideoContentToUnknownOutput { get; set; }
         /// <summary> Specifies the output protection level for uncompressed digital video. </summary>
         public int? UncompressedDigitalVideoOpl { get; set; }
         /// <summary> Specifies the output protection level for compressed digital video. </summary>

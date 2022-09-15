@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The ArmStreamingEndpointSkuInfo. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="resourceType"></param>
         /// <param name="capacity"> The streaming endpoint sku capacity. </param>
         /// <param name="sku"> The streaming endpoint sku. </param>
-        internal ArmStreamingEndpointSkuInfo(string resourceType, ArmStreamingEndpointCapacity capacity, ArmStreamingEndpointSku sku)
+        internal ArmStreamingEndpointSkuInfo(ResourceType? resourceType, ArmStreamingEndpointCapacity capacity, ArmStreamingEndpointSku sku)
         {
             ResourceType = resourceType;
             Capacity = capacity;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Gets the resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The streaming endpoint sku capacity. </summary>
         public ArmStreamingEndpointCapacity Capacity { get; }
         /// <summary> The streaming endpoint sku. </summary>

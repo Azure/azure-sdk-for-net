@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataFlow DeserializeDataFlow(JsonElement element)
         {
-            Optional<IList<KnownDataFlowStream>> streams = default;
+            Optional<IList<DataFlowStream>> streams = default;
             Optional<IList<string>> destinations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownDataFlowStream> array = new List<KnownDataFlowStream>();
+                    List<DataFlowStream> array = new List<DataFlowStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownDataFlowStream(item.GetString()));
+                        array.Add(new DataFlowStream(item.GetString()));
                     }
                     streams = array;
                     continue;

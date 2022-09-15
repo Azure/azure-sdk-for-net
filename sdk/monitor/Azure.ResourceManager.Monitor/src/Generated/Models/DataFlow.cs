@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataFlow. </summary>
         public DataFlow()
         {
-            Streams = new ChangeTrackingList<KnownDataFlowStream>();
+            Streams = new ChangeTrackingList<DataFlowStream>();
             Destinations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataFlow. </summary>
         /// <param name="streams"> List of streams for this data flow. </param>
         /// <param name="destinations"> List of destinations for this data flow. </param>
-        internal DataFlow(IList<KnownDataFlowStream> streams, IList<string> destinations)
+        internal DataFlow(IList<DataFlowStream> streams, IList<string> destinations)
         {
             Streams = streams;
             Destinations = destinations;
         }
 
         /// <summary> List of streams for this data flow. </summary>
-        public IList<KnownDataFlowStream> Streams { get; }
+        public IList<DataFlowStream> Streams { get; }
         /// <summary> List of destinations for this data flow. </summary>
         public IList<string> Destinations { get; }
     }

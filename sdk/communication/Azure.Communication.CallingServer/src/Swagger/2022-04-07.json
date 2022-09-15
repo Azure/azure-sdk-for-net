@@ -995,6 +995,10 @@
         "playOptions": {
           "$ref": "#/definitions/PlayOptions",
           "description": "Defines options for playing the audio."
+        },
+        "operationContext": {
+          "description": "The value to identify context of the operation.",
+          "type": "string"
         }
       }
     },
@@ -1023,7 +1027,8 @@
           "type": "string"
         },
         "fileSource": {
-          "$ref": "#/definitions/FileSource"
+          "$ref": "#/definitions/FileSource",
+          "description": "Defines the file source info to be used for play"
         }
       }
     },
@@ -1261,6 +1266,228 @@
         },
         "recordingStatus": {
           "$ref": "#/definitions/RecordingStatus"
+        }
+      }
+    },
+    "AcsEventType": {
+      "enum": [
+        "unknown",
+        "callConnected",
+        "callDisconnected",
+        "callTransferAccepted",
+        "callTransferFailed",
+        "addParticipantsSucceeded",
+        "addParticipantsFailed",
+        "participantsUpdated"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "AcsEventType",
+        "modelAsString": true
+      }
+    },
+    "AddParticipantsFailedEvent": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation"
+        },
+        "participants": {
+          "description": "Participants failed to be added",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "ResultInformation": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "subCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "AddParticipantsSucceededEvent": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation"
+        },
+        "participants": {
+          "description": "Participants added",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "CallConnectedEvent": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "CallDisconnectedEvent": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "CallTransferAcceptedEvent": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation"
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "CallTransferFailedEvent": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation"
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "ParticipantsUpdatedEvent": {
+      "type": "object",
+      "properties": {
+        "participants": {
+          "description": "List of current participants in the call.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
         }
       }
     },

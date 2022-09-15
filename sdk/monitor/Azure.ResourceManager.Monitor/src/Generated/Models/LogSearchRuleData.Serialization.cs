@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.Monitor
 
         internal static LogSearchRuleData DeserializeLogSearchRuleData(JsonElement element)
         {
-            Optional<string> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -85,17 +84,12 @@ namespace Azure.ResourceManager.Monitor
             Optional<bool> autoMitigate = default;
             Optional<MonitorEnabled> enabled = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<MonitorProvisioningState> provisioningState = default;
             MonitorSource source = default;
             Optional<MonitorSchedule> schedule = default;
             MonitorAction action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -222,7 +216,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MonitorProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("source"))
@@ -249,7 +243,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogSearchRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action, kind.Value, Optional.ToNullable(etag));
+            return new LogSearchRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action, Optional.ToNullable(etag));
         }
     }
 }

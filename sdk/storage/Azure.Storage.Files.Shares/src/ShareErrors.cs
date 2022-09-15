@@ -19,13 +19,16 @@ namespace Azure.Storage.Files.Shares
 
         public static void AssertAlgorithmSupport(ValidationAlgorithm? algorithm)
         {
-            switch ((algorithm ?? ValidationAlgorithm.None).ResolveAuto())
+            ValidationAlgorithm resolved = (algorithm ?? ValidationAlgorithm.None).ResolveAuto();
+            switch (resolved)
             {
                 case ValidationAlgorithm.None:
                 case ValidationAlgorithm.MD5:
                     return;
+                case ValidationAlgorithm.StorageCrc64:
+                    throw new ArgumentException("Azure File Shares do not support CRC-64.");
                 default:
-                    throw new ArgumentException(null);
+                    throw new ArgumentException($"SDK does not support ValidationAlgorithm value {Enum.GetName(typeof(ValidationAlgorithm), resolved)}.");
             }
         }
     }

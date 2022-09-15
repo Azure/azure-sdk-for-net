@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public virtual async Task<ArmOperation<KeyValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyValueName, KeyValueData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<KeyValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyValueName, KeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public virtual ArmOperation<KeyValueResource> CreateOrUpdate(WaitUntil waitUntil, string keyValueName, KeyValueData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<KeyValueResource> CreateOrUpdate(WaitUntil waitUntil, string keyValueName, KeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.CreateOrUpdate");
             scope.Start();

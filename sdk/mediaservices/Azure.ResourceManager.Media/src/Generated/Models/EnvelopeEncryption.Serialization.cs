@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("contentKeys");
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Optional.IsDefined(CustomKeyAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomKeyAcquisitionUrlTemplate);
+                writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);
             }
             writer.WriteEndObject();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<EnabledProtocols> enabledProtocols = default;
             Optional<IList<TrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<string> customKeyAcquisitionUrlTemplate = default;
+            Optional<string> customKeyAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"))
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("customKeyAcquisitionUrlTemplate"))
                 {
-                    customKeyAcquisitionUrlTemplate = property.Value.GetString();
+                    customKeyAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
             }
-            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUrlTemplate.Value);
+            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value);
         }
     }
 }

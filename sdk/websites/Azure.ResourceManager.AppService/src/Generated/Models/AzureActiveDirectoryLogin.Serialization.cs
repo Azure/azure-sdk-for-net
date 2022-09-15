@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableWWWAuthenticate))
+            if (Optional.IsDefined(IsDisableWwwAuthenticate))
             {
                 writer.WritePropertyName("disableWWWAuthenticate");
-                writer.WriteBooleanValue(DisableWWWAuthenticate.Value);
+                writer.WriteBooleanValue(IsDisableWwwAuthenticate.Value);
             }
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static AzureActiveDirectoryLogin DeserializeAzureActiveDirectoryLogin(JsonElement element)
         {
             Optional<IList<string>> loginParameters = default;
-            Optional<bool> disableWWWAuthenticate = default;
+            Optional<bool> disableWwwAuthenticate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginParameters"))
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableWWWAuthenticate = property.Value.GetBoolean();
+                    disableWwwAuthenticate = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AzureActiveDirectoryLogin(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate));
+            return new AzureActiveDirectoryLogin(Optional.ToList(loginParameters), Optional.ToNullable(disableWwwAuthenticate));
         }
     }
 }

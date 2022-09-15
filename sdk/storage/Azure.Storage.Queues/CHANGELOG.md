@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- This release contains bug fixes to improve quality.
 
 ## 12.11.0 (2022-07-07)
 - Includes all features from 12.10.1-beta.1.

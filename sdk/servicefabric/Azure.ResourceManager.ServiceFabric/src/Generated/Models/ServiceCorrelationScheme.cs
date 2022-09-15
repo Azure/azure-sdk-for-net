@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The service correlation scheme. </summary>
+    /// <summary>
+    /// The service correlation scheme.
+    /// Serialized Name: ServiceCorrelationScheme
+    /// </summary>
     public readonly partial struct ServiceCorrelationScheme : IEquatable<ServiceCorrelationScheme>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string AlignedAffinityValue = "AlignedAffinity";
         private const string NonAlignedAffinityValue = "NonAlignedAffinity";
 
-        /// <summary> An invalid correlation scheme. Cannot be used. The value is zero. </summary>
+        /// <summary>
+        /// An invalid correlation scheme. Cannot be used. The value is zero.
+        /// Serialized Name: ServiceCorrelationScheme.Invalid
+        /// </summary>
         public static ServiceCorrelationScheme Invalid { get; } = new ServiceCorrelationScheme(InvalidValue);
-        /// <summary> Indicates that this service has an affinity relationship with another service. Provided for backwards compatibility, consider preferring the Aligned or NonAlignedAffinity options. The value is 1. </summary>
+        /// <summary>
+        /// Indicates that this service has an affinity relationship with another service. Provided for backwards compatibility, consider preferring the Aligned or NonAlignedAffinity options. The value is 1.
+        /// Serialized Name: ServiceCorrelationScheme.Affinity
+        /// </summary>
         public static ServiceCorrelationScheme Affinity { get; } = new ServiceCorrelationScheme(AffinityValue);
-        /// <summary> Aligned affinity ensures that the primaries of the partitions of the affinitized services are collocated on the same nodes. This is the default and is the same as selecting the Affinity scheme. The value is 2. </summary>
+        /// <summary>
+        /// Aligned affinity ensures that the primaries of the partitions of the affinitized services are collocated on the same nodes. This is the default and is the same as selecting the Affinity scheme. The value is 2.
+        /// Serialized Name: ServiceCorrelationScheme.AlignedAffinity
+        /// </summary>
         public static ServiceCorrelationScheme AlignedAffinity { get; } = new ServiceCorrelationScheme(AlignedAffinityValue);
-        /// <summary> Non-Aligned affinity guarantees that all replicas of each service will be placed on the same nodes. Unlike Aligned Affinity, this does not guarantee that replicas of particular role will be collocated. The value is 3. </summary>
+        /// <summary>
+        /// Non-Aligned affinity guarantees that all replicas of each service will be placed on the same nodes. Unlike Aligned Affinity, this does not guarantee that replicas of particular role will be collocated. The value is 3.
+        /// Serialized Name: ServiceCorrelationScheme.NonAlignedAffinity
+        /// </summary>
         public static ServiceCorrelationScheme NonAlignedAffinity { get; } = new ServiceCorrelationScheme(NonAlignedAffinityValue);
         /// <summary> Determines if two <see cref="ServiceCorrelationScheme"/> values are the same. </summary>
         public static bool operator ==(ServiceCorrelationScheme left, ServiceCorrelationScheme right) => left.Equals(right);

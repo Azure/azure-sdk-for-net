@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
+    /// <summary>
+    /// The type of placement policy for a service fabric service. Following are the possible values.
+    /// Serialized Name: ServicePlacementPolicyType
+    /// </summary>
     internal readonly partial struct ServicePlacementPolicyType : IEquatable<ServicePlacementPolicyType>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string RequiredDomainDistributionValue = "RequiredDomainDistribution";
         private const string NonPartiallyPlaceServiceValue = "NonPartiallyPlaceService";
 
-        /// <summary> Indicates the type of the placement policy is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
+        /// <summary>
+        /// Indicates the type of the placement policy is invalid. All Service Fabric enumerations have the invalid type. The value is zero.
+        /// Serialized Name: ServicePlacementPolicyType.Invalid
+        /// </summary>
         public static ServicePlacementPolicyType Invalid { get; } = new ServicePlacementPolicyType(InvalidValue);
-        /// <summary> Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementInvalidDomainPolicyDescription, which indicates that a particular fault or upgrade domain cannot be used for placement of this service. The value is 1. </summary>
+        /// <summary>
+        /// Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementInvalidDomainPolicyDescription, which indicates that a particular fault or upgrade domain cannot be used for placement of this service. The value is 1.
+        /// Serialized Name: ServicePlacementPolicyType.InvalidDomain
+        /// </summary>
         public static ServicePlacementPolicyType InvalidDomain { get; } = new ServicePlacementPolicyType(InvalidDomainValue);
-        /// <summary> Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementRequireDomainDistributionPolicyDescription indicating that the replicas of the service must be placed in a specific domain. The value is 2. </summary>
+        /// <summary>
+        /// Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementRequireDomainDistributionPolicyDescription indicating that the replicas of the service must be placed in a specific domain. The value is 2.
+        /// Serialized Name: ServicePlacementPolicyType.RequiredDomain
+        /// </summary>
         public static ServicePlacementPolicyType RequiredDomain { get; } = new ServicePlacementPolicyType(RequiredDomainValue);
-        /// <summary> Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementPreferPrimaryDomainPolicyDescription, which indicates that if possible the Primary replica for the partitions of the service should be located in a particular domain as an optimization. The value is 3. </summary>
+        /// <summary>
+        /// Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementPreferPrimaryDomainPolicyDescription, which indicates that if possible the Primary replica for the partitions of the service should be located in a particular domain as an optimization. The value is 3.
+        /// Serialized Name: ServicePlacementPolicyType.PreferredPrimaryDomain
+        /// </summary>
         public static ServicePlacementPolicyType PreferredPrimaryDomain { get; } = new ServicePlacementPolicyType(PreferredPrimaryDomainValue);
-        /// <summary> Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementRequireDomainDistributionPolicyDescription, indicating that the system will disallow placement of any two replicas from the same partition in the same domain at any time. The value is 4. </summary>
+        /// <summary>
+        /// Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementRequireDomainDistributionPolicyDescription, indicating that the system will disallow placement of any two replicas from the same partition in the same domain at any time. The value is 4.
+        /// Serialized Name: ServicePlacementPolicyType.RequiredDomainDistribution
+        /// </summary>
         public static ServicePlacementPolicyType RequiredDomainDistribution { get; } = new ServicePlacementPolicyType(RequiredDomainDistributionValue);
-        /// <summary> Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementNonPartiallyPlaceServicePolicyDescription, which indicates that if possible all replicas of a particular partition of the service should be placed atomically. The value is 5. </summary>
+        /// <summary>
+        /// Indicates that the ServicePlacementPolicyDescription is of type ServicePlacementNonPartiallyPlaceServicePolicyDescription, which indicates that if possible all replicas of a particular partition of the service should be placed atomically. The value is 5.
+        /// Serialized Name: ServicePlacementPolicyType.NonPartiallyPlaceService
+        /// </summary>
         public static ServicePlacementPolicyType NonPartiallyPlaceService { get; } = new ServicePlacementPolicyType(NonPartiallyPlaceServiceValue);
         /// <summary> Determines if two <see cref="ServicePlacementPolicyType"/> values are the same. </summary>
         public static bool operator ==(ServicePlacementPolicyType left, ServicePlacementPolicyType right) => left.Equals(right);

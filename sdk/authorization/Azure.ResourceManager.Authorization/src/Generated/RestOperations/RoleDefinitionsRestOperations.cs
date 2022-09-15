@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateDeleteRequest(string scope, string roleDefinitionId)
+        internal HttpMessage CreateDeleteRequest(string scope, ResourceIdentifier roleDefinitionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,11 +60,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleDefinitionData>> DeleteAsync(string scope, string roleDefinitionId, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleDefinitionData>> DeleteAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var message = CreateDeleteRequest(scope, roleDefinitionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -89,11 +88,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleDefinitionData> Delete(string scope, string roleDefinitionId, CancellationToken cancellationToken = default)
+        public Response<RoleDefinitionData> Delete(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var message = CreateDeleteRequest(scope, roleDefinitionId);
             _pipeline.Send(message, cancellationToken);
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        internal HttpMessage CreateGetRequest(string scope, string roleDefinitionId)
+        internal HttpMessage CreateGetRequest(string scope, ResourceIdentifier roleDefinitionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,11 +134,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleDefinitionData>> GetAsync(string scope, string roleDefinitionId, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleDefinitionData>> GetAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var message = CreateGetRequest(scope, roleDefinitionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -165,11 +162,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleDefinitionData> Get(string scope, string roleDefinitionId, CancellationToken cancellationToken = default)
+        public Response<RoleDefinitionData> Get(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var message = CreateGetRequest(scope, roleDefinitionId);
             _pipeline.Send(message, cancellationToken);
@@ -189,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string roleDefinitionId, RoleDefinitionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, ResourceIdentifier roleDefinitionId, RoleDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -217,11 +213,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="data"> The values for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleDefinitionData>> CreateOrUpdateAsync(string scope, string roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleDefinitionData>> CreateOrUpdateAsync(string scope, ResourceIdentifier roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, roleDefinitionId, data);
@@ -246,11 +241,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="data"> The values for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleDefinitionData> CreateOrUpdate(string scope, string roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
+        public Response<RoleDefinitionData> CreateOrUpdate(string scope, ResourceIdentifier roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, roleDefinitionId, data);

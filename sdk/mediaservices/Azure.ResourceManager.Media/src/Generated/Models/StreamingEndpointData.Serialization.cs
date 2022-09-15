@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CdnEnabled))
+            if (Optional.IsDefined(IsCdnEnabled))
             {
                 writer.WritePropertyName("cdnEnabled");
-                writer.WriteBooleanValue(CdnEnabled.Value);
+                writer.WriteBooleanValue(IsCdnEnabled.Value);
             }
             if (Optional.IsDefined(CdnProvider))
             {

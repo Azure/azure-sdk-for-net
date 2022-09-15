@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="title"> The issue title. </param>
         /// <param name="description"> Text describing the issue. </param>
         /// <param name="userId"> A resource identifier for the user created the issue. </param>
-        internal IssueContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, State? state, string apiId, string title, string description, string userId) : base(id, name, resourceType, systemData)
+        internal IssueContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, ResourceIdentifier userId) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Date and time when the issue was created. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Status of the issue. </summary>
-        public State? State { get; set; }
+        public IssueState? State { get; set; }
         /// <summary> A resource identifier for the API the issue was created for. </summary>
-        public string ApiId { get; set; }
+        public ResourceIdentifier ApiId { get; set; }
         /// <summary> The issue title. </summary>
         public string Title { get; set; }
         /// <summary> Text describing the issue. </summary>
         public string Description { get; set; }
         /// <summary> A resource identifier for the user created the issue. </summary>
-        public string UserId { get; set; }
+        public ResourceIdentifier UserId { get; set; }
     }
 }

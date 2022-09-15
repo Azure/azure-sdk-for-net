@@ -443,35 +443,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, pages[0].Count);
         }
 
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview)]
-        public async Task RecognizeHealthcareEntitiesWithFhir()
-        {
-            TextAnalyticsClient client = GetClient(useTokenCredential: true);
-
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
-            {
-                FhirVersion = FhirVersion.Four01
-            };
-
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
-
-            await operation.WaitForCompletionAsync();
-
-            ValidateOperationProperties(operation);
-
-            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
-
-            //Take the first page
-            var resultCollection = resultInPages.FirstOrDefault();
-            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
-
-            //Check Fhirbundle has content on it
-            Assert.IsNotNull(resultCollection[0].FhirBundle);
-            Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
-        }
-
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
         {
             Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
@@ -527,7 +498,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 Assert.IsNotNull(entitiesInDocument.Warnings);
                 Assert.IsNotNull(entitiesInDocument.EntityRelations);
-                Assert.IsNotNull(entitiesInDocument.FhirBundle);
                 ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
             }
         }

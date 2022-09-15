@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> Cluster operating system, the default will be Windows. </summary>
+    /// <summary>
+    /// Cluster operating system, the default will be Windows
+    /// Serialized Name: ClusterEnvironment
+    /// </summary>
     public readonly partial struct ClusterEnvironment : IEquatable<ClusterEnvironment>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string WindowsValue = "Windows";
         private const string LinuxValue = "Linux";
 
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: ClusterEnvironment.Windows
+        /// </summary>
         public static ClusterEnvironment Windows { get; } = new ClusterEnvironment(WindowsValue);
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: ClusterEnvironment.Linux
+        /// </summary>
         public static ClusterEnvironment Linux { get; } = new ClusterEnvironment(LinuxValue);
         /// <summary> Determines if two <see cref="ClusterEnvironment"/> values are the same. </summary>
         public static bool operator ==(ClusterEnvironment left, ClusterEnvironment right) => left.Equals(right);

@@ -271,13 +271,10 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (data != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -287,12 +284,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataCollectionRuleAssociationData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataCollectionRuleAssociationData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(resourceUri, associationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -316,12 +314,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataCollectionRuleAssociationData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        public Response<DataCollectionRuleAssociationData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(resourceUri, associationName, data);
             _pipeline.Send(message, cancellationToken);

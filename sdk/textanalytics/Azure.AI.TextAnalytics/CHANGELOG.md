@@ -6,9 +6,26 @@
 
 ### Breaking Changes
 
+- Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `ClassifyDocumentResult`.
+- Removed Extractive Text Summarization and related models. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
+- Removed Extractive Text Summarization, Multi Label Classification, and Single Label Classification from legacy client library.
+- Removed `HealthcareTaskParameters.FhirVersion` and `AnalyzeHealthcareEntitiesResult.FhirBundle`. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
+- Renamed `LabelClassifyResult.Classifications` to `LabelClassifyResult.ClassificationCategories`.
+- Renamed `MultiCategoryClassifyAction` to `MultiLabelClassifyAction`.
+- Renamed `MultiCategoryClassifyActionResult` to `MultiLabelClassifyActionResult`.
+- Renamed `MultiCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `MultiCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
+- Renamed `SingleCategoryClassifyAction` to `SingleLabelClassifyAction`.
+- Renamed `SingleCategoryClassifyActionResult` to `SingleLabelClassifyActionResult`.
+- Renamed `SingleCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `SingleCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- We are now targeting the service version `2022-05-01` API as the default instead of `3.2-preview.2`.
+- The legacy client library is now targeting the service version `3.1`.
 
 ## 5.2.0-beta.3 (2022-05-18)
 

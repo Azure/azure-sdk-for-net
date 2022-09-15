@@ -40,8 +40,4 @@
     <ProjectReference Include="..\Integration.Tests.AspNetCoreWebApp\Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
-  </ItemGroup>
-
 </Project>

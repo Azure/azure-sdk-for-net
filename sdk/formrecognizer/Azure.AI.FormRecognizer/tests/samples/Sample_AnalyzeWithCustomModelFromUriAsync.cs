@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             BuildModelOperation buildOperation = await adminClient.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
-            DocumentModel customModel = buildOperation.Value;
+            DocumentModelDetails customModel = buildOperation.Value;
 
             // Proceed with the custom document recognition.
 

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="assetName"> Asset Name. </param>
-        /// <param name="created"> The creation time of the Streaming Locator. </param>
+        /// <param name="createdOn"> The creation time of the Streaming Locator. </param>
         /// <param name="startOn"> The start time of the Streaming Locator. </param>
         /// <param name="endOn"> The end time of the Streaming Locator. </param>
         /// <param name="streamingLocatorId"> The StreamingLocatorId of the Streaming Locator. </param>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Media
         /// <param name="contentKeys"> The ContentKeys used by this Streaming Locator. </param>
         /// <param name="alternativeMediaId"> Alternative Media ID of this Streaming Locator. </param>
         /// <param name="filters"> A list of asset or account filters which apply to this streaming locator. </param>
-        internal StreamingLocatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string assetName, DateTimeOffset? created, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName, IList<StreamingLocatorContentKey> contentKeys, string alternativeMediaId, IList<string> filters) : base(id, name, resourceType, systemData)
+        internal StreamingLocatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName, IList<StreamingLocatorContentKey> contentKeys, string alternativeMediaId, IList<string> filters) : base(id, name, resourceType, systemData)
         {
             AssetName = assetName;
-            Created = created;
+            CreatedOn = createdOn;
             StartOn = startOn;
             EndOn = endOn;
             StreamingLocatorId = streamingLocatorId;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Asset Name. </summary>
         public string AssetName { get; set; }
         /// <summary> The creation time of the Streaming Locator. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The start time of the Streaming Locator. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end time of the Streaming Locator. </summary>

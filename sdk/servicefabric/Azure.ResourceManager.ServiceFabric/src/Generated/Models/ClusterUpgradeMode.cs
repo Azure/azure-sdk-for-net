@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
+    /// <summary>
+    /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
+    /// Serialized Name: UpgradeMode
+    /// </summary>
     public readonly partial struct ClusterUpgradeMode : IEquatable<ClusterUpgradeMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string AutomaticValue = "Automatic";
         private const string ManualValue = "Manual";
 
-        /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, **upgradeWave** will determine when the upgrade starts after the new version becomes available. </summary>
+        /// <summary>
+        /// The cluster will be automatically upgraded to the latest Service Fabric runtime version, **upgradeWave** will determine when the upgrade starts after the new version becomes available.
+        /// Serialized Name: UpgradeMode.Automatic
+        /// </summary>
         public static ClusterUpgradeMode Automatic { get; } = new ClusterUpgradeMode(AutomaticValue);
-        /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the **clusterCodeVersion** property in the cluster resource. </summary>
+        /// <summary>
+        /// The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the **clusterCodeVersion** property in the cluster resource.
+        /// Serialized Name: UpgradeMode.Manual
+        /// </summary>
         public static ClusterUpgradeMode Manual { get; } = new ClusterUpgradeMode(ManualValue);
         /// <summary> Determines if two <see cref="ClusterUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(ClusterUpgradeMode left, ClusterUpgradeMode right) => left.Equals(right);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </param>
         /// <param name="renew"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal PurchaseRequestContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, string billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, bool? renew, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties)
+        internal PurchaseRequestContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, ResourceIdentifier billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, bool? renew, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties)
         {
             Sku = sku;
             Location = location;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> The type of the resource that is being reserved. </summary>
         public ReservedResourceType? ReservedResourceType { get; set; }
         /// <summary> Subscription that will be charged for purchasing Reservation. </summary>
-        public string BillingScopeId { get; set; }
+        public ResourceIdentifier BillingScopeId { get; set; }
         /// <summary> Represent the term of Reservation. </summary>
         public ReservationTerm? Term { get; set; }
         /// <summary> Represent the billing plans. </summary>

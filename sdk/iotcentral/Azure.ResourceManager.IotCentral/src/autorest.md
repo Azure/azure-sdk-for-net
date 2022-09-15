@@ -25,6 +25,8 @@ rename-mapping:
   OperationInputs: IotCentralAppNameAvailabilityContent
   AppAvailabilityInfo: IotCentralAppNameAvailabilityResponse
   AppAvailabilityInfo.reason: IotCentralAppNameUnavailableReason
+  NetworkRuleSets.applyToIoTCentral: ApplyToIotCentral
+  AppTemplateLocations.id: location
 
 prepend-rp-prefix:
   - App
@@ -71,5 +73,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - from: iotcentral.json
+    where: $.definitions
+    transform: >
+      $.AppTemplate.properties.order['type'] = 'integer';
 
 ```

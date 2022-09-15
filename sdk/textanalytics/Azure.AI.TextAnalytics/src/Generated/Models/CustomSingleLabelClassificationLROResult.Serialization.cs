@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomSingleLabelClassificationLROResult DeserializeCustomSingleLabelClassificationLROResult(JsonElement element)
         {
-            CustomSingleLabelClassificationResult results = default;
+            CustomLabelClassificationResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("results"))
                 {
-                    results = CustomSingleLabelClassificationResult.DeserializeCustomSingleLabelClassificationResult(property.Value);
+                    results = CustomLabelClassificationResult.DeserializeCustomLabelClassificationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))

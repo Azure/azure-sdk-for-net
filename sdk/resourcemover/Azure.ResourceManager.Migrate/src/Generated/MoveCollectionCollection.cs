@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="data"> The MoveCollection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
-        public virtual async Task<ArmOperation<MoveCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moveCollectionName, MoveCollectionData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<MoveCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="data"> The MoveCollection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
-        public virtual ArmOperation<MoveCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string moveCollectionName, MoveCollectionData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<MoveCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.CreateOrUpdate");
             scope.Start();

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         internal WsfcDomainProfile(string domainFqdn, string ouPath, string clusterBootstrapAccount, string clusterOperatorAccount, string sqlServiceAccount, string fileShareWitnessPath, Uri storageAccountUri, string storageAccountPrimaryKey, ClusterSubnetType? clusterSubnetType)
         {
             DomainFqdn = domainFqdn;
-            OuPath = ouPath;
+            OUPath = ouPath;
             ClusterBootstrapAccount = clusterBootstrapAccount;
             ClusterOperatorAccount = clusterOperatorAccount;
             SqlServiceAccount = sqlServiceAccount;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Fully qualified name of the domain. </summary>
         public string DomainFqdn { get; set; }
         /// <summary> Organizational Unit path in which the nodes and cluster will be present. </summary>
-        public string OuPath { get; set; }
+        public string OUPath { get; set; }
         /// <summary> Account name used for creating cluster (at minimum needs permissions to &apos;Create Computer Objects&apos; in domain). </summary>
         public string ClusterBootstrapAccount { get; set; }
         /// <summary> Account name used for operating cluster i.e. will be part of administrators group on all the participating virtual machines in the cluster. </summary>

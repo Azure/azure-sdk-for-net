@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<PipelineDiagnosticSettings> backend = default;
             Optional<bool> logClientIP = default;
             Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
-            Optional<Verbosity> verbosity = default;
+            Optional<TraceVerbosityLevel> verbosity = default;
             Optional<OperationNameFormat> operationNameFormat = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            verbosity = new Verbosity(property0.Value.GetString());
+                            verbosity = new TraceVerbosityLevel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("operationNameFormat"))

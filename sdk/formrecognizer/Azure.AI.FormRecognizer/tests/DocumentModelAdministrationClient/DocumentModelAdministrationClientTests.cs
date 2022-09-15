@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             try
             {
-                await client.GetAccountPropertiesAsync();
+                await client.GetResourceDetailsAsync();
             }
             catch (AggregateException ex)
             {

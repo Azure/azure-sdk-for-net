@@ -5,8 +5,11 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,29 +17,67 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static ExpandedProperties DeserializeExpandedProperties(JsonElement element)
         {
-            Optional<ExpandedPropertiesScope> scope = default;
-            Optional<ExpandedPropertiesRoleDefinition> roleDefinition = default;
-            Optional<ExpandedPropertiesPrincipal> principal = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> id0 = default;
+            Optional<string> displayName = default;
+            Optional<string> email = default;
+            Optional<string> type0 = default;
+            Optional<ResourceIdentifier> id1 = default;
+            Optional<string> displayName0 = default;
+            Optional<string> type1 = default;
+            Optional<ResourceIdentifier> id2 = default;
+            Optional<string> displayName1 = default;
+            Optional<string> type2 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scope = ExpandedPropertiesScope.DeserializeExpandedPropertiesScope(property.Value);
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("roleDefinition"))
+                if (property.NameEquals("location"))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    roleDefinition = ExpandedPropertiesRoleDefinition.DeserializeExpandedPropertiesRoleDefinition(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("principal"))
@@ -46,11 +87,102 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    principal = ExpandedPropertiesPrincipal.DeserializeExpandedPropertiesPrincipal(property.Value);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("id"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            id0 = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("email"))
+                        {
+                            email = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"))
+                        {
+                            type0 = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (property.NameEquals("roleDefinition"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("id"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            id1 = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"))
+                        {
+                            displayName0 = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"))
+                        {
+                            type1 = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (property.NameEquals("scope"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("id"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            id2 = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"))
+                        {
+                            displayName1 = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"))
+                        {
+                            type2 = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new ExpandedProperties(scope.Value, roleDefinition.Value, principal.Value);
+            return new ExpandedProperties(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(id0), displayName.Value, email.Value, type0.Value, id1.Value, displayName0.Value, type1.Value, id2.Value, displayName1.Value, type2.Value);
         }
     }
 }

@@ -9,15 +9,33 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
+    /// <summary>
+    /// The storage account information for storing Service Fabric diagnostic logs.
+    /// Serialized Name: DiagnosticsStorageAccountConfig
+    /// </summary>
     public partial class DiagnosticsStorageAccountConfig
     {
         /// <summary> Initializes a new instance of DiagnosticsStorageAccountConfig. </summary>
-        /// <param name="storageAccountName"> The Azure storage account name. </param>
-        /// <param name="protectedAccountKeyName"> The protected diagnostics storage key name. </param>
-        /// <param name="blobEndpoint"> The blob endpoint of the azure storage account. </param>
-        /// <param name="queueEndpoint"> The queue endpoint of the azure storage account. </param>
-        /// <param name="tableEndpoint"> The table endpoint of the azure storage account. </param>
+        /// <param name="storageAccountName">
+        /// The Azure storage account name.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.storageAccountName
+        /// </param>
+        /// <param name="protectedAccountKeyName">
+        /// The protected diagnostics storage key name.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.protectedAccountKeyName
+        /// </param>
+        /// <param name="blobEndpoint">
+        /// The blob endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.blobEndpoint
+        /// </param>
+        /// <param name="queueEndpoint">
+        /// The queue endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.queueEndpoint
+        /// </param>
+        /// <param name="tableEndpoint">
+        /// The table endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.tableEndpoint
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="protectedAccountKeyName"/>, <paramref name="blobEndpoint"/>, <paramref name="queueEndpoint"/> or <paramref name="tableEndpoint"/> is null. </exception>
         public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint)
         {
@@ -50,12 +68,30 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticsStorageAccountConfig. </summary>
-        /// <param name="storageAccountName"> The Azure storage account name. </param>
-        /// <param name="protectedAccountKeyName"> The protected diagnostics storage key name. </param>
-        /// <param name="protectedAccountKeyName2"> The secondary protected diagnostics storage key name. If one of the storage account keys is rotated the cluster will fallback to using the other. </param>
-        /// <param name="blobEndpoint"> The blob endpoint of the azure storage account. </param>
-        /// <param name="queueEndpoint"> The queue endpoint of the azure storage account. </param>
-        /// <param name="tableEndpoint"> The table endpoint of the azure storage account. </param>
+        /// <param name="storageAccountName">
+        /// The Azure storage account name.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.storageAccountName
+        /// </param>
+        /// <param name="protectedAccountKeyName">
+        /// The protected diagnostics storage key name.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.protectedAccountKeyName
+        /// </param>
+        /// <param name="protectedAccountKeyName2">
+        /// The secondary protected diagnostics storage key name. If one of the storage account keys is rotated the cluster will fallback to using the other.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.protectedAccountKeyName2
+        /// </param>
+        /// <param name="blobEndpoint">
+        /// The blob endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.blobEndpoint
+        /// </param>
+        /// <param name="queueEndpoint">
+        /// The queue endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.queueEndpoint
+        /// </param>
+        /// <param name="tableEndpoint">
+        /// The table endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.tableEndpoint
+        /// </param>
         internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, string blobEndpoint, string queueEndpoint, string tableEndpoint)
         {
             StorageAccountName = storageAccountName;
@@ -66,17 +102,35 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TableEndpoint = tableEndpoint;
         }
 
-        /// <summary> The Azure storage account name. </summary>
+        /// <summary>
+        /// The Azure storage account name.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.storageAccountName
+        /// </summary>
         public string StorageAccountName { get; set; }
-        /// <summary> The protected diagnostics storage key name. </summary>
+        /// <summary>
+        /// The protected diagnostics storage key name.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.protectedAccountKeyName
+        /// </summary>
         public string ProtectedAccountKeyName { get; set; }
-        /// <summary> The secondary protected diagnostics storage key name. If one of the storage account keys is rotated the cluster will fallback to using the other. </summary>
+        /// <summary>
+        /// The secondary protected diagnostics storage key name. If one of the storage account keys is rotated the cluster will fallback to using the other.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.protectedAccountKeyName2
+        /// </summary>
         public string ProtectedAccountKeyName2 { get; set; }
-        /// <summary> The blob endpoint of the azure storage account. </summary>
+        /// <summary>
+        /// The blob endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.blobEndpoint
+        /// </summary>
         public string BlobEndpoint { get; set; }
-        /// <summary> The queue endpoint of the azure storage account. </summary>
+        /// <summary>
+        /// The queue endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.queueEndpoint
+        /// </summary>
         public string QueueEndpoint { get; set; }
-        /// <summary> The table endpoint of the azure storage account. </summary>
+        /// <summary>
+        /// The table endpoint of the azure storage account.
+        /// Serialized Name: DiagnosticsStorageAccountConfig.tableEndpoint
+        /// </summary>
         public string TableEndpoint { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="port"> SQL Server port. </param>
         /// <param name="sqlAuthUpdateUserName"> SQL Server sysadmin login to create. </param>
         /// <param name="sqlAuthUpdatePassword"> SQL Server sysadmin login password. </param>
-        internal SqlConnectivityUpdateSettings(ConnectivityType? connectivityType, int? port, string sqlAuthUpdateUserName, string sqlAuthUpdatePassword)
+        internal SqlConnectivityUpdateSettings(SqlServerConnectivityType? connectivityType, int? port, string sqlAuthUpdateUserName, string sqlAuthUpdatePassword)
         {
             ConnectivityType = connectivityType;
             Port = port;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> SQL Server connectivity option. </summary>
-        public ConnectivityType? ConnectivityType { get; set; }
+        public SqlServerConnectivityType? ConnectivityType { get; set; }
         /// <summary> SQL Server port. </summary>
         public int? Port { get; set; }
         /// <summary> SQL Server sysadmin login to create. </summary>

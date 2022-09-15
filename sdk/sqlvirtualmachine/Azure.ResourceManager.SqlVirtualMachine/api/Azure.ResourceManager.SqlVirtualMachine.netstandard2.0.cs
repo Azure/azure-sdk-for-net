@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     {
         public AvailabilityGroupListenerData() { }
         public string AvailabilityGroupName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SqlVirtualMachine.Models.AgReplica> AvailabilityGroupReplicas { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplica> AvailabilityGroupReplicas { get { throw null; } }
         public bool? CreateDefaultAvailabilityGroupIfNotExist { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SqlVirtualMachine.Models.LoadBalancerConfiguration> LoadBalancerConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupListenerLoadBalancerConfiguration> LoadBalancerConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SqlVirtualMachine.Models.MultiSubnetIPConfiguration> MultiSubnetIPConfigurations { get { throw null; } }
         public int? Port { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     public partial class SqlVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlVirtualMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.AssessmentSettings AssessmentSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineAssessmentSettings AssessmentSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.AutoBackupSettings AutoBackupSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.AutoPatchingSettings AutoPatchingSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku? SqlImageSku { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode? SqlManagement { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType? SqlServerLicenseType { get { throw null; } set { } }
-        public string SqlVirtualMachineGroupResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SqlVirtualMachineGroupResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.StorageConfigurationSettings StorageConfigurationSettings { get { throw null; } set { } }
-        public string VirtualMachineResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.WsfcDomainCredentials WsfcDomainCredentials { get { throw null; } set { } }
         public string WsfcStaticIP { get { throw null; } set { } }
     }
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     public partial class SqlVirtualMachineGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlVirtualMachineGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration? ClusterConfiguration { get { throw null; } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration? ClusterConfiguration { get { throw null; } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.ClusterManagerType? ClusterManagerType { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType? ScaleType { get { throw null; } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType? ScaleType { get { throw null; } }
         public string SqlImageOffer { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmGroupImageSku? SqlImageSku { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.WsfcDomainProfile WsfcDomainProfile { get { throw null; } set { } }
@@ -169,32 +169,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 }
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class AgReplica
-    {
-        public AgReplica() { }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.Commit? Commit { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.Failover? Failover { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary? ReadableSecondary { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.Role? Role { get { throw null; } set { } }
-        public string SqlVirtualMachineInstanceId { get { throw null; } set { } }
-    }
-    public enum AssessmentDayOfWeek
-    {
-        Monday = 0,
-        Tuesday = 1,
-        Wednesday = 2,
-        Thursday = 3,
-        Friday = 4,
-        Saturday = 5,
-        Sunday = 6,
-    }
-    public partial class AssessmentSettings
-    {
-        public AssessmentSettings() { }
-        public bool? Enable { get { throw null; } set { } }
-        public bool? RunImmediately { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.Schedule Schedule { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutoBackupDaysOfWeek : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.AutoBackupDaysOfWeek>
     {
@@ -222,13 +196,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     {
         public AutoBackupSettings() { }
         public Azure.ResourceManager.SqlVirtualMachine.Models.BackupScheduleType? BackupScheduleType { get { throw null; } set { } }
-        public bool? BackupSystemDbs { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SqlVirtualMachine.Models.AutoBackupDaysOfWeek> DaysOfWeek { get { throw null; } }
-        public bool? Enable { get { throw null; } set { } }
-        public bool? EnableEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType? FullBackupFrequency { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency? FullBackupFrequency { get { throw null; } set { } }
         public int? FullBackupStartTime { get { throw null; } set { } }
         public int? FullBackupWindowHours { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsEncryptionEnabled { get { throw null; } set { } }
+        public bool? IsSystemDbsIncludedInBackup { get { throw null; } set { } }
         public int? LogBackupFrequency { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public int? RetentionPeriod { get { throw null; } set { } }
@@ -236,13 +210,102 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public System.Uri StorageAccountUri { get { throw null; } set { } }
         public string StorageContainerName { get { throw null; } set { } }
     }
+    public enum AutoPatchingDayOfWeek
+    {
+        Everyday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+        Sunday = 7,
+    }
     public partial class AutoPatchingSettings
     {
         public AutoPatchingSettings() { }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.DayOfWeek? DayOfWeek { get { throw null; } set { } }
-        public bool? Enable { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.AutoPatchingDayOfWeek? DayOfWeek { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public int? MaintenanceWindowDuration { get { throw null; } set { } }
         public int? MaintenanceWindowStartingHour { get { throw null; } set { } }
+    }
+    public partial class AvailabilityGroupListenerLoadBalancerConfiguration
+    {
+        public AvailabilityGroupListenerLoadBalancerConfiguration() { }
+        public Azure.Core.ResourceIdentifier LoadBalancerResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupListenerPrivateIPAddress PrivateIPAddress { get { throw null; } set { } }
+        public int? ProbePort { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPAddressResourceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SqlVirtualMachineInstances { get { throw null; } }
+    }
+    public partial class AvailabilityGroupListenerPrivateIPAddress
+    {
+        public AvailabilityGroupListenerPrivateIPAddress() { }
+        public System.Net.IPAddress IPAddress { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetResourceId { get { throw null; } set { } }
+    }
+    public partial class AvailabilityGroupReplica
+    {
+        public AvailabilityGroupReplica() { }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode? Commit { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode? Failover { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary? ReadableSecondary { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole? Role { get { throw null; } set { } }
+        public string SqlVirtualMachineInstanceId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvailabilityGroupReplicaCommitMode : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvailabilityGroupReplicaCommitMode(string value) { throw null; }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode AsynchronousCommit { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode SynchronousCommit { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaCommitMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvailabilityGroupReplicaFailoverMode : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvailabilityGroupReplicaFailoverMode(string value) { throw null; }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode Automatic { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaFailoverMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvailabilityGroupReplicaRole : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvailabilityGroupReplicaRole(string value) { throw null; }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole Primary { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole left, Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupReplicaRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BackupScheduleType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.BackupScheduleType>
@@ -260,23 +323,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.BackupScheduleType left, Azure.ResourceManager.SqlVirtualMachine.Models.BackupScheduleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.BackupScheduleType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.BackupScheduleType left, Azure.ResourceManager.SqlVirtualMachine.Models.BackupScheduleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ClusterConfiguration : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ClusterConfiguration(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration Domainful { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration left, Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration left, Azure.ResourceManager.SqlVirtualMachine.Models.ClusterConfiguration right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -315,62 +361,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Commit : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.Commit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Commit(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.Commit AsynchronousCommit { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.Commit SynchronousCommit { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.Commit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.Commit left, Azure.ResourceManager.SqlVirtualMachine.Models.Commit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.Commit (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.Commit left, Azure.ResourceManager.SqlVirtualMachine.Models.Commit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConnectivityType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConnectivityType(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType Local { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType Private { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType Public { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType left, Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType left, Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum DayOfWeek
-    {
-        Everyday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
-        Sunday = 7,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskConfigurationType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskConfigurationType(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType ADD { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType Add { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType Extend { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType NEW { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -382,39 +380,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Failover : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.Failover>
+    public readonly partial struct FullBackupFrequency : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Failover(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.Failover Automatic { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.Failover Manual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.Failover other) { throw null; }
+        public FullBackupFrequency(string value) { throw null; }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency Daily { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency Weekly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.Failover left, Azure.ResourceManager.SqlVirtualMachine.Models.Failover right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.Failover (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.Failover left, Azure.ResourceManager.SqlVirtualMachine.Models.Failover right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FullBackupFrequencyType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FullBackupFrequencyType(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType Daily { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType Weekly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType left, Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType left, Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequencyType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency left, Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency left, Azure.ResourceManager.SqlVirtualMachine.Models.FullBackupFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KeyVaultCredentialSettings
@@ -422,30 +402,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public KeyVaultCredentialSettings() { }
         public System.Uri AzureKeyVaultUri { get { throw null; } set { } }
         public string CredentialName { get { throw null; } set { } }
-        public bool? Enable { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public string ServicePrincipalName { get { throw null; } set { } }
         public string ServicePrincipalSecret { get { throw null; } set { } }
     }
-    public partial class LoadBalancerConfiguration
-    {
-        public LoadBalancerConfiguration() { }
-        public string LoadBalancerResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.PrivateIPAddress PrivateIPAddress { get { throw null; } set { } }
-        public int? ProbePort { get { throw null; } set { } }
-        public string PublicIPAddressResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SqlVirtualMachineInstances { get { throw null; } }
-    }
     public partial class MultiSubnetIPConfiguration
     {
-        public MultiSubnetIPConfiguration(Azure.ResourceManager.SqlVirtualMachine.Models.PrivateIPAddress privateIPAddress, string sqlVirtualMachineInstance) { }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.PrivateIPAddress PrivateIPAddress { get { throw null; } set { } }
+        public MultiSubnetIPConfiguration(Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupListenerPrivateIPAddress privateIPAddress, string sqlVirtualMachineInstance) { }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.AvailabilityGroupListenerPrivateIPAddress PrivateIPAddress { get { throw null; } set { } }
         public string SqlVirtualMachineInstance { get { throw null; } set { } }
-    }
-    public partial class PrivateIPAddress
-    {
-        public PrivateIPAddress() { }
-        public string IPAddress { get { throw null; } set { } }
-        public string SubnetResourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReadableSecondary : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary>
@@ -453,8 +418,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ReadableSecondary(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary ALL { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary NO { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary All { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary No { get { throw null; } }
         public static Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary ReadOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -466,63 +431,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary left, Azure.ResourceManager.SqlVirtualMachine.Models.ReadableSecondary right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Role : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.Role>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Role(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.Role Primary { get { throw null; } }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.Role Secondary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.Role other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.Role left, Azure.ResourceManager.SqlVirtualMachine.Models.Role right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.Role (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.Role left, Azure.ResourceManager.SqlVirtualMachine.Models.Role right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScaleType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScaleType(string value) { throw null; }
-        public static Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType HA { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType left, Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType left, Azure.ResourceManager.SqlVirtualMachine.Models.ScaleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Schedule
-    {
-        public Schedule() { }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.AssessmentDayOfWeek? DayOfWeek { get { throw null; } set { } }
-        public bool? Enable { get { throw null; } set { } }
-        public int? MonthlyOccurrence { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
-        public int? WeeklyInterval { get { throw null; } set { } }
-    }
     public partial class ServerConfigurationsManagementSettings
     {
         public ServerConfigurationsManagementSettings() { }
         public bool? IsRServicesEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlConnectivityUpdateSettings SqlConnectivityUpdateSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.SQLInstanceSettings SqlInstanceSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlInstanceSettings SqlInstanceSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlStorageUpdateSettings SqlStorageUpdateSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlWorkloadType? SqlWorkloadType { get { throw null; } set { } }
     }
     public partial class SqlConnectivityUpdateSettings
     {
         public SqlConnectivityUpdateSettings() { }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.ConnectivityType? ConnectivityType { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType? ConnectivityType { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public string SqlAuthUpdatePassword { get { throw null; } set { } }
         public string SqlAuthUpdateUserName { get { throw null; } set { } }
@@ -548,16 +469,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlImageSku right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SQLInstanceSettings
+    public partial class SqlInstanceSettings
     {
-        public SQLInstanceSettings() { }
+        public SqlInstanceSettings() { }
         public string Collation { get { throw null; } set { } }
         public bool? IsIfiEnabled { get { throw null; } set { } }
         public bool? IsLpimEnabled { get { throw null; } set { } }
         public bool? IsOptimizeForAdHocWorkloadsEnabled { get { throw null; } set { } }
         public int? MaxDop { get { throw null; } set { } }
-        public int? MaxServerMemoryMB { get { throw null; } set { } }
-        public int? MinServerMemoryMB { get { throw null; } set { } }
+        public int? MaxServerMemoryInMB { get { throw null; } set { } }
+        public int? MinServerMemoryInMB { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlManagementMode : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.SqlManagementMode>
@@ -579,6 +500,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlServerConnectivityType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlServerConnectivityType(string value) { throw null; }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType Local { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType Private { get { throw null; } }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType Public { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerConnectivityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlServerLicenseType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType>
     {
         private readonly object _dummy;
@@ -597,9 +537,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlServerLicenseType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SQLStorageSettings
+    public partial class SqlStorageSettings
     {
-        public SQLStorageSettings() { }
+        public SqlStorageSettings() { }
         public string DefaultFilePath { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> Luns { get { throw null; } }
     }
@@ -610,9 +550,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public int? DiskCount { get { throw null; } set { } }
         public int? StartingDeviceId { get { throw null; } set { } }
     }
-    public partial class SQLTempDbSettings
+    public partial class SqlTempDBSettings
     {
-        public SQLTempDbSettings() { }
+        public SqlTempDBSettings() { }
         public int? DataFileCount { get { throw null; } set { } }
         public int? DataFileSize { get { throw null; } set { } }
         public int? DataGrowth { get { throw null; } set { } }
@@ -623,10 +563,70 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public bool? PersistFolder { get { throw null; } set { } }
         public string PersistFolderPath { get { throw null; } set { } }
     }
+    public enum SqlVirtualMachineAssessmentDayOfWeek
+    {
+        Monday = 0,
+        Tuesday = 1,
+        Wednesday = 2,
+        Thursday = 3,
+        Friday = 4,
+        Saturday = 5,
+        Sunday = 6,
+    }
+    public partial class SqlVirtualMachineAssessmentSchedule
+    {
+        public SqlVirtualMachineAssessmentSchedule() { }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineAssessmentDayOfWeek? DayOfWeek { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public int? MonthlyOccurrence { get { throw null; } set { } }
+        public string StartTime { get { throw null; } set { } }
+        public int? WeeklyInterval { get { throw null; } set { } }
+    }
+    public partial class SqlVirtualMachineAssessmentSettings
+    {
+        public SqlVirtualMachineAssessmentSettings() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? RunImmediately { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineAssessmentSchedule Schedule { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlVirtualMachineClusterConfiguration : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlVirtualMachineClusterConfiguration(string value) { throw null; }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration Domainful { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineClusterConfiguration right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SqlVirtualMachineGroupPatch
     {
         public SqlVirtualMachineGroupPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlVirtualMachineGroupScaleType : System.IEquatable<Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlVirtualMachineGroupScaleType(string value) { throw null; }
+        public static Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType HA { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType left, Azure.ResourceManager.SqlVirtualMachine.Models.SqlVirtualMachineGroupScaleType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SqlVirtualMachinePatch
     {
@@ -674,10 +674,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     {
         public StorageConfigurationSettings() { }
         public Azure.ResourceManager.SqlVirtualMachine.Models.DiskConfigurationType? DiskConfigurationType { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.SQLStorageSettings SqlDataSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.SQLStorageSettings SqlLogSettings { get { throw null; } set { } }
-        public bool? SqlSystemDbOnDataDisk { get { throw null; } set { } }
-        public Azure.ResourceManager.SqlVirtualMachine.Models.SQLTempDbSettings SqlTempDbSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlStorageSettings SqlDataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlStorageSettings SqlLogSettings { get { throw null; } set { } }
+        public bool? SqlSystemDBOnDataDisk { get { throw null; } set { } }
+        public Azure.ResourceManager.SqlVirtualMachine.Models.SqlTempDBSettings SqlTempDBSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.StorageWorkloadType? StorageWorkloadType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public Azure.ResourceManager.SqlVirtualMachine.Models.ClusterSubnetType? ClusterSubnetType { get { throw null; } set { } }
         public string DomainFqdn { get { throw null; } set { } }
         public string FileShareWitnessPath { get { throw null; } set { } }
-        public string OuPath { get { throw null; } set { } }
+        public string OUPath { get { throw null; } set { } }
         public string SqlServiceAccount { get { throw null; } set { } }
         public string StorageAccountPrimaryKey { get { throw null; } set { } }
         public System.Uri StorageAccountUri { get { throw null; } set { } }

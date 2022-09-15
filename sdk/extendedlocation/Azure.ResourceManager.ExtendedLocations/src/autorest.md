@@ -16,12 +16,22 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  CustomLocationPropertiesAuthentication: CustomLocationAuthentication
+  EnabledResourceType: CustomLocationEnabledResourceType
+  EnabledResourceTypePropertiesTypesMetadataItem: CustomLocationEnabledResourceTypeMetadata
+  EnabledResourceTypesListResult: CustomLocationEnabledResourceTypesResult
+  HostType: CustomLocationHostType
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'clusterExtensionIds': 'arm-id'
+  'clusterExtensionId': 'arm-id'
+  'HostResourceId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -47,7 +57,5 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  - rename-model:
-      from: Identity
-      to: LocationIdentity
+  - remove-operation: 'CustomLocations_ListOperations'
 ```

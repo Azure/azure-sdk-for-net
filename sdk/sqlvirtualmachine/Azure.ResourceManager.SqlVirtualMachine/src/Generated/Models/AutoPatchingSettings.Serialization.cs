@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable");
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(DayOfWeek))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         internal static AutoPatchingSettings DeserializeAutoPatchingSettings(JsonElement element)
         {
             Optional<bool> enable = default;
-            Optional<DayOfWeek> dayOfWeek = default;
+            Optional<AutoPatchingDayOfWeek> dayOfWeek = default;
             Optional<int> maintenanceWindowStartingHour = default;
             Optional<int> maintenanceWindowDuration = default;
             foreach (var property in element.EnumerateObject())
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dayOfWeek = property.Value.GetString().ToDayOfWeek();
+                    dayOfWeek = property.Value.GetString().ToAutoPatchingDayOfWeek();
                     continue;
                 }
                 if (property.NameEquals("maintenanceWindowStartingHour"))

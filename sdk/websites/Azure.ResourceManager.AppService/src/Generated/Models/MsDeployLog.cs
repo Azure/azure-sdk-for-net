@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy log. </summary>
-    public partial class MsDeployLog : ResourceData
+    public partial class MSDeployLog : ResourceData
     {
-        /// <summary> Initializes a new instance of MsDeployLog. </summary>
-        public MsDeployLog()
+        /// <summary> Initializes a new instance of MSDeployLog. </summary>
+        public MSDeployLog()
         {
-            Entries = new ChangeTrackingList<MsDeployLogEntry>();
+            Entries = new ChangeTrackingList<MSDeployLogEntry>();
         }
 
-        /// <summary> Initializes a new instance of MsDeployLog. </summary>
+        /// <summary> Initializes a new instance of MSDeployLog. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="entries"> List of log entry messages. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MsDeployLog(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MsDeployLogEntry> entries, string kind) : base(id, name, resourceType, systemData)
+        internal MSDeployLog(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MSDeployLogEntry> entries, string kind) : base(id, name, resourceType, systemData)
         {
             Entries = entries;
             Kind = kind;
         }
 
         /// <summary> List of log entry messages. </summary>
-        public IReadOnlyList<MsDeployLogEntry> Entries { get; }
+        public IReadOnlyList<MSDeployLogEntry> Entries { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

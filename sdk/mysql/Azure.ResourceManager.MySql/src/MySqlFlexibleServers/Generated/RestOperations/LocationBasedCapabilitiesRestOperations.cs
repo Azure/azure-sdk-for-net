@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitiesListResult>> ListAsync(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerCapabilitiesListResult>> ListAsync(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        MySqlFlexibleServerCapabilitiesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = MySqlFlexibleServerCapabilitiesListResult.DeserializeMySqlFlexibleServerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitiesListResult> List(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerCapabilitiesListResult> List(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        MySqlFlexibleServerCapabilitiesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = MySqlFlexibleServerCapabilitiesListResult.DeserializeMySqlFlexibleServerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitiesListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerCapabilitiesListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        MySqlFlexibleServerCapabilitiesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = MySqlFlexibleServerCapabilitiesListResult.DeserializeMySqlFlexibleServerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitiesListResult> ListNextPage(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerCapabilitiesListResult> ListNextPage(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        CapabilitiesListResult value = default;
+                        MySqlFlexibleServerCapabilitiesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilitiesListResult.DeserializeCapabilitiesListResult(document.RootElement);
+                        value = MySqlFlexibleServerCapabilitiesListResult.DeserializeMySqlFlexibleServerCapabilitiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

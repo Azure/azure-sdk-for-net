@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Security.ConfidentialLedger.Certificate;
@@ -15,7 +16,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private const string transactionId = "1234";
 
         [Test]
-        public void FailedTransaction()
+        public async Task FailedTransaction()
         {
             var client = InstrumentClient(
                 new ConfidentialLedgerClient(
@@ -54,9 +55,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
                             })
                     }
                     ));
-
+            var operation = await client.PostLedgerEntryAsync(WaitUntil.Started, RequestContent.Create(new { contents = "test" }), null, default);
             var ex = Assert.ThrowsAsync<RequestFailedException>(
-                async () => await client.PostLedgerEntryAsync(waitUntil: WaitUntil.Completed, RequestContent.Create(new { contents = "test" }), null, default));
+                async () => await operation.WaitForCompletionResponseAsync());
             Assert.That(ex.Message, Does.Contain(transactionId));
         }
     }

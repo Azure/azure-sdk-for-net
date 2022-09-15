@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AkamaiSignatureHeaderAuthenticationKey. </summary>
         /// <param name="identifier"> identifier of the key. </param>
         /// <param name="base64Key"> authentication key. </param>
-        /// <param name="expiration"> The expiration time of the authentication key. </param>
-        internal AkamaiSignatureHeaderAuthenticationKey(string identifier, string base64Key, DateTimeOffset? expiration)
+        /// <param name="expireOn"> The expiration time of the authentication key. </param>
+        internal AkamaiSignatureHeaderAuthenticationKey(string identifier, string base64Key, DateTimeOffset? expireOn)
         {
             Identifier = identifier;
             Base64Key = base64Key;
-            Expiration = expiration;
+            ExpireOn = expireOn;
         }
 
         /// <summary> identifier of the key. </summary>
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> authentication key. </summary>
         public string Base64Key { get; set; }
         /// <summary> The expiration time of the authentication key. </summary>
-        public DateTimeOffset? Expiration { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
     }
 }

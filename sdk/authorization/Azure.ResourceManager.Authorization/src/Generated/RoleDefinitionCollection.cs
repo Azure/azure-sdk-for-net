@@ -52,11 +52,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="data"> The values for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ResourceIdentifier roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _roleDefinitionClientDiagnostics.CreateScope("RoleDefinitionCollection.CreateOrUpdate");
@@ -85,11 +84,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="data"> The values for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, ResourceIdentifier roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _roleDefinitionClientDiagnostics.CreateScope("RoleDefinitionCollection.CreateOrUpdate");
@@ -116,11 +114,10 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual async Task<Response<RoleDefinitionResource>> GetAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleDefinitionResource>> GetAsync(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _roleDefinitionClientDiagnostics.CreateScope("RoleDefinitionCollection.Get");
             scope.Start();
@@ -145,11 +142,10 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual Response<RoleDefinitionResource> Get(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual Response<RoleDefinitionResource> Get(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _roleDefinitionClientDiagnostics.CreateScope("RoleDefinitionCollection.Get");
             scope.Start();
@@ -260,11 +256,10 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _roleDefinitionClientDiagnostics.CreateScope("RoleDefinitionCollection.Exists");
             scope.Start();
@@ -287,11 +282,10 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual Response<bool> Exists(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _roleDefinitionClientDiagnostics.CreateScope("RoleDefinitionCollection.Exists");
             scope.Start();

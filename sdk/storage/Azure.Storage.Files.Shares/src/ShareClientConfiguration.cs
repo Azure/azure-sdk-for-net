@@ -10,9 +10,9 @@ namespace Azure.Storage.Files.Shares
     {
         public ShareClientOptions ClientOptions { get; internal set; }
 
-        public UploadTransferValidationOptions UploadValidationOptions { get; internal set; }
+        public UploadTransferValidationOptions UploadTransferValidationOptions { get; internal set; }
 
-        public DownloadTransferValidationOptions DownloadValidationOptions { get; internal set; }
+        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; internal set; }
 
         public ShareClientConfiguration(
             HttpPipeline pipeline,
@@ -41,6 +41,8 @@ namespace Azure.Storage.Files.Shares
             : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
         {
             ClientOptions = clientOptions;
+            UploadTransferValidationOptions = clientOptions.UploadTransferValidationOptions;
+            DownloadTransferValidationOptions = clientOptions.DownloadTransferValidationOptions;
         }
     }
 }

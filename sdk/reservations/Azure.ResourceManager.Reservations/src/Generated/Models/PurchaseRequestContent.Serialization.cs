@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ReservationsSkuName> sku = default;
             Optional<AzureLocation> location = default;
             Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<string> billingScopeId = default;
+            Optional<ResourceIdentifier> billingScopeId = default;
             Optional<ReservationTerm> term = default;
             Optional<ReservationBillingPlan> billingPlan = default;
             Optional<int> quantity = default;
@@ -144,7 +144,12 @@ namespace Azure.ResourceManager.Reservations.Models
                         }
                         if (property0.NameEquals("billingScopeId"))
                         {
-                            billingScopeId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            billingScopeId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("term"))

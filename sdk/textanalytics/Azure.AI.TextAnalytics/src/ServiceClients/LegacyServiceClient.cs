@@ -1488,10 +1488,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToLegacyTasks(actions.RecognizeEntitiesActions);
             }
-            if (actions.RecognizeCustomEntitiesActions != null)
-            {
-                tasks.CustomEntityRecognitionTasks = Transforms.ConvertFromRecognizeCustomEntitiesActionsToLegacyTasks(actions.RecognizeCustomEntitiesActions);
-            }
             if (actions.ExtractKeyPhrasesActions != null)
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToLegacyTasks(actions.ExtractKeyPhrasesActions);
@@ -1503,18 +1499,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             if (actions.AnalyzeSentimentActions != null)
             {
                 tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToLegacyTasks(actions.AnalyzeSentimentActions);
-            }
-            if (actions.ExtractSummaryActions != null)
-            {
-                tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToLegacyTasks(actions.ExtractSummaryActions);
-            }
-            if (actions.SingleCategoryClassifyActions != null)
-            {
-                tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToLegacyTasks(actions.SingleCategoryClassifyActions);
-            }
-            if (actions.MultiCategoryClassifyActions != null)
-            {
-                tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToLegacyTasks(actions.MultiCategoryClassifyActions);
             }
             return tasks;
         }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The list results of the Service Fabric runtime versions. </summary>
+    /// <summary>
+    /// The list results of the Service Fabric runtime versions.
+    /// Serialized Name: ClusterCodeVersionsListResult
+    /// </summary>
     internal partial class ClusterCodeVersionsListResult
     {
         /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>
@@ -20,17 +23,23 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value"> Serialized Name: ClusterCodeVersionsListResult.value. </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ClusterCodeVersionsListResult.nextLink
+        /// </param>
         internal ClusterCodeVersionsListResult(IReadOnlyList<ClusterCodeVersionsResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: ClusterCodeVersionsListResult.value. </summary>
         public IReadOnlyList<ClusterCodeVersionsResult> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ClusterCodeVersionsListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

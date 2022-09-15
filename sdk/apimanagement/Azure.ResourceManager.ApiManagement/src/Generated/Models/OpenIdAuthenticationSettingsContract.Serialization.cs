@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OpenidProviderId))
+            if (Optional.IsDefined(OpenIdProviderId))
             {
                 writer.WritePropertyName("openidProviderId");
-                writer.WriteStringValue(OpenidProviderId);
+                writer.WriteStringValue(OpenIdProviderId);
             }
             if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         internal static OpenIdAuthenticationSettingsContract DeserializeOpenIdAuthenticationSettingsContract(JsonElement element)
         {
             Optional<string> openidProviderId = default;
-            Optional<IList<BearerTokenSendingMethodContract>> bearerTokenSendingMethods = default;
+            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("openidProviderId"))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BearerTokenSendingMethodContract> array = new List<BearerTokenSendingMethodContract>();
+                    List<BearerTokenSendingMethod> array = new List<BearerTokenSendingMethod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new BearerTokenSendingMethodContract(item.GetString()));
+                        array.Add(new BearerTokenSendingMethod(item.GetString()));
                     }
                     bearerTokenSendingMethods = array;
                     continue;

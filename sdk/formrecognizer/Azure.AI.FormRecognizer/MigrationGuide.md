@@ -620,7 +620,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
 BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
-DocumentModel model = operation.Value;
+DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))

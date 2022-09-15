@@ -2166,7 +2166,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.DownloadValidationOptions;
+            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.DownloadTransferValidationOptions;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -2655,7 +2655,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
-            DownloadTransferValidationOptions validaitonOptions = validationOptionsOverride ?? ClientConfiguration.DownloadValidationOptions;
+            DownloadTransferValidationOptions validaitonOptions = validationOptionsOverride ?? ClientConfiguration.DownloadTransferValidationOptions;
 
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
             try
@@ -4312,7 +4312,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadValidationOptions;
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
             ShareErrors.AssertAlgorithmSupport(validationOptions?.Algorithm);
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
@@ -5106,7 +5106,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.UploadValidationOptions;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.UploadTransferValidationOptions;
 
             var uploader = GetPartitionedUploader(
                 new StorageTransferOptions

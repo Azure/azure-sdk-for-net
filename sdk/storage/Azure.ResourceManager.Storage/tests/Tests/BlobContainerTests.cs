@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, parameters2)).Value;
             await container2.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, data: new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 1 });
 
-            await container2.EnableObjectLevelWormAsync(WaitUntil.Completed);
+            await container2.EnableVersionLevelImmutabilityAsync(WaitUntil.Completed);
             container2 = await container2.GetAsync();
             Assert.IsTrue(container2.Data.ImmutableStorageWithVersioning.IsEnabled);
             Assert.AreEqual("Completed", container2.Data.ImmutableStorageWithVersioning.MigrationState);

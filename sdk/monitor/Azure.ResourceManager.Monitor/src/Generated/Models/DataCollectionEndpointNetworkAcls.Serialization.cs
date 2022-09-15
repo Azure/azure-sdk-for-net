@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionEndpointNetworkAcls DeserializeDataCollectionEndpointNetworkAcls(JsonElement element)
         {
-            Optional<KnownPublicNetworkAccessOption> publicNetworkAccess = default;
+            Optional<MonitorPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetworkAccess = new KnownPublicNetworkAccessOption(property.Value.GetString());
+                    publicNetworkAccess = new MonitorPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
             }

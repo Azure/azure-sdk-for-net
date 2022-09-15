@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="enabledProtocols"> Representing supported protocols. </param>
         /// <param name="clearTracks"> Representing which tracks should not be encrypted. </param>
         /// <param name="contentKeys"> Representing default content key for each encryption scheme and separate content keys for specific tracks. </param>
-        /// <param name="customKeyAcquisitionUrlTemplate"> Template for the URL of the custom service delivering keys to end user players.  Not required when using Azure Media Services for issuing keys.  The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token values are {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is replaced with the value of identifier of the key being requested. </param>
-        internal EnvelopeEncryption(EnabledProtocols enabledProtocols, IList<TrackSelection> clearTracks, StreamingPolicyContentKeys contentKeys, string customKeyAcquisitionUrlTemplate)
+        /// <param name="customKeyAcquisitionUriTemplate"> Template for the URL of the custom service delivering keys to end user players.  Not required when using Azure Media Services for issuing keys.  The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token values are {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is replaced with the value of identifier of the key being requested. </param>
+        internal EnvelopeEncryption(EnabledProtocols enabledProtocols, IList<TrackSelection> clearTracks, StreamingPolicyContentKeys contentKeys, string customKeyAcquisitionUriTemplate)
         {
             EnabledProtocols = enabledProtocols;
             ClearTracks = clearTracks;
             ContentKeys = contentKeys;
-            CustomKeyAcquisitionUrlTemplate = customKeyAcquisitionUrlTemplate;
+            CustomKeyAcquisitionUriTemplate = customKeyAcquisitionUriTemplate;
         }
 
         /// <summary> Representing supported protocols. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Representing default content key for each encryption scheme and separate content keys for specific tracks. </summary>
         public StreamingPolicyContentKeys ContentKeys { get; set; }
         /// <summary> Template for the URL of the custom service delivering keys to end user players.  Not required when using Azure Media Services for issuing keys.  The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token values are {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is replaced with the value of identifier of the key being requested. </summary>
-        public string CustomKeyAcquisitionUrlTemplate { get; set; }
+        public string CustomKeyAcquisitionUriTemplate { get; set; }
     }
 }

@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string name = "srv";
             var recordSetSrvResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
             Assert.IsNotNull(recordSetSrvResource);
+            Assert.IsNotNull(recordSetSrvResource.Value.Data.ETag);
             Assert.AreEqual(name, recordSetSrvResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetSrvResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/SRV", recordSetSrvResource.Value.Data.ResourceType.Type);

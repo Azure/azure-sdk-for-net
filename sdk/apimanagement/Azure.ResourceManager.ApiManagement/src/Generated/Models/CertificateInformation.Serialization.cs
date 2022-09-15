@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("expiry");
-            writer.WriteStringValue(Expiry, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             writer.WritePropertyName("thumbprint");
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("subject");

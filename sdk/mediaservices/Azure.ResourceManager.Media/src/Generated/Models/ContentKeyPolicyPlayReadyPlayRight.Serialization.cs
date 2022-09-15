@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
             bool digitalVideoOnlyContentRestriction = default;
             bool imageConstraintForAnalogComponentVideoRestriction = default;
             bool imageConstraintForAnalogComputerMonitorRestriction = default;
-            ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput = default;
+            ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput = default;
             Optional<int> uncompressedDigitalVideoOpl = default;
             Optional<int> compressedDigitalVideoOpl = default;
             Optional<int> analogVideoOpl = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("allowPassingVideoContentToUnknownOutput"))
                 {
-                    allowPassingVideoContentToUnknownOutput = new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(property.Value.GetString());
+                    allowPassingVideoContentToUnknownOutput = new ContentKeyPolicyPlayReadyUnknownOutputPassingSetting(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("uncompressedDigitalVideoOpl"))

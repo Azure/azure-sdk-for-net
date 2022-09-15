@@ -32,6 +32,11 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("playOptions");
                 writer.WriteObjectValue(PlayOptions);
             }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext");
+                writer.WriteStringValue(OperationContext);
+            }
             writer.WriteEndObject();
         }
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public TxtRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            TxtRecords = new ChangeTrackingList<TxtRecord>();
+            TxtRecords = new ChangeTrackingList<DnsTxtRecord>();
         }
 
         /// <summary> Initializes a new instance of TxtRecordSetData. </summary>
@@ -30,16 +31,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal TxtRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<TxtRecord> txtRecords) : base(id, name, resourceType, systemData)
+        internal TxtRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsTxtRecord> txtRecords) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = etag;
             Metadata = metadata;
-            TTL = ttl;
+            Ttl = ttl;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
@@ -47,11 +48,11 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The etag of the record set. </summary>
-        public string Etag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> The metadata attached to the record set. </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
-        public long? TTL { get; set; }
+        /// <summary> The Ttl (time-to-live) of the records in the record set. </summary>
+        public long? Ttl { get; set; }
         /// <summary> Fully qualified domain name of the record set. </summary>
         public string Fqdn { get; }
         /// <summary> provisioning State of the record set. </summary>
@@ -71,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<TxtRecord> TxtRecords { get; }
+        public IList<DnsTxtRecord> TxtRecords { get; }
     }
 }

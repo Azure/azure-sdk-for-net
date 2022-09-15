@@ -1287,7 +1287,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     ModelVersion = options.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = options.DisableServiceLogs,
-                    FhirVersion = options.FhirVersion ?? (FhirVersion?)null
                 }
             };
         }
@@ -1701,17 +1700,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 analyzeTasks.AddRange(Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions));
             }
-            if (actions.ExtractSummaryActions != null)
+            if (actions.SingleLabelClassifyActions != null)
             {
-                analyzeTasks.AddRange(Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions));
+                analyzeTasks.AddRange(Transforms.ConvertFromSingleLabelClassifyActionsToTasks(actions.SingleLabelClassifyActions));
             }
-            if (actions.SingleCategoryClassifyActions != null)
+            if (actions.MultiLabelClassifyActions != null)
             {
-                analyzeTasks.AddRange(Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions));
-            }
-            if (actions.MultiCategoryClassifyActions != null)
-            {
-                analyzeTasks.AddRange(Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions));
+                analyzeTasks.AddRange(Transforms.ConvertFromMultiLabelClassifyActionsToTasks(actions.MultiLabelClassifyActions));
             }
 
             return analyzeTasks;

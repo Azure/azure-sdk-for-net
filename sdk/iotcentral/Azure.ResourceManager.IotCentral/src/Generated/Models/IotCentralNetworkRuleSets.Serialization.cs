@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WritePropertyName("applyToDevices");
                 writer.WriteBooleanValue(ApplyToDevices.Value);
             }
-            if (Optional.IsDefined(ApplyToIoTCentral))
+            if (Optional.IsDefined(ApplyToIotCentral))
             {
                 writer.WritePropertyName("applyToIoTCentral");
-                writer.WriteBooleanValue(ApplyToIoTCentral.Value);
+                writer.WriteBooleanValue(ApplyToIotCentral.Value);
             }
             if (Optional.IsDefined(DefaultAction))
             {

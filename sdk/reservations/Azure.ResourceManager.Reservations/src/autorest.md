@@ -23,6 +23,16 @@ format-by-name-rules:
   'locations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  "SessionId": "uuid"
+  "DestinationTenantId": "uuid"
+  "BillingScopeId": "arm-id"
+  "SubRequestId": "uuid"
+
+override-operation-name:
+  Reservation_AvailableScopes: GetAvailableScopes
+  CalculateExchange_Post: CalculateReservationExchange
+  Exchange_Post: Exchange
+  GetAppliedReservationList: GetAppliedReservations
 
 rename-rules:
   CPU: Cpu
@@ -46,7 +56,42 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  AVS: Avs
+  Db: DB
 
+rename-mapping:
+  CurrentQuotaLimitBase: ReservationQuota
+  ReservationOrderResponse: ReservationOrder
+  ReservationOrderResponse.properties.expiryDate: ExpireOn
+  ProvisioningState: ReservationProvisioningState
+  ReservationResponse: ReservationDetail
+  ReservationsKind: ReservationKind
+  ReservationsProperties: ReservationProperties
+  AvailableScopeProperties: AvailableScopesProperties
+  AvailableScopeRequest: AvailableScopesContent
+  PurchaseRequest: ReservationPurchaseContent
+  CalculatePriceResponse: CalculatePriceResult
+  CalculatePriceResponseProperties: CalculatePriceResultProperties
+  CalculateExchangeOperationResultResponse: CalculateExchangeResult
+  ExchangeOperationResultResponse: ExchangeResult
+  AppliedReservations: AppliedReservationsData
+  CalculateExchangeRequestProperties: CalculateExchangeContentProperties
+  CalculateExchangeResponseProperties: CalculateExchangeResultProperties
+  CalculatePriceResponsePropertiesBillingCurrencyTotal: CalculatePriceResultPropertiesBillingCurrencyTotal
+  CalculatePriceResponsePropertiesPricingCurrencyTotal: CalculatePriceResultPropertiesPricingCurrencyTotal
+  ChangeDirectoryResponse: ChangeDirectoryDetail
+  ExchangeResponseProperties: ExchangeResultProperties
+  PaymentDetail.paymentDate: PayOn
+  RenewPropertiesResponse: RenewProperties
+  RenewPropertiesResponseBillingCurrencyTotal: RenewPropertiesBillingCurrencyTotal
+  RenewPropertiesResponsePricingCurrencyTotal: RenewPropertiesPricingCurrencyTotal
+  ReservationsProperties.archived: IsArchived
+  ReservationsProperties.effectiveDateTime: EffectOn
+  ReservationsProperties.expiryDate: ExpireOn
+  ReservationsPropertiesUtilization:  ReservationPropertiesUtilization
+  ScopeProperties.valid: IsValid
+  SubRequest: SubContent
+  
 directive:
   - from: quota.json
     where: $.definitions
@@ -66,4 +111,14 @@ directive:
       $.Catalog.properties.resourceType['x-ms-client-name'] = 'reservedResourceType';
       $.Catalog.properties.name['x-ms-client-name'] = 'SkuName';
       $.Catalog['x-ms-client-name'] = 'ReservationCatalog';
+      $.CalculateExchangeOperationResultResponse.properties.id['x-ms-format'] = 'arm-id';
+      $.ExchangeOperationResultResponse.properties.id['x-ms-format'] = 'arm-id';
+      $.CalculatePriceResponseProperties.properties.reservationOrderId['format'] = 'uuid';
+      $.ChangeDirectoryResult.properties.id['format'] = 'uuid';
+      $.ReservationToExchange.properties.reservationId['x-ms-format'] = 'arm-id';
+      $.ReservationToPurchaseExchange.properties.reservationId['x-ms-format'] = 'arm-id';
+      $.ReservationToPurchaseExchange.properties.reservationOrderId['x-ms-format'] = 'arm-id';
+      $.ReservationToReturnForExchange.properties.reservationId['x-ms-format'] = 'arm-id';
+      $.SplitProperties.properties.reservationId['x-ms-format'] = 'arm-id';
+  - remove-operation: Operation_List
 ```

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="metadata"> The metadata. </param>
         /// <param name="key"> The key details in the key vault. </param>
         /// <param name="publicCertificate"> The public certificate. </param>
-        internal IntegrationAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, KeyVaultKeyReference key, string publicCertificate) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountKeyVaultKeyReference key, BinaryData publicCertificate) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The metadata. </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> The key details in the key vault. </summary>
-        public KeyVaultKeyReference Key { get; set; }
+        public IntegrationAccountKeyVaultKeyReference Key { get; set; }
         /// <summary> The public certificate. </summary>
-        public string PublicCertificate { get; set; }
+        public BinaryData PublicCertificate { get; set; }
     }
 }

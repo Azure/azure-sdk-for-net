@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SKU discovery information. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="sku"> Name and tier of the SKU. </param>
         /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>
-        internal SkuInfo(string resourceType, SkuDescription sku, SkuCapacity capacity)
+        internal SkuInfo(ResourceType? resourceType, SkuDescription sku, SkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource type that this SKU applies to. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Name and tier of the SKU. </summary>
         public SkuDescription Sku { get; }
         /// <summary> Min, max, and default scale values of the SKU. </summary>

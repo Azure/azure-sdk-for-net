@@ -14,14 +14,19 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static ArmStreamingEndpointSkuInfo DeserializeArmStreamingEndpointSkuInfo(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<ArmStreamingEndpointCapacity> capacity = default;
             Optional<ArmStreamingEndpointSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"))
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ArmStreamingEndpointSkuInfo(resourceType.Value, capacity.Value, sku.Value);
+            return new ArmStreamingEndpointSkuInfo(Optional.ToNullable(resourceType), capacity.Value, sku.Value);
         }
     }
 }

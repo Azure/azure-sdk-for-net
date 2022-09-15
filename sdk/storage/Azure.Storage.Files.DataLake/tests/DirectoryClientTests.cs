@@ -683,6 +683,97 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeSas()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder
+            {
+                FileSystemName = test.FileSystem.Name,
+                Path = directoryName,
+                EncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            sasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            DataLakeSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(
+                new StorageSharedKeyCredential(
+                    TestConfigHierarchicalNamespace.AccountName,
+                    TestConfigHierarchicalNamespace.AccountKey));
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
+            {
+                DirectoryOrFilePath = directoryName,
+                Sas = sasQueryParameters
+            };
+
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(uriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            Response<PathInfo> response = await sasDirectoryClient.CreateAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeAccountSas()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeServiceClient serviceClient = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
+                permissions: AccountSasPermissions.Write,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: AccountSasServices.All,
+                resourceTypes: AccountSasResourceTypes.All);
+            accountSasBuilder.EncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope;
+
+            Uri accountSasUri = serviceClient.GenerateAccountSasUri(accountSasBuilder);
+            serviceClient = InstrumentClient(new DataLakeServiceClient(accountSasUri, GetOptions()));
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(serviceClient.GetFileSystemClient(fileSystemName));
+            DataLakeDirectoryClient directoryClient = InstrumentClient(fileSystemClient.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            await directoryClient.CreateAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeIdentitySas()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            Response<UserDelegationKey> userDelegationKey = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            string directoryName = GetNewDirectoryName();
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder
+            {
+                FileSystemName = test.FileSystem.Name,
+                Path = directoryName,
+                EncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            sasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
+            {
+                DirectoryOrFilePath = directoryName,
+                Sas = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, TestConfigHierarchicalNamespace.AccountName)
+            };
+
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(uriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            await sasDirectoryClient.CreateAsync();
+        }
+
         [RecordedTest]
         public async Task CreateIfNotExistsAsync_NotExists()
         {
@@ -3930,6 +4021,26 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetPropertiesAsync_EncryptionScope()
+        {
+            // Arrange
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            await directoryClient.CreateAsync();
+
+            // Act
+            Response<PathProperties> response = await directoryClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [RecordedTest]

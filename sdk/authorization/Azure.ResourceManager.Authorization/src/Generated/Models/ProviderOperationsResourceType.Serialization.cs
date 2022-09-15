@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<string> name = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<ProviderOperation>> operations = default;
+            Optional<IReadOnlyList<ProviderOperationInfo>> operations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProviderOperation> array = new List<ProviderOperation>();
+                    List<ProviderOperationInfo> array = new List<ProviderOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderOperation.DeserializeProviderOperation(item));
+                        array.Add(ProviderOperationInfo.DeserializeProviderOperationInfo(item));
                     }
                     operations = array;
                     continue;

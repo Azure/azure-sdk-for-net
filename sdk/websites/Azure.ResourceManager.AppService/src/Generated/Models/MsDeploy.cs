@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information. </summary>
-    public partial class MsDeploy : ResourceData
+    public partial class MSDeploy : ResourceData
     {
-        /// <summary> Initializes a new instance of MsDeploy. </summary>
-        public MsDeploy()
+        /// <summary> Initializes a new instance of MSDeploy. </summary>
+        public MSDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MsDeploy. </summary>
+        /// <summary> Initializes a new instance of MSDeploy. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        /// <param name="appOffline">
+        /// <param name="isAppOffline">
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MsDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, string kind) : base(id, name, resourceType, systemData)
+        internal MSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, string kind) : base(id, name, resourceType, systemData)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
             SetParametersXmlFileUri = setParametersXmlFileUri;
             SetParameters = setParameters;
             SkipAppData = skipAppData;
-            AppOffline = appOffline;
+            IsAppOffline = isAppOffline;
             Kind = kind;
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
-        public bool? AppOffline { get; set; }
+        public bool? IsAppOffline { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

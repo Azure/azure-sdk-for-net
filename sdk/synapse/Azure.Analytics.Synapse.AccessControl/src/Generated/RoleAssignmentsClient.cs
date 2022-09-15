@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -99,18 +99,18 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///         groupIds = new[] {
-        ///             "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>"
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
         ///         },
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -133,8 +133,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId, # Required. Principal Id
-        ///     groupIds: [SubjectInfoGroupIdsItem], # Optional. List of group Ids that the principalId is part of.
+        ///     principalId: Guid, # Required. Principal Id
+        ///     groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
         ///   }, # Required. Subject details
         ///   actions: [
         ///     {
@@ -156,8 +156,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///       actionId: string, # Optional. Action Id.
         ///       roleAssignment: {
         ///         id: string, # Optional. Role Assignment ID
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///         principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///         roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///         principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///         scope: string, # Optional. Scope at the role assignment is created
         ///         principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///       }, # Optional. Role Assignment response details
@@ -201,15 +201,15 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -225,18 +225,18 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///         groupIds = new[] {
-        ///             "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>"
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
         ///         },
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -259,8 +259,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId, # Required. Principal Id
-        ///     groupIds: [SubjectInfoGroupIdsItem], # Optional. List of group Ids that the principalId is part of.
+        ///     principalId: Guid, # Required. Principal Id
+        ///     groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
         ///   }, # Required. Subject details
         ///   actions: [
         ///     {
@@ -282,8 +282,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///       actionId: string, # Optional. Action Id.
         ///       roleAssignment: {
         ///         id: string, # Optional. Role Assignment ID
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///         principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///         roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///         principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///         scope: string, # Optional. Scope at the role assignment is created
         ///         principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///       }, # Optional. Role Assignment response details
@@ -359,8 +359,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   value: [
         ///     {
         ///       id: string, # Optional. Role Assignment ID
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///       principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///       roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///       principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///       scope: string, # Optional. Scope at the role assignment is created
         ///       principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///     }
@@ -433,8 +433,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   value: [
         ///     {
         ///       id: string, # Optional. Role Assignment ID
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///       principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///       roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///       principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///       scope: string, # Optional. Scope at the role assignment is created
         ///       principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///     }
@@ -476,9 +476,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -493,10 +493,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
-        ///     principalType = "<RoleAssignmentRequestPrincipalType>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        ///     principalType = "<principalType>",
         /// };
         /// 
         /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -516,8 +516,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId, # Required. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentRequestPrincipalId, # Required. Object ID of the AAD principal or security-group
+        ///   roleId: Guid, # Required. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Required. Object ID of the AAD principal or security-group
         ///   scope: string, # Required. Scope at which the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -528,8 +528,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -572,9 +572,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -589,10 +589,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
-        ///     principalType = "<RoleAssignmentRequestPrincipalType>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        ///     principalType = "<principalType>",
         /// };
         /// 
         /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -612,8 +612,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId, # Required. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentRequestPrincipalId, # Required. Object ID of the AAD principal or security-group
+        ///   roleId: Guid, # Required. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Required. Object ID of the AAD principal or security-group
         ///   scope: string, # Required. Scope at which the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -624,8 +624,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -683,8 +683,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -741,8 +741,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }

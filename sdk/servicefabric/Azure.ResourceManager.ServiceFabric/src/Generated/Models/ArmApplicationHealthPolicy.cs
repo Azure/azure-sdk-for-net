@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary>
     /// Defines a health policy used to evaluate the health of an application or one of its children entities.
     /// 
+    /// Serialized Name: ArmApplicationHealthPolicy
     /// </summary>
     public partial class ArmApplicationHealthPolicy
     {
@@ -23,16 +24,26 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ArmApplicationHealthPolicy. </summary>
-        /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
+        /// <param name="considerWarningAsError">
+        /// Indicates whether warnings are treated with the same severity as errors.
+        /// Serialized Name: ArmApplicationHealthPolicy.considerWarningAsError
+        /// </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
         /// The percentage represents the maximum tolerated percentage of deployed applications that can be unhealthy before the application is considered in error.
         /// This is calculated by dividing the number of unhealthy deployed applications over the number of nodes where the application is currently deployed on in the cluster.
         /// The computation rounds up to tolerate one failure on small numbers of nodes. Default percentage is zero.
         /// 
+        /// Serialized Name: ArmApplicationHealthPolicy.maxPercentUnhealthyDeployedApplications
         /// </param>
-        /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
-        /// <param name="serviceTypeHealthPolicyMap"> The map with service type health policy per service type name. The map is empty by default. </param>
+        /// <param name="defaultServiceTypeHealthPolicy">
+        /// The health policy used by default to evaluate the health of a service type.
+        /// Serialized Name: ArmApplicationHealthPolicy.defaultServiceTypeHealthPolicy
+        /// </param>
+        /// <param name="serviceTypeHealthPolicyMap">
+        /// The map with service type health policy per service type name. The map is empty by default.
+        /// Serialized Name: ArmApplicationHealthPolicy.serviceTypeHealthPolicyMap
+        /// </param>
         internal ArmApplicationHealthPolicy(bool? considerWarningAsError, int? maxPercentUnhealthyDeployedApplications, ArmServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap)
         {
             ConsiderWarningAsError = considerWarningAsError;
@@ -41,7 +52,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ServiceTypeHealthPolicyMap = serviceTypeHealthPolicyMap;
         }
 
-        /// <summary> Indicates whether warnings are treated with the same severity as errors. </summary>
+        /// <summary>
+        /// Indicates whether warnings are treated with the same severity as errors.
+        /// Serialized Name: ArmApplicationHealthPolicy.considerWarningAsError
+        /// </summary>
         public bool? ConsiderWarningAsError { get; set; }
         /// <summary>
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
@@ -49,11 +63,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// This is calculated by dividing the number of unhealthy deployed applications over the number of nodes where the application is currently deployed on in the cluster.
         /// The computation rounds up to tolerate one failure on small numbers of nodes. Default percentage is zero.
         /// 
+        /// Serialized Name: ArmApplicationHealthPolicy.maxPercentUnhealthyDeployedApplications
         /// </summary>
         public int? MaxPercentUnhealthyDeployedApplications { get; set; }
-        /// <summary> The health policy used by default to evaluate the health of a service type. </summary>
+        /// <summary>
+        /// The health policy used by default to evaluate the health of a service type.
+        /// Serialized Name: ArmApplicationHealthPolicy.defaultServiceTypeHealthPolicy
+        /// </summary>
         public ArmServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get; set; }
-        /// <summary> The map with service type health policy per service type name. The map is empty by default. </summary>
+        /// <summary>
+        /// The map with service type health policy per service type name. The map is empty by default.
+        /// Serialized Name: ArmApplicationHealthPolicy.serviceTypeHealthPolicyMap
+        /// </summary>
         public IDictionary<string, ArmServiceTypeHealthPolicy> ServiceTypeHealthPolicyMap { get; }
     }
 }

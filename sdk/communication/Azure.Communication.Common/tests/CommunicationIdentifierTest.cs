@@ -60,6 +60,8 @@ namespace Azure.Communication
             {
                 Assert.AreEqual(CommunicationIdentifier.FromRawId(rawId), expectedIdentifier);
                 Assert.AreEqual(CommunicationIdentifier.FromRawId(rawId).GetHashCode(), expectedIdentifier.GetHashCode());
+                Assert.IsTrue(CommunicationIdentifier.FromRawId(rawId) == expectedIdentifier);
+                Assert.IsFalse(CommunicationIdentifier.FromRawId(rawId) != expectedIdentifier);
             }
 
             AssertIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130", new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));

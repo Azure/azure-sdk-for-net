@@ -7,17 +7,26 @@
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The ApplicationTypeVersionsCleanupPolicy. </summary>
+    /// <summary>
+    /// The ApplicationTypeVersionsCleanupPolicy.
+    /// Serialized Name: ApplicationTypeVersionsCleanupPolicy
+    /// </summary>
     internal partial class ApplicationTypeVersionsCleanupPolicy
     {
         /// <summary> Initializes a new instance of ApplicationTypeVersionsCleanupPolicy. </summary>
-        /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
+        /// <param name="maxUnusedVersionsToKeep">
+        /// Number of unused versions per application type to keep.
+        /// Serialized Name: ApplicationTypeVersionsCleanupPolicy.maxUnusedVersionsToKeep
+        /// </param>
         public ApplicationTypeVersionsCleanupPolicy(long maxUnusedVersionsToKeep)
         {
             MaxUnusedVersionsToKeep = maxUnusedVersionsToKeep;
         }
 
-        /// <summary> Number of unused versions per application type to keep. </summary>
+        /// <summary>
+        /// Number of unused versions per application type to keep.
+        /// Serialized Name: ApplicationTypeVersionsCleanupPolicy.maxUnusedVersionsToKeep
+        /// </summary>
         public long MaxUnusedVersionsToKeep { get; set; }
     }
 }
