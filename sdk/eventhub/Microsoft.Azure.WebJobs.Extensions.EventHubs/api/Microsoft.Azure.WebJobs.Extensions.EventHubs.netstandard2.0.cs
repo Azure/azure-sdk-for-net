@@ -49,6 +49,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         FromEnd = 1,
         FromEnqueuedTime = 2,
     }
+    public partial class CheckpointContext
+    {
+        public CheckpointContext(bool isCheckpointingAfterInvocation) { }
+        public bool IsCheckpointingAfterInvocation { get { throw null; } }
+    }
 }
 namespace Microsoft.Extensions.Hosting
 {

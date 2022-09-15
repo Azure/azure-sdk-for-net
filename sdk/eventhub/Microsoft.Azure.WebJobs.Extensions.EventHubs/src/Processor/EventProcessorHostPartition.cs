@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
-using Microsoft.Azure.WebJobs.Extensions.EventHubs;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
