@@ -49,16 +49,6 @@ namespace Azure.ResourceManager.Subscription.Tests
             Assert.IsNotEmpty(list);
             Assert.IsNotNull(list.First(item => item.TagName == tagName));
 
-            //// Add a TagValue
-            //string tagValue = "preTestValue";
-            //var predefinedTagValue = await _subscription.CreateOrUpdatePredefinedTagValueAsync(tagName, tagValue);
-            //Assert.IsNotNull(predefinedTagValue);
-            //Assert.AreEqual(tagValue, predefinedTagValue.Value.TagValue);
-
-            //// Delete a TagValue
-            //var deleteResponse1 = await _subscription.CreateOrUpdatePredefinedTagValueAsync(tagName, tagValue);
-            //Assert.AreEqual(200, deleteResponse1.GetRawResponse().Status);
-
             // Delete
             var deleteResponse = await _subscription.DeletePredefinedTagAsync(tagName);
             Assert.AreEqual(200, deleteResponse.Status);
