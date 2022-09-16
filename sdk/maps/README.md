@@ -32,7 +32,7 @@ Azure.Maps.Common will be automatically installed when you install other package
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
 ```powershell
-az maps account create --kind "Gen2" --account-name "myMapAccountName" --resource-group "<resource group>" --sku "G2" --accept-tos
+az maps account create --kind "Gen2" --account-name "myMapAccountName" --resource-group "<resource group>" --sku "G2"
 ```
 
 ### Authenticate the client
@@ -111,7 +111,7 @@ var routePoints = new List<GeoPosition>() { homeCoord, parkCoord };
 var query = new RouteDirectionQuery(routePoints, new RouteDirectionOptions()
 {
     RouteType = RouteType.Fastest,
-    TravelMode = TravelMode.Car,
+    TravelMode = TravelMode.Car
 });
 
 // Call MapsRoutingClient's GetDirections method to get direction
