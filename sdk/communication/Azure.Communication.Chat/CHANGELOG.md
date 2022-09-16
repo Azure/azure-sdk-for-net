@@ -1,14 +1,9 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.1 (2022-09-16)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Updated `Azure.Communication.Common` version.
 
 ## 1.1.0 (2021-09-15)
 Updated `Azure.Communication.Chat` version.
