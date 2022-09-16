@@ -31,6 +31,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCreateFromNull()
         {
+            // This has become an ambiguous call-site
             var jsonData = new JsonData(null);
             Assert.AreEqual(JsonValueKind.Null, jsonData.Kind);
         }
