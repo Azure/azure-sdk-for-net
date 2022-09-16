@@ -15,7 +15,7 @@ namespace Azure.Developer.LoadTesting
 {
     // Data plane generated client. The Test service client.
     /// <summary> The Test service client. </summary>
-    internal partial class TestClient
+    public partial class TestClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,32 +32,6 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Initializes a new instance of TestClient for mocking. </summary>
         protected TestClient()
         {
-        }
-
-        /// <summary> Initializes a new instance of TestClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TestClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of TestClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TestClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureLoadTestingClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Create a new test or Update an existing test. </summary>

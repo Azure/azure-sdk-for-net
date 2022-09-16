@@ -34,32 +34,6 @@ namespace Azure.Developer.LoadTesting
         {
         }
 
-        /// <summary> Initializes a new instance of AppComponentClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        internal AppComponentClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of AppComponentClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AppComponentClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureLoadTestingClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
         /// <summary> Associate an App Component (Azure resource) to a test or test run. </summary>
         /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>

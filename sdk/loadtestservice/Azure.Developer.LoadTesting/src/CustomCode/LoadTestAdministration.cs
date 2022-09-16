@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> The LoadTesting service client. </summary>
-    public partial class LoadTestingClient
+    /// <summary> The LoadTesting Administration Wrapper. </summary>
+    public partial class LoadTestAdministration
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -21,14 +21,19 @@ namespace Azure.Developer.LoadTesting
         private readonly string _apiVersion;
 
         /// <summary>
-        /// Adminstration Client for LoadTest
+        /// AppComponent Client Object
         /// </summary>
-        public LoadTestAdministration Administration;
+        public AppComponentClient AppComponent;
 
         /// <summary>
-        /// TestRun Client
+        /// ServerMetrics Client Object
         /// </summary>
-        public TestRunClient LoadTestRun;
+        public ServerMetricsClient ServerMetrics;
+
+        /// <summary>
+        /// Test Client Object
+        /// </summary>
+        public TestClient Test;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -37,22 +42,22 @@ namespace Azure.Developer.LoadTesting
         public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of LoadTestingClient for mocking. </summary>
-        protected LoadTestingClient()
+        protected LoadTestAdministration()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingClient. </summary>
+        /// <summary> Initializes a new instance of LoadTestAdministration. </summary>
         /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestingClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        internal LoadTestAdministration(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoadTestingClient"/> class.
         /// </summary>
-        public LoadTestingClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        internal LoadTestAdministration(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -64,8 +69,9 @@ namespace Azure.Developer.LoadTesting
             _endpoint = endpoint;
             _apiVersion = options.Version;
 
-            Administration = new LoadTestAdministration(endpoint, credential, options);
-            LoadTestRun = new TestRunClient(endpoint, credential, options);
+            AppComponent = new AppComponentClient(endpoint, credential, options);
+            ServerMetrics = new ServerMetricsClient(endpoint, credential, options);
+            Test = new TestClient(endpoint, credential, options);
         }
     }
 }

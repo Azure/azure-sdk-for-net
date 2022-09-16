@@ -7,7 +7,5 @@ namespace Azure.Developer.LoadTesting
 {
     [CodeGenSuppress("AppComponentClient", typeof(string), typeof(TokenCredential))]
     [CodeGenSuppress("AppComponentClient", typeof(string), typeof(TokenCredential), typeof(AzureLoadTestingClientOptions))]
-    public partial class AppComponentClient
-    {
-    }
+    public partial class AppComponentClient { }
 }

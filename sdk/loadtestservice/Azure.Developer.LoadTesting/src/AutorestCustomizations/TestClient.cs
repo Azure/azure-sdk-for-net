@@ -5,6 +5,7 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    [CodeGenClient("TestClient")]
-    internal partial class TestClient { }
+    [CodeGenSuppress("TestClient", typeof(string), typeof(TokenCredential))]
+    [CodeGenSuppress("TestClient", typeof(string), typeof(TokenCredential), typeof(AzureLoadTestingClientOptions))]
+    public partial class TestClient { }
 }
