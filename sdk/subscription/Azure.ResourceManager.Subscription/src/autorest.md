@@ -16,8 +16,30 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug: 
+  show-serialized-names: true
+
 list-exception:
   - /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
+
+override-operation-name:
+  Subscription_AcceptOwnershipStatus: GetAcceptOwnershipStatus
+  Subscription_AcceptOwnership: AcceptSubscriptionOwnership
+
+rename-mapping:
+  AcceptOwnership: AcceptOwnershipState
+  AcceptOwnershipStatusResponse: AcceptOwnershipStatus
+  BillingAccountPoliciesResponse: BillingAccountPolicy
+  BillingAccountPoliciesResponseProperties: BillingAccountPolicyProperties
+  TenantPolicy: TenantPolicyProperties
+  GetTenantPolicyResponse: TenantPolicy
+  GetTenantPolicyListResponse: TenantPoliciesResult
+  Provisioning: AcceptOwnershipProvisioningState
+  ProvisioningState: SubscriptionProvisioningState
+  PutAliasRequestAdditionalProperties: SubscriptionAliasAdditionalProperties
+  SubscriptionAliasResponse: SubscriptionAlias
+  SubscriptionAliasResponseProperties: SubscriptionAliasProperties
+  Workload: SubscriptionWorkload
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -49,4 +71,17 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  # Exists on ArmResource as GetAvailableLocationsGetSubscription
+  - remove-operation: 'Subscriptions_ListLocations'
+  # Exists on ArmResource as GetSubscription
+  - remove-operation: 'Subscriptions_Get'
+  # Exists on ArmResource as GetSubscriptions
+  - remove-operation: 'Subscriptions_List'
+  # Exists on ArmResource as GetTenants
+  - remove-operation: 'Tenants_List'
+  - from: swagger-document
+    where: $.definitions.PutAliasRequest
+    transform: >
+      $.properties.properties['x-ms-client-flatten'] = true;
 ```

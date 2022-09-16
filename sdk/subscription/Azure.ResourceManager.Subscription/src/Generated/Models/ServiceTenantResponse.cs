@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary> Billing account service tenant. </summary>
+    /// <summary>
+    /// Billing account service tenant.
+    /// Serialized Name: ServiceTenantResponse
+    /// </summary>
     public partial class ServiceTenantResponse
     {
         /// <summary> Initializes a new instance of ServiceTenantResponse. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of ServiceTenantResponse. </summary>
-        /// <param name="tenantId"> Service tenant id. </param>
-        /// <param name="tenantName"> Service tenant name. </param>
+        /// <param name="tenantId">
+        /// Service tenant id.
+        /// Serialized Name: ServiceTenantResponse.tenantId
+        /// </param>
+        /// <param name="tenantName">
+        /// Service tenant name.
+        /// Serialized Name: ServiceTenantResponse.tenantName
+        /// </param>
         internal ServiceTenantResponse(Guid? tenantId, string tenantName)
         {
             TenantId = tenantId;
             TenantName = tenantName;
         }
 
-        /// <summary> Service tenant id. </summary>
+        /// <summary>
+        /// Service tenant id.
+        /// Serialized Name: ServiceTenantResponse.tenantId
+        /// </summary>
         public Guid? TenantId { get; }
-        /// <summary> Service tenant name. </summary>
+        /// <summary>
+        /// Service tenant name.
+        /// Serialized Name: ServiceTenantResponse.tenantName
+        /// </summary>
         public string TenantName { get; }
     }
 }

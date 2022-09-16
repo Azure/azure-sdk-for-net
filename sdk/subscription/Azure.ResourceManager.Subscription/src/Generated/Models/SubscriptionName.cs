@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary> The new name of the subscription. </summary>
+    /// <summary>
+    /// The new name of the subscription.
+    /// Serialized Name: SubscriptionName
+    /// </summary>
     public partial class SubscriptionName
     {
         /// <summary> Initializes a new instance of SubscriptionName. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.Subscription.Models
         {
         }
 
-        /// <summary> New subscription name. </summary>
+        /// <summary>
+        /// New subscription name
+        /// Serialized Name: SubscriptionName.subscriptionName
+        /// </summary>
         public string SubscriptionNameValue { get; set; }
     }
 }

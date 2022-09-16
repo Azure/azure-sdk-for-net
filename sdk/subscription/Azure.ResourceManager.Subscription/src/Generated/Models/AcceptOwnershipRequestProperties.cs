@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary> Accept subscription ownership request properties. </summary>
+    /// <summary>
+    /// Accept subscription ownership request properties.
+    /// Serialized Name: AcceptOwnershipRequestProperties
+    /// </summary>
     public partial class AcceptOwnershipRequestProperties
     {
         /// <summary> Initializes a new instance of AcceptOwnershipRequestProperties. </summary>
-        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="displayName">
+        /// The friendly name of the subscription.
+        /// Serialized Name: AcceptOwnershipRequestProperties.displayName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public AcceptOwnershipRequestProperties(string displayName)
         {
@@ -28,11 +34,20 @@ namespace Azure.ResourceManager.Subscription.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The friendly name of the subscription. </summary>
+        /// <summary>
+        /// The friendly name of the subscription.
+        /// Serialized Name: AcceptOwnershipRequestProperties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Management group Id for the subscription. </summary>
+        /// <summary>
+        /// Management group Id for the subscription.
+        /// Serialized Name: AcceptOwnershipRequestProperties.managementGroupId
+        /// </summary>
         public string ManagementGroupId { get; set; }
-        /// <summary> Tags for the subscription. </summary>
+        /// <summary>
+        /// Tags for the subscription
+        /// Serialized Name: AcceptOwnershipRequestProperties.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

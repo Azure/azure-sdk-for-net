@@ -11,27 +11,42 @@ using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary> The list of aliases. </summary>
+    /// <summary>
+    /// The list of aliases.
+    /// Serialized Name: SubscriptionAliasListResult
+    /// </summary>
     internal partial class SubscriptionAliasListResult
     {
         /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>
         internal SubscriptionAliasListResult()
         {
-            Value = new ChangeTrackingList<SubscriptionAliasResponseData>();
+            Value = new ChangeTrackingList<SubscriptionAliasData>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>
-        /// <param name="value"> The list of alias. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal SubscriptionAliasListResult(IReadOnlyList<SubscriptionAliasResponseData> value, string nextLink)
+        /// <param name="value">
+        /// The list of alias.
+        /// Serialized Name: SubscriptionAliasListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: SubscriptionAliasListResult.nextLink
+        /// </param>
+        internal SubscriptionAliasListResult(IReadOnlyList<SubscriptionAliasData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of alias. </summary>
-        public IReadOnlyList<SubscriptionAliasResponseData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The list of alias.
+        /// Serialized Name: SubscriptionAliasListResult.value
+        /// </summary>
+        public IReadOnlyList<SubscriptionAliasData> Value { get; }
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: SubscriptionAliasListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
