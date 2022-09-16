@@ -24,19 +24,13 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Tenant policy properties.
-        /// Serialized Name: GetTenantPolicyResponse.properties
-        /// </param>
+        /// <param name="properties"> Tenant policy properties. </param>
         internal TenantPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TenantPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Tenant policy properties.
-        /// Serialized Name: GetTenantPolicyResponse.properties
-        /// </summary>
+        /// <summary> Tenant policy properties. </summary>
         public TenantPolicyProperties Properties { get; }
     }
 }

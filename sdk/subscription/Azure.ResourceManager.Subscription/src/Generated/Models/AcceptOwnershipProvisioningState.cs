@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The provisioning state of the resource.
-    /// Serialized Name: Provisioning
-    /// </summary>
+    /// <summary> The provisioning state of the resource. </summary>
     public readonly partial struct AcceptOwnershipProvisioningState : IEquatable<AcceptOwnershipProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Subscription.Models
         private const string AcceptedValue = "Accepted";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: Provisioning.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static AcceptOwnershipProvisioningState Pending { get; } = new AcceptOwnershipProvisioningState(PendingValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: Provisioning.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static AcceptOwnershipProvisioningState Accepted { get; } = new AcceptOwnershipProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: Provisioning.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static AcceptOwnershipProvisioningState Succeeded { get; } = new AcceptOwnershipProvisioningState(SucceededValue);
         /// <summary> Determines if two <see cref="AcceptOwnershipProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AcceptOwnershipProvisioningState left, AcceptOwnershipProvisioningState right) => left.Equals(right);

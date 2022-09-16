@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// Put tenant policy request properties.
-    /// Serialized Name: PutTenantPolicyRequestProperties
-    /// </summary>
+    /// <summary> Put tenant policy request properties. </summary>
     public partial class TenantPolicyCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of TenantPolicyCreateOrUpdateContent. </summary>
@@ -23,20 +20,11 @@ namespace Azure.ResourceManager.Subscription.Models
             ExemptedPrincipals = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary>
-        /// Blocks the leaving of subscriptions from user&apos;s tenant.
-        /// Serialized Name: PutTenantPolicyRequestProperties.blockSubscriptionsLeavingTenant
-        /// </summary>
+        /// <summary> Blocks the leaving of subscriptions from user&apos;s tenant. </summary>
         public bool? BlockSubscriptionsLeavingTenant { get; set; }
-        /// <summary>
-        /// Blocks the entering of subscriptions into user&apos;s tenant.
-        /// Serialized Name: PutTenantPolicyRequestProperties.blockSubscriptionsIntoTenant
-        /// </summary>
+        /// <summary> Blocks the entering of subscriptions into user&apos;s tenant. </summary>
         public bool? BlockSubscriptionsIntoTenant { get; set; }
-        /// <summary>
-        /// List of user objectIds that are exempted from the set subscription tenant policies for the user&apos;s tenant.
-        /// Serialized Name: PutTenantPolicyRequestProperties.exemptedPrincipals
-        /// </summary>
+        /// <summary> List of user objectIds that are exempted from the set subscription tenant policies for the user&apos;s tenant. </summary>
         public IList<Guid> ExemptedPrincipals { get; }
     }
 }

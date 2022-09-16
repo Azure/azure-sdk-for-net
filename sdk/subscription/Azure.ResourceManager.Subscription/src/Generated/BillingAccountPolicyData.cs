@@ -24,19 +24,13 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Billing account policies response properties.
-        /// Serialized Name: BillingAccountPoliciesResponse.properties
-        /// </param>
+        /// <param name="properties"> Billing account policies response properties. </param>
         internal BillingAccountPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Billing account policies response properties.
-        /// Serialized Name: BillingAccountPoliciesResponse.properties
-        /// </summary>
+        /// <summary> Billing account policies response properties. </summary>
         public BillingAccountPolicyProperties Properties { get; }
     }
 }

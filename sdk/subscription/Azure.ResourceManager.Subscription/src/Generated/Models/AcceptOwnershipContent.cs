@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The parameters required to accept subscription ownership.
-    /// Serialized Name: AcceptOwnershipRequest
-    /// </summary>
+    /// <summary> The parameters required to accept subscription ownership. </summary>
     public partial class AcceptOwnershipContent
     {
         /// <summary> Initializes a new instance of AcceptOwnershipContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.Subscription.Models
         {
         }
 
-        /// <summary>
-        /// Accept subscription ownership request properties.
-        /// Serialized Name: AcceptOwnershipRequest.properties
-        /// </summary>
+        /// <summary> Accept subscription ownership request properties. </summary>
         public AcceptOwnershipRequestProperties Properties { get; set; }
     }
 }

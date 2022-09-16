@@ -11,10 +11,7 @@ using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// Tenant policy information list.
-    /// Serialized Name: GetTenantPolicyListResponse
-    /// </summary>
+    /// <summary> Tenant policy information list. </summary>
     internal partial class TenantPoliciesResult
     {
         /// <summary> Initializes a new instance of TenantPoliciesResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of TenantPoliciesResult. </summary>
-        /// <param name="value">
-        /// The list of tenant policies.
-        /// Serialized Name: GetTenantPolicyListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: GetTenantPolicyListResponse.nextLink
-        /// </param>
+        /// <param name="value"> The list of tenant policies. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal TenantPoliciesResult(IReadOnlyList<TenantPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of tenant policies.
-        /// Serialized Name: GetTenantPolicyListResponse.value
-        /// </summary>
+        /// <summary> The list of tenant policies. </summary>
         public IReadOnlyList<TenantPolicyData> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: GetTenantPolicyListResponse.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The ID of the subscriptions that is being renamed
-    /// Serialized Name: RenamedSubscriptionId
-    /// </summary>
+    /// <summary> The ID of the subscriptions that is being renamed. </summary>
     public partial class RenamedSubscriptionId
     {
         /// <summary> Initializes a new instance of RenamedSubscriptionId. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of RenamedSubscriptionId. </summary>
-        /// <param name="subscriptionId">
-        /// The ID of the subscriptions that is being renamed
-        /// Serialized Name: RenamedSubscriptionId.subscriptionId
-        /// </param>
+        /// <param name="subscriptionId"> The ID of the subscriptions that is being renamed. </param>
         internal RenamedSubscriptionId(string subscriptionId)
         {
             SubscriptionId = subscriptionId;
         }
 
-        /// <summary>
-        /// The ID of the subscriptions that is being renamed
-        /// Serialized Name: RenamedSubscriptionId.subscriptionId
-        /// </summary>
+        /// <summary> The ID of the subscriptions that is being renamed. </summary>
         public string SubscriptionId { get; }
     }
 }

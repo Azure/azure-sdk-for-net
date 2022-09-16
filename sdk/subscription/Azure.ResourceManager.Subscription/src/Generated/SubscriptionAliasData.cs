@@ -24,19 +24,13 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Subscription Alias response properties.
-        /// Serialized Name: SubscriptionAliasResponse.properties
-        /// </param>
+        /// <param name="properties"> Subscription Alias response properties. </param>
         internal SubscriptionAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionAliasProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Subscription Alias response properties.
-        /// Serialized Name: SubscriptionAliasResponse.properties
-        /// </summary>
+        /// <summary> Subscription Alias response properties. </summary>
         public SubscriptionAliasProperties Properties { get; }
     }
 }

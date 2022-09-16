@@ -10,42 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// Put billing account policies response properties.
-    /// Serialized Name: BillingAccountPoliciesResponseProperties
-    /// </summary>
+    /// <summary> Put billing account policies response properties. </summary>
     public partial class BillingAccountPolicyProperties
     {
         /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>
         internal BillingAccountPolicyProperties()
         {
-            ServiceTenants = new ChangeTrackingList<ServiceTenantResponse>();
+            ServiceTenants = new ChangeTrackingList<ServiceTenant>();
         }
 
         /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>
-        /// <param name="serviceTenants">
-        /// Service tenant for the billing account.
-        /// Serialized Name: BillingAccountPoliciesResponseProperties.serviceTenants
-        /// </param>
-        /// <param name="allowTransfers">
-        /// Determine if the transfers are allowed for the billing account
-        /// Serialized Name: BillingAccountPoliciesResponseProperties.allowTransfers
-        /// </param>
-        internal BillingAccountPolicyProperties(IReadOnlyList<ServiceTenantResponse> serviceTenants, bool? allowTransfers)
+        /// <param name="serviceTenants"> Service tenant for the billing account. </param>
+        /// <param name="allowTransfers"> Determine if the transfers are allowed for the billing account. </param>
+        internal BillingAccountPolicyProperties(IReadOnlyList<ServiceTenant> serviceTenants, bool? allowTransfers)
         {
             ServiceTenants = serviceTenants;
             AllowTransfers = allowTransfers;
         }
 
-        /// <summary>
-        /// Service tenant for the billing account.
-        /// Serialized Name: BillingAccountPoliciesResponseProperties.serviceTenants
-        /// </summary>
-        public IReadOnlyList<ServiceTenantResponse> ServiceTenants { get; }
-        /// <summary>
-        /// Determine if the transfers are allowed for the billing account
-        /// Serialized Name: BillingAccountPoliciesResponseProperties.allowTransfers
-        /// </summary>
+        /// <summary> Service tenant for the billing account. </summary>
+        public IReadOnlyList<ServiceTenant> ServiceTenants { get; }
+        /// <summary> Determine if the transfers are allowed for the billing account. </summary>
         public bool? AllowTransfers { get; }
     }
 }

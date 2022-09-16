@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The ID of the subscriptions that is being enabled
-    /// Serialized Name: EnabledSubscriptionId
-    /// </summary>
+    /// <summary> The ID of the subscriptions that is being enabled. </summary>
     public partial class EnabledSubscriptionId
     {
         /// <summary> Initializes a new instance of EnabledSubscriptionId. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of EnabledSubscriptionId. </summary>
-        /// <param name="subscriptionId">
-        /// The ID of the subscriptions that is being enabled
-        /// Serialized Name: EnabledSubscriptionId.subscriptionId
-        /// </param>
+        /// <param name="subscriptionId"> The ID of the subscriptions that is being enabled. </param>
         internal EnabledSubscriptionId(string subscriptionId)
         {
             SubscriptionId = subscriptionId;
         }
 
-        /// <summary>
-        /// The ID of the subscriptions that is being enabled
-        /// Serialized Name: EnabledSubscriptionId.subscriptionId
-        /// </summary>
+        /// <summary> The ID of the subscriptions that is being enabled. </summary>
         public string SubscriptionId { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// Subscription Accept Ownership Response
-    /// Serialized Name: AcceptOwnershipStatusResponse
-    /// </summary>
+    /// <summary> Subscription Accept Ownership Response. </summary>
     public partial class AcceptOwnershipStatus
     {
         /// <summary> Initializes a new instance of AcceptOwnershipStatus. </summary>
@@ -24,34 +21,13 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of AcceptOwnershipStatus. </summary>
-        /// <param name="subscriptionId">
-        /// Newly created subscription Id.
-        /// Serialized Name: AcceptOwnershipStatusResponse.subscriptionId
-        /// </param>
-        /// <param name="acceptOwnershipState">
-        /// The accept ownership state of the resource.
-        /// Serialized Name: AcceptOwnershipStatusResponse.acceptOwnershipState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the resource.
-        /// Serialized Name: AcceptOwnershipStatusResponse.provisioningState
-        /// </param>
-        /// <param name="billingOwner">
-        /// UPN of the billing owner
-        /// Serialized Name: AcceptOwnershipStatusResponse.billingOwner
-        /// </param>
-        /// <param name="subscriptionTenantId">
-        /// Tenant Id of the subscription
-        /// Serialized Name: AcceptOwnershipStatusResponse.subscriptionTenantId
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the subscription.
-        /// Serialized Name: AcceptOwnershipStatusResponse.displayName
-        /// </param>
-        /// <param name="tags">
-        /// Tags for the subscription
-        /// Serialized Name: AcceptOwnershipStatusResponse.tags
-        /// </param>
+        /// <param name="subscriptionId"> Newly created subscription Id. </param>
+        /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="billingOwner"> UPN of the billing owner. </param>
+        /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
+        /// <param name="displayName"> The display name of the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
         internal AcceptOwnershipStatus(string subscriptionId, AcceptOwnershipState? acceptOwnershipState, AcceptOwnershipProvisioningState? provisioningState, string billingOwner, Guid? subscriptionTenantId, string displayName, IReadOnlyDictionary<string, string> tags)
         {
             SubscriptionId = subscriptionId;
@@ -63,40 +39,19 @@ namespace Azure.ResourceManager.Subscription.Models
             Tags = tags;
         }
 
-        /// <summary>
-        /// Newly created subscription Id.
-        /// Serialized Name: AcceptOwnershipStatusResponse.subscriptionId
-        /// </summary>
+        /// <summary> Newly created subscription Id. </summary>
         public string SubscriptionId { get; }
-        /// <summary>
-        /// The accept ownership state of the resource.
-        /// Serialized Name: AcceptOwnershipStatusResponse.acceptOwnershipState
-        /// </summary>
+        /// <summary> The accept ownership state of the resource. </summary>
         public AcceptOwnershipState? AcceptOwnershipState { get; }
-        /// <summary>
-        /// The provisioning state of the resource.
-        /// Serialized Name: AcceptOwnershipStatusResponse.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the resource. </summary>
         public AcceptOwnershipProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// UPN of the billing owner
-        /// Serialized Name: AcceptOwnershipStatusResponse.billingOwner
-        /// </summary>
+        /// <summary> UPN of the billing owner. </summary>
         public string BillingOwner { get; }
-        /// <summary>
-        /// Tenant Id of the subscription
-        /// Serialized Name: AcceptOwnershipStatusResponse.subscriptionTenantId
-        /// </summary>
+        /// <summary> Tenant Id of the subscription. </summary>
         public Guid? SubscriptionTenantId { get; }
-        /// <summary>
-        /// The display name of the subscription.
-        /// Serialized Name: AcceptOwnershipStatusResponse.displayName
-        /// </summary>
+        /// <summary> The display name of the subscription. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Tags for the subscription
-        /// Serialized Name: AcceptOwnershipStatusResponse.tags
-        /// </summary>
+        /// <summary> Tags for the subscription. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

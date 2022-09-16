@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class ServiceTenantResponse
+    public partial class ServiceTenant
     {
-        internal static ServiceTenantResponse DeserializeServiceTenantResponse(JsonElement element)
+        internal static ServiceTenant DeserializeServiceTenant(JsonElement element)
         {
             Optional<Guid> tenantId = default;
             Optional<string> tenantName = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new ServiceTenantResponse(Optional.ToNullable(tenantId), tenantName.Value);
+            return new ServiceTenant(Optional.ToNullable(tenantId), tenantName.Value);
         }
     }
 }

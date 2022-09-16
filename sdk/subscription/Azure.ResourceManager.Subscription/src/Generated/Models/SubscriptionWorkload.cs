@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The workload type of the subscription. It can be either Production or DevTest.
-    /// Serialized Name: Workload
-    /// </summary>
+    /// <summary> The workload type of the subscription. It can be either Production or DevTest. </summary>
     public readonly partial struct SubscriptionWorkload : IEquatable<SubscriptionWorkload>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Subscription.Models
         private const string ProductionValue = "Production";
         private const string DevTestValue = "DevTest";
 
-        /// <summary>
-        /// Production
-        /// Serialized Name: Workload.Production
-        /// </summary>
+        /// <summary> Production. </summary>
         public static SubscriptionWorkload Production { get; } = new SubscriptionWorkload(ProductionValue);
-        /// <summary>
-        /// DevTest
-        /// Serialized Name: Workload.DevTest
-        /// </summary>
+        /// <summary> DevTest. </summary>
         public static SubscriptionWorkload DevTest { get; } = new SubscriptionWorkload(DevTestValue);
         /// <summary> Determines if two <see cref="SubscriptionWorkload"/> values are the same. </summary>
         public static bool operator ==(SubscriptionWorkload left, SubscriptionWorkload right) => left.Equals(right);

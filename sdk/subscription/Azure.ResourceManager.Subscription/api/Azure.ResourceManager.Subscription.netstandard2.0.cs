@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal BillingAccountPolicyProperties() { }
         public bool? AllowTransfers { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Subscription.Models.ServiceTenantResponse> ServiceTenants { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Subscription.Models.ServiceTenant> ServiceTenants { get { throw null; } }
     }
     public partial class CanceledSubscriptionId
     {
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.Subscription.Models
         internal RenamedSubscriptionId() { }
         public string SubscriptionId { get { throw null; } }
     }
-    public partial class ServiceTenantResponse
+    public partial class ServiceTenant
     {
-        internal ServiceTenantResponse() { }
+        internal ServiceTenant() { }
         public System.Guid? TenantId { get { throw null; } }
         public string TenantName { get { throw null; } }
     }

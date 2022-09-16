@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The provisioning state of the resource.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state of the resource. </summary>
     public readonly partial struct SubscriptionProvisioningState : IEquatable<SubscriptionProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Subscription.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static SubscriptionProvisioningState Accepted { get; } = new SubscriptionProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static SubscriptionProvisioningState Succeeded { get; } = new SubscriptionProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static SubscriptionProvisioningState Failed { get; } = new SubscriptionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="SubscriptionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SubscriptionProvisioningState left, SubscriptionProvisioningState right) => left.Equals(right);

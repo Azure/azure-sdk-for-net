@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// Put subscription additional properties.
-    /// Serialized Name: PutAliasRequestAdditionalProperties
-    /// </summary>
+    /// <summary> Put subscription additional properties. </summary>
     public partial class SubscriptionAliasAdditionalProperties
     {
         /// <summary> Initializes a new instance of SubscriptionAliasAdditionalProperties. </summary>
@@ -23,25 +20,13 @@ namespace Azure.ResourceManager.Subscription.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Management group Id for the subscription.
-        /// Serialized Name: PutAliasRequestAdditionalProperties.managementGroupId
-        /// </summary>
+        /// <summary> Management group Id for the subscription. </summary>
         public string ManagementGroupId { get; set; }
-        /// <summary>
-        /// Tenant Id of the subscription
-        /// Serialized Name: PutAliasRequestAdditionalProperties.subscriptionTenantId
-        /// </summary>
+        /// <summary> Tenant Id of the subscription. </summary>
         public Guid? SubscriptionTenantId { get; set; }
-        /// <summary>
-        /// Owner Id of the subscription
-        /// Serialized Name: PutAliasRequestAdditionalProperties.subscriptionOwnerId
-        /// </summary>
+        /// <summary> Owner Id of the subscription. </summary>
         public string SubscriptionOwnerId { get; set; }
-        /// <summary>
-        /// Tags for the subscription
-        /// Serialized Name: PutAliasRequestAdditionalProperties.tags
-        /// </summary>
+        /// <summary> Tags for the subscription. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

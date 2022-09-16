@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceTenantResponse>> serviceTenants = default;
+            Optional<IReadOnlyList<ServiceTenant>> serviceTenants = default;
             Optional<bool> allowTransfers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Subscription.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceTenantResponse> array = new List<ServiceTenantResponse>();
+                    List<ServiceTenant> array = new List<ServiceTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTenantResponse.DeserializeServiceTenantResponse(item));
+                        array.Add(ServiceTenant.DeserializeServiceTenant(item));
                     }
                     serviceTenants = array;
                     continue;

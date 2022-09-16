@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The ID of the canceled subscription
-    /// Serialized Name: CanceledSubscriptionId
-    /// </summary>
+    /// <summary> The ID of the canceled subscription. </summary>
     public partial class CanceledSubscriptionId
     {
         /// <summary> Initializes a new instance of CanceledSubscriptionId. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Subscription.Models
         }
 
         /// <summary> Initializes a new instance of CanceledSubscriptionId. </summary>
-        /// <param name="subscriptionId">
-        /// The ID of the canceled subscription
-        /// Serialized Name: CanceledSubscriptionId.subscriptionId
-        /// </param>
+        /// <param name="subscriptionId"> The ID of the canceled subscription. </param>
         internal CanceledSubscriptionId(string subscriptionId)
         {
             SubscriptionId = subscriptionId;
         }
 
-        /// <summary>
-        /// The ID of the canceled subscription
-        /// Serialized Name: CanceledSubscriptionId.subscriptionId
-        /// </summary>
+        /// <summary> The ID of the canceled subscription. </summary>
         public string SubscriptionId { get; }
     }
 }

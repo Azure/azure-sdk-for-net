@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary>
-    /// The accept ownership state of the resource.
-    /// Serialized Name: AcceptOwnership
-    /// </summary>
+    /// <summary> The accept ownership state of the resource. </summary>
     public readonly partial struct AcceptOwnershipState : IEquatable<AcceptOwnershipState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Subscription.Models
         private const string CompletedValue = "Completed";
         private const string ExpiredValue = "Expired";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: AcceptOwnership.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static AcceptOwnershipState Pending { get; } = new AcceptOwnershipState(PendingValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: AcceptOwnership.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static AcceptOwnershipState Completed { get; } = new AcceptOwnershipState(CompletedValue);
-        /// <summary>
-        /// Expired
-        /// Serialized Name: AcceptOwnership.Expired
-        /// </summary>
+        /// <summary> Expired. </summary>
         public static AcceptOwnershipState Expired { get; } = new AcceptOwnershipState(ExpiredValue);
         /// <summary> Determines if two <see cref="AcceptOwnershipState"/> values are the same. </summary>
         public static bool operator ==(AcceptOwnershipState left, AcceptOwnershipState right) => left.Equals(right);

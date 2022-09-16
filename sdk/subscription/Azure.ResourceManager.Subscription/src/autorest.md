@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 list-exception:
   - /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
 
@@ -42,6 +39,7 @@ rename-mapping:
   PutAliasRequestAdditionalProperties: SubscriptionAliasAdditionalProperties
   SubscriptionAliasResponse: SubscriptionAlias
   SubscriptionAliasResponseProperties: SubscriptionAliasProperties
+  ServiceTenantResponse: ServiceTenant
   Workload: SubscriptionWorkload
 
 format-by-name-rules:
