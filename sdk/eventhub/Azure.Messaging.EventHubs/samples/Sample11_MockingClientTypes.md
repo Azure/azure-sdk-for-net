@@ -110,7 +110,7 @@ foreach (EventData eventData in backingList)
 Assert.AreEqual(backingList.Count, sourceEvents.Count);
 ```
 
-## Mocking access to the properties of an `EventHubProducerClient`
+## Reading Event Hub properties with an `EventHubProducerClient`
 
 Many applications make decisions for publishing based on the properties of the Event Hub itself or the properties of its partitions. Both can be mocked using the `EventHubsModelFactory`. The following example demonstrates how to mock an `EventHubProducerClient` that is publishing to an Event Hub with a set of two partitions with different ownership levels.
 
