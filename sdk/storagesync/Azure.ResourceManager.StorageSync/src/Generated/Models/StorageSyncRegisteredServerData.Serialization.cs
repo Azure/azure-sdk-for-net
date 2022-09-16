@@ -23,7 +23,11 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(ServerCertificate))
             {
                 writer.WritePropertyName("serverCertificate");
-                writer.WriteStringValue(ServerCertificate);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServerCertificate);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServerCertificate.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AgentVersion))
             {
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.StorageSync
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> serverCertificate = default;
+            Optional<BinaryData> serverCertificate = default;
             Optional<string> agentVersion = default;
             Optional<RegisteredServerAgentVersionStatus> agentVersionStatus = default;
             Optional<DateTimeOffset> agentVersionExpirationDate = default;
@@ -191,7 +195,12 @@ namespace Azure.ResourceManager.StorageSync
                     {
                         if (property0.NameEquals("serverCertificate"))
                         {
-                            serverCertificate = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serverCertificate = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("agentVersion"))

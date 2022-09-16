@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StorageSync
         public System.Uri MonitoringEndpointUri { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
         public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
-        public string ServerCertificate { get { throw null; } set { } }
+        public System.BinaryData ServerCertificate { get { throw null; } set { } }
         public System.Guid? ServerId { get { throw null; } set { } }
         public int? ServerManagementErrorCode { get { throw null; } set { } }
         public string ServerName { get { throw null; } }
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public string ClusterName { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public string LastHeartbeat { get { throw null; } set { } }
-        public string ServerCertificate { get { throw null; } set { } }
+        public System.BinaryData ServerCertificate { get { throw null; } set { } }
         public System.Guid? ServerId { get { throw null; } set { } }
         public string ServerOSVersion { get { throw null; } set { } }
         public string ServerRole { get { throw null; } set { } }
@@ -1015,6 +1015,6 @@ namespace Azure.ResourceManager.StorageSync.Models
     public partial class TriggerRolloverContent
     {
         public TriggerRolloverContent() { }
-        public string ServerCertificate { get { throw null; } set { } }
+        public System.BinaryData ServerCertificate { get { throw null; } set { } }
     }
 }

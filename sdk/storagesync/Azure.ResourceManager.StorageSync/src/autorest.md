@@ -31,6 +31,7 @@ format-by-name-rules:
   'storageSyncServiceUid': 'uuid'
   'uniqueId': 'uuid'
   'lastOperationId': 'uuid'
+  'serverCertificate': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -98,16 +99,6 @@ override-operation-name:
 directive:
   - remove-operation: OperationStatus_Get
   - remove-operation: LocationOperationStatus
-  - from: storagesync.json
-    where: $.definitions.CheckNameAvailabilityParameters.properties.type['x-ms-enum']
-    transform: >
-      $.values =
-      [
-        {
-          value: 'Microsoft.StorageSync/storageSyncServices',
-          name: 'StorageSyncServices'
-        }
-      ];
   - from: storagesync.json
     where: $.definitions..lastUpdatedTimestamp
     transform: >

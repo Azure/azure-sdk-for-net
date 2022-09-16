@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="clusterName"> Registered Server clusterName. </param>
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
-        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName) : base(id, name, resourceType, systemData)
+        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -46,8 +46,37 @@ namespace Azure.ResourceManager.StorageSync.Models
             FriendlyName = friendlyName;
         }
 
-        /// <summary> Registered Server Certificate. </summary>
-        public string ServerCertificate { get; set; }
+        /// <summary>
+        /// Registered Server Certificate
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ServerCertificate { get; set; }
         /// <summary> Registered Server Agent Version. </summary>
         public string AgentVersion { get; set; }
         /// <summary> Registered Server OS Version. </summary>
