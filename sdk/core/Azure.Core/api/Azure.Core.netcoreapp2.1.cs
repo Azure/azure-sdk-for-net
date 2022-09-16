@@ -995,7 +995,7 @@ namespace Azure.Core.Pipeline
     }
     public abstract partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        public RetryPolicy(Azure.Core.RetryOptions options) { }
+        protected RetryPolicy(Azure.Core.RetryOptions options) { }
         protected virtual System.TimeSpan CalculateNextDelay(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> CalculateNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
         protected virtual void OnResponse(Azure.Core.HttpMessage message) { }
