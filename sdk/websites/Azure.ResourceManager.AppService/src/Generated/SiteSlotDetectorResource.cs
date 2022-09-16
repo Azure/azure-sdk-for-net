@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new virtual async Task<Response<SiteSlotDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken);
+            var value = await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SiteSlotDetectorResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>

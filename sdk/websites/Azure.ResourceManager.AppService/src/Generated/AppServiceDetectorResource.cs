@@ -137,9 +137,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="startTime"> The start time for detector response. </param>
+        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="timeGrain"> The time grain for the detector response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<AppServiceDetectorResource>> GetCoreAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
@@ -147,12 +152,17 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<Response<AppServiceDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken);
+            return await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="startTime"> The start time for detector response. </param>
+        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="timeGrain"> The time grain for the detector response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<AppServiceDetectorResource> GetCore(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>

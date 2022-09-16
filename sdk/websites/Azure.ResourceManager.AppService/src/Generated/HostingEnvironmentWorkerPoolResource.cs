@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<WorkerPoolResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((HostingEnvironmentWorkerPoolResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<WorkerPoolResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
             return Response.FromValue((HostingEnvironmentWorkerPoolResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(data, cancellationToken);
+            var value = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((HostingEnvironmentWorkerPoolResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
