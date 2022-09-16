@@ -12,6 +12,7 @@ namespace Azure.Monitor.Ingestion
     {
         /// <summary>
         /// The serializer to use to convert the log objects to JSON.
+        /// <remarks> Default Serializer is System.Text.Json. </remarks>
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
 

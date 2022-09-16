@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -17,16 +18,21 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             CompareBodies = false; //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30865
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
-        private LogsIngestionClient CreateClient()
+        private LogsIngestionClient CreateClient(HttpPipelinePolicy policy = null)
         {
-            var clientOptions = InstrumentClientOptions(new LogsIngestionClientOptions());
+            var options = new LogsIngestionClientOptions();
+            if (policy != null)
+            {
+                options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            }
+            var clientOptions = InstrumentClientOptions(options);
             return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, clientOptions));
         }
 
@@ -77,6 +83,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.AreEqual(0, response.Value.Errors.Count());
         }
 
         private static List<Object> GenerateEntries(int numEntries, DateTime recordingNow)
@@ -105,6 +112,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.AreEqual(0, response.Value.Errors.Count());
         }
 
         [Test]
@@ -145,6 +153,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.AreEqual(0, response.Value.Errors.Count());
         }
 
         [LiveOnly]
@@ -160,17 +169,40 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
         }
 
+        [AsyncOnly]
         [Test]
-        public async Task ConcurrenyMultiThread()
+        public async Task ConcurrencyMultiThread()
         {
-            LogsIngestionClient client = CreateClient();
+            var policy = new ConcurrencyCounterPolicy();
+            LogsIngestionClient client = CreateClient(policy);
 
             // Make the request
-            //UploadLogsOptions options = new UploadLogsOptions(5);
-            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false);
+            UploadLogsOptions options = new UploadLogsOptions();
+            options.MaxConcurrency = 2;
+            // 20,000 entries makes 2 batches
+            var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(20000, Recording.Now.DateTime), options).ConfigureAwait(false);
+            Assert.Greater(policy.Count, 1);
+
+            var response = await tasks;
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.AreEqual(0, response.Value.Errors.Count());
+        }
+
+        [SyncOnly]
+        [Test]
+        public void ConcurrencySingleThread()
+        {
+            var policy = new ConcurrencyCounterPolicy();
+            LogsIngestionClient client = CreateClient(policy);
+            // 20,000 entries makes 2 batches
+            var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(20000, Recording.Now.DateTime));
+            Assert.AreEqual(policy.Count, 0); // 2 batches uploaded in Sequence
+
+            // Check the response
+            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.AreEqual(0, response.Value.Errors.Count());
         }
     }
 }

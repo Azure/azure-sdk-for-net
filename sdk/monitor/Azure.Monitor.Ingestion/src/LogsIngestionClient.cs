@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -101,11 +100,12 @@ namespace Azure.Monitor.Ingestion
             foreach (var log in logEntries)
             {
                 BinaryData entry;
-                //TODO: simplify if
+                // Default Serializer is System.Text.Json
                 if (options == null || options.Serializer == null)
                 {
                     entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
                 }
+                // Otherwise use Serializer specified in options
                 else
                 {
                     entry = options.Serializer.Serialize(log);
@@ -377,7 +377,7 @@ namespace Azure.Monitor.Ingestion
         private static UploadLogsStatus Status<T>(IEnumerable<T> logEntries, List<UploadLogsError> errors)
         {
             UploadLogsStatus status;
-            // errors holds the lists of all failed logs per batch so summing up these gives us the total number of failed logs
+            // Errors holds the lists of all failed logs per batch so summing up these gives us the total number of failed logs
             int totalLogsFailed = 0;
             foreach (var x in errors)
             {

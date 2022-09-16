@@ -11,19 +11,19 @@ namespace Azure.Monitor.Ingestion.Tests
 {
     internal class ConcurrencyCounterPolicy : HttpPipelinePolicy
     {
-        public volatile int count;
+        public volatile int Count;
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            Interlocked.Increment(ref count);
+            Interlocked.Increment(ref Count);
             ProcessNext(message, pipeline);
-            Interlocked.Decrement(ref count);
+            Interlocked.Decrement(ref Count);
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            Interlocked.Increment(ref count);
+            Interlocked.Increment(ref Count);
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            Interlocked.Decrement(ref count);
+            Interlocked.Decrement(ref Count);
         }
     }
 }
