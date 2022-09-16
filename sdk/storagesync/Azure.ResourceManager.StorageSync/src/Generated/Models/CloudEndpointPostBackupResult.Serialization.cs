@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class PostBackupResponse
+    public partial class CloudEndpointPostBackupResult
     {
-        internal static PostBackupResponse DeserializePostBackupResponse(JsonElement element)
+        internal static CloudEndpointPostBackupResult DeserializeCloudEndpointPostBackupResult(JsonElement element)
         {
             Optional<string> cloudEndpointName = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new PostBackupResponse(cloudEndpointName.Value);
+            return new CloudEndpointPostBackupResult(cloudEndpointName.Value);
         }
     }
 }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="completedTimestamp"> Timestamp when change enumeration completed. </param>
         /// <param name="namespaceFilesCount"> Count of files in the namespace. </param>
         /// <param name="namespaceDirectoriesCount"> Count of directories in the namespace. </param>
-        /// <param name="namespaceSizeBytes"> Namespace size in bytes. </param>
+        /// <param name="namespaceSizeInBytes"> Namespace size in bytes. </param>
         /// <param name="nextRunTimestamp"> Timestamp of when change enumeration is expected to run again. </param>
-        internal CloudEndpointLastChangeEnumerationStatus(DateTimeOffset? startedTimestamp, DateTimeOffset? completedTimestamp, long? namespaceFilesCount, long? namespaceDirectoriesCount, long? namespaceSizeBytes, DateTimeOffset? nextRunTimestamp)
+        internal CloudEndpointLastChangeEnumerationStatus(DateTimeOffset? startedTimestamp, DateTimeOffset? completedTimestamp, long? namespaceFilesCount, long? namespaceDirectoriesCount, long? namespaceSizeInBytes, DateTimeOffset? nextRunTimestamp)
         {
             StartedTimestamp = startedTimestamp;
             CompletedTimestamp = completedTimestamp;
             NamespaceFilesCount = namespaceFilesCount;
             NamespaceDirectoriesCount = namespaceDirectoriesCount;
-            NamespaceSizeBytes = namespaceSizeBytes;
+            NamespaceSizeInBytes = namespaceSizeInBytes;
             NextRunTimestamp = nextRunTimestamp;
         }
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Count of directories in the namespace. </summary>
         public long? NamespaceDirectoriesCount { get; }
         /// <summary> Namespace size in bytes. </summary>
-        public long? NamespaceSizeBytes { get; }
+        public long? NamespaceSizeInBytes { get; }
         /// <summary> Timestamp of when change enumeration is expected to run again. </summary>
         public DateTimeOffset? NextRunTimestamp { get; }
     }

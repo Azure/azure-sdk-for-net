@@ -16,15 +16,21 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-rename-mapping:
-  RestoreFileSpec.isdir: IsDirectory
-
 format-by-name-rules:
   'tenantId': 'uuid'
+  '*TenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'resourceLocation': 'azure-location'
+  'serviceLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*ResourceId': 'arm-id'
+  'clusterId': 'uuid'
+  'serverId': 'uuid'
+  'storageSyncServiceUid': 'uuid'
+  'uniqueId': 'uuid'
+  'lastOperationId': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -48,8 +54,48 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  HeartBeat: Heartbeat
+  Innererror: InnerError
+
+prepend-rp-prefix:
+  - Workflow
+  - WorkflowStatus
+  - FeatureStatus
+  - OperationDirection
+
+rename-mapping:
+  RestoreFileSpec.isdir: IsDirectory
+  CloudEndpoint.properties.backupEnabled: IsBackupEnabled
+  PostBackupResponse: CloudEndpointPostBackupResult
+  BackupRequest: CloudEndpointBackupContent
+  RegisteredServer.properties.agentVersionExpirationDate: AgentVersionExpireOn
+  SyncGroup: StorageSyncGroup
+  CheckNameAvailabilityParameters: StorageSyncNameAvailabilityContent
+  CheckNameAvailabilityResult: StorageSyncNameAvailabilityResult
+  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
+  NameAvailabilityReason: StorageSyncNameUnavailableReason
+  Type: StorageSyncResourceType
+  CloudEndpointChangeEnumerationActivity.totalSizeBytes: TotalSizeInBytes
+  CloudEndpointLastChangeEnumerationStatus.namespaceSizeBytes: NamespaceSizeInBytes
+  CloudTieringSpaceSavings.volumeSizeBytes: VolumeSizeInBytes
+  CloudTieringSpaceSavings.cachedSizeBytes: CachedSizeInBytes
+  CloudTieringSpaceSavings.spaceSavingsBytes: SpaceSavingsInBytes
+
+override-operation-name:
+  CloudEndpoints_restoreheartbeat: RestoreHeartbeat
 
 directive:
   - remove-operation: OperationStatus_Get
+  - remove-operation: LocationOperationStatus
+  - from: storagesync.json
+    where: $.definitions.CheckNameAvailabilityParameters.properties.type['x-ms-enum']
+    transform: >
+      $.values =
+      [
+        {
+          value: 'Microsoft.StorageSync/storageSyncServices',
+          name: 'StorageSyncServices'
+        }
+      ];
 
 ```

@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.StorageSync
     {
         private ClientDiagnostics _storageSyncServiceClientDiagnostics;
         private StorageSyncServicesRestOperations _storageSyncServiceRestClient;
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private MicrosoftStorageSyncRestOperations _defaultRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +37,6 @@ namespace Azure.ResourceManager.StorageSync
 
         private ClientDiagnostics StorageSyncServiceClientDiagnostics => _storageSyncServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncServiceResource.ResourceType.Namespace, Diagnostics);
         private StorageSyncServicesRestOperations StorageSyncServiceRestClient => _storageSyncServiceRestClient ??= new StorageSyncServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageSyncServiceResource.ResourceType));
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MicrosoftStorageSyncRestOperations DefaultRestClient => _defaultRestClient ??= new MicrosoftStorageSyncRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,7 +52,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityStorageSyncServiceAsync(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncNameAvailabilityResult>> CheckNameAvailabilityStorageSyncServiceAsync(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityStorageSyncService");
             scope.Start();
@@ -80,7 +76,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityStorageSyncService(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncNameAvailabilityResult> CheckNameAvailabilityStorageSyncService(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityStorageSyncService");
             scope.Start();
@@ -148,54 +144,6 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Get Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageSync/locations/{locationName}/operations/{operationId}
-        /// Operation Id: LocationOperationStatus
-        /// </summary>
-        /// <param name="locationName"> The desired region to obtain information from. </param>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LocationOperationStatus>> LocationOperationStatusAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.LocationOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await DefaultRestClient.LocationOperationStatusAsync(Id.SubscriptionId, locationName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageSync/locations/{locationName}/operations/{operationId}
-        /// Operation Id: LocationOperationStatus
-        /// </summary>
-        /// <param name="locationName"> The desired region to obtain information from. </param>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LocationOperationStatus> LocationOperationStatus(string locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.LocationOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = DefaultRestClient.LocationOperationStatus(Id.SubscriptionId, locationName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

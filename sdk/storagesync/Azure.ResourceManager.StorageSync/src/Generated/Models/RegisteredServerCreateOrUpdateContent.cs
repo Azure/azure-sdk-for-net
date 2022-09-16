@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -26,18 +27,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="serverCertificate"> Registered Server Certificate. </param>
         /// <param name="agentVersion"> Registered Server Agent Version. </param>
         /// <param name="serverOSVersion"> Registered Server OS Version. </param>
-        /// <param name="lastHeartBeat"> Registered Server last heart beat. </param>
+        /// <param name="lastHeartbeat"> Registered Server last heart beat. </param>
         /// <param name="serverRole"> Registered Server serverRole. </param>
         /// <param name="clusterId"> Registered Server clusterId. </param>
         /// <param name="clusterName"> Registered Server clusterName. </param>
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
-        internal RegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverCertificate, string agentVersion, string serverOSVersion, string lastHeartBeat, string serverRole, string clusterId, string clusterName, string serverId, string friendlyName) : base(id, name, resourceType, systemData)
+        internal RegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
             ServerOSVersion = serverOSVersion;
-            LastHeartBeat = lastHeartBeat;
+            LastHeartbeat = lastHeartbeat;
             ServerRole = serverRole;
             ClusterId = clusterId;
             ClusterName = clusterName;
@@ -52,15 +53,15 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Registered Server OS Version. </summary>
         public string ServerOSVersion { get; set; }
         /// <summary> Registered Server last heart beat. </summary>
-        public string LastHeartBeat { get; set; }
+        public string LastHeartbeat { get; set; }
         /// <summary> Registered Server serverRole. </summary>
         public string ServerRole { get; set; }
         /// <summary> Registered Server clusterId. </summary>
-        public string ClusterId { get; set; }
+        public Guid? ClusterId { get; set; }
         /// <summary> Registered Server clusterName. </summary>
         public string ClusterName { get; set; }
         /// <summary> Registered Server serverId. </summary>
-        public string ServerId { get; set; }
+        public Guid? ServerId { get; set; }
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
     }

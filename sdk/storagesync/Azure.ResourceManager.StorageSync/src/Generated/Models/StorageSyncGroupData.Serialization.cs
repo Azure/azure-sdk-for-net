@@ -10,49 +10,27 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.StorageSync.Models
+namespace Azure.ResourceManager.StorageSync
 {
-    public partial class CloudEndpointCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class StorageSyncGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
-            {
-                writer.WritePropertyName("storageAccountResourceId");
-                writer.WriteStringValue(StorageAccountResourceId);
-            }
-            if (Optional.IsDefined(AzureFileShareName))
-            {
-                writer.WritePropertyName("azureFileShareName");
-                writer.WriteStringValue(AzureFileShareName);
-            }
-            if (Optional.IsDefined(StorageAccountTenantId))
-            {
-                writer.WritePropertyName("storageAccountTenantId");
-                writer.WriteStringValue(StorageAccountTenantId.Value);
-            }
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName");
-                writer.WriteStringValue(FriendlyName);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CloudEndpointCreateOrUpdateContent DeserializeCloudEndpointCreateOrUpdateContent(JsonElement element)
+        internal static StorageSyncGroupData DeserializeStorageSyncGroupData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> azureFileShareName = default;
-            Optional<Guid> storageAccountTenantId = default;
-            Optional<string> friendlyName = default;
+            Optional<Guid> uniqueId = default;
+            Optional<string> syncGroupStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -89,41 +67,26 @@ namespace Azure.ResourceManager.StorageSync.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountResourceId"))
+                        if (property0.NameEquals("uniqueId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            uniqueId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("azureFileShareName"))
+                        if (property0.NameEquals("syncGroupStatus"))
                         {
-                            azureFileShareName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountTenantId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            storageAccountTenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("friendlyName"))
-                        {
-                            friendlyName = property0.Value.GetString();
+                            syncGroupStatus = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), friendlyName.Value);
+            return new StorageSyncGroupData(id, name, type, systemData.Value, Optional.ToNullable(uniqueId), syncGroupStatus.Value);
         }
     }
 }

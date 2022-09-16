@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Cloud Tiering. </summary>
-        public FeatureStatus? CloudTiering { get; set; }
+        public StorageSyncFeatureStatus? CloudTiering { get; set; }
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
         public int? VolumeFreeSpacePercent { get; set; }
         /// <summary> Tier files older than days. </summary>
         public int? TierFilesOlderThanDays { get; set; }
         /// <summary> Offline data transfer. </summary>
-        public FeatureStatus? OfflineDataTransfer { get; set; }
+        public StorageSyncFeatureStatus? OfflineDataTransfer { get; set; }
         /// <summary> Offline data transfer share name. </summary>
         public string OfflineDataTransferShareName { get; set; }
         /// <summary> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </summary>

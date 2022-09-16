@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkflowResource" /> and their operations.
-    /// Each <see cref="WorkflowResource" /> in the collection will belong to the same instance of <see cref="StorageSyncServiceResource" />.
-    /// To get a <see cref="WorkflowCollection" /> instance call the GetWorkflows method from an instance of <see cref="StorageSyncServiceResource" />.
+    /// A class representing a collection of <see cref="StorageSyncWorkflowResource" /> and their operations.
+    /// Each <see cref="StorageSyncWorkflowResource" /> in the collection will belong to the same instance of <see cref="StorageSyncServiceResource" />.
+    /// To get a <see cref="StorageSyncWorkflowCollection" /> instance call the GetStorageSyncWorkflows method from an instance of <see cref="StorageSyncServiceResource" />.
     /// </summary>
-    public partial class WorkflowCollection : ArmCollection, IEnumerable<WorkflowResource>, IAsyncEnumerable<WorkflowResource>
+    public partial class StorageSyncWorkflowCollection : ArmCollection, IEnumerable<StorageSyncWorkflowResource>, IAsyncEnumerable<StorageSyncWorkflowResource>
     {
-        private readonly ClientDiagnostics _workflowClientDiagnostics;
-        private readonly WorkflowsRestOperations _workflowRestClient;
+        private readonly ClientDiagnostics _storageSyncWorkflowWorkflowsClientDiagnostics;
+        private readonly WorkflowsRestOperations _storageSyncWorkflowWorkflowsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowCollection"/> class for mocking. </summary>
-        protected WorkflowCollection()
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncWorkflowCollection"/> class for mocking. </summary>
+        protected StorageSyncWorkflowCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncWorkflowCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageSyncWorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", WorkflowResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WorkflowResource.ResourceType, out string workflowApiVersion);
-            _workflowRestClient = new WorkflowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workflowApiVersion);
+            _storageSyncWorkflowWorkflowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncWorkflowResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageSyncWorkflowResource.ResourceType, out string storageSyncWorkflowWorkflowsApiVersion);
+            _storageSyncWorkflowWorkflowsRestClient = new WorkflowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncWorkflowWorkflowsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
-        public virtual async Task<Response<WorkflowResource>> GetAsync(string workflowId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncWorkflowResource>> GetAsync(string workflowId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
-            using var scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Get");
+            using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workflowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncWorkflowWorkflowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
-        public virtual Response<WorkflowResource> Get(string workflowId, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncWorkflowResource> Get(string workflowId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
-            using var scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Get");
+            using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Get");
             scope.Start();
             try
             {
-                var response = _workflowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken);
+                var response = _storageSyncWorkflowWorkflowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: Workflows_ListByStorageSyncService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageSyncWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageSyncWorkflowResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkflowResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StorageSyncWorkflowResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.GetAll");
+                using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workflowRestClient.ListByStorageSyncServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkflowResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _storageSyncWorkflowWorkflowsRestClient.ListByStorageSyncServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncWorkflowResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: Workflows_ListByStorageSyncService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageSyncWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageSyncWorkflowResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkflowResource> FirstPageFunc(int? pageSizeHint)
+            Page<StorageSyncWorkflowResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.GetAll");
+                using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workflowRestClient.ListByStorageSyncService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkflowResource(Client, value)), null, response.GetRawResponse());
+                    var response = _storageSyncWorkflowWorkflowsRestClient.ListByStorageSyncService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncWorkflowResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
-            using var scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Exists");
+            using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workflowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncWorkflowWorkflowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
-            using var scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Exists");
+            using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workflowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken: cancellationToken);
+                var response = _storageSyncWorkflowWorkflowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        IEnumerator<WorkflowResource> IEnumerable<WorkflowResource>.GetEnumerator()
+        IEnumerator<StorageSyncWorkflowResource> IEnumerable<StorageSyncWorkflowResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StorageSync
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WorkflowResource> IAsyncEnumerable<WorkflowResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<StorageSyncWorkflowResource> IAsyncEnumerable<StorageSyncWorkflowResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

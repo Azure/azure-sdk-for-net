@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Parameters for a check name availability request. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class StorageSyncNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of StorageSyncNameAvailabilityContent. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityContent(string name)
+        public StorageSyncNameAvailabilityContent(string name)
         {
             if (name == null)
             {
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             Name = name;
-            ResourceType = Type.MicrosoftStorageSyncStorageSyncServices;
+            ResourceType = StorageSyncResourceType.MicrosoftStorageSyncStorageSyncServices;
         }
 
         /// <summary> The name to check for availability. </summary>
         public string Name { get; }
         /// <summary> The resource type. Must be set to Microsoft.StorageSync/storageSyncServices. </summary>
-        public Type ResourceType { get; }
+        public StorageSyncResourceType ResourceType { get; }
     }
 }

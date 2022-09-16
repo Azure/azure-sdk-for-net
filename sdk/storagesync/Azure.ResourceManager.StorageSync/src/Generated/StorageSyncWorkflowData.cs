@@ -12,15 +12,15 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> A class representing the Workflow data model. </summary>
-    public partial class WorkflowData : ResourceData
+    /// <summary> A class representing the StorageSyncWorkflow data model. </summary>
+    public partial class StorageSyncWorkflowData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkflowData. </summary>
-        public WorkflowData()
+        /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>
+        public StorageSyncWorkflowData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkflowData. </summary>
+        /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="commandName"> workflow command name. </param>
         /// <param name="createdTimestamp"> workflow created timestamp. </param>
         /// <param name="lastStatusTimestamp"> workflow last status timestamp. </param>
-        internal WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastStepName, WorkflowStatus? status, OperationDirection? operation, string steps, string lastOperationId, string commandName, DateTimeOffset? createdTimestamp, DateTimeOffset? lastStatusTimestamp) : base(id, name, resourceType, systemData)
+        internal StorageSyncWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastStepName, StorageSyncWorkflowStatus? status, StorageSyncOperationDirection? operation, string steps, Guid? lastOperationId, string commandName, DateTimeOffset? createdTimestamp, DateTimeOffset? lastStatusTimestamp) : base(id, name, resourceType, systemData)
         {
             LastStepName = lastStepName;
             Status = status;
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> last step name. </summary>
         public string LastStepName { get; set; }
         /// <summary> workflow status. </summary>
-        public WorkflowStatus? Status { get; set; }
+        public StorageSyncWorkflowStatus? Status { get; set; }
         /// <summary> operation direction. </summary>
-        public OperationDirection? Operation { get; set; }
+        public StorageSyncOperationDirection? Operation { get; set; }
         /// <summary> workflow steps. </summary>
         public string Steps { get; set; }
         /// <summary> workflow last operation identifier. </summary>
-        public string LastOperationId { get; set; }
+        public Guid? LastOperationId { get; set; }
         /// <summary> workflow command name. </summary>
         public string CommandName { get; }
         /// <summary> workflow created timestamp. </summary>

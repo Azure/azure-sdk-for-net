@@ -10,16 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class BackupRequest : IUtf8JsonSerializable
+    public partial class StorageSyncNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureFileShare))
-            {
-                writer.WritePropertyName("azureFileShare");
-                writer.WriteStringValue(AzureFileShare);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(ResourceType.ToString());
             writer.WriteEndObject();
         }
     }

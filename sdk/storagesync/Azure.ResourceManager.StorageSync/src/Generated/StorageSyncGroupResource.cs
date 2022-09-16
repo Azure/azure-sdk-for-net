@@ -18,46 +18,46 @@ using Azure.ResourceManager.StorageSync.Models;
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A Class representing a SyncGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SyncGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSyncGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetSyncGroup method.
+    /// A Class representing a StorageSyncGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSyncGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetStorageSyncGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetStorageSyncGroup method.
     /// </summary>
-    public partial class SyncGroupResource : ArmResource
+    public partial class StorageSyncGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SyncGroupResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="StorageSyncGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _syncGroupClientDiagnostics;
-        private readonly SyncGroupsRestOperations _syncGroupRestClient;
-        private readonly SyncGroupData _data;
+        private readonly ClientDiagnostics _storageSyncGroupSyncGroupsClientDiagnostics;
+        private readonly SyncGroupsRestOperations _storageSyncGroupSyncGroupsRestClient;
+        private readonly StorageSyncGroupData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SyncGroupResource"/> class for mocking. </summary>
-        protected SyncGroupResource()
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncGroupResource"/> class for mocking. </summary>
+        protected StorageSyncGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SyncGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "StorageSyncGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SyncGroupResource(ArmClient client, SyncGroupData data) : this(client, data.Id)
+        internal StorageSyncGroupResource(ArmClient client, StorageSyncGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SyncGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SyncGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageSyncGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _syncGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string syncGroupApiVersion);
-            _syncGroupRestClient = new SyncGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, syncGroupApiVersion);
+            _storageSyncGroupSyncGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string storageSyncGroupSyncGroupsApiVersion);
+            _storageSyncGroupSyncGroupsRestClient = new SyncGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncGroupSyncGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageSync
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SyncGroupData Data
+        public virtual StorageSyncGroupData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageSync
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CloudEndpointResources in the SyncGroup. </summary>
+        /// <summary> Gets a collection of CloudEndpointResources in the StorageSyncGroup. </summary>
         /// <returns> An object representing collection of CloudEndpointResources and their operations over a CloudEndpointResource. </returns>
         public virtual CloudEndpointCollection GetCloudEndpoints()
         {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageSync
             return GetCloudEndpoints().Get(cloudEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerEndpointResources in the SyncGroup. </summary>
+        /// <summary> Gets a collection of ServerEndpointResources in the StorageSyncGroup. </summary>
         /// <returns> An object representing collection of ServerEndpointResources and their operations over a ServerEndpointResource. </returns>
         public virtual ServerEndpointCollection GetServerEndpoints()
         {
@@ -167,16 +167,16 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: SyncGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SyncGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Get");
+            using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _syncGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncGroupSyncGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SyncGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,16 +191,16 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: SyncGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SyncGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Get");
+            using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _syncGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _storageSyncGroupSyncGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SyncGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Delete");
+            using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _syncGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncGroupSyncGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new StorageSyncArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Delete");
+            using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _syncGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _storageSyncGroupSyncGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new StorageSyncArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -270,16 +270,16 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="content"> Sync Group Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SyncGroupResource>> UpdateAsync(WaitUntil waitUntil, SyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageSyncGroupResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Update");
+            using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _syncGroupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<SyncGroupResource>(Response.FromValue(new SyncGroupResource(Client, response), response.GetRawResponse()));
+                var response = await _storageSyncGroupSyncGroupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<StorageSyncGroupResource>(Response.FromValue(new StorageSyncGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -300,16 +300,16 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="content"> Sync Group Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SyncGroupResource> Update(WaitUntil waitUntil, SyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageSyncGroupResource> Update(WaitUntil waitUntil, StorageSyncGroupCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Update");
+            using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _syncGroupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<SyncGroupResource>(Response.FromValue(new SyncGroupResource(Client, response), response.GetRawResponse()));
+                var response = _storageSyncGroupSyncGroupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new StorageSyncArmOperation<StorageSyncGroupResource>(Response.FromValue(new StorageSyncGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

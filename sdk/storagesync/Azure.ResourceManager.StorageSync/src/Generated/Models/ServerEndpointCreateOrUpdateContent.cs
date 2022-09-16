@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="initialDownloadPolicy"> Policy for how namespace and files are recalled during FastDr. </param>
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
-        internal ServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, FeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, string serverResourceId, FeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy) : base(id, name, resourceType, systemData)
+        internal ServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Server Local path. </summary>
         public string ServerLocalPath { get; set; }
         /// <summary> Cloud Tiering. </summary>
-        public FeatureStatus? CloudTiering { get; set; }
+        public StorageSyncFeatureStatus? CloudTiering { get; set; }
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
         public int? VolumeFreeSpacePercent { get; set; }
         /// <summary> Tier files older than days. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Server Resource Id. </summary>
-        public string ServerResourceId { get; set; }
+        public ResourceIdentifier ServerResourceId { get; set; }
         /// <summary> Offline data transfer. </summary>
-        public FeatureStatus? OfflineDataTransfer { get; set; }
+        public StorageSyncFeatureStatus? OfflineDataTransfer { get; set; }
         /// <summary> Offline data transfer share name. </summary>
         public string OfflineDataTransferShareName { get; set; }
         /// <summary> Policy for how namespace and files are recalled during FastDr. </summary>

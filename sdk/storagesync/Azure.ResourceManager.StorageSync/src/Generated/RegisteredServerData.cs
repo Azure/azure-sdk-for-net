@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="serverCertificate"> Registered Server Certificate. </param>
         /// <param name="agentVersion"> Registered Server Agent Version. </param>
         /// <param name="agentVersionStatus"> Registered Server Agent Version Status. </param>
-        /// <param name="agentVersionExpirationOn"> Registered Server Agent Version Expiration Date. </param>
+        /// <param name="agentVersionExpireOn"> Registered Server Agent Version Expiration Date. </param>
         /// <param name="serverOSVersion"> Registered Server OS Version. </param>
         /// <param name="serverManagementErrorCode"> Registered Server Management Error Code. </param>
-        /// <param name="lastHeartBeat"> Registered Server last heart beat. </param>
+        /// <param name="lastHeartbeat"> Registered Server last heart beat. </param>
         /// <param name="provisioningState"> Registered Server Provisioning State. </param>
         /// <param name="serverRole"> Registered Server serverRole. </param>
         /// <param name="clusterId"> Registered Server clusterId. </param>
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="monitoringEndpointUri"> Telemetry Endpoint Uri. </param>
         /// <param name="monitoringConfiguration"> Monitoring Configuration. </param>
         /// <param name="serverName"> Server name. </param>
-        internal RegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpirationOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartBeat, string provisioningState, string serverRole, string clusterId, string clusterName, string serverId, string storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, string resourceLocation, string serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName) : base(id, name, resourceType, systemData)
+        internal RegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
             AgentVersionStatus = agentVersionStatus;
-            AgentVersionExpirationOn = agentVersionExpirationOn;
+            AgentVersionExpireOn = agentVersionExpireOn;
             ServerOSVersion = serverOSVersion;
             ServerManagementErrorCode = serverManagementErrorCode;
-            LastHeartBeat = lastHeartBeat;
+            LastHeartbeat = lastHeartbeat;
             ProvisioningState = provisioningState;
             ServerRole = serverRole;
             ClusterId = clusterId;
@@ -82,25 +82,25 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Registered Server Agent Version Status. </summary>
         public RegisteredServerAgentVersionStatus? AgentVersionStatus { get; }
         /// <summary> Registered Server Agent Version Expiration Date. </summary>
-        public DateTimeOffset? AgentVersionExpirationOn { get; }
+        public DateTimeOffset? AgentVersionExpireOn { get; }
         /// <summary> Registered Server OS Version. </summary>
         public string ServerOSVersion { get; set; }
         /// <summary> Registered Server Management Error Code. </summary>
         public int? ServerManagementErrorCode { get; set; }
         /// <summary> Registered Server last heart beat. </summary>
-        public string LastHeartBeat { get; set; }
+        public string LastHeartbeat { get; set; }
         /// <summary> Registered Server Provisioning State. </summary>
         public string ProvisioningState { get; set; }
         /// <summary> Registered Server serverRole. </summary>
         public string ServerRole { get; set; }
         /// <summary> Registered Server clusterId. </summary>
-        public string ClusterId { get; set; }
+        public Guid? ClusterId { get; set; }
         /// <summary> Registered Server clusterName. </summary>
         public string ClusterName { get; set; }
         /// <summary> Registered Server serverId. </summary>
-        public string ServerId { get; set; }
+        public Guid? ServerId { get; set; }
         /// <summary> Registered Server storageSyncServiceUid. </summary>
-        public string StorageSyncServiceUid { get; set; }
+        public Guid? StorageSyncServiceUid { get; set; }
         /// <summary> Registered Server lastWorkflowId. </summary>
         public string LastWorkflowId { get; set; }
         /// <summary> Resource Last Operation Name. </summary>
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Resource discoveryEndpointUri. </summary>
         public Uri DiscoveryEndpointUri { get; set; }
         /// <summary> Resource Location. </summary>
-        public string ResourceLocation { get; set; }
+        public AzureLocation? ResourceLocation { get; set; }
         /// <summary> Service Location. </summary>
-        public string ServiceLocation { get; set; }
+        public AzureLocation? ServiceLocation { get; set; }
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Management Endpoint Uri. </summary>

@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> serverLocalPath = default;
-            Optional<FeatureStatus> cloudTiering = default;
+            Optional<StorageSyncFeatureStatus> cloudTiering = default;
             Optional<int> volumeFreeSpacePercent = default;
             Optional<int> tierFilesOlderThanDays = default;
             Optional<string> friendlyName = default;
-            Optional<string> serverResourceId = default;
-            Optional<FeatureStatus> offlineDataTransfer = default;
+            Optional<ResourceIdentifier> serverResourceId = default;
+            Optional<StorageSyncFeatureStatus> offlineDataTransfer = default;
             Optional<string> offlineDataTransferShareName = default;
             Optional<InitialDownloadPolicy> initialDownloadPolicy = default;
             Optional<LocalCacheMode> localCacheMode = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cloudTiering = new FeatureStatus(property0.Value.GetString());
+                            cloudTiering = new StorageSyncFeatureStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("volumeFreeSpacePercent"))
@@ -172,7 +172,12 @@ namespace Azure.ResourceManager.StorageSync.Models
                         }
                         if (property0.NameEquals("serverResourceId"))
                         {
-                            serverResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serverResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("offlineDataTransfer"))
@@ -182,7 +187,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            offlineDataTransfer = new FeatureStatus(property0.Value.GetString());
+                            offlineDataTransfer = new StorageSyncFeatureStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("offlineDataTransferShareName"))

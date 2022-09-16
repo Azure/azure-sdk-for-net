@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("serverManagementErrorCode");
                 writer.WriteNumberValue(ServerManagementErrorCode.Value);
             }
-            if (Optional.IsDefined(LastHeartBeat))
+            if (Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartBeat");
-                writer.WriteStringValue(LastHeartBeat);
+                writer.WriteStringValue(LastHeartbeat);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId");
-                writer.WriteStringValue(ClusterId);
+                writer.WriteStringValue(ClusterId.Value);
             }
             if (Optional.IsDefined(ClusterName))
             {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(ServerId))
             {
                 writer.WritePropertyName("serverId");
-                writer.WriteStringValue(ServerId);
+                writer.WriteStringValue(ServerId.Value);
             }
             if (Optional.IsDefined(StorageSyncServiceUid))
             {
                 writer.WritePropertyName("storageSyncServiceUid");
-                writer.WriteStringValue(StorageSyncServiceUid);
+                writer.WriteStringValue(StorageSyncServiceUid.Value);
             }
             if (Optional.IsDefined(LastWorkflowId))
             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation");
-                writer.WriteStringValue(ResourceLocation);
+                writer.WriteStringValue(ResourceLocation.Value);
             }
             if (Optional.IsDefined(ServiceLocation))
             {
                 writer.WritePropertyName("serviceLocation");
-                writer.WriteStringValue(ServiceLocation);
+                writer.WriteStringValue(ServiceLocation.Value);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.StorageSync
             Optional<DateTimeOffset> agentVersionExpirationDate = default;
             Optional<string> serverOSVersion = default;
             Optional<int> serverManagementErrorCode = default;
-            Optional<string> lastHeartBeat = default;
+            Optional<string> lastHeartbeat = default;
             Optional<string> provisioningState = default;
             Optional<string> serverRole = default;
-            Optional<string> clusterId = default;
+            Optional<Guid> clusterId = default;
             Optional<string> clusterName = default;
-            Optional<string> serverId = default;
-            Optional<string> storageSyncServiceUid = default;
+            Optional<Guid> serverId = default;
+            Optional<Guid> storageSyncServiceUid = default;
             Optional<string> lastWorkflowId = default;
             Optional<string> lastOperationName = default;
             Optional<Uri> discoveryEndpointUri = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> serviceLocation = default;
+            Optional<AzureLocation> resourceLocation = default;
+            Optional<AzureLocation> serviceLocation = default;
             Optional<string> friendlyName = default;
             Optional<Uri> managementEndpointUri = default;
             Optional<Uri> monitoringEndpointUri = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.StorageSync
                         }
                         if (property0.NameEquals("lastHeartBeat"))
                         {
-                            lastHeartBeat = property0.Value.GetString();
+                            lastHeartbeat = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -251,7 +251,12 @@ namespace Azure.ResourceManager.StorageSync
                         }
                         if (property0.NameEquals("clusterId"))
                         {
-                            clusterId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clusterId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("clusterName"))
@@ -261,12 +266,22 @@ namespace Azure.ResourceManager.StorageSync
                         }
                         if (property0.NameEquals("serverId"))
                         {
-                            serverId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serverId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("storageSyncServiceUid"))
                         {
-                            storageSyncServiceUid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageSyncServiceUid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("lastWorkflowId"))
@@ -291,12 +306,22 @@ namespace Azure.ResourceManager.StorageSync
                         }
                         if (property0.NameEquals("resourceLocation"))
                         {
-                            resourceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serviceLocation"))
                         {
-                            serviceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serviceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"))
@@ -338,7 +363,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new RegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartBeat.Value, provisioningState.Value, serverRole.Value, clusterId.Value, clusterName.Value, serverId.Value, storageSyncServiceUid.Value, lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, resourceLocation.Value, serviceLocation.Value, friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value);
+            return new RegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value);
         }
     }
 }

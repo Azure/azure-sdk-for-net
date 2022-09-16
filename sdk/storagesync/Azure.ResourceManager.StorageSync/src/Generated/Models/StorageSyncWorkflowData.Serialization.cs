@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class WorkflowData : IUtf8JsonSerializable
+    public partial class StorageSyncWorkflowData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,23 +43,23 @@ namespace Azure.ResourceManager.StorageSync
             if (Optional.IsDefined(LastOperationId))
             {
                 writer.WritePropertyName("lastOperationId");
-                writer.WriteStringValue(LastOperationId);
+                writer.WriteStringValue(LastOperationId.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static WorkflowData DeserializeWorkflowData(JsonElement element)
+        internal static StorageSyncWorkflowData DeserializeStorageSyncWorkflowData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> lastStepName = default;
-            Optional<WorkflowStatus> status = default;
-            Optional<OperationDirection> operation = default;
+            Optional<StorageSyncWorkflowStatus> status = default;
+            Optional<StorageSyncOperationDirection> operation = default;
             Optional<string> steps = default;
-            Optional<string> lastOperationId = default;
+            Optional<Guid> lastOperationId = default;
             Optional<string> commandName = default;
             Optional<DateTimeOffset> createdTimestamp = default;
             Optional<DateTimeOffset> lastStatusTimestamp = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageSync
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new WorkflowStatus(property0.Value.GetString());
+                            status = new StorageSyncWorkflowStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("operation"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageSync
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            operation = new OperationDirection(property0.Value.GetString());
+                            operation = new StorageSyncOperationDirection(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("steps"))
@@ -131,7 +131,12 @@ namespace Azure.ResourceManager.StorageSync
                         }
                         if (property0.NameEquals("lastOperationId"))
                         {
-                            lastOperationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastOperationId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("commandName"))
@@ -163,7 +168,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new WorkflowData(id, name, type, systemData.Value, lastStepName.Value, Optional.ToNullable(status), Optional.ToNullable(operation), steps.Value, lastOperationId.Value, commandName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(lastStatusTimestamp));
+            return new StorageSyncWorkflowData(id, name, type, systemData.Value, lastStepName.Value, Optional.ToNullable(status), Optional.ToNullable(operation), steps.Value, Optional.ToNullable(lastOperationId), commandName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(lastStatusTimestamp));
         }
     }
 }

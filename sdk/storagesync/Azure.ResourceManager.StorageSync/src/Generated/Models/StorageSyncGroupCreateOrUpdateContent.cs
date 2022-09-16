@@ -12,20 +12,20 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> The parameters used when creating a sync group. </summary>
-    public partial class SyncGroupCreateOrUpdateContent : ResourceData
+    public partial class StorageSyncGroupCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncGroupCreateOrUpdateContent. </summary>
-        public SyncGroupCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of StorageSyncGroupCreateOrUpdateContent. </summary>
+        public StorageSyncGroupCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of StorageSyncGroupCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The parameters used to create the sync group. </param>
-        internal SyncGroupCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties) : base(id, name, resourceType, systemData)
+        internal StorageSyncGroupCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

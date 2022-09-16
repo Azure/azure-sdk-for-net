@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
         /// <param name="serverName"> Server name. </param>
-        internal ServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, FeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, string serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, FeatureStatus? offlineDataTransfer, string offlineDataTransferStorageAccountResourceId, string offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName) : base(id, name, resourceType, systemData)
+        internal ServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Server Local path. </summary>
         public string ServerLocalPath { get; set; }
         /// <summary> Cloud Tiering. </summary>
-        public FeatureStatus? CloudTiering { get; set; }
+        public StorageSyncFeatureStatus? CloudTiering { get; set; }
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
         public int? VolumeFreeSpacePercent { get; set; }
         /// <summary> Tier files older than days. </summary>
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Server Resource Id. </summary>
-        public string ServerResourceId { get; set; }
+        public ResourceIdentifier ServerResourceId { get; set; }
         /// <summary> ServerEndpoint Provisioning State. </summary>
         public string ProvisioningState { get; }
         /// <summary> ServerEndpoint lastWorkflowId. </summary>
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Server Endpoint sync status. </summary>
         public ServerEndpointSyncStatus SyncStatus { get; }
         /// <summary> Offline data transfer. </summary>
-        public FeatureStatus? OfflineDataTransfer { get; set; }
+        public StorageSyncFeatureStatus? OfflineDataTransfer { get; set; }
         /// <summary> Offline data transfer storage account resource ID. </summary>
-        public string OfflineDataTransferStorageAccountResourceId { get; }
+        public ResourceIdentifier OfflineDataTransferStorageAccountResourceId { get; }
         /// <summary> Offline data transfer storage account tenant ID. </summary>
-        public string OfflineDataTransferStorageAccountTenantId { get; }
+        public Guid? OfflineDataTransferStorageAccountTenantId { get; }
         /// <summary> Offline data transfer share name. </summary>
         public string OfflineDataTransferShareName { get; set; }
         /// <summary> Cloud tiering status. Only populated if cloud tiering is enabled. </summary>

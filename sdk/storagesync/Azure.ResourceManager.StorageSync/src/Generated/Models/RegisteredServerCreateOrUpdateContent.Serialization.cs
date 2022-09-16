@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -33,10 +34,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("serverOSVersion");
                 writer.WriteStringValue(ServerOSVersion);
             }
-            if (Optional.IsDefined(LastHeartBeat))
+            if (Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartBeat");
-                writer.WriteStringValue(LastHeartBeat);
+                writer.WriteStringValue(LastHeartbeat);
             }
             if (Optional.IsDefined(ServerRole))
             {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId");
-                writer.WriteStringValue(ClusterId);
+                writer.WriteStringValue(ClusterId.Value);
             }
             if (Optional.IsDefined(ClusterName))
             {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (Optional.IsDefined(ServerId))
             {
                 writer.WritePropertyName("serverId");
-                writer.WriteStringValue(ServerId);
+                writer.WriteStringValue(ServerId.Value);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -76,11 +77,11 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<string> serverCertificate = default;
             Optional<string> agentVersion = default;
             Optional<string> serverOSVersion = default;
-            Optional<string> lastHeartBeat = default;
+            Optional<string> lastHeartbeat = default;
             Optional<string> serverRole = default;
-            Optional<string> clusterId = default;
+            Optional<Guid> clusterId = default;
             Optional<string> clusterName = default;
-            Optional<string> serverId = default;
+            Optional<Guid> serverId = default;
             Optional<string> friendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         }
                         if (property0.NameEquals("lastHeartBeat"))
                         {
-                            lastHeartBeat = property0.Value.GetString();
+                            lastHeartbeat = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("serverRole"))
@@ -145,7 +146,12 @@ namespace Azure.ResourceManager.StorageSync.Models
                         }
                         if (property0.NameEquals("clusterId"))
                         {
-                            clusterId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clusterId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("clusterName"))
@@ -155,7 +161,12 @@ namespace Azure.ResourceManager.StorageSync.Models
                         }
                         if (property0.NameEquals("serverId"))
                         {
-                            serverId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serverId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"))
@@ -167,7 +178,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new RegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartBeat.Value, serverRole.Value, clusterId.Value, clusterName.Value, serverId.Value, friendlyName.Value);
+            return new RegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value);
         }
     }
 }

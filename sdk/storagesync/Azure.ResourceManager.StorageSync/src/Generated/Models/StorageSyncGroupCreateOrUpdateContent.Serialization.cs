@@ -5,33 +5,49 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.StorageSync
+namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class SyncGroupData : IUtf8JsonSerializable
+    public partial class StorageSyncGroupCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WriteEndObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
+#endif
+            }
             writer.WriteEndObject();
         }
 
-        internal static SyncGroupData DeserializeSyncGroupData(JsonElement element)
+        internal static StorageSyncGroupCreateOrUpdateContent DeserializeStorageSyncGroupCreateOrUpdateContent(JsonElement element)
         {
+            Optional<BinaryData> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> uniqueId = default;
-            Optional<string> syncGroupStatus = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -57,30 +73,8 @@ namespace Azure.ResourceManager.StorageSync
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("uniqueId"))
-                        {
-                            uniqueId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("syncGroupStatus"))
-                        {
-                            syncGroupStatus = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new SyncGroupData(id, name, type, systemData.Value, uniqueId.Value, syncGroupStatus.Value);
+            return new StorageSyncGroupCreateOrUpdateContent(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

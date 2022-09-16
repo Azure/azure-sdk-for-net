@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="processedDirectoriesCount"> Count of directories processed. </param>
         /// <param name="totalFilesCount"> Total count of files enumerated. </param>
         /// <param name="totalDirectoriesCount"> Total count of directories enumerated. </param>
-        /// <param name="totalSizeBytes"> Total enumerated size in bytes. </param>
+        /// <param name="totalSizeInBytes"> Total enumerated size in bytes. </param>
         /// <param name="progressPercent"> Progress percentage for change enumeration run, excluding processing of deletes. </param>
         /// <param name="minutesRemaining"> Estimate of time remaining for the enumeration run. </param>
         /// <param name="totalCountsState"> Change enumeration total counts state. </param>
         /// <param name="deletesProgressPercent"> Progress percentage for processing deletes. This is done separately from the rest of the enumeration run. </param>
-        internal CloudEndpointChangeEnumerationActivity(DateTimeOffset? lastUpdatedTimestamp, CloudEndpointChangeEnumerationActivityState? operationState, int? statusCode, DateTimeOffset? startedTimestamp, long? processedFilesCount, long? processedDirectoriesCount, long? totalFilesCount, long? totalDirectoriesCount, long? totalSizeBytes, int? progressPercent, int? minutesRemaining, CloudEndpointChangeEnumerationTotalCountsState? totalCountsState, int? deletesProgressPercent)
+        internal CloudEndpointChangeEnumerationActivity(DateTimeOffset? lastUpdatedTimestamp, CloudEndpointChangeEnumerationActivityState? operationState, int? statusCode, DateTimeOffset? startedTimestamp, long? processedFilesCount, long? processedDirectoriesCount, long? totalFilesCount, long? totalDirectoriesCount, long? totalSizeInBytes, int? progressPercent, int? minutesRemaining, CloudEndpointChangeEnumerationTotalCountsState? totalCountsState, int? deletesProgressPercent)
         {
             LastUpdatedTimestamp = lastUpdatedTimestamp;
             OperationState = operationState;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             ProcessedDirectoriesCount = processedDirectoriesCount;
             TotalFilesCount = totalFilesCount;
             TotalDirectoriesCount = totalDirectoriesCount;
-            TotalSizeBytes = totalSizeBytes;
+            TotalSizeInBytes = totalSizeInBytes;
             ProgressPercent = progressPercent;
             MinutesRemaining = minutesRemaining;
             TotalCountsState = totalCountsState;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Total count of directories enumerated. </summary>
         public long? TotalDirectoriesCount { get; }
         /// <summary> Total enumerated size in bytes. </summary>
-        public long? TotalSizeBytes { get; }
+        public long? TotalSizeInBytes { get; }
         /// <summary> Progress percentage for change enumeration run, excluding processing of deletes. </summary>
         public int? ProgressPercent { get; }
         /// <summary> Estimate of time remaining for the enumeration run. </summary>

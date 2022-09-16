@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.StorageSync
             return GetStorageSyncPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SyncGroupResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of SyncGroupResources and their operations over a SyncGroupResource. </returns>
-        public virtual SyncGroupCollection GetSyncGroups()
+        /// <summary> Gets a collection of StorageSyncGroupResources in the StorageSyncService. </summary>
+        /// <returns> An object representing collection of StorageSyncGroupResources and their operations over a StorageSyncGroupResource. </returns>
+        public virtual StorageSyncGroupCollection GetStorageSyncGroups()
         {
-            return GetCachedClient(Client => new SyncGroupCollection(Client, Id));
+            return GetCachedClient(Client => new StorageSyncGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SyncGroupResource>> GetSyncGroupAsync(string syncGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncGroupResource>> GetStorageSyncGroupAsync(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetSyncGroups().GetAsync(syncGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSyncGroups().GetAsync(syncGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SyncGroupResource> GetSyncGroup(string syncGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncGroupResource> GetStorageSyncGroup(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            return GetSyncGroups().Get(syncGroupName, cancellationToken);
+            return GetStorageSyncGroups().Get(syncGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RegisteredServerResources in the StorageSyncService. </summary>
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.StorageSync
             return GetRegisteredServers().Get(serverId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkflowResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of WorkflowResources and their operations over a WorkflowResource. </returns>
-        public virtual WorkflowCollection GetWorkflows()
+        /// <summary> Gets a collection of StorageSyncWorkflowResources in the StorageSyncService. </summary>
+        /// <returns> An object representing collection of StorageSyncWorkflowResources and their operations over a StorageSyncWorkflowResource. </returns>
+        public virtual StorageSyncWorkflowCollection GetStorageSyncWorkflows()
         {
-            return GetCachedClient(Client => new WorkflowCollection(Client, Id));
+            return GetCachedClient(Client => new StorageSyncWorkflowCollection(Client, Id));
         }
 
         /// <summary>
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkflowResource>> GetWorkflowAsync(string workflowId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncWorkflowResource>> GetStorageSyncWorkflowAsync(string workflowId, CancellationToken cancellationToken = default)
         {
-            return await GetWorkflows().GetAsync(workflowId, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSyncWorkflows().GetAsync(workflowId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkflowResource> GetWorkflow(string workflowId, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncWorkflowResource> GetStorageSyncWorkflow(string workflowId, CancellationToken cancellationToken = default)
         {
-            return GetWorkflows().Get(workflowId, cancellationToken);
+            return GetStorageSyncWorkflows().Get(workflowId, cancellationToken);
         }
 
         /// <summary>

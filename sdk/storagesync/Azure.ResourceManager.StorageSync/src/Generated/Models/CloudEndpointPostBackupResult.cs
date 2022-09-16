@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Post Backup Response. </summary>
-    public partial class PostBackupResponse
+    public partial class CloudEndpointPostBackupResult
     {
-        /// <summary> Initializes a new instance of PostBackupResponse. </summary>
-        internal PostBackupResponse()
+        /// <summary> Initializes a new instance of CloudEndpointPostBackupResult. </summary>
+        internal CloudEndpointPostBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PostBackupResponse. </summary>
+        /// <summary> Initializes a new instance of CloudEndpointPostBackupResult. </summary>
         /// <param name="cloudEndpointName"> cloud endpoint Name. </param>
-        internal PostBackupResponse(string cloudEndpointName)
+        internal CloudEndpointPostBackupResult(string cloudEndpointName)
         {
             CloudEndpointName = cloudEndpointName;
         }
