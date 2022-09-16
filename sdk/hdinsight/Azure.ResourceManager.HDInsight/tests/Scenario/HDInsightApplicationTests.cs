@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         private void ValidateApplication(HDInsightApplicationResource application)
         {
             Assert.IsNotNull(application);
-            Assert.IsNotNull(application.Data.Properties.CreatedDate);
+            Assert.IsNotNull(application.Data.Properties.CreatedOn);
             Assert.AreEqual("CustomApplication", application.Data.Properties.ApplicationType);
             Assert.AreEqual(1, application.Data.Properties.InstallScriptActions.Count);
         }
