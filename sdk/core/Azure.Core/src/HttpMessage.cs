@@ -33,6 +33,7 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
+            RetryContext = new RetryContext(DateTimeOffset.UtcNow);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Azure.Core
         /// <summary>
         /// The retry context for the current message.
         /// </summary>
-        public RetryContext? RetryContext { get; internal set; }
+        public RetryContext RetryContext { get; internal set; }
 
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {

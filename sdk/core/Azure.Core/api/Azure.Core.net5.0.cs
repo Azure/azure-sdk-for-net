@@ -455,7 +455,7 @@ namespace Azure.Core
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        public Azure.Core.RetryContext? RetryContext { get { throw null; } }
+        public Azure.Core.RetryContext RetryContext { get { throw null; } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }

@@ -53,11 +53,9 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            message.RetryContext = new RetryContext(DateTimeOffset.UtcNow);
             List<Exception>? exceptions = null;
             while (true)
             {
-                message.RetryContext.AttemptNumber++;
                 var before = Stopwatch.GetTimestamp();
 
                 if (async)
@@ -160,6 +158,7 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream?.Dispose();
                 }
 
+                message.RetryContext.AttemptNumber++;
                 AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryContext.AttemptNumber, elapsed);
             }
         }

@@ -28,6 +28,7 @@ namespace Azure.Core
         internal RetryContext(DateTimeOffset startTime)
         {
             OperationStartTime = startTime;
+            AttemptNumber = 1;
         }
     }
 }
