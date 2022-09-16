@@ -48,6 +48,47 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Rp: RP
+
+override-operation-name:
+  CancelOrderItem: Cancel
+  ReturnOrderItem: Return
+
+rename-mapping:
+  AddressResource: EdgeOrderAddress
+  AddressValidationStatus: EdgeOrderAddressValidationStatus
+  ContactDetails: EdgeOrderAddressContactDetails
+  ShippingAddress: EdgeOrderShippingAddress
+  OrderItemResource: EdgeOrderItem
+  OrderItemResource.properties.orderId: -|arm-id
+  CancellationReason: EdgeOrderItemCancellationReason
+  ReturnOrderItemDetails: EdgeOrderItemReturnContent
+  ReturnOrderItemDetails.shippingBoxRequired: IsShippingBoxRequired
+  AddressDetails: EdgeOrderItemAddressDetails
+  AddressProperties: EdgeOrderItemAddressProperties
+  OrderItemDetails: EdgeOrderItemDetails
+  OrderItemDetails.managementRpDetails: FirstOrDefaultManagement
+  OrderResource: EdgeOrder
+  OrderResource.properties.orderItemIds: -|arm-id
+  StageDetails: EdgeOrderStageDetails
+  StageName: EdgeOrderStageName
+  StageStatus: EdgeOrderStageStatus
+  ProductFamiliesMetadata: ProductFamiliesMetadataListResult
+  ProductFamiliesMetadataDetails: ProductFamiliesMetadata
+  ActionStatusEnum: EdgeOrderActionStatus
+  AddressType: EdgeOrderAddressType
+  AvailabilityInformation: ProductAvailabilityInformation
+  AvailabilityStage: ProductAvailabilityStage
+  AvailabilityStage.Signup: SignUp
+  DisabledReason: ProductDisabledReason
+  DescriptionType: ProductDescriptionType
+  DisplayInfo: ProductDisplayInfo
+  NotificationPreference.sendNotification: IsNotificationRequired
+  OrderItemCancellationEnum: OrderItemCancellationStatus
+  OrderItemReturnEnum: OrderItemReturnStatus
+  Pav2MeterDetails.meterGuid: -|uuid
+  WeightMeasurementUnit.LBS: Lbs
+  WeightMeasurementUnit.KGS: Kgs
 
 directive:
   - remove-operation: ListOperations

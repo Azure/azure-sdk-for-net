@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static Pav2MeterDetails DeserializePav2MeterDetails(JsonElement element)
         {
-            Optional<string> meterGuid = default;
+            Optional<Guid> meterGuid = default;
             BillingType billingType = default;
             Optional<double> multiplier = default;
             Optional<ChargingType> chargingType = default;
@@ -22,7 +23,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (property.NameEquals("meterGuid"))
                 {
-                    meterGuid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    meterGuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("billingType"))
@@ -51,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new Pav2MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), meterGuid.Value);
+            return new Pav2MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), Optional.ToNullable(meterGuid));
         }
     }
 }
