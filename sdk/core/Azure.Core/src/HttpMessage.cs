@@ -85,6 +85,11 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
+        /// <summary>
+        /// The retry context for the current message.
+        /// </summary>
+        public RetryContext? RetryContext { get; internal set; }
+
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
             if (context == null)

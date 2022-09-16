@@ -91,6 +91,12 @@ namespace Azure.Core
         public RetryOptions Retry { get; }
 
         /// <summary>
+        /// The policy to use for retries. If a policy is specified, it will be used in place of the <see cref="Retry"/> property.
+        /// If no policy is specified, a default policy respecting the <see cref="Retry"/> property will be used.
+        /// </summary>
+        public RetryPolicy? RetryPolicy { get; set; }
+
+        /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/> otherwise use <see cref="HttpPipelinePosition.PerRetry"/>
         /// to run the policy for every retry. Note that the same instance of <paramref name="policy"/> would be added to all pipelines of client constructed using this <see cref="ClientOptions"/> object.

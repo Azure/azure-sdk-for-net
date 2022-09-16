@@ -11,7 +11,10 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
-    internal class RetryPolicy : HttpPipelinePolicy
+    /// <summary>
+    ///
+    /// </summary>
+    public abstract class RetryPolicy : HttpPipelinePolicy
     {
         private readonly RetryMode _mode;
         private readonly TimeSpan _delay;
@@ -20,23 +23,29 @@ namespace Azure.Core.Pipeline
 
         private readonly Random _random = new ThreadSafeRandom();
 
-        public RetryPolicy(RetryMode mode, TimeSpan delay, TimeSpan maxDelay, int maxRetries)
-        {
-            _mode = mode;
-            _delay = delay;
-            _maxDelay = maxDelay;
-            _maxRetries = maxRetries;
-        }
-
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="options"></param>
+        public RetryPolicy(RetryOptions options)
+        {
+            _mode = options.Mode;
+            _delay = options.Delay;
+            _maxDelay = options.MaxDelay;
+            _maxRetries = options.MaxRetries;
+        }
+
+        /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
+        /// <inheritdoc/>
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
@@ -44,22 +53,28 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            int attempt = 0;
+            message.RetryContext = new RetryContext(DateTimeOffset.UtcNow);
             List<Exception>? exceptions = null;
             while (true)
             {
-                Exception? lastException = null;
                 var before = Stopwatch.GetTimestamp();
                 try
                 {
                     if (async)
                     {
+                        await OnTryRequestAsync(message).ConfigureAwait(false);
                         await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                        await OnResponseAsync(message).ConfigureAwait(false);
                     }
                     else
                     {
+                        OnTryRequest(message);
                         ProcessNext(message, pipeline);
+                        OnResponse(message);
                     }
+                    // This request didn't result in an exception, so reset the LastException property
+                    // in case it was set on a previous attempt.
+                    message.RetryContext.LastException = null;
                 }
                 catch (Exception ex)
                 {
@@ -70,7 +85,7 @@ namespace Azure.Core.Pipeline
 
                     exceptions.Add(ex);
 
-                    lastException = ex;
+                    message.RetryContext.LastException = ex;
                 }
 
                 var after = Stopwatch.GetTimestamp();
@@ -78,37 +93,32 @@ namespace Azure.Core.Pipeline
 
                 TimeSpan delay;
 
-                attempt++;
-
-                var shouldRetry = attempt <= _maxRetries;
-
-                if (lastException != null)
+                message.RetryContext.AttemptNumber++;
+                bool shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
+                if (shouldRetry)
                 {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriable(message, lastException))
+                    delay = async ? await CalculateNextDelayAsync(message).ConfigureAwait(false) : CalculateNextDelay(message);
+                    if (delay > TimeSpan.Zero)
                     {
-                        GetDelay(attempt, out delay);
-                    }
-                    else
-                    {
-                        // Rethrow a singular exception
-                        if (exceptions!.Count == 1)
+                        if (async)
                         {
-                            ExceptionDispatchInfo.Capture(lastException).Throw();
+                            await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
                         }
-
-                        throw new AggregateException($"Retry failed after {attempt} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
+                        else
+                        {
+                            Wait(delay, message.CancellationToken);
+                        }
                     }
                 }
-                else if (message.Response.IsError)
+                else if (message.RetryContext.LastException != null)
                 {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message))
+                    // Rethrow a singular exception
+                    if (exceptions!.Count == 1)
                     {
-                        GetDelay(message, attempt, out delay);
+                        ExceptionDispatchInfo.Capture(message.RetryContext.LastException).Throw();
                     }
-                    else
-                    {
-                        return;
-                    }
+
+                    throw new AggregateException($"Retry failed after {message.RetryContext.AttemptNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
                 }
                 else
                 {
@@ -133,7 +143,7 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream?.Dispose();
                 }
 
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt, elapsed);
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryContext.AttemptNumber, elapsed);
             }
         }
 
@@ -147,7 +157,107 @@ namespace Azure.Core.Pipeline
             cancellationToken.WaitHandle.WaitOne(time);
         }
 
-        protected virtual TimeSpan GetServerDelay(HttpMessage message)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
+
+        private bool ShouldRetryInternal(HttpMessage message)
+        {
+            if (message.RetryContext!.AttemptNumber <= _maxRetries)
+            {
+                if (message.RetryContext!.LastException != null)
+                {
+                    return message.RetryContext!.AttemptNumber <= _maxRetries &&
+                           message.ResponseClassifier.IsRetriable(message, message.RetryContext!.LastException);
+                }
+
+                if (message.Response.IsError)
+                {
+                    return message.ResponseClassifier.IsRetriableResponse(message);
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
+
+        private TimeSpan CalculateNextDelayInternal(HttpMessage message)
+        {
+            TimeSpan delay = TimeSpan.Zero;
+
+            switch (_mode)
+            {
+                case RetryMode.Fixed:
+                    delay = _delay;
+                    break;
+                case RetryMode.Exponential:
+                    delay = CalculateExponentialDelay(message.RetryContext!.AttemptNumber);
+                    break;
+            }
+
+            TimeSpan serverDelay = GetServerDelay(message);
+            if (serverDelay > delay)
+            {
+                delay = serverDelay;
+            }
+
+            return delay;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        protected virtual void OnTryRequest(HttpMessage message)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected virtual ValueTask OnTryRequestAsync(HttpMessage message) => new();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        protected virtual void OnResponse(HttpMessage message)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected virtual ValueTask OnResponseAsync(HttpMessage message) => new();
+
+        internal virtual TimeSpan GetServerDelay(HttpMessage message)
         {
             if (message.Response == null)
             {
@@ -176,32 +286,6 @@ namespace Azure.Core.Pipeline
             }
 
             return TimeSpan.Zero;
-        }
-
-        private void GetDelay(HttpMessage message, int attempted, out TimeSpan delay)
-        {
-            delay = TimeSpan.Zero;
-
-            switch (_mode)
-            {
-                case RetryMode.Fixed:
-                    delay = _delay;
-                    break;
-                case RetryMode.Exponential:
-                    delay = CalculateExponentialDelay(attempted);
-                    break;
-            }
-
-            TimeSpan serverDelay = GetServerDelay(message);
-            if (serverDelay > delay)
-            {
-                delay = serverDelay;
-            }
-        }
-
-        private void GetDelay(int attempted, out TimeSpan delay)
-        {
-            delay = CalculateExponentialDelay(attempted);
         }
 
         private TimeSpan CalculateExponentialDelay(int attempted)
