@@ -579,7 +579,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # Client
 # PRLabel: %Service Bus
-/sdk/servicebus/                                @JoshLove-msft @jsquire
+/sdk/servicebus/                                @JoshLove-msft @jsquire @m-redding
 
 # PRLabel: %Service Bus %Functions
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/ @JoshLove-msft @jsquire

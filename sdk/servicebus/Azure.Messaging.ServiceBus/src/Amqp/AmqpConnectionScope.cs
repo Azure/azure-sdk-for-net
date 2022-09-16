@@ -1191,7 +1191,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await OpenAmqpObjectCoreAsync(targetObject, timeout: timeout).ConfigureAwait(false);
         }
 
-        private static async Task OpenAmqpObjectCoreAsync(
+        private async Task OpenAmqpObjectCoreAsync(
             AmqpObject target,
             string entityPath = default,
             TimeSpan? timeout = default,
@@ -1215,14 +1215,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 switch (target)
                 {
                     case AmqpLink linkTarget:
-                        linkTarget.Session?.SafeClose();
+                        CloseLink(linkTarget);
                         break;
                     case RequestResponseAmqpLink linkTarget:
-                        linkTarget.Session?.SafeClose();
+                        CloseLink(linkTarget);
                         break;
                 }
-
-                target.SafeClose();
 
                 // The AMQP library may throw an InvalidOperationException or one of its derived types, such as
                 // ObjectDisposedException if the underlying network state changes.  While normally terminal, in this
