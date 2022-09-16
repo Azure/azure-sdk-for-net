@@ -11,9 +11,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
         public override void OnEnd(Activity activity)
         {
             // The updated activity will be available to all processors which are called after this processor.
-            activity.DisplayName = "Updated-" + activity.DisplayName;
+            activity.DisplayName = "Enriched-" + activity.DisplayName;
             activity.SetTag("CustomDimension1", "Value1");
             activity.SetTag("CustomDimension2", "Value2");
+            activity.SetTag("ActivityKind", activity.Kind);
         }
     }
 }

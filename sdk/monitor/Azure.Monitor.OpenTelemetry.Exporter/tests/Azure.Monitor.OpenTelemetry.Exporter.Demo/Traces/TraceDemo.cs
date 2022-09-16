@@ -40,12 +40,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                             .Build();
         }
 
+        /// <remarks>
+        /// Activities will be ingested and stored in Application Insights
+        /// as either a request or dependency, according to their ActivityKind.
+        /// </remarks>
         public void GenerateTraces()
         {
-            using (var testActivity1 = activitySource.StartActivity("TestInternalActivity", ActivityKind.Internal))
+            // Note: This activity will be dropped due to the ActivityFilteringProcessor filtering ActivityKind.Producer.
+            using (var testActivity1 = activitySource.StartActivity("TestInternalActivity", ActivityKind.Producer))
             {
-                // Note: This activity will be dropped due to
-                // the ActivityFilteringProcessor filtering Internal Activities.
                 testActivity1?.SetTag("CustomTag1", "Value1");
                 testActivity1?.SetTag("CustomTag2", "Value2");
             }
@@ -56,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 activity?.SetTag("baz", new int[] { 1, 2, 3 });
                 activity?.SetStatus(ActivityStatusCode.Ok);
 
-                using (var nestedActivity = activitySource.StartActivity("SayHelloAgain", ActivityKind.Client))
+                using (var nestedActivity = activitySource.StartActivity("SayHelloAgain", ActivityKind.Server))
                 {
                     nestedActivity?.SetTag("bar", "Hello, World!");
                     nestedActivity?.SetStatus(ActivityStatusCode.Ok);
@@ -66,7 +69,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
         public void Dispose()
         {
-            this.tracerProvider.Shutdown();
             this.tracerProvider.Dispose();
         }
     }

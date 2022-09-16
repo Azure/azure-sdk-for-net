@@ -23,6 +23,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
                                 .Build();
         }
 
+        /// <remarks>
+        /// These counters will be aggregated and ingested as Application Insights customMetrics.
+        /// </remarks>
         public void GenerateMetrics()
         {
             Counter<long> MyFruitCounter = meter.CreateCounter<long>("MyFruitCounter");
@@ -37,7 +40,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
 
         public void Dispose()
         {
-            this.meterProvider.Shutdown();
             this.meterProvider.Dispose();
         }
     }

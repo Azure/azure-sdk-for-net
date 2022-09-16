@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
         public override void OnStart(Activity activity)
         {
             // prevents all exporters from exporting internal activities
-            if (activity.Kind == ActivityKind.Internal)
+            if (activity.Kind == ActivityKind.Producer)
             {
                 activity.IsAllDataRequested = false;
             }

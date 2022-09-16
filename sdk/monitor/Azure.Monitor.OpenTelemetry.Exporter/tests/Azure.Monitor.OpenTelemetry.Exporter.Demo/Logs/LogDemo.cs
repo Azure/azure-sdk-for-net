@@ -21,10 +21,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
             });
         }
 
+        /// <remarks>
+        /// Logs will be ingested as an Application Insights trace.
+        /// These can be differentiated by their severityLevel.
+        /// </remarks>
         public void GenerateLogs()
         {
             var logger = this.loggerFactory.CreateLogger<LogDemo>();
             logger.LogInformation("Hello from {name} {price}.", "tomato", 2.99);
+            logger.LogError("An error occurred.");
         }
 
         public void Dispose()
