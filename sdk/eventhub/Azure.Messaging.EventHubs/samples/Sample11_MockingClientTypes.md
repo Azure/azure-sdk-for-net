@@ -110,7 +110,7 @@ foreach (EventData eventData in backingList)
 Assert.AreEqual(backingList.Count, sourceEvents.Count);
 ```
 
-## Reading Event Hub properties with an `EventHubProducerClient`
+## Reading Event Hub properties with an `EventHubProducerClient` or `EventHubBufferedProducerClient`
 
 Many applications make decisions for publishing based on the properties of the Event Hub itself or the properties of its partitions. Both can be mocked using the `EventHubsModelFactory`. The following example demonstrates how to mock an `EventHubProducerClient` that is publishing to an Event Hub with a set of two partitions with different ownership levels.
 
@@ -229,7 +229,7 @@ string isPartitionEmpty = firstPartitionProperties.IsEmpty.ToString();
 Debug.WriteLine($"Sending Events to: {isPartitionEmpty}");
 ```
 
-## Enqueuing Events with a Mocked `EventHubBufferedProducerClient`
+## Publishing events using an `EventHubBufferedProducerClient`
 
 The following snippet demonstrates how to mock the `EventHubBufferedProducerClient`. In this scenario, the failed handler decides to add events to the end of the queue after failing to send. A test could then verify that `EnqueueEventAsync` was called to make sure that their failed handler was working as expected.
 
@@ -307,13 +307,7 @@ Assert.DoesNotThrowAsync(async () => await sendFailed(args));
 // The expected outcome of any application-specific complex processing can be asserted here.
 ```
 
-## Mocking access to Event Hub Properties through the `EventHubBufferedProducerClient`
-
-Mocking the `PartitionProperties` class is very similar to the `PartitionPublishingProperties` above. The snippet below demonstrates how an application could set up a specific set of properties, and then test different code paths that depend on it. It can be done in the same way for the `EventHubProducerClient` as well.
-
-TODO
-
-## Mocking access to the properties of an `EventHubConsumerClient`
+## Consuming events and reading properties from an `EventHubConsumerClient`
 
 When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to create a known set of expected events and contexts to verify that their application consumes them correctly.  Tests can mock the expected data and use it with the consumer client for these scenarios.
 
