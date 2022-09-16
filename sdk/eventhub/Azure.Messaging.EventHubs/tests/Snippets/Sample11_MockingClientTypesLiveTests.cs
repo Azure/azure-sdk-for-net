@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 .ReturnsAsync(dataBatchMock);
 
             // Here we are mocking the SendAsync method so that it will throw an exception if the batch passed
-            // into send is not the one we are expecting to send.
+            // into it is not the one we are expecting to send.
 
             mockProducer
                 .Setup(p => p.SendAsync(
@@ -104,11 +104,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 Assert.True(batch.TryAdd(eventData));
             }
 
-            EventData eventData4 = new EventData(eventBody: new BinaryData("Sample-Event-4-will-fail"));
+            // Since there area already batchCountThreshold number of events in the batch, this event will be
+            // rejected from the batch.
+
+            EventData eventData4 = new EventData("Sample-Event-4-will-fail");
             Assert.IsFalse(batch.TryAdd(eventData4));
 
-            // For illustrative purposes we are calling SendAsync. This call would likely be inside an application
-            // defined method.
+            // For illustrative purposes we are calling SendAsync. This call would likely already be inside the application-
+            // defined method being tested.
 
             await producer.SendAsync(batch);
 
