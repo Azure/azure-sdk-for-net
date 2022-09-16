@@ -35,24 +35,28 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public async Task MockingEventDataBatch()
         {
             #region Snippet:EventHubs_Sample11_MockingEventDataBatch
-            Mock<EventHubProducerClient> mockProducer = new Mock<EventHubProducerClient>();
 
-            // This sets the value returned by the EventDataBatch when accessing the Size property
-            // It does not impact TryAdd on the mocked batch
+            Mock<EventHubProducerClient> mockProducer = new();
+
+            // This sets the value returned by the EventDataBatch when accessing the Size property,
+            // it does not impact TryAdd on the mocked batch.
+
             long batchSizeInBytes = 500;
 
             // Events added to the batch will be added here, but altering the events in this list will not change the
-            // events in the batch, since they are stored inside the batch as well
-            List<EventData> backingList = new List<EventData>();
+            // events in the batch, since they are stored inside the batch as well.
+
+            List<EventData> backingList = new();
 
             // For illustrative purposes, this is the number of events that the batch will contain,
             // returning false from TryAdd for any additional calls.
+
             int batchCountThreshold = 3;
 
             EventDataBatch dataBatchMock = EventHubsModelFactory.EventDataBatch(
                     batchSizeBytes : batchSizeInBytes,
                     batchEventStore : backingList,
-                    batchOptions : new CreateBatchOptions() { },
+                    batchOptions : new CreateBatchOptions(),
                     // The model factory allows the user to define a custom TryAdd callback, allowing
                     // control of what events the batch accepts.
                     eventData =>
@@ -61,13 +65,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         return eventCount < batchCountThreshold;
                     });
 
-            // Setting up a mock of the CreateBatchAsync method
+            // This sets up a mock of the CreateBatchAsync method.
+
             mockProducer
                 .Setup(p => p.CreateBatchAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dataBatchMock);
 
-            // Mocking the SendAsync method so that it will throw an exception if the batch passed into send is
-            // not the one we are expecting to send
+            // Here we are mocking the SendAsync method so that it will throw an exception if the batch passed
+            // into send is not the one we are expecting to send.
+
             mockProducer
                 .Setup(p => p.SendAsync(
                     It.Is<EventDataBatch>(sendBatch => sendBatch != dataBatchMock),
@@ -76,37 +82,44 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             EventHubProducerClient producer = mockProducer.Object;
 
-            // Attempting to add events to the batch
             EventDataBatch batch = await producer.CreateBatchAsync();
 
-            // Keep track of what events we successfully added to the batch
-            List<EventData> sourceEvents = new List<EventData>();
+            // Next we are creating a list of events to use in our test.
 
-            for (int i=0; i<3; i++)
+            List<EventData> sourceEvents = new();
+
+            for (int index = 0; index < batchCountThreshold; index++)
             {
-                var eventData = new EventData(eventBody: new BinaryData($"Sample-Event-{i}"));
-                if (batch.TryAdd(eventData))
-                {
-                    // Track all of the events that were successfully added to the batch
-                    sourceEvents.Add(eventData);
-                }
+                var eventData = new EventData($"Sample-Event-{ index }");
+                sourceEvents.Add(eventData);
             }
 
-            // Illustrating the use of the try add callback
+            // Here we are adding events to the batch. They should all be accepted.
+
+            foreach (var eventData in sourceEvents)
+            {
+                Assert.True(batch.TryAdd(eventData));
+            }
+
             EventData eventData4 = new EventData(eventBody: new BinaryData("Sample-Event-4-will-fail"));
             Assert.IsFalse(batch.TryAdd(eventData4));
 
-            // Call SendAsync
+            // For illustrative purposes we are calling SendAsync. In real-world scenarios this
+            // would likely be a call to an application-defind method containing a SendAsync call. TODO
+
             await producer.SendAsync(batch);
 
-            // Using the mocked event producer to test that SendAsync was called once
+            // This is demonstrating how to verify SendAsync was called once within the mocked producer client.
+
             mockProducer
                 .Verify(bp => bp.SendAsync(
                     It.IsAny<EventDataBatch>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
-            // Verify that the events in the batch match what the application expects
+            // For illustrative purposes, check that the events in the batch match what the application expects
+            // to have added.
+
             foreach (EventData eventData in backingList)
             {
                 Assert.IsTrue(sourceEvents.Contains(eventData));
@@ -116,106 +129,138 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #endregion
         }
 
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
         [Test]
-        public async Task MockingEventHubsProperties()
-        {
-            #region Snippet:EventHubs_Sample11_MockingEventHubProperties
-            // Create a mock of the EventHubProducerClient
-            Mock<EventHubProducerClient> mockProducer = new Mock<EventHubProducerClient>();
-
-            // Define the set of partitions
-            List<string> partitions = new List<string>(){ "0", "1" };
-
-            // Mock the EventHubProperties using the model factory
-            EventHubProperties eventHubProperties =
-                EventHubsModelFactory.EventHubProperties(
-                    name : "fakeEventHubName",
-                    createdOn : DateTimeOffset.UtcNow, // arbitrary value
-                    partitionIds : partitions.ToArray());
-
-            // Setting up to return the mocked properties
-            mockProducer
-                .Setup(p => p.GetEventHubPropertiesAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(eventHubProperties);
-
-            // Setting up to return the mocked partition Ids.
-            mockProducer
-                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(partitions.ToArray());
-
-            EventHubProducerClient producer = mockProducer.Object;
-
-            // Demonstrating accessing mocked EventHubProperties.
-            EventHubProperties properties = await producer.GetEventHubPropertiesAsync();
-
-            string eventHubName = properties.Name;
-            Debug.WriteLine($"Sending Events to: {eventHubName}");
-            #endregion
-        }
-
-        [Test]
-        public void MockingBufferedProducer()
+        public async Task MockingBufferedProducer()
         {
             #region Snippet:EventHubs_Sample11_MockingBufferedProducer
-            // Create a mock buffered producer
-            Mock<EventHubBufferedProducerClient> bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
 
-            // Define a failed handler for the mock
-            Func<SendEventBatchFailedEventArgs, Task> sendFailed = new Func<SendEventBatchFailedEventArgs, Task>(async args =>
-            {
-                foreach (EventData eventData in args.EventBatch)
-                {
-                    if (eventData.Body.Length != 0)
-                    {
-                        await bufferedProducerMock.Object.EnqueueEventAsync(eventData);
-                    }
-                }
-            });
+            Mock<EventHubBufferedProducerClient> bufferedProducerMock = new();
 
-            // Create a mock event to fail send
-            EventData eventToEnqueue = EventHubsModelFactory.EventData(new BinaryData("Sample-Event"));
-            List<EventData> eventList = new List<EventData>();
-            eventList.Add(eventToEnqueue);
+            // For this scenario, set up EnqueueEventAsync to always pass and return 1.
 
-            // Create a set of args to send to the SendEventBatchFailedAsync handler
-            SendEventBatchFailedEventArgs args = new SendEventBatchFailedEventArgs(eventList, new Exception(), "0", default);
-
-            // Setup EnqueueEventAsync to always pass and return 1
             bufferedProducerMock
                 .Setup(bp => bp.EnqueueEventAsync(
                     It.IsAny<EventData>(),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(1);
 
-            // Set up EnqueueEventsAsync to fail and call the defined fail handler using the
-            // above created args
-            bufferedProducerMock
-                .Setup(bp => bp.EnqueueEventsAsync(
-                    It.IsAny<List<EventData>>(),
-                    It.IsAny<CancellationToken>()))
-                .Callback(() => sendFailed(args));
-
             EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
 
+            // This is an illustrative fail handler that can be added to the mock buffered producer.
+
+            Func<SendEventBatchFailedEventArgs, Task> sendFailed = new(async args =>
+            {
+                foreach (EventData eventData in args.EventBatch)
+                {
+                    // Do more complex error handling here...
+
+                    Debug.WriteLine($"Publishing failed for {args.EventBatch.Count} events.  Error: '{args.Exception.Message}'");
+                    await Task.CompletedTask;
+                }
+            });
+
             bufferedProducer.SendEventBatchFailedAsync += sendFailed;
+
+            // For illustrative purposes, enqueue a set of events to be published.
+
+            int numOfEventsToEnqueue = 15;
+            CancellationTokenSource cancellationTokenSource = new();
+
+            for (int index = 0; index < numOfEventsToEnqueue; index++)
+            {
+                EventData eventToEnqueue = new(index.ToString());
+                await bufferedProducer.EnqueueEventAsync(eventToEnqueue, cancellationTokenSource.Token);
+            }
+
+            // This demonstrates how to verify that EnqueueEventAsync was called the correct number of times,
+            // with the expected arguments.
+
+            for (int index = 0; index < numOfEventsToEnqueue; index++)
+            {
+                bufferedProducerMock
+                    .Verify(bp => bp.EnqueueEventAsync(
+                        It.Is<EventData>(e => (e.EventBody.ToString().Equals(index.ToString()))), //TODO: explanation?
+                        It.IsAny<CancellationToken>()));
+            }
+
+            // The following lines demonstrate how to test a fail handler by calling it directly.
+
+            int numEventsInBatch = 12;
+            List<EventData> eventsInBatch = new();
+
+            for (int index = 0; index < numEventsInBatch; index++)
+            {
+                EventData eventToEnqueue = new(index.ToString());
+                await bufferedProducer.EnqueueEventAsync(eventToEnqueue, cancellationTokenSource.Token);
+            }
+
+            SendEventBatchFailedEventArgs args = new SendEventBatchFailedEventArgs(eventsInBatch, new Exception(), "0", default);
+
+            Assert.DoesNotThrowAsync(async () => await sendFailed(args));
+
+            // The expected outcome of any application-specific complex processing can be asserted here.
 
             #endregion
         }
 
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
         [Test]
-        public void BufferedProducerPartitionProps()
+        public async Task MockingProducerProperties()
         {
-            #region Snippet:EventHubs_Sample11_BufferedProducerPartitionProps
+            #region Snippet:EventHubs_Sample11_MockingProducerProperties
 
-            // Create the buffered producer mock
-            Mock<EventHubBufferedProducerClient> bufferedProducerMock = new Mock<EventHubBufferedProducerClient>();
+            // The first part of this snippet demonstrates mocking EventHubProperties on
+            // an EventHubProducerClient. This same method can be used with EventHubBufferedProducerClients
+            // and EventHubConsumerClients as well.
 
-            // Define the partitions and their properties
-            Dictionary<string, PartitionProperties> partitions = new Dictionary<string, PartitionProperties>()
+            Mock<EventHubProducerClient> mockProducer = new();
+
+            // Here we are defining the set of partitions we want for our testing scenario.
+
+            List<string> producerPartitions = new() { "0", "1" };
+
+            // Using the model factory, this call creates a mock of the EventHubProperties.
+
+            EventHubProperties eventHubProperties =
+                EventHubsModelFactory.EventHubProperties(
+                    name: "fakeEventHubName",
+                    createdOn: DateTimeOffset.UtcNow, // arbitrary value
+                    partitionIds: producerPartitions.ToArray());
+
+            // This sets up GetEventHubPropertiesAsync to return the mocked Event Hub properties above.
+
+            mockProducer
+                .Setup(p => p.GetEventHubPropertiesAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(eventHubProperties);
+
+            // This sets up GetPartitionIdsAsync to return the mocked partition Ids above.
+
+            mockProducer
+                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(producerPartitions.ToArray());
+
+            EventHubProducerClient producer = mockProducer.Object;
+
+            // Here we are demonstrating how to access the mocked EventHubProperties for illustrative
+            // purposes.
+
+            EventHubProperties properties = await producer.GetEventHubPropertiesAsync();
+            string eventHubName = properties.Name;
+            Debug.WriteLine($"Sending Events to: {eventHubName}");
+
+            // The second part of this snippet demonstrates mocking PartitionProperties on an
+            // EventHubBufferedProducerClient, which again can be done in the same way for the
+            // EventHubProducerClient and EventHubConsumerClient types.
+
+            Mock<EventHubBufferedProducerClient> bufferedProducerMock = new();
+
+            // This creates the set of partitions to mock for this test, and mocks the PartitionProperty
+            // instances using the model factory.
+
+            Dictionary<string, PartitionProperties> partitionProperties = new()
             {
                 // Non-empty partition
                 { "0", EventHubsModelFactory.PartitionProperties(
@@ -238,13 +283,17 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     lastEnqueuedTime : DateTime.UtcNow) }
             };
 
-            // Set up partition Ids
+            // This sets up GetPartitionIdsAsync to return the set of partition Ids mocked
+            // above.
+
             bufferedProducerMock
                 .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(partitions.Keys.ToArray());
+                .ReturnsAsync(partitionProperties.Keys.ToArray());
 
-            // Set up partition properties
-            foreach (var partition in partitions)
+            // This sets up GetPartitionPropertiesAsync to return the right PartitionProperties
+            // mock for each partition Id input.
+
+            foreach (KeyValuePair<string, PartitionProperties> partition in partitionProperties)
             {
                 bufferedProducerMock
                     .Setup(p => p.GetPartitionPropertiesAsync(
@@ -253,6 +302,26 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     .ReturnsAsync(partition.Value);
             }
 
+            // Here we are demonstrating how to access the mocked partition Ids and PartitionProperties for
+            // illustrative purposes.
+
+            EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
+
+            CancellationTokenSource cancellationTokenSource = new();
+
+            // This gets all the partition Ids and arbitrarily takes the first partition Id.
+
+            string[] partitionIds = await bufferedProducer.GetPartitionIdsAsync(cancellationTokenSource.Token);
+            string partitionId = partitionIds[0];
+
+            // This gets the partition properties for the first partition Id.
+
+            PartitionProperties firstPartitionProperties =
+                await bufferedProducer.GetPartitionPropertiesAsync(partitionId, cancellationTokenSource.Token);
+
+            string isPartitionEmpty = firstPartitionProperties.IsEmpty.ToString();
+
+            Debug.WriteLine($"Sending Events to: {isPartitionEmpty}");
             #endregion
         }
 
@@ -265,69 +334,98 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample11_MockingConsumerClient
 
-            // Create a mock of the EventHubConsumerClient
-            Mock<EventHubConsumerClient> mockConsumer = new Mock<EventHubConsumerClient>();
+            Mock<EventHubConsumerClient> mockConsumer = new();
 
-            List<EventData> receivedEvents = new List<EventData>();
+            // This creates a mock LastEnqueuedEventProperties using the model factory.
 
-            // Setting the TrackLastEnqueuedEventProperties flag to receive LastEnqueuedEventProperties
-            // when reading events
+            LastEnqueuedEventProperties lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
+                lastSequenceNumber : 1234,
+                lastOffset : 234,
+                lastEnqueuedTime : DateTimeOffset.Parse("1:24 AM"),
+                lastReceivedTime : DateTimeOffset.Parse("1:26 AM"));
+
+            // This creates a mock of PartitionContext using the model factory.
+
+            PartitionContext partitionContext = EventHubsModelFactory.PartitionContext(
+                partitionId : "0",
+                lastEnqueuedEventProperties : lastEnqueueEventProperties);
+
+            // This is a simple local method that returns an IAsyncEnumerable to use as the return for
+            // ReadEventsAsync below, since IAsyncEnumerables cannot be created directly.
+
+            async IAsyncEnumerable<PartitionEvent> mockReturn()
+            {
+                for (int index = 0; index < 3; index++)
+                {
+                    // This mocks an EventData instance using the model factory. Different arguments can mock different
+                    // potential outputs from the broker
+
+                    EventData eventData = EventHubsModelFactory.EventData(
+                        eventBody: new BinaryData($"Sample-Event-{ index }"),
+                        systemProperties: new Dictionary<string, object>(), //arbitrary value
+                        partitionKey: "sample-key",
+                        sequenceNumber: 1000,
+                        offset: 1500,
+                        enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
+
+                    // This creates a mock PartitionEvent to return from the consumer client.
+
+                    PartitionEvent samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
+                    List<PartitionEvent> partitionEventList = new List<PartitionEvent> { samplePartitionEvent };
+
+                    // IAsyncEnumerable types can only be returned by async functions, use this await statement to
+                    // synthetically make this method async.
+
+                    await Task.Yield();
+
+                    // Yield statements allow methods to emit multiple outputs, and in async methods, over time.
+
+                    yield return samplePartitionEvent;
+                }
+            }
+
+            // Use the method to mock a return from the consumer. We are setting up the method to return partition events that
+            // include the last enqueued event properties if the tracking flag is set in the options.
+
+            mockConsumer
+                .Setup(c => c.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.Is<ReadEventOptions>(opts => opts.TrackLastEnqueuedEventProperties),
+                    It.IsAny<CancellationToken>()))
+                .Returns(mockReturn());
+
+            // This sets up the consumer client to return a mocked set of partition Ids.
+
+            string[] consumerPartitions = new string[] { "0", "1" };
+
+            mockConsumer
+                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(consumerPartitions);
+
+            // The follow demonstrates how to use the mocked methods.
+
+            EventHubConsumerClient consumer = mockConsumer.Object;
+
+            using CancellationTokenSource cancellationTokenSource = new();
+
+            // Here we are setting the TrackLastEnqueuedEventProperties flag so that the EventHubConsumerClient receives
+            // LastEnqueuedEventProperties when reading events.
+
             ReadEventOptions options = new ReadEventOptions
             {
                 TrackLastEnqueuedEventProperties = true
             };
 
-            // Create a mock of LastEnqueuedEventProperties using the model factory
-            LastEnqueuedEventProperties lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
-                lastSequenceNumber : default,
-                lastOffset : default,
-                lastEnqueuedTime : default,
-                lastReceivedTime : default);
+            string firstPartition = (await consumer.GetPartitionIdsAsync(cancellationTokenSource.Token)).First();
+            EventPosition startingPosition = EventPosition.Earliest;
 
-            // Create a mock of PartitionContext using the model factory
-            PartitionContext partitionContext = EventHubsModelFactory.PartitionContext(
-                partitionId : "0",
-                lastEnqueuedEventProperties : lastEnqueueEventProperties);
-
-            // Mock an EventData instance, different arguments can simulate different potential
-            // outputs from the broker
-            EventData eventData = EventHubsModelFactory.EventData(
-                eventBody : new BinaryData("Sample-Event"),
-                systemProperties : default,
-                partitionKey : default,
-                sequenceNumber : default,
-                offset : default,
-                enqueuedTime : default);
-
-            // Create a mock of a partition event
-            PartitionEvent samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
-            List<PartitionEvent> partitionEventList = new List<PartitionEvent>{ samplePartitionEvent };
-
-            // Define a simple local method that returns an IAsyncEnumerable to use as the return for
-            // ReadEventsAsync below.
-            async IAsyncEnumerable<PartitionEvent> mockReturn(PartitionEvent samplePartitionEvent)
+            await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(firstPartition, startingPosition, options, cancellationTokenSource.Token))
             {
-                await Task.Yield();
-                yield return samplePartitionEvent;
+                // This is where application code would be handling partition events.
             }
 
-            // Use this PartitionEvent to mock a return from the consumer, because ReadEvents returns an IAsyncEnumerable a separate
-            // method is needed to properly set up this method. Return the partition event that includes the last enqueued event properties
-            // if the tracking flag is set in the options.
-            mockConsumer
-                .Setup(c => c.ReadEventsAsync(
-                    It.Is<ReadEventOptions>(opts => opts.TrackLastEnqueuedEventProperties),
-                    It.IsAny<CancellationToken>()))
-                .Returns(mockReturn(samplePartitionEvent));
-
-            EventHubConsumerClient consumer = mockConsumer.Object;
-
-            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-            await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync(options, cancellationTokenSource.Token))
-            {
-                Assert.AreEqual(receivedEvent.Data, eventData);
-            }
+            // This is where applications can verify that the partition events output by the consumer client were handled as expected.
             #endregion
         }
 
@@ -348,11 +446,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 // outputs from the broker
                 EventData eventData = EventHubsModelFactory.EventData(
                     eventBody: new BinaryData($"Sample-Event-{i}"),
-                    systemProperties: default,
-                    partitionKey: "0",
-                    sequenceNumber: default,
-                    offset: default,
-                    enqueuedTime: default);
+                    systemProperties: new Dictionary<string, object>(), //arbitrary value
+                    partitionKey: $"sample-key-{i}",
+                    sequenceNumber: 1234,
+                    offset: 234,
+                    enqueuedTime: DateTimeOffset.Parse("9:25 AM"));
 
                 receivedEvents.Add(eventData);
             }
