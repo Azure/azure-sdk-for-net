@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="rights"> Rights that this key has. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, AccessRightsDescription rights)
+        public SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, DeviceProvisioningServicesAccessKeyRight rights)
         {
             if (keyName == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="primaryKey"> Primary SAS key value. </param>
         /// <param name="secondaryKey"> Secondary SAS key value. </param>
         /// <param name="rights"> Rights that this key has. </param>
-        internal SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, string primaryKey, string secondaryKey, AccessRightsDescription rights)
+        internal SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, string primaryKey, string secondaryKey, DeviceProvisioningServicesAccessKeyRight rights)
         {
             KeyName = keyName;
             PrimaryKey = primaryKey;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Secondary SAS key value. </summary>
         public string SecondaryKey { get; set; }
         /// <summary> Rights that this key has. </summary>
-        public AccessRightsDescription Rights { get; set; }
+        public DeviceProvisioningServicesAccessKeyRight Rights { get; set; }
     }
 }

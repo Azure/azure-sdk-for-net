@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             string keyName = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
-            AccessRightsDescription rights = default;
+            DeviceProvisioningServicesAccessKeyRight rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (property.NameEquals("rights"))
                 {
-                    rights = new AccessRightsDescription(property.Value.GetString());
+                    rights = new DeviceProvisioningServicesAccessKeyRight(property.Value.GetString());
                     continue;
                 }
             }

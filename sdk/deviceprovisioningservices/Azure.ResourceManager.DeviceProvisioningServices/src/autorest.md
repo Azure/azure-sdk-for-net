@@ -48,4 +48,63 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+override-operation-name:
+  IotDpsResource_ListKeysForKeyName: GetKey
+  IotDpsResource_CheckProvisioningServiceNameAvailability: CheckDeviceProvisioningServicesNameAvailability
+
+rename-mapping:
+  CertificateResponse: DeviceProvisioningServicesCertificate
+  CertificateProperties: DeviceProvisioningServicesCertificateProperties
+  CertificateProperties.expiry: ExpireOn
+  CertificateProperties.created: CreatedOn
+  CertificateProperties.updated: UpdatedOn
+  VerificationCodeResponse: CertificateVerificationCodeResult
+  VerificationCodeResponse.properties.expiry: ExpireOn
+  VerificationCodeResponse.properties.created: CreatedOn
+  VerificationCodeResponse.properties.updated: UpdatedOn
+  VerificationCodeResponseProperties: CertificateVerificationCodeProperties
+  VerificationCodeRequest: CertificateVerificationCodeContent
+  PrivateEndpointConnectionProperties: DeviceProvisioningServicesPrivateEndpointConnectionProperties
+  GroupIdInformation: DeviceProvisioningServicesPrivateLinkResource
+  GroupIdInformationProperties: DeviceProvisioningServicesPrivateLinkResourceProperties
+  ProvisioningServiceDescription: DeviceProvisioningService
+  IotDpsPropertiesDescription: DeviceProvisioningServiceProperties
+  IotDpsPropertiesDescription.enableDataResidency: IsDataResidencyEnabled
+  IotDpsSkuInfo: DeviceProvisioningServicesSkuInfo
+  IotDpsSku: DeviceProvisioningServicesSku
+  IotDpsSkuDefinition: DeviceProvisioningServicesSkuDefinition
+  SharedAccessSignatureAuthorizationRule[AccessRightsDescription]: DeviceProvisioningServicesSharedAccessKey
+  OperationInputs: DeviceProvisioningServicesNameAvailabilityContent
+  NameAvailabilityInfo: DeviceProvisioningServicesNameAvailabilityResult
+  NameUnavailabilityReason: DeviceProvisioningServicesNameUnavailableReason
+  AccessRightsDescription: DeviceProvisioningServicesAccessKeyRight
+  AllocationPolicy: DeviceProvisioningServicesAllocationPolicy
+  PrivateLinkServiceConnectionStatus: DeviceProvisioningServicesPrivateLinkServiceConnectionStatus
+  IpFilterRule: DeviceProvisioningServicesIPFilterRule
+  IpFilterActionType: DeviceProvisioningServicesIPFilterActionType
+  IpFilterTargetType: DeviceProvisioningServicesIPFilterTargetType
+  PublicNetworkAccess: DeviceProvisioningServicesPublicNetworkAccess
+  State: DeviceProvisioningServicesState
+
+directive:
+  - from: iotdps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}'].delete.parameters
+    transform: >
+      $[5].name = 'certificateCommonName';
+      $[9].name = 'certificateCreatedOn';
+      $[10].name = 'certificateLastUpdatedOn';
+  - from: iotdps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/generateVerificationCode'].post.parameters
+    transform: >
+      $[5].name = 'certificateCommonName';
+      $[9].name = 'certificateCreatedOn';
+      $[10].name = 'certificateLastUpdatedOn';
+  - from: iotdps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}/verify'].post.parameters
+    transform: >
+      $[6].name = 'certificateCommonName';
+      $[10].name = 'certificateCreatedOn';
+      $[11].name = 'certificateLastUpdatedOn';
+  - remove-operation: IotDpsResource_GetOperationResult
+
 ```
