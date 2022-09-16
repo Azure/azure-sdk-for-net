@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         [RecordedTest]
-        //[Ignore("Dangerous operations")]
+        [PlaybackOnly("Dangerous operations")]
         public async Task CancelSubscription()
         {
             var response = await _subscription.CancelSubscriptionAsync();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         }
 
         [RecordedTest]
-        //[Ignore("Dangerous operations")]
+        [PlaybackOnly("Dangerous operations")]
         public async Task RenameSubscription()
         {
             SubscriptionName data = new SubscriptionName()
