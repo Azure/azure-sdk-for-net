@@ -44,8 +44,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         {
             using (var testActivity1 = activitySource.StartActivity("TestInternalActivity", ActivityKind.Internal))
             {
-                // Note: These will not be ingested because
-                // the ActivityFilteringProcessor will drop Internal Activities.
+                // Note: This activity will be dropped due to
+                // the ActivityFilteringProcessor filtering Internal Activities.
                 testActivity1?.SetTag("CustomTag1", "Value1");
                 testActivity1?.SetTag("CustomTag2", "Value2");
             }
