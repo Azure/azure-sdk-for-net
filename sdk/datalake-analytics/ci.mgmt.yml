@@ -9,5 +9,5 @@ extends:
   parameters:
     ServiceDirectory: datalake-analytics
     Artifacts:
-    - name: Azure.ResourceManager.DataLake.Analytics
+    - name: Azure.ResourceManager.DataLakeAnalytics
       safeName: AzureResourceManagerDataLakeAnalytics

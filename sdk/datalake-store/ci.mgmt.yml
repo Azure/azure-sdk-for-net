@@ -9,5 +9,5 @@ extends:
   parameters:
     ServiceDirectory: datalake-store
     Artifacts:
-    - name: Azure.ResourceManager.DataLake.Store
+    - name: Azure.ResourceManager.DataLakeStore
       safeName: AzureResourceManagerDataLakeStore
