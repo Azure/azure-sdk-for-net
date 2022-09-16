@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         public TriggerPartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId)
-            : base(fullyQualifiedNamespace ?? "default", eventHubName ?? "default", consumerGroup ?? "default", partitionId)
+            : base(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId)
         {
         }
     }

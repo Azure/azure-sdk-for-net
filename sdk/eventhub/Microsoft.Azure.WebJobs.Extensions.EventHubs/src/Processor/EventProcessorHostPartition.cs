@@ -58,12 +58,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         private class EventProcessorHostPartitionContext : TriggerPartitionContext
         {
+            private const string DefaultProcessorHostParameter = "default";
             private readonly EventProcessorHostPartition _hostPartition;
 
             public EventProcessorHostPartitionContext(EventProcessorHostPartition hostPartition)
-                : base(hostPartition.ProcessorHost.FullyQualifiedNamespace,
-                    hostPartition.ProcessorHost.EventHubName,
-                    hostPartition.ProcessorHost.ConsumerGroup,
+                : base(hostPartition.ProcessorHost.FullyQualifiedNamespace ?? DefaultProcessorHostParameter,
+                    hostPartition.ProcessorHost.EventHubName ?? DefaultProcessorHostParameter,
+                    hostPartition.ProcessorHost.ConsumerGroup ?? DefaultProcessorHostParameter,
                     hostPartition.PartitionId)
             {
                 _hostPartition = hostPartition;
