@@ -78,7 +78,7 @@ Some key concepts for OpenTelemetry include:
   OpenTelemetry is a set of libraries used to collect and export telemetry data
   (metrics, logs, and traces) for analysis in order to understand your software's performance and behavior.
 
-- [Instrumentation](instrumentation_library):
+- [Instrumentation](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/overview.md#instrumentation-libraries):
   The ability to call the OpenTelemetry API directly by any application is
   facilitated by instrumentation. A library that enables OpenTelemetry observability for another library is called an Instrumentation Library.
 
