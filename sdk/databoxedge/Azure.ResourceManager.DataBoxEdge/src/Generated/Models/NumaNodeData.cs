@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of NumaNodeData. </summary>
         /// <param name="numaNodeIndex"> The NUMA node index. </param>
-        /// <param name="totalMemoryInMb"> The total memory on the NUMA node. </param>
+        /// <param name="totalMemoryInMB"> The total memory on the NUMA node. </param>
         /// <param name="logicalCoreCountPerCore"> The logical cores per core count. </param>
         /// <param name="effectiveAvailableMemoryInMB"> The effective available memory on the NUMA node in MB. </param>
         /// <param name="freeVCpuIndexesForHpn"> The free VCPU indices for the Hpn VMs. </param>
         /// <param name="vCpuIndexesForHpn"> The VCPU indices for Hpn VMs. </param>
         /// <param name="vCpuIndexesForRoot"> The VCPU indices for the root. </param>
-        internal NumaNodeData(int? numaNodeIndex, long? totalMemoryInMb, int? logicalCoreCountPerCore, long? effectiveAvailableMemoryInMB, IList<int> freeVCpuIndexesForHpn, IList<int> vCpuIndexesForHpn, IList<int> vCpuIndexesForRoot)
+        internal NumaNodeData(int? numaNodeIndex, long? totalMemoryInMB, int? logicalCoreCountPerCore, long? effectiveAvailableMemoryInMB, IList<int> freeVCpuIndexesForHpn, IList<int> vCpuIndexesForHpn, IList<int> vCpuIndexesForRoot)
         {
             NumaNodeIndex = numaNodeIndex;
-            TotalMemoryInMb = totalMemoryInMb;
+            TotalMemoryInMB = totalMemoryInMB;
             LogicalCoreCountPerCore = logicalCoreCountPerCore;
             EffectiveAvailableMemoryInMB = effectiveAvailableMemoryInMB;
             FreeVCpuIndexesForHpn = freeVCpuIndexesForHpn;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The NUMA node index. </summary>
         public int? NumaNodeIndex { get; set; }
         /// <summary> The total memory on the NUMA node. </summary>
-        public long? TotalMemoryInMb { get; set; }
+        public long? TotalMemoryInMB { get; set; }
         /// <summary> The logical cores per core count. </summary>
         public int? LogicalCoreCountPerCore { get; set; }
         /// <summary> The effective available memory on the NUMA node in MB. </summary>
