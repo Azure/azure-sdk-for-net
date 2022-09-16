@@ -31,7 +31,7 @@ namespace Azure.Core.Pipeline
         ///
         /// </summary>
         /// <param name="options"></param>
-        public RetryPolicy(RetryOptions options)
+        protected RetryPolicy(RetryOptions options)
         {
             _mode = options.Mode;
             _delay = options.Delay;
