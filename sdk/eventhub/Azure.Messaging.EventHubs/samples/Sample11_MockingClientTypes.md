@@ -3,7 +3,7 @@
 
 Event Hubs is built to support unit testing with mocks, as described in the [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking). This is an important feature of the library that allows developers to write tests that are completely focused on their own application logic, though they depend on the Event Hubs types.
 
-The following examples focus on scenarios likely to occur in applications, and demonstrate how to mock the Event Hubs types typically used in each scenario. The code snippets utilize the mock object framework Moq in order to provide practical examples, however many mocking frameworks exist and can be used with the same approach in mind.
+The following examples focus on scenarios likely to occur in applications, and demonstrate how to mock the Event Hubs types typically used in each scenario. The code snippets utilize the mock object framework, Moq, in order to provide practical examples. However, many mocking frameworks exist and can be used with the same approach in mind.
 
 ## Publishing events with the `EventHubProducerClient`
 
@@ -110,11 +110,11 @@ foreach (EventData eventData in backingList)
 Assert.AreEqual(backingList.Count, sourceEvents.Count);
 ```
 
-## Reading Event Hub properties with an `EventHubProducerClient` or `EventHubBufferedProducerClient`
+## Reading Event Hub metadata with an `EventHubProducerClient` or `EventHubBufferedProducerClient`
 
-Many applications make decisions for publishing based on the properties of the Event Hub itself or the properties of its partitions. Both can be mocked using the `EventHubsModelFactory`. The following example demonstrates how to mock an `EventHubProducerClient` that is publishing to an Event Hub with a set of two partitions with different ownership levels.
+Many applications make decisions for publishing based on the properties of the Event Hub itself or the properties of its partitions. Both can be mocked using the `EventHubsModelFactory`. The following snippet demonstrates how to mock Event Hub properties for both the `EventHubBufferedProducerClient` and the `EventHubProducerClient`, and how to set up the mock to return a cohesive set of values for each of the accompanying methods.
 
-These mocked properties can be used to test expected application behavior given a specific set of Event Hub properties. These property types can be mocked in the same way for the `EventHubConsumerClient` and the `EventHubBufferedProducerClient`.
+These mocked properties can be used to test expected application behavior given a specific set of Event Hub properties. These property types can be mocked in the same way for the `EventHubConsumerClient`.
 
 ```C# Snippet:EventHubs_Sample11_MockingProducerProperties
 // The first part of this snippet demonstrates mocking EventHubProperties on
@@ -231,9 +231,9 @@ Debug.WriteLine($"Sending Events to: {isPartitionEmpty}");
 
 ## Publishing events using an `EventHubBufferedProducerClient`
 
-The following snippet demonstrates how to mock the `EventHubBufferedProducerClient`. In this scenario, the failed handler decides to add events to the end of the queue after failing to send. A test could then verify that `EnqueueEventAsync` was called to make sure that their failed handler was working as expected.
+The following snippet demonstrates how to mock the `EventHubBufferedProducerClient`. When using the buffered producer to publish events the important methods calls to test are calls to `EnqueueEventAsync` or `EnqueueEventsAsync`. 
 
-A mock of the `EventHubBufferedProducer` client could also be used in the same way as the `EventHubProducerClient` mock in the first scenario in this document, by verifying that `EnqueueEventAsync` or its variations are called with the expected arguments. As emphasized throughout this document, testing code that uses the `EventHubBufferedProducer` client should focus on the code written in the actual application, not the functionality of the buffered producer itself. 
+This snippet also demonstrates testing a send event failed handler. Fail and success handlers can be called and validated directly when testing, since it is guaranteed that they will be correctly called when appropriate.
 
 ```C# Snippet:EventHubs_Sample11_MockingBufferedProducer
 Mock<EventHubBufferedProducerClient> bufferedProducerMock = new();
@@ -309,7 +309,9 @@ Assert.DoesNotThrowAsync(async () => await sendFailed(args));
 
 ## Consuming events and reading properties from an `EventHubConsumerClient`
 
-When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to create a known set of expected events and contexts to verify that their application consumes them correctly.  Tests can mock the expected data and use it with the consumer client for these scenarios.
+When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to create a known set of expected events and contexts to verify that their application consumes them correctly.  Tests can mock `EventData` instances coming from the broker using the `EventHubModelFactory`. These can be used within the consumer client mock to mock returns from `ReadEventsFromPartitionAsync`, which is the most important interaction for this client for most applications. 
+
+This snippet also demonstrates how to mock `LastEnqueuedEventProperties` using the `EventHubsModelFactory`.
 
 ```C# Snippet:EventHubs_Sample11_MockingConsumerClient
 Mock<EventHubConsumerClient> mockConsumer = new();
@@ -411,7 +413,7 @@ await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionA
 
 The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch. 
 
-Given the purpose of the `PartitionReceiver`, it is anticipated that most applications will have complex code surrounding their receivers, meaning mocking these data types can be especially helpful.
+Given the purpose of the `PartitionReceiver`, it is anticipated that most applications will have complex code surrounding their receivers, so this snippet is relatively simple, with the focus being on using the `EventHubsModelFactory` to mock events being returned from the broker.
 
 ```C# Snippet:EventHubs_Sample11_PartitionReceiverMock
 Mock<PartitionReceiver> mockReceiver = new();
