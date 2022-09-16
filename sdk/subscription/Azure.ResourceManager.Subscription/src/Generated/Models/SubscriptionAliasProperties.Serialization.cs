@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<string> resellerId = default;
             Optional<string> subscriptionOwnerId = default;
             Optional<string> managementGroupId = default;
-            Optional<string> createdTime = default;
+            Optional<DateTimeOffset> createdTime = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,7 +102,12 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    createdTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -121,7 +126,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Optional.ToNullable(acceptOwnershipState), billingScope.Value, Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, createdTime.Value, Optional.ToDictionary(tags));
+            return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Optional.ToNullable(acceptOwnershipState), billingScope.Value, Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, Optional.ToNullable(createdTime), Optional.ToDictionary(tags));
         }
     }
 }

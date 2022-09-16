@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// The Management Group Id.
         /// Serialized Name: SubscriptionAliasResponseProperties.managementGroupId
         /// </param>
-        /// <param name="createdTime">
+        /// <param name="createdOn">
         /// Created Time
         /// Serialized Name: SubscriptionAliasResponseProperties.createdTime
         /// </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// Tags for the subscription
         /// Serialized Name: SubscriptionAliasResponseProperties.tags
         /// </param>
-        internal SubscriptionAliasProperties(string subscriptionId, string displayName, SubscriptionProvisioningState? provisioningState, Uri acceptOwnershipUri, AcceptOwnershipState? acceptOwnershipState, string billingScope, SubscriptionWorkload? workload, string resellerId, string subscriptionOwnerId, string managementGroupId, string createdTime, IReadOnlyDictionary<string, string> tags)
+        internal SubscriptionAliasProperties(string subscriptionId, string displayName, SubscriptionProvisioningState? provisioningState, Uri acceptOwnershipUri, AcceptOwnershipState? acceptOwnershipState, string billingScope, SubscriptionWorkload? workload, string resellerId, string subscriptionOwnerId, string managementGroupId, DateTimeOffset? createdOn, IReadOnlyDictionary<string, string> tags)
         {
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Subscription.Models
             ResellerId = resellerId;
             SubscriptionOwnerId = subscriptionOwnerId;
             ManagementGroupId = managementGroupId;
-            CreatedTime = createdTime;
+            CreatedOn = createdOn;
             Tags = tags;
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// Created Time
         /// Serialized Name: SubscriptionAliasResponseProperties.createdTime
         /// </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// Tags for the subscription
         /// Serialized Name: SubscriptionAliasResponseProperties.tags

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// Tags for the subscription
         /// Serialized Name: AcceptOwnershipStatusResponse.tags
         /// </param>
-        internal AcceptOwnershipStatus(string subscriptionId, AcceptOwnershipState? acceptOwnershipState, AcceptOwnershipProvisioningState? provisioningState, string billingOwner, string subscriptionTenantId, string displayName, IReadOnlyDictionary<string, string> tags)
+        internal AcceptOwnershipStatus(string subscriptionId, AcceptOwnershipState? acceptOwnershipState, AcceptOwnershipProvisioningState? provisioningState, string billingOwner, Guid? subscriptionTenantId, string displayName, IReadOnlyDictionary<string, string> tags)
         {
             SubscriptionId = subscriptionId;
             AcceptOwnershipState = acceptOwnershipState;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// Tenant Id of the subscription
         /// Serialized Name: AcceptOwnershipStatusResponse.subscriptionTenantId
         /// </summary>
-        public string SubscriptionTenantId { get; }
+        public Guid? SubscriptionTenantId { get; }
         /// <summary>
         /// The display name of the subscription.
         /// Serialized Name: AcceptOwnershipStatusResponse.displayName

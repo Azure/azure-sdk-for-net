@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// Tenant Id of the subscription
         /// Serialized Name: PutAliasRequestAdditionalProperties.subscriptionTenantId
         /// </summary>
-        public string SubscriptionTenantId { get; set; }
+        public Guid? SubscriptionTenantId { get; set; }
         /// <summary>
         /// Owner Id of the subscription
         /// Serialized Name: PutAliasRequestAdditionalProperties.subscriptionOwnerId

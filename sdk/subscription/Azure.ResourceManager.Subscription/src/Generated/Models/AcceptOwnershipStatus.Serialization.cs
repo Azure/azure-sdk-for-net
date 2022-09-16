@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<AcceptOwnershipState> acceptOwnershipState = default;
             Optional<AcceptOwnershipProvisioningState> provisioningState = default;
             Optional<string> billingOwner = default;
-            Optional<string> subscriptionTenantId = default;
+            Optional<Guid> subscriptionTenantId = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +57,12 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (property.NameEquals("subscriptionTenantId"))
                 {
-                    subscriptionTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subscriptionTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new AcceptOwnershipStatus(subscriptionId.Value, Optional.ToNullable(acceptOwnershipState), Optional.ToNullable(provisioningState), billingOwner.Value, subscriptionTenantId.Value, displayName.Value, Optional.ToDictionary(tags));
+            return new AcceptOwnershipStatus(subscriptionId.Value, Optional.ToNullable(acceptOwnershipState), Optional.ToNullable(provisioningState), billingOwner.Value, Optional.ToNullable(subscriptionTenantId), displayName.Value, Optional.ToDictionary(tags));
         }
     }
 }

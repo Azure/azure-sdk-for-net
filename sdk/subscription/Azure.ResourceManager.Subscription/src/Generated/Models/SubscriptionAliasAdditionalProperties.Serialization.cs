@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(SubscriptionTenantId))
             {
                 writer.WritePropertyName("subscriptionTenantId");
-                writer.WriteStringValue(SubscriptionTenantId);
+                writer.WriteStringValue(SubscriptionTenantId.Value);
             }
             if (Optional.IsDefined(SubscriptionOwnerId))
             {

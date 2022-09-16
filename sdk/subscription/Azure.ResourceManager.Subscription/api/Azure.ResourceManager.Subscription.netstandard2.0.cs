@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public string DisplayName { get { throw null; } }
         public Azure.ResourceManager.Subscription.Models.AcceptOwnershipProvisioningState? ProvisioningState { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-        public string SubscriptionTenantId { get { throw null; } }
+        public System.Guid? SubscriptionTenantId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class BillingAccountPolicyProperties
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public SubscriptionAliasAdditionalProperties() { }
         public string ManagementGroupId { get { throw null; } set { } }
         public string SubscriptionOwnerId { get { throw null; } set { } }
-        public string SubscriptionTenantId { get { throw null; } set { } }
+        public System.Guid? SubscriptionTenantId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SubscriptionAliasCreateOrUpdateContent
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public Azure.ResourceManager.Subscription.Models.AcceptOwnershipState? AcceptOwnershipState { get { throw null; } }
         public System.Uri AcceptOwnershipUri { get { throw null; } }
         public string BillingScope { get { throw null; } }
-        public string CreatedTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string ManagementGroupId { get { throw null; } }
         public Azure.ResourceManager.Subscription.Models.SubscriptionProvisioningState? ProvisioningState { get { throw null; } }
