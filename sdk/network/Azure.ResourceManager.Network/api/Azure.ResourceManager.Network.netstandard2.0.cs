@@ -290,6 +290,16 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BackendAddressPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BackendAddressPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BackendAddressPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BackendAddressPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public abstract partial class BaseSecurityRuleResource : Azure.ResourceManager.ArmResource
+    {
+        protected BaseSecurityRuleResource() { }
+        public virtual Azure.ResourceManager.Network.SecurityRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public partial class BastionHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.BastionHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BastionHostResource>, System.Collections.IEnumerable
     {
         protected BastionHostCollection() { }
@@ -584,15 +594,15 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.DefaultSecurityRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.DefaultSecurityRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DefaultSecurityRuleResource : Azure.ResourceManager.ArmResource
+    public partial class DefaultSecurityRuleResource : Azure.ResourceManager.Network.BaseSecurityRuleResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DefaultSecurityRuleResource() { }
-        public virtual Azure.ResourceManager.Network.SecurityRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Network.DefaultSecurityRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DefaultSecurityRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new Azure.Response<Azure.ResourceManager.Network.DefaultSecurityRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DefaultSecurityRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DscpConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.DscpConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.DscpConfigurationResource>, System.Collections.IEnumerable
     {
@@ -3357,17 +3367,17 @@ namespace Azure.ResourceManager.Network
         public string SourcePortRange { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourcePortRanges { get { throw null; } }
     }
-    public partial class SecurityRuleResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityRuleResource : Azure.ResourceManager.Network.BaseSecurityRuleResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityRuleResource() { }
-        public virtual Azure.ResourceManager.Network.SecurityRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string securityRuleName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Network.SecurityRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.SecurityRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new Azure.Response<Azure.ResourceManager.Network.SecurityRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.SecurityRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BaseSecurityRuleResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.SecurityRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.SecurityRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.SecurityRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.SecurityRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
