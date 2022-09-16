@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StorageSyncResourceType(string value) { throw null; }
-        public static Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType MicrosoftStorageSyncStorageSyncServices { get { throw null; } }
+        public static Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType Microsoft_StorageSync_StorageSyncServices { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
