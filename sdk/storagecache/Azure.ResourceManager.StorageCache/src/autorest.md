@@ -100,6 +100,9 @@ rename-rules:
 override-operation-name:
   Caches_SpaceAllocation: UpdateSpaceAllocation
   StorageTargets_DnsRefresh: RefreshDns
+  AscUsages_List: GetStorageCacheUsages
+  Skus_List: GetStorageCacheSkus
+  Caches_DebugInfo: EnableDebugInfo
 
 directive:
   - remove-operation: AscOperations_Get

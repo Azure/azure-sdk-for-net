@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageCacheSku> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<StorageCacheSku> GetStorageCacheSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStorageCacheSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageCacheSku> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<StorageCacheSku> GetStorageCacheSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSkus(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStorageCacheSkus(cancellationToken);
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageCacheUsage> GetAscUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<StorageCacheUsage> GetStorageCacheUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAscUsagesAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStorageCacheUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageCacheUsage> GetAscUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<StorageCacheUsage> GetStorageCacheUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAscUsages(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStorageCacheUsages(location, cancellationToken);
         }
 
         /// <summary>

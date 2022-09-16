@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageCacheSku> GetSkusAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageCacheSku> GetStorageCacheSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<StorageCacheSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
                 scope.Start();
                 try
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache
             }
             async Task<Page<StorageCacheSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
                 scope.Start();
                 try
                 {
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageCacheSku> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageCacheSku> GetStorageCacheSkus(CancellationToken cancellationToken = default)
         {
             Page<StorageCacheSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
                 scope.Start();
                 try
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageCache
             }
             Page<StorageCacheSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
                 scope.Start();
                 try
                 {
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageCacheUsage> GetAscUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageCacheUsage> GetStorageCacheUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<StorageCacheUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAscUsages");
+                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
                 scope.Start();
                 try
                 {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StorageCache
             }
             async Task<Page<StorageCacheUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAscUsages");
+                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
                 scope.Start();
                 try
                 {
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageCacheUsage> GetAscUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageCacheUsage> GetStorageCacheUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<StorageCacheUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAscUsages");
+                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
                 scope.Start();
                 try
                 {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageCache
             }
             Page<StorageCacheUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAscUsages");
+                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
                 scope.Start();
                 try
                 {
