@@ -118,7 +118,7 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ValidInputFromObjectAsJsonNoBatchingAsync()
         {
-            LogsIngestionClient client = CreateClient();
+             LogsIngestionClient client = CreateClient();
 
             BinaryData data = BinaryData.FromObjectAsJson(
                 // Use an anonymous type to create the payload

@@ -24,8 +24,8 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[0]
-  transform: $['x-accessibility'] = "internal";
+  where: $.parameters.Endpoint
+  transform: $.format = "url";
 ```
 ### Updates default parameter contentEncoding value from null to gzip in Upload method
 ``` yaml
@@ -38,6 +38,6 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
-  transform: $["x-ms-client-default"] = "gzip";
+  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post
+  transform: $['x-accessibility'] = "internal";
 ```
