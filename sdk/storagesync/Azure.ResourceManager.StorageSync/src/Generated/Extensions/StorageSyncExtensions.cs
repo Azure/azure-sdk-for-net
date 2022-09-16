@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<StorageSyncNameAvailabilityResult>> CheckNameAvailabilityStorageSyncServiceAsync(this SubscriptionResource subscriptionResource, string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<StorageSyncNameAvailabilityResult>> CheckStorageSyncNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityStorageSyncServiceAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckStorageSyncNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static Response<StorageSyncNameAvailabilityResult> CheckNameAvailabilityStorageSyncService(this SubscriptionResource subscriptionResource, string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<StorageSyncNameAvailabilityResult> CheckStorageSyncNameAvailability(this SubscriptionResource subscriptionResource, string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityStorageSyncService(locationName, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckStorageSyncNameAvailability(locationName, content, cancellationToken);
         }
 
         /// <summary>
@@ -217,39 +217,39 @@ namespace Azure.ResourceManager.StorageSync
         }
         #endregion
 
-        #region ServerEndpointResource
+        #region StorageSyncServerEndpointResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="ServerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncServerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncServerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncServerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerEndpointResource" /> object. </returns>
-        public static ServerEndpointResource GetServerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageSyncServerEndpointResource" /> object. </returns>
+        public static StorageSyncServerEndpointResource GetStorageSyncServerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerEndpointResource.ValidateResourceId(id);
-                return new ServerEndpointResource(client, id);
+                StorageSyncServerEndpointResource.ValidateResourceId(id);
+                return new StorageSyncServerEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RegisteredServerResource
+        #region StorageSyncRegisteredServerResource
         /// <summary>
-        /// Gets an object representing a <see cref="RegisteredServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegisteredServerResource.CreateResourceIdentifier" /> to create a <see cref="RegisteredServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncRegisteredServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncRegisteredServerResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncRegisteredServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegisteredServerResource" /> object. </returns>
-        public static RegisteredServerResource GetRegisteredServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageSyncRegisteredServerResource" /> object. </returns>
+        public static StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RegisteredServerResource.ValidateResourceId(id);
-                return new RegisteredServerResource(client, id);
+                StorageSyncRegisteredServerResource.ValidateResourceId(id);
+                return new StorageSyncRegisteredServerResource(client, id);
             }
             );
         }

@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> The parameters used when creating a registered server. </summary>
-    public partial class RegisteredServerCreateOrUpdateContent : ResourceData
+    public partial class StorageSyncRegisteredServerCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of RegisteredServerCreateOrUpdateContent. </summary>
-        public RegisteredServerCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of StorageSyncRegisteredServerCreateOrUpdateContent. </summary>
+        public StorageSyncRegisteredServerCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of RegisteredServerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of StorageSyncRegisteredServerCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="clusterName"> Registered Server clusterName. </param>
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
-        internal RegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName) : base(id, name, resourceType, systemData)
+        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;

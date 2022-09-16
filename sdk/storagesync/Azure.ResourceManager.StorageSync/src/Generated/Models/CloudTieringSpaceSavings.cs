@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of CloudTieringSpaceSavings. </summary>
-        /// <param name="lastUpdatedTimestamp"> Last updated timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="volumeSizeInBytes"> Volume size. </param>
-        /// <param name="totalSizeCloudBytes"> Total size of content in the azure file share. </param>
+        /// <param name="cloudTotalSizeInBytes"> Total size of content in the azure file share. </param>
         /// <param name="cachedSizeInBytes"> Cached content size on the server. </param>
         /// <param name="spaceSavingsPercent"> Percentage of cached size over total size. </param>
         /// <param name="spaceSavingsInBytes"> Count of bytes saved on the server. </param>
-        internal CloudTieringSpaceSavings(DateTimeOffset? lastUpdatedTimestamp, long? volumeSizeInBytes, long? totalSizeCloudBytes, long? cachedSizeInBytes, int? spaceSavingsPercent, long? spaceSavingsInBytes)
+        internal CloudTieringSpaceSavings(DateTimeOffset? lastUpdatedOn, long? volumeSizeInBytes, long? cloudTotalSizeInBytes, long? cachedSizeInBytes, int? spaceSavingsPercent, long? spaceSavingsInBytes)
         {
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             VolumeSizeInBytes = volumeSizeInBytes;
-            TotalSizeCloudBytes = totalSizeCloudBytes;
+            CloudTotalSizeInBytes = cloudTotalSizeInBytes;
             CachedSizeInBytes = cachedSizeInBytes;
             SpaceSavingsPercent = spaceSavingsPercent;
             SpaceSavingsInBytes = spaceSavingsInBytes;
         }
 
         /// <summary> Last updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Volume size. </summary>
         public long? VolumeSizeInBytes { get; }
         /// <summary> Total size of content in the azure file share. </summary>
-        public long? TotalSizeCloudBytes { get; }
+        public long? CloudTotalSizeInBytes { get; }
         /// <summary> Cached content size on the server. </summary>
         public long? CachedSizeInBytes { get; }
         /// <summary> Percentage of cached size over total size. </summary>

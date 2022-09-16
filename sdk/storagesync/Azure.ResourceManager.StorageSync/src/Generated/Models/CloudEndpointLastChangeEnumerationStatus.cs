@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of CloudEndpointLastChangeEnumerationStatus. </summary>
-        /// <param name="startedTimestamp"> Timestamp when change enumeration started. </param>
-        /// <param name="completedTimestamp"> Timestamp when change enumeration completed. </param>
+        /// <param name="startedOn"> Timestamp when change enumeration started. </param>
+        /// <param name="completedOn"> Timestamp when change enumeration completed. </param>
         /// <param name="namespaceFilesCount"> Count of files in the namespace. </param>
         /// <param name="namespaceDirectoriesCount"> Count of directories in the namespace. </param>
         /// <param name="namespaceSizeInBytes"> Namespace size in bytes. </param>
         /// <param name="nextRunTimestamp"> Timestamp of when change enumeration is expected to run again. </param>
-        internal CloudEndpointLastChangeEnumerationStatus(DateTimeOffset? startedTimestamp, DateTimeOffset? completedTimestamp, long? namespaceFilesCount, long? namespaceDirectoriesCount, long? namespaceSizeInBytes, DateTimeOffset? nextRunTimestamp)
+        internal CloudEndpointLastChangeEnumerationStatus(DateTimeOffset? startedOn, DateTimeOffset? completedOn, long? namespaceFilesCount, long? namespaceDirectoriesCount, long? namespaceSizeInBytes, DateTimeOffset? nextRunTimestamp)
         {
-            StartedTimestamp = startedTimestamp;
-            CompletedTimestamp = completedTimestamp;
+            StartedOn = startedOn;
+            CompletedOn = completedOn;
             NamespaceFilesCount = namespaceFilesCount;
             NamespaceDirectoriesCount = namespaceDirectoriesCount;
             NamespaceSizeInBytes = namespaceSizeInBytes;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Timestamp when change enumeration started. </summary>
-        public DateTimeOffset? StartedTimestamp { get; }
+        public DateTimeOffset? StartedOn { get; }
         /// <summary> Timestamp when change enumeration completed. </summary>
-        public DateTimeOffset? CompletedTimestamp { get; }
+        public DateTimeOffset? CompletedOn { get; }
         /// <summary> Count of files in the namespace. </summary>
         public long? NamespaceFilesCount { get; }
         /// <summary> Count of directories in the namespace. </summary>

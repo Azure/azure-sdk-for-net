@@ -55,128 +55,15 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.CloudEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.CloudEndpointCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.CloudEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.CloudEndpointCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RegisteredServerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.RegisteredServerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.RegisteredServerResource>, System.Collections.IEnumerable
-    {
-        protected RegisteredServerCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.RegisteredServerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string serverId, Azure.ResourceManager.StorageSync.Models.RegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.RegisteredServerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string serverId, Azure.ResourceManager.StorageSync.Models.RegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StorageSync.RegisteredServerResource> Get(string serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.StorageSync.RegisteredServerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageSync.RegisteredServerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.RegisteredServerResource>> GetAsync(string serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageSync.RegisteredServerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.RegisteredServerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageSync.RegisteredServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.RegisteredServerResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class RegisteredServerData : Azure.ResourceManager.Models.ResourceData
-    {
-        public RegisteredServerData() { }
-        public string AgentVersion { get { throw null; } set { } }
-        public System.DateTimeOffset? AgentVersionExpireOn { get { throw null; } }
-        public Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus? AgentVersionStatus { get { throw null; } }
-        public System.Guid? ClusterId { get { throw null; } set { } }
-        public string ClusterName { get { throw null; } set { } }
-        public System.Uri DiscoveryEndpointUri { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public string LastHeartbeat { get { throw null; } set { } }
-        public string LastOperationName { get { throw null; } set { } }
-        public string LastWorkflowId { get { throw null; } set { } }
-        public System.Uri ManagementEndpointUri { get { throw null; } set { } }
-        public string MonitoringConfiguration { get { throw null; } set { } }
-        public System.Uri MonitoringEndpointUri { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
-        public string ServerCertificate { get { throw null; } set { } }
-        public System.Guid? ServerId { get { throw null; } set { } }
-        public int? ServerManagementErrorCode { get { throw null; } set { } }
-        public string ServerName { get { throw null; } }
-        public string ServerOSVersion { get { throw null; } set { } }
-        public string ServerRole { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? ServiceLocation { get { throw null; } set { } }
-        public System.Guid? StorageSyncServiceUid { get { throw null; } set { } }
-    }
-    public partial class RegisteredServerResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected RegisteredServerResource() { }
-        public virtual Azure.ResourceManager.StorageSync.RegisteredServerData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string serverId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StorageSync.RegisteredServerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.RegisteredServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation TriggerRollover(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.TriggerRolloverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerRolloverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.TriggerRolloverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.RegisteredServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.RegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.RegisteredServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.RegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.ServerEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.ServerEndpointResource>, System.Collections.IEnumerable
-    {
-        protected ServerEndpointCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.ServerEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string serverEndpointName, Azure.ResourceManager.StorageSync.Models.ServerEndpointCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.ServerEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string serverEndpointName, Azure.ResourceManager.StorageSync.Models.ServerEndpointCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StorageSync.ServerEndpointResource> Get(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.StorageSync.ServerEndpointResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageSync.ServerEndpointResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.ServerEndpointResource>> GetAsync(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageSync.ServerEndpointResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.ServerEndpointResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageSync.ServerEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.ServerEndpointResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerEndpointData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerEndpointData() { }
-        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? CloudTiering { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.ServerEndpointCloudTieringStatus CloudTieringStatus { get { throw null; } }
-        public string FriendlyName { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy? InitialDownloadPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy? InitialUploadPolicy { get { throw null; } set { } }
-        public string LastOperationName { get { throw null; } }
-        public string LastWorkflowId { get { throw null; } }
-        public Azure.ResourceManager.StorageSync.Models.LocalCacheMode? LocalCacheMode { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? OfflineDataTransfer { get { throw null; } set { } }
-        public string OfflineDataTransferShareName { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OfflineDataTransferStorageAccountResourceId { get { throw null; } }
-        public System.Guid? OfflineDataTransferStorageAccountTenantId { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallStatus RecallStatus { get { throw null; } }
-        public string ServerLocalPath { get { throw null; } set { } }
-        public string ServerName { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ServerResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus SyncStatus { get { throw null; } }
-        public int? TierFilesOlderThanDays { get { throw null; } set { } }
-        public int? VolumeFreeSpacePercent { get { throw null; } set { } }
-    }
-    public partial class ServerEndpointResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerEndpointResource() { }
-        public virtual Azure.ResourceManager.StorageSync.ServerEndpointData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StorageSync.ServerEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.ServerEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RecallAction(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.RecallActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RecallActionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.RecallActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.ServerEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.ServerEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.ServerEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.ServerEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public static partial class StorageSyncExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityResult> CheckNameAvailabilityStorageSyncService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityResult>> CheckNameAvailabilityStorageSyncServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityResult> CheckStorageSyncNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityResult>> CheckStorageSyncNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StorageSync.CloudEndpointResource GetCloudEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.StorageSync.RegisteredServerResource GetRegisteredServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.StorageSync.ServerEndpointResource GetServerEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StorageSync.StorageSyncGroupResource GetStorageSyncGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource GetStorageSyncPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource GetStorageSyncServerEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServiceResource> GetStorageSyncService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageSyncServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServiceResource>> GetStorageSyncServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageSyncServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StorageSync.StorageSyncServiceResource GetStorageSyncServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -220,9 +107,9 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Azure.Response<Azure.ResourceManager.StorageSync.CloudEndpointResource> GetCloudEndpoint(string cloudEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.CloudEndpointResource>> GetCloudEndpointAsync(string cloudEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageSync.CloudEndpointCollection GetCloudEndpoints() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StorageSync.ServerEndpointResource> GetServerEndpoint(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.ServerEndpointResource>> GetServerEndpointAsync(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.StorageSync.ServerEndpointCollection GetServerEndpoints() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> GetStorageSyncServerEndpoint(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>> GetStorageSyncServerEndpointAsync(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncServerEndpointCollection GetStorageSyncServerEndpoints() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncGroupCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncGroupCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -261,6 +148,119 @@ namespace Azure.ResourceManager.StorageSync
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageSyncRegisteredServerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>, System.Collections.IEnumerable
+    {
+        protected StorageSyncRegisteredServerCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, System.Guid serverId, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, System.Guid serverId, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(System.Guid serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> Get(System.Guid serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>> GetAsync(System.Guid serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StorageSyncRegisteredServerData : Azure.ResourceManager.Models.ResourceData
+    {
+        public StorageSyncRegisteredServerData() { }
+        public string AgentVersion { get { throw null; } set { } }
+        public System.DateTimeOffset? AgentVersionExpireOn { get { throw null; } }
+        public Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus? AgentVersionStatus { get { throw null; } }
+        public System.Guid? ClusterId { get { throw null; } set { } }
+        public string ClusterName { get { throw null; } set { } }
+        public System.Uri DiscoveryEndpointUri { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public string LastHeartbeat { get { throw null; } set { } }
+        public string LastOperationName { get { throw null; } set { } }
+        public string LastWorkflowId { get { throw null; } set { } }
+        public System.Uri ManagementEndpointUri { get { throw null; } set { } }
+        public string MonitoringConfiguration { get { throw null; } set { } }
+        public System.Uri MonitoringEndpointUri { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
+        public string ServerCertificate { get { throw null; } set { } }
+        public System.Guid? ServerId { get { throw null; } set { } }
+        public int? ServerManagementErrorCode { get { throw null; } set { } }
+        public string ServerName { get { throw null; } }
+        public string ServerOSVersion { get { throw null; } set { } }
+        public string ServerRole { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? ServiceLocation { get { throw null; } set { } }
+        public System.Guid? StorageSyncServiceUid { get { throw null; } set { } }
+    }
+    public partial class StorageSyncRegisteredServerResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StorageSyncRegisteredServerResource() { }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, System.Guid serverId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation TriggerRollover(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.TriggerRolloverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerRolloverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.TriggerRolloverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageSyncServerEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>, System.Collections.IEnumerable
+    {
+        protected StorageSyncServerEndpointCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string serverEndpointName, Azure.ResourceManager.StorageSync.Models.StorageSyncServerEndpointCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string serverEndpointName, Azure.ResourceManager.StorageSync.Models.StorageSyncServerEndpointCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> Get(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>> GetAsync(string serverEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StorageSyncServerEndpointData : Azure.ResourceManager.Models.ResourceData
+    {
+        public StorageSyncServerEndpointData() { }
+        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? CloudTiering { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.ServerEndpointCloudTieringStatus CloudTieringStatus { get { throw null; } }
+        public string FriendlyName { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy? InitialDownloadPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy? InitialUploadPolicy { get { throw null; } set { } }
+        public string LastOperationName { get { throw null; } }
+        public string LastWorkflowId { get { throw null; } }
+        public Azure.ResourceManager.StorageSync.Models.LocalCacheMode? LocalCacheMode { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? OfflineDataTransfer { get { throw null; } set { } }
+        public string OfflineDataTransferShareName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OfflineDataTransferStorageAccountResourceId { get { throw null; } }
+        public System.Guid? OfflineDataTransferStorageAccountTenantId { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallStatus RecallStatus { get { throw null; } }
+        public string ServerLocalPath { get { throw null; } set { } }
+        public string ServerName { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ServerResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus SyncStatus { get { throw null; } }
+        public int? TierFilesOlderThanDays { get { throw null; } set { } }
+        public int? VolumeFreeSpacePercent { get { throw null; } set { } }
+    }
+    public partial class StorageSyncServerEndpointResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StorageSyncServerEndpointResource() { }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncServerEndpointData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RecallAction(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.RecallActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RecallActionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.RecallActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncServerEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncServerEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StorageSyncServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServiceResource>, System.Collections.IEnumerable
     {
@@ -303,15 +303,15 @@ namespace Azure.ResourceManager.StorageSync
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateLinkResource> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateLinkResource> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StorageSync.RegisteredServerResource> GetRegisteredServer(string serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.RegisteredServerResource>> GetRegisteredServerAsync(string serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.StorageSync.RegisteredServerCollection GetRegisteredServers() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncGroupResource> GetStorageSyncGroup(string syncGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncGroupResource>> GetStorageSyncGroupAsync(string syncGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageSync.StorageSyncGroupCollection GetStorageSyncGroups() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource> GetStorageSyncPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource>> GetStorageSyncPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionCollection GetStorageSyncPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> GetStorageSyncRegisteredServer(System.Guid serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>> GetStorageSyncRegisteredServerAsync(System.Guid serverId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerCollection GetStorageSyncRegisteredServers() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncWorkflowResource> GetStorageSyncWorkflow(string workflowId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncWorkflowResource>> GetStorageSyncWorkflowAsync(string workflowId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageSync.StorageSyncWorkflowCollection GetStorageSyncWorkflows() { throw null; }
@@ -339,9 +339,9 @@ namespace Azure.ResourceManager.StorageSync
     {
         public StorageSyncWorkflowData() { }
         public string CommandName { get { throw null; } }
-        public System.DateTimeOffset? CreatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Guid? LastOperationId { get { throw null; } set { } }
-        public System.DateTimeOffset? LastStatusTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastStatusUpdatedOn { get { throw null; } }
         public string LastStepName { get { throw null; } set { } }
         public Azure.ResourceManager.StorageSync.Models.StorageSyncOperationDirection? Operation { get { throw null; } set { } }
         public Azure.ResourceManager.StorageSync.Models.StorageSyncWorkflowStatus? Status { get { throw null; } set { } }
@@ -389,13 +389,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal CloudEndpointChangeEnumerationActivity() { }
         public int? DeletesProgressPercent { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public int? MinutesRemaining { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudEndpointChangeEnumerationActivityState? OperationState { get { throw null; } }
         public long? ProcessedDirectoriesCount { get { throw null; } }
         public long? ProcessedFilesCount { get { throw null; } }
         public int? ProgressPercent { get { throw null; } }
-        public System.DateTimeOffset? StartedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
         public int? StatusCode { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudEndpointChangeEnumerationTotalCountsState? TotalCountsState { get { throw null; } }
         public long? TotalDirectoriesCount { get { throw null; } }
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         internal CloudEndpointChangeEnumerationStatus() { }
         public Azure.ResourceManager.StorageSync.Models.CloudEndpointChangeEnumerationActivity Activity { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudEndpointLastChangeEnumerationStatus LastEnumerationStatus { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CloudEndpointChangeEnumerationTotalCountsState : System.IEquatable<Azure.ResourceManager.StorageSync.Models.CloudEndpointChangeEnumerationTotalCountsState>
@@ -456,12 +456,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     public partial class CloudEndpointLastChangeEnumerationStatus
     {
         internal CloudEndpointLastChangeEnumerationStatus() { }
-        public System.DateTimeOffset? CompletedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } }
         public long? NamespaceDirectoriesCount { get { throw null; } }
         public long? NamespaceFilesCount { get { throw null; } }
         public long? NamespaceSizeInBytes { get { throw null; } }
         public System.DateTimeOffset? NextRunTimestamp { get { throw null; } }
-        public System.DateTimeOffset? StartedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
     }
     public partial class CloudEndpointPostBackupResult
     {
@@ -474,29 +474,29 @@ namespace Azure.ResourceManager.StorageSync.Models
         public long? CacheHitBytes { get { throw null; } }
         public int? CacheHitBytesPercent { get { throw null; } }
         public long? CacheMissBytes { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
     }
     public partial class CloudTieringDatePolicyStatus
     {
         internal CloudTieringDatePolicyStatus() { }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public System.DateTimeOffset? TieredFilesMostRecentAccessTimestamp { get { throw null; } }
     }
     public partial class CloudTieringFilesNotTiering
     {
         internal CloudTieringFilesNotTiering() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StorageSync.Models.FilesNotTieringError> Errors { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public long? TotalFileCount { get { throw null; } }
     }
     public partial class CloudTieringSpaceSavings
     {
         internal CloudTieringSpaceSavings() { }
         public long? CachedSizeInBytes { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public long? CloudTotalSizeInBytes { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public long? SpaceSavingsInBytes { get { throw null; } }
         public int? SpaceSavingsPercent { get { throw null; } }
-        public long? TotalSizeCloudBytes { get { throw null; } }
         public long? VolumeSizeInBytes { get { throw null; } }
     }
     public partial class CloudTieringVolumeFreeSpacePolicyStatus
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         internal CloudTieringVolumeFreeSpacePolicyStatus() { }
         public int? CurrentVolumeFreeSpacePercent { get { throw null; } }
         public int? EffectiveVolumeFreeSpacePolicy { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
     }
     public partial class FilesNotTieringError
     {
@@ -636,19 +636,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator !=(Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus left, Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RegisteredServerCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
-    {
-        public RegisteredServerCreateOrUpdateContent() { }
-        public string AgentVersion { get { throw null; } set { } }
-        public System.Guid? ClusterId { get { throw null; } set { } }
-        public string ClusterName { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public string LastHeartbeat { get { throw null; } set { } }
-        public string ServerCertificate { get { throw null; } set { } }
-        public System.Guid? ServerId { get { throw null; } set { } }
-        public string ServerOSVersion { get { throw null; } set { } }
-        public string ServerRole { get { throw null; } set { } }
-    }
     public partial class RestoreFileSpec
     {
         public RestoreFileSpec() { }
@@ -660,7 +647,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         internal ServerEndpointBackgroundDataDownloadActivity() { }
         public long? DownloadedBytes { get { throw null; } }
         public int? PercentProgress { get { throw null; } }
-        public System.DateTimeOffset? StartedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
     public partial class ServerEndpointCloudTieringStatus
@@ -670,27 +657,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         public Azure.ResourceManager.StorageSync.Models.CloudTieringDatePolicyStatus DatePolicyStatus { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudTieringFilesNotTiering FilesNotTiering { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.ServerEndpointHealthState? Health { get { throw null; } }
-        public System.DateTimeOffset? HealthLastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? HealthLastUpdatedOn { get { throw null; } }
         public int? LastCloudTieringResult { get { throw null; } }
         public System.DateTimeOffset? LastSuccessTimestamp { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudTieringSpaceSavings SpaceSavings { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.CloudTieringVolumeFreeSpacePolicyStatus VolumeFreeSpacePolicyStatus { get { throw null; } }
-    }
-    public partial class ServerEndpointCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerEndpointCreateOrUpdateContent() { }
-        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? CloudTiering { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy? InitialDownloadPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy? InitialUploadPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.LocalCacheMode? LocalCacheMode { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? OfflineDataTransfer { get { throw null; } set { } }
-        public string OfflineDataTransferShareName { get { throw null; } set { } }
-        public string ServerLocalPath { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ServerResourceId { get { throw null; } set { } }
-        public int? TierFilesOlderThanDays { get { throw null; } set { } }
-        public int? VolumeFreeSpacePercent { get { throw null; } set { } }
     }
     public partial class ServerEndpointFilesNotSyncingError
     {
@@ -738,16 +710,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator !=(Azure.ResourceManager.StorageSync.Models.ServerEndpointOfflineDataTransferState left, Azure.ResourceManager.StorageSync.Models.ServerEndpointOfflineDataTransferState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServerEndpointPatch
-    {
-        public ServerEndpointPatch() { }
-        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? CloudTiering { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.LocalCacheMode? LocalCacheMode { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? OfflineDataTransfer { get { throw null; } set { } }
-        public string OfflineDataTransferShareName { get { throw null; } set { } }
-        public int? TierFilesOlderThanDays { get { throw null; } set { } }
-        public int? VolumeFreeSpacePercent { get { throw null; } set { } }
-    }
     public partial class ServerEndpointRecallError
     {
         internal ServerEndpointRecallError() { }
@@ -757,7 +719,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     public partial class ServerEndpointRecallStatus
     {
         internal ServerEndpointRecallStatus() { }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallError> RecallErrors { get { throw null; } }
         public long? TotalRecallErrorsCount { get { throw null; } }
     }
@@ -833,7 +795,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncActivityStatus DownloadActivity { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.ServerEndpointHealthState? DownloadHealth { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncSessionStatus DownloadStatus { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.ServerEndpointOfflineDataTransferState? OfflineDataTransferStatus { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncActivityState? SyncActivity { get { throw null; } }
         public long? TotalPersistentFilesNotSyncingCount { get { throw null; } }
@@ -954,6 +916,19 @@ namespace Azure.ResourceManager.StorageSync.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
+    public partial class StorageSyncRegisteredServerCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
+    {
+        public StorageSyncRegisteredServerCreateOrUpdateContent() { }
+        public string AgentVersion { get { throw null; } set { } }
+        public System.Guid? ClusterId { get { throw null; } set { } }
+        public string ClusterName { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public string LastHeartbeat { get { throw null; } set { } }
+        public string ServerCertificate { get { throw null; } set { } }
+        public System.Guid? ServerId { get { throw null; } set { } }
+        public string ServerOSVersion { get { throw null; } set { } }
+        public string ServerRole { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageSyncResourceType : System.IEquatable<Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType>
     {
@@ -970,6 +945,31 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static implicit operator Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType left, Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class StorageSyncServerEndpointCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
+    {
+        public StorageSyncServerEndpointCreateOrUpdateContent() { }
+        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? CloudTiering { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy? InitialDownloadPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy? InitialUploadPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.LocalCacheMode? LocalCacheMode { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? OfflineDataTransfer { get { throw null; } set { } }
+        public string OfflineDataTransferShareName { get { throw null; } set { } }
+        public string ServerLocalPath { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServerResourceId { get { throw null; } set { } }
+        public int? TierFilesOlderThanDays { get { throw null; } set { } }
+        public int? VolumeFreeSpacePercent { get { throw null; } set { } }
+    }
+    public partial class StorageSyncServerEndpointPatch
+    {
+        public StorageSyncServerEndpointPatch() { }
+        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? CloudTiering { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.LocalCacheMode? LocalCacheMode { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? OfflineDataTransfer { get { throw null; } set { } }
+        public string OfflineDataTransferShareName { get { throw null; } set { } }
+        public int? TierFilesOlderThanDays { get { throw null; } set { } }
+        public int? VolumeFreeSpacePercent { get { throw null; } set { } }
     }
     public partial class StorageSyncServiceCreateOrUpdateContent
     {

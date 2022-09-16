@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Parameters for updating an Server Endpoint. </summary>
-    public partial class ServerEndpointPatch
+    public partial class StorageSyncServerEndpointPatch
     {
-        /// <summary> Initializes a new instance of ServerEndpointPatch. </summary>
-        public ServerEndpointPatch()
+        /// <summary> Initializes a new instance of StorageSyncServerEndpointPatch. </summary>
+        public StorageSyncServerEndpointPatch()
         {
         }
 

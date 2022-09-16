@@ -21,28 +21,28 @@ using Azure.ResourceManager.StorageSync.Models;
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServerEndpointResource" /> and their operations.
-    /// Each <see cref="ServerEndpointResource" /> in the collection will belong to the same instance of <see cref="StorageSyncGroupResource" />.
-    /// To get a <see cref="ServerEndpointCollection" /> instance call the GetServerEndpoints method from an instance of <see cref="StorageSyncGroupResource" />.
+    /// A class representing a collection of <see cref="StorageSyncServerEndpointResource" /> and their operations.
+    /// Each <see cref="StorageSyncServerEndpointResource" /> in the collection will belong to the same instance of <see cref="StorageSyncGroupResource" />.
+    /// To get a <see cref="StorageSyncServerEndpointCollection" /> instance call the GetStorageSyncServerEndpoints method from an instance of <see cref="StorageSyncGroupResource" />.
     /// </summary>
-    public partial class ServerEndpointCollection : ArmCollection, IEnumerable<ServerEndpointResource>, IAsyncEnumerable<ServerEndpointResource>
+    public partial class StorageSyncServerEndpointCollection : ArmCollection, IEnumerable<StorageSyncServerEndpointResource>, IAsyncEnumerable<StorageSyncServerEndpointResource>
     {
-        private readonly ClientDiagnostics _serverEndpointClientDiagnostics;
-        private readonly ServerEndpointsRestOperations _serverEndpointRestClient;
+        private readonly ClientDiagnostics _storageSyncServerEndpointServerEndpointsClientDiagnostics;
+        private readonly ServerEndpointsRestOperations _storageSyncServerEndpointServerEndpointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServerEndpointCollection"/> class for mocking. </summary>
-        protected ServerEndpointCollection()
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncServerEndpointCollection"/> class for mocking. </summary>
+        protected StorageSyncServerEndpointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServerEndpointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncServerEndpointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ServerEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageSyncServerEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ServerEndpointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerEndpointResource.ResourceType, out string serverEndpointApiVersion);
-            _serverEndpointRestClient = new ServerEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverEndpointApiVersion);
+            _storageSyncServerEndpointServerEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncServerEndpointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageSyncServerEndpointResource.ResourceType, out string storageSyncServerEndpointServerEndpointsApiVersion);
+            _storageSyncServerEndpointServerEndpointsRestClient = new ServerEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncServerEndpointServerEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverEndpointName, ServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageSyncServerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.CreateOrUpdate");
+            using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<ServerEndpointResource>(new ServerEndpointOperationSource(Client), _serverEndpointClientDiagnostics, Pipeline, _serverEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _storageSyncServerEndpointServerEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ServerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string serverEndpointName, ServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageSyncServerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.CreateOrUpdate");
+            using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<ServerEndpointResource>(new ServerEndpointOperationSource(Client), _serverEndpointClientDiagnostics, Pipeline, _serverEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, OperationFinalStateVia.Location);
+                var response = _storageSyncServerEndpointServerEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content, cancellationToken);
+                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
-        public virtual async Task<Response<ServerEndpointResource>> GetAsync(string serverEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncServerEndpointResource>> GetAsync(string serverEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
-            using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.Get");
+            using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serverEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncServerEndpointServerEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncServerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
-        public virtual Response<ServerEndpointResource> Get(string serverEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncServerEndpointResource> Get(string serverEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
-            using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.Get");
+            using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken);
+                var response = _storageSyncServerEndpointServerEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncServerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: ServerEndpoints_ListBySyncGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerEndpointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageSyncServerEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageSyncServerEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerEndpointResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StorageSyncServerEndpointResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.GetAll");
+                using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverEndpointRestClient.ListBySyncGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerEndpointResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _storageSyncServerEndpointServerEndpointsRestClient.ListBySyncGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncServerEndpointResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +211,17 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: ServerEndpoints_ListBySyncGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerEndpointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerEndpointResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageSyncServerEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageSyncServerEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServerEndpointResource> FirstPageFunc(int? pageSizeHint)
+            Page<StorageSyncServerEndpointResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.GetAll");
+                using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverEndpointRestClient.ListBySyncGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerEndpointResource(Client, value)), null, response.GetRawResponse());
+                    var response = _storageSyncServerEndpointServerEndpointsRestClient.ListBySyncGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncServerEndpointResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
-            using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.Exists");
+            using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serverEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncServerEndpointServerEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,11 +272,11 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
-            using var scope = _serverEndpointClientDiagnostics.CreateScope("ServerEndpointCollection.Exists");
+            using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serverEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken: cancellationToken);
+                var response = _storageSyncServerEndpointServerEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        IEnumerator<ServerEndpointResource> IEnumerable<ServerEndpointResource>.GetEnumerator()
+        IEnumerator<StorageSyncServerEndpointResource> IEnumerable<StorageSyncServerEndpointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.StorageSync
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerEndpointResource> IAsyncEnumerable<ServerEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<StorageSyncServerEndpointResource> IAsyncEnumerable<StorageSyncServerEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

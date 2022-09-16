@@ -55,13 +55,14 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   HeartBeat: Heartbeat
-  Innererror: InnerError
 
 prepend-rp-prefix:
   - Workflow
   - WorkflowStatus
   - FeatureStatus
   - OperationDirection
+  - RegisteredServer
+  - ServerEndpoint
 
 rename-mapping:
   RestoreFileSpec.isdir: IsDirectory
@@ -76,13 +77,23 @@ rename-mapping:
   NameAvailabilityReason: StorageSyncNameUnavailableReason
   Type: StorageSyncResourceType
   CloudEndpointChangeEnumerationActivity.totalSizeBytes: TotalSizeInBytes
+  CloudEndpointChangeEnumerationStatus.completedTimestamp: CompletedOn
+  CloudEndpointChangeEnumerationActivity.startedTimestamp: StartedOn
+  ServerEndpointBackgroundDataDownloadActivity.startedTimestamp: StartedOn
   CloudEndpointLastChangeEnumerationStatus.namespaceSizeBytes: NamespaceSizeInBytes
+  CloudEndpointLastChangeEnumerationStatus.startedTimestamp: StartedOn
+  CloudEndpointLastChangeEnumerationStatus.completedTimestamp: CompletedOn
   CloudTieringSpaceSavings.volumeSizeBytes: VolumeSizeInBytes
   CloudTieringSpaceSavings.cachedSizeBytes: CachedSizeInBytes
   CloudTieringSpaceSavings.spaceSavingsBytes: SpaceSavingsInBytes
+  CloudTieringSpaceSavings.totalSizeCloudBytes: CloudTotalSizeInBytes
+  Workflow.properties.createdTimestamp: CreatedOn
+  Workflow.properties.lastStatusTimestamp: LastStatusUpdatedOn
+  ServerEndpointCloudTieringStatus.healthLastUpdatedTimestamp: HealthLastUpdatedOn
 
 override-operation-name:
   CloudEndpoints_restoreheartbeat: RestoreHeartbeat
+  StorageSyncServices_CheckNameAvailability: CheckStorageSyncNameAvailability
 
 directive:
   - remove-operation: OperationStatus_Get
@@ -97,5 +108,12 @@ directive:
           name: 'StorageSyncServices'
         }
       ];
-
+  - from: storagesync.json
+    where: $.definitions..lastUpdatedTimestamp
+    transform: >
+      $['x-ms-client-name'] = 'LastUpdatedOn';
+  - from: storagesync.json
+    where: $.paths..parameters[?(@.name == 'serverId')]
+    transform: >
+      $.format = 'uuid';
 ```

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of CloudEndpointChangeEnumerationActivity. </summary>
-        /// <param name="lastUpdatedTimestamp"> Last updated timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="operationState"> Change enumeration operation state. </param>
         /// <param name="statusCode"> When non-zero, indicates an issue that is delaying change enumeration. </param>
-        /// <param name="startedTimestamp"> Timestamp when change enumeration started. </param>
+        /// <param name="startedOn"> Timestamp when change enumeration started. </param>
         /// <param name="processedFilesCount"> Count of files processed. </param>
         /// <param name="processedDirectoriesCount"> Count of directories processed. </param>
         /// <param name="totalFilesCount"> Total count of files enumerated. </param>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="minutesRemaining"> Estimate of time remaining for the enumeration run. </param>
         /// <param name="totalCountsState"> Change enumeration total counts state. </param>
         /// <param name="deletesProgressPercent"> Progress percentage for processing deletes. This is done separately from the rest of the enumeration run. </param>
-        internal CloudEndpointChangeEnumerationActivity(DateTimeOffset? lastUpdatedTimestamp, CloudEndpointChangeEnumerationActivityState? operationState, int? statusCode, DateTimeOffset? startedTimestamp, long? processedFilesCount, long? processedDirectoriesCount, long? totalFilesCount, long? totalDirectoriesCount, long? totalSizeInBytes, int? progressPercent, int? minutesRemaining, CloudEndpointChangeEnumerationTotalCountsState? totalCountsState, int? deletesProgressPercent)
+        internal CloudEndpointChangeEnumerationActivity(DateTimeOffset? lastUpdatedOn, CloudEndpointChangeEnumerationActivityState? operationState, int? statusCode, DateTimeOffset? startedOn, long? processedFilesCount, long? processedDirectoriesCount, long? totalFilesCount, long? totalDirectoriesCount, long? totalSizeInBytes, int? progressPercent, int? minutesRemaining, CloudEndpointChangeEnumerationTotalCountsState? totalCountsState, int? deletesProgressPercent)
         {
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             OperationState = operationState;
             StatusCode = statusCode;
-            StartedTimestamp = startedTimestamp;
+            StartedOn = startedOn;
             ProcessedFilesCount = processedFilesCount;
             ProcessedDirectoriesCount = processedDirectoriesCount;
             TotalFilesCount = totalFilesCount;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Last updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Change enumeration operation state. </summary>
         public CloudEndpointChangeEnumerationActivityState? OperationState { get; }
         /// <summary> When non-zero, indicates an issue that is delaying change enumeration. </summary>
         public int? StatusCode { get; }
         /// <summary> Timestamp when change enumeration started. </summary>
-        public DateTimeOffset? StartedTimestamp { get; }
+        public DateTimeOffset? StartedOn { get; }
         /// <summary> Count of files processed. </summary>
         public long? ProcessedFilesCount { get; }
         /// <summary> Count of directories processed. </summary>

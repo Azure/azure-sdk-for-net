@@ -21,28 +21,28 @@ using Azure.ResourceManager.StorageSync.Models;
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RegisteredServerResource" /> and their operations.
-    /// Each <see cref="RegisteredServerResource" /> in the collection will belong to the same instance of <see cref="StorageSyncServiceResource" />.
-    /// To get a <see cref="RegisteredServerCollection" /> instance call the GetRegisteredServers method from an instance of <see cref="StorageSyncServiceResource" />.
+    /// A class representing a collection of <see cref="StorageSyncRegisteredServerResource" /> and their operations.
+    /// Each <see cref="StorageSyncRegisteredServerResource" /> in the collection will belong to the same instance of <see cref="StorageSyncServiceResource" />.
+    /// To get a <see cref="StorageSyncRegisteredServerCollection" /> instance call the GetStorageSyncRegisteredServers method from an instance of <see cref="StorageSyncServiceResource" />.
     /// </summary>
-    public partial class RegisteredServerCollection : ArmCollection, IEnumerable<RegisteredServerResource>, IAsyncEnumerable<RegisteredServerResource>
+    public partial class StorageSyncRegisteredServerCollection : ArmCollection, IEnumerable<StorageSyncRegisteredServerResource>, IAsyncEnumerable<StorageSyncRegisteredServerResource>
     {
-        private readonly ClientDiagnostics _registeredServerClientDiagnostics;
-        private readonly RegisteredServersRestOperations _registeredServerRestClient;
+        private readonly ClientDiagnostics _storageSyncRegisteredServerRegisteredServersClientDiagnostics;
+        private readonly RegisteredServersRestOperations _storageSyncRegisteredServerRegisteredServersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RegisteredServerCollection"/> class for mocking. </summary>
-        protected RegisteredServerCollection()
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerCollection"/> class for mocking. </summary>
+        protected StorageSyncRegisteredServerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RegisteredServerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RegisteredServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageSyncRegisteredServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _registeredServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", RegisteredServerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RegisteredServerResource.ResourceType, out string registeredServerApiVersion);
-            _registeredServerRestClient = new RegisteredServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, registeredServerApiVersion);
+            _storageSyncRegisteredServerRegisteredServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncRegisteredServerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageSyncRegisteredServerResource.ResourceType, out string storageSyncRegisteredServerRegisteredServersApiVersion);
+            _storageSyncRegisteredServerRegisteredServersRestClient = new RegisteredServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncRegisteredServerRegisteredServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,19 +63,17 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="content"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<RegisteredServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverId, RegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid serverId, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverId, nameof(serverId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.CreateOrUpdate");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _registeredServerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<RegisteredServerResource>(new RegisteredServerOperationSource(Client), _registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,19 +94,17 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="content"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<RegisteredServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverId, RegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<StorageSyncRegisteredServerResource> CreateOrUpdate(WaitUntil waitUntil, Guid serverId, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverId, nameof(serverId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.CreateOrUpdate");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _registeredServerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<RegisteredServerResource>(new RegisteredServerOperationSource(Client), _registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content).Request, response, OperationFinalStateVia.Location);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content, cancellationToken);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -127,20 +123,16 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
-        public virtual async Task<Response<RegisteredServerResource>> GetAsync(string serverId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetAsync(Guid serverId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverId, nameof(serverId));
-
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.Get");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _registeredServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RegisteredServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,20 +148,16 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
-        public virtual Response<RegisteredServerResource> Get(string serverId, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncRegisteredServerResource> Get(Guid serverId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverId, nameof(serverId));
-
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.Get");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Get");
             scope.Start();
             try
             {
-                var response = _registeredServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RegisteredServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +172,17 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: RegisteredServers_ListByStorageSyncService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RegisteredServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RegisteredServerResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageSyncRegisteredServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageSyncRegisteredServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RegisteredServerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StorageSyncRegisteredServerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.GetAll");
+                using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _registeredServerRestClient.ListByStorageSyncServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegisteredServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _storageSyncRegisteredServerRegisteredServersRestClient.ListByStorageSyncServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncRegisteredServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +199,17 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: RegisteredServers_ListByStorageSyncService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RegisteredServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RegisteredServerResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageSyncRegisteredServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageSyncRegisteredServerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RegisteredServerResource> FirstPageFunc(int? pageSizeHint)
+            Page<StorageSyncRegisteredServerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.GetAll");
+                using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _registeredServerRestClient.ListByStorageSyncService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegisteredServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = _storageSyncRegisteredServerRegisteredServersRestClient.ListByStorageSyncService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncRegisteredServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,17 +227,13 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string serverId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid serverId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverId, nameof(serverId));
-
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.Exists");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _registeredServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,17 +250,13 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
-        public virtual Response<bool> Exists(string serverId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid serverId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverId, nameof(serverId));
-
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerCollection.Exists");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _registeredServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,7 +266,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        IEnumerator<RegisteredServerResource> IEnumerable<RegisteredServerResource>.GetEnumerator()
+        IEnumerator<StorageSyncRegisteredServerResource> IEnumerable<StorageSyncRegisteredServerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -296,7 +276,7 @@ namespace Azure.ResourceManager.StorageSync
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RegisteredServerResource> IAsyncEnumerable<RegisteredServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<StorageSyncRegisteredServerResource> IAsyncEnumerable<StorageSyncRegisteredServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

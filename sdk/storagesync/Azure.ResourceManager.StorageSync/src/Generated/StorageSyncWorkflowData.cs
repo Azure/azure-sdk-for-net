@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="steps"> workflow steps. </param>
         /// <param name="lastOperationId"> workflow last operation identifier. </param>
         /// <param name="commandName"> workflow command name. </param>
-        /// <param name="createdTimestamp"> workflow created timestamp. </param>
-        /// <param name="lastStatusTimestamp"> workflow last status timestamp. </param>
-        internal StorageSyncWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastStepName, StorageSyncWorkflowStatus? status, StorageSyncOperationDirection? operation, string steps, Guid? lastOperationId, string commandName, DateTimeOffset? createdTimestamp, DateTimeOffset? lastStatusTimestamp) : base(id, name, resourceType, systemData)
+        /// <param name="createdOn"> workflow created timestamp. </param>
+        /// <param name="lastStatusUpdatedOn"> workflow last status timestamp. </param>
+        internal StorageSyncWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastStepName, StorageSyncWorkflowStatus? status, StorageSyncOperationDirection? operation, string steps, Guid? lastOperationId, string commandName, DateTimeOffset? createdOn, DateTimeOffset? lastStatusUpdatedOn) : base(id, name, resourceType, systemData)
         {
             LastStepName = lastStepName;
             Status = status;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.StorageSync
             Steps = steps;
             LastOperationId = lastOperationId;
             CommandName = commandName;
-            CreatedTimestamp = createdTimestamp;
-            LastStatusTimestamp = lastStatusTimestamp;
+            CreatedOn = createdOn;
+            LastStatusUpdatedOn = lastStatusUpdatedOn;
         }
 
         /// <summary> last step name. </summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> workflow command name. </summary>
         public string CommandName { get; }
         /// <summary> workflow created timestamp. </summary>
-        public DateTimeOffset? CreatedTimestamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> workflow last status timestamp. </summary>
-        public DateTimeOffset? LastStatusTimestamp { get; }
+        public DateTimeOffset? LastStatusUpdatedOn { get; }
     }
 }

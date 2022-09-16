@@ -18,46 +18,46 @@ using Azure.ResourceManager.StorageSync.Models;
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A Class representing a RegisteredServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RegisteredServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRegisteredServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetRegisteredServer method.
+    /// A Class representing a StorageSyncRegisteredServer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSyncRegisteredServerResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetStorageSyncRegisteredServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetStorageSyncRegisteredServer method.
     /// </summary>
-    public partial class RegisteredServerResource : ArmResource
+    public partial class StorageSyncRegisteredServerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RegisteredServerResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string serverId)
+        /// <summary> Generate the resource identifier of a <see cref="StorageSyncRegisteredServerResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _registeredServerClientDiagnostics;
-        private readonly RegisteredServersRestOperations _registeredServerRestClient;
-        private readonly RegisteredServerData _data;
+        private readonly ClientDiagnostics _storageSyncRegisteredServerRegisteredServersClientDiagnostics;
+        private readonly RegisteredServersRestOperations _storageSyncRegisteredServerRegisteredServersRestClient;
+        private readonly StorageSyncRegisteredServerData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="RegisteredServerResource"/> class for mocking. </summary>
-        protected RegisteredServerResource()
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerResource"/> class for mocking. </summary>
+        protected StorageSyncRegisteredServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RegisteredServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "StorageSyncRegisteredServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RegisteredServerResource(ArmClient client, RegisteredServerData data) : this(client, data.Id)
+        internal StorageSyncRegisteredServerResource(ArmClient client, StorageSyncRegisteredServerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RegisteredServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RegisteredServerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageSyncRegisteredServerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _registeredServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string registeredServerApiVersion);
-            _registeredServerRestClient = new RegisteredServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, registeredServerApiVersion);
+            _storageSyncRegisteredServerRegisteredServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string storageSyncRegisteredServerRegisteredServersApiVersion);
+            _storageSyncRegisteredServerRegisteredServersRestClient = new RegisteredServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncRegisteredServerRegisteredServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageSync
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RegisteredServerData Data
+        public virtual StorageSyncRegisteredServerData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: RegisteredServers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegisteredServerResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.Get");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Get");
             scope.Start();
             try
             {
-                var response = await _registeredServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RegisteredServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: RegisteredServers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegisteredServerResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncRegisteredServerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.Get");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Get");
             scope.Start();
             try
             {
-                var response = _registeredServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RegisteredServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.Delete");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _registeredServerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation(_registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation(_storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name)).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.Delete");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Delete");
             scope.Start();
             try
             {
-                var response = _registeredServerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageSyncArmOperation(_registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
+                var operation = new StorageSyncArmOperation(_storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name)).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -196,16 +196,16 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="content"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<RegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, RegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.Update");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
             scope.Start();
             try
             {
-                var response = await _registeredServerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<RegisteredServerResource>(new RegisteredServerOperationSource(Client), _registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,16 +226,16 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="content"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<RegisteredServerResource> Update(WaitUntil waitUntil, RegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageSyncRegisteredServerResource> Update(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.Update");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
             scope.Start();
             try
             {
-                var response = _registeredServerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<RegisteredServerResource>(new RegisteredServerOperationSource(Client), _registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -260,12 +260,12 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.TriggerRollover");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.TriggerRollover");
             scope.Start();
             try
             {
-                var response = await _registeredServerRestClient.TriggerRolloverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation(_registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateTriggerRolloverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.TriggerRolloverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation(_storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateTriggerRolloverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -290,12 +290,12 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _registeredServerClientDiagnostics.CreateScope("RegisteredServerResource.TriggerRollover");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.TriggerRollover");
             scope.Start();
             try
             {
-                var response = _registeredServerRestClient.TriggerRollover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new StorageSyncArmOperation(_registeredServerClientDiagnostics, Pipeline, _registeredServerRestClient.CreateTriggerRolloverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.TriggerRollover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken);
+                var operation = new StorageSyncArmOperation(_storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateTriggerRolloverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

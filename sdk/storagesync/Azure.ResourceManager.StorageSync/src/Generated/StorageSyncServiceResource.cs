@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.StorageSync
             return GetStorageSyncGroups().Get(syncGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RegisteredServerResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of RegisteredServerResources and their operations over a RegisteredServerResource. </returns>
-        public virtual RegisteredServerCollection GetRegisteredServers()
+        /// <summary> Gets a collection of StorageSyncRegisteredServerResources in the StorageSyncService. </summary>
+        /// <returns> An object representing collection of StorageSyncRegisteredServerResources and their operations over a StorageSyncRegisteredServerResource. </returns>
+        public virtual StorageSyncRegisteredServerCollection GetStorageSyncRegisteredServers()
         {
-            return GetCachedClient(Client => new RegisteredServerCollection(Client, Id));
+            return GetCachedClient(Client => new StorageSyncRegisteredServerCollection(Client, Id));
         }
 
         /// <summary>
@@ -181,12 +181,10 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RegisteredServerResource>> GetRegisteredServerAsync(string serverId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetStorageSyncRegisteredServerAsync(Guid serverId, CancellationToken cancellationToken = default)
         {
-            return await GetRegisteredServers().GetAsync(serverId, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSyncRegisteredServers().GetAsync(serverId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,12 +194,10 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RegisteredServerResource> GetRegisteredServer(string serverId, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncRegisteredServerResource> GetStorageSyncRegisteredServer(Guid serverId, CancellationToken cancellationToken = default)
         {
-            return GetRegisteredServers().Get(serverId, cancellationToken);
+            return GetStorageSyncRegisteredServers().Get(serverId, cancellationToken);
         }
 
         /// <summary> Gets a collection of StorageSyncWorkflowResources in the StorageSyncService. </summary>

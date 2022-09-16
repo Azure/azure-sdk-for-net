@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageSyncNameAvailabilityResult>> CheckNameAvailabilityStorageSyncServiceAsync(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncNameAvailabilityResult>> CheckStorageSyncNameAvailabilityAsync(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityStorageSyncService");
+            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageSyncNameAvailability");
             scope.Start();
             try
             {
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageSyncNameAvailabilityResult> CheckNameAvailabilityStorageSyncService(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncNameAvailabilityResult> CheckStorageSyncNameAvailability(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityStorageSyncService");
+            using var scope = StorageSyncServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageSyncNameAvailability");
             scope.Start();
             try
             {

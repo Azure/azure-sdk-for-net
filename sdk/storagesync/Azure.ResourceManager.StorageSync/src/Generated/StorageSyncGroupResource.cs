@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.StorageSync
             return GetCloudEndpoints().Get(cloudEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerEndpointResources in the StorageSyncGroup. </summary>
-        /// <returns> An object representing collection of ServerEndpointResources and their operations over a ServerEndpointResource. </returns>
-        public virtual ServerEndpointCollection GetServerEndpoints()
+        /// <summary> Gets a collection of StorageSyncServerEndpointResources in the StorageSyncGroup. </summary>
+        /// <returns> An object representing collection of StorageSyncServerEndpointResources and their operations over a StorageSyncServerEndpointResource. </returns>
+        public virtual StorageSyncServerEndpointCollection GetStorageSyncServerEndpoints()
         {
-            return GetCachedClient(Client => new ServerEndpointCollection(Client, Id));
+            return GetCachedClient(Client => new StorageSyncServerEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerEndpointResource>> GetServerEndpointAsync(string serverEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageSyncServerEndpointResource>> GetStorageSyncServerEndpointAsync(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            return await GetServerEndpoints().GetAsync(serverEndpointName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSyncServerEndpoints().GetAsync(serverEndpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerEndpointResource> GetServerEndpoint(string serverEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageSyncServerEndpointResource> GetStorageSyncServerEndpoint(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            return GetServerEndpoints().Get(serverEndpointName, cancellationToken);
+            return GetStorageSyncServerEndpoints().Get(serverEndpointName, cancellationToken);
         }
 
         /// <summary>
