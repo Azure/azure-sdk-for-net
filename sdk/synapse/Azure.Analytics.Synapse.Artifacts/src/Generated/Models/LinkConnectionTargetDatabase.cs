@@ -17,12 +17,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of LinkConnectionTargetDatabase. </summary>
         /// <param name="linkedService"> Linked service reference. </param>
-        internal LinkConnectionTargetDatabase(LinkedServiceReference linkedService)
+        /// <param name="typeProperties"> Target database type properties. </param>
+        internal LinkConnectionTargetDatabase(LinkedServiceReference linkedService, LinkConnectionTargetDatabaseTypeProperties typeProperties)
         {
             LinkedService = linkedService;
+            TypeProperties = typeProperties;
         }
 
         /// <summary> Linked service reference. </summary>
         public LinkedServiceReference LinkedService { get; set; }
+        /// <summary> Target database type properties. </summary>
+        public LinkConnectionTargetDatabaseTypeProperties TypeProperties { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Extensions.AzureMonitor;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 {
@@ -32,6 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                             .SetResourceBuilder(resourceBuilder)
                             .AddSource("MyCompany.MyProduct.MyLibrary")
+                            .SetSampler(new ApplicationInsightsSampler(1.0F))
                             .AddAzureMonitorTraceExporter(o =>
                             {
                                 o.ConnectionString = ConnectionString;

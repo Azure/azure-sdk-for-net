@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> IoT edge agent details is optional, this will be used for download system Agent module while bootstrapping IoT Role if specified. </summary>
-    public partial class IoTEdgeAgentInfo
+    public partial class IotEdgeAgentInfo
     {
-        /// <summary> Initializes a new instance of IoTEdgeAgentInfo. </summary>
+        /// <summary> Initializes a new instance of IotEdgeAgentInfo. </summary>
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
         /// <param name="tag"> Image Tag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="tag"/> is null. </exception>
-        public IoTEdgeAgentInfo(string imageName, string tag)
+        public IotEdgeAgentInfo(string imageName, string tag)
         {
             if (imageName == null)
             {
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Tag = tag;
         }
 
-        /// <summary> Initializes a new instance of IoTEdgeAgentInfo. </summary>
+        /// <summary> Initializes a new instance of IotEdgeAgentInfo. </summary>
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
         /// <param name="tag"> Image Tag. </param>
         /// <param name="imageRepository"> Image repository details. </param>
-        internal IoTEdgeAgentInfo(string imageName, string tag, ImageRepositoryCredential imageRepository)
+        internal IotEdgeAgentInfo(string imageName, string tag, ImageRepositoryCredential imageRepository)
         {
             ImageName = imageName;
             Tag = tag;

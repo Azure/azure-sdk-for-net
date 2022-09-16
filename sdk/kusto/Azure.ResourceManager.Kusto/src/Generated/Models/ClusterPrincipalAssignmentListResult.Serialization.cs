@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static ClusterPrincipalAssignmentListResult DeserializeClusterPrincipalAssignmentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ClusterPrincipalAssignmentData>> value = default;
+            Optional<IReadOnlyList<KustoClusterPrincipalAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterPrincipalAssignmentData> array = new List<ClusterPrincipalAssignmentData>();
+                    List<KustoClusterPrincipalAssignmentData> array = new List<KustoClusterPrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterPrincipalAssignmentData.DeserializeClusterPrincipalAssignmentData(item));
+                        array.Add(KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(item));
                     }
                     value = array;
                     continue;

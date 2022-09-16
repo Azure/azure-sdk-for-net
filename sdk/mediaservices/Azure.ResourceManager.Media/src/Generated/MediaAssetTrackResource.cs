@@ -91,43 +91,6 @@ namespace Azure.ResourceManager.Media
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MediaAssetTrackOperationResultResources in the MediaAssetTrack. </summary>
-        /// <returns> An object representing collection of MediaAssetTrackOperationResultResources and their operations over a MediaAssetTrackOperationResultResource. </returns>
-        public virtual MediaAssetTrackOperationResultCollection GetMediaAssetTrackOperationResults()
-        {
-            return GetCachedClient(Client => new MediaAssetTrackOperationResultCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get asset track operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MediaAssetTrackOperationResultResource>> GetMediaAssetTrackOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            return await GetMediaAssetTrackOperationResults().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get asset track operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MediaAssetTrackOperationResultResource> GetMediaAssetTrackOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            return GetMediaAssetTrackOperationResults().Get(operationId, cancellationToken);
-        }
-
         /// <summary>
         /// Get the details of a Track in the Asset
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}

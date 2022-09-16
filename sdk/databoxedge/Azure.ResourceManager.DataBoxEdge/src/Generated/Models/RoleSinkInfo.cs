@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of RoleSinkInfo. </summary>
         /// <param name="roleId"> Compute role ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
-        public RoleSinkInfo(string roleId)
+        public RoleSinkInfo(ResourceIdentifier roleId)
         {
             if (roleId == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Compute role ID. </summary>
-        public string RoleId { get; set; }
+        public ResourceIdentifier RoleId { get; set; }
     }
 }

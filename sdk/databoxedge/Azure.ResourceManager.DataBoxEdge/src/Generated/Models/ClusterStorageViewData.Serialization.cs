@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterTotalStorageMb))
+            if (Optional.IsDefined(ClusterTotalStorageInMB))
             {
                 writer.WritePropertyName("clusterTotalStorageMb");
-                writer.WriteNumberValue(ClusterTotalStorageMb.Value);
+                writer.WriteNumberValue(ClusterTotalStorageInMB.Value);
             }
-            if (Optional.IsDefined(ClusterFreeStorageMb))
+            if (Optional.IsDefined(ClusterFreeStorageInMB))
             {
                 writer.WritePropertyName("clusterFreeStorageMb");
-                writer.WriteNumberValue(ClusterFreeStorageMb.Value);
+                writer.WriteNumberValue(ClusterFreeStorageInMB.Value);
             }
             writer.WriteEndObject();
         }

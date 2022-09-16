@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2022-09-14)
+
+### Features Added
+
+- Upgraded the API version to `2022-08-01`
+
+### Breaking Changes
+
+- Renamed `TransformOutputsPriority` to `MediaTransformOutputsPriority`.
+- Renamed `ContentKeyPolicyPreference` to `ContentKeyPolicyOption`.
+- Renamed `GetContainerSasContent` to `GetStorageContainersContent`.
+- Renamed `MediaPreset` to `MediaTransformPreset`.
+- Removed all get LRO operation status / result methods which is nativly supported by the LRO object ArmOperation.
 
 ## 1.0.0-beta.2 (2022-08-29)
 
