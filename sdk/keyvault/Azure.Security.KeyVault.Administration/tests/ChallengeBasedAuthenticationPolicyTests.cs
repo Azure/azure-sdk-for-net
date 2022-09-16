@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Tests
         private const string KeyVaultChallenge = "Bearer authorization=\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\", resource=\"https://vault.azure.net\"";
         public ChallengeBasedAuthenticationPolicyTests(bool isAsync) : base(isAsync)
         {
-            _policy = new ChallengeBasedAuthenticationPolicy(new MockCredentialThrowsWithNoScopes(), true);
+            _policy = new ChallengeBasedAuthenticationPolicy(new MockCredentialThrowsWithNoScopes(), false);
         }
 
         [SetUp]
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Tests
             Assert.That(response.Status, Is.EqualTo(200));
 
             // Construct a new policy so that we can get the Scopes from cache.
-            _policy = new ChallengeBasedAuthenticationPolicy(new MockCredentialThrowsWithNoScopes(), true);
+            _policy = new ChallengeBasedAuthenticationPolicy(new MockCredentialThrowsWithNoScopes(), false);
 
             transport = CreateMockTransport(new MockResponse(200));
             response = await SendGetRequest(transport, _policy, uri: new Uri("https://myvault.vault.azure.net"));
@@ -50,15 +50,15 @@ namespace Azure.Security.KeyVault.Tests
         }
 
         [TestCaseSource(nameof(VerifyChallengeResourceData))]
-        public async Task VerifyChallengeResource(Uri uri, bool verify)
+        public async Task VerifyChallengeResource(Uri uri, bool disableVerification)
         {
             var keyvaultChallengeResponse = new MockResponse(401);
             keyvaultChallengeResponse.AddHeader(new HttpHeader("WWW-Authenticate", KeyVaultChallenge));
             MockTransport transport = CreateMockTransport(keyvaultChallengeResponse, new MockResponse(200));
 
-            ChallengeBasedAuthenticationPolicy policy = new(new MockCredentialThrowsWithNoScopes(), verify);
+            ChallengeBasedAuthenticationPolicy policy = new(new MockCredentialThrowsWithNoScopes(), disableVerification);
 
-            if (verify)
+            if (!disableVerification)
             {
                 InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await SendGetRequest(transport, policy, uri: uri));
                 Assert.That(ex.Message, Is.EqualTo("The challenge resource 'vault.azure.net' does not match the requested domain."));
@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Tests
             "https://example.com",
             "https://examplevault.azure.net",
             "https://example.vault.azure.com",
-        }.Zip(new[] { false, true }, (uri, verify) => new object[] { new Uri(uri), verify });
+        }.Zip(new[] { false, true }, (uri, disableVerification) => new object[] { new Uri(uri), disableVerification });
 
         [Test]
         public void VerifyChallengeResourceInvalidUri()
@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Tests
             keyvaultChallengeResponse.AddHeader(new HttpHeader("WWW-Authenticate", "Bearer authorization=\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\", resource=\"invalid-uri\""));
             MockTransport transport = CreateMockTransport(keyvaultChallengeResponse, new MockResponse(200));
 
-            ChallengeBasedAuthenticationPolicy policy = new(new MockCredentialThrowsWithNoScopes(), true);
+            ChallengeBasedAuthenticationPolicy policy = new(new MockCredentialThrowsWithNoScopes(), false);
             Uri uri = new("https://example.com");
 
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await SendGetRequest(transport, policy, uri: uri));

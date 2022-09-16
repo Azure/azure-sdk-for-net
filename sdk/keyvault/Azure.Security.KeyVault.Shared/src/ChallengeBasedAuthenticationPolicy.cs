@@ -21,9 +21,9 @@ namespace Azure.Security.KeyVault
         private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
         private ChallengeParameters _challenge;
 
-        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool verifyChallengeResource) : base(credential, Array.Empty<string>())
+        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification) : base(credential, Array.Empty<string>())
         {
-            _verifyChallengeResource = verifyChallengeResource;
+            _verifyChallengeResource = !disableChallengeResourceVerification;
         }
 
         /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync(Azure.Core.HttpMessage)" />
