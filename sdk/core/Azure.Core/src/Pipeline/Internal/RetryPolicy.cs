@@ -57,6 +57,7 @@ namespace Azure.Core.Pipeline
             List<Exception>? exceptions = null;
             while (true)
             {
+                message.RetryContext.AttemptNumber++;
                 var before = Stopwatch.GetTimestamp();
                 try
                 {
@@ -93,7 +94,6 @@ namespace Azure.Core.Pipeline
 
                 TimeSpan delay;
 
-                message.RetryContext.AttemptNumber++;
                 bool shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
                 if (shouldRetry)
                 {
@@ -173,12 +173,11 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
-            if (message.RetryContext!.AttemptNumber <= _maxRetries)
+            if (message.RetryContext!.AttemptNumber <= _maxRetries + 1)
             {
                 if (message.RetryContext!.LastException != null)
                 {
-                    return message.RetryContext!.AttemptNumber <= _maxRetries &&
-                           message.ResponseClassifier.IsRetriable(message, message.RetryContext!.LastException);
+                    return message.ResponseClassifier.IsRetriable(message, message.RetryContext!.LastException);
                 }
 
                 if (message.Response.IsError)
