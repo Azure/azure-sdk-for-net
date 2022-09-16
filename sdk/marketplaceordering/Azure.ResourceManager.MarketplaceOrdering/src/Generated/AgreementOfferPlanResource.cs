@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<AgreementTermResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         [ForwardsClientCalls]
         public new virtual async Task<Response<AgreementOfferPlanResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AgreementOfferPlanResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<AgreementTermResource> GetCore(CancellationToken cancellationToken = default)
         {

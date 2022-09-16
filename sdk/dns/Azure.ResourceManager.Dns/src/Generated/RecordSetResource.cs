@@ -251,19 +251,23 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<RecordSetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<RecordSetResource> Get(CancellationToken cancellationToken = default)
@@ -271,21 +275,29 @@ namespace Azure.ResourceManager.Dns
             return GetCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteCoreAsync(waitUntil, ifMatch, cancellationToken);
+            return await DeleteCoreAsync(waitUntil, ifMatch, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract ArmOperation DeleteCore(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -295,9 +307,14 @@ namespace Azure.ResourceManager.Dns
             return DeleteCore(waitUntil, ifMatch, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract Task<Response<RecordSetResource>> UpdateCoreAsync(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -305,12 +322,17 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public async Task<Response<RecordSetResource>> UpdateAsync(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await UpdateCoreAsync(data, ifMatch, cancellationToken);
+            return await UpdateCoreAsync(data, ifMatch, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract Response<RecordSetResource> UpdateCore(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

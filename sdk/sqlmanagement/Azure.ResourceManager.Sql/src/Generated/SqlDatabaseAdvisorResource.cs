@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             return GetRecommendedActions().Get(recommendedActionName, cancellationToken);
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SqlAdvisorResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new virtual async Task<Response<SqlDatabaseAdvisorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SqlDatabaseAdvisorResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SqlAdvisorResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
             return Response.FromValue((SqlDatabaseAdvisorResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new virtual async Task<Response<SqlDatabaseAdvisorResource>> UpdateAsync(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(data, cancellationToken);
+            var value = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SqlDatabaseAdvisorResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>

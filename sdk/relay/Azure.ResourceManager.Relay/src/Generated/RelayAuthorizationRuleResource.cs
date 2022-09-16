@@ -119,19 +119,23 @@ namespace Azure.ResourceManager.Relay
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<RelayAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<RelayAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<RelayAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<RelayAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
@@ -139,20 +143,26 @@ namespace Azure.ResourceManager.Relay
             return GetCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return await DeleteCoreAsync(waitUntil, cancellationToken);
+            return await DeleteCoreAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -161,9 +171,14 @@ namespace Azure.ResourceManager.Relay
             return DeleteCore(waitUntil, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The authorization rule parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract Task<ArmOperation<RelayAuthorizationRuleResource>> UpdateCoreAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,12 +186,17 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public async Task<ArmOperation<RelayAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            return await UpdateCoreAsync(waitUntil, data, cancellationToken);
+            return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The authorization rule parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract ArmOperation<RelayAuthorizationRuleResource> UpdateCore(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The authorization rule parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,19 +207,23 @@ namespace Azure.ResourceManager.Relay
             return UpdateCore(waitUntil, data, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation GetKeys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<RelayAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<RelayAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            return await GetKeysCoreAsync(cancellationToken);
+            return await GetKeysCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation GetKeys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<RelayAccessKeys> GetKeysCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<RelayAccessKeys> GetKeys(CancellationToken cancellationToken = default)
@@ -207,21 +231,29 @@ namespace Azure.ResourceManager.Relay
             return GetKeysCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation RegenerateKeys. </summary>
+        /// <param name="content"> Parameters supplied to regenerate authorization rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         protected abstract Task<Response<RelayAccessKeys>> RegenerateKeysCoreAsync(RelayRegenerateAccessKeyContent content, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation RegenerateKeys. </summary>
         /// <param name="content"> Parameters supplied to regenerate authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [ForwardsClientCalls]
         public async Task<Response<RelayAccessKeys>> RegenerateKeysAsync(RelayRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
-            return await RegenerateKeysCoreAsync(content, cancellationToken);
+            return await RegenerateKeysCoreAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation RegenerateKeys. </summary>
+        /// <param name="content"> Parameters supplied to regenerate authorization rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         protected abstract Response<RelayAccessKeys> RegenerateKeysCore(RelayRegenerateAccessKeyContent content, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation RegenerateKeys. </summary>
         /// <param name="content"> Parameters supplied to regenerate authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>

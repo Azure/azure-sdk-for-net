@@ -119,19 +119,23 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<GuestConfigurationAssignmentResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<GuestConfigurationAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<GuestConfigurationAssignmentResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<GuestConfigurationAssignmentResource> Get(CancellationToken cancellationToken = default)
@@ -139,19 +143,23 @@ namespace Azure.ResourceManager.GuestConfiguration
             return GetCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation GetReports. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract AsyncPageable<GuestConfigurationAssignmentReport> GetReportsCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetReports. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
-            return await GetReportsCoreAsync(cancellationToken);
+            return await GetReportsCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation GetReports. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Pageable<GuestConfigurationAssignmentReport> GetReportsCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetReports. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
@@ -159,9 +167,14 @@ namespace Azure.ResourceManager.GuestConfiguration
             return GetReportsCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation GetReport. </summary>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
         protected abstract Task<Response<GuestConfigurationAssignmentReport>> GetReportCoreAsync(string reportId, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetReport. </summary>
         /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -169,12 +182,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
-            return await GetReportCoreAsync(reportId, cancellationToken);
+            return await GetReportCoreAsync(reportId, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation GetReport. </summary>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
         protected abstract Response<GuestConfigurationAssignmentReport> GetReportCore(string reportId, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetReport. </summary>
         /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>

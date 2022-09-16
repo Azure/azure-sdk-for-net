@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic
             return GetLogicWorkflowRunActionRepetitionRequestHistories().Get(requestHistoryName, cancellationToken);
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<LogicWorkflowRunActionRepetitionDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Logic
         [ForwardsClientCalls]
         public new virtual async Task<Response<LogicWorkflowRunActionRepetitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((LogicWorkflowRunActionRepetitionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<LogicWorkflowRunActionRepetitionDefinitionResource> GetCore(CancellationToken cancellationToken = default)
         {

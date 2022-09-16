@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint
     /// from an instance of <see cref="ArmClient" /> using the GetBlueprintVersionArtifactResource method.
     /// Otherwise you can get one from its parent resource <see cref="PublishedBlueprintResource" /> using the GetBlueprintVersionArtifact method.
     /// </summary>
-    public partial class BlueprintVersionArtifactResource : ArmResource
+    public partial class BlueprintVersionArtifactResource : ArtifactResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlueprintVersionArtifactResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceScope, string blueprintName, string versionId, string artifactName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Blueprint
 
         private readonly ClientDiagnostics _blueprintVersionArtifactPublishedArtifactsClientDiagnostics;
         private readonly PublishedArtifactsRestOperations _blueprintVersionArtifactPublishedArtifactsRestClient;
-        private readonly ArtifactData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BlueprintVersionArtifactResource"/> class for mocking. </summary>
         protected BlueprintVersionArtifactResource()
@@ -43,10 +42,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary> Initializes a new instance of the <see cref = "BlueprintVersionArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BlueprintVersionArtifactResource(ArmClient client, ArtifactData data) : this(client, data.Id)
+        internal BlueprintVersionArtifactResource(ArmClient client, ArtifactData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="BlueprintVersionArtifactResource"/> class. </summary>
@@ -65,34 +62,15 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Blueprint/blueprints/versions/artifacts";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ArtifactData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get an artifact for a published blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}
-        /// Operation Id: PublishedArtifacts_Get
-        /// </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BlueprintVersionArtifactResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<ArtifactResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactResource.Get");
             scope.Start();
@@ -101,7 +79,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _blueprintVersionArtifactPublishedArtifactsRestClient.GetAsync(Id.Parent.Parent.Parent, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +94,16 @@ namespace Azure.ResourceManager.Blueprint
         /// Operation Id: PublishedArtifacts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BlueprintVersionArtifactResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<BlueprintVersionArtifactResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((BlueprintVersionArtifactResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<ArtifactResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactResource.Get");
             scope.Start();
@@ -125,13 +112,26 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _blueprintVersionArtifactPublishedArtifactsRestClient.Get(Id.Parent.Parent.Parent, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get an artifact for a published blueprint definition.
+        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}
+        /// Operation Id: PublishedArtifacts_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<BlueprintVersionArtifactResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((BlueprintVersionArtifactResource)value.Value, value.GetRawResponse());
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseManagedBackupShortTermRetentionPolicyResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new virtual async Task<Response<ManagedBackupShortTermRetentionPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ManagedBackupShortTermRetentionPolicyResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseManagedBackupShortTermRetentionPolicyResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             return Response.FromValue((ManagedBackupShortTermRetentionPolicyResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,11 +173,16 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new virtual async Task<ArmOperation<ManagedBackupShortTermRetentionPolicyResource>> UpdateAsync(WaitUntil waitUntil, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken);
-            throw new InvalidOperationException();
+            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(Response.FromValue((ManagedBackupShortTermRetentionPolicyResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyOperationSource(Client), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, _managedBackupShortTermRetentionPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,7 +221,12 @@ namespace Azure.ResourceManager.Sql
         public new virtual ArmOperation<ManagedBackupShortTermRetentionPolicyResource> Update(WaitUntil waitUntil, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             var value = UpdateCore(waitUntil, data, cancellationToken);
-            throw new InvalidOperationException();
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(Response.FromValue((ManagedBackupShortTermRetentionPolicyResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyOperationSource(Client), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, _managedBackupShortTermRetentionPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
     }
 }

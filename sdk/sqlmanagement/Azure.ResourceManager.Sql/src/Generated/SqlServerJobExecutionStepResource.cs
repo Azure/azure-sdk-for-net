@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
             return GetSqlServerJobExecutionStepTargets().Get(targetId, cancellationToken);
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseSqlServerJobExecutionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new virtual async Task<Response<SqlServerJobExecutionStepResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SqlServerJobExecutionStepResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseSqlServerJobExecutionResource> GetCore(CancellationToken cancellationToken = default)
         {

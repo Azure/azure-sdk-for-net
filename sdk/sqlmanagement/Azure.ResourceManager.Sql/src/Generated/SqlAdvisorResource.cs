@@ -99,19 +99,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<SqlAdvisorResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<SqlAdvisorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<SqlAdvisorResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<SqlAdvisorResource> Get(CancellationToken cancellationToken = default)
@@ -119,21 +123,29 @@ namespace Azure.ResourceManager.Sql
             return GetCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="data"> The requested advisor resource state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract Task<Response<SqlAdvisorResource>> UpdateCoreAsync(SqlAdvisorData data, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
         public async Task<Response<SqlAdvisorResource>> UpdateAsync(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
-            return await UpdateCoreAsync(data, cancellationToken);
+            return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="data"> The requested advisor resource state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract Response<SqlAdvisorResource> UpdateCore(SqlAdvisorData data, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>

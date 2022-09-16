@@ -99,19 +99,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<DatabaseSchemaResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<DatabaseSchemaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<DatabaseSchemaResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<DatabaseSchemaResource> Get(CancellationToken cancellationToken = default)

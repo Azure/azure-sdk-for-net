@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Automation
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ModuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ModuleResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Automation
             return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Automation
                 throw;
             }
         }
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new virtual async Task<Response<AutomationAccountPython2PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = await AddTagCoreAsync(key, value, cancellationToken);
+            var value0 = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AutomationAccountPython2PackageResource)value0.Value, value0.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Automation
             return Response.FromValue((AutomationAccountPython2PackageResource)value0.Value, value0.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -395,11 +395,11 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new virtual async Task<Response<AutomationAccountPython2PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = await SetTagsCoreAsync(tags, cancellationToken);
+            var value = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Automation
             return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -502,11 +502,11 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new virtual async Task<Response<AutomationAccountPython2PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var value = await RemoveTagCoreAsync(key, cancellationToken);
+            var value = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

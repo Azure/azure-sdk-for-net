@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCommitmentPlans().Get(commitmentPlanName, cancellationToken);
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseCognitiveServicesAccountResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public new virtual async Task<Response<CognitiveServicesAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((CognitiveServicesAccountResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseCognitiveServicesAccountResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return Response.FromValue((CognitiveServicesAccountResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)

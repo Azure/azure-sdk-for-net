@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseEventSubscriptionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new virtual async Task<Response<DomainEventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseEventSubscriptionResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,11 +217,16 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new virtual async Task<ArmOperation<DomainEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, patch, cancellationToken);
-            throw new InvalidOperationException();
+            var value = await UpdateCoreAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new EventGridArmOperation<DomainEventSubscriptionResource>(Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -260,10 +265,15 @@ namespace Azure.ResourceManager.EventGrid
         public new virtual ArmOperation<DomainEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             var value = UpdateCore(waitUntil, patch, cancellationToken);
-            throw new InvalidOperationException();
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new EventGridArmOperation<DomainEventSubscriptionResource>(Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetDeliveryAttributes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -285,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetDeliveryAttributes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Pageable<DeliveryAttributeMapping> GetDeliveryAttributesCore(CancellationToken cancellationToken = default)
         {
@@ -307,7 +317,7 @@ namespace Azure.ResourceManager.EventGrid
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetFullUri. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventSubscriptionFullUri>> GetFullUriCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -325,7 +335,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetFullUri. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventSubscriptionFullUri> GetFullUriCore(CancellationToken cancellationToken = default)
         {

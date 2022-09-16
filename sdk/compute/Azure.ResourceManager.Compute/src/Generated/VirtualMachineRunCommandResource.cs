@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseVirtualMachineRunCommandResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new virtual async Task<Response<VirtualMachineRunCommandResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(expand, cancellationToken);
+            var value = await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((VirtualMachineRunCommandResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseVirtualMachineRunCommandResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
             return Response.FromValue((VirtualMachineRunCommandResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,11 +222,16 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new virtual async Task<ArmOperation<VirtualMachineRunCommandResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, runCommand, cancellationToken);
-            throw new InvalidOperationException();
+            var value = await UpdateCoreAsync(waitUntil, runCommand, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new ComputeArmOperation<VirtualMachineRunCommandResource>(Response.FromValue((VirtualMachineRunCommandResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(new VirtualMachineRunCommandOperationSource(Client), _virtualMachineRunCommandClientDiagnostics, Pipeline, _virtualMachineRunCommandRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -265,10 +270,15 @@ namespace Azure.ResourceManager.Compute
         public new virtual ArmOperation<VirtualMachineRunCommandResource> Update(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
             var value = UpdateCore(waitUntil, runCommand, cancellationToken);
-            throw new InvalidOperationException();
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new ComputeArmOperation<VirtualMachineRunCommandResource>(Response.FromValue((VirtualMachineRunCommandResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(new VirtualMachineRunCommandOperationSource(Client), _virtualMachineRunCommandClientDiagnostics, Pipeline, _virtualMachineRunCommandRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,7 +309,7 @@ namespace Azure.ResourceManager.Compute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateCoreAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -322,11 +332,11 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new virtual async Task<Response<VirtualMachineRunCommandResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = await AddTagCoreAsync(key, value, cancellationToken);
+            var value0 = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((VirtualMachineRunCommandResource)value0.Value, value0.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -357,7 +367,7 @@ namespace Azure.ResourceManager.Compute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = UpdateCore(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -384,7 +394,7 @@ namespace Azure.ResourceManager.Compute
             return Response.FromValue((VirtualMachineRunCommandResource)value0.Value, value0.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -410,7 +420,7 @@ namespace Azure.ResourceManager.Compute
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateCoreAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -432,11 +442,11 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new virtual async Task<Response<VirtualMachineRunCommandResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = await SetTagsCoreAsync(tags, cancellationToken);
+            var value = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((VirtualMachineRunCommandResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -462,7 +472,7 @@ namespace Azure.ResourceManager.Compute
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = UpdateCore(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -488,7 +498,7 @@ namespace Azure.ResourceManager.Compute
             return Response.FromValue((VirtualMachineRunCommandResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -517,7 +527,7 @@ namespace Azure.ResourceManager.Compute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateCoreAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -539,11 +549,11 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new virtual async Task<Response<VirtualMachineRunCommandResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var value = await RemoveTagCoreAsync(key, cancellationToken);
+            var value = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((VirtualMachineRunCommandResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -572,7 +582,7 @@ namespace Azure.ResourceManager.Compute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = UpdateCore(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

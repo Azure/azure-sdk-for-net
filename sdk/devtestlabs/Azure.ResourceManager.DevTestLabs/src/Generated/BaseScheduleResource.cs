@@ -139,20 +139,26 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<BaseScheduleResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(expand, cancellationToken);
+            return await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<BaseScheduleResource> GetCore(string expand = null, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -161,20 +167,26 @@ namespace Azure.ResourceManager.DevTestLabs
             return GetCore(expand, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return await DeleteCoreAsync(waitUntil, cancellationToken);
+            return await DeleteCoreAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Delete. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -183,21 +195,29 @@ namespace Azure.ResourceManager.DevTestLabs
             return DeleteCore(waitUntil, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="schedule"> A schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         protected abstract Task<Response<BaseScheduleResource>> UpdateCoreAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="schedule"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
-            return await UpdateCoreAsync(schedule, cancellationToken);
+            return await UpdateCoreAsync(schedule, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Update. </summary>
+        /// <param name="schedule"> A schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         protected abstract Response<BaseScheduleResource> UpdateCore(ScheduleFragment schedule, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Update. </summary>
         /// <param name="schedule"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
@@ -207,20 +227,26 @@ namespace Azure.ResourceManager.DevTestLabs
             return UpdateCore(schedule, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation Execute. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<ArmOperation> ExecuteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Execute. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return await ExecuteCoreAsync(waitUntil, cancellationToken);
+            return await ExecuteCoreAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Execute. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract ArmOperation ExecuteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Execute. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -229,9 +255,14 @@ namespace Azure.ResourceManager.DevTestLabs
             return ExecuteCore(waitUntil, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation AddTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected abstract Task<Response<BaseScheduleResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -239,12 +270,17 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return await AddTagCoreAsync(key, value, cancellationToken);
+            return await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation AddTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected abstract Response<BaseScheduleResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -255,21 +291,29 @@ namespace Azure.ResourceManager.DevTestLabs
             return AddTagCore(key, value, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation SetTags. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected abstract Task<Response<BaseScheduleResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return await SetTagsCoreAsync(tags, cancellationToken);
+            return await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation SetTags. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected abstract Response<BaseScheduleResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -279,21 +323,29 @@ namespace Azure.ResourceManager.DevTestLabs
             return SetTagsCore(tags, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation RemoveTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected abstract Task<Response<BaseScheduleResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            return await RemoveTagCoreAsync(key, cancellationToken);
+            return await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation RemoveTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected abstract Response<BaseScheduleResource> RemoveTagCore(string key, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

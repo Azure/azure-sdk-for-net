@@ -138,19 +138,23 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<ServiceBusAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<ServiceBusAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<ServiceBusAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<ServiceBusAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
@@ -158,19 +162,23 @@ namespace Azure.ResourceManager.ServiceBus
             return GetCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation GetKeys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<ServiceBusAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<ServiceBusAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            return await GetKeysCoreAsync(cancellationToken);
+            return await GetKeysCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation GetKeys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<ServiceBusAccessKeys> GetKeysCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<ServiceBusAccessKeys> GetKeys(CancellationToken cancellationToken = default)

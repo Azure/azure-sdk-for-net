@@ -279,19 +279,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<ThroughputSettingResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<ThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<ThroughputSettingResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<ThroughputSettingResource> Get(CancellationToken cancellationToken = default)
@@ -299,9 +303,14 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation CreateOrUpdate. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The parameters to provide for the RUs per second of the current SQL database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract Task<ArmOperation<ThroughputSettingResource>> CreateOrUpdateCoreAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation CreateOrUpdate. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -309,12 +318,17 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public async Task<ArmOperation<ThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            return await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken);
+            return await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation CreateOrUpdate. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The parameters to provide for the RUs per second of the current SQL database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected abstract ArmOperation<ThroughputSettingResource> CreateOrUpdateCore(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation CreateOrUpdate. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,9 +339,14 @@ namespace Azure.ResourceManager.CosmosDB
             return CreateOrUpdateCore(waitUntil, data, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation AddTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected abstract Task<Response<ThroughputSettingResource>> AddTagCoreAsync(string key, string value, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -335,12 +354,17 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public async Task<Response<ThroughputSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return await AddTagCoreAsync(key, value, cancellationToken);
+            return await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation AddTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         protected abstract Response<ThroughputSettingResource> AddTagCore(string key, string value, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation AddTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -351,21 +375,29 @@ namespace Azure.ResourceManager.CosmosDB
             return AddTagCore(key, value, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation SetTags. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected abstract Task<Response<ThroughputSettingResource>> SetTagsCoreAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
         public async Task<Response<ThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return await SetTagsCoreAsync(tags, cancellationToken);
+            return await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation SetTags. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         protected abstract Response<ThroughputSettingResource> SetTagsCore(IDictionary<string, string> tags, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation SetTags. </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -375,21 +407,29 @@ namespace Azure.ResourceManager.CosmosDB
             return SetTagsCore(tags, cancellationToken);
         }
 
+        /// <summary> The core implementation for operation RemoveTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected abstract Task<Response<ThroughputSettingResource>> RemoveTagCoreAsync(string key, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
         public async Task<Response<ThroughputSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            return await RemoveTagCoreAsync(key, cancellationToken);
+            return await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation RemoveTag. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         protected abstract Response<ThroughputSettingResource> RemoveTagCore(string key, CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation RemoveTag. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

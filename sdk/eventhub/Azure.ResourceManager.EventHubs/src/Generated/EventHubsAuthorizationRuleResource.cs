@@ -119,19 +119,23 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<EventHubsAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<EventHubsAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken);
+            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<EventHubsAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<EventHubsAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
@@ -139,19 +143,23 @@ namespace Azure.ResourceManager.EventHubs
             return GetCore(cancellationToken);
         }
 
+        /// <summary> The core implementation for operation GetKeys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Task<Response<EventHubsAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public async Task<Response<EventHubsAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            return await GetKeysCoreAsync(cancellationToken);
+            return await GetKeysCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> The core implementation for operation GetKeys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected abstract Response<EventHubsAccessKeys> GetKeysCore(CancellationToken cancellationToken = default);
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The default implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public Response<EventHubsAccessKeys> GetKeys(CancellationToken cancellationToken = default)

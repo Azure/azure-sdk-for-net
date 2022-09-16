@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ServiceBusAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.ServiceBus
         [ForwardsClientCalls]
         public new virtual async Task<Response<ServiceBusNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ServiceBusNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ServiceBusAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw;
             }
         }
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ServiceBusAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ServiceBusAccessKeys> GetKeysCore(CancellationToken cancellationToken = default)
         {

@@ -12,75 +12,65 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql
+namespace Azure.ResourceManager.Blueprint
 {
     /// <summary> TODO. </summary>
-    public abstract partial class BaseSqlServerJobStepResource : ArmResource
+    public abstract partial class ArtifactResource : ArmResource
     {
-        internal static BaseSqlServerJobStepResource GetResource(ArmClient client, SqlServerJobStepData data)
+        internal static ArtifactResource GetResource(ArmClient client, ArtifactData data)
         {
-            if (IsSqlServerJobVersionStepResource(data.Id))
+            if (IsBlueprintArtifactResource(data.Id))
             {
-                return new SqlServerJobVersionStepResource(client, data);
+                return new BlueprintArtifactResource(client, data);
             }
-            if (IsSqlServerJobStepResource(data.Id))
+            if (IsBlueprintVersionArtifactResource(data.Id))
             {
-                return new SqlServerJobStepResource(client, data);
+                return new BlueprintVersionArtifactResource(client, data);
             }
             // TODO -- should we throw or return an UnknownResource?
             throw new InvalidOperationException();
         }
 
-        internal static bool IsSqlServerJobVersionStepResource(ResourceIdentifier id)
+        internal static bool IsBlueprintArtifactResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != SqlServerJobVersionStepResource.ResourceType)
-            {
-                return false;
-            }
-            // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.ResourceType != BlueprintArtifactResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSqlServerJobStepResource(ResourceIdentifier id)
+        internal static bool IsBlueprintVersionArtifactResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != SqlServerJobStepResource.ResourceType)
-            {
-                return false;
-            }
-            // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.ResourceType != BlueprintVersionArtifactResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        private readonly SqlServerJobStepData _data;
+        private readonly ArtifactData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BaseSqlServerJobStepResource"/> class for mocking. </summary>
-        protected BaseSqlServerJobStepResource()
+        /// <summary> Initializes a new instance of the <see cref="ArtifactResource"/> class for mocking. </summary>
+        protected ArtifactResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BaseSqlServerJobStepResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BaseSqlServerJobStepResource(ArmClient client, SqlServerJobStepData data) : this(client, data.Id)
+        internal ArtifactResource(ArmClient client, ArtifactData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BaseSqlServerJobStepResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArtifactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BaseSqlServerJobStepResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArtifactResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +79,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SqlServerJobStepData Data
+        public virtual ArtifactData Data
         {
             get
             {
@@ -101,24 +91,24 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<BaseSqlServerJobStepResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<ArtifactResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<BaseSqlServerJobStepResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ArtifactResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<BaseSqlServerJobStepResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<ArtifactResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<BaseSqlServerJobStepResource> Get(CancellationToken cancellationToken = default)
+        public Response<ArtifactResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }

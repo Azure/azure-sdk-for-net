@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<HealthcareApisPrivateEndpointConnectionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public new virtual async Task<Response<HealthcareApisWorkspacePrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((HealthcareApisWorkspacePrivateEndpointConnectionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<HealthcareApisPrivateEndpointConnectionResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HealthcareApis
             return Response.FromValue((HealthcareApisWorkspacePrivateEndpointConnectionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,11 +216,16 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public new virtual async Task<ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken);
-            throw new InvalidOperationException();
+            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(Response.FromValue((HealthcareApisWorkspacePrivateEndpointConnectionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisWorkspacePrivateEndpointConnectionOperationSource(Client), _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,7 +264,12 @@ namespace Azure.ResourceManager.HealthcareApis
         public new virtual ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             var value = UpdateCore(waitUntil, data, cancellationToken);
-            throw new InvalidOperationException();
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(Response.FromValue((HealthcareApisWorkspacePrivateEndpointConnectionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisWorkspacePrivateEndpointConnectionOperationSource(Client), _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
     }
 }

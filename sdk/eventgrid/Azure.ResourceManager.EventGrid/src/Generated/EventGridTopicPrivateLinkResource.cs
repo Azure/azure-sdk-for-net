@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventGridPrivateLinkResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((EventGridTopicPrivateLinkResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventGridPrivateLinkResource> GetCore(CancellationToken cancellationToken = default)
         {

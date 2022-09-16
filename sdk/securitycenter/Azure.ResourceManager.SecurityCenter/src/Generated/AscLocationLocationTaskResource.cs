@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SecurityTaskResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public new virtual async Task<Response<AscLocationLocationTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AscLocationLocationTaskResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SecurityTaskResource> GetCore(CancellationToken cancellationToken = default)
         {

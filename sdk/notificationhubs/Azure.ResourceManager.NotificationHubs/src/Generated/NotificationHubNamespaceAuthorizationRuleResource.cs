@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseNotificationHubAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public new virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((NotificationHubNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseNotificationHubAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NotificationHubs
             return Response.FromValue((NotificationHubNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public new virtual async Task<ArmOperation<NotificationHubNamespaceAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, content, cancellationToken);
-            throw new InvalidOperationException();
+            var value = await UpdateCoreAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue((NotificationHubNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse()));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -260,10 +260,10 @@ namespace Azure.ResourceManager.NotificationHubs
         public new virtual ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             var value = UpdateCore(waitUntil, content, cancellationToken);
-            throw new InvalidOperationException();
+            return new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue((NotificationHubNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse()));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<NotificationHubResourceKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation GetKeys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<NotificationHubResourceKeys> GetKeysCore(CancellationToken cancellationToken = default)
         {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation RegenerateKeys. </summary>
         /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation RegenerateKeys. </summary>
         /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>

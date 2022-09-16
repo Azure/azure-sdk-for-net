@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventGridPrivateEndpointConnectionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new virtual async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventGridPrivateEndpointConnectionResource> GetCore(CancellationToken cancellationToken = default)
         {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The private endpoint connection object to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,11 +218,16 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new virtual async Task<ArmOperation<EventGridTopicPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken);
-            throw new InvalidOperationException();
+            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The private endpoint connection object to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,7 +266,12 @@ namespace Azure.ResourceManager.EventGrid
         public new virtual ArmOperation<EventGridTopicPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             var value = UpdateCore(waitUntil, data, cancellationToken);
-            throw new InvalidOperationException();
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
     }
 }

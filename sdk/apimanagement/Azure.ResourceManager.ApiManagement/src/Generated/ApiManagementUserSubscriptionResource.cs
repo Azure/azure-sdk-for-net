@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SubscriptionContractResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public new virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken);
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ApiManagementUserSubscriptionResource)value.Value, value.GetRawResponse());
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SubscriptionContractResource> GetCore(CancellationToken cancellationToken = default)
         {
