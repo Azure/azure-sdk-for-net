@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus
             throw new TaskCanceledException();
         }
 
-        internal void SetServerBusy(string exceptionMessage, CancellationToken cancellationToken)
+        private void SetServerBusy(string exceptionMessage, CancellationToken cancellationToken)
         {
             // multiple call to this method will not prolong the timer.
             if (Interlocked.CompareExchange(ref serverBusyLock, 1, 0) != 0)
@@ -201,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
             _ = ScheduleResetServerBusy(cancellationToken);
         }
 
-        internal void ResetServerBusy()
+        private void ResetServerBusy()
         {
             if (Interlocked.CompareExchange(ref serverBusyLock, 1, 0) != 0)
             {
