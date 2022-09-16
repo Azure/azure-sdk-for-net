@@ -82,9 +82,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             EventHubProducerClient producer = mockProducer.Object;
 
+            // The rest of this snippet demonstrates how to use the mocked methods. This would be where
+            // application methods can be called and tested.
+
             EventDataBatch batch = await producer.CreateBatchAsync();
 
-            // Next we are creating a list of events to use in our test.
+            // This is creating a list of events to use in our test.
 
             List<EventData> sourceEvents = new();
 
@@ -104,8 +107,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             EventData eventData4 = new EventData(eventBody: new BinaryData("Sample-Event-4-will-fail"));
             Assert.IsFalse(batch.TryAdd(eventData4));
 
-            // For illustrative purposes we are calling SendAsync. In real-world scenarios this
-            // would likely be a call to an application-defind method containing a SendAsync call. TODO
+            // For illustrative purposes we are calling SendAsync. This call would likely be inside an application
+            // defined method.
 
             await producer.SendAsync(batch);
 
@@ -146,6 +149,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
 
+            // The following demonstrates how to use the mocked EnqueueEventAsync. This would be where application
+            // methods can be called and tested.
+
             // This is an illustrative fail handler that can be added to the mock buffered producer.
 
             Func<SendEventBatchFailedEventArgs, Task> sendFailed = new(async args =>
@@ -179,11 +185,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 bufferedProducerMock
                     .Verify(bp => bp.EnqueueEventAsync(
-                        It.Is<EventData>(e => (e.EventBody.ToString().Equals(index.ToString()))), //TODO: explanation?
+                        It.Is<EventData>(e => (e.EventBody.ToString().Equals(index.ToString()))), // Check that enqueue was called on each expected event body
                         It.IsAny<CancellationToken>()));
             }
 
-            // The following lines demonstrate how to test a fail handler by calling it directly.
+            // The following lines demonstrate how to test a fail handler by calling it directly. Testing fail and success handlers
+            // does not require mocking.
 
             int numEventsInBatch = 12;
             List<EventData> eventsInBatch = new();
@@ -302,8 +309,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     .ReturnsAsync(partition.Value);
             }
 
-            // Here we are demonstrating how to access the mocked partition Ids and PartitionProperties for
-            // illustrative purposes.
+            // The following demonstrates how to use the mocked partition Ids and PartitionProperties. This would be
+            // where application code utilizing the mocked methods could be called and verified.
 
             EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
 
@@ -358,7 +365,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 for (int index = 0; index < 3; index++)
                 {
                     // This mocks an EventData instance using the model factory. Different arguments can mock different
-                    // potential outputs from the broker
+                    // potential outputs from the broker.
 
                     EventData eventData = EventHubsModelFactory.EventData(
                         eventBody: new BinaryData($"Sample-Event-{ index }"),
@@ -373,12 +380,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     PartitionEvent samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
                     List<PartitionEvent> partitionEventList = new List<PartitionEvent> { samplePartitionEvent };
 
-                    // IAsyncEnumerable types can only be returned by async functions, use this await statement to
-                    // synthetically make this method async.
+                    // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
+                    // force the method to be async.
 
                     await Task.Yield();
 
-                    // Yield statements allow methods to emit multiple outputs, and in async methods, over time.
+                    // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
 
                     yield return samplePartitionEvent;
                 }
@@ -403,7 +410,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(consumerPartitions);
 
-            // The follow demonstrates how to use the mocked methods.
+            // The following demonstrates how to use the mocked methods. This would be where application methods
+            // can be called and tested.
 
             EventHubConsumerClient consumer = mockConsumer.Object;
 
@@ -412,7 +420,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // Here we are setting the TrackLastEnqueuedEventProperties flag so that the EventHubConsumerClient receives
             // LastEnqueuedEventProperties when reading events.
 
-            ReadEventOptions options = new ReadEventOptions
+            ReadEventOptions options = new()
             {
                 TrackLastEnqueuedEventProperties = true
             };
@@ -422,7 +430,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(firstPartition, startingPosition, options, cancellationTokenSource.Token))
             {
-                // This is where application code would be handling partition events.
+                // This could be where application code is handling partition events.
             }
 
             // This is where applications can verify that the partition events output by the consumer client were handled as expected.
@@ -434,11 +442,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample11_PartitionReceiverMock
 
-            // Create a mock of the PartitionReceiver
-            Mock<PartitionReceiver> mockReceiver = new Mock<PartitionReceiver>();
+            Mock<PartitionReceiver> mockReceiver = new();
 
-            // Create a list of events to receive from the PartitionReceiver
-            List<EventData> receivedEvents = new List<EventData>();
+            // ReceivedEvents is a list of events to use when mocking ReceiveBatchAsync within the PartitionReceiver.
+
+            List<EventData> receivedEvents = new();
 
             for (int i=0; i<10; i++)
             {
@@ -455,8 +463,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 receivedEvents.Add(eventData);
             }
 
-            // Setup the mock to receive the mocked data batch when ReceiveBatchAsync is called
-            // on a given partition
+            // This sets up the mock to receive the list of events defined above when ReceiveBatchAsync is called
+            // on a given partition.
+
             mockReceiver
                 .Setup(r => r.ReceiveBatchAsync(
                     It.IsAny<int>(),
@@ -464,9 +473,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(receivedEvents);
 
+            // The following demonstrates how to use the mocked methods. This would be where application code utilizing
+            // the mocked methods could be called and verified.
+
             PartitionReceiver receiver = mockReceiver.Object;
 
-            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            using CancellationTokenSource cancellationTokenSource = new();
 
             IEnumerable<EventData> receivedBatch = await receiver.ReceiveBatchAsync(
                 maximumEventCount: 10,
@@ -474,85 +486,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 cancellationTokenSource.Token);
 
             #endregion
-        }
-
-        [Test]
-        public async Task MockingEventProcessor()
-        {
-#region Snippet:EventHubs_Sample11_MockingEventProcessor
-
-            // TestableCustomProcessor is a wrapper class around a CustomProcessor class that exposes
-            // protected methods so that they can be tested
-            Mock<TestableCustomProcessor> eventProcessorMock =
-                new Mock<TestableCustomProcessor>(
-                    5, //eventBatchMaximumCount
-                    "consumerGroup",
-                    "namespace",
-                    "eventHub",
-                    Mock.Of<TokenCredential>(),
-                    new EventProcessorOptions())
-                { CallBase = true };
-
-            List<EventData> eventList = new List<EventData>()
-            {
-                new EventData(new BinaryData("Sample-Event-1")),
-                new EventData(new BinaryData("Sample-Event-2")),
-                new EventData(new BinaryData("Sample-Event-3"))
-            };
-
-            TestableCustomProcessor eventProcessor = eventProcessorMock.Object;
-
-            // Call the wrapper method in order to reach proctected method within a custom processor
-            // Using It.Is allows the test to set the PartitionId value, even though the setter is protected
-            await eventProcessor.TestOnProcessingEventBatchAsync(eventList, new EventProcessorPartition());
-
-#endregion
-        }
-
-#region Snippet:EventHubs_Sample11_CustomEventProcessor
-        internal class CustomProcessor : EventProcessor<EventProcessorPartition>
-#endregion
-        {
-            public CustomProcessor(int eventBatchMaximumCount,
-                                        string consumerGroup,
-                                        string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        TokenCredential credential,
-                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
-
-            protected override async Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken = default)
-            {
-                await Task.Delay(1);
-            }
-
-            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken = default) =>
-                Task.CompletedTask;
-
-            // Storage integration
-            protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
-                throw new NotImplementedException();
-
-            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
-                throw new NotImplementedException();
-
-            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
-                throw new NotImplementedException();
-        }
-
-#region Snippet:EventHubs_Sample11_TestCustomEventProcessor
-        internal class TestableCustomProcessor : CustomProcessor
-#endregion
-        {
-            public TestableCustomProcessor(int eventBatchMaximumCount,
-                                        string consumerGroup,
-                                        string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        TokenCredential credential,
-                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
-
-            // Local event processing
-            internal async Task TestOnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken = default) =>
-                await OnProcessingEventBatchAsync(events, partition, cancellationToken);
         }
     }
 }
