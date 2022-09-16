@@ -3,14 +3,14 @@
 
 Event Hubs is built to support unit testing with mocks, as described in the [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking). This is an important feature of the library that allows developers to write tests that are completely focused on their own application logic, though they depend on the Event Hubs types.
 
-The examples that follow focus on scenarios likely to occur in applications, and demonstrate how to mock the Event Hubs types typically used in each scenario.
+The following examples focus on scenarios likely to occur in applications, and demonstrate how to mock the Event Hubs types typically used in each scenario. The code snippets utilize the mock object framework Moq in order to provide practical examples, however many mocking frameworks exist and can be used with the same approach in mind.
 
 ## Publishing Events with the `EventHubProducerClient`
 
 When using batches to publish to Event Hubs, the key interactions with the `EventHubProducerClient` are calling `CreateBatchAsync` to create the batch and `SendAsync` to publish it. 
  Mocked batches accept a `List<EventData>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected.  The custom `TryAdd` callback can be used to control the decision for whether an event is accepted into the batch or is rejected.   
 
-This snippet demonstrates mocking the `EventHubProducerClient` using Moq, and creating `EventDataBatch` instances using the `EventHubsModelFactory`.
+This snippet demonstrates mocking the `EventHubProducerClient`, and creating `EventDataBatch` instances using the `EventHubsModelFactory`.
 
 ```C# Snippet:EventHubs_Sample11_MockingEventDataBatch
 Mock<EventHubProducerClient> mockProducer = new();
