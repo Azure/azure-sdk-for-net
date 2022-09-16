@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Properties pertaining to the BlobNfsTarget. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
         /// <param name="target"> Resource ID of the storage container. </param>
         /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
-        internal BlobNfsTarget(string target, string usageModel)
+        internal BlobNfsTarget(ResourceIdentifier target, string usageModel)
         {
             Target = target;
             UsageModel = usageModel;
         }
 
         /// <summary> Resource ID of the storage container. </summary>
-        public string Target { get; set; }
+        public ResourceIdentifier Target { get; set; }
         /// <summary> Identifies the StorageCache usage model to be used for this storage target. </summary>
         public string UsageModel { get; set; }
     }
