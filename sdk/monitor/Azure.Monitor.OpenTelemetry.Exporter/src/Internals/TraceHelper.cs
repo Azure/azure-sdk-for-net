@@ -236,7 +236,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 Stack = exceptionStackTrace.Truncate(SchemaConstants.ExceptionDetails_Stack_MaxLength),
 
-                HasFullStack = exceptionStackTrace.Length < SchemaConstants.ExceptionDetails_Stack_MaxLength,
+                HasFullStack = exceptionStackTrace.Length <= SchemaConstants.ExceptionDetails_Stack_MaxLength,
 
                 // TODO: Update swagger schema to mandate typename.
                 TypeName = exceptionType.Truncate(SchemaConstants.ExceptionDetails_TypeName_MaxLength),
