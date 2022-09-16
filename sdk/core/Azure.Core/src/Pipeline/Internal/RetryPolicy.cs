@@ -59,19 +59,25 @@ namespace Azure.Core.Pipeline
             {
                 message.RetryContext.AttemptNumber++;
                 var before = Stopwatch.GetTimestamp();
+
+                if (async)
+                {
+                    await OnTryRequestAsync(message).ConfigureAwait(false);
+                }
+                else
+                {
+                    OnTryRequest(message);
+                }
+
                 try
                 {
                     if (async)
                     {
-                        await OnTryRequestAsync(message).ConfigureAwait(false);
                         await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                        await OnResponseAsync(message).ConfigureAwait(false);
                     }
                     else
                     {
-                        OnTryRequest(message);
                         ProcessNext(message, pipeline);
-                        OnResponse(message);
                     }
                     // This request didn't result in an exception, so reset the LastException property
                     // in case it was set on a previous attempt.
@@ -89,52 +95,63 @@ namespace Azure.Core.Pipeline
                     message.RetryContext.LastException = ex;
                 }
 
-                var after = Stopwatch.GetTimestamp();
-                double elapsed = (after - before) / (double)Stopwatch.Frequency;
-
-                TimeSpan delay;
-
-                bool shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
-                if (shouldRetry)
-                {
-                    delay = async ? await CalculateNextDelayAsync(message).ConfigureAwait(false) : CalculateNextDelay(message);
-                    if (delay > TimeSpan.Zero)
-                    {
-                        if (async)
-                        {
-                            await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            Wait(delay, message.CancellationToken);
-                        }
-                    }
-                }
-                else if (message.RetryContext.LastException != null)
-                {
-                    // Rethrow a singular exception
-                    if (exceptions!.Count == 1)
-                    {
-                        ExceptionDispatchInfo.Capture(message.RetryContext.LastException).Throw();
-                    }
-
-                    throw new AggregateException($"Retry failed after {message.RetryContext.AttemptNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
-                }
-                else
-                {
-                    return;
-                }
-
-                if (delay > TimeSpan.Zero)
+                // If we got a response for this request, trigger OnResponse. We don't rely on exception because it's possible
+                // a policy later in the pipeline could throw after receiving a response, but we still want to allow OnResponse to be called
+                // in this case.
+                if (message.Request.ClientRequestId == message.Response.ClientRequestId)
                 {
                     if (async)
                     {
-                        await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
+                        await OnResponseAsync(message).ConfigureAwait(false);
                     }
                     else
                     {
-                        Wait(delay, message.CancellationToken);
+                        OnResponse(message);
                     }
+                }
+
+                var after = Stopwatch.GetTimestamp();
+                double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
+                bool failed = message.RetryContext.LastException != null || message.Response.IsError;
+                if (failed)
+                {
+                    bool shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
+                    if (shouldRetry)
+                    {
+                        TimeSpan delay = async ? await CalculateNextDelayAsync(message).ConfigureAwait(false) : CalculateNextDelay(message);
+                        if (delay > TimeSpan.Zero)
+                        {
+                            if (async)
+                            {
+                                await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
+                            }
+                            else
+                            {
+                                Wait(delay, message.CancellationToken);
+                            }
+                        }
+                    }
+                    else if (message.RetryContext.LastException != null)
+                    {
+                        // Rethrow a singular exception
+                        if (exceptions!.Count == 1)
+                        {
+                            ExceptionDispatchInfo.Capture(message.RetryContext.LastException).Throw();
+                        }
+
+                        throw new AggregateException($"Retry failed after {message.RetryContext.AttemptNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
+                    }
+                    else
+                    {
+                        // The response indicates a failure, but there was no exception. Return to the caller so they can handle the response.
+                        return;
+                    }
+                }
+                else
+                {
+                    // Request succeeded. Return to the caller.
+                    return;
                 }
 
                 if (message.HasResponse)
