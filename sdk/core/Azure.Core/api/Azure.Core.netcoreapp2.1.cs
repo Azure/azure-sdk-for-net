@@ -356,6 +356,7 @@ namespace Azure.Core
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
+        public Azure.Core.Pipeline.RetryPolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -454,6 +455,7 @@ namespace Azure.Core
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
+        public Azure.Core.RetryContext? RetryContext { get { throw null; } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -644,6 +646,13 @@ namespace Azure.Core
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string name, out string? value) { throw null; }
         public bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
+    public partial class RetryContext
+    {
+        internal RetryContext() { }
+        public int AttemptNumber { get { throw null; } }
+        public System.Exception? LastException { get { throw null; } }
+        public System.DateTimeOffset OperationStartTime { get { throw null; } }
     }
     public enum RetryMode
     {
@@ -983,6 +992,20 @@ namespace Azure.Core.Pipeline
         public HttpPipelineTransportOptions() { }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+    }
+    public abstract partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    {
+        public RetryPolicy(Azure.Core.RetryOptions options) { }
+        protected virtual System.TimeSpan CalculateNextDelay(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> CalculateNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual void OnResponse(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnResponseAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual void OnTryRequest(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnTryRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+        protected virtual bool ShouldRetry(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message) { throw null; }
     }
     public partial class ServerCertificateCustomValidationArgs
     {
