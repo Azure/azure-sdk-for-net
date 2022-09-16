@@ -1,0 +1,185 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-89e15fe6888ea043ad3e44feb0a58e27-4d8c11d126336245-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "981e15a8f8bd76ddbfd6f5f9074a6771",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 06:11:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9c8ab613-7094-4b61-95c6-9bd4ec5834e5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "9c8ab613-7094-4b61-95c6-9bd4ec5834e5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220906T061137Z:9c8ab613-7094-4b61-95c6-9bd4ec5834e5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "45b60d85-fd72-427a-a708-f994d26e593e",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "AzureStorage_DMStaging_10041369",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourcegroups/testelasticsan?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dab594d482db7545a59dd4fe182c8c84-33ddfb7e46b74647-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9e54285f115b18a9aaf00c28d47e23d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "226",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 06:11:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f5cc770f-6feb-4237-b110-2c7430339f01",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "f5cc770f-6feb-4237-b110-2c7430339f01",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220906T061137Z:f5cc770f-6feb-4237-b110-2c7430339f01"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testelasticsan",
+        "name": "testelasticsan",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testelasticsan/providers/Microsoft.ElasticSan/elasticSans?api-version=2021-11-20-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3a335ea29320a84599ac09d81b579524-31c0ee4ec5caef4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ElasticSan/1.0.0-alpha.20220906.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2c1e43f8d8b1f54835e7200e54c1c4dd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1543",
+        "Content-Type": "application/json",
+        "Date": "Tue, 06 Sep 2022 06:11:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2c1e43f8d8b1f54835e7200e54c1c4dd",
+        "x-ms-correlation-request-id": "0d499f30-f218-4ad0-a86d-dfbfd4b8cf2e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "e9c21b5b-8065-478f-b7c3-4cd01e6984d0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220906T061137Z:0d499f30-f218-4ad0-a86d-dfbfd4b8cf2e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "sku": {
+                "name": "Premium_LRS"
+              },
+              "provisioningState": "Succeeded",
+              "baseSizeTiB": 1,
+              "extendedCapacitySizeTiB": 6,
+              "totalIops": 5000,
+              "totalMBps": 80,
+              "totalSizeTiB": 7,
+              "volumeGroupCount": 0,
+              "totalVolumeSizeGiB": 0
+            },
+            "location": "southcentralusstg",
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testelasticsan/providers/Microsoft.ElasticSan/elasticSans/testsan1",
+            "name": "testsan1",
+            "type": "Microsoft.ElasticSan/ElasticSans",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "systemData": {
+              "createdAt": "2022-09-06T05:44:56.9683284Z",
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "lastModifiedAt": "2022-09-06T05:44:56.9683284Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application"
+            }
+          },
+          {
+            "properties": {
+              "sku": {
+                "name": "Premium_LRS"
+              },
+              "provisioningState": "Succeeded",
+              "baseSizeTiB": 1,
+              "extendedCapacitySizeTiB": 6,
+              "totalIops": 5000,
+              "totalMBps": 80,
+              "totalSizeTiB": 7,
+              "volumeGroupCount": 0,
+              "totalVolumeSizeGiB": 0
+            },
+            "location": "southcentralusstg",
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testelasticsan/providers/Microsoft.ElasticSan/elasticSans/testsan2",
+            "name": "testsan2",
+            "type": "Microsoft.ElasticSan/ElasticSans",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "systemData": {
+              "createdAt": "2022-09-06T06:04:31.3030122Z",
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "lastModifiedAt": "2022-09-06T06:04:31.3030122Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1281174158",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "45b60d85-fd72-427a-a708-f994d26e593e"
+  }
+}
