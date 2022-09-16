@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Subscription.Tests
 {
     internal class BillingAccountPoliciesResponseTests : SubscriptionManagementTestBase
     {
-        private BillingAccountPoliciesResponseCollection _billingAccountPolicesCollection => GetBillingAccountPoliciesResponseCollection().Result;
+        private BillingAccountPolicyCollection _billingAccountPolicesCollection => GetBillingAccountPoliciesResponseCollection().Result;
 
         public BillingAccountPoliciesResponseTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private async Task<BillingAccountPoliciesResponseCollection> GetBillingAccountPoliciesResponseCollection()
+        private async Task<BillingAccountPolicyCollection> GetBillingAccountPoliciesResponseCollection()
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            return tenants.FirstOrDefault().GetBillingAccountPoliciesResponses();
+            return tenants.FirstOrDefault().GetBillingAccountPolicies();
         }
 
         [RecordedTest]

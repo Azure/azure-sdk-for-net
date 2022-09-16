@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Subscription.Tests
 {
     internal class SubscriptionAliasResponseTests : SubscriptionManagementTestBase
     {
-        private SubscriptionAliasResponseCollection _aliasCollection => GetAliasCollection().Result;
+        private SubscriptionAliasCollection _aliasCollection => GetAliasCollection().Result;
 
         public SubscriptionAliasResponseTests(bool isAsync) : base(isAsync)
         {
@@ -32,25 +32,22 @@ namespace Azure.ResourceManager.Subscription.Tests
             }
         }
 
-        private async Task<SubscriptionAliasResponseCollection> GetAliasCollection()
+        private async Task<SubscriptionAliasCollection> GetAliasCollection()
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            return tenants.FirstOrDefault().GetSubscriptionAliasResponses();
+            return tenants.FirstOrDefault().GetSubscriptionAliases();
         }
 
-        private async Task<SubscriptionAliasResponseResource> CreateAliasResponse(string aliasName)
+        private async Task<SubscriptionAliasResource> CreateAliasResponse(string aliasName)
         {
-            var data = new SubscriptionAliasResponseCreateOrUpdateContent()
+            var data = new SubscriptionAliasCreateOrUpdateContent()
             {
-                Properties = new PutAliasRequestProperties()
-                {
-                    Workload = "Production",
-                    SubscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID"),
-                }
+                 Workload = "Production",
+                SubscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID")
             };
-            data.Properties.AdditionalProperties = new PutAliasRequestAdditionalProperties();
-            data.Properties.AdditionalProperties.Tags.Add(new KeyValuePair<string, string>("tag1", "test1"));
-            data.Properties.AdditionalProperties.Tags.Add(new KeyValuePair<string, string>("tag2", "test2"));
+            data.AdditionalProperties = new SubscriptionAliasAdditionalProperties();
+            data.AdditionalProperties.Tags.Add(new KeyValuePair<string, string>("tag1", "test1"));
+            data.AdditionalProperties.Tags.Add(new KeyValuePair<string, string>("tag2", "test2"));
             var alias = await _aliasCollection.CreateOrUpdateAsync(WaitUntil.Completed, aliasName, data);
             return alias.Value;
         }
@@ -111,7 +108,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateAliasResponse(SubscriptionAliasResponseResource alias)
+        private void ValidateAliasResponse(SubscriptionAliasResource alias)
         {
             Assert.IsNotNull(alias);
             Assert.AreEqual("Microsoft.Subscription", alias.Data.ResourceType.Namespace);

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task GetAll()
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            var response = tenants.FirstOrDefault().GetGetTenantPolicyResponse();
+            var response = tenants.FirstOrDefault().GetTenantPolicy();
             Assert.NotNull(response);
         }
     }

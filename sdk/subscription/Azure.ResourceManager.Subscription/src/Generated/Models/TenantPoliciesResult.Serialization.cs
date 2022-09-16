@@ -12,11 +12,11 @@ using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    internal partial class SubscriptionAliasListResult
+    internal partial class TenantPoliciesResult
     {
-        internal static SubscriptionAliasListResult DeserializeSubscriptionAliasListResult(JsonElement element)
+        internal static TenantPoliciesResult DeserializeTenantPoliciesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SubscriptionAliasData>> value = default;
+            Optional<IReadOnlyList<TenantPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Subscription.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubscriptionAliasData> array = new List<SubscriptionAliasData>();
+                    List<TenantPolicyData> array = new List<TenantPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item));
+                        array.Add(TenantPolicyData.DeserializeTenantPolicyData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new SubscriptionAliasListResult(Optional.ToList(value), nextLink.Value);
+            return new TenantPoliciesResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
