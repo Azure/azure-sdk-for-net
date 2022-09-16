@@ -315,7 +315,7 @@ TODO
 
 ## Mocking access to the properties of an `EventHubConsumerClient`
 
-When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to determine a representative set of events, event properties, and contexts that their application could potentially see as outputs from the `EventHubConsumerClient`. Tests can mock each data type, and then set up the consumer client to output these representative scenarios, verifying the resulting behavior is as expected.
+When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to create a known set of expected events and contexts to verify that their application consumes them correctly.  Tests can mock the expected data and use it with the consumer client for these scenarios.
 
 ```C# Snippet:EventHubs_Sample11_MockingConsumerClient
 Mock<EventHubConsumerClient> mockConsumer = new();
