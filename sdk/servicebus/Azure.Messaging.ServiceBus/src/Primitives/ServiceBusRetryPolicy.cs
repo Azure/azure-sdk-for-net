@@ -148,7 +148,6 @@ namespace Azure.Messaging.ServiceBus
                 {
                     return await operation(t1, tryTimeout, cancellationToken).ConfigureAwait(false);
                 }
-
                 catch (Exception ex)
                 {
                     Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
