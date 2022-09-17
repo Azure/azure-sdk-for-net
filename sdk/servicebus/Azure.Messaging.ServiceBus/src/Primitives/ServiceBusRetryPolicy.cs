@@ -26,8 +26,6 @@ namespace Azure.Messaging.ServiceBus
     ///
     public abstract class ServiceBusRetryPolicy
     {
-        private static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
-
         /// <summary>
         /// Represents a state flag that is used to make sure the server busy value can be observed with
         /// reasonable fresh values without having to acquire a lock.
@@ -40,12 +38,18 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Determines whether or not the server returned a busy error.
         /// </summary>
-        private bool IsServerBusy => serverBusyState == ServerBusyState;
+        internal bool IsServerBusy => serverBusyState == ServerBusyState;
 
         /// <summary>
         /// Gets the exception message when a server busy error is returned.
         /// </summary>
-        private string ServerBusyExceptionMessage { get; set; }
+        internal string ServerBusyExceptionMessage { get; set; }
+
+        /// <summary>
+        /// Gets the server busy base sleep time
+        /// </summary>
+        /// <remarks>Defaults to TimeSpan.FromSeconds(10)</remarks>
+        internal TimeSpan ServerBusyBaseSleepTime { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
