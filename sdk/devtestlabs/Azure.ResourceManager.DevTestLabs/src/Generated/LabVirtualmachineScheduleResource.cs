@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags[key] = value;
                     var result = UpdateCore(patch, cancellationToken: cancellationToken);
-                    return result;
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     var patch = new ScheduleFragment();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     var patch = new ScheduleFragment();
                     patch.Tags.ReplaceWith(tags);
                     var result = UpdateCore(patch, cancellationToken: cancellationToken);
-                    return result;
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags.Remove(key);
                     var result = UpdateCore(patch, cancellationToken: cancellationToken);
-                    return result;
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     patch.Tags[key] = value;
                     var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Response.FromValue((ThroughputSettingResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     patch.Tags[key] = value;
                     var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Response.FromValue((ThroughputSettingResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.CosmosDB
                     var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
                     patch.Tags.ReplaceWith(tags);
                     var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Response.FromValue((ThroughputSettingResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.CosmosDB
                     var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
                     patch.Tags.ReplaceWith(tags);
                     var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Response.FromValue((ThroughputSettingResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     patch.Tags.Remove(key);
                     var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Response.FromValue((ThroughputSettingResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     patch.Tags.Remove(key);
                     var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Response.FromValue((ThroughputSettingResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

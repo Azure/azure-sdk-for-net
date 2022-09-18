@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Automation
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    return Response.FromValue((ModuleResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Automation
                     }
                     patch.Tags[key] = value;
                     var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    return Response.FromValue((ModuleResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Automation
                     var patch = new AutomationAccountModulePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    return Response.FromValue((ModuleResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Automation
                     var patch = new AutomationAccountModulePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    return Response.FromValue((ModuleResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Automation
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    return Response.FromValue((ModuleResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.Automation
                     }
                     patch.Tags.Remove(key);
                     var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    return Response.FromValue((ModuleResource)result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
