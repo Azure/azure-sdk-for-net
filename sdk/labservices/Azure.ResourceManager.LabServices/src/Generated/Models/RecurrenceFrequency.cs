@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Schedule recurrence frequencies. </summary>
+    /// <summary>
+    /// Schedule recurrence frequencies.
+    /// Serialized Name: RecurrenceFrequency
+    /// </summary>
     public enum RecurrenceFrequency
     {
-        /// <summary> Schedule will run every days. </summary>
+        /// <summary>
+        /// Schedule will run every days.
+        /// Serialized Name: RecurrenceFrequency.Daily
+        /// </summary>
         Daily,
-        /// <summary> Schedule will run every week on days specified in weekDays. </summary>
+        /// <summary>
+        /// Schedule will run every week on days specified in weekDays.
+        /// Serialized Name: RecurrenceFrequency.Weekly
+        /// </summary>
         Weekly
     }
 }

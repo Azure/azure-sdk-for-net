@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static SupportInfo DeserializeSupportInfo(JsonElement element)
         {
-            Optional<string> url = default;
+            Optional<ResourceIdentifier> url = default;
             Optional<string> email = default;
             Optional<string> phone = default;
             Optional<string> instructions = default;
@@ -48,7 +48,12 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    url = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("email"))

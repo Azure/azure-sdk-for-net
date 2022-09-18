@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The type of restriction. </summary>
+    /// <summary>
+    /// The type of restriction.
+    /// Serialized Name: RestrictionType
+    /// </summary>
     public readonly partial struct RestrictionType : IEquatable<RestrictionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         private const string LocationValue = "Location";
 
-        /// <summary> Location. </summary>
+        /// <summary>
+        /// Location
+        /// Serialized Name: RestrictionType.Location
+        /// </summary>
         public static RestrictionType Location { get; } = new RestrictionType(LocationValue);
         /// <summary> Determines if two <see cref="RestrictionType"/> values are the same. </summary>
         public static bool operator ==(RestrictionType left, RestrictionType right) => left.Equals(right);

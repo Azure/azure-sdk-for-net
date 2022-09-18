@@ -16,13 +16,24 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug: 
+  show-serialized-names: true
+
 rename-mapping:
   LabServicesSkuCapacity: AvailableLabServicesSkuCapacity
   LabServicesSkuCapabilities: AvailableLabServicesSkuCapabilities
   LabServicesSkuCost: AvailableLabServicesSkuCost
   LabServicesSkuRestrictions: AvailableLabServicesSkuRestrictions
-  PagedLabServicesSkus: AvailableLabServicesSkuList
+  PagedLabServicesSkus: AvailableLabServicesSkus
   ScaleType: SkuCapacityScaleType
+  Image: LabServicesImage
+  PagedImages: LabServicesImageListResult
+  Image.properties.availableRegions: -|azure-location
+  Image.properties.sharedGalleryId: -|arm-id
+  Lab.properties.labPlanId: -|arm-id
+  LabUpdate.properties.labPlanId: -|arm-id
+  LabPlan.properties.allowedRegions: -|azure-location
+  LabPlanUpdate.properties.allowedRegions: -|azure-location
 
 format-by-name-rules:
   'tenantId': 'uuid'

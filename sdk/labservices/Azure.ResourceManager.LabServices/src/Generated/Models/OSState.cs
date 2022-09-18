@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The operating system state. </summary>
+    /// <summary>
+    /// The operating system state.
+    /// Serialized Name: OsState
+    /// </summary>
     public enum OSState
     {
-        /// <summary> Image does not contain any machine and user specific information. </summary>
+        /// <summary>
+        /// Image does not contain any machine and user specific information.
+        /// Serialized Name: OsState.Generalized
+        /// </summary>
         Generalized,
-        /// <summary> Image contains machine and user specific information. </summary>
+        /// <summary>
+        /// Image contains machine and user specific information.
+        /// Serialized Name: OsState.Specialized
+        /// </summary>
         Specialized
     }
 }

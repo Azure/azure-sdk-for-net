@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Body of a reset password request. </summary>
+    /// <summary>
+    /// Body of a reset password request.
+    /// Serialized Name: ResetPasswordBody
+    /// </summary>
     public partial class ResetPasswordBody
     {
         /// <summary> Initializes a new instance of ResetPasswordBody. </summary>
-        /// <param name="username"> The user whose password is being reset. </param>
-        /// <param name="password"> The password. </param>
+        /// <param name="username">
+        /// The user whose password is being reset
+        /// Serialized Name: ResetPasswordBody.username
+        /// </param>
+        /// <param name="password">
+        /// The password
+        /// Serialized Name: ResetPasswordBody.password
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public ResetPasswordBody(string username, string password)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.LabServices.Models
             Password = password;
         }
 
-        /// <summary> The user whose password is being reset. </summary>
+        /// <summary>
+        /// The user whose password is being reset
+        /// Serialized Name: ResetPasswordBody.username
+        /// </summary>
         public string Username { get; }
-        /// <summary> The password. </summary>
+        /// <summary>
+        /// The password
+        /// Serialized Name: ResetPasswordBody.password
+        /// </summary>
         public string Password { get; }
     }
 }

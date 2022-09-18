@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The localized name of the resource. </summary>
+    /// <summary>
+    /// The localized name of the resource.
+    /// Serialized Name: ScaleType
+    /// </summary>
     public readonly partial struct SkuCapacityScaleType : IEquatable<SkuCapacityScaleType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.LabServices.Models
         private const string ManualValue = "Manual";
         private const string AutomaticValue = "Automatic";
 
-        /// <summary> The capacity is not adjustable in any way. </summary>
+        /// <summary>
+        /// The capacity is not adjustable in any way.
+        /// Serialized Name: ScaleType.None
+        /// </summary>
         public static SkuCapacityScaleType None { get; } = new SkuCapacityScaleType(NoneValue);
-        /// <summary> The user must manually scale this SKU in and out. </summary>
+        /// <summary>
+        /// The user must manually scale this SKU in and out.
+        /// Serialized Name: ScaleType.Manual
+        /// </summary>
         public static SkuCapacityScaleType Manual { get; } = new SkuCapacityScaleType(ManualValue);
-        /// <summary> The user is permitted to scale this SKU in and out. </summary>
+        /// <summary>
+        /// The user is permitted to scale this SKU in and out.
+        /// Serialized Name: ScaleType.Automatic
+        /// </summary>
         public static SkuCapacityScaleType Automatic { get; } = new SkuCapacityScaleType(AutomaticValue);
         /// <summary> Determines if two <see cref="SkuCapacityScaleType"/> values are the same. </summary>
         public static bool operator ==(SkuCapacityScaleType left, SkuCapacityScaleType right) => left.Equals(right);

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<VirtualMachineProfile> virtualMachineProfile = default;
             Optional<SecurityProfile> securityProfile = default;
             Optional<RosterProfile> rosterProfile = default;
-            Optional<string> labPlanId = default;
+            Optional<ResourceIdentifier> labPlanId = default;
             Optional<string> title = default;
             Optional<string> description = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -209,7 +209,12 @@ namespace Azure.ResourceManager.LabServices
                         }
                         if (property0.NameEquals("labPlanId"))
                         {
-                            labPlanId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            labPlanId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("title"))

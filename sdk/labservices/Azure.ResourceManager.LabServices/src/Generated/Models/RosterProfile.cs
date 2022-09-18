@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The lab user list management profile. </summary>
+    /// <summary>
+    /// The lab user list management profile.
+    /// Serialized Name: RosterProfile
+    /// </summary>
     public partial class RosterProfile
     {
         /// <summary> Initializes a new instance of RosterProfile. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of RosterProfile. </summary>
-        /// <param name="activeDirectoryGroupId"> The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode. </param>
-        /// <param name="ltiContextId"> The unique context identifier for the lab in the lms. </param>
-        /// <param name="lmsInstance"> The base URI identifying the lms instance. </param>
-        /// <param name="ltiClientId"> The unique id of the azure lab services tool in the lms. </param>
-        /// <param name="ltiRosterEndpoint"> The uri of the names and roles service endpoint on the lms for the class attached to this lab. </param>
+        /// <param name="activeDirectoryGroupId">
+        /// The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode.
+        /// Serialized Name: RosterProfile.activeDirectoryGroupId
+        /// </param>
+        /// <param name="ltiContextId">
+        /// The unique context identifier for the lab in the lms.
+        /// Serialized Name: RosterProfile.ltiContextId
+        /// </param>
+        /// <param name="lmsInstance">
+        /// The base URI identifying the lms instance.
+        /// Serialized Name: RosterProfile.lmsInstance
+        /// </param>
+        /// <param name="ltiClientId">
+        /// The unique id of the azure lab services tool in the lms.
+        /// Serialized Name: RosterProfile.ltiClientId
+        /// </param>
+        /// <param name="ltiRosterEndpoint">
+        /// The uri of the names and roles service endpoint on the lms for the class attached to this lab.
+        /// Serialized Name: RosterProfile.ltiRosterEndpoint
+        /// </param>
         internal RosterProfile(string activeDirectoryGroupId, string ltiContextId, string lmsInstance, string ltiClientId, string ltiRosterEndpoint)
         {
             ActiveDirectoryGroupId = activeDirectoryGroupId;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.LabServices.Models
             LtiRosterEndpoint = ltiRosterEndpoint;
         }
 
-        /// <summary> The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode. </summary>
+        /// <summary>
+        /// The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode.
+        /// Serialized Name: RosterProfile.activeDirectoryGroupId
+        /// </summary>
         public string ActiveDirectoryGroupId { get; set; }
-        /// <summary> The unique context identifier for the lab in the lms. </summary>
+        /// <summary>
+        /// The unique context identifier for the lab in the lms.
+        /// Serialized Name: RosterProfile.ltiContextId
+        /// </summary>
         public string LtiContextId { get; set; }
-        /// <summary> The base URI identifying the lms instance. </summary>
+        /// <summary>
+        /// The base URI identifying the lms instance.
+        /// Serialized Name: RosterProfile.lmsInstance
+        /// </summary>
         public string LmsInstance { get; set; }
-        /// <summary> The unique id of the azure lab services tool in the lms. </summary>
+        /// <summary>
+        /// The unique id of the azure lab services tool in the lms.
+        /// Serialized Name: RosterProfile.ltiClientId
+        /// </summary>
         public string LtiClientId { get; set; }
-        /// <summary> The uri of the names and roles service endpoint on the lms for the class attached to this lab. </summary>
+        /// <summary>
+        /// The uri of the names and roles service endpoint on the lms for the class attached to this lab.
+        /// Serialized Name: RosterProfile.ltiRosterEndpoint
+        /// </summary>
         public string LtiRosterEndpoint { get; set; }
     }
 }

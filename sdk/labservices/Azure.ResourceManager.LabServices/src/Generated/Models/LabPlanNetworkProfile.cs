@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Profile for how to handle networking for Lab Plans. </summary>
+    /// <summary>
+    /// Profile for how to handle networking for Lab Plans.
+    /// Serialized Name: LabPlanNetworkProfile
+    /// </summary>
     internal partial class LabPlanNetworkProfile
     {
         /// <summary> Initializes a new instance of LabPlanNetworkProfile. </summary>
@@ -16,13 +21,19 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of LabPlanNetworkProfile. </summary>
-        /// <param name="subnetId"> The external subnet resource id. </param>
-        internal LabPlanNetworkProfile(string subnetId)
+        /// <param name="subnetId">
+        /// The external subnet resource id
+        /// Serialized Name: LabPlanNetworkProfile.subnetId
+        /// </param>
+        internal LabPlanNetworkProfile(ResourceIdentifier subnetId)
         {
             SubnetId = subnetId;
         }
 
-        /// <summary> The external subnet resource id. </summary>
-        public string SubnetId { get; set; }
+        /// <summary>
+        /// The external subnet resource id
+        /// Serialized Name: LabPlanNetworkProfile.subnetId
+        /// </summary>
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

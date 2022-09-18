@@ -265,20 +265,20 @@ namespace Azure.ResourceManager.LabServices
             return resourceGroupResource.GetLabs().Get(labName, cancellationToken);
         }
 
-        #region ImageResource
+        #region LabServicesImageResource
         /// <summary>
-        /// Gets an object representing an <see cref="ImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImageResource.CreateResourceIdentifier" /> to create an <see cref="ImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabServicesImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabServicesImageResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageResource" /> object. </returns>
-        public static ImageResource GetImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabServicesImageResource" /> object. </returns>
+        public static LabServicesImageResource GetLabServicesImageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ImageResource.ValidateResourceId(id);
-                return new ImageResource(client, id);
+                LabServicesImageResource.ValidateResourceId(id);
+                return new LabServicesImageResource(client, id);
             }
             );
         }

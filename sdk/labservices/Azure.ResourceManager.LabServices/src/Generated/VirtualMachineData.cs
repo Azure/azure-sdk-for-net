@@ -24,11 +24,26 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Current provisioning state of the virtual machine. </param>
-        /// <param name="state"> The current state of the virtual machine. </param>
-        /// <param name="connectionProfile"> Profile for information about connecting to the virtual machine. </param>
-        /// <param name="claimedByUserId"> The lab user ID (not the PUID!) of who claimed the virtual machine. </param>
-        /// <param name="vmType"> The type of this VM resource. </param>
+        /// <param name="provisioningState">
+        /// Current provisioning state of the virtual machine.
+        /// Serialized Name: VirtualMachine.properties.provisioningState
+        /// </param>
+        /// <param name="state">
+        /// The current state of the virtual machine
+        /// Serialized Name: VirtualMachine.properties.state
+        /// </param>
+        /// <param name="connectionProfile">
+        /// Profile for information about connecting to the virtual machine.
+        /// Serialized Name: VirtualMachine.properties.connectionProfile
+        /// </param>
+        /// <param name="claimedByUserId">
+        /// The lab user ID (not the PUID!) of who claimed the virtual machine.
+        /// Serialized Name: VirtualMachine.properties.claimedByUserId
+        /// </param>
+        /// <param name="vmType">
+        /// The type of this VM resource
+        /// Serialized Name: VirtualMachine.properties.vmType
+        /// </param>
         internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, VirtualMachineState? state, VirtualMachineConnectionProfile connectionProfile, string claimedByUserId, VirtualMachineType? vmType) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
@@ -38,15 +53,30 @@ namespace Azure.ResourceManager.LabServices
             VmType = vmType;
         }
 
-        /// <summary> Current provisioning state of the virtual machine. </summary>
+        /// <summary>
+        /// Current provisioning state of the virtual machine.
+        /// Serialized Name: VirtualMachine.properties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The current state of the virtual machine. </summary>
+        /// <summary>
+        /// The current state of the virtual machine
+        /// Serialized Name: VirtualMachine.properties.state
+        /// </summary>
         public VirtualMachineState? State { get; }
-        /// <summary> Profile for information about connecting to the virtual machine. </summary>
+        /// <summary>
+        /// Profile for information about connecting to the virtual machine.
+        /// Serialized Name: VirtualMachine.properties.connectionProfile
+        /// </summary>
         public VirtualMachineConnectionProfile ConnectionProfile { get; }
-        /// <summary> The lab user ID (not the PUID!) of who claimed the virtual machine. </summary>
+        /// <summary>
+        /// The lab user ID (not the PUID!) of who claimed the virtual machine.
+        /// Serialized Name: VirtualMachine.properties.claimedByUserId
+        /// </summary>
         public string ClaimedByUserId { get; }
-        /// <summary> The type of this VM resource. </summary>
+        /// <summary>
+        /// The type of this VM resource
+        /// Serialized Name: VirtualMachine.properties.vmType
+        /// </summary>
         public VirtualMachineType? VmType { get; }
     }
 }

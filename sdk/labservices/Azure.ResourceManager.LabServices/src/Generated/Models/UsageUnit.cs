@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The unit details. </summary>
+    /// <summary>
+    /// The unit details.
+    /// Serialized Name: UsageUnit
+    /// </summary>
     public readonly partial struct UsageUnit : IEquatable<UsageUnit>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         private const string CountValue = "Count";
 
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: UsageUnit.Count
+        /// </summary>
         public static UsageUnit Count { get; } = new UsageUnit(CountValue);
         /// <summary> Determines if two <see cref="UsageUnit"/> values are the same. </summary>
         public static bool operator ==(UsageUnit left, UsageUnit right) => left.Equals(right);

@@ -9,15 +9,33 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The base virtual machine configuration for a lab. </summary>
+    /// <summary>
+    /// The base virtual machine configuration for a lab.
+    /// Serialized Name: VirtualMachineProfile
+    /// </summary>
     public partial class VirtualMachineProfile
     {
         /// <summary> Initializes a new instance of VirtualMachineProfile. </summary>
-        /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
-        /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
-        /// <param name="sku"> The SKU for the lab. Defines the type of virtual machines used in the lab. </param>
-        /// <param name="usageQuota"> The initial quota alloted to each lab user. Must be a time span between 0 and 9999 hours. </param>
-        /// <param name="adminUser"> Credentials for the admin user on the VM. </param>
+        /// <param name="createOption">
+        /// Indicates what lab virtual machines are created from.
+        /// Serialized Name: VirtualMachineProfile.createOption
+        /// </param>
+        /// <param name="imageReference">
+        /// The image configuration for lab virtual machines.
+        /// Serialized Name: VirtualMachineProfile.imageReference
+        /// </param>
+        /// <param name="sku">
+        /// The SKU for the lab. Defines the type of virtual machines used in the lab.
+        /// Serialized Name: VirtualMachineProfile.sku
+        /// </param>
+        /// <param name="usageQuota">
+        /// The initial quota alloted to each lab user. Must be a time span between 0 and 9999 hours.
+        /// Serialized Name: VirtualMachineProfile.usageQuota
+        /// </param>
+        /// <param name="adminUser">
+        /// Credentials for the admin user on the VM.
+        /// Serialized Name: VirtualMachineProfile.adminUser
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/>, <paramref name="sku"/> or <paramref name="adminUser"/> is null. </exception>
         public VirtualMachineProfile(CreateOption createOption, ImageReference imageReference, LabServicesSku sku, TimeSpan usageQuota, Credentials adminUser)
         {
@@ -42,15 +60,42 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineProfile. </summary>
-        /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
-        /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
-        /// <param name="osType"> The OS type of the image. </param>
-        /// <param name="sku"> The SKU for the lab. Defines the type of virtual machines used in the lab. </param>
-        /// <param name="additionalCapabilities"> Additional VM capabilities. </param>
-        /// <param name="usageQuota"> The initial quota alloted to each lab user. Must be a time span between 0 and 9999 hours. </param>
-        /// <param name="useSharedPassword"> Enabling this option will use the same password for all user VMs. </param>
-        /// <param name="adminUser"> Credentials for the admin user on the VM. </param>
-        /// <param name="nonAdminUser"> Credentials for the non-admin user on the VM, if one exists. </param>
+        /// <param name="createOption">
+        /// Indicates what lab virtual machines are created from.
+        /// Serialized Name: VirtualMachineProfile.createOption
+        /// </param>
+        /// <param name="imageReference">
+        /// The image configuration for lab virtual machines.
+        /// Serialized Name: VirtualMachineProfile.imageReference
+        /// </param>
+        /// <param name="osType">
+        /// The OS type of the image
+        /// Serialized Name: VirtualMachineProfile.osType
+        /// </param>
+        /// <param name="sku">
+        /// The SKU for the lab. Defines the type of virtual machines used in the lab.
+        /// Serialized Name: VirtualMachineProfile.sku
+        /// </param>
+        /// <param name="additionalCapabilities">
+        /// Additional VM capabilities.
+        /// Serialized Name: VirtualMachineProfile.additionalCapabilities
+        /// </param>
+        /// <param name="usageQuota">
+        /// The initial quota alloted to each lab user. Must be a time span between 0 and 9999 hours.
+        /// Serialized Name: VirtualMachineProfile.usageQuota
+        /// </param>
+        /// <param name="useSharedPassword">
+        /// Enabling this option will use the same password for all user VMs.
+        /// Serialized Name: VirtualMachineProfile.useSharedPassword
+        /// </param>
+        /// <param name="adminUser">
+        /// Credentials for the admin user on the VM.
+        /// Serialized Name: VirtualMachineProfile.adminUser
+        /// </param>
+        /// <param name="nonAdminUser">
+        /// Credentials for the non-admin user on the VM, if one exists.
+        /// Serialized Name: VirtualMachineProfile.nonAdminUser
+        /// </param>
         internal VirtualMachineProfile(CreateOption createOption, ImageReference imageReference, OSType? osType, LabServicesSku sku, VirtualMachineAdditionalCapabilities additionalCapabilities, TimeSpan usageQuota, EnableState? useSharedPassword, Credentials adminUser, Credentials nonAdminUser)
         {
             CreateOption = createOption;
@@ -64,17 +109,35 @@ namespace Azure.ResourceManager.LabServices.Models
             NonAdminUser = nonAdminUser;
         }
 
-        /// <summary> Indicates what lab virtual machines are created from. </summary>
+        /// <summary>
+        /// Indicates what lab virtual machines are created from.
+        /// Serialized Name: VirtualMachineProfile.createOption
+        /// </summary>
         public CreateOption CreateOption { get; set; }
-        /// <summary> The image configuration for lab virtual machines. </summary>
+        /// <summary>
+        /// The image configuration for lab virtual machines.
+        /// Serialized Name: VirtualMachineProfile.imageReference
+        /// </summary>
         public ImageReference ImageReference { get; set; }
-        /// <summary> The OS type of the image. </summary>
+        /// <summary>
+        /// The OS type of the image
+        /// Serialized Name: VirtualMachineProfile.osType
+        /// </summary>
         public OSType? OSType { get; }
-        /// <summary> The SKU for the lab. Defines the type of virtual machines used in the lab. </summary>
+        /// <summary>
+        /// The SKU for the lab. Defines the type of virtual machines used in the lab.
+        /// Serialized Name: VirtualMachineProfile.sku
+        /// </summary>
         public LabServicesSku Sku { get; set; }
-        /// <summary> Additional VM capabilities. </summary>
+        /// <summary>
+        /// Additional VM capabilities.
+        /// Serialized Name: VirtualMachineProfile.additionalCapabilities
+        /// </summary>
         internal VirtualMachineAdditionalCapabilities AdditionalCapabilities { get; set; }
-        /// <summary> Flag to pre-install dedicated GPU drivers. </summary>
+        /// <summary>
+        /// Flag to pre-install dedicated GPU drivers.
+        /// Serialized Name: VirtualMachineAdditionalCapabilities.installGpuDrivers
+        /// </summary>
         public EnableState? AdditionalCapabilitiesInstallGpuDrivers
         {
             get => AdditionalCapabilities is null ? default : AdditionalCapabilities.InstallGpuDrivers;
@@ -86,13 +149,25 @@ namespace Azure.ResourceManager.LabServices.Models
             }
         }
 
-        /// <summary> The initial quota alloted to each lab user. Must be a time span between 0 and 9999 hours. </summary>
+        /// <summary>
+        /// The initial quota alloted to each lab user. Must be a time span between 0 and 9999 hours.
+        /// Serialized Name: VirtualMachineProfile.usageQuota
+        /// </summary>
         public TimeSpan UsageQuota { get; set; }
-        /// <summary> Enabling this option will use the same password for all user VMs. </summary>
+        /// <summary>
+        /// Enabling this option will use the same password for all user VMs.
+        /// Serialized Name: VirtualMachineProfile.useSharedPassword
+        /// </summary>
         public EnableState? UseSharedPassword { get; set; }
-        /// <summary> Credentials for the admin user on the VM. </summary>
+        /// <summary>
+        /// Credentials for the admin user on the VM.
+        /// Serialized Name: VirtualMachineProfile.adminUser
+        /// </summary>
         public Credentials AdminUser { get; set; }
-        /// <summary> Credentials for the non-admin user on the VM, if one exists. </summary>
+        /// <summary>
+        /// Credentials for the non-admin user on the VM, if one exists.
+        /// Serialized Name: VirtualMachineProfile.nonAdminUser
+        /// </summary>
         public Credentials NonAdminUser { get; set; }
     }
 }

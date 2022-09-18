@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> A connection type for access labs and VMs (Public, Private or None). </summary>
+    /// <summary>
+    /// A connection type for access labs and VMs (Public, Private or None).
+    /// Serialized Name: ConnectionType
+    /// </summary>
     public enum ConnectionType
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ConnectionType.None
+        /// </summary>
         None,
-        /// <summary> Public. </summary>
+        /// <summary>
+        /// Public
+        /// Serialized Name: ConnectionType.Public
+        /// </summary>
         Public,
-        /// <summary> Private. </summary>
+        /// <summary>
+        /// Private
+        /// Serialized Name: ConnectionType.Private
+        /// </summary>
         Private
     }
 }

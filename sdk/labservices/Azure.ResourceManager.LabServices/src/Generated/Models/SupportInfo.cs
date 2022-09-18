@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Support contact information and instructions. </summary>
+    /// <summary>
+    /// Support contact information and instructions.
+    /// Serialized Name: SupportInfo
+    /// </summary>
     public partial class SupportInfo
     {
         /// <summary> Initializes a new instance of SupportInfo. </summary>
@@ -16,11 +21,23 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of SupportInfo. </summary>
-        /// <param name="uri"> Support web address. </param>
-        /// <param name="email"> Support contact email address. </param>
-        /// <param name="phone"> Support contact phone number. </param>
-        /// <param name="instructions"> Support instructions. </param>
-        internal SupportInfo(string uri, string email, string phone, string instructions)
+        /// <param name="uri">
+        /// Support web address.
+        /// Serialized Name: SupportInfo.url
+        /// </param>
+        /// <param name="email">
+        /// Support contact email address.
+        /// Serialized Name: SupportInfo.email
+        /// </param>
+        /// <param name="phone">
+        /// Support contact phone number.
+        /// Serialized Name: SupportInfo.phone
+        /// </param>
+        /// <param name="instructions">
+        /// Support instructions.
+        /// Serialized Name: SupportInfo.instructions
+        /// </param>
+        internal SupportInfo(ResourceIdentifier uri, string email, string phone, string instructions)
         {
             Uri = uri;
             Email = email;
@@ -28,13 +45,25 @@ namespace Azure.ResourceManager.LabServices.Models
             Instructions = instructions;
         }
 
-        /// <summary> Support web address. </summary>
-        public string Uri { get; set; }
-        /// <summary> Support contact email address. </summary>
+        /// <summary>
+        /// Support web address.
+        /// Serialized Name: SupportInfo.url
+        /// </summary>
+        public ResourceIdentifier Uri { get; set; }
+        /// <summary>
+        /// Support contact email address.
+        /// Serialized Name: SupportInfo.email
+        /// </summary>
         public string Email { get; set; }
-        /// <summary> Support contact phone number. </summary>
+        /// <summary>
+        /// Support contact phone number.
+        /// Serialized Name: SupportInfo.phone
+        /// </summary>
         public string Phone { get; set; }
-        /// <summary> Support instructions. </summary>
+        /// <summary>
+        /// Support instructions.
+        /// Serialized Name: SupportInfo.instructions
+        /// </summary>
         public string Instructions { get; set; }
     }
 }

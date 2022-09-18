@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.LabServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ImageResources in the LabPlan. </summary>
-        /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
-        public virtual ImageCollection GetImages()
+        /// <summary> Gets a collection of LabServicesImageResources in the LabPlan. </summary>
+        /// <returns> An object representing collection of LabServicesImageResources and their operations over a LabServicesImageResource. </returns>
+        public virtual LabServicesImageCollection GetLabServicesImages()
         {
-            return GetCachedClient(Client => new ImageCollection(Client, Id));
+            return GetCachedClient(Client => new LabServicesImageCollection(Client, Id));
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImageResource>> GetImageAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesImageResource>> GetLabServicesImageAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            return await GetImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
+            return await GetLabServicesImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageResource> GetImage(string imageName, CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesImageResource> GetLabServicesImage(string imageName, CancellationToken cancellationToken = default)
         {
-            return GetImages().Get(imageName, cancellationToken);
+            return GetLabServicesImages().Get(imageName, cancellationToken);
         }
 
         /// <summary>

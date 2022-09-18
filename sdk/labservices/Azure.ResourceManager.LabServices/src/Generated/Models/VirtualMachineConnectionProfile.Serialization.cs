@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.LabServices.Models
         {
             Optional<string> privateIPAddress = default;
             Optional<string> sshAuthority = default;
-            Optional<string> sshInBrowserUrl = default;
+            Optional<ResourceIdentifier> sshInBrowserUrl = default;
             Optional<string> rdpAuthority = default;
-            Optional<string> rdpInBrowserUrl = default;
+            Optional<ResourceIdentifier> rdpInBrowserUrl = default;
             Optional<string> adminUsername = default;
             Optional<string> nonAdminUsername = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +35,12 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("sshInBrowserUrl"))
                 {
-                    sshInBrowserUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sshInBrowserUrl = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rdpAuthority"))
@@ -45,7 +50,12 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("rdpInBrowserUrl"))
                 {
-                    rdpInBrowserUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    rdpInBrowserUrl = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("adminUsername"))

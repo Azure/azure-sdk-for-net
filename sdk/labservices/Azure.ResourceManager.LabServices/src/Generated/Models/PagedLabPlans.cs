@@ -11,7 +11,10 @@ using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Paged list of lab plans. </summary>
+    /// <summary>
+    /// Paged list of lab plans.
+    /// Serialized Name: PagedLabPlans
+    /// </summary>
     internal partial class PagedLabPlans
     {
         /// <summary> Initializes a new instance of PagedLabPlans. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of PagedLabPlans. </summary>
-        /// <param name="value"> The array page of lab plans. </param>
-        /// <param name="nextLink"> The link to get the next page of lab plan results. </param>
+        /// <param name="value">
+        /// The array page of lab plans.
+        /// Serialized Name: PagedLabPlans.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to get the next page of lab plan results.
+        /// Serialized Name: PagedLabPlans.nextLink
+        /// </param>
         internal PagedLabPlans(IReadOnlyList<LabPlanData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The array page of lab plans. </summary>
+        /// <summary>
+        /// The array page of lab plans.
+        /// Serialized Name: PagedLabPlans.value
+        /// </summary>
         public IReadOnlyList<LabPlanData> Value { get; }
-        /// <summary> The link to get the next page of lab plan results. </summary>
+        /// <summary>
+        /// The link to get the next page of lab plan results.
+        /// Serialized Name: PagedLabPlans.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

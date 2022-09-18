@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.LabServices
             Optional<ConnectionProfile> defaultConnectionProfile = default;
             Optional<AutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<string>> allowedRegions = default;
-            Optional<string> sharedGalleryId = default;
+            Optional<IList<AzureLocation>> allowedRegions = default;
+            Optional<ResourceIdentifier> sharedGalleryId = default;
             Optional<SupportInfo> supportInfo = default;
-            Optional<string> linkedLmsInstance = default;
+            Optional<ResourceIdentifier> linkedLmsInstance = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -202,17 +202,22 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new AzureLocation(item.GetString()));
                             }
                             allowedRegions = array;
                             continue;
                         }
                         if (property0.NameEquals("sharedGalleryId"))
                         {
-                            sharedGalleryId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sharedGalleryId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("supportInfo"))
@@ -227,7 +232,12 @@ namespace Azure.ResourceManager.LabServices
                         }
                         if (property0.NameEquals("linkedLmsInstance"))
                         {
-                            linkedLmsInstance = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedLmsInstance = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

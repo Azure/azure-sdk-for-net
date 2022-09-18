@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The reason for the restriction. </summary>
+    /// <summary>
+    /// The reason for the restriction.
+    /// Serialized Name: RestrictionReasonCode
+    /// </summary>
     public readonly partial struct RestrictionReasonCode : IEquatable<RestrictionReasonCode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.LabServices.Models
         private const string QuotaIdValue = "QuotaId";
         private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
-        /// <summary> QuotaId. </summary>
+        /// <summary>
+        /// QuotaId
+        /// Serialized Name: RestrictionReasonCode.QuotaId
+        /// </summary>
         public static RestrictionReasonCode QuotaId { get; } = new RestrictionReasonCode(QuotaIdValue);
-        /// <summary> NotAvailableForSubscription. </summary>
+        /// <summary>
+        /// NotAvailableForSubscription
+        /// Serialized Name: RestrictionReasonCode.NotAvailableForSubscription
+        /// </summary>
         public static RestrictionReasonCode NotAvailableForSubscription { get; } = new RestrictionReasonCode(NotAvailableForSubscriptionValue);
         /// <summary> Determines if two <see cref="RestrictionReasonCode"/> values are the same. </summary>
         public static bool operator ==(RestrictionReasonCode left, RestrictionReasonCode right) => left.Equals(right);

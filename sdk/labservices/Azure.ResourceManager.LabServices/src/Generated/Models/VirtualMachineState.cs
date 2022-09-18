@@ -7,22 +7,46 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The state of a virtual machine. </summary>
+    /// <summary>
+    /// The state of a virtual machine.
+    /// Serialized Name: VirtualMachineState
+    /// </summary>
     public enum VirtualMachineState
     {
-        /// <summary> The VM is currently stopped. </summary>
+        /// <summary>
+        /// The VM is currently stopped.
+        /// Serialized Name: VirtualMachineState.Stopped
+        /// </summary>
         Stopped,
-        /// <summary> The VM is starting. </summary>
+        /// <summary>
+        /// The VM is starting.
+        /// Serialized Name: VirtualMachineState.Starting
+        /// </summary>
         Starting,
-        /// <summary> The VM is running. </summary>
+        /// <summary>
+        /// The VM is running.
+        /// Serialized Name: VirtualMachineState.Running
+        /// </summary>
         Running,
-        /// <summary> The VM is stopping. </summary>
+        /// <summary>
+        /// The VM is stopping.
+        /// Serialized Name: VirtualMachineState.Stopping
+        /// </summary>
         Stopping,
-        /// <summary> The VM password is being reset. </summary>
+        /// <summary>
+        /// The VM password is being reset.
+        /// Serialized Name: VirtualMachineState.ResettingPassword
+        /// </summary>
         ResettingPassword,
-        /// <summary> The VM is being reimaged. </summary>
+        /// <summary>
+        /// The VM is being reimaged.
+        /// Serialized Name: VirtualMachineState.Reimaging
+        /// </summary>
         Reimaging,
-        /// <summary> The VM is being redeployed. </summary>
+        /// <summary>
+        /// The VM is being redeployed.
+        /// Serialized Name: VirtualMachineState.Redeploying
+        /// </summary>
         Redeploying
     }
 }

@@ -1,52 +1,5 @@
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class ImageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.ImageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.ImageResource>, System.Collections.IEnumerable
-    {
-        protected ImageCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.ImageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string imageName, Azure.ResourceManager.LabServices.ImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.ImageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string imageName, Azure.ResourceManager.LabServices.ImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.LabServices.ImageResource> Get(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.LabServices.ImageResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.LabServices.ImageResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.ImageResource>> GetAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.LabServices.ImageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.ImageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.ImageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.ImageResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ImageData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ImageData() { }
-        public string Author { get { throw null; } }
-        public System.Collections.Generic.IList<string> AvailableRegions { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.EnableState? EnabledState { get { throw null; } set { } }
-        public System.Uri IconUri { get { throw null; } }
-        public string Offer { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.OSState? OSState { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.OSType? OSType { get { throw null; } }
-        public string Plan { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string Publisher { get { throw null; } }
-        public string SharedGalleryId { get { throw null; } }
-        public string Sku { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.EnableState? TermsStatus { get { throw null; } }
-        public string Version { get { throw null; } }
-    }
-    public partial class ImageResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ImageResource() { }
-        public virtual Azure.ResourceManager.LabServices.ImageData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labPlanName, string imageName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.LabServices.ImageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.ImageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.LabServices.ImageResource> Update(Azure.ResourceManager.LabServices.Models.ImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.ImageResource>> UpdateAsync(Azure.ResourceManager.LabServices.Models.ImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class LabCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabResource>, System.Collections.IEnumerable
     {
         protected LabCollection() { }
@@ -68,7 +21,7 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.ConnectionProfile ConnectionProfile { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public string LabPlanId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LabPlanId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.RosterProfile RosterProfile { get { throw null; } set { } }
@@ -95,14 +48,14 @@ namespace Azure.ResourceManager.LabServices
     public partial class LabPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public LabPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<string> AllowedRegions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.ConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
-        public string DefaultNetworkSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DefaultNetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string LinkedLmsInstance { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LinkedLmsInstance { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string SharedGalleryId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.SupportInfo SupportInfo { get { throw null; } set { } }
     }
     public partial class LabPlanResource : Azure.ResourceManager.ArmResource
@@ -116,9 +69,9 @@ namespace Azure.ResourceManager.LabServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LabServices.LabPlanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabPlanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.LabServices.ImageResource> GetImage(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.ImageResource>> GetImageAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.LabServices.ImageCollection GetImages() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource> GetLabServicesImage(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource>> GetLabServicesImageAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabServicesImageCollection GetLabServicesImages() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation SaveImage(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.SaveImageBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SaveImageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.SaveImageBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabPlanResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -153,7 +106,6 @@ namespace Azure.ResourceManager.LabServices
     }
     public static partial class LabServicesExtensions
     {
-        public static Azure.ResourceManager.LabServices.ImageResource GetImageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.LabServices.LabResource> GetLab(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabResource>> GetLabAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.LabServices.LabPlanResource> GetLabPlan(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string labPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -166,6 +118,7 @@ namespace Azure.ResourceManager.LabServices
         public static Azure.ResourceManager.LabServices.LabCollection GetLabs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.LabServices.LabResource> GetLabs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.LabServices.LabResource> GetLabsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.LabServices.LabServicesImageResource GetLabServicesImageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.LabServices.Models.OperationResult> GetOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string operationResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.Models.OperationResult>> GetOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string operationResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.LabServices.ScheduleResource GetScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -175,6 +128,53 @@ namespace Azure.ResourceManager.LabServices
         public static Azure.AsyncPageable<Azure.ResourceManager.LabServices.Models.LabServicesUsage> GetUsagesByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.LabServices.UserResource GetUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.LabServices.VirtualMachineResource GetVirtualMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class LabServicesImageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabServicesImageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabServicesImageResource>, System.Collections.IEnumerable
+    {
+        protected LabServicesImageCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabServicesImageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string imageName, Azure.ResourceManager.LabServices.LabServicesImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabServicesImageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string imageName, Azure.ResourceManager.LabServices.LabServicesImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource> Get(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.LabServices.LabServicesImageResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LabServices.LabServicesImageResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource>> GetAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.LabServices.LabServicesImageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabServicesImageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.LabServices.LabServicesImageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabServicesImageResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class LabServicesImageData : Azure.ResourceManager.Models.ResourceData
+    {
+        public LabServicesImageData() { }
+        public string Author { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> AvailableRegions { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.EnableState? EnabledState { get { throw null; } set { } }
+        public System.Uri IconUri { get { throw null; } }
+        public string Offer { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.OSState? OSState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.OSType? OSType { get { throw null; } }
+        public string Plan { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public string Publisher { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } }
+        public string Sku { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.EnableState? TermsStatus { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
+    public partial class LabServicesImageResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected LabServicesImageResource() { }
+        public virtual Azure.ResourceManager.LabServices.LabServicesImageData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labPlanName, string imageName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource> Update(Azure.ResourceManager.LabServices.Models.LabServicesImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabServicesImageResource>> UpdateAsync(Azure.ResourceManager.LabServices.Models.LabServicesImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.ScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.ScheduleResource>, System.Collections.IEnumerable
     {
@@ -403,16 +403,11 @@ namespace Azure.ResourceManager.LabServices.Models
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class ImagePatch
-    {
-        public ImagePatch() { }
-        public Azure.ResourceManager.LabServices.Models.EnableState? EnabledState { get { throw null; } set { } }
-    }
     public partial class ImageReference
     {
         public ImageReference() { }
         public string ExactVersion { get { throw null; } }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
@@ -433,9 +428,9 @@ namespace Azure.ResourceManager.LabServices.Models
     public partial class LabNetworkProfile
     {
         public LabNetworkProfile() { }
-        public string LoadBalancerId { get { throw null; } set { } }
-        public string PublicIPId { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LoadBalancerId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class LabPatch : Azure.ResourceManager.LabServices.Models.TrackedResourceUpdate
     {
@@ -443,7 +438,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.ConnectionProfile ConnectionProfile { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public string LabPlanId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LabPlanId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.RosterProfile RosterProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
@@ -452,14 +447,19 @@ namespace Azure.ResourceManager.LabServices.Models
     public partial class LabPlanPatch : Azure.ResourceManager.LabServices.Models.TrackedResourceUpdate
     {
         public LabPlanPatch() { }
-        public System.Collections.Generic.IList<string> AllowedRegions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.ConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
-        public string DefaultNetworkSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DefaultNetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string LinkedLmsInstance { get { throw null; } set { } }
-        public string SharedGalleryId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LinkedLmsInstance { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.SupportInfo SupportInfo { get { throw null; } set { } }
+    }
+    public partial class LabServicesImagePatch
+    {
+        public LabServicesImagePatch() { }
+        public Azure.ResourceManager.LabServices.Models.EnableState? EnabledState { get { throw null; } set { } }
     }
     public partial class LabServicesSku
     {
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.LabServices.Models
     public partial class SaveImageBody
     {
         public SaveImageBody() { }
-        public string LabVirtualMachineId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LabVirtualMachineId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     public partial class SchedulePatch
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Email { get { throw null; } set { } }
         public string Instructions { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Uri { get { throw null; } set { } }
     }
     public partial class TrackedResourceUpdate
     {
@@ -695,9 +695,9 @@ namespace Azure.ResourceManager.LabServices.Models
         public string NonAdminUsername { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
         public string RdpAuthority { get { throw null; } }
-        public string RdpInBrowserUri { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RdpInBrowserUri { get { throw null; } }
         public string SshAuthority { get { throw null; } }
-        public string SshInBrowserUri { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SshInBrowserUri { get { throw null; } }
     }
     public partial class VirtualMachineProfile
     {

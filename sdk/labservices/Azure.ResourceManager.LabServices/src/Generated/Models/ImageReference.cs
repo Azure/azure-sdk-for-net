@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Image reference information. Used in the virtual machine profile. </summary>
+    /// <summary>
+    /// Image reference information. Used in the virtual machine profile.
+    /// Serialized Name: ImageReference
+    /// </summary>
     public partial class ImageReference
     {
         /// <summary> Initializes a new instance of ImageReference. </summary>
@@ -16,13 +21,31 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of ImageReference. </summary>
-        /// <param name="id"> Image resource ID. </param>
-        /// <param name="offer"> The image offer if applicable. </param>
-        /// <param name="publisher"> The image publisher. </param>
-        /// <param name="sku"> The image SKU. </param>
-        /// <param name="version"> The image version specified on creation. </param>
-        /// <param name="exactVersion"> The actual version of the image after use. </param>
-        internal ImageReference(string id, string offer, string publisher, string sku, string version, string exactVersion)
+        /// <param name="id">
+        /// Image resource ID
+        /// Serialized Name: ImageReference.id
+        /// </param>
+        /// <param name="offer">
+        /// The image offer if applicable.
+        /// Serialized Name: ImageReference.offer
+        /// </param>
+        /// <param name="publisher">
+        /// The image publisher
+        /// Serialized Name: ImageReference.publisher
+        /// </param>
+        /// <param name="sku">
+        /// The image SKU
+        /// Serialized Name: ImageReference.sku
+        /// </param>
+        /// <param name="version">
+        /// The image version specified on creation.
+        /// Serialized Name: ImageReference.version
+        /// </param>
+        /// <param name="exactVersion">
+        /// The actual version of the image after use.
+        /// Serialized Name: ImageReference.exactVersion
+        /// </param>
+        internal ImageReference(ResourceIdentifier id, string offer, string publisher, string sku, string version, string exactVersion)
         {
             Id = id;
             Offer = offer;
@@ -32,17 +55,35 @@ namespace Azure.ResourceManager.LabServices.Models
             ExactVersion = exactVersion;
         }
 
-        /// <summary> Image resource ID. </summary>
-        public string Id { get; set; }
-        /// <summary> The image offer if applicable. </summary>
+        /// <summary>
+        /// Image resource ID
+        /// Serialized Name: ImageReference.id
+        /// </summary>
+        public ResourceIdentifier Id { get; set; }
+        /// <summary>
+        /// The image offer if applicable.
+        /// Serialized Name: ImageReference.offer
+        /// </summary>
         public string Offer { get; set; }
-        /// <summary> The image publisher. </summary>
+        /// <summary>
+        /// The image publisher
+        /// Serialized Name: ImageReference.publisher
+        /// </summary>
         public string Publisher { get; set; }
-        /// <summary> The image SKU. </summary>
+        /// <summary>
+        /// The image SKU
+        /// Serialized Name: ImageReference.sku
+        /// </summary>
         public string Sku { get; set; }
-        /// <summary> The image version specified on creation. </summary>
+        /// <summary>
+        /// The image version specified on creation.
+        /// Serialized Name: ImageReference.version
+        /// </summary>
         public string Version { get; set; }
-        /// <summary> The actual version of the image after use. </summary>
+        /// <summary>
+        /// The actual version of the image after use.
+        /// Serialized Name: ImageReference.exactVersion
+        /// </summary>
         public string ExactVersion { get; }
     }
 }

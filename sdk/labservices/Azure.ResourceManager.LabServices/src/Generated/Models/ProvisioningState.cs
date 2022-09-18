@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Resource provisioning state. </summary>
+    /// <summary>
+    /// Resource provisioning state.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public enum ProvisioningState
     {
-        /// <summary> Resource is in the process of being created. </summary>
+        /// <summary>
+        /// Resource is in the process of being created.
+        /// Serialized Name: ProvisioningState.Creating
+        /// </summary>
         Creating,
-        /// <summary> New property values are being applied to the resource. </summary>
+        /// <summary>
+        /// New property values are being applied to the resource.
+        /// Serialized Name: ProvisioningState.Updating
+        /// </summary>
         Updating,
-        /// <summary> Resource is in the process of being deleted. </summary>
+        /// <summary>
+        /// Resource is in the process of being deleted.
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         Deleting,
-        /// <summary> Resource is in healthy state after creation or update operation. </summary>
+        /// <summary>
+        /// Resource is in healthy state after creation or update operation.
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         Succeeded,
-        /// <summary> Previous operation on the resource has failed leaving resource in unhealthy state. </summary>
+        /// <summary>
+        /// Previous operation on the resource has failed leaving resource in unhealthy state.
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         Failed,
-        /// <summary> The resource is locked and changes are currently blocked. This could be due to maintenance or a scheduled operation. The state will go back to succeeded once the locking operation has finished. </summary>
+        /// <summary>
+        /// The resource is locked and changes are currently blocked. This could be due to maintenance or a scheduled operation. The state will go back to succeeded once the locking operation has finished.
+        /// Serialized Name: ProvisioningState.Locked
+        /// </summary>
         Locked
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Paged list of lab services virtual machines. </summary>
+    /// <summary>
+    /// Paged list of lab services virtual machines.
+    /// Serialized Name: PagedVirtualMachines
+    /// </summary>
     internal partial class PagedVirtualMachines
     {
         /// <summary> Initializes a new instance of PagedVirtualMachines. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of PagedVirtualMachines. </summary>
-        /// <param name="value"> The array page of virtual machine results. </param>
-        /// <param name="nextLink"> The link to get the next page of virtual machine results. </param>
+        /// <param name="value">
+        /// The array page of virtual machine results.
+        /// Serialized Name: PagedVirtualMachines.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to get the next page of virtual machine results.
+        /// Serialized Name: PagedVirtualMachines.nextLink
+        /// </param>
         internal PagedVirtualMachines(IReadOnlyList<VirtualMachineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The array page of virtual machine results. </summary>
+        /// <summary>
+        /// The array page of virtual machine results.
+        /// Serialized Name: PagedVirtualMachines.value
+        /// </summary>
         public IReadOnlyList<VirtualMachineData> Value { get; }
-        /// <summary> The link to get the next page of virtual machine results. </summary>
+        /// <summary>
+        /// The link to get the next page of virtual machine results.
+        /// Serialized Name: PagedVirtualMachines.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

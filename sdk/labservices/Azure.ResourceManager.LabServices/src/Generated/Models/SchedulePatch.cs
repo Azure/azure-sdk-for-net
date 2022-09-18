@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Schedule for automatically turning virtual machines in a lab on and off at specified times. Used for updates. </summary>
+    /// <summary>
+    /// Schedule for automatically turning virtual machines in a lab on and off at specified times. Used for updates.
+    /// Serialized Name: ScheduleUpdate
+    /// </summary>
     public partial class SchedulePatch
     {
         /// <summary> Initializes a new instance of SchedulePatch. </summary>
@@ -17,15 +20,30 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
-        /// <summary> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
+        /// <summary>
+        /// When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead.
+        /// Serialized Name: ScheduleUpdate.properties.startAt
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
+        /// <summary>
+        /// When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead.
+        /// Serialized Name: ScheduleUpdate.properties.stopAt
+        /// </summary>
         public DateTimeOffset? StopOn { get; set; }
-        /// <summary> The recurrence pattern of the scheduled actions. </summary>
+        /// <summary>
+        /// The recurrence pattern of the scheduled actions.
+        /// Serialized Name: ScheduleUpdate.properties.recurrencePattern
+        /// </summary>
         public RecurrencePattern RecurrencePattern { get; set; }
-        /// <summary> The IANA timezone id for the schedule. </summary>
+        /// <summary>
+        /// The IANA timezone id for the schedule.
+        /// Serialized Name: ScheduleUpdate.properties.timeZoneId
+        /// </summary>
         public string TimeZoneId { get; set; }
-        /// <summary> Notes for this schedule. </summary>
+        /// <summary>
+        /// Notes for this schedule.
+        /// Serialized Name: ScheduleUpdate.properties.notes
+        /// </summary>
         public string Notes { get; set; }
     }
 }

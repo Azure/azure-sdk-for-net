@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The restriction details. </summary>
+    /// <summary>
+    /// The restriction details.
+    /// Serialized Name: LabServicesSkuRestrictions
+    /// </summary>
     public partial class AvailableLabServicesSkuRestrictions
     {
         /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
-        /// <param name="restrictionType"> The type of restriction. </param>
-        /// <param name="values"> The values of the restriction. </param>
-        /// <param name="reasonCode"> The reason for the restriction. </param>
+        /// <param name="restrictionType">
+        /// The type of restriction.
+        /// Serialized Name: LabServicesSkuRestrictions.type
+        /// </param>
+        /// <param name="values">
+        /// The values of the restriction.
+        /// Serialized Name: LabServicesSkuRestrictions.values
+        /// </param>
+        /// <param name="reasonCode">
+        /// The reason for the restriction.
+        /// Serialized Name: LabServicesSkuRestrictions.reasonCode
+        /// </param>
         internal AvailableLabServicesSkuRestrictions(RestrictionType? restrictionType, IReadOnlyList<string> values, RestrictionReasonCode? reasonCode)
         {
             RestrictionType = restrictionType;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.LabServices.Models
             ReasonCode = reasonCode;
         }
 
-        /// <summary> The type of restriction. </summary>
+        /// <summary>
+        /// The type of restriction.
+        /// Serialized Name: LabServicesSkuRestrictions.type
+        /// </summary>
         public RestrictionType? RestrictionType { get; }
-        /// <summary> The values of the restriction. </summary>
+        /// <summary>
+        /// The values of the restriction.
+        /// Serialized Name: LabServicesSkuRestrictions.values
+        /// </summary>
         public IReadOnlyList<string> Values { get; }
-        /// <summary> The reason for the restriction. </summary>
+        /// <summary>
+        /// The reason for the restriction.
+        /// Serialized Name: LabServicesSkuRestrictions.reasonCode
+        /// </summary>
         public RestrictionReasonCode? ReasonCode { get; }
     }
 }

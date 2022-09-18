@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> List of Core Usages. </summary>
+    /// <summary>
+    /// List of Core Usages.
+    /// Serialized Name: ListUsagesResult
+    /// </summary>
     internal partial class ListUsagesResult
     {
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
-        /// <param name="value"> The array page of Usages. </param>
-        /// <param name="nextLink"> The link to get the next page of Usage result. </param>
+        /// <param name="value">
+        /// The array page of Usages.
+        /// Serialized Name: ListUsagesResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to get the next page of Usage result.
+        /// Serialized Name: ListUsagesResult.nextLink
+        /// </param>
         internal ListUsagesResult(IReadOnlyList<LabServicesUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The array page of Usages. </summary>
+        /// <summary>
+        /// The array page of Usages.
+        /// Serialized Name: ListUsagesResult.value
+        /// </summary>
         public IReadOnlyList<LabServicesUsage> Value { get; }
-        /// <summary> The link to get the next page of Usage result. </summary>
+        /// <summary>
+        /// The link to get the next page of Usage result.
+        /// Serialized Name: ListUsagesResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

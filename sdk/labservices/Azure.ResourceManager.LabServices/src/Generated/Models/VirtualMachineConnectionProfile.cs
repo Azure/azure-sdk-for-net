@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The connection information for the virtual machine. </summary>
+    /// <summary>
+    /// The connection information for the virtual machine
+    /// Serialized Name: VirtualMachineConnectionProfile
+    /// </summary>
     public partial class VirtualMachineConnectionProfile
     {
         /// <summary> Initializes a new instance of VirtualMachineConnectionProfile. </summary>
@@ -16,14 +21,35 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineConnectionProfile. </summary>
-        /// <param name="privateIPAddress"> The private IP address of the virtual machine. </param>
-        /// <param name="sshAuthority"> Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine. </param>
-        /// <param name="sshInBrowserUri"> URL for connecting via SSH protocol to the virtual machine in browser. </param>
-        /// <param name="rdpAuthority"> Port and host name separated by semicolon for connecting via RDP protocol to the virtual machine. </param>
-        /// <param name="rdpInBrowserUri"> URL for connecting via RDP protocol to the virtual machine in browser. </param>
-        /// <param name="adminUsername"> The username used to log on to the virtual machine as admin. </param>
-        /// <param name="nonAdminUsername"> The username used to log on to the virtual machine as non-admin, if one exists. </param>
-        internal VirtualMachineConnectionProfile(string privateIPAddress, string sshAuthority, string sshInBrowserUri, string rdpAuthority, string rdpInBrowserUri, string adminUsername, string nonAdminUsername)
+        /// <param name="privateIPAddress">
+        /// The private IP address of the virtual machine.
+        /// Serialized Name: VirtualMachineConnectionProfile.privateIpAddress
+        /// </param>
+        /// <param name="sshAuthority">
+        /// Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine.
+        /// Serialized Name: VirtualMachineConnectionProfile.sshAuthority
+        /// </param>
+        /// <param name="sshInBrowserUri">
+        /// URL for connecting via SSH protocol to the virtual machine in browser.
+        /// Serialized Name: VirtualMachineConnectionProfile.sshInBrowserUrl
+        /// </param>
+        /// <param name="rdpAuthority">
+        /// Port and host name separated by semicolon for connecting via RDP protocol to the virtual machine.
+        /// Serialized Name: VirtualMachineConnectionProfile.rdpAuthority
+        /// </param>
+        /// <param name="rdpInBrowserUri">
+        /// URL for connecting via RDP protocol to the virtual machine in browser.
+        /// Serialized Name: VirtualMachineConnectionProfile.rdpInBrowserUrl
+        /// </param>
+        /// <param name="adminUsername">
+        /// The username used to log on to the virtual machine as admin.
+        /// Serialized Name: VirtualMachineConnectionProfile.adminUsername
+        /// </param>
+        /// <param name="nonAdminUsername">
+        /// The username used to log on to the virtual machine as non-admin, if one exists.
+        /// Serialized Name: VirtualMachineConnectionProfile.nonAdminUsername
+        /// </param>
+        internal VirtualMachineConnectionProfile(string privateIPAddress, string sshAuthority, ResourceIdentifier sshInBrowserUri, string rdpAuthority, ResourceIdentifier rdpInBrowserUri, string adminUsername, string nonAdminUsername)
         {
             PrivateIPAddress = privateIPAddress;
             SshAuthority = sshAuthority;
@@ -34,19 +60,40 @@ namespace Azure.ResourceManager.LabServices.Models
             NonAdminUsername = nonAdminUsername;
         }
 
-        /// <summary> The private IP address of the virtual machine. </summary>
+        /// <summary>
+        /// The private IP address of the virtual machine.
+        /// Serialized Name: VirtualMachineConnectionProfile.privateIpAddress
+        /// </summary>
         public string PrivateIPAddress { get; }
-        /// <summary> Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine. </summary>
+        /// <summary>
+        /// Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine.
+        /// Serialized Name: VirtualMachineConnectionProfile.sshAuthority
+        /// </summary>
         public string SshAuthority { get; }
-        /// <summary> URL for connecting via SSH protocol to the virtual machine in browser. </summary>
-        public string SshInBrowserUri { get; }
-        /// <summary> Port and host name separated by semicolon for connecting via RDP protocol to the virtual machine. </summary>
+        /// <summary>
+        /// URL for connecting via SSH protocol to the virtual machine in browser.
+        /// Serialized Name: VirtualMachineConnectionProfile.sshInBrowserUrl
+        /// </summary>
+        public ResourceIdentifier SshInBrowserUri { get; }
+        /// <summary>
+        /// Port and host name separated by semicolon for connecting via RDP protocol to the virtual machine.
+        /// Serialized Name: VirtualMachineConnectionProfile.rdpAuthority
+        /// </summary>
         public string RdpAuthority { get; }
-        /// <summary> URL for connecting via RDP protocol to the virtual machine in browser. </summary>
-        public string RdpInBrowserUri { get; }
-        /// <summary> The username used to log on to the virtual machine as admin. </summary>
+        /// <summary>
+        /// URL for connecting via RDP protocol to the virtual machine in browser.
+        /// Serialized Name: VirtualMachineConnectionProfile.rdpInBrowserUrl
+        /// </summary>
+        public ResourceIdentifier RdpInBrowserUri { get; }
+        /// <summary>
+        /// The username used to log on to the virtual machine as admin.
+        /// Serialized Name: VirtualMachineConnectionProfile.adminUsername
+        /// </summary>
         public string AdminUsername { get; }
-        /// <summary> The username used to log on to the virtual machine as non-admin, if one exists. </summary>
+        /// <summary>
+        /// The username used to log on to the virtual machine as non-admin, if one exists.
+        /// Serialized Name: VirtualMachineConnectionProfile.nonAdminUsername
+        /// </summary>
         public string NonAdminUsername { get; }
     }
 }

@@ -18,46 +18,46 @@ using Azure.ResourceManager.LabServices.Models;
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A Class representing an Image along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LabPlanResource" /> using the GetImage method.
+    /// A Class representing a LabServicesImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LabServicesImageResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetLabServicesImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LabPlanResource" /> using the GetLabServicesImage method.
     /// </summary>
-    public partial class ImageResource : ArmResource
+    public partial class LabServicesImageResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ImageResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LabServicesImageResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labPlanName, string imageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}/images/{imageName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _imageClientDiagnostics;
-        private readonly ImagesRestOperations _imageRestClient;
-        private readonly ImageData _data;
+        private readonly ClientDiagnostics _labServicesImageImagesClientDiagnostics;
+        private readonly ImagesRestOperations _labServicesImageImagesRestClient;
+        private readonly LabServicesImageData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ImageResource"/> class for mocking. </summary>
-        protected ImageResource()
+        /// <summary> Initializes a new instance of the <see cref="LabServicesImageResource"/> class for mocking. </summary>
+        protected LabServicesImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "LabServicesImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ImageResource(ArmClient client, ImageData data) : this(client, data.Id)
+        internal LabServicesImageResource(ArmClient client, LabServicesImageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabServicesImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LabServicesImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _imageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LabServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string imageApiVersion);
-            _imageRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, imageApiVersion);
+            _labServicesImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LabServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string labServicesImageImagesApiVersion);
+            _labServicesImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, labServicesImageImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ImageData Data
+        public virtual LabServicesImageData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.LabServices
         /// Operation Id: Images_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ImageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesImageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Get");
+            using var scope = _labServicesImageImagesClientDiagnostics.CreateScope("LabServicesImageResource.Get");
             scope.Start();
             try
             {
-                var response = await _imageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _labServicesImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.LabServices
         /// Operation Id: Images_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ImageResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesImageResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Get");
+            using var scope = _labServicesImageImagesClientDiagnostics.CreateScope("LabServicesImageResource.Get");
             scope.Start();
             try
             {
-                var response = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _labServicesImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ImageResource>> UpdateAsync(ImagePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesImageResource>> UpdateAsync(LabServicesImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Update");
+            using var scope = _labServicesImageImagesClientDiagnostics.CreateScope("LabServicesImageResource.Update");
             scope.Start();
             try
             {
-                var response = await _imageRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                var response = await _labServicesImageImagesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LabServicesImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,16 +169,16 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ImageResource> Update(ImagePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesImageResource> Update(LabServicesImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Update");
+            using var scope = _labServicesImageImagesClientDiagnostics.CreateScope("LabServicesImageResource.Update");
             scope.Start();
             try
             {
-                var response = _imageRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                var response = _labServicesImageImagesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new LabServicesImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

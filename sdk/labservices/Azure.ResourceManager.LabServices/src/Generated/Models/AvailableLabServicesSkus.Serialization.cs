@@ -8,15 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    internal partial class PagedImages
+    internal partial class AvailableLabServicesSkus
     {
-        internal static PagedImages DeserializePagedImages(JsonElement element)
+        internal static AvailableLabServicesSkus DeserializeAvailableLabServicesSkus(JsonElement element)
         {
-            Optional<IReadOnlyList<ImageData>> value = default;
+            Optional<IReadOnlyList<AvailableLabServicesSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ImageData> array = new List<ImageData>();
+                    List<AvailableLabServicesSku> array = new List<AvailableLabServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageData.DeserializeImageData(item));
+                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new PagedImages(Optional.ToList(value), nextLink.Value);
+            return new AvailableLabServicesSkus(Optional.ToList(value), nextLink.Value);
         }
     }
 }

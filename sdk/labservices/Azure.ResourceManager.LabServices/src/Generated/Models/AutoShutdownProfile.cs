@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Profile for how to handle shutting down virtual machines. </summary>
+    /// <summary>
+    /// Profile for how to handle shutting down virtual machines.
+    /// Serialized Name: AutoShutdownProfile
+    /// </summary>
     public partial class AutoShutdownProfile
     {
         /// <summary> Initializes a new instance of AutoShutdownProfile. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of AutoShutdownProfile. </summary>
-        /// <param name="shutdownOnDisconnect"> Whether shutdown on disconnect is enabled. </param>
-        /// <param name="shutdownWhenNotConnected"> Whether a VM will get shutdown when it hasn&apos;t been connected to after a period of time. </param>
-        /// <param name="shutdownOnIdle"> Whether a VM will get shutdown when it has idled for a period of time. </param>
-        /// <param name="disconnectDelay"> The amount of time a VM will stay running after a user disconnects if this behavior is enabled. </param>
-        /// <param name="noConnectDelay"> The amount of time a VM will stay running before it is shutdown if no connection is made and this behavior is enabled. </param>
-        /// <param name="idleDelay"> The amount of time a VM will idle before it is shutdown if this behavior is enabled. </param>
+        /// <param name="shutdownOnDisconnect">
+        /// Whether shutdown on disconnect is enabled
+        /// Serialized Name: AutoShutdownProfile.shutdownOnDisconnect
+        /// </param>
+        /// <param name="shutdownWhenNotConnected">
+        /// Whether a VM will get shutdown when it hasn&apos;t been connected to after a period of time.
+        /// Serialized Name: AutoShutdownProfile.shutdownWhenNotConnected
+        /// </param>
+        /// <param name="shutdownOnIdle">
+        /// Whether a VM will get shutdown when it has idled for a period of time.
+        /// Serialized Name: AutoShutdownProfile.shutdownOnIdle
+        /// </param>
+        /// <param name="disconnectDelay">
+        /// The amount of time a VM will stay running after a user disconnects if this behavior is enabled.
+        /// Serialized Name: AutoShutdownProfile.disconnectDelay
+        /// </param>
+        /// <param name="noConnectDelay">
+        /// The amount of time a VM will stay running before it is shutdown if no connection is made and this behavior is enabled.
+        /// Serialized Name: AutoShutdownProfile.noConnectDelay
+        /// </param>
+        /// <param name="idleDelay">
+        /// The amount of time a VM will idle before it is shutdown if this behavior is enabled.
+        /// Serialized Name: AutoShutdownProfile.idleDelay
+        /// </param>
         internal AutoShutdownProfile(EnableState? shutdownOnDisconnect, EnableState? shutdownWhenNotConnected, ShutdownOnIdleMode? shutdownOnIdle, TimeSpan? disconnectDelay, TimeSpan? noConnectDelay, TimeSpan? idleDelay)
         {
             ShutdownOnDisconnect = shutdownOnDisconnect;
@@ -34,17 +55,35 @@ namespace Azure.ResourceManager.LabServices.Models
             IdleDelay = idleDelay;
         }
 
-        /// <summary> Whether shutdown on disconnect is enabled. </summary>
+        /// <summary>
+        /// Whether shutdown on disconnect is enabled
+        /// Serialized Name: AutoShutdownProfile.shutdownOnDisconnect
+        /// </summary>
         public EnableState? ShutdownOnDisconnect { get; set; }
-        /// <summary> Whether a VM will get shutdown when it hasn&apos;t been connected to after a period of time. </summary>
+        /// <summary>
+        /// Whether a VM will get shutdown when it hasn&apos;t been connected to after a period of time.
+        /// Serialized Name: AutoShutdownProfile.shutdownWhenNotConnected
+        /// </summary>
         public EnableState? ShutdownWhenNotConnected { get; set; }
-        /// <summary> Whether a VM will get shutdown when it has idled for a period of time. </summary>
+        /// <summary>
+        /// Whether a VM will get shutdown when it has idled for a period of time.
+        /// Serialized Name: AutoShutdownProfile.shutdownOnIdle
+        /// </summary>
         public ShutdownOnIdleMode? ShutdownOnIdle { get; set; }
-        /// <summary> The amount of time a VM will stay running after a user disconnects if this behavior is enabled. </summary>
+        /// <summary>
+        /// The amount of time a VM will stay running after a user disconnects if this behavior is enabled.
+        /// Serialized Name: AutoShutdownProfile.disconnectDelay
+        /// </summary>
         public TimeSpan? DisconnectDelay { get; set; }
-        /// <summary> The amount of time a VM will stay running before it is shutdown if no connection is made and this behavior is enabled. </summary>
+        /// <summary>
+        /// The amount of time a VM will stay running before it is shutdown if no connection is made and this behavior is enabled.
+        /// Serialized Name: AutoShutdownProfile.noConnectDelay
+        /// </summary>
         public TimeSpan? NoConnectDelay { get; set; }
-        /// <summary> The amount of time a VM will idle before it is shutdown if this behavior is enabled. </summary>
+        /// <summary>
+        /// The amount of time a VM will idle before it is shutdown if this behavior is enabled.
+        /// Serialized Name: AutoShutdownProfile.idleDelay
+        /// </summary>
         public TimeSpan? IdleDelay { get; set; }
     }
 }

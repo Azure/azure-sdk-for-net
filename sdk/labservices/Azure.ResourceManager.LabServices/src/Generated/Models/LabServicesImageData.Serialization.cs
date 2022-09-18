@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class ImageData : IUtf8JsonSerializable
+    public partial class LabServicesImageData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LabServices
             writer.WriteEndObject();
         }
 
-        internal static ImageData DeserializeImageData(JsonElement element)
+        internal static LabServicesImageData DeserializeLabServicesImageData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.LabServices
             Optional<string> publisher = default;
             Optional<string> sku = default;
             Optional<string> version = default;
-            Optional<string> sharedGalleryId = default;
-            Optional<IList<string>> availableRegions = default;
+            Optional<ResourceIdentifier> sharedGalleryId = default;
+            Optional<IList<AzureLocation>> availableRegions = default;
             Optional<OSState> osState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -190,7 +190,12 @@ namespace Azure.ResourceManager.LabServices
                         }
                         if (property0.NameEquals("sharedGalleryId"))
                         {
-                            sharedGalleryId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sharedGalleryId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("availableRegions"))
@@ -200,10 +205,10 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new AzureLocation(item.GetString()));
                             }
                             availableRegions = array;
                             continue;
@@ -222,7 +227,7 @@ namespace Azure.ResourceManager.LabServices
                     continue;
                 }
             }
-            return new ImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Optional.ToList(availableRegions), Optional.ToNullable(osState));
+            return new LabServicesImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Optional.ToList(availableRegions), Optional.ToNullable(osState));
         }
     }
 }

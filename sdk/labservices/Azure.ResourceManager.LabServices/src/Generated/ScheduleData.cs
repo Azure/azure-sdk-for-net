@@ -25,12 +25,30 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn"> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
-        /// <param name="stopOn"> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
-        /// <param name="recurrencePattern"> The recurrence pattern of the scheduled actions. </param>
-        /// <param name="timeZoneId"> The IANA timezone id for the schedule. </param>
-        /// <param name="notes"> Notes for this schedule. </param>
-        /// <param name="provisioningState"> Current provisioning state of the schedule. </param>
+        /// <param name="startOn">
+        /// When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead.
+        /// Serialized Name: Schedule.properties.startAt
+        /// </param>
+        /// <param name="stopOn">
+        /// When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead.
+        /// Serialized Name: Schedule.properties.stopAt
+        /// </param>
+        /// <param name="recurrencePattern">
+        /// The recurrence pattern of the scheduled actions.
+        /// Serialized Name: Schedule.properties.recurrencePattern
+        /// </param>
+        /// <param name="timeZoneId">
+        /// The IANA timezone id for the schedule.
+        /// Serialized Name: Schedule.properties.timeZoneId
+        /// </param>
+        /// <param name="notes">
+        /// Notes for this schedule.
+        /// Serialized Name: Schedule.properties.notes
+        /// </param>
+        /// <param name="provisioningState">
+        /// Current provisioning state of the schedule.
+        /// Serialized Name: Schedule.properties.provisioningState
+        /// </param>
         internal ScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? stopOn, RecurrencePattern recurrencePattern, string timeZoneId, string notes, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
@@ -41,17 +59,35 @@ namespace Azure.ResourceManager.LabServices
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
+        /// <summary>
+        /// When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead.
+        /// Serialized Name: Schedule.properties.startAt
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
+        /// <summary>
+        /// When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead.
+        /// Serialized Name: Schedule.properties.stopAt
+        /// </summary>
         public DateTimeOffset? StopOn { get; set; }
-        /// <summary> The recurrence pattern of the scheduled actions. </summary>
+        /// <summary>
+        /// The recurrence pattern of the scheduled actions.
+        /// Serialized Name: Schedule.properties.recurrencePattern
+        /// </summary>
         public RecurrencePattern RecurrencePattern { get; set; }
-        /// <summary> The IANA timezone id for the schedule. </summary>
+        /// <summary>
+        /// The IANA timezone id for the schedule.
+        /// Serialized Name: Schedule.properties.timeZoneId
+        /// </summary>
         public string TimeZoneId { get; set; }
-        /// <summary> Notes for this schedule. </summary>
+        /// <summary>
+        /// Notes for this schedule.
+        /// Serialized Name: Schedule.properties.notes
+        /// </summary>
         public string Notes { get; set; }
-        /// <summary> Current provisioning state of the schedule. </summary>
+        /// <summary>
+        /// Current provisioning state of the schedule.
+        /// Serialized Name: Schedule.properties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
     }
 }

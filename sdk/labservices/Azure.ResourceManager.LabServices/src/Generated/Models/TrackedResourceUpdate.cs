@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Base tracked resource type for all PATCH updates. </summary>
+    /// <summary>
+    /// Base tracked resource type for all PATCH updates.
+    /// Serialized Name: TrackedResourceUpdate
+    /// </summary>
     public partial class TrackedResourceUpdate
     {
         /// <summary> Initializes a new instance of TrackedResourceUpdate. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.LabServices.Models
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: TrackedResourceUpdate.tags
+        /// </summary>
         public IList<string> Tags { get; }
     }
 }

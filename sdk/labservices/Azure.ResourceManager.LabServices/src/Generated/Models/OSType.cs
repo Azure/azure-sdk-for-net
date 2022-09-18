@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The operating system type. </summary>
+    /// <summary>
+    /// The operating system type.
+    /// Serialized Name: OsType
+    /// </summary>
     public enum OSType
     {
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: OsType.Windows
+        /// </summary>
         Windows,
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: OsType.Linux
+        /// </summary>
         Linux
     }
 }

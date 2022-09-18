@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The lab user invitation state. </summary>
+    /// <summary>
+    /// The lab user invitation state.
+    /// Serialized Name: InvitationState
+    /// </summary>
     public enum InvitationState
     {
-        /// <summary> The invitation has not been sent. </summary>
+        /// <summary>
+        /// The invitation has not been sent.
+        /// Serialized Name: InvitationState.NotSent
+        /// </summary>
         NotSent,
-        /// <summary> Currently sending the invitation. </summary>
+        /// <summary>
+        /// Currently sending the invitation.
+        /// Serialized Name: InvitationState.Sending
+        /// </summary>
         Sending,
-        /// <summary> The invitation has been successfully sent. </summary>
+        /// <summary>
+        /// The invitation has been successfully sent.
+        /// Serialized Name: InvitationState.Sent
+        /// </summary>
         Sent,
-        /// <summary> There was an error while sending the invitation. </summary>
+        /// <summary>
+        /// There was an error while sending the invitation.
+        /// Serialized Name: InvitationState.Failed
+        /// </summary>
         Failed
     }
 }

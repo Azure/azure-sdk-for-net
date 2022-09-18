@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Defines whether to shut down VM on idle and the criteria for idle detection. </summary>
+    /// <summary>
+    /// Defines whether to shut down VM on idle and the criteria for idle detection.
+    /// Serialized Name: ShutdownOnIdleMode
+    /// </summary>
     public enum ShutdownOnIdleMode
     {
-        /// <summary> The VM won&apos;t be shut down when it is idle. </summary>
+        /// <summary>
+        /// The VM won&apos;t be shut down when it is idle.
+        /// Serialized Name: ShutdownOnIdleMode.None
+        /// </summary>
         None,
-        /// <summary> The VM will be considered as idle when there is no keyboard or mouse input. </summary>
+        /// <summary>
+        /// The VM will be considered as idle when there is no keyboard or mouse input.
+        /// Serialized Name: ShutdownOnIdleMode.UserAbsence
+        /// </summary>
         UserAbsence,
-        /// <summary> The VM will be considered as idle when user is absent and the resource (CPU and disk) consumption is low. </summary>
+        /// <summary>
+        /// The VM will be considered as idle when user is absent and the resource (CPU and disk) consumption is low.
+        /// Serialized Name: ShutdownOnIdleMode.LowUsage
+        /// </summary>
         LowUsage
     }
 }

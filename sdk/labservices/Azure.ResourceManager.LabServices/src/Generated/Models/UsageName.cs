@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The Usage Names. </summary>
+    /// <summary>
+    /// The Usage Names.
+    /// Serialized Name: UsageName
+    /// </summary>
     public partial class UsageName
     {
         /// <summary> Initializes a new instance of UsageName. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of UsageName. </summary>
-        /// <param name="localizedValue"> The localized name of the resource. </param>
-        /// <param name="skuInstances"> The instances of the resource. </param>
-        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue">
+        /// The localized name of the resource.
+        /// Serialized Name: UsageName.localizedValue
+        /// </param>
+        /// <param name="skuInstances">
+        /// The instances of the resource.
+        /// Serialized Name: UsageName.skuInstances
+        /// </param>
+        /// <param name="value">
+        /// The name of the resource.
+        /// Serialized Name: UsageName.value
+        /// </param>
         internal UsageName(string localizedValue, IReadOnlyList<string> skuInstances, string value)
         {
             LocalizedValue = localizedValue;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.LabServices.Models
             Value = value;
         }
 
-        /// <summary> The localized name of the resource. </summary>
+        /// <summary>
+        /// The localized name of the resource.
+        /// Serialized Name: UsageName.localizedValue
+        /// </summary>
         public string LocalizedValue { get; }
-        /// <summary> The instances of the resource. </summary>
+        /// <summary>
+        /// The instances of the resource.
+        /// Serialized Name: UsageName.skuInstances
+        /// </summary>
         public IReadOnlyList<string> SkuInstances { get; }
-        /// <summary> The name of the resource. </summary>
+        /// <summary>
+        /// The name of the resource.
+        /// Serialized Name: UsageName.value
+        /// </summary>
         public string Value { get; }
     }
 }

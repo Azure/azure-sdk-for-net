@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Indicates what lab virtual machines are created from. </summary>
+    /// <summary>
+    /// Indicates what lab virtual machines are created from.
+    /// Serialized Name: CreateOption
+    /// </summary>
     public enum CreateOption
     {
-        /// <summary> An image is used to create all lab user virtual machines. When this option is set, no template VM will be created. </summary>
+        /// <summary>
+        /// An image is used to create all lab user virtual machines. When this option is set, no template VM will be created.
+        /// Serialized Name: CreateOption.Image
+        /// </summary>
         Image,
-        /// <summary> A template VM will be used to create all lab user virtual machines. </summary>
+        /// <summary>
+        /// A template VM will be used to create all lab user virtual machines.
+        /// Serialized Name: CreateOption.TemplateVM
+        /// </summary>
         TemplateVm
     }
 }

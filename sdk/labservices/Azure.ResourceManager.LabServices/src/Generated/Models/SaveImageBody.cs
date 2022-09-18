@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Body for the save image POST. </summary>
+    /// <summary>
+    /// Body for the save image POST
+    /// Serialized Name: SaveImageBody
+    /// </summary>
     public partial class SaveImageBody
     {
         /// <summary> Initializes a new instance of SaveImageBody. </summary>
@@ -15,9 +20,15 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
-        /// <summary> The name for the image we create. </summary>
+        /// <summary>
+        /// The name for the image we create.
+        /// Serialized Name: SaveImageBody.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The ID of the lab virtual machine you want to save an image from. </summary>
-        public string LabVirtualMachineId { get; set; }
+        /// <summary>
+        /// The ID of the lab virtual machine you want to save an image from.
+        /// Serialized Name: SaveImageBody.labVirtualMachineId
+        /// </summary>
+        public ResourceIdentifier LabVirtualMachineId { get; set; }
     }
 }

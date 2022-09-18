@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The array of capabilities of a lab services SKU. </summary>
+    /// <summary>
+    /// The array of capabilities of a lab services SKU.
+    /// Serialized Name: LabServicesSkuCapabilities
+    /// </summary>
     public partial class AvailableLabServicesSkuCapabilities
     {
         /// <summary> Initializes a new instance of AvailableLabServicesSkuCapabilities. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSkuCapabilities. </summary>
-        /// <param name="name"> The name of the capability for a SKU. </param>
-        /// <param name="value"> The value of the capability for a SKU. </param>
+        /// <param name="name">
+        /// The name of the capability for a SKU.
+        /// Serialized Name: LabServicesSkuCapabilities.name
+        /// </param>
+        /// <param name="value">
+        /// The value of the capability for a SKU.
+        /// Serialized Name: LabServicesSkuCapabilities.value
+        /// </param>
         internal AvailableLabServicesSkuCapabilities(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> The name of the capability for a SKU. </summary>
+        /// <summary>
+        /// The name of the capability for a SKU.
+        /// Serialized Name: LabServicesSkuCapabilities.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The value of the capability for a SKU. </summary>
+        /// <summary>
+        /// The value of the capability for a SKU.
+        /// Serialized Name: LabServicesSkuCapabilities.value
+        /// </summary>
         public string Value { get; }
     }
 }

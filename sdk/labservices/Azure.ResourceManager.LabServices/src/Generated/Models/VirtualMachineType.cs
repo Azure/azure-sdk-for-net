@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The type of the lab virtual machine. </summary>
+    /// <summary>
+    /// The type of the lab virtual machine.
+    /// Serialized Name: VirtualMachineType
+    /// </summary>
     public enum VirtualMachineType
     {
-        /// <summary> A user VM. </summary>
+        /// <summary>
+        /// A user VM
+        /// Serialized Name: VirtualMachineType.User
+        /// </summary>
         User,
-        /// <summary> A template VM. </summary>
+        /// <summary>
+        /// A template VM
+        /// Serialized Name: VirtualMachineType.Template
+        /// </summary>
         Template
     }
 }

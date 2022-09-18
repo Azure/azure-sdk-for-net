@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Credentials for a user on a lab VM. </summary>
+    /// <summary>
+    /// Credentials for a user on a lab VM.
+    /// Serialized Name: Credentials
+    /// </summary>
     public partial class Credentials
     {
         /// <summary> Initializes a new instance of Credentials. </summary>
-        /// <param name="username"> The username to use when signing in to lab VMs. </param>
+        /// <param name="username">
+        /// The username to use when signing in to lab VMs.
+        /// Serialized Name: Credentials.username
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public Credentials(string username)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of Credentials. </summary>
-        /// <param name="username"> The username to use when signing in to lab VMs. </param>
-        /// <param name="password"> The password for the user. This is required for the TemplateVM createOption. </param>
+        /// <param name="username">
+        /// The username to use when signing in to lab VMs.
+        /// Serialized Name: Credentials.username
+        /// </param>
+        /// <param name="password">
+        /// The password for the user. This is required for the TemplateVM createOption.
+        /// Serialized Name: Credentials.password
+        /// </param>
         internal Credentials(string username, string password)
         {
             Username = username;
             Password = password;
         }
 
-        /// <summary> The username to use when signing in to lab VMs. </summary>
+        /// <summary>
+        /// The username to use when signing in to lab VMs.
+        /// Serialized Name: Credentials.username
+        /// </summary>
         public string Username { get; set; }
-        /// <summary> The password for the user. This is required for the TemplateVM createOption. </summary>
+        /// <summary>
+        /// The password for the user. This is required for the TemplateVM createOption.
+        /// Serialized Name: Credentials.password
+        /// </summary>
         public string Password { get; set; }
     }
 }

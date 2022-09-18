@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Body for a user invite request. </summary>
+    /// <summary>
+    /// Body for a user invite request
+    /// Serialized Name: InviteBody
+    /// </summary>
     public partial class InviteBody
     {
         /// <summary> Initializes a new instance of InviteBody. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
-        /// <summary> Custom text for the invite email. </summary>
+        /// <summary>
+        /// Custom text for the invite email.
+        /// Serialized Name: InviteBody.text
+        /// </summary>
         public string Text { get; set; }
     }
 }

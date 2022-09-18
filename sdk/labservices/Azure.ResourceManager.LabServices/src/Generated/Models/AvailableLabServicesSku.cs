@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Azure Lab Services resource SKUs. </summary>
+    /// <summary>
+    /// Azure Lab Services resource SKUs
+    /// Serialized Name: AvailableLabServicesSku
+    /// </summary>
     public partial class AvailableLabServicesSku
     {
         /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
@@ -23,16 +26,46 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
-        /// <param name="resourceType"> The lab services resource type. </param>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <param name="tier"> The tier of the SKU. </param>
-        /// <param name="size"> The SKU size. </param>
-        /// <param name="family"> The family of the SKU. </param>
-        /// <param name="capacity"> The scale out/in options of the SKU. </param>
-        /// <param name="capabilities"> The capabilities of the SKU. </param>
-        /// <param name="locations"> List of locations that are available for a size. </param>
-        /// <param name="costs"> Metadata for retrieving price info of a lab services SKUs. </param>
-        /// <param name="restrictions"> Restrictions of a lab services SKUs. </param>
+        /// <param name="resourceType">
+        /// The lab services resource type.
+        /// Serialized Name: AvailableLabServicesSku.resourceType
+        /// </param>
+        /// <param name="name">
+        /// The name of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.name
+        /// </param>
+        /// <param name="tier">
+        /// The tier of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.tier
+        /// </param>
+        /// <param name="size">
+        /// The SKU size.
+        /// Serialized Name: AvailableLabServicesSku.size
+        /// </param>
+        /// <param name="family">
+        /// The family of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.family
+        /// </param>
+        /// <param name="capacity">
+        /// The scale out/in options of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.capacity
+        /// </param>
+        /// <param name="capabilities">
+        /// The capabilities of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.capabilities
+        /// </param>
+        /// <param name="locations">
+        /// List of locations that are available for a size.
+        /// Serialized Name: AvailableLabServicesSku.locations
+        /// </param>
+        /// <param name="costs">
+        /// Metadata for retrieving price info of a lab services SKUs.
+        /// Serialized Name: AvailableLabServicesSku.costs
+        /// </param>
+        /// <param name="restrictions">
+        /// Restrictions of a lab services SKUs.
+        /// Serialized Name: AvailableLabServicesSku.restrictions
+        /// </param>
         internal AvailableLabServicesSku(string resourceType, string name, AvailableLabServicesSkuTier? tier, string size, string family, AvailableLabServicesSkuCapacity capacity, IReadOnlyList<AvailableLabServicesSkuCapabilities> capabilities, IReadOnlyList<string> locations, IReadOnlyList<AvailableLabServicesSkuCost> costs, IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
@@ -47,25 +80,55 @@ namespace Azure.ResourceManager.LabServices.Models
             Restrictions = restrictions;
         }
 
-        /// <summary> The lab services resource type. </summary>
+        /// <summary>
+        /// The lab services resource type.
+        /// Serialized Name: AvailableLabServicesSku.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> The name of the SKU. </summary>
+        /// <summary>
+        /// The name of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The tier of the SKU. </summary>
+        /// <summary>
+        /// The tier of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.tier
+        /// </summary>
         public AvailableLabServicesSkuTier? Tier { get; }
-        /// <summary> The SKU size. </summary>
+        /// <summary>
+        /// The SKU size.
+        /// Serialized Name: AvailableLabServicesSku.size
+        /// </summary>
         public string Size { get; }
-        /// <summary> The family of the SKU. </summary>
+        /// <summary>
+        /// The family of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.family
+        /// </summary>
         public string Family { get; }
-        /// <summary> The scale out/in options of the SKU. </summary>
+        /// <summary>
+        /// The scale out/in options of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.capacity
+        /// </summary>
         public AvailableLabServicesSkuCapacity Capacity { get; }
-        /// <summary> The capabilities of the SKU. </summary>
+        /// <summary>
+        /// The capabilities of the SKU.
+        /// Serialized Name: AvailableLabServicesSku.capabilities
+        /// </summary>
         public IReadOnlyList<AvailableLabServicesSkuCapabilities> Capabilities { get; }
-        /// <summary> List of locations that are available for a size. </summary>
+        /// <summary>
+        /// List of locations that are available for a size.
+        /// Serialized Name: AvailableLabServicesSku.locations
+        /// </summary>
         public IReadOnlyList<string> Locations { get; }
-        /// <summary> Metadata for retrieving price info of a lab services SKUs. </summary>
+        /// <summary>
+        /// Metadata for retrieving price info of a lab services SKUs.
+        /// Serialized Name: AvailableLabServicesSku.costs
+        /// </summary>
         public IReadOnlyList<AvailableLabServicesSkuCost> Costs { get; }
-        /// <summary> Restrictions of a lab services SKUs. </summary>
+        /// <summary>
+        /// Restrictions of a lab services SKUs.
+        /// Serialized Name: AvailableLabServicesSku.restrictions
+        /// </summary>
         public IReadOnlyList<AvailableLabServicesSkuRestrictions> Restrictions { get; }
     }
 }

@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Recurrence pattern of a lab schedule. </summary>
+    /// <summary>
+    /// Recurrence pattern of a lab schedule.
+    /// Serialized Name: RecurrencePattern
+    /// </summary>
     public partial class RecurrencePattern
     {
         /// <summary> Initializes a new instance of RecurrencePattern. </summary>
-        /// <param name="frequency"> The frequency of the recurrence. </param>
-        /// <param name="expireOn"> When the recurrence will expire. This date is inclusive. </param>
+        /// <param name="frequency">
+        /// The frequency of the recurrence.
+        /// Serialized Name: RecurrencePattern.frequency
+        /// </param>
+        /// <param name="expireOn">
+        /// When the recurrence will expire. This date is inclusive.
+        /// Serialized Name: RecurrencePattern.expirationDate
+        /// </param>
         public RecurrencePattern(RecurrenceFrequency frequency, DateTimeOffset expireOn)
         {
             Frequency = frequency;
@@ -25,10 +34,22 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of RecurrencePattern. </summary>
-        /// <param name="frequency"> The frequency of the recurrence. </param>
-        /// <param name="weekDays"> The week days the schedule runs. Used for when the Frequency is set to Weekly. </param>
-        /// <param name="interval"> The interval to invoke the schedule on. For example, interval = 2 and RecurrenceFrequency.Daily will run every 2 days. When no interval is supplied, an interval of 1 is used. </param>
-        /// <param name="expireOn"> When the recurrence will expire. This date is inclusive. </param>
+        /// <param name="frequency">
+        /// The frequency of the recurrence.
+        /// Serialized Name: RecurrencePattern.frequency
+        /// </param>
+        /// <param name="weekDays">
+        /// The week days the schedule runs. Used for when the Frequency is set to Weekly.
+        /// Serialized Name: RecurrencePattern.weekDays
+        /// </param>
+        /// <param name="interval">
+        /// The interval to invoke the schedule on. For example, interval = 2 and RecurrenceFrequency.Daily will run every 2 days. When no interval is supplied, an interval of 1 is used.
+        /// Serialized Name: RecurrencePattern.interval
+        /// </param>
+        /// <param name="expireOn">
+        /// When the recurrence will expire. This date is inclusive.
+        /// Serialized Name: RecurrencePattern.expirationDate
+        /// </param>
         internal RecurrencePattern(RecurrenceFrequency frequency, IList<WeekDay> weekDays, int? interval, DateTimeOffset expireOn)
         {
             Frequency = frequency;
@@ -37,13 +58,25 @@ namespace Azure.ResourceManager.LabServices.Models
             ExpireOn = expireOn;
         }
 
-        /// <summary> The frequency of the recurrence. </summary>
+        /// <summary>
+        /// The frequency of the recurrence.
+        /// Serialized Name: RecurrencePattern.frequency
+        /// </summary>
         public RecurrenceFrequency Frequency { get; set; }
-        /// <summary> The week days the schedule runs. Used for when the Frequency is set to Weekly. </summary>
+        /// <summary>
+        /// The week days the schedule runs. Used for when the Frequency is set to Weekly.
+        /// Serialized Name: RecurrencePattern.weekDays
+        /// </summary>
         public IList<WeekDay> WeekDays { get; }
-        /// <summary> The interval to invoke the schedule on. For example, interval = 2 and RecurrenceFrequency.Daily will run every 2 days. When no interval is supplied, an interval of 1 is used. </summary>
+        /// <summary>
+        /// The interval to invoke the schedule on. For example, interval = 2 and RecurrenceFrequency.Daily will run every 2 days. When no interval is supplied, an interval of 1 is used.
+        /// Serialized Name: RecurrencePattern.interval
+        /// </summary>
         public int? Interval { get; set; }
-        /// <summary> When the recurrence will expire. This date is inclusive. </summary>
+        /// <summary>
+        /// When the recurrence will expire. This date is inclusive.
+        /// Serialized Name: RecurrencePattern.expirationDate
+        /// </summary>
         public DateTimeOffset ExpireOn { get; set; }
     }
 }

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    internal partial class AvailableLabServicesSkuList
+    internal partial class LabServicesImageListResult
     {
-        internal static AvailableLabServicesSkuList DeserializeAvailableLabServicesSkuList(JsonElement element)
+        internal static LabServicesImageListResult DeserializeLabServicesImageListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AvailableLabServicesSku>> value = default;
+            Optional<IReadOnlyList<LabServicesImageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AvailableLabServicesSku> array = new List<AvailableLabServicesSku>();
+                    List<LabServicesImageData> array = new List<LabServicesImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item));
+                        array.Add(LabServicesImageData.DeserializeLabServicesImageData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new AvailableLabServicesSkuList(Optional.ToList(value), nextLink.Value);
+            return new LabServicesImageListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

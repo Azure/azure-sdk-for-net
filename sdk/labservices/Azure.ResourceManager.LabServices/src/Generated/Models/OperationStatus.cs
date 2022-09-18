@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The operation status. </summary>
+    /// <summary>
+    /// The operation status
+    /// Serialized Name: OperationStatus
+    /// </summary>
     public enum OperationStatus
     {
-        /// <summary> The operation has been accepted but hasn&apos;t started. </summary>
+        /// <summary>
+        /// The operation has been accepted but hasn&apos;t started.
+        /// Serialized Name: OperationStatus.NotStarted
+        /// </summary>
         NotStarted,
-        /// <summary> The operation is running. </summary>
+        /// <summary>
+        /// The operation is running
+        /// Serialized Name: OperationStatus.InProgress
+        /// </summary>
         InProgress,
-        /// <summary> The operation Succeeded. </summary>
+        /// <summary>
+        /// The operation Succeeded
+        /// Serialized Name: OperationStatus.Succeeded
+        /// </summary>
         Succeeded,
-        /// <summary> The operation failed. </summary>
+        /// <summary>
+        /// The operation failed
+        /// Serialized Name: OperationStatus.Failed
+        /// </summary>
         Failed,
-        /// <summary> Not supported yet. </summary>
+        /// <summary>
+        /// Not supported yet
+        /// Serialized Name: OperationStatus.Canceled
+        /// </summary>
         Canceled
     }
 }

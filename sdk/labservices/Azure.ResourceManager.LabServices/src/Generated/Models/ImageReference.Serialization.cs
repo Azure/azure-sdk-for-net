@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static ImageReference DeserializeImageReference(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> offer = default;
             Optional<string> publisher = default;
             Optional<string> sku = default;
@@ -55,7 +55,12 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("offer"))

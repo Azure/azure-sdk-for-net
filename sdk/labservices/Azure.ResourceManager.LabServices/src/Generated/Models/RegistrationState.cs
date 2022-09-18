@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> The user lab registration state. </summary>
+    /// <summary>
+    /// The user lab registration state.
+    /// Serialized Name: RegistrationState
+    /// </summary>
     public enum RegistrationState
     {
-        /// <summary> User has not yet registered with the lab. </summary>
+        /// <summary>
+        /// User has not yet registered with the lab.
+        /// Serialized Name: RegistrationState.Registered
+        /// </summary>
         Registered,
-        /// <summary> User has registered with the lab. </summary>
+        /// <summary>
+        /// User has registered with the lab.
+        /// Serialized Name: RegistrationState.NotRegistered
+        /// </summary>
         NotRegistered
     }
 }

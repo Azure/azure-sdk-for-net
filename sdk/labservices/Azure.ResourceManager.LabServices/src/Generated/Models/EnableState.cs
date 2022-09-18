@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Property enabled state. </summary>
+    /// <summary>
+    /// Property enabled state.
+    /// Serialized Name: EnableState
+    /// </summary>
     public enum EnableState
     {
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: EnableState.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: EnableState.Disabled
+        /// </summary>
         Disabled
     }
 }

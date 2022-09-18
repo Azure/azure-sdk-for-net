@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary> Connection profile for how users connect to lab virtual machines. </summary>
+    /// <summary>
+    /// Connection profile for how users connect to lab virtual machines.
+    /// Serialized Name: ConnectionProfile
+    /// </summary>
     public partial class ConnectionProfile
     {
         /// <summary> Initializes a new instance of ConnectionProfile. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionProfile. </summary>
-        /// <param name="webSshAccess"> The enabled access level for Web Access over SSH. </param>
-        /// <param name="webRdpAccess"> The enabled access level for Web Access over RDP. </param>
-        /// <param name="clientSshAccess"> The enabled access level for Client Access over SSH. </param>
-        /// <param name="clientRdpAccess"> The enabled access level for Client Access over RDP. </param>
+        /// <param name="webSshAccess">
+        /// The enabled access level for Web Access over SSH.
+        /// Serialized Name: ConnectionProfile.webSshAccess
+        /// </param>
+        /// <param name="webRdpAccess">
+        /// The enabled access level for Web Access over RDP.
+        /// Serialized Name: ConnectionProfile.webRdpAccess
+        /// </param>
+        /// <param name="clientSshAccess">
+        /// The enabled access level for Client Access over SSH.
+        /// Serialized Name: ConnectionProfile.clientSshAccess
+        /// </param>
+        /// <param name="clientRdpAccess">
+        /// The enabled access level for Client Access over RDP.
+        /// Serialized Name: ConnectionProfile.clientRdpAccess
+        /// </param>
         internal ConnectionProfile(ConnectionType? webSshAccess, ConnectionType? webRdpAccess, ConnectionType? clientSshAccess, ConnectionType? clientRdpAccess)
         {
             WebSshAccess = webSshAccess;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.LabServices.Models
             ClientRdpAccess = clientRdpAccess;
         }
 
-        /// <summary> The enabled access level for Web Access over SSH. </summary>
+        /// <summary>
+        /// The enabled access level for Web Access over SSH.
+        /// Serialized Name: ConnectionProfile.webSshAccess
+        /// </summary>
         public ConnectionType? WebSshAccess { get; set; }
-        /// <summary> The enabled access level for Web Access over RDP. </summary>
+        /// <summary>
+        /// The enabled access level for Web Access over RDP.
+        /// Serialized Name: ConnectionProfile.webRdpAccess
+        /// </summary>
         public ConnectionType? WebRdpAccess { get; set; }
-        /// <summary> The enabled access level for Client Access over SSH. </summary>
+        /// <summary>
+        /// The enabled access level for Client Access over SSH.
+        /// Serialized Name: ConnectionProfile.clientSshAccess
+        /// </summary>
         public ConnectionType? ClientSshAccess { get; set; }
-        /// <summary> The enabled access level for Client Access over RDP. </summary>
+        /// <summary>
+        /// The enabled access level for Client Access over RDP.
+        /// Serialized Name: ConnectionProfile.clientRdpAccess
+        /// </summary>
         public ConnectionType? ClientRdpAccess { get; set; }
     }
 }

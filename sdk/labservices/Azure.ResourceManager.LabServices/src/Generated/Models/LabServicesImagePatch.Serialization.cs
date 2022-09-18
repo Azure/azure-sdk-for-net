@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class ImagePatch : IUtf8JsonSerializable
+    public partial class LabServicesImagePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
