@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AddActionGroups : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleAddGroupsAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static AddActionGroups DeserializeAddActionGroups(JsonElement element)
+        internal static AlertProcessingRuleAddGroupsAction DeserializeAlertProcessingRuleAddGroupsAction(JsonElement element)
         {
             IList<ResourceIdentifier> actionGroupIds = default;
-            AlertProcessingActionType actionType = default;
+            AlertProcessingRuleActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroupIds"))
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (property.NameEquals("actionType"))
                 {
-                    actionType = new AlertProcessingActionType(property.Value.GetString());
+                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new AddActionGroups(actionType, actionGroupIds);
+            return new AlertProcessingRuleAddGroupsAction(actionType, actionGroupIds);
         }
     }
 }

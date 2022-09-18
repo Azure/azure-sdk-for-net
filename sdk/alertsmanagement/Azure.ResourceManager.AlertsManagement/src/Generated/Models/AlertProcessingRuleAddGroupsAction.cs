@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Add action groups to alert processing rule. </summary>
-    public partial class AddActionGroups : AlertProcessingAction
+    public partial class AlertProcessingRuleAddGroupsAction : AlertProcessingRuleAction
     {
-        /// <summary> Initializes a new instance of AddActionGroups. </summary>
+        /// <summary> Initializes a new instance of AlertProcessingRuleAddGroupsAction. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupIds"/> is null. </exception>
-        public AddActionGroups(IEnumerable<ResourceIdentifier> actionGroupIds)
+        public AlertProcessingRuleAddGroupsAction(IEnumerable<ResourceIdentifier> actionGroupIds)
         {
             if (actionGroupIds == null)
             {
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             ActionGroupIds = actionGroupIds.ToList();
-            ActionType = AlertProcessingActionType.AddActionGroups;
+            ActionType = AlertProcessingRuleActionType.AddActionGroups;
         }
 
-        /// <summary> Initializes a new instance of AddActionGroups. </summary>
+        /// <summary> Initializes a new instance of AlertProcessingRuleAddGroupsAction. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
-        internal AddActionGroups(AlertProcessingActionType actionType, IList<ResourceIdentifier> actionGroupIds) : base(actionType)
+        internal AlertProcessingRuleAddGroupsAction(AlertProcessingRuleActionType actionType, IList<ResourceIdentifier> actionGroupIds) : base(actionType)
         {
             ActionGroupIds = actionGroupIds;
             ActionType = actionType;

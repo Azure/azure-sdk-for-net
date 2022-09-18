@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Alert processing rule properties defining scopes, conditions and scheduling logic for alert processing rule. </summary>
-    public partial class ServiceAlertProcessingRuleProperties
+    public partial class AlertProcessingRuleProperties
     {
-        /// <summary> Initializes a new instance of ServiceAlertProcessingRuleProperties. </summary>
+        /// <summary> Initializes a new instance of AlertProcessingRuleProperties. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="actions">
         /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
+        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="actions"/> is null. </exception>
-        public ServiceAlertProcessingRuleProperties(IEnumerable<string> scopes, IEnumerable<AlertProcessingAction> actions)
+        public AlertProcessingRuleProperties(IEnumerable<string> scopes, IEnumerable<AlertProcessingRuleAction> actions)
         {
             if (scopes == null)
             {
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertProcessingRuleProperties. </summary>
+        /// <summary> Initializes a new instance of AlertProcessingRuleProperties. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="conditions"> Conditions on which alerts will be filtered. </param>
         /// <param name="schedule"> Scheduling for alert processing rule. </param>
         /// <param name="actions">
         /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
+        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
         /// </param>
         /// <param name="description"> Description of alert processing rule. </param>
         /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
-        internal ServiceAlertProcessingRuleProperties(IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingAction> actions, string description, bool? isEnabled)
+        internal AlertProcessingRuleProperties(IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? isEnabled)
         {
             Scopes = scopes;
             Conditions = conditions;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public AlertProcessingRuleSchedule Schedule { get; set; }
         /// <summary>
         /// Actions to be applied.
-        /// Please note <see cref="AlertProcessingAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
+        /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
         /// </summary>
-        public IList<AlertProcessingAction> Actions { get; }
+        public IList<AlertProcessingRuleAction> Actions { get; }
         /// <summary> Description of alert processing rule. </summary>
         public string Description { get; set; }
         /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
