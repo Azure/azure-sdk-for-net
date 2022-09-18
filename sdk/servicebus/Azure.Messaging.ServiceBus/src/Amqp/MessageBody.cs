@@ -91,11 +91,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (_lazySegments != null)
                     {
-                        foreach (var segment in _lazySegments)
-                        {
-                            Append(segment);
-                        }
-
+                        Append(_lazySegments);
                         _lazySegments = null;
                     }
 
@@ -108,15 +104,38 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return _segments?.GetEnumerator() ?? _lazySegments.GetEnumerator();
             }
 
-            private void Append(ReadOnlyMemory<byte> segment)
+            private void Append(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
             {
-                _writer ??= new ArrayBufferWriter<byte>();
-                _segments ??= new List<ReadOnlyMemory<byte>>();
+                int length = 0;
+                int numberOfSegments = 0;
+                List<ReadOnlyMemory<byte>> segments = null;
+                foreach (var segment in dataSegments)
+                {
+                    segments ??= dataSegments is IReadOnlyCollection<ReadOnlyMemory<byte>> readOnlyList
+                        ? new List<ReadOnlyMemory<byte>>(readOnlyList.Count)
+                        : new List<ReadOnlyMemory<byte>>();
+                    length += segment.Length;
+                    numberOfSegments++;
+                    segments.Add(segment);
+                }
 
-                var memory = _writer.GetMemory(segment.Length);
-                segment.CopyTo(memory);
-                _writer.Advance(segment.Length);
-                _segments.Add(memory.Slice(0, segment.Length));
+                if (segments == null)
+                {
+                    return;
+                }
+
+                // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
+                _writer = length > 0 ? new ArrayBufferWriter<byte>(length) : new ArrayBufferWriter<byte>();
+                _segments = segments;
+
+                for (var i = 0; i < numberOfSegments; i++)
+                {
+                    var dataToAppend = segments[i];
+                    var memory = _writer.GetMemory(dataToAppend.Length);
+                    dataToAppend.CopyTo(memory);
+                    _writer.Advance(dataToAppend.Length);
+                    segments[i] = memory.Slice(0, dataToAppend.Length);
+                }
             }
         }
 
