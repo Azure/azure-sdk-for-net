@@ -80,6 +80,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             private IList<ReadOnlyMemory<byte>> _segments;
             private IEnumerable<ReadOnlyMemory<byte>> _lazySegments;
 
+            internal CopyingOnConversionMessageBody(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
+            {
+                _lazySegments = dataSegments;
+            }
+
             protected override ReadOnlyMemory<byte> WrittenMemory
             {
                 get
@@ -98,9 +103,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
-            internal CopyingOnConversionMessageBody(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
+            public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
             {
-                _lazySegments = dataSegments;
+                return _segments?.GetEnumerator() ?? _lazySegments.GetEnumerator();
             }
 
             private void Append(ReadOnlyMemory<byte> segment)
@@ -112,11 +117,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 segment.CopyTo(memory);
                 _writer.Advance(segment.Length);
                 _segments.Add(memory.Slice(0, segment.Length));
-            }
-
-            public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
-            {
-                return _segments?.GetEnumerator() ?? _lazySegments.GetEnumerator();
             }
         }
 
