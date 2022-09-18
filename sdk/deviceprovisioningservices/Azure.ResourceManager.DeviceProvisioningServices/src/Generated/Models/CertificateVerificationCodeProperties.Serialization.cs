@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         {
             Optional<string> verificationCode = default;
             Optional<string> subject = default;
-            Optional<string> expiry = default;
-            Optional<string> thumbprint = default;
+            Optional<DateTimeOffset> expiry = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<bool> isVerified = default;
-            Optional<byte[]> certificate = default;
-            Optional<string> created = default;
-            Optional<string> updated = default;
+            Optional<BinaryData> certificate = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verificationCode"))
@@ -37,12 +37,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (property.NameEquals("expiry"))
                 {
-                    expiry = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expiry = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
                 if (property.NameEquals("thumbprint"))
                 {
-                    thumbprint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("isVerified"))
@@ -62,21 +72,31 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    certificate = property.Value.GetBytesFromBase64("D");
+                    certificate = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("created"))
                 {
-                    created = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
                 if (property.NameEquals("updated"))
                 {
-                    updated = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    updated = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
             }
-            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, expiry.Value, thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, created.Value, updated.Value);
+            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated));
         }
     }
 }

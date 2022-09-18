@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> Description of the shared access key. </summary>
-    public partial class SharedAccessSignatureAuthorizationRuleAccessRightsDescription
+    public partial class DeviceProvisioningServicesSharedAccessKey
     {
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleAccessRightsDescription. </summary>
+        /// <summary> Initializes a new instance of DeviceProvisioningServicesSharedAccessKey. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="rights"> Rights that this key has. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, DeviceProvisioningServicesAccessKeyRight rights)
+        public DeviceProvisioningServicesSharedAccessKey(string keyName, DeviceProvisioningServicesAccessKeyRight rights)
         {
             if (keyName == null)
             {
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Rights = rights;
         }
 
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleAccessRightsDescription. </summary>
+        /// <summary> Initializes a new instance of DeviceProvisioningServicesSharedAccessKey. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="primaryKey"> Primary SAS key value. </param>
         /// <param name="secondaryKey"> Secondary SAS key value. </param>
         /// <param name="rights"> Rights that this key has. </param>
-        internal SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, string primaryKey, string secondaryKey, DeviceProvisioningServicesAccessKeyRight rights)
+        internal DeviceProvisioningServicesSharedAccessKey(string keyName, string primaryKey, string secondaryKey, DeviceProvisioningServicesAccessKeyRight rights)
         {
             KeyName = keyName;
             PrimaryKey = primaryKey;
