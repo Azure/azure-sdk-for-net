@@ -523,6 +523,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             public Func<ServiceBusMessage, AmqpMessage> BuildAmqpMessageFromSBMessageHandler = (_s) => Mock.Of<AmqpMessage>();
             public Func<IEnumerable<ServiceBusMessage>, bool, AmqpMessage> BuildBatchFromSBMessagesHandler = (_s, _f) => Mock.Of<AmqpMessage>();
             public Func<IEnumerable<AmqpMessage>, AmqpMessage> BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>();
+
+            public InjectableMockConverter(bool trackBodies = false) : base(trackBodies)
+            {
+            }
+
             public override AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage source) => BuildAmqpMessageFromSBMessageHandler(source);
             public override AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, bool forceBatch) => BuildBatchFromAmqpMessagesHandler(source);
             public override AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);

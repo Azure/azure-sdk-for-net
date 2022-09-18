@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _messageConverter = AmqpMessageConverter.Default;
+            _messageConverter = AmqpMessageConverter.NonTrackingDefault;
 
             ServiceEndpoint = new UriBuilder
             {
@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 sessionId,
                 isSessionReceiver,
                 isProcessor,
-                _messageConverter,
+                new AmqpMessageConverter(true),
                 cancellationToken
             );
         }

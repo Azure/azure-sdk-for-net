@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
@@ -27,7 +28,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessageConverter Default = new AmqpMessageConverter();
+        private ConditionalWeakTable<AmqpMessageBody, MessageBody> messageBodyTracking;
+
+        public static readonly AmqpMessageConverter NonTrackingDefault = new AmqpMessageConverter();
+
+        public AmqpMessageConverter() : this(false)
+        {
+        }
+
+        public AmqpMessageConverter(bool trackBodies = false)
+        {
+            if (trackBodies)
+            {
+                messageBodyTracking = new ConditionalWeakTable<AmqpMessageBody, MessageBody>();
+            }
+        }
 
         public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
         {
@@ -328,7 +343,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(MessageBody.FromDataSegments(amqpMessage.DataBody)));
+                // TBD just doing it here without a feature flag for the hack
+                var messageBody = MessageBody.FromDataSegments(amqpMessage.DataBody, messageBodyTracking != null);
+                var amqpMessageBody = AmqpMessageBody.FromData(messageBody);
+                annotatedMessage = new AmqpAnnotatedMessage(amqpMessageBody);
+                messageBodyTracking?.Add(amqpMessageBody, messageBody);
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {

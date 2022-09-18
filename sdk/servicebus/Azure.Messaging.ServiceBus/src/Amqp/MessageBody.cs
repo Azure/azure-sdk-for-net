@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new NonCopyingSingleSegmentMessageBody(segment);
         }
 
-        public static MessageBody FromDataSegments(IEnumerable<Data> segments)
+        public static MessageBody FromDataSegments(IEnumerable<Data> segments, bool bufferBody = false)
         {
-            return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
+            IEnumerable<Data> dataSegments = segments ?? Enumerable.Empty<Data>();
+            return bufferBody
+                ? new EagerCopyingMessageBodyWithPooling(dataSegments)
+                : new EagerCopyingMessageBody(dataSegments);
         }
 
         protected abstract ReadOnlyMemory<byte> WrittenMemory { get; }
@@ -197,6 +201,82 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     _writer.Advance(dataToAppend.Length);
                     segments[i] = memory.Slice(0, dataToAppend.Length);
                 }
+            }
+        }
+
+        /// <summary>
+        /// TBD because hack
+        /// </summary>
+        private sealed class EagerCopyingMessageBodyWithPooling : MessageBody
+        {
+            private byte[] _buffer;
+            private IList<ReadOnlyMemory<byte>> _segments;
+
+            ~EagerCopyingMessageBodyWithPooling()
+            {
+                if (_buffer == null)
+                {
+                    return;
+                }
+
+                ArrayPool<byte>.Shared.Return(_buffer);
+                _buffer = null;
+            }
+
+            internal EagerCopyingMessageBodyWithPooling(IEnumerable<Data> dataSegments)
+            {
+                WrittenMemory = ToReadonlyMemory(dataSegments);
+            }
+
+            protected override ReadOnlyMemory<byte> WrittenMemory { get; }
+
+            public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
+            {
+                return _segments.GetEnumerator();
+            }
+
+            private ReadOnlyMemory<byte> ToReadonlyMemory(IEnumerable<Data> dataSegments)
+            {
+                int length = 0;
+                int numberOfSegments = 0;
+                List<ReadOnlyMemory<byte>> segments = null;
+                foreach (var segment in dataSegments)
+                {
+                    segments ??= dataSegments is IReadOnlyCollection<Data> readOnlyList
+                        ? new List<ReadOnlyMemory<byte>>(readOnlyList.Count)
+                        : new List<ReadOnlyMemory<byte>>();
+                    ReadOnlyMemory<byte> dataToAppend = segment.Value switch
+                    {
+                        byte[] byteArray => byteArray,
+                        ArraySegment<byte> arraySegment => arraySegment,
+                        _ => ReadOnlyMemory<byte>.Empty
+                    };
+                    length += dataToAppend.Length;
+                    numberOfSegments++;
+                    segments.Add(dataToAppend);
+                }
+
+                if (segments == null)
+                {
+                    return ReadOnlyMemory<byte>.Empty;
+                }
+
+                // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
+                // TBD more explanation here why not returned
+                _buffer = ArrayPool<byte>.Shared.Rent(length);
+                _segments = segments;
+
+                var bytesWritten = 0;
+                for (var i = 0; i < numberOfSegments; i++)
+                {
+                    var dataToAppend = segments[i];
+                    var memory = _buffer.AsMemory(bytesWritten, dataToAppend.Length);
+                    dataToAppend.CopyTo(memory);
+                    bytesWritten += dataToAppend.Length;
+                    segments[i] = memory;
+                }
+
+                return _buffer.AsMemory(0, bytesWritten);
             }
         }
     }
