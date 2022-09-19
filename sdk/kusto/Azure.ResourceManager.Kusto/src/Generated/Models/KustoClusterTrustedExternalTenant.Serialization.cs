@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class TrustedExternalTenant : IUtf8JsonSerializable
+    public partial class KustoClusterTrustedExternalTenant : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteEndObject();
         }
 
-        internal static TrustedExternalTenant DeserializeTrustedExternalTenant(JsonElement element)
+        internal static KustoClusterTrustedExternalTenant DeserializeKustoClusterTrustedExternalTenant(JsonElement element)
         {
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new TrustedExternalTenant(value.Value);
+            return new KustoClusterTrustedExternalTenant(value.Value);
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The list of language extension objects. </summary>
-    public partial class LanguageExtensionList
+    public partial class KustoLanguageExtensionList
     {
-        /// <summary> Initializes a new instance of LanguageExtensionList. </summary>
-        public LanguageExtensionList()
+        /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
+        public KustoLanguageExtensionList()
         {
-            Value = new ChangeTrackingList<LanguageExtension>();
+            Value = new ChangeTrackingList<KustoLanguageExtension>();
         }
 
-        /// <summary> Initializes a new instance of LanguageExtensionList. </summary>
+        /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
         /// <param name="value"> The list of language extensions. </param>
-        internal LanguageExtensionList(IList<LanguageExtension> value)
+        internal KustoLanguageExtensionList(IList<KustoLanguageExtension> value)
         {
             Value = value;
         }
 
         /// <summary> The list of language extensions. </summary>
-        public IList<LanguageExtension> Value { get; }
+        public IList<KustoLanguageExtension> Value { get; }
     }
 }
