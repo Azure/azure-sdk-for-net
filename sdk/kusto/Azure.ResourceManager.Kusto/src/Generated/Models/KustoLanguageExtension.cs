@@ -8,21 +8,21 @@
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The language extension object. </summary>
-    public partial class LanguageExtension
+    public partial class KustoLanguageExtension
     {
-        /// <summary> Initializes a new instance of LanguageExtension. </summary>
-        public LanguageExtension()
+        /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
+        public KustoLanguageExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of LanguageExtension. </summary>
+        /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
         /// <param name="languageExtensionName"> The language extension name. </param>
-        internal LanguageExtension(LanguageExtensionName? languageExtensionName)
+        internal KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName)
         {
             LanguageExtensionName = languageExtensionName;
         }
 
         /// <summary> The language extension name. </summary>
-        public LanguageExtensionName? LanguageExtensionName { get; set; }
+        public KustoLanguageExtensionName? LanguageExtensionName { get; set; }
     }
 }

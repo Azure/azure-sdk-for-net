@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class LanguageExtensionList : IUtf8JsonSerializable
+    public partial class KustoLanguageExtensionList : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteEndObject();
         }
 
-        internal static LanguageExtensionList DeserializeLanguageExtensionList(JsonElement element)
+        internal static KustoLanguageExtensionList DeserializeKustoLanguageExtensionList(JsonElement element)
         {
-            Optional<IList<LanguageExtension>> value = default;
+            Optional<IList<KustoLanguageExtension>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LanguageExtension> array = new List<LanguageExtension>();
+                    List<KustoLanguageExtension> array = new List<KustoLanguageExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LanguageExtension.DeserializeLanguageExtension(item));
+                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new LanguageExtensionList(Optional.ToList(value));
+            return new KustoLanguageExtensionList(Optional.ToList(value));
         }
     }
 }

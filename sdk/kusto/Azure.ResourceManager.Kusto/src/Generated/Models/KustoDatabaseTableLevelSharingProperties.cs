@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Tables that will be included and excluded in the follower database. </summary>
-    public partial class TableLevelSharingProperties
+    public partial class KustoDatabaseTableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
-        public TableLevelSharingProperties()
+        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
+        public KustoDatabaseTableLevelSharingProperties()
         {
             TablesToInclude = new ChangeTrackingList<string>();
             TablesToExclude = new ChangeTrackingList<string>();
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Kusto.Models
             MaterializedViewsToExclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
         /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
         /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
         /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>
         /// <param name="externalTablesToExclude"> List of external tables exclude from the follower database. </param>
         /// <param name="materializedViewsToInclude"> List of materialized views to include in the follower database. </param>
         /// <param name="materializedViewsToExclude"> List of materialized views exclude from the follower database. </param>
-        internal TableLevelSharingProperties(IList<string> tablesToInclude, IList<string> tablesToExclude, IList<string> externalTablesToInclude, IList<string> externalTablesToExclude, IList<string> materializedViewsToInclude, IList<string> materializedViewsToExclude)
+        internal KustoDatabaseTableLevelSharingProperties(IList<string> tablesToInclude, IList<string> tablesToExclude, IList<string> externalTablesToInclude, IList<string> externalTablesToExclude, IList<string> materializedViewsToInclude, IList<string> materializedViewsToExclude)
         {
             TablesToInclude = tablesToInclude;
             TablesToExclude = tablesToExclude;

@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Represents a tenant ID that is trusted by the cluster. </summary>
-    public partial class TrustedExternalTenant
+    public partial class KustoClusterTrustedExternalTenant
     {
-        /// <summary> Initializes a new instance of TrustedExternalTenant. </summary>
-        public TrustedExternalTenant()
+        /// <summary> Initializes a new instance of KustoClusterTrustedExternalTenant. </summary>
+        public KustoClusterTrustedExternalTenant()
         {
         }
 
-        /// <summary> Initializes a new instance of TrustedExternalTenant. </summary>
+        /// <summary> Initializes a new instance of KustoClusterTrustedExternalTenant. </summary>
         /// <param name="value"> GUID representing an external tenant. </param>
-        internal TrustedExternalTenant(string value)
+        internal KustoClusterTrustedExternalTenant(string value)
         {
             Value = value;
         }
