@@ -84,11 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(ProtectedSettingsFromKeyVault);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

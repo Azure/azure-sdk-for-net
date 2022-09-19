@@ -158,6 +158,7 @@ namespace Azure.ResourceManager.Compute
             Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
             Optional<string> provisioningState = default;
             Optional<bool> incremental = default;
+            Optional<string> incrementalSnapshotFamilyId = default;
             Optional<DiskEncryption> encryption = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
             Optional<ResourceIdentifier> diskAccessId = default;
@@ -368,6 +369,11 @@ namespace Azure.ResourceManager.Compute
                             incremental = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("incrementalSnapshotFamilyId"))
+                        {
+                            incrementalSnapshotFamilyId = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("encryption"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -462,7 +468,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode));
+            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), incrementalSnapshotFamilyId.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode));
         }
     }
 }

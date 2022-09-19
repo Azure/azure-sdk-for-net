@@ -123,6 +123,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dataAccessAuthMode");
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
+            if (Optional.IsDefined(OptimizedForFrequentAttach))
+            {
+                writer.WritePropertyName("optimizedForFrequentAttach");
+                writer.WriteBooleanValue(OptimizedForFrequentAttach.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

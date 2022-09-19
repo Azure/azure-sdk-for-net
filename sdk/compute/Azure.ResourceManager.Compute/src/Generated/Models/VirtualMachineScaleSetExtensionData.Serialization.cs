@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -86,11 +87,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(ProtectedSettingsFromKeyVault);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -113,7 +110,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> provisioningState = default;
             Optional<IList<string>> provisionAfterExtensions = default;
             Optional<bool> suppressFailures = default;
-            Optional<BinaryData> protectedSettingsFromKeyVault = default;
+            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -247,7 +244,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = BinaryData.FromString(property0.Value.GetRawText());
+                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value);
                             continue;
                         }
                     }

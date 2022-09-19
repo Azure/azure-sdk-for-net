@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeSku Sku { get; set; }
         /// <summary> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </summary>
         public string ReservationId { get; }
+        /// <summary> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size.&lt;br&gt;NOTE: The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-08-01. </summary>
+        public int? PlatformFaultDomainCount { get; }
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
         public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The date time when the capacity reservation was last updated. </summary>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ProvisioningState { get; }
         /// <summary> The Capacity reservation instance view. </summary>
         public CapacityReservationInstanceView InstanceView { get; }
-        /// <summary> Specifies the time at which the Capacity Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        /// <summary> Specifies the time at which the Capacity Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated { get; }
     }
 }

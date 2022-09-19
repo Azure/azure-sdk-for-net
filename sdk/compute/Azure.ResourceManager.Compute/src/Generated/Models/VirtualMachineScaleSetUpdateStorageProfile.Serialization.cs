@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DiskControllerType))
+            {
+                writer.WritePropertyName("diskControllerType");
+                writer.WriteStringValue(DiskControllerType);
+            }
             writer.WriteEndObject();
         }
     }
