@@ -6,6 +6,7 @@
 
 - Verify the challenge resource matches the vault domain.
   This should affect few customers who can set `KeyVaultAdministrationClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.1.0 (2022-03-24)
 
