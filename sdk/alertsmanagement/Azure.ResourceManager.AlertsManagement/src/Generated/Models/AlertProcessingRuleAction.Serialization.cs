@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingAction : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingAction DeserializeAlertProcessingAction(JsonElement element)
+        internal static AlertProcessingRuleAction DeserializeAlertProcessingRuleAction(JsonElement element)
         {
             if (element.TryGetProperty("actionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AddActionGroups": return AddActionGroups.DeserializeAddActionGroups(element);
-                    case "RemoveAllActionGroups": return RemoveAllActionGroups.DeserializeRemoveAllActionGroups(element);
+                    case "AddActionGroups": return AlertProcessingRuleAddGroupsAction.DeserializeAlertProcessingRuleAddGroupsAction(element);
+                    case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element);
                 }
             }
-            AlertProcessingActionType actionType = default;
+            AlertProcessingRuleActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"))
                 {
-                    actionType = new AlertProcessingActionType(property.Value.GetString());
+                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownAlertProcessingAction(actionType);
+            return new UnknownAlertProcessingRuleAction(actionType);
         }
     }
 }

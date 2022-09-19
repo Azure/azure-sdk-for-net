@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertProcessingRuleProperties : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceAlertProcessingRuleProperties DeserializeServiceAlertProcessingRuleProperties(JsonElement element)
+        internal static AlertProcessingRuleProperties DeserializeAlertProcessingRuleProperties(JsonElement element)
         {
             IList<string> scopes = default;
             Optional<IList<AlertProcessingRuleCondition>> conditions = default;
             Optional<AlertProcessingRuleSchedule> schedule = default;
-            IList<AlertProcessingAction> actions = default;
+            IList<AlertProcessingRuleAction> actions = default;
             Optional<string> description = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (property.NameEquals("actions"))
                 {
-                    List<AlertProcessingAction> array = new List<AlertProcessingAction>();
+                    List<AlertProcessingRuleAction> array = new List<AlertProcessingRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingAction.DeserializeAlertProcessingAction(item));
+                        array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item));
                     }
                     actions = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertProcessingRuleProperties(scopes, Optional.ToList(conditions), schedule.Value, actions, description.Value, Optional.ToNullable(enabled));
+            return new AlertProcessingRuleProperties(scopes, Optional.ToList(conditions), schedule.Value, actions, description.Value, Optional.ToNullable(enabled));
         }
     }
 }
