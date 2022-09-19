@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
             CompareBodies = false; //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30865
         }
@@ -113,33 +113,6 @@ namespace Azure.Monitor.Ingestion.Tests
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
             Assert.AreEqual(0, response.Value.Errors.Count());
-        }
-
-        [Test]
-        public async Task ValidInputFromObjectAsJsonNoBatchingAsync()
-        {
-             LogsIngestionClient client = CreateClient();
-
-            BinaryData data = BinaryData.FromObjectAsJson(
-                // Use an anonymous type to create the payload
-                new[] {
-                    new
-                    {
-                        Time = Recording.Now.DateTime,
-                        Computer = "Computer1",
-                        AdditionalContext = 2,
-                    },
-                    new
-                    {
-                        Time = Recording.Now.DateTime,
-                        Computer = "Computer2",
-                        AdditionalContext = 3
-                    },
-                });
-
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
-            // Check the response
-            Assert.AreEqual(204, response.Status);
         }
 
         [LiveOnly]
