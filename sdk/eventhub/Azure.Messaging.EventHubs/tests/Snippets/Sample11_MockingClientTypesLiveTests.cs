@@ -32,24 +32,141 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
+        public async Task MockingProducerProperties()
+        {
+            #region Snippet:EventHubs_Sample11_MockingProducerProperties
+
+            // The first part of this snippet demonstrates mocking EventHubProperties on an EventHubProducerClient. Properties on
+            // EventHubBufferedProducerClients and EventHubConsumerClients can be mocked in the same way.
+
+            Mock<EventHubProducerClient> mockProducer = new();
+
+            // Here we are defining the set of partition identifiers we want for our testing scenario.
+
+            List<string> producerPartitions = new() { "0", "1" };
+
+            // Using the model factory, this call creates a mock of the EventHubProperties.
+
+            EventHubProperties eventHubProperties =
+                EventHubsModelFactory.EventHubProperties(
+                    name: "fakeEventHubName",
+                    createdOn: DateTimeOffset.UtcNow, // arbitrary value
+                    partitionIds: producerPartitions.ToArray());
+
+            // This sets up GetEventHubPropertiesAsync to return the mocked Event Hub properties above.
+
+            mockProducer
+                .Setup(p => p.GetEventHubPropertiesAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(eventHubProperties);
+
+            // This sets up GetPartitionIdsAsync to return the mocked partition Ids above.
+
+            mockProducer
+                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(producerPartitions.ToArray());
+
+            EventHubProducerClient producer = mockProducer.Object;
+
+            // Here we are demonstrating how to access the mocked EventHubProperties for illustrative purposes.
+
+            EventHubProperties properties = await producer.GetEventHubPropertiesAsync();
+            string eventHubName = properties.Name;
+            Debug.WriteLine($"Sending Events to: {eventHubName}");
+
+            // The second half of this snippet demonstrates mocking PartitionProperties on an EventHubBufferedProducerClient, which
+            // again can be done in the same way for the EventHubProducerClient and EventHubConsumerClient types.
+
+            Mock<EventHubBufferedProducerClient> bufferedProducerMock = new();
+
+            // This creates the set of partitions to mock for this test, and mocks the PartitionProperty instances using the model
+            // factory.
+
+            Dictionary<string, PartitionProperties> partitionProperties = new()
+            {
+                // Non-empty partition
+                { "0", EventHubsModelFactory.PartitionProperties(
+                    eventHubName : "eventhub-name",
+                    partitionId : "0",
+                    isEmpty : true,
+                    beginningSequenceNumber: 1000,
+                    lastSequenceNumber : 1100,
+                    lastOffset : 500,
+                    lastEnqueuedTime : DateTime.UtcNow) },
+
+                // Empty partition
+                { "1", EventHubsModelFactory.PartitionProperties(
+                    eventHubName : "eventhub-name",
+                    partitionId : "1",
+                    isEmpty : false,
+                    beginningSequenceNumber : 2000,
+                    lastSequenceNumber : 2000,
+                    lastOffset : 760,
+                    lastEnqueuedTime : DateTime.UtcNow) }
+            };
+
+            // This sets up GetPartitionIdsAsync to return the set of partition Ids mocked above.
+
+            bufferedProducerMock
+                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitionProperties.Keys.ToArray());
+
+            // This sets up GetPartitionPropertiesAsync to return the mocked PartitionProperties for each partition Id input.
+
+            foreach (KeyValuePair<string, PartitionProperties> partition in partitionProperties)
+            {
+                bufferedProducerMock
+                    .Setup(p => p.GetPartitionPropertiesAsync(
+                        partition.Key,
+                        It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(partition.Value);
+            }
+
+            // The rest of the snippet demonstrates how to use the mocked partition Ids and PartitionProperties. This would be
+            // where application code utilizing the mocked methods could be called and verified.
+
+            EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
+
+            CancellationTokenSource cancellationTokenSource = new();
+
+            // This gets all the partition Ids and arbitrarily takes the first partition Id.
+
+            string[] partitionIds = await bufferedProducer.GetPartitionIdsAsync(cancellationTokenSource.Token);
+            string partitionId = partitionIds[0];
+
+            // This gets the partition properties for the first partition Id.
+
+            PartitionProperties firstPartitionProperties =
+                await bufferedProducer.GetPartitionPropertiesAsync(partitionId, cancellationTokenSource.Token);
+
+            string isPartitionEmpty = firstPartitionProperties.IsEmpty.ToString();
+
+            Debug.WriteLine($"Sending Events to: {isPartitionEmpty}");
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task MockingEventDataBatch()
         {
             #region Snippet:EventHubs_Sample11_MockingEventDataBatch
 
             Mock<EventHubProducerClient> mockProducer = new();
 
-            // This sets the value returned by the EventDataBatch when accessing the Size property,
-            // it does not impact TryAdd on the mocked batch.
+            // This argument sets the value returned by the EventDataBatch when accessing the Size property, it does
+            // not impact TryAdd on the mocked batch.
 
             long batchSizeInBytes = 500;
 
-            // Events added to the batch will be added here, but altering the events in this list will not change the
-            // events in the batch, since they are stored inside the batch as well.
+            // As events are added to the batch they will be added to this listas well. Altering the events in this
+            // list will not change the events in the batch though, since they are stored inside the batch as well.
 
             List<EventData> backingList = new();
 
-            // For illustrative purposes, this is the number of events that the batch will contain,
-            // returning false from TryAdd for any additional calls.
+            // For illustrative purposes, this is the number of events that the batch will contain, returning false
+            // from TryAdd for any additional calls.
 
             int batchCountThreshold = 3;
 
@@ -57,8 +174,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     batchSizeBytes : batchSizeInBytes,
                     batchEventStore : backingList,
                     batchOptions : new CreateBatchOptions(),
-                    // The model factory allows the user to define a custom TryAdd callback, allowing
-                    // control of what events the batch accepts.
+                    // The model factory allows the user to define a custom TryAdd callback, allowing control of what
+                    // events the batch accepts.
                     eventData =>
                     {
                         int eventCount = backingList.Count();
@@ -71,8 +188,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 .Setup(p => p.CreateBatchAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dataBatchMock);
 
-            // Here we are mocking the SendAsync method so that it will throw an exception if the batch passed
-            // into it is not the one we are expecting to send.
+            // Here we are mocking the SendAsync method so it will throw an exception if the batch passed into it is
+            // not the one we are expecting to send.
 
             mockProducer
                 .Setup(p => p.SendAsync(
@@ -82,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             EventHubProducerClient producer = mockProducer.Object;
 
-            // The rest of this snippet demonstrates how to use the mocked methods. This would be where
+            // The rest of this snippet demonstrates how to use the mocked methods define above. This would be where
             // application methods can be called and tested.
 
             EventDataBatch batch = await producer.CreateBatchAsync();
@@ -104,14 +221,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 Assert.True(batch.TryAdd(eventData));
             }
 
-            // Since there area already batchCountThreshold number of events in the batch, this event will be
-            // rejected from the batch.
+            // Since there area already batchCountThreshold number of events in the batch, this event will be rejected
+            // from the batch.
 
             EventData eventData4 = new EventData("Sample-Event-4-will-fail");
             Assert.IsFalse(batch.TryAdd(eventData4));
 
-            // For illustrative purposes we are calling SendAsync. This call would likely already be inside the application-
-            // defined method being tested.
+            // For illustrative purposes we are calling SendAsync. This call would likely already be inside the
+            // application-defined method being tested.
 
             await producer.SendAsync(batch);
 
@@ -123,8 +240,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
-            // For illustrative purposes, check that the events in the batch match what the application expects
-            // to have added.
+            // For illustrative purposes, check that the events in the batch match what the application expects to have
+            // added.
 
             foreach (EventData eventData in backingList)
             {
@@ -152,7 +269,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
 
-            // The following demonstrates how to use the mocked EnqueueEventAsync. This would be where application
+            // The following demonstrates how to use the mocked EnqueueEventAsync. This would be where application-defined
             // methods can be called and tested.
 
             // This is an illustrative fail handler that can be added to the mock buffered producer.
@@ -181,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 await bufferedProducer.EnqueueEventAsync(eventToEnqueue, cancellationTokenSource.Token);
             }
 
-            // This demonstrates how to verify that EnqueueEventAsync was called the correct number of times,
+            // This shows how to verify that EnqueueEventAsync was called the correct number of times,
             // with the expected arguments.
 
             for (int index = 0; index < numOfEventsToEnqueue; index++)
@@ -210,128 +327,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             // The expected outcome of any application-specific complex processing can be asserted here.
 
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task MockingProducerProperties()
-        {
-            #region Snippet:EventHubs_Sample11_MockingProducerProperties
-
-            // The first part of this snippet demonstrates mocking EventHubProperties on
-            // an EventHubProducerClient. This same method can be used with EventHubBufferedProducerClients
-            // and EventHubConsumerClients as well.
-
-            Mock<EventHubProducerClient> mockProducer = new();
-
-            // Here we are defining the set of partitions we want for our testing scenario.
-
-            List<string> producerPartitions = new() { "0", "1" };
-
-            // Using the model factory, this call creates a mock of the EventHubProperties.
-
-            EventHubProperties eventHubProperties =
-                EventHubsModelFactory.EventHubProperties(
-                    name: "fakeEventHubName",
-                    createdOn: DateTimeOffset.UtcNow, // arbitrary value
-                    partitionIds: producerPartitions.ToArray());
-
-            // This sets up GetEventHubPropertiesAsync to return the mocked Event Hub properties above.
-
-            mockProducer
-                .Setup(p => p.GetEventHubPropertiesAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(eventHubProperties);
-
-            // This sets up GetPartitionIdsAsync to return the mocked partition Ids above.
-
-            mockProducer
-                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(producerPartitions.ToArray());
-
-            EventHubProducerClient producer = mockProducer.Object;
-
-            // Here we are demonstrating how to access the mocked EventHubProperties for illustrative
-            // purposes.
-
-            EventHubProperties properties = await producer.GetEventHubPropertiesAsync();
-            string eventHubName = properties.Name;
-            Debug.WriteLine($"Sending Events to: {eventHubName}");
-
-            // The second part of this snippet demonstrates mocking PartitionProperties on an
-            // EventHubBufferedProducerClient, which again can be done in the same way for the
-            // EventHubProducerClient and EventHubConsumerClient types.
-
-            Mock<EventHubBufferedProducerClient> bufferedProducerMock = new();
-
-            // This creates the set of partitions to mock for this test, and mocks the PartitionProperty
-            // instances using the model factory.
-
-            Dictionary<string, PartitionProperties> partitionProperties = new()
-            {
-                // Non-empty partition
-                { "0", EventHubsModelFactory.PartitionProperties(
-                    eventHubName : "eventhub-name",
-                    partitionId : "0",
-                    isEmpty : true,
-                    beginningSequenceNumber: 1000,
-                    lastSequenceNumber : 1100,
-                    lastOffset : 500,
-                    lastEnqueuedTime : DateTime.UtcNow) },
-
-                // Empty partition
-                { "1", EventHubsModelFactory.PartitionProperties(
-                    eventHubName : "eventhub-name",
-                    partitionId : "1",
-                    isEmpty : false,
-                    beginningSequenceNumber : 2000,
-                    lastSequenceNumber : 2000,
-                    lastOffset : 760,
-                    lastEnqueuedTime : DateTime.UtcNow) }
-            };
-
-            // This sets up GetPartitionIdsAsync to return the set of partition Ids mocked
-            // above.
-
-            bufferedProducerMock
-                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(partitionProperties.Keys.ToArray());
-
-            // This sets up GetPartitionPropertiesAsync to return the right PartitionProperties
-            // mock for each partition Id input.
-
-            foreach (KeyValuePair<string, PartitionProperties> partition in partitionProperties)
-            {
-                bufferedProducerMock
-                    .Setup(p => p.GetPartitionPropertiesAsync(
-                        partition.Key,
-                        It.IsAny<CancellationToken>()))
-                    .ReturnsAsync(partition.Value);
-            }
-
-            // The following demonstrates how to use the mocked partition Ids and PartitionProperties. This would be
-            // where application code utilizing the mocked methods could be called and verified.
-
-            EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
-
-            CancellationTokenSource cancellationTokenSource = new();
-
-            // This gets all the partition Ids and arbitrarily takes the first partition Id.
-
-            string[] partitionIds = await bufferedProducer.GetPartitionIdsAsync(cancellationTokenSource.Token);
-            string partitionId = partitionIds[0];
-
-            // This gets the partition properties for the first partition Id.
-
-            PartitionProperties firstPartitionProperties =
-                await bufferedProducer.GetPartitionPropertiesAsync(partitionId, cancellationTokenSource.Token);
-
-            string isPartitionEmpty = firstPartitionProperties.IsEmpty.ToString();
-
-            Debug.WriteLine($"Sending Events to: {isPartitionEmpty}");
             #endregion
         }
 
