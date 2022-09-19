@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Healthbot
 }
 namespace Azure.ResourceManager.Healthbot.Models
 {
+    public partial class HealthBotKeyVaultProperties
+    {
+        public HealthBotKeyVaultProperties(string keyName, System.Uri keyVaultUri) { }
+        public string KeyName { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public string KeyVersion { get { throw null; } set { } }
+        public string UserIdentity { get { throw null; } set { } }
+    }
     public partial class HealthBotPatch
     {
         public HealthBotPatch() { }
@@ -66,8 +74,8 @@ namespace Azure.ResourceManager.Healthbot.Models
     public partial class HealthBotProperties
     {
         public HealthBotProperties() { }
-        public string BotManagementPortalLink { get { throw null; } }
-        public Azure.ResourceManager.Healthbot.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        public System.Uri BotManagementPortalLink { get { throw null; } }
+        public Azure.ResourceManager.Healthbot.Models.HealthBotKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
     public partial class HealthbotSku
@@ -80,13 +88,5 @@ namespace Azure.ResourceManager.Healthbot.Models
         F0 = 0,
         S1 = 1,
         C0 = 2,
-    }
-    public partial class KeyVaultProperties
-    {
-        public KeyVaultProperties(string keyName, System.Uri keyVaultUri) { }
-        public string KeyName { get { throw null; } set { } }
-        public System.Uri KeyVaultUri { get { throw null; } set { } }
-        public string KeyVersion { get { throw null; } set { } }
-        public string UserIdentity { get { throw null; } set { } }
     }
 }

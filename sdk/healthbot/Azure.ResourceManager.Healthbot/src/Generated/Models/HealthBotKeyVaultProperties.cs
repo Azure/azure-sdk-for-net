@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.Healthbot.Models
 {
     /// <summary> Properties of the key vault. </summary>
-    public partial class KeyVaultProperties
+    public partial class HealthBotKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of HealthBotKeyVaultProperties. </summary>
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="keyVaultUri"/> is null. </exception>
-        public KeyVaultProperties(string keyName, Uri keyVaultUri)
+        public HealthBotKeyVaultProperties(string keyName, Uri keyVaultUri)
         {
             if (keyName == null)
             {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Healthbot.Models
             KeyVaultUri = keyVaultUri;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of HealthBotKeyVaultProperties. </summary>
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVersion"> The version of the key vault key. </param>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>
         /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. </param>
-        internal KeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string userIdentity)
+        internal HealthBotKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string userIdentity)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;

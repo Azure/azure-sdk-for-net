@@ -16,7 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  HealthBotProperties.botManagementPortalLink: -|uri
+  KeyVaultProperties: HealthBotKeyVaultProperties
 
 format-by-name-rules:
   'tenantId': 'uuid'

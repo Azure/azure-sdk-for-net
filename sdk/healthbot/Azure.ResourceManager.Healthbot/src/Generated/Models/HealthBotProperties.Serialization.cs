@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,8 +27,8 @@ namespace Azure.ResourceManager.Healthbot.Models
         internal static HealthBotProperties DeserializeHealthBotProperties(JsonElement element)
         {
             Optional<string> provisioningState = default;
-            Optional<string> botManagementPortalLink = default;
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            Optional<Uri> botManagementPortalLink = default;
+            Optional<HealthBotKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -37,7 +38,12 @@ namespace Azure.ResourceManager.Healthbot.Models
                 }
                 if (property.NameEquals("botManagementPortalLink"))
                 {
-                    botManagementPortalLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        botManagementPortalLink = null;
+                        continue;
+                    }
+                    botManagementPortalLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVaultProperties"))
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.Healthbot.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = HealthBotKeyVaultProperties.DeserializeHealthBotKeyVaultProperties(property.Value);
                     continue;
                 }
             }

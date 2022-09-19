@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Healthbot.Models
 {
-    public partial class KeyVaultProperties : IUtf8JsonSerializable
+    public partial class HealthBotKeyVaultProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Healthbot.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
+        internal static HealthBotKeyVaultProperties DeserializeHealthBotKeyVaultProperties(JsonElement element)
         {
             string keyName = default;
             Optional<string> keyVersion = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Healthbot.Models
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyName, keyVersion.Value, keyVaultUri, userIdentity.Value);
+            return new HealthBotKeyVaultProperties(keyName, keyVersion.Value, keyVaultUri, userIdentity.Value);
         }
     }
 }
