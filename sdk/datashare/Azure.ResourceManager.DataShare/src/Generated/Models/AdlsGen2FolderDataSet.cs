@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An ADLS Gen 2 folder data set. </summary>
-    public partial class AdlsGen2FolderDataSet : DataSetData
+    public partial class AdlsGen2FolderDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
         /// <param name="fileSystem"> File system to which the folder belongs. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal AdlsGen2FolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AdlsGen2FolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             FileSystem = fileSystem;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> File system to which the folder belongs. </summary>
         public string FileSystem { get; set; }
         /// <summary> Folder path within the file system. </summary>

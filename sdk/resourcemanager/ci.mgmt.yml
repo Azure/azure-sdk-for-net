@@ -27,8 +27,10 @@ trigger:
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
     - sdk/blueprint/Azure.ResourceManager.Blueprint
+    - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
+    - sdk/chaos/Azure.ResourceManager.Chaos
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
@@ -41,9 +43,13 @@ trigger:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
+    - sdk/datadog/Azure.ResourceManager.Datadog
     - sdk/datafactory/Azure.ResourceManager.DataFactory
+    - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
+    - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
@@ -149,8 +155,10 @@ pr:
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
     - sdk/blueprint/Azure.ResourceManager.Blueprint
+    - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
+    - sdk/chaos/Azure.ResourceManager.Chaos
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
@@ -163,9 +171,13 @@ pr:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
+    - sdk/datadog/Azure.ResourceManager.Datadog
     - sdk/datafactory/Azure.ResourceManager.DataFactory
+    - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
+    - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices

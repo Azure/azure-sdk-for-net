@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Models
         internal static ConsumerInvitationList DeserializeConsumerInvitationList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<ConsumerInvitationData> value = default;
+            IReadOnlyList<DataShareConsumerInvitationData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<ConsumerInvitationData> array = new List<ConsumerInvitationData>();
+                    List<DataShareConsumerInvitationData> array = new List<DataShareConsumerInvitationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumerInvitationData.DeserializeConsumerInvitationData(item));
+                        array.Add(DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(item));
                     }
                     value = array;
                     continue;
