@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Peering.Tests
     internal class PeeringTests : PeeringManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private PeeringServiceCollection _peeringServiceCollection => _resourceGroup.GetPeeringServices();
+        private PeeringCollection _peeringCollection => _resourceGroup.GetPeerings();
 
         public PeeringTests(bool isAsync) : base(isAsync)
         {
@@ -30,90 +30,60 @@ namespace Azure.ResourceManager.Peering.Tests
             _resourceGroup = await CreateResourceGroup();
         }
 
-        private async Task<PeeringServiceResource> CreateAtmanPeeringService(string peeringServiceName)
-        {
-            PeeringServiceData data = new PeeringServiceData(_resourceGroup.Data.Location)
-            {
-                Location = _resourceGroup.Data.Location,
-                PeeringServiceLocation = "South Australia",
-                PeeringServiceProvider = "Atman",
-                ProviderPrimaryPeeringLocation = "Warsaw",
-            };
-            var peeringservice = await _peeringServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, peeringServiceName, data);
-            return peeringservice.Value;
-        }
-
         [RecordedTest]
+        [Ignore("ASN validation can take up to 3 business days after submitting PeerASN request.")]
         public async Task CreateOrUpdate()
         {
-            string peeringServiceName = Recording.GenerateAssetName("peeringService");
-            var peeringService = await CreateAtmanPeeringService(peeringServiceName);
-            ValidatePeeringService(peeringService);
-            Assert.AreEqual(peeringServiceName, peeringService.Data.Name);
-        }
+            // Create a PeerAsn. status of PeerASN: Pending
+            string peerAsnName = Recording.GenerateAssetName("asn");
+            var peerAsn = await CreatePeerAsn(peerAsnName);
 
-        [RecordedTest]
-        public async Task Exist()
-        {
-            string peeringServiceName = Recording.GenerateAssetName("peeringService");
-            await CreateAtmanPeeringService(peeringServiceName);
-            bool flag = await _peeringServiceCollection.ExistsAsync(peeringServiceName);
+            // Create. 400 PeerAsn is not approved for the subscription. Waiting PeerASN approved
+            string peeringName = Recording.GenerateAssetName("peering");
+            var peeringSku = new PeeringSku()
+            {
+                Name = "Basic_Direct_Free"
+            };
+            var data = new PeeringData(_resourceGroup.Data.Location, peeringSku, PeeringKind.Direct);
+            data.PeeringLocation = "Seattle";
+            data.Direct = new DirectPeeringProperties();
+            data.Direct.Connections.Add(new PeeringDirectConnection()
+            {
+                BandwidthInMbps = 10000,
+                SessionAddressProvider = PeeringSessionAddressProvider.Peer,
+                UseForPeeringService = false,
+                PeeringDBFacilityId = 99999,
+                ConnectionIdentifier = Guid.NewGuid().ToString(),
+                BgpSession = new PeeringBgpSession()
+                {
+                    SessionPrefixV4 = "94.54.173.0/30",
+                    MaxPrefixesAdvertisedV4 = 20000
+                }
+            });
+            data.Direct.PeerAsnId = peerAsn.Data.Id;
+            data.Direct.DirectPeeringType = DirectPeeringType.Edge;
+            var peering = await _peeringCollection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data);
+            Assert.IsNotNull(peering);
+            Assert.AreEqual(peeringName, peering.Value.Data.Name);
+
+            // Exist
+            bool flag = await _peeringCollection.ExistsAsync(peeringName);
             Assert.IsTrue(flag);
-        }
 
-        [RecordedTest]
-        public async Task Get()
-        {
-            string peeringServiceName = Recording.GenerateAssetName("peeringService");
-            await CreateAtmanPeeringService(peeringServiceName);
-            var peeringService = await _peeringServiceCollection.GetAsync(peeringServiceName);
-            ValidatePeeringService(peeringService);
-            Assert.AreEqual(peeringServiceName, peeringService.Value.Data.Name);
-        }
+            // Get
+            var getResponse = await _peeringCollection.GetAsync(peeringName);
+            Assert.IsNotNull(getResponse);
+            Assert.AreEqual(peeringName, getResponse.Value.Data.Name);
 
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            string peeringServiceName = Recording.GenerateAssetName("peeringService");
-            await CreateAtmanPeeringService(peeringServiceName);
-            var list = await _peeringServiceCollection.GetAllAsync().ToEnumerableAsync();
+            // GetAll
+            var list = await _peeringCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidatePeeringService(list.First(item => item.Data.Name == peeringServiceName));
-        }
+            Assert.IsNotNull(list.First(item => item.Data.Name == peeringName));
 
-        [RecordedTest]
-        public async Task Delete()
-        {
-            string peeringServiceName = Recording.GenerateAssetName("peeringService");
-            var peeringService = await CreateAtmanPeeringService(peeringServiceName);
-            bool flag = await _peeringServiceCollection.ExistsAsync(peeringServiceName);
-            Assert.IsTrue(flag);
-
-            await peeringService.DeleteAsync(WaitUntil.Completed);
-            flag = await _peeringServiceCollection.ExistsAsync(peeringServiceName);
+            // Delete
+            await peering.Value.DeleteAsync(WaitUntil.Completed);
+            flag = await _peeringCollection.ExistsAsync(peeringName);
             Assert.IsFalse(flag);
-        }
-
-        [RecordedTest]
-        public async Task AddTag()
-        {
-            string peeringServiceName = Recording.GenerateAssetName("peeringService");
-            var peeringService = await CreateAtmanPeeringService(peeringServiceName);
-            await peeringService.AddTagAsync("addtagkey", "addtagvalue");
-
-            peeringService = await _peeringServiceCollection.GetAsync(peeringServiceName);
-            KeyValuePair<string, string> tag = peeringService.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
-        }
-
-        private void ValidatePeeringService(PeeringServiceResource peeringService)
-        {
-            Assert.IsNotNull(peeringService);
-            Assert.AreEqual("South Australia", peeringService.Data.PeeringServiceLocation);
-            Assert.AreEqual("Atman", peeringService.Data.PeeringServiceProvider);
-            Assert.AreEqual("Warsaw", peeringService.Data.ProviderPrimaryPeeringLocation);
-            Assert.AreEqual("Succeeded", peeringService.Data.ProvisioningState.ToString());
         }
     }
 }

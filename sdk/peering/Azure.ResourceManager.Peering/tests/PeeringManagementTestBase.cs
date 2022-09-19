@@ -3,9 +3,11 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Peering.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Peering.Tests
@@ -32,6 +34,17 @@ namespace Azure.ResourceManager.Peering.Tests
             Client = GetArmClient();
         }
 
+        [TearDown]
+        public async Task GlobalTearDown()
+        {
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var peerAsns = await subscription.GetPeerAsns().GetAllAsync().ToEnumerableAsync();
+            foreach (var item in peerAsns)
+            {
+                await item.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
         protected async Task<ResourceGroupResource> CreateResourceGroup()
         {
             var subscription = await Client.GetDefaultSubscriptionAsync();
@@ -39,6 +52,39 @@ namespace Azure.ResourceManager.Peering.Tests
             ResourceGroupData input = new ResourceGroupData(DefaultLocation);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        protected async Task<PeeringServiceResource> CreateAtmanPeeringService(ResourceGroupResource resourceGroup, string peeringServiceName)
+        {
+            PeeringServiceData data = new PeeringServiceData(resourceGroup.Data.Location)
+            {
+                Location = resourceGroup.Data.Location,
+                PeeringServiceLocation = "South Australia",
+                PeeringServiceProvider = "Atman",
+                ProviderPrimaryPeeringLocation = "Warsaw",
+            };
+            var peeringservice = await resourceGroup.GetPeeringServices().CreateOrUpdateAsync(WaitUntil.Completed, peeringServiceName, data);
+            return peeringservice.Value;
+        }
+
+        protected async Task<PeerAsnResource> CreatePeerAsn(string peerAsnName)
+        {
+            Random random = new Random();
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var peerAsnCollection = subscription.GetPeerAsns();
+            PeerAsnData data = new PeerAsnData()
+            {
+                PeerName = peerAsnName,
+                PeerAsn = random.Next(1, 94967295), // The value must be at most 4294967295.
+            };
+            data.PeerContactDetail.Add(new PeerAsnContactDetail()
+            {
+                Role = "Noc",
+                Email = "noc65003@contoso.com",
+                Phone = "8888988888"
+            });
+            var peerAsn = await peerAsnCollection.CreateOrUpdateAsync(WaitUntil.Completed, peerAsnName, data);
+            return peerAsn.Value;
         }
     }
 }
