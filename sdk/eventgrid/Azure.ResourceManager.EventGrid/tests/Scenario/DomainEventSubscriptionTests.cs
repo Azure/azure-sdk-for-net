@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class DomainEventSubscriptionTests : EventGridManagementTestBase
     {
         public DomainEventSubscriptionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

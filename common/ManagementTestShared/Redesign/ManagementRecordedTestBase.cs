@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.TestFramework
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
-            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
             if (ApiVersion is not null)
                 options.SetApiVersion(_resourceType, ApiVersion);
 
