@@ -77,10 +77,11 @@ Describe "Write-Project-Files-To-Matrix" -Tag "UnitTest" {
     It "Write project files into matrix property" -TestCases @(
         @{ TestFolderName = "$PSScriptRoot/testFolder1"; ProjectFiles = "1.txt", "2.txt"; MatrixJsonPath = "$PSScriptRoot/inputs/platform-matrix1.json"; expectOutput="$PSScriptRoot/expectOutputs/expect-matrix1.json" }
         @{ TestFolderName = "$PSScriptRoot/testFolder2"; ProjectFiles = "1.txt", "2.txt", "3.txt"; MatrixJsonPath = "$PSScriptRoot/inputs/platform-matrix1.json"; expectOutput="$PSScriptRoot/expectOutputs/expect-matrix2.json" }
+        @{ TestFolderName = "$PSScriptRoot/testFolder3"; ProjectFiles = "1.txt", "2.txt", "3.txt"; MatrixJsonPath = "$PSScriptRoot/inputs/platform-matrix2.json"; expectOutput="$PSScriptRoot/expectOutputs/expect-matrix3.json" }
     ) {
         Backup-File -targetPath $MatrixJsonPath -backupFolder $TestFolderName
         Write-Project-Files-To-Matrix -ProjectFiles $ProjectFiles -MatrixJsonPath $MatrixJsonPath -MatrixOutputFolder $TestFolderName -ProjectFileConfigName "OverrideFiles"
-        Get-Content "$TestFolderName\platform-matrix1.json" | Should -Be (Get-Content $expectOutput)
+        Get-Content $MatrixJsonPath | Should -Be (Get-Content $expectOutput)
         Reset-File -targetPath $MatrixJsonPath -backupFolder $TestFolderName
     }
     # Failed cases

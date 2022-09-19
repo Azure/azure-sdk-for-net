@@ -22,29 +22,13 @@
     "OverrideFiles": {
       "DependencyGroup1.txt": {
         "OverrideFiles": "1.txt"
+      },
+      "DependencyGroup2.txt": {
+        "OverrideFiles": "2.txt"
+      },
+      "DependencyGroup3.txt": {
+        "OverrideFiles": "3.txt"
       }
     }
-  },
-  "include": [
-    {
-      "Agent": {
-        "Windows2019": {
-          "OSVmImage": "MMS2019",
-          "Pool": "azsdk-pool-mms-win-2019-general",
-          "TestTargetFramework": "netcoreapp3.1"
-        }
-      },
-      "TestMode": {
-        "netcoreapp31_Coverage_Record": {
-          "SupportsRecording": true,
-          "CollectCoverage": true
-        }
-      },
-      "OverrideFiles": {
-        "DependencyGroup2.txt": {
-          "OverrideFiles": "2.txt"
-        }
-      }
-    }
-  ]
+  }
 }
