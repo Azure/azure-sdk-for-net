@@ -22,7 +22,7 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
 
             // to fully manually verify the InteractiveBrowserCredential this test should be run both authenticating with a
             // school / organization account as well as a personal live account, i.e. a @outlook.com, @live.com, or @hotmail.com
-            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle, true));
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
