@@ -121,7 +121,7 @@ namespace Azure.Security.KeyVault
 
                     if (!message.Request.Uri.Host.EndsWith($".{scopeUri.Host}", StringComparison.OrdinalIgnoreCase))
                     {
-                        throw new InvalidOperationException($"The challenge resource '{scopeUri.Host}' does not match the requested domain.");
+                        throw new InvalidOperationException($"The challenge resource '{scopeUri.Host}' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information.");
                     }
                 }
 

@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Tests
             if (!disableVerification)
             {
                 InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await SendGetRequest(transport, policy, uri: uri));
-                Assert.That(ex.Message, Is.EqualTo("The challenge resource 'vault.azure.net' does not match the requested domain."));
+                Assert.That(ex.Message, Is.EqualTo("The challenge resource 'vault.azure.net' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information."));
             }
             else
             {
