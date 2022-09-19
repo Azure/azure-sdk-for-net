@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Peering.Tests
             PeerAsnData data = new PeerAsnData()
             {
                 PeerName = peerAsnName,
-                PeerAsn = random.Next(1, 94967295), // The value must be at most 4294967295.
+                PeerAsn = Recording.Random.Next(1, 94967295), // The value must be at most 4294967295.
             };
             data.PeerContactDetail.Add(new PeerAsnContactDetail()
             {
