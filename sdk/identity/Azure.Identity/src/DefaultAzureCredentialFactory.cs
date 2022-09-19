@@ -138,7 +138,7 @@ namespace Azure.Identity
             var options = new AzureCliCredentialOptions
             {
                 TenantId = Options.TenantId,
-				CliProcessTimeout = Options.DeveloperCredentialTimeout
+                CliProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
             foreach (var addlTenant in Options.AdditionallyAllowedTenants)
@@ -154,7 +154,7 @@ namespace Azure.Identity
             var options = new VisualStudioCredentialOptions
             {
                 TenantId = Options.VisualStudioTenantId,
-				VisualStudioProcessTimeout = Options.DeveloperCredentialTimeout
+                VisualStudioProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
             foreach (var addlTenant in Options.AdditionallyAllowedTenants)
@@ -185,7 +185,7 @@ namespace Azure.Identity
             var options = new AzurePowerShellCredentialOptions
             {
                 TenantId = Options.VisualStudioCodeTenantId,
-				PowerShellProcessTimeout = Options.DeveloperCredentialTimeout
+                PowerShellProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
             foreach (var addlTenant in Options.AdditionallyAllowedTenants)
