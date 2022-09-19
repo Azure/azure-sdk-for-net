@@ -20,30 +20,30 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AgreementOfferPlanResource" /> and their operations.
-    /// Each <see cref="AgreementOfferPlanResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="AgreementOfferPlanCollection" /> instance call the GetAgreementOfferPlans method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="MarketplaceAgreementResource" /> and their operations.
+    /// Each <see cref="MarketplaceAgreementResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="MarketplaceAgreementCollection" /> instance call the GetMarketplaceAgreements method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class AgreementOfferPlanCollection : ArmCollection, IEnumerable<AgreementTermData>, IAsyncEnumerable<AgreementTermData>
+    public partial class MarketplaceAgreementCollection : ArmCollection, IEnumerable<MarketplaceAgreementTermData>, IAsyncEnumerable<MarketplaceAgreementTermData>
     {
-        private readonly ClientDiagnostics _agreementOfferPlanMarketplaceAgreementsClientDiagnostics;
-        private readonly MarketplaceAgreementsRestOperations _agreementOfferPlanMarketplaceAgreementsRestClient;
+        private readonly ClientDiagnostics _marketplaceAgreementClientDiagnostics;
+        private readonly MarketplaceAgreementsRestOperations _marketplaceAgreementRestClient;
         private readonly ClientDiagnostics _marketplaceAgreementsClientDiagnostics;
         private readonly MarketplaceAgreementsRestOperations _marketplaceAgreementsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AgreementOfferPlanCollection"/> class for mocking. </summary>
-        protected AgreementOfferPlanCollection()
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceAgreementCollection"/> class for mocking. </summary>
+        protected MarketplaceAgreementCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgreementOfferPlanCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceAgreementCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AgreementOfferPlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MarketplaceAgreementCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _agreementOfferPlanMarketplaceAgreementsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MarketplaceOrdering", AgreementOfferPlanResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AgreementOfferPlanResource.ResourceType, out string agreementOfferPlanMarketplaceAgreementsApiVersion);
-            _agreementOfferPlanMarketplaceAgreementsRestClient = new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agreementOfferPlanMarketplaceAgreementsApiVersion);
+            _marketplaceAgreementClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MarketplaceOrdering", MarketplaceAgreementResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MarketplaceAgreementResource.ResourceType, out string marketplaceAgreementApiVersion);
+            _marketplaceAgreementRestClient = new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, marketplaceAgreementApiVersion);
             _marketplaceAgreementsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MarketplaceOrdering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _marketplaceAgreementsRestClient = new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
-        public virtual async Task<Response<AgreementOfferPlanResource>> GetAsync(string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceAgreementResource>> GetAsync(string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
             Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
-            using var scope = _agreementOfferPlanMarketplaceAgreementsClientDiagnostics.CreateScope("AgreementOfferPlanCollection.Get");
+            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementCollection.Get");
             scope.Start();
             try
             {
-                var response = await _agreementOfferPlanMarketplaceAgreementsRestClient.GetAgreementAsync(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
+                var response = await _marketplaceAgreementRestClient.GetAgreementAsync(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgreementOfferPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -101,20 +101,20 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
-        public virtual Response<AgreementOfferPlanResource> Get(string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceAgreementResource> Get(string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
             Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
-            using var scope = _agreementOfferPlanMarketplaceAgreementsClientDiagnostics.CreateScope("AgreementOfferPlanCollection.Get");
+            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementCollection.Get");
             scope.Start();
             try
             {
-                var response = _agreementOfferPlanMarketplaceAgreementsRestClient.GetAgreement(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken);
+                var response = _marketplaceAgreementRestClient.GetAgreement(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgreementOfferPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// Operation Id: MarketplaceAgreements_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgreementTermData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AgreementTermData> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MarketplaceAgreementTermData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceAgreementTermData> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AgreementTermData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MarketplaceAgreementTermData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _marketplaceAgreementsClientDiagnostics.CreateScope("AgreementOfferPlanCollection.GetAll");
+                using var scope = _marketplaceAgreementsClientDiagnostics.CreateScope("MarketplaceAgreementCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// Operation Id: MarketplaceAgreements_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgreementTermData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AgreementTermData> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceAgreementTermData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceAgreementTermData> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AgreementTermData> FirstPageFunc(int? pageSizeHint)
+            Page<MarketplaceAgreementTermData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _marketplaceAgreementsClientDiagnostics.CreateScope("AgreementOfferPlanCollection.GetAll");
+                using var scope = _marketplaceAgreementsClientDiagnostics.CreateScope("MarketplaceAgreementCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
             Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
-            using var scope = _agreementOfferPlanMarketplaceAgreementsClientDiagnostics.CreateScope("AgreementOfferPlanCollection.Exists");
+            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _agreementOfferPlanMarketplaceAgreementsRestClient.GetAgreementAsync(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _marketplaceAgreementRestClient.GetAgreementAsync(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
             Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
-            using var scope = _agreementOfferPlanMarketplaceAgreementsClientDiagnostics.CreateScope("AgreementOfferPlanCollection.Exists");
+            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementCollection.Exists");
             scope.Start();
             try
             {
-                var response = _agreementOfferPlanMarketplaceAgreementsRestClient.GetAgreement(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken: cancellationToken);
+                var response = _marketplaceAgreementRestClient.GetAgreement(Id.SubscriptionId, publisherId, offerId, planId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             }
         }
 
-        IEnumerator<AgreementTermData> IEnumerable<AgreementTermData>.GetEnumerator()
+        IEnumerator<MarketplaceAgreementTermData> IEnumerable<MarketplaceAgreementTermData>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AgreementTermData> IAsyncEnumerable<AgreementTermData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MarketplaceAgreementTermData> IAsyncEnumerable<MarketplaceAgreementTermData>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
