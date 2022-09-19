@@ -106,6 +106,10 @@ namespace Azure.Identity.Tests
                 {
                     propInfo.SetValue(orig, rand.NextDouble() > .5);
                 }
+                else if (propInfo.PropertyType == typeof(TimeSpan?))
+                {
+                    propInfo.SetValue(orig, TimeSpan.FromHours(rand.NextDouble() + .02));
+                }
                 else if (propInfo.PropertyType == typeof(Uri))
                 {
                     propInfo.SetValue(orig, AzureAuthorityHosts.AzureChina);

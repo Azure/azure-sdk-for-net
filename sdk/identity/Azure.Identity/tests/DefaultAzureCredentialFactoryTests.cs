@@ -94,7 +94,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateVisualStudioOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioTenantId, [Values] bool setAdditionallyAllowedTenants)
+        public void ValidateVisualStudioOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioTenantId, [Values] bool setAdditionallyAllowedTenants, [Values]bool setDeveloperCredentialTimeout)
         {
             // ignore when both setTenantId and setVisualStudioTenantId are true since we cannot set both
             if (setTenantId && setVisualStudioTenantId)
@@ -113,8 +113,11 @@ namespace Azure.Identity.Tests
                 string expTenantId = setTenantId ? Guid.NewGuid().ToString() : null;
                 string expVisualStudioTenantId = setVisualStudioTenantId ? Guid.NewGuid().ToString() : null;
                 string[] expAdditionallyAllowedTenants = setAdditionallyAllowedTenants ? new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() } : Array.Empty<string>();
-
-                DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions();
+                TimeSpan? expTimeout = setDeveloperCredentialTimeout ? TimeSpan.FromMinutes(777) : null;
+                DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions
+                {
+                    DeveloperCredentialTimeout = expTimeout
+                };
 
                 if (setTenantId)
                 {
@@ -135,6 +138,7 @@ namespace Azure.Identity.Tests
 
                 VisualStudioCredential cred = (VisualStudioCredential)factory.CreateVisualStudioCredential();
 
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.VisualStudioProcessTimeout);
                 Assert.AreEqual(expVisualStudioTenantId ?? expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
@@ -188,7 +192,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateCliOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants)
+        public void ValidateCliOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setDeveloperCredentialTimeout)
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -200,10 +204,12 @@ namespace Azure.Identity.Tests
             {
                 string expTenantId = setTenantId ? Guid.NewGuid().ToString() : null;
                 string[] expAdditionallyAllowedTenants = setAdditionallyAllowedTenants ? new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() } : Array.Empty<string>();
+                TimeSpan? expTimeout = setDeveloperCredentialTimeout ? TimeSpan.FromMinutes(777) : null;
 
                 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
                 {
                     TenantId = expTenantId,
+                    DeveloperCredentialTimeout = expTimeout
                 };
 
                 foreach (var tenantId in expAdditionallyAllowedTenants)
@@ -215,13 +221,14 @@ namespace Azure.Identity.Tests
 
                 AzureCliCredential cred = (AzureCliCredential)factory.CreateAzureCliCredential();
 
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.CliProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
         }
 
         [Test]
-        public void ValidatePowerShellOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants)
+        public void ValidatePowerShellOptionsHonored([Values] bool setTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setDeveloperCredentialTimeout)
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -233,10 +240,12 @@ namespace Azure.Identity.Tests
             {
                 string expTenantId = setTenantId ? Guid.NewGuid().ToString() : null;
                 string[] expAdditionallyAllowedTenants = setAdditionallyAllowedTenants ? new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() } : Array.Empty<string>();
+                TimeSpan? expTimeout = setDeveloperCredentialTimeout ? TimeSpan.FromMinutes(777) : null;
 
                 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
                 {
                     TenantId = expTenantId,
+                    DeveloperCredentialTimeout = expTimeout
                 };
 
                 foreach (var tenantId in expAdditionallyAllowedTenants)
@@ -248,6 +257,7 @@ namespace Azure.Identity.Tests
 
                 AzurePowerShellCredential cred = (AzurePowerShellCredential)factory.CreateAzurePowerShellCredential();
 
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.PowerShellProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }

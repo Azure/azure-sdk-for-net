@@ -22,7 +22,7 @@ namespace Azure.Identity
         /// If no value is specified for <see cref="TenantId"/> this option will have no effect, and the credential will acquire tokens for any requested tenant.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
-		
+
         /// <summary>
         /// The Cli process timeout.
         /// </summary>
