@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class SharedAccessSignatureAuthorizationRuleAccessRightsDescription : IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesSharedAccessKey : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static SharedAccessSignatureAuthorizationRuleAccessRightsDescription DeserializeSharedAccessSignatureAuthorizationRuleAccessRightsDescription(JsonElement element)
+        internal static DeviceProvisioningServicesSharedAccessKey DeserializeDeviceProvisioningServicesSharedAccessKey(JsonElement element)
         {
             string keyName = default;
             Optional<string> primaryKey = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new SharedAccessSignatureAuthorizationRuleAccessRightsDescription(keyName, primaryKey.Value, secondaryKey.Value, rights);
+            return new DeviceProvisioningServicesSharedAccessKey(keyName, primaryKey.Value, secondaryKey.Value, rights);
         }
     }
 }
