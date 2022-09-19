@@ -15,7 +15,7 @@ var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
 });
 ```
 
-- Add `*` to enable token acquisition from any tenant. This is the original behavior and is compatible with versions 1.5.0 through 1.6.1. For example:
+- Add `*` to enable token acquisition from any tenant. This is the original behavior and is compatible with previous versions supporting multi tenant authentication. For example:
 
 ```C# Snippet:Identity_BreakingChanges_AddAllAdditionallyAllowedTenants
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
@@ -25,6 +25,8 @@ var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
 ```
 
 Note: Credential types which do not require a `TenantId` on construction will only throw `AuthenticationFailedException` when the application has provided a value for `TenantId` either in the options or via a constructor overload. If no `TenantId` is specified when constructing the credential, the credential will acquire tokens for any requested `TenantId` regardless of the value of `AdditionallyAllowedTenants`.
+
+More information on this change and the consideration behind it can be found [here](https://aka.ms/azsdk/blog/multi-tenant-guidance).
 
 ## 1.4.0
 
