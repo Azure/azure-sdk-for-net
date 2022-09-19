@@ -54,12 +54,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
 
+            await UploadManifestPrerequisites(client);
+
             // Act
             var manifest = CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest);
             string digest = uploadResult.Value.Digest;
-
-            await UploadManifestPrerequisites(client);
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);

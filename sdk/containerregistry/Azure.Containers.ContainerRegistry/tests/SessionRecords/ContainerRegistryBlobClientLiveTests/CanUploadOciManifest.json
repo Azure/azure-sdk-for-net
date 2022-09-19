@@ -1,36 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/manifests/sha256%3Ae2fffb656966c98a0b7712672e996a58327eff7705fb3d8d9581fc16ef412d13",
-      "RequestMethod": "PUT",
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
+      "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Connection": "keep-alive",
-        "Content-Length": "399",
-        "Content-Type": "application/vnd.oci.image.manifest.v1\u002Bjson",
-        "traceparent": "00-79c92b05b8337044a93212ed1f88b9a2-ec6f55e4d0b01445-00",
+        "Content-Length": "0",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-09ad62a092524b4f-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7e6bf02b689d84f3934acf393f4a8e0c",
+        "x-ms-client-request-id": "8364d95183caee97e6f7bb34e6f44aae",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "config": {
-          "mediaType": "application/vnd.acme.rocket.config",
-          "size": 171,
-          "digest": "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8"
-        },
-        "layers": [
-          {
-            "mediaType": "application/vnd.oci.image.layer.v1.tar",
-            "size": 28,
-            "digest": "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
-            "annotations": {
-              "org.opencontainers.image.ref.name": "artifact.txt"
-            }
-          }
-        ],
-        "schemaVersion": 2
-      },
+      "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [
@@ -42,16 +24,16 @@
         "Connection": "keep-alive",
         "Content-Length": "266",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:21 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:29 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:push,pull\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "73f6fd1d-a839-47c0-a873-f8482445b31d"
+        "X-Ms-Correlation-Request-Id": "01a0e7f7-431f-4d67-a772-c9f8cfe014f8"
       },
       "ResponseBody": {
         "errors": [
@@ -81,9 +63,9 @@
         "Accept": "application/json",
         "Content-Length": "89",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-79c92b05b8337044a93212ed1f88b9a2-ec4b636d40a3ed42-00",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-d88718185ad42e42-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "b135abc3cde46ad67688886a0442c3fc",
+        "x-ms-client-request-id": "8de52413b79ad668c78b0cd3f6e86ca7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "grant_type=access_token\u0026service=shrejacontainerregistry.azurecr.io\u0026access_token=Sanitized",
@@ -91,15 +73,15 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:23 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:31 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "61dc637f-c927-4521-8592-99307d268518",
+        "X-Ms-Correlation-Request-Id": "a31f963c-a546-4998-b4ce-b6b56894f691",
         "x-ms-ratelimit-remaining-calls-per-second": "166.65"
       },
       "ResponseBody": {
-        "refresh_token": "Sanitized.eyJleHAiOjI2MDk3MDUyMzl9.Sanitized"
+        "refresh_token": "Sanitized.eyJleHAiOjI2MDk3MDk1MDd9.Sanitized"
       }
     },
     {
@@ -109,9 +91,133 @@
         "Accept": "application/json",
         "Content-Length": "137",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-79c92b05b8337044a93212ed1f88b9a2-2301976d28cf7044-00",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-0ae5660afe9bdd43-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "4ee7ad861b188014eee80d12e1500d30",
+        "x-ms-client-request-id": "ac9438bcfccef0b5eb137047ec24f4e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apush%2Cpull\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:31 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "fbed17ad-7e34-4bff-9512-7e3514f23db9",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.633333"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-09ad62a092524b4f-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8364d95183caee97e6f7bb34e6f44aae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 19 Sep 2022 23:18:31 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Docker-Upload-Uuid": "cfb6b16c-02bb-412d-aefb-8f32fff9bbcc",
+        "Location": "/v2/oci-artifact/blobs/uploads/cfb6b16c-02bb-412d-aefb-8f32fff9bbcc?_nouploadcache=false\u0026_state=nWcQHvB_VMCSuiWCrpRSqizaq2xumR2GlbLxonO4rnJ7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiY2ZiNmIxNmMtMDJiYi00MTJkLWFlZmItOGYzMmZmZjliYmNjIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIzOjE4OjMxLjgwNjEwNzM5OFoifQ%3D%3D",
+        "Range": "0-0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "8364d95183caee97e6f7bb34e6f44aae",
+        "X-Ms-Correlation-Request-Id": "94ca225c-b664-441d-b40b-f05dfdeb83a8",
+        "X-Ms-Request-Id": "4b7adcc8-f828-4100-9f89-e254f3e4b512"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/cfb6b16c-02bb-412d-aefb-8f32fff9bbcc?_nouploadcache=false\u0026_state=nWcQHvB_VMCSuiWCrpRSqizaq2xumR2GlbLxonO4rnJ7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiY2ZiNmIxNmMtMDJiYi00MTJkLWFlZmItOGYzMmZmZjliYmNjIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIzOjE4OjMxLjgwNjEwNzM5OFoifQ%3D%3D",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "171",
+        "Content-Type": "application/octet-stream",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-2675924a39f6dc4c-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2f611f6bb314996d718ebb3f77c4f7fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "H4sIAAAAAAAA/\u002BzRwcrCMBAE4Dn/8L9DD551tulmn6dUq4VioUb06VUsORU8aRQx32VzSjYzi2bYt90WKZGkmU2T5HxOZ6lo6lTNPCjUUlFo0q2i4yHUI8hn75l/7kvE/lf1GLq2bsIynMOr37jn4b1/3L\u002BrYv9lWYkDxYkoireE\u002BOP9Xy87bNCjx4ACJwwY0WONf/x9erUsy7IsoVsAAAD//yO/fykACgAA",
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:31 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "95a42fe1-a73b-4eb4-a598-dcc39fa20c7f"
+      },
+      "ResponseBody": {
+        "errors": [
+          {
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "pull"
+              },
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "push"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "137",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-0f2e70533de15247-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ad77148a9e5f16e06ef5a1864721e9a2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
@@ -119,12 +225,646 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:31 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "5f1e5518-9ba7-4d8c-b5a3-982c5cf83a34",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.633333"
+        "X-Ms-Correlation-Request-Id": "1f76a8a1-1cdb-4510-b6aa-5269615b6422",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.616667"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/cfb6b16c-02bb-412d-aefb-8f32fff9bbcc?_nouploadcache=false\u0026_state=nWcQHvB_VMCSuiWCrpRSqizaq2xumR2GlbLxonO4rnJ7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiY2ZiNmIxNmMtMDJiYi00MTJkLWFlZmItOGYzMmZmZjliYmNjIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIzOjE4OjMxLjgwNjEwNzM5OFoifQ%3D%3D",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "171",
+        "Content-Type": "application/octet-stream",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-2675924a39f6dc4c-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2f611f6bb314996d718ebb3f77c4f7fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "H4sIAAAAAAAA/\u002BzRwcrCMBAE4Dn/8L9DD551tulmn6dUq4VioUb06VUsORU8aRQx32VzSjYzi2bYt90WKZGkmU2T5HxOZ6lo6lTNPCjUUlFo0q2i4yHUI8hn75l/7kvE/lf1GLq2bsIynMOr37jn4b1/3L\u002BrYv9lWYkDxYkoireE\u002BOP9Xy87bNCjx4ACJwwY0WONf/x9erUsy7IsoVsAAAD//yO/fykACgAA",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Docker-Upload-Uuid": "cfb6b16c-02bb-412d-aefb-8f32fff9bbcc",
+        "Location": "/v2/oci-artifact/blobs/uploads/cfb6b16c-02bb-412d-aefb-8f32fff9bbcc?_nouploadcache=false\u0026_state=GskWuQvpWqfZ6y-klDg3l-l7v41rHnkdm5TU5DfCKS57Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiY2ZiNmIxNmMtMDJiYi00MTJkLWFlZmItOGYzMmZmZjliYmNjIiwiT2Zmc2V0IjoxNzEsIlN0YXJ0ZWRBdCI6IjIwMjItMDktMTlUMjM6MTg6MzFaIn0%3D",
+        "Range": "0-170",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "2f611f6bb314996d718ebb3f77c4f7fe",
+        "X-Ms-Correlation-Request-Id": "66646b62-03d1-4b01-90ae-881e6c8f1665",
+        "X-Ms-Request-Id": "dd3e568c-1129-450e-9195-2d8c7106d25a"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/cfb6b16c-02bb-412d-aefb-8f32fff9bbcc?_nouploadcache=false\u0026_state=GskWuQvpWqfZ6y-klDg3l-l7v41rHnkdm5TU5DfCKS57Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiY2ZiNmIxNmMtMDJiYi00MTJkLWFlZmItOGYzMmZmZjliYmNjIiwiT2Zmc2V0IjoxNzEsIlN0YXJ0ZWRBdCI6IjIwMjItMDktMTlUMjM6MTg6MzFaIn0%3D\u0026digest=sha256%3Ad25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-c14d79ce29bbc540-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d66727963c860993cafb3a3f40767927",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:push,pull\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "cf17da01-95bd-41f6-93cc-713341260f9d"
+      },
+      "ResponseBody": {
+        "errors": [
+          {
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "pull"
+              },
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "push"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "137",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-041831ea86d12640-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d8bc721b46adcd853f4ac11f12e6524f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apush%2Cpull\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "e82ca5f2-ca6d-426a-98ed-e8296949ee7d",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.6"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/cfb6b16c-02bb-412d-aefb-8f32fff9bbcc?_nouploadcache=false\u0026_state=GskWuQvpWqfZ6y-klDg3l-l7v41rHnkdm5TU5DfCKS57Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiY2ZiNmIxNmMtMDJiYi00MTJkLWFlZmItOGYzMmZmZjliYmNjIiwiT2Zmc2V0IjoxNzEsIlN0YXJ0ZWRBdCI6IjIwMjItMDktMTlUMjM6MTg6MzFaIn0%3D\u0026digest=sha256%3Ad25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-0f685b1e2241864889ee679a92c6a306-c14d79ce29bbc540-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d66727963c860993cafb3a3f40767927",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Content-Digest": "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Location": "/v2/oci-artifact/blobs/sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "d66727963c860993cafb3a3f40767927",
+        "X-Ms-Correlation-Request-Id": "033088a2-677c-4d5e-bad7-00b1bc6279f4",
+        "X-Ms-Request-Id": "bce0d2f0-f925-4ce1-a55b-1f06766fb0d9"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-326982cf1da5104f-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "50a818a5205c4d77816de26363a1d5f7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "183b49e7-979d-4f76-8f85-e5f8fc8e17cd"
+      },
+      "ResponseBody": {
+        "errors": [
+          {
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "pull"
+              },
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "push"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "137",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-4421ec29f2ac894d-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d46b797b10654ff5a19a973b7a73f7e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "e1c4cc91-2f61-4b0e-bc13-08c0e7017e02",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.583333"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-326982cf1da5104f-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "50a818a5205c4d77816de26363a1d5f7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Docker-Upload-Uuid": "dd5be437-7486-4a8d-b3ec-dc8d867723fb",
+        "Location": "/v2/oci-artifact/blobs/uploads/dd5be437-7486-4a8d-b3ec-dc8d867723fb?_nouploadcache=false\u0026_state=hGQtNYNfBQFgqEPMnQGQ5VCJLaNx7eSPqqvZ3iMBiRl7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiZGQ1YmU0MzctNzQ4Ni00YThkLWIzZWMtZGM4ZDg2NzcyM2ZiIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIzOjE4OjMyLjU1Mjk3Nzk5OFoifQ%3D%3D",
+        "Range": "0-0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "50a818a5205c4d77816de26363a1d5f7",
+        "X-Ms-Correlation-Request-Id": "a0e4e99b-49f8-4406-8b54-37ace39e56b4",
+        "X-Ms-Request-Id": "71b306ce-ce35-4b0b-9b59-f52cf001a367"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/dd5be437-7486-4a8d-b3ec-dc8d867723fb?_nouploadcache=false\u0026_state=hGQtNYNfBQFgqEPMnQGQ5VCJLaNx7eSPqqvZ3iMBiRl7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiZGQ1YmU0MzctNzQ4Ni00YThkLWIzZWMtZGM4ZDg2NzcyM2ZiIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIzOjE4OjMyLjU1Mjk3Nzk5OFoifQ%3D%3D",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "28",
+        "Content-Type": "application/octet-stream",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-bcbd8816a2d69843-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2899eaa928cdfacbfa6e573f64216a9e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "//5oAGUAbABsAG8AIAB3AG8AcgBsAGQADQAKAA==",
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "72f8e1f6-1965-4276-8faf-29f69df0cf65"
+      },
+      "ResponseBody": {
+        "errors": [
+          {
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "pull"
+              },
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "push"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "137",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-68783ec198fcd64d-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "98a3ca757d7a95ea2358aec1893bd20d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "25f33804-1754-407b-8e87-7e8764595909",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.566667"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/dd5be437-7486-4a8d-b3ec-dc8d867723fb?_nouploadcache=false\u0026_state=hGQtNYNfBQFgqEPMnQGQ5VCJLaNx7eSPqqvZ3iMBiRl7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiZGQ1YmU0MzctNzQ4Ni00YThkLWIzZWMtZGM4ZDg2NzcyM2ZiIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIzOjE4OjMyLjU1Mjk3Nzk5OFoifQ%3D%3D",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "28",
+        "Content-Type": "application/octet-stream",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-bcbd8816a2d69843-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2899eaa928cdfacbfa6e573f64216a9e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "//5oAGUAbABsAG8AIAB3AG8AcgBsAGQADQAKAA==",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Docker-Upload-Uuid": "dd5be437-7486-4a8d-b3ec-dc8d867723fb",
+        "Location": "/v2/oci-artifact/blobs/uploads/dd5be437-7486-4a8d-b3ec-dc8d867723fb?_nouploadcache=false\u0026_state=MnCGaCrSJy-W2MbuqTj6vWbEzMNg5pMc1W96a321Iuh7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiZGQ1YmU0MzctNzQ4Ni00YThkLWIzZWMtZGM4ZDg2NzcyM2ZiIiwiT2Zmc2V0IjoyOCwiU3RhcnRlZEF0IjoiMjAyMi0wOS0xOVQyMzoxODozMloifQ%3D%3D",
+        "Range": "0-27",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "2899eaa928cdfacbfa6e573f64216a9e",
+        "X-Ms-Correlation-Request-Id": "78effef2-bf38-4bde-96cc-3a0419048f1a",
+        "X-Ms-Request-Id": "618eccee-3c20-4fac-be50-c5d89ce9eba9"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/dd5be437-7486-4a8d-b3ec-dc8d867723fb?_nouploadcache=false\u0026_state=MnCGaCrSJy-W2MbuqTj6vWbEzMNg5pMc1W96a321Iuh7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiZGQ1YmU0MzctNzQ4Ni00YThkLWIzZWMtZGM4ZDg2NzcyM2ZiIiwiT2Zmc2V0IjoyOCwiU3RhcnRlZEF0IjoiMjAyMi0wOS0xOVQyMzoxODozMloifQ%3D%3D\u0026digest=sha256%3A654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-f484a56ddb0a0d4e-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "78bafe76ad075329ae71d9f6b8b6eb80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "4d99a64c-7965-4fcc-82fe-e2adee2afcde"
+      },
+      "ResponseBody": {
+        "errors": [
+          {
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "pull"
+              },
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "push"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "137",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-d9d942219aceb140-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b0c6f9305ecf2c69000405757a0970bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "562b2422-0736-48de-bd30-6e959c619945",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.55"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/dd5be437-7486-4a8d-b3ec-dc8d867723fb?_nouploadcache=false\u0026_state=MnCGaCrSJy-W2MbuqTj6vWbEzMNg5pMc1W96a321Iuh7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiZGQ1YmU0MzctNzQ4Ni00YThkLWIzZWMtZGM4ZDg2NzcyM2ZiIiwiT2Zmc2V0IjoyOCwiU3RhcnRlZEF0IjoiMjAyMi0wOS0xOVQyMzoxODozMloifQ%3D%3D\u0026digest=sha256%3A654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-71f594da0bb14041a0a44039b7c117f4-f484a56ddb0a0d4e-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "78bafe76ad075329ae71d9f6b8b6eb80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 19 Sep 2022 23:18:32 GMT",
+        "Docker-Content-Digest": "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Location": "/v2/oci-artifact/blobs/sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "78bafe76ad075329ae71d9f6b8b6eb80",
+        "X-Ms-Correlation-Request-Id": "4573e92d-ff4d-48e9-820f-b16ad98f4f99",
+        "X-Ms-Request-Id": "4bb5eb83-b3fb-4c76-a0d5-48521ac69758"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/manifests/sha256%3Ae2fffb656966c98a0b7712672e996a58327eff7705fb3d8d9581fc16ef412d13",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "399",
+        "Content-Type": "application/vnd.oci.image.manifest.v1\u002Bjson",
+        "traceparent": "00-f336a07ca9f76245b15582b7a5b10380-0c2dd68bbf0e4f48-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "65c84a9bf167c896a050ea09a3f4dc6d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "config": {
+          "mediaType": "application/vnd.acme.rocket.config",
+          "size": 171,
+          "digest": "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8"
+        },
+        "layers": [
+          {
+            "mediaType": "application/vnd.oci.image.layer.v1.tar",
+            "size": 28,
+            "digest": "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
+            "annotations": {
+              "org.opencontainers.image.ref.name": "artifact.txt"
+            }
+          }
+        ],
+        "schemaVersion": 2
+      },
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "03ca8114-8966-43c5-ab7d-6ed2df768cb5"
+      },
+      "ResponseBody": {
+        "errors": [
+          {
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "pull"
+              },
+              {
+                "Type": "repository",
+                "Name": "oci-artifact",
+                "Action": "push"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "137",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-f336a07ca9f76245b15582b7a5b10380-89bddc414fc82b46-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8f912e6c2274183d948e7803a8b4d8a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "90ae6fae-b4ae-4561-83f3-cd87b8dc8fef",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.533333"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -138,9 +878,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "399",
         "Content-Type": "application/vnd.oci.image.manifest.v1\u002Bjson",
-        "traceparent": "00-79c92b05b8337044a93212ed1f88b9a2-ec6f55e4d0b01445-00",
+        "traceparent": "00-f336a07ca9f76245b15582b7a5b10380-0c2dd68bbf0e4f48-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7e6bf02b689d84f3934acf393f4a8e0c",
+        "x-ms-client-request-id": "65c84a9bf167c896a050ea09a3f4dc6d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -171,7 +911,7 @@
         ],
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
         "Docker-Content-Digest": "sha256:e2fffb656966c98a0b7712672e996a58327eff7705fb3d8d9581fc16ef412d13",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Location": "/v2/oci-artifact/manifests/sha256:e2fffb656966c98a0b7712672e996a58327eff7705fb3d8d9581fc16ef412d13",
@@ -181,749 +921,9 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "7e6bf02b689d84f3934acf393f4a8e0c",
-        "X-Ms-Correlation-Request-Id": "7e0deb5c-563c-4346-8c43-c82c97591ace",
-        "X-Ms-Request-Id": "a434810a-4e54-40b9-91ae-9db113b933c6"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "0",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-a14a8c0c78d97044-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "88abe883ab775ddf19000714df887f50",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "266",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "df67d8b5-0c17-4fa3-9a06-bc3fe5d8f235"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "pull"
-              },
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "push"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "137",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-328ad42206699b42-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "91b3d3864062a8f496b4c2fcc0c48926",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "8e1fd1d4-c41c-4ae1-b593-3c9d7a0e267a",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.616667"
-      },
-      "ResponseBody": {
-        "access_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-a14a8c0c78d97044-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "88abe883ab775ddf19000714df887f50",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Docker-Upload-Uuid": "b078851c-37cb-4479-adb3-4d8137adc435",
-        "Location": "/v2/oci-artifact/blobs/uploads/b078851c-37cb-4479-adb3-4d8137adc435?_nouploadcache=false\u0026_state=GzfAigbmlhlmYr5PyoDVOW-zqVxEGcG2qxLABDhpHSR7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiYjA3ODg1MWMtMzdjYi00NDc5LWFkYjMtNGQ4MTM3YWRjNDM1IiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIyOjA3OjI0LjQ1MDIwNDAzMVoifQ%3D%3D",
-        "Range": "0-0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "88abe883ab775ddf19000714df887f50",
-        "X-Ms-Correlation-Request-Id": "aa96c7de-29fa-4805-bfa4-5e57114a758c",
-        "X-Ms-Request-Id": "c643d0a1-cda3-4bfc-be2f-20559838974a"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/b078851c-37cb-4479-adb3-4d8137adc435?_nouploadcache=false\u0026_state=GzfAigbmlhlmYr5PyoDVOW-zqVxEGcG2qxLABDhpHSR7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiYjA3ODg1MWMtMzdjYi00NDc5LWFkYjMtNGQ4MTM3YWRjNDM1IiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIyOjA3OjI0LjQ1MDIwNDAzMVoifQ%3D%3D",
-      "RequestMethod": "PATCH",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "171",
-        "Content-Type": "application/octet-stream",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-54fe1a9ecd800b42-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1ce7587a3b97da85cd8a34171300a166",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "H4sIAAAAAAAA/\u002BzRwcrCMBAE4Dn/8L9DD551tulmn6dUq4VioUb06VUsORU8aRQx32VzSjYzi2bYt90WKZGkmU2T5HxOZ6lo6lTNPCjUUlFo0q2i4yHUI8hn75l/7kvE/lf1GLq2bsIynMOr37jn4b1/3L\u002BrYv9lWYkDxYkoireE\u002BOP9Xy87bNCjx4ACJwwY0WONf/x9erUsy7IsoVsAAAD//yO/fykACgAA",
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "266",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "6f0f030a-90a5-45d9-ab3d-f5e569ed1098"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "pull"
-              },
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "push"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "137",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-2da6c54c8f7f684e-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "0d8bbc687b9d43cdf402f1c2e9e29c54",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "26b6bd85-e187-4825-bd60-9cfa9aa058cc",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.6"
-      },
-      "ResponseBody": {
-        "access_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/b078851c-37cb-4479-adb3-4d8137adc435?_nouploadcache=false\u0026_state=GzfAigbmlhlmYr5PyoDVOW-zqVxEGcG2qxLABDhpHSR7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiYjA3ODg1MWMtMzdjYi00NDc5LWFkYjMtNGQ4MTM3YWRjNDM1IiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIyOjA3OjI0LjQ1MDIwNDAzMVoifQ%3D%3D",
-      "RequestMethod": "PATCH",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "171",
-        "Content-Type": "application/octet-stream",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-54fe1a9ecd800b42-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1ce7587a3b97da85cd8a34171300a166",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "H4sIAAAAAAAA/\u002BzRwcrCMBAE4Dn/8L9DD551tulmn6dUq4VioUb06VUsORU8aRQx32VzSjYzi2bYt90WKZGkmU2T5HxOZ6lo6lTNPCjUUlFo0q2i4yHUI8hn75l/7kvE/lf1GLq2bsIynMOr37jn4b1/3L\u002BrYv9lWYkDxYkoireE\u002BOP9Xy87bNCjx4ACJwwY0WONf/x9erUsy7IsoVsAAAD//yO/fykACgAA",
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Docker-Upload-Uuid": "b078851c-37cb-4479-adb3-4d8137adc435",
-        "Location": "/v2/oci-artifact/blobs/uploads/b078851c-37cb-4479-adb3-4d8137adc435?_nouploadcache=false\u0026_state=WRdXQ__SC3ZaTLS1aPzy0Aw158oSWSwq8FEv2qFUJG17Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiYjA3ODg1MWMtMzdjYi00NDc5LWFkYjMtNGQ4MTM3YWRjNDM1IiwiT2Zmc2V0IjoxNzEsIlN0YXJ0ZWRBdCI6IjIwMjItMDktMTlUMjI6MDc6MjRaIn0%3D",
-        "Range": "0-170",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "1ce7587a3b97da85cd8a34171300a166",
-        "X-Ms-Correlation-Request-Id": "25b2f838-29c7-4d53-b564-6dc278274079",
-        "X-Ms-Request-Id": "768689f2-90c3-490b-af67-7ac598c089a9"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/b078851c-37cb-4479-adb3-4d8137adc435?_nouploadcache=false\u0026_state=WRdXQ__SC3ZaTLS1aPzy0Aw158oSWSwq8FEv2qFUJG17Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiYjA3ODg1MWMtMzdjYi00NDc5LWFkYjMtNGQ4MTM3YWRjNDM1IiwiT2Zmc2V0IjoxNzEsIlN0YXJ0ZWRBdCI6IjIwMjItMDktMTlUMjI6MDc6MjRaIn0%3D\u0026digest=sha256%3Ad25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "0",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-1e4abd5274adff4f-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "869ae17763a14bb94ed8c4d80bdd9496",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "266",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "2817c116-f139-4810-b7ab-92397e994248"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "pull"
-              },
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "push"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "137",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-64763ea50a7b924d-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "04935c137b39fe888ba3279449c2f1ea",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "40e24b51-b097-45f7-89e1-13ce152c4b5c",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.583333"
-      },
-      "ResponseBody": {
-        "access_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/b078851c-37cb-4479-adb3-4d8137adc435?_nouploadcache=false\u0026_state=WRdXQ__SC3ZaTLS1aPzy0Aw158oSWSwq8FEv2qFUJG17Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiYjA3ODg1MWMtMzdjYi00NDc5LWFkYjMtNGQ4MTM3YWRjNDM1IiwiT2Zmc2V0IjoxNzEsIlN0YXJ0ZWRBdCI6IjIwMjItMDktMTlUMjI6MDc6MjRaIn0%3D\u0026digest=sha256%3Ad25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-e7164b4345cc6a45a780d19e537ef5ae-1e4abd5274adff4f-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "869ae17763a14bb94ed8c4d80bdd9496",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Content-Digest": "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Location": "/v2/oci-artifact/blobs/sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "869ae17763a14bb94ed8c4d80bdd9496",
-        "X-Ms-Correlation-Request-Id": "9953f098-6e5f-4700-8df3-c5ea0914f74c",
-        "X-Ms-Request-Id": "28f2e9ef-1384-41b1-8926-979b62858964"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "0",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-c6f1cb8f4647e542-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "31a0dfed1b6505c4023fbfc4b7f43717",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "266",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:push,pull\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "c56fef21-beed-4581-8cfa-5fb3922a24e6"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "pull"
-              },
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "push"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "137",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-fe6a198a7de05045-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "8caf5b6d984ffb1b589bfafd3b24028b",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apush%2Cpull\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "2a368157-4e2c-4086-bd99-c80204916bb5",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.566667"
-      },
-      "ResponseBody": {
-        "access_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-c6f1cb8f4647e542-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "31a0dfed1b6505c4023fbfc4b7f43717",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Docker-Upload-Uuid": "86b7838e-00b3-4a5e-a29d-9d1ca171e4a2",
-        "Location": "/v2/oci-artifact/blobs/uploads/86b7838e-00b3-4a5e-a29d-9d1ca171e4a2?_nouploadcache=false\u0026_state=A0dHvreGkDK13ShMPfZy4cTUcx_qYNB2KF4JyabCkD17Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiODZiNzgzOGUtMDBiMy00YTVlLWEyOWQtOWQxY2ExNzFlNGEyIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIyOjA3OjI0LjkyMzgxODI5WiJ9",
-        "Range": "0-0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "31a0dfed1b6505c4023fbfc4b7f43717",
-        "X-Ms-Correlation-Request-Id": "573d9418-e39f-4351-80b1-76927d853b7e",
-        "X-Ms-Request-Id": "4dcfa0ff-716c-4318-839a-9ae9170b0be1"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/86b7838e-00b3-4a5e-a29d-9d1ca171e4a2?_nouploadcache=false\u0026_state=A0dHvreGkDK13ShMPfZy4cTUcx_qYNB2KF4JyabCkD17Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiODZiNzgzOGUtMDBiMy00YTVlLWEyOWQtOWQxY2ExNzFlNGEyIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIyOjA3OjI0LjkyMzgxODI5WiJ9",
-      "RequestMethod": "PATCH",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "28",
-        "Content-Type": "application/octet-stream",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-269bf42ab782014e-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "2bead9e7623cf830988d01f9bcc44696",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "//5oAGUAbABsAG8AIAB3AG8AcgBsAGQADQAKAA==",
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "266",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:24 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "118169f3-b1df-4c1b-8398-7c8430ae5c27"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "pull"
-              },
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "push"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "137",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-8c0047b01824f746-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "ed26106c6413559bc4a4d9ca20c6cadd",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "56650b53-34c5-4f0b-959f-5d78e4e83981",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.55"
-      },
-      "ResponseBody": {
-        "access_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/86b7838e-00b3-4a5e-a29d-9d1ca171e4a2?_nouploadcache=false\u0026_state=A0dHvreGkDK13ShMPfZy4cTUcx_qYNB2KF4JyabCkD17Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiODZiNzgzOGUtMDBiMy00YTVlLWEyOWQtOWQxY2ExNzFlNGEyIiwiT2Zmc2V0IjowLCJTdGFydGVkQXQiOiIyMDIyLTA5LTE5VDIyOjA3OjI0LjkyMzgxODI5WiJ9",
-      "RequestMethod": "PATCH",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "28",
-        "Content-Type": "application/octet-stream",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-269bf42ab782014e-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "2bead9e7623cf830988d01f9bcc44696",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "//5oAGUAbABsAG8AIAB3AG8AcgBsAGQADQAKAA==",
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Docker-Upload-Uuid": "86b7838e-00b3-4a5e-a29d-9d1ca171e4a2",
-        "Location": "/v2/oci-artifact/blobs/uploads/86b7838e-00b3-4a5e-a29d-9d1ca171e4a2?_nouploadcache=false\u0026_state=oO2A44R4n6QHtLX9OQuvq3sM6-e46xbUWEk3Ks41LQV7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiODZiNzgzOGUtMDBiMy00YTVlLWEyOWQtOWQxY2ExNzFlNGEyIiwiT2Zmc2V0IjoyOCwiU3RhcnRlZEF0IjoiMjAyMi0wOS0xOVQyMjowNzoyNFoifQ%3D%3D",
-        "Range": "0-27",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "2bead9e7623cf830988d01f9bcc44696",
-        "X-Ms-Correlation-Request-Id": "a5194a59-7335-482d-9ed9-da679ea2f675",
-        "X-Ms-Request-Id": "aed29a9a-4aa7-4d12-a555-3e42c4bbdc58"
-      },
-      "ResponseBody": null
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/86b7838e-00b3-4a5e-a29d-9d1ca171e4a2?_nouploadcache=false\u0026_state=oO2A44R4n6QHtLX9OQuvq3sM6-e46xbUWEk3Ks41LQV7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiODZiNzgzOGUtMDBiMy00YTVlLWEyOWQtOWQxY2ExNzFlNGEyIiwiT2Zmc2V0IjoyOCwiU3RhcnRlZEF0IjoiMjAyMi0wOS0xOVQyMjowNzoyNFoifQ%3D%3D\u0026digest=sha256%3A654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "0",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-9992b0d7514ea44e-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "dedc333d0b0a0bda2bb6f4c196223f94",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "266",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull,push\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "8067be01-b508-41b4-b9ef-7a3a2aca7a4d"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "pull"
-              },
-              {
-                "Type": "repository",
-                "Name": "oci-artifact",
-                "Action": "push"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "137",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-5543e7d2eabc2445-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "2a91645414fe82773d9467978966d7d1",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull%2Cpush\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "423fbaa8-5c4e-40e3-a6c4-f97a3aa74666",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.533333"
-      },
-      "ResponseBody": {
-        "access_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://shrejacontainerregistry.azurecr.io/v2/oci-artifact/blobs/uploads/86b7838e-00b3-4a5e-a29d-9d1ca171e4a2?_nouploadcache=false\u0026_state=oO2A44R4n6QHtLX9OQuvq3sM6-e46xbUWEk3Ks41LQV7Ik5hbWUiOiJvY2ktYXJ0aWZhY3QiLCJVVUlEIjoiODZiNzgzOGUtMDBiMy00YTVlLWEyOWQtOWQxY2ExNzFlNGEyIiwiT2Zmc2V0IjoyOCwiU3RhcnRlZEF0IjoiMjAyMi0wOS0xOVQyMjowNzoyNFoifQ%3D%3D\u0026digest=sha256%3A654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-0de368e61d7f8b44b9e0711ea9dd4796-9992b0d7514ea44e-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "dedc333d0b0a0bda2bb6f4c196223f94",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
-        "Docker-Content-Digest": "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Location": "/v2/oci-artifact/blobs/sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "dedc333d0b0a0bda2bb6f4c196223f94",
-        "X-Ms-Correlation-Request-Id": "08958b37-4f0f-47d3-9b8b-540bb77ebd46",
-        "X-Ms-Request-Id": "cf91fd3a-01e6-4f36-bc2d-18e0ae18d220"
+        "X-Ms-Client-Request-Id": "65c84a9bf167c896a050ea09a3f4dc6d",
+        "X-Ms-Correlation-Request-Id": "df040d81-fd6f-4436-a5b2-275e788bfbba",
+        "X-Ms-Request-Id": "9eb6b814-427e-4844-86dc-5c0b73f98c66"
       },
       "ResponseBody": null
     },
@@ -932,9 +932,9 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/vnd.oci.image.manifest.v1\u002Bjson,application/json",
-        "traceparent": "00-fded024c9f09cb4b8fc2076865cfbaf5-2abc5496949f3946-00",
+        "traceparent": "00-4e41914809bf704ca0b97678010cb13a-ea8560705fa10844-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "88bb24c368e7608c361bc25c70dabfa2",
+        "x-ms-client-request-id": "6e5a1a0086ed3e1963fe0f7f7460880b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -949,7 +949,7 @@
         "Connection": "keep-alive",
         "Content-Length": "206",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -958,7 +958,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:pull\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "44a5fe3b-614c-4293-a97f-7c700ce69266"
+        "X-Ms-Correlation-Request-Id": "1679ba7c-e2f7-4c10-b2e6-c3a5bc08c4b0"
       },
       "ResponseBody": {
         "errors": [
@@ -983,9 +983,9 @@
         "Accept": "application/json",
         "Content-Length": "130",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-fded024c9f09cb4b8fc2076865cfbaf5-e5820a22e9140f40-00",
+        "traceparent": "00-4e41914809bf704ca0b97678010cb13a-7c7af82cb9d71442-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "bc754565a03429dfbc5aa175a44281c5",
+        "x-ms-client-request-id": "4c089827e178794a0cb0d0d9799220ec",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Apull\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
@@ -993,11 +993,11 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "f2e276af-986d-4738-a6bb-ebe694c9d469",
+        "X-Ms-Correlation-Request-Id": "fdeeafae-8f17-40cd-a4a2-eb8262527f2b",
         "x-ms-ratelimit-remaining-calls-per-second": "166.516667"
       },
       "ResponseBody": {
@@ -1010,9 +1010,9 @@
       "RequestHeaders": {
         "Accept": "application/vnd.oci.image.manifest.v1\u002Bjson,application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fded024c9f09cb4b8fc2076865cfbaf5-2abc5496949f3946-00",
+        "traceparent": "00-4e41914809bf704ca0b97678010cb13a-ea8560705fa10844-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "88bb24c368e7608c361bc25c70dabfa2",
+        "x-ms-client-request-id": "6e5a1a0086ed3e1963fe0f7f7460880b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1027,7 +1027,7 @@
         "Connection": "keep-alive",
         "Content-Length": "399",
         "Content-Type": "application/vnd.oci.image.manifest.v1\u002Bjson",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
         "Docker-Content-Digest": "sha256:e2fffb656966c98a0b7712672e996a58327eff7705fb3d8d9581fc16ef412d13",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "ETag": "\u0022sha256:e2fffb656966c98a0b7712672e996a58327eff7705fb3d8d9581fc16ef412d13\u0022",
@@ -1037,9 +1037,9 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "88bb24c368e7608c361bc25c70dabfa2",
-        "X-Ms-Correlation-Request-Id": "60bb77a6-1d26-4421-a345-2212197d627a",
-        "X-Ms-Request-Id": "7ddc7aea-8a1f-44f3-9b59-e55ee5370430"
+        "X-Ms-Client-Request-Id": "6e5a1a0086ed3e1963fe0f7f7460880b",
+        "X-Ms-Correlation-Request-Id": "edf9ecab-8037-4369-965d-71c53b7cdbe4",
+        "X-Ms-Request-Id": "324530ab-9625-44e0-8c99-bd14508ad700"
       },
       "ResponseBody": {
         "config": {
@@ -1065,9 +1065,9 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
-        "traceparent": "00-73a4ea5caabbd849a9c6dfe772ef3830-14edf56ac3a78740-00",
+        "traceparent": "00-ef9ae9e71a14c34eace3bc000e6df34e-6fe38d0025d5ad4d-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "72fd22dfb666ecacd831f3e3511a1262",
+        "x-ms-client-request-id": "880845776d99e67f15522c7612bea334",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1082,7 +1082,7 @@
         "Connection": "keep-alive",
         "Content-Length": "208",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -1091,7 +1091,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://shrejacontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022shrejacontainerregistry.azurecr.io\u0022,scope=\u0022repository:oci-artifact:delete\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "9afd3023-8c98-40cf-9b49-fcf4e8ddd4d0"
+        "X-Ms-Correlation-Request-Id": "caecf336-3ca6-4afe-84fa-157cbec7bed2"
       },
       "ResponseBody": {
         "errors": [
@@ -1116,9 +1116,9 @@
         "Accept": "application/json",
         "Content-Length": "132",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-73a4ea5caabbd849a9c6dfe772ef3830-549f2a5a149dfe4b-00",
+        "traceparent": "00-ef9ae9e71a14c34eace3bc000e6df34e-1e07fd92cd597c46-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "4432c5d51bf0239c4491cc8dc616bcf3",
+        "x-ms-client-request-id": "10db6c058cab1f2ccfe1623cb540c5d0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "service=shrejacontainerregistry.azurecr.io\u0026scope=repository%3Aoci-artifact%3Adelete\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
@@ -1126,11 +1126,11 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Sep 2022 22:07:25 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "db20d28c-dd24-486a-8f84-ded023411a3c",
+        "X-Ms-Correlation-Request-Id": "ca4f67d5-b67c-44de-a2f4-1ed3d90246ff",
         "x-ms-ratelimit-remaining-calls-per-second": "166.5"
       },
       "ResponseBody": {
@@ -1143,9 +1143,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-73a4ea5caabbd849a9c6dfe772ef3830-14edf56ac3a78740-00",
+        "traceparent": "00-ef9ae9e71a14c34eace3bc000e6df34e-6fe38d0025d5ad4d-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220919.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "72fd22dfb666ecacd831f3e3511a1262",
+        "x-ms-client-request-id": "880845776d99e67f15522c7612bea334",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1159,7 +1159,7 @@
         ],
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Mon, 19 Sep 2022 22:07:26 GMT",
+        "Date": "Mon, 19 Sep 2022 23:18:33 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -1167,10 +1167,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "72fd22dfb666ecacd831f3e3511a1262",
-        "X-Ms-Correlation-Request-Id": "add4ee60-f650-4b58-bd5d-d55cb47992d4",
+        "X-Ms-Client-Request-Id": "880845776d99e67f15522c7612bea334",
+        "X-Ms-Correlation-Request-Id": "4ea5b8a4-8f89-4d9a-add9-12a1013200b0",
         "X-Ms-Ratelimit-Remaining-Calls-Per-Second": "8.000000",
-        "X-Ms-Request-Id": "26c2965a-df13-4681-9aec-63183a177e46"
+        "X-Ms-Request-Id": "9eb22e0b-b151-4d4b-8733-1ad6de70f6ef"
       },
       "ResponseBody": null
     }
@@ -1178,6 +1178,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "CONTAINERREGISTRY_ENDPOINT": "https://shrejacontainerregistry.azurecr.io",
-    "RandomSeed": "1470247683"
+    "RandomSeed": "1336663346"
   }
 }
