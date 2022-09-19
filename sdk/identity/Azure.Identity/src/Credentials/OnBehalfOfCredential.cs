@@ -22,6 +22,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
+        private readonly string[] _additionallyAllowedTenantIds;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -125,6 +126,8 @@ namespace Azure.Identity
                           certificateProvider,
                           options.SendCertificateChain,
                           options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         internal OnBehalfOfCredential(
@@ -146,6 +149,8 @@ namespace Azure.Identity
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
             _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -178,7 +183,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
 
                 AuthenticationResult result = await _client
                     .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
