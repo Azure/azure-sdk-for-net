@@ -1,16 +1,19 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2022-09-19)
 
-### Features Added
+This is the first stable release of the HDInsight Management client library.
 
 ### Breaking Changes
 
-- Fix the format of `IPConfiguration.type` to `ResourceType`.
-
-### Bugs Fixed
+- Fixed the format of `IPConfiguration.type` to `ResourceType`.
+- Rename the `CreateDate` to `CreatedOn` and changed the format to `DateTimeOffset`.
+- Renamed the `LdapsUrls` tp `LdapsUris` and chagned the format to `Uri`.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.2 (2022-08-29)
 
