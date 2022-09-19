@@ -12,11 +12,18 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for DdosSettingsProtectionCoverage.
+    /// Defines values for Geo.
     /// </summary>
-    public static class DdosSettingsProtectionCoverage
+    public static class Geo
     {
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
+        public const string GLOBAL = "GLOBAL";
+        public const string AFRI = "AFRI";
+        public const string APAC = "APAC";
+        public const string EURO = "EURO";
+        public const string LATAM = "LATAM";
+        public const string NAM = "NAM";
+        public const string ME = "ME";
+        public const string OCEANIA = "OCEANIA";
+        public const string AQ = "AQ";
     }
 }

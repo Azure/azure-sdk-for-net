@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for DdosCustomPolicyProtocol.
+    /// Defines values for VnetLocalRouteOverrideCriteria.
     /// </summary>
-    public static class DdosCustomPolicyProtocol
+    public static class VnetLocalRouteOverrideCriteria
     {
-        public const string Tcp = "Tcp";
-        public const string Udp = "Udp";
-        public const string Syn = "Syn";
+        public const string Contains = "Contains";
+        public const string Equal = "Equal";
     }
 }
