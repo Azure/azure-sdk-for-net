@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary> The core implementation for operation GetReport. </summary>
-        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        protected override async Task<Response<GuestConfigurationAssignmentReport>> GetReportCoreAsync(string reportId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        protected override async Task<Response<GuestConfigurationAssignmentReport>> GetReportCoreAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
@@ -259,13 +259,13 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary> The core implementation for operation GetReport. </summary>
-        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        protected override Response<GuestConfigurationAssignmentReport> GetReportCore(string reportId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        protected override Response<GuestConfigurationAssignmentReport> GetReportCore(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
