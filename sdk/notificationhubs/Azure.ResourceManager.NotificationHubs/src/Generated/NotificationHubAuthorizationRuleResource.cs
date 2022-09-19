@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary> The core implementation for operation RegenerateKeys. </summary>
-        /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
+        /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the NotificationHub Authorization Rule Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>
         protected override async Task<Response<NotificationHubResourceKeys>> RegenerateKeysCoreAsync(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary> The core implementation for operation RegenerateKeys. </summary>
-        /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the Namespace Authorization Rule Key. </param>
+        /// <param name="notificationHubPolicyKey"> Parameters supplied to regenerate the NotificationHub Authorization Rule Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>
         protected override Response<NotificationHubResourceKeys> RegenerateKeysCore(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
