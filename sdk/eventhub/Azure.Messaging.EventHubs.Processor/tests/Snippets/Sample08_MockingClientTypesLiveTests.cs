@@ -3,15 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
