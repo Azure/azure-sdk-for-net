@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0 (2022-09-13)
+## 1.7.0 (2022-09-19)
 
 ### Features Added
 - Added `AdditionallyAllowedTenants` to the following credential options to force explicit opt-in behavior for multi-tenant authentication:
@@ -17,8 +17,12 @@
     - `VisualStudioCredentialOptions`
 - Added `TenantId` to `DefaultAzureCredentialOptions` to avoid having to set `InteractiveBrowserTenantId`, `SharedTokenCacheTenantId`, `VisualStudioCodeTenantId`, and `VisualStudioTenantId` individually.
 
+### Bugs Fixed
+- Fixed overly restrictive scope validation to allow the '_' character, for common scopes such as `user_impersonation` [#30647](https://github.com/Azure/azure-sdk-for-net/issues/30647)
+
 ### Breaking Changes
 - Credential types supporting multi-tenant authentication will now throw `AuthenticationFailedException` if the requested tenant ID doesn't match the credential's tenant ID, and is not included in the `AdditionallyAllowedTenants` option. Applications must now explicitly add additional tenants to the `AdditionallyAllowedTenants` list, or add '*' to list, to enable acquiring tokens from tenants other than the originally specified tenant ID. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).
+- `ManagedIdentityCredential` token caching added in 1.7.0-beta.1 has been removed from this release and will be added back in 1.8.0-beta.1
 
 ## 1.7.0-beta.1 (2022-08-09)
 
