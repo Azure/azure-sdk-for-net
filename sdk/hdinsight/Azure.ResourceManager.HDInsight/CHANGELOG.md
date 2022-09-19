@@ -8,7 +8,7 @@ This is the first stable release of the HDInsight Management client library.
 
 - Fixed the format of `IPConfiguration.type` to `ResourceType`.
 - Rename the `CreateDate` to `CreatedOn` and changed the format to `DateTimeOffset`.
-- Renamed the `LdapsUrls` tp `LdapsUris` and chagned the format to `Uri`.
+- Renamed the `LdapsUrls` to `LdapsUris` and changed the format to `Uri`.
 
 ### Other Changes
 
