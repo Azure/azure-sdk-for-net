@@ -14,15 +14,13 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Added new api version 2021-08-01
-			- Made AppGw swagger changes for L4 proxy 
-			- Implemented HubRoutingPreference in VirtualHub
-			- MultipleApipa feature VpnSiteLinkConnection and VirtualNetworkGateway
-			- Virtual Wan P2S MultiPool feature swagger fixes
-			- Added nic auxiliary mode
-			- Connection Draining: added new properties
-			- Azure Firewall Support of Private IP Ranges in IDPS
-			- Added flush conn to nsg			
+			- Published new api version 2022-05-01
+			- Added DisableTcpStateTracking on nic 
+			- Added new VIP Swap APIs to support extension resource design
+			- Added BillingType Property to ExpressRoutePorts
+			- Added Virtual network gateway policy group api
+			- Added DDoS Per IP SKU + Custom Policy Deprecation Swagger PR
+			- Added prefixType property to CustomIPPrefix for NRP 2022-05-01
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
