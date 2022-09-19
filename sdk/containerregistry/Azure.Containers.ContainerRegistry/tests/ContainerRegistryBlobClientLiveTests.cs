@@ -59,6 +59,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var uploadResult = await client.UploadManifestAsync(manifest);
             string digest = uploadResult.Value.Digest;
 
+            await UploadManifestPrerequisites(client);
+
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
@@ -75,6 +77,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
+
+            await UploadManifestPrerequisites(client);
 
             // Act
             string payload = "" +
