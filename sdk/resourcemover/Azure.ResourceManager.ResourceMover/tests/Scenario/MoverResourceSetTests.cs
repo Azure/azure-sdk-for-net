@@ -18,6 +18,9 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 {
     internal class MoverResourceSetTests : ResourceMoverManagementTestBase
     {
+        protected internal const string ExpectedKey = "tagKey";
+        protected internal const string ExpectedValue = "tagValue";
+
         public MoverResourceSetTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -201,6 +204,24 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             };
             lro = await moverResourceSet.BulkRemoveAsync(WaitUntil.Completed, bulkRemoveContent);
             Assert.IsTrue(lro.Value.Status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+        }
+
+        [TestCase(null)]
+        public async Task AddTagTest(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.WestUS);
+            string moverResourceSetName = Recording.GenerateAssetName("MoverResourceSet-");
+            MoverResourceSetResource moverResourceSet = await CreateMoverResourceSet(rg, moverResourceSetName);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await moverResourceSet.AddTagAsync(ExpectedKey, ExpectedValue));
+            //moverResourceSet = await moverResourceSet.AddTagAsync(ExpectedKey, ExpectedValue);
+
+            //Assert.IsTrue(moverResourceSet.Data.Tags.TryGetValue(ExpectedKey, out string value));
+            //Assert.AreEqual(ExpectedValue, value);
         }
 
         private void AssertValidMoverResourceSet(MoverResourceSetResource model, MoverResourceSetResource getResult)
