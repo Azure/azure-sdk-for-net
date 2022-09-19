@@ -142,6 +142,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
         }
 
+        [LiveOnly]
         [AsyncOnly]
         [Test]
         public async Task ConcurrencyMultiThread()
@@ -163,6 +164,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(0, response.Value.Errors.Count());
         }
 
+        [LiveOnly]
         [SyncOnly]
         [Test]
         public void ConcurrencySingleThread()
