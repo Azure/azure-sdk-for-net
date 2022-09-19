@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0 (2022-09-20)
+## 1.7.0 (2022-09-19)
 
 ### Features Added
 - Added `AdditionallyAllowedTenants` to the following credential options to force explicit opt-in behavior for multi-tenant authentication:
