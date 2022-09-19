@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
-            return await GetReportsCoreAsync(cancellationToken).ConfigureAwait(false);
+            return GetReportsCoreAsync(cancellationToken);
         }
 
         /// <summary> The core implementation for operation GetReports. </summary>

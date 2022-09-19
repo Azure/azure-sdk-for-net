@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
-            return await GetDeliveryAttributesCoreAsync(cancellationToken).ConfigureAwait(false);
+            return GetDeliveryAttributesCoreAsync(cancellationToken);
         }
 
         /// <summary> The core implementation for operation GetDeliveryAttributes. </summary>
