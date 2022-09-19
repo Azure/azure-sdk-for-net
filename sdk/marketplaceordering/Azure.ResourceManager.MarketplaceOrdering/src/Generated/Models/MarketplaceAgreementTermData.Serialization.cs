@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
-    public partial class AgreementTermData : IUtf8JsonSerializable
+    public partial class MarketplaceAgreementTermData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,38 +37,38 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             if (Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink");
-                writer.WriteStringValue(LicenseTextLink);
+                writer.WriteStringValue(LicenseTextLink.AbsoluteUri);
             }
             if (Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink");
-                writer.WriteStringValue(PrivacyPolicyLink);
+                writer.WriteStringValue(PrivacyPolicyLink.AbsoluteUri);
             }
             if (Optional.IsDefined(MarketplaceTermsLink))
             {
                 writer.WritePropertyName("marketplaceTermsLink");
-                writer.WriteStringValue(MarketplaceTermsLink);
+                writer.WriteStringValue(MarketplaceTermsLink.AbsoluteUri);
             }
-            if (Optional.IsDefined(RetrieveDatetime))
+            if (Optional.IsDefined(RetrievedOn))
             {
                 writer.WritePropertyName("retrieveDatetime");
-                writer.WriteStringValue(RetrieveDatetime.Value, "O");
+                writer.WriteStringValue(RetrievedOn.Value, "O");
             }
             if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature");
                 writer.WriteStringValue(Signature);
             }
-            if (Optional.IsDefined(Accepted))
+            if (Optional.IsDefined(IsAccepted))
             {
                 writer.WritePropertyName("accepted");
-                writer.WriteBooleanValue(Accepted.Value);
+                writer.WriteBooleanValue(IsAccepted.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static AgreementTermData DeserializeAgreementTermData(JsonElement element)
+        internal static MarketplaceAgreementTermData DeserializeMarketplaceAgreementTermData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             Optional<string> publisher = default;
             Optional<string> product = default;
             Optional<string> plan = default;
-            Optional<string> licenseTextLink = default;
-            Optional<string> privacyPolicyLink = default;
-            Optional<string> marketplaceTermsLink = default;
+            Optional<Uri> licenseTextLink = default;
+            Optional<Uri> privacyPolicyLink = default;
+            Optional<Uri> marketplaceTermsLink = default;
             Optional<DateTimeOffset> retrieveDatetime = default;
             Optional<string> signature = default;
             Optional<bool> accepted = default;
@@ -136,17 +136,32 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         }
                         if (property0.NameEquals("licenseTextLink"))
                         {
-                            licenseTextLink = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                licenseTextLink = null;
+                                continue;
+                            }
+                            licenseTextLink = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privacyPolicyLink"))
                         {
-                            privacyPolicyLink = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privacyPolicyLink = null;
+                                continue;
+                            }
+                            privacyPolicyLink = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("marketplaceTermsLink"))
                         {
-                            marketplaceTermsLink = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                marketplaceTermsLink = null;
+                                continue;
+                            }
+                            marketplaceTermsLink = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("retrieveDatetime"))
@@ -178,7 +193,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                     continue;
                 }
             }
-            return new AgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
+            return new MarketplaceAgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
         }
     }
 }

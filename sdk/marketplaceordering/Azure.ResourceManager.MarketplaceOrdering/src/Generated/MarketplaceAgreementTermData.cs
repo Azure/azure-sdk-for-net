@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
-    /// <summary> A class representing the AgreementTerm data model. </summary>
-    public partial class AgreementTermData : ResourceData
+    /// <summary> A class representing the MarketplaceAgreementTerm data model. </summary>
+    public partial class MarketplaceAgreementTermData : ResourceData
     {
-        /// <summary> Initializes a new instance of AgreementTermData. </summary>
-        public AgreementTermData()
+        /// <summary> Initializes a new instance of MarketplaceAgreementTermData. </summary>
+        public MarketplaceAgreementTermData()
         {
         }
 
-        /// <summary> Initializes a new instance of AgreementTermData. </summary>
+        /// <summary> Initializes a new instance of MarketplaceAgreementTermData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="licenseTextLink"> Link to HTML with Microsoft and Publisher terms. </param>
         /// <param name="privacyPolicyLink"> Link to the privacy policy of the publisher. </param>
         /// <param name="marketplaceTermsLink"> Link to HTML with Azure Marketplace terms. </param>
-        /// <param name="retrieveDatetime"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
+        /// <param name="retrievedOn"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
         /// <param name="signature"> Terms signature. </param>
-        /// <param name="accepted"> If any version of the terms have been accepted, otherwise false. </param>
-        internal AgreementTermData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, string marketplaceTermsLink, DateTimeOffset? retrieveDatetime, string signature, bool? accepted) : base(id, name, resourceType, systemData)
+        /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
+        internal MarketplaceAgreementTermData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, Uri licenseTextLink, Uri privacyPolicyLink, Uri marketplaceTermsLink, DateTimeOffset? retrievedOn, string signature, bool? isAccepted) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             Product = product;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             LicenseTextLink = licenseTextLink;
             PrivacyPolicyLink = privacyPolicyLink;
             MarketplaceTermsLink = marketplaceTermsLink;
-            RetrieveDatetime = retrieveDatetime;
+            RetrievedOn = retrievedOn;
             Signature = signature;
-            Accepted = accepted;
+            IsAccepted = isAccepted;
         }
 
         /// <summary> Publisher identifier string of image being deployed. </summary>
@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <summary> Plan identifier string of image being deployed. </summary>
         public string Plan { get; set; }
         /// <summary> Link to HTML with Microsoft and Publisher terms. </summary>
-        public string LicenseTextLink { get; set; }
+        public Uri LicenseTextLink { get; set; }
         /// <summary> Link to the privacy policy of the publisher. </summary>
-        public string PrivacyPolicyLink { get; set; }
+        public Uri PrivacyPolicyLink { get; set; }
         /// <summary> Link to HTML with Azure Marketplace terms. </summary>
-        public string MarketplaceTermsLink { get; set; }
+        public Uri MarketplaceTermsLink { get; set; }
         /// <summary> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </summary>
-        public DateTimeOffset? RetrieveDatetime { get; set; }
+        public DateTimeOffset? RetrievedOn { get; set; }
         /// <summary> Terms signature. </summary>
         public string Signature { get; set; }
         /// <summary> If any version of the terms have been accepted, otherwise false. </summary>
-        public bool? Accepted { get; set; }
+        public bool? IsAccepted { get; set; }
     }
 }
