@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Maps.GeoLocation
 {
-    internal partial class GeoLocationRestClient
+    internal partial class GeolocationRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -25,14 +25,14 @@ namespace Azure.Maps.GeoLocation
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of GeoLocationRestClient. </summary>
+        /// <summary> Initializes a new instance of GeolocationRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public GeoLocationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "1.0")
+        public GeolocationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "1.0")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -63,8 +63,8 @@ namespace Azure.Maps.GeoLocation
 
         /// <summary>
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
+        /// 
+        /// 
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
@@ -97,8 +97,8 @@ namespace Azure.Maps.GeoLocation
 
         /// <summary>
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
+        /// 
+        /// 
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
