@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The core implementation for operation Get. </summary>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
-        /// <param name="timeGrain"> The time grain for the detector response. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<AppServiceDetectorResource>> GetCoreAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The core implementation for operation Get. </summary>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
-        /// <param name="timeGrain"> The time grain for the detector response. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<AppServiceDetectorResource> GetCore(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {

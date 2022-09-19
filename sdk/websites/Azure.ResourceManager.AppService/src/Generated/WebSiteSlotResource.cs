@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.BackupSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(BackupItemResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.BackupSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken);
-                return response;
+                return Response.FromValue(BackupItemResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -2699,7 +2699,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.ListHybridConnectionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(HybridConnectionResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -2721,7 +2721,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.ListHybridConnectionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                return Response.FromValue(HybridConnectionResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -2743,7 +2743,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.ListRelayServiceConnectionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(RelayServiceConnectionEntityResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -2765,7 +2765,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.ListRelayServiceConnectionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                return Response.FromValue(RelayServiceConnectionEntityResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -3541,7 +3541,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.ListPremierAddOnsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(PremierAddOnResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -3563,7 +3563,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.ListPremierAddOnsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                return Response.FromValue(PremierAddOnResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="data"> Properties of the multi-role pool. </param>
+        /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override async Task<Response<WorkerPoolResource>> UpdateCoreAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="data"> Properties of the multi-role pool. </param>
+        /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override Response<WorkerPoolResource> UpdateCore(WorkerPoolData data, CancellationToken cancellationToken = default)

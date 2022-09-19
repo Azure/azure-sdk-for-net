@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(BackupItemResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                return response;
+                return Response.FromValue(BackupItemResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -3014,7 +3014,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(HybridConnectionResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -3036,7 +3036,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                return Response.FromValue(HybridConnectionResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -3058,7 +3058,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.ListRelayServiceConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(RelayServiceConnectionEntityResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -3080,7 +3080,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.ListRelayServiceConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                return Response.FromValue(RelayServiceConnectionEntityResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -4078,7 +4078,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.ListPremierAddOnsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(PremierAddOnResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -4100,7 +4100,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.ListPremierAddOns(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                return Response.FromValue(PremierAddOnResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
