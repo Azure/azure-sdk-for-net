@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class EventGridManagementTestBase : ManagementRecordedTestBase<EventGridManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        public SubscriptionResource DefaultSubscription { get; private set; }
+        public AzureLocation DefaultLocation => AzureLocation.EastUS;
 
         protected EventGridManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,12 +27,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
