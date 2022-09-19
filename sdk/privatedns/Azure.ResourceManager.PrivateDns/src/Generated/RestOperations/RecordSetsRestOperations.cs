@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PrivateDns
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, RecordSetData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, PrivateRecordSetData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecordSetData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateRecordSetData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, PrivateRecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                 case 201:
                     {
-                        RecordSetData value = default;
+                        PrivateRecordSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = PrivateRecordSetData.DeserializePrivateRecordSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecordSetData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<PrivateRecordSetData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, PrivateRecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                 case 201:
                     {
-                        RecordSetData value = default;
+                        PrivateRecordSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = PrivateRecordSetData.DeserializePrivateRecordSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, RecordSetData data, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, PrivateRecordSetData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecordSetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateRecordSetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, PrivateRecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        PrivateRecordSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = PrivateRecordSetData.DeserializePrivateRecordSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecordSetData> Update(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<PrivateRecordSetData> Update(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, PrivateRecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        PrivateRecordSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = PrivateRecordSetData.DeserializePrivateRecordSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecordSetData>> GetAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateRecordSetData>> GetAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -381,13 +381,13 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        PrivateRecordSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = PrivateRecordSetData.DeserializePrivateRecordSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecordSetData)null, message.Response);
+                    return Response.FromValue((PrivateRecordSetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecordSetData> Get(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public Response<PrivateRecordSetData> Get(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -415,13 +415,13 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 case 200:
                     {
-                        RecordSetData value = default;
+                        PrivateRecordSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordSetData.DeserializeRecordSetData(document.RootElement);
+                        value = PrivateRecordSetData.DeserializePrivateRecordSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecordSetData)null, message.Response);
+                    return Response.FromValue((PrivateRecordSetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

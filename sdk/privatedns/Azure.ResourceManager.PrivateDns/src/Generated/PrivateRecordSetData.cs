@@ -13,11 +13,11 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the RecordSet data model. </summary>
-    public partial class RecordSetData : ResourceData
+    /// <summary> A class representing the PrivateRecordSet data model. </summary>
+    public partial class PrivateRecordSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
-        public RecordSetData()
+        /// <summary> Initializes a new instance of PrivateRecordSetData. </summary>
+        public PrivateRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             ARecords = new ChangeTrackingList<ARecord>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PrivateDns
             TxtRecords = new ChangeTrackingList<TxtRecord>();
         }
 
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
+        /// <summary> Initializes a new instance of PrivateRecordSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="soaRecord"> The SOA record in the record set. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, CnameRecord cnameRecord, IList<MxRecord> mxRecords, IList<PtrRecord> ptrRecords, SoaRecord soaRecord, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords) : base(id, name, resourceType, systemData)
+        internal PrivateRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, CnameRecord cnameRecord, IList<MxRecord> mxRecords, IList<PtrRecord> ptrRecords, SoaRecord soaRecord, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
