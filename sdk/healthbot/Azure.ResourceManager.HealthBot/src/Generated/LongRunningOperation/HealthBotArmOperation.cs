@@ -13,28 +13,28 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Healthbot
+namespace Azure.ResourceManager.HealthBot
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class HealthbotArmOperation : ArmOperation
+    internal class HealthBotArmOperation : ArmOperation
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of HealthbotArmOperation for mocking. </summary>
-        protected HealthbotArmOperation()
+        /// <summary> Initializes a new instance of HealthBotArmOperation for mocking. </summary>
+        protected HealthBotArmOperation()
         {
         }
 
-        internal HealthbotArmOperation(Response response)
+        internal HealthBotArmOperation(Response response)
         {
             _operation = OperationInternal.Succeeded(response);
         }
 
-        internal HealthbotArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal HealthBotArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "HealthbotArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "HealthBotArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />

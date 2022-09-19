@@ -5,19 +5,19 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Healthbot.Models
+namespace Azure.ResourceManager.HealthBot.Models
 {
     /// <summary> The resource model definition representing SKU. </summary>
-    public partial class HealthbotSku
+    public partial class HealthBotSku
     {
-        /// <summary> Initializes a new instance of HealthbotSku. </summary>
+        /// <summary> Initializes a new instance of HealthBotSku. </summary>
         /// <param name="name"> The name of the Azure Health Bot SKU. </param>
-        public HealthbotSku(HealthbotSkuName name)
+        public HealthBotSku(HealthBotSkuName name)
         {
             Name = name;
         }
 
         /// <summary> The name of the Azure Health Bot SKU. </summary>
-        public HealthbotSkuName Name { get; set; }
+        public HealthBotSkuName Name { get; set; }
     }
 }

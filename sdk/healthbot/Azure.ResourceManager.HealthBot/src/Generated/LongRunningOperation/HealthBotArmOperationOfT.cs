@@ -13,28 +13,28 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Healthbot
+namespace Azure.ResourceManager.HealthBot
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class HealthbotArmOperation<T> : ArmOperation<T>
+    internal class HealthBotArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of HealthbotArmOperation for mocking. </summary>
-        protected HealthbotArmOperation()
+        /// <summary> Initializes a new instance of HealthBotArmOperation for mocking. </summary>
+        protected HealthBotArmOperation()
         {
         }
 
-        internal HealthbotArmOperation(Response<T> response)
+        internal HealthBotArmOperation(Response<T> response)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal HealthbotArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal HealthBotArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "HealthbotArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "HealthBotArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />

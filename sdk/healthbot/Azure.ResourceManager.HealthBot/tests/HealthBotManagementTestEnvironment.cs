@@ -3,9 +3,9 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.Healthbot.Tests
+namespace Azure.ResourceManager.HealthBot.Tests
 {
-    public class HealthbotManagementTestEnvironment : TestEnvironment
+    public class HealthBotManagementTestEnvironment : TestEnvironment
     {
     }
 }

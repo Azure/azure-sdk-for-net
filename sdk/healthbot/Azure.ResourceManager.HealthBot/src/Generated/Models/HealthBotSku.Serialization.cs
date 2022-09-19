@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Healthbot.Models
+namespace Azure.ResourceManager.HealthBot.Models
 {
-    public partial class HealthbotSku : IUtf8JsonSerializable
+    public partial class HealthBotSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.Healthbot.Models
             writer.WriteEndObject();
         }
 
-        internal static HealthbotSku DeserializeHealthbotSku(JsonElement element)
+        internal static HealthBotSku DeserializeHealthBotSku(JsonElement element)
         {
-            HealthbotSkuName name = default;
+            HealthBotSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString().ToHealthbotSkuName();
+                    name = property.Value.GetString().ToHealthBotSkuName();
                     continue;
                 }
             }
-            return new HealthbotSku(name);
+            return new HealthBotSku(name);
         }
     }
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D5E9998A-C0D9-4CF4-9183-C37B152E4E68}") = "Azure.ResourceManager.Healthbot", "src\Azure.ResourceManager.Healthbot.csproj", "{ACA94220-0BF9-4B53-8F79-D96A0172D032}"
+Project("{D5E9998A-C0D9-4CF4-9183-C37B152E4E68}") = "Azure.ResourceManager.HealthBot", "src\Azure.ResourceManager.HealthBot.csproj", "{ACA94220-0BF9-4B53-8F79-D96A0172D032}"
 EndProject
-Project("{D5E9998A-C0D9-4CF4-9183-C37B152E4E68}") = "Azure.ResourceManager.Healthbot.Tests", "tests\Azure.ResourceManager.Healthbot.Tests.csproj", "{969125CD-196D-43AF-9FBD-6FAF4E7D1E58}"
+Project("{D5E9998A-C0D9-4CF4-9183-C37B152E4E68}") = "Azure.ResourceManager.HealthBot.Tests", "tests\Azure.ResourceManager.HealthBot.Tests.csproj", "{969125CD-196D-43AF-9FBD-6FAF4E7D1E58}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution

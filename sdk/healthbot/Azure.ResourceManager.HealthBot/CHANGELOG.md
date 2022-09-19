@@ -18,7 +18,7 @@ New design of track 2 initial commit.
 
 ### Package Name
 
-The package name has been changed from `Microsoft.Azure.Management.Healthbot` to `Azure.ResourceManager.Healthbot`.
+The package name has been changed from `Microsoft.Azure.Management.HealthBot` to `Azure.ResourceManager.HealthBot`.
 
 ### General New Features
 

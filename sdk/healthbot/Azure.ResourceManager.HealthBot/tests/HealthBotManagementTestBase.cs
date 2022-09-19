@@ -8,18 +8,18 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.Healthbot.Tests
+namespace Azure.ResourceManager.HealthBot.Tests
 {
-    public class HealthbotManagementTestBase : ManagementRecordedTestBase<HealthbotManagementTestEnvironment>
+    public class HealthBotManagementTestBase : ManagementRecordedTestBase<HealthBotManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
 
-        protected HealthbotManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected HealthBotManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected HealthbotManagementTestBase(bool isAsync)
+        protected HealthBotManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Healthbot
+namespace Azure.ResourceManager.HealthBot
 {
     internal static class ProviderConstants
     {

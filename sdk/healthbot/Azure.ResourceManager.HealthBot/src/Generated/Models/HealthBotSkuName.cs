@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Healthbot.Models
+namespace Azure.ResourceManager.HealthBot.Models
 {
     /// <summary> The name of the Azure Health Bot SKU. </summary>
-    public enum HealthbotSkuName
+    public enum HealthBotSkuName
     {
         /// <summary> F0. </summary>
         F0,
