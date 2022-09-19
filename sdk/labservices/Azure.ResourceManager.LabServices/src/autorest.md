@@ -34,6 +34,8 @@ rename-mapping:
   LabUpdate.properties.labPlanId: -|arm-id
   LabPlan.properties.allowedRegions: -|azure-location
   LabPlanUpdate.properties.allowedRegions: -|azure-location
+#  LabNetworkProfile.subnetId: -|arm-id
+#  LabPlanNetworkProfile.subnetId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -66,9 +68,21 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  - from: LabServices.json
+    where: $.definitions
+    transform: >
+      $['arm-id'] = {
+            'type': 'string',
+            'format': 'arm-id',
+            'description': 'A resource identifier.'
+          };
   - from: Skus.json
     where: $.definitions
     transform: >
       $.LabServicesSku.properties.tier['x-ms-enum']['name'] = 'AvailableLabServicesSkuTier';
       $.LabServicesSku['x-ms-client-name'] = 'AvailableLabServicesSku';
+  - from: LabPlans.json
+    where: $.definitions
+    transform: >
+      $.LabPlanNetworkProfile.properties.subnetId['$ref'] = 'LabServices.json#/definitions/arm-id';
 ```
