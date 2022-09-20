@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
         /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
         /// <param name="location"> Region name string. </param>
-        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, ProvisioningStateType? provisioningState, OperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, StorageCacheProvisioningStateType? provisioningState, StorageTargetOperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Junctions = junctions;
             TargetType = targetType;
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Type of the Storage Target. </summary>
         public StorageTargetType? TargetType { get; set; }
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public ProvisioningStateType? ProvisioningState { get; }
+        public StorageCacheProvisioningStateType? ProvisioningState { get; }
         /// <summary> Storage target operational state. </summary>
-        public OperationalStateType? State { get; set; }
+        public StorageTargetOperationalStateType? State { get; set; }
         /// <summary> Properties when targetType is nfs3. </summary>
         public Nfs3Target Nfs3 { get; set; }
         /// <summary> Properties when targetType is clfs. </summary>
         internal ClfsTarget Clfs { get; set; }
         /// <summary> Resource ID of storage container. </summary>
-        public string ClfsTarget
+        public ResourceIdentifier ClfsTarget
         {
             get => Clfs is null ? default : Clfs.Target;
             set

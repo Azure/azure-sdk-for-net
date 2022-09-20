@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
-        internal HttpMessage CreateGetRequest(AzureLocation location, string invitationId)
+        internal HttpMessage CreateGetRequest(AzureLocation location, Guid invitationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -120,25 +120,21 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="invitationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConsumerInvitationData>> GetAsync(AzureLocation location, string invitationId, CancellationToken cancellationToken = default)
+        public async Task<Response<DataShareConsumerInvitationData>> GetAsync(AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(invitationId, nameof(invitationId));
-
             using var message = CreateGetRequest(location, invitationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConsumerInvitationData value = default;
+                        DataShareConsumerInvitationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConsumerInvitationData.DeserializeConsumerInvitationData(document.RootElement);
+                        value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConsumerInvitationData)null, message.Response);
+                    return Response.FromValue((DataShareConsumerInvitationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -148,31 +144,27 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="invitationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConsumerInvitationData> Get(AzureLocation location, string invitationId, CancellationToken cancellationToken = default)
+        public Response<DataShareConsumerInvitationData> Get(AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(invitationId, nameof(invitationId));
-
             using var message = CreateGetRequest(location, invitationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConsumerInvitationData value = default;
+                        DataShareConsumerInvitationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConsumerInvitationData.DeserializeConsumerInvitationData(document.RootElement);
+                        value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConsumerInvitationData)null, message.Response);
+                    return Response.FromValue((DataShareConsumerInvitationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRejectInvitationRequest(AzureLocation location, ConsumerInvitationData data)
+        internal HttpMessage CreateRejectInvitationRequest(AzureLocation location, DataShareConsumerInvitationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -198,7 +190,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="data"> An invitation payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async Task<Response<ConsumerInvitationData>> RejectInvitationAsync(AzureLocation location, ConsumerInvitationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DataShareConsumerInvitationData>> RejectInvitationAsync(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -208,9 +200,9 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        ConsumerInvitationData value = default;
+                        DataShareConsumerInvitationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConsumerInvitationData.DeserializeConsumerInvitationData(document.RootElement);
+                        value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -223,7 +215,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="data"> An invitation payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public Response<ConsumerInvitationData> RejectInvitation(AzureLocation location, ConsumerInvitationData data, CancellationToken cancellationToken = default)
+        public Response<DataShareConsumerInvitationData> RejectInvitation(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -233,9 +225,9 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        ConsumerInvitationData value = default;
+                        DataShareConsumerInvitationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConsumerInvitationData.DeserializeConsumerInvitationData(document.RootElement);
+                        value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

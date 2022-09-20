@@ -1029,6 +1029,9 @@ namespace Azure.Messaging.ServiceBus
         {
             await CloseAsync().ConfigureAwait(false);
             _handlerCts.Dispose();
+            _messageHandlerSemaphore.Dispose();
+            _maxConcurrentAcceptSessionsSemaphore.Dispose();
+            _processingStartStopSemaphore.Dispose();
             GC.SuppressFinalize(this);
         }
 

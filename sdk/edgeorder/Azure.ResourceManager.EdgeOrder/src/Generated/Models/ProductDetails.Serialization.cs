@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ProductDetails DeserializeProductDetails(JsonElement element)
         {
-            Optional<DisplayInfo> displayInfo = default;
+            Optional<ProductDisplayInfo> displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
             Optional<int> count = default;
             Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    displayInfo = DisplayInfo.DeserializeDisplayInfo(property.Value);
+                    displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hierarchyInformation"))

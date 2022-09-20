@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, BackupRequest backupRequest)
+        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.StorageSync
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(backupRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -425,20 +425,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="backupRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PreBackupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> PreBackupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
             Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, backupRequest);
+            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -456,20 +456,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="backupRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PreBackup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        public Response PreBackup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
             Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, backupRequest);
+            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        internal HttpMessage CreatePostBackupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, BackupRequest backupRequest)
+        internal HttpMessage CreatePostBackupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -503,9 +503,9 @@ namespace Azure.ResourceManager.StorageSync
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(backupRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -516,20 +516,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="backupRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PostBackupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> PostBackupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
             Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePostBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, backupRequest);
+            using var message = CreatePostBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -547,20 +547,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="backupRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PostBackup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        public Response PostBackup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
             Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePostBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, backupRequest);
+            using var message = CreatePostBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
