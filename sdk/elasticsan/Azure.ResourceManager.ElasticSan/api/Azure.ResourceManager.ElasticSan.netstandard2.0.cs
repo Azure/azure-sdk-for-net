@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.ElasticSan
     }
     public partial class ElasticSanData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ElasticSanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ElasticSanData(Azure.Core.AzureLocation location, Azure.ResourceManager.ElasticSan.Models.ElasticSanSku sku, long baseSizeTiB, long extendedCapacitySizeTiB) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
-        public long? BaseSizeTiB { get { throw null; } set { } }
+        public long BaseSizeTiB { get { throw null; } set { } }
         public long? ElasticSanVolumeGroupCount { get { throw null; } }
-        public long? ExtendedCapacitySizeTiB { get { throw null; } set { } }
+        public long ExtendedCapacitySizeTiB { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanSku Sku { get { throw null; } set { } }
         public long? TotalElasticSanVolumeSizeGiB { get { throw null; } }
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ElasticSan
         public static Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanResource> GetElasticSansAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource GetElasticSanVolumeGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource GetElasticSanVolumeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ElasticSan.Models.ResourceTypeSku> GetSkus(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.Models.ResourceTypeSku> GetSkusAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuInformation> GetSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuInformation> GetSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ElasticSanResource : Azure.ResourceManager.ArmResource
     {
@@ -199,9 +199,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
     }
     public partial class ElasticSanSku
     {
-        public ElasticSanSku() { }
-        public Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName? Name { get { throw null; } set { } }
-        public Azure.ResourceManager.ElasticSan.Models.ElasticSanTier? Tier { get { throw null; } set { } }
+        public ElasticSanSku(Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName name) { }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier? Tier { get { throw null; } set { } }
+    }
+    public partial class ElasticSanSkuInformation
+    {
+        internal ElasticSanSkuInformation() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ElasticSan.Models.SKUCapability> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ElasticSan.Models.SkuLocationInfo> LocationInfo { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier? Tier { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ElasticSanSkuName : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName>
@@ -222,20 +232,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ElasticSanTier : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ElasticSanTier>
+    public readonly partial struct ElasticSanSkuTier : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ElasticSanTier(string value) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.ElasticSanTier Premium { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ElasticSan.Models.ElasticSanTier other) { throw null; }
+        public ElasticSanSkuTier(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier Premium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.ElasticSanTier left, Azure.ResourceManager.ElasticSan.Models.ElasticSanTier right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ElasticSan.Models.ElasticSanTier (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ElasticSanTier left, Azure.ResourceManager.ElasticSan.Models.ElasticSanTier right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier left, Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier left, Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -254,16 +264,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static implicit operator Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumeCreateOption (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumeCreateOption left, Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumeCreateOption right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ElasticSanVolumeTierInfo
-    {
-        internal ElasticSanVolumeTierInfo() { }
-        public long? IopsPerBaseGiB { get { throw null; } }
-        public long? MaxIops { get { throw null; } }
-        public long? MaxMbps { get { throw null; } }
-        public long? MaxSizeGiB { get { throw null; } }
-        public long? MinIncrementSizeGiB { get { throw null; } }
-        public long? MinSizeGiB { get { throw null; } }
     }
     public partial class IscsiTargetInfo
     {
@@ -322,25 +322,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ProvisioningState left, Azure.ResourceManager.ElasticSan.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceTypeSku
+    public partial class SKUCapability
     {
-        internal ResourceTypeSku() { }
-        public Azure.ResourceManager.ElasticSan.Models.SanTierInfo ElasticSan { get { throw null; } }
-        public Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumeTierInfo ElasticSanVolume { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ElasticSan.Models.SkuLocationInfo> LocationInfo { get { throw null; } }
-        public long? MaxElasticSanVolumeCount { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ElasticSan.Models.ElasticSanSku> Sku { get { throw null; } }
-    }
-    public partial class SanTierInfo
-    {
-        internal SanTierInfo() { }
-        public long? IopsPerBaseTiB { get { throw null; } }
-        public long? MaxElasticSanVolumeGroupCount { get { throw null; } }
-        public long? MaxMbps { get { throw null; } }
-        public long? MaxSizeTiB { get { throw null; } }
-        public long? MbpsPerBaseTiB { get { throw null; } }
-        public long? MinIncrementSizeTiB { get { throw null; } }
-        public long? MinSizeTiB { get { throw null; } }
+        internal SKUCapability() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public partial class SkuLocationInfo
     {
@@ -351,7 +337,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public partial class SourceCreationData
     {
         public SourceCreationData() { }
-        public Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumeCreateOption CreateSource { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumeCreateOption? CreateSource { get { throw null; } set { } }
         public System.Uri SourceUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

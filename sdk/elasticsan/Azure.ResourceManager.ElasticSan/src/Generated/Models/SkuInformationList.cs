@@ -16,21 +16,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of SkuInformationList. </summary>
         internal SkuInformationList()
         {
-            Value = new ChangeTrackingList<ResourceTypeSku>();
+            Value = new ChangeTrackingList<ElasticSanSkuInformation>();
         }
 
         /// <summary> Initializes a new instance of SkuInformationList. </summary>
         /// <param name="value"> List of ResourceType Sku. </param>
-        /// <param name="nextLink"> Links to the next set of results. </param>
-        internal SkuInformationList(IReadOnlyList<ResourceTypeSku> value, string nextLink)
+        internal SkuInformationList(IReadOnlyList<ElasticSanSkuInformation> value)
         {
             Value = value;
-            NextLink = nextLink;
         }
 
         /// <summary> List of ResourceType Sku. </summary>
-        public IReadOnlyList<ResourceTypeSku> Value { get; }
-        /// <summary> Links to the next set of results. </summary>
-        public string NextLink { get; }
+        public IReadOnlyList<ElasticSanSkuInformation> Value { get; }
     }
 }

@@ -16,8 +16,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("createSource");
-            writer.WriteStringValue(CreateSource.ToString());
+            if (Optional.IsDefined(CreateSource))
+            {
+                writer.WritePropertyName("createSource");
+                writer.WriteStringValue(CreateSource.Value.ToString());
+            }
             if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri");
@@ -28,12 +31,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static SourceCreationData DeserializeSourceCreationData(JsonElement element)
         {
-            ElasticSanVolumeCreateOption createSource = default;
+            Optional<ElasticSanVolumeCreateOption> createSource = default;
             Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createSource"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createSource = new ElasticSanVolumeCreateOption(property.Value.GetString());
                     continue;
                 }
@@ -48,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SourceCreationData(createSource, sourceUri.Value);
+            return new SourceCreationData(Optional.ToNullable(createSource), sourceUri.Value);
         }
     }
 }

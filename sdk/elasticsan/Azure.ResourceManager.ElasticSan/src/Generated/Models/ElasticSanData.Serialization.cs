@@ -33,11 +33,8 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
-            }
+            writer.WritePropertyName("sku");
+            writer.WriteObjectValue(Sku);
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones");
@@ -48,16 +45,10 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BaseSizeTiB))
-            {
-                writer.WritePropertyName("baseSizeTiB");
-                writer.WriteNumberValue(BaseSizeTiB.Value);
-            }
-            if (Optional.IsDefined(ExtendedCapacitySizeTiB))
-            {
-                writer.WritePropertyName("extendedCapacitySizeTiB");
-                writer.WriteNumberValue(ExtendedCapacitySizeTiB.Value);
-            }
+            writer.WritePropertyName("baseSizeTiB");
+            writer.WriteNumberValue(BaseSizeTiB);
+            writer.WritePropertyName("extendedCapacitySizeTiB");
+            writer.WriteNumberValue(ExtendedCapacitySizeTiB);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -70,11 +61,11 @@ namespace Azure.ResourceManager.ElasticSan
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ElasticSanSku> sku = default;
+            ElasticSanSku sku = default;
             Optional<IList<string>> availabilityZones = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<long> baseSizeTiB = default;
-            Optional<long> extendedCapacitySizeTiB = default;
+            long baseSizeTiB = default;
+            long extendedCapacitySizeTiB = default;
             Optional<long> totalElasticSanVolumeSizeGiB = default;
             Optional<long> elasticSanVolumeGroupCount = default;
             Optional<long> totalIops = default;
@@ -138,11 +129,6 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("sku"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             sku = ElasticSanSku.DeserializeElasticSanSku(property0.Value);
                             continue;
                         }
@@ -173,21 +159,11 @@ namespace Azure.ResourceManager.ElasticSan
                         }
                         if (property0.NameEquals("baseSizeTiB"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             baseSizeTiB = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("extendedCapacitySizeTiB"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             extendedCapacitySizeTiB = property0.Value.GetInt64();
                             continue;
                         }
@@ -245,7 +221,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), Optional.ToNullable(baseSizeTiB), Optional.ToNullable(extendedCapacitySizeTiB), Optional.ToNullable(totalElasticSanVolumeSizeGiB), Optional.ToNullable(elasticSanVolumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB));
+            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalElasticSanVolumeSizeGiB), Optional.ToNullable(elasticSanVolumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB));
         }
     }
 }
