@@ -466,7 +466,8 @@ namespace Compute.Tests
                     Gallery galleryOutWithSharingProfile = m_CrpClient.Galleries.Get(rgName, galleryName, SelectPermissions.Permissions);
                     Trace.TraceInformation("Got the gallery");
                     Assert.NotNull(galleryOutWithSharingProfile);
-                    CommunityGalleryInfo communityGalleryInfo = JsonConvert.DeserializeObject<CommunityGalleryInfo>(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.ToString());
+                    //CommunityGalleryInfo communityGalleryInfo = JsonConvert.DeserializeObject<CommunityGalleryInfo>(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.ToString());
+                    CommunityGalleryInfo communityGalleryInfo = galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo;
                     Assert.True(communityGalleryInfo.CommunityGalleryEnabled);
 
                     Trace.TraceInformation("Reset this gallery to private before deleting it.");
