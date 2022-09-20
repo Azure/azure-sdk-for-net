@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LabServices
         /// The lab state.
         /// Serialized Name: Lab.properties.state
         /// </param>
-        internal LabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutoShutdownProfile autoShutdownProfile, ConnectionProfile connectionProfile, VirtualMachineProfile virtualMachineProfile, SecurityProfile securityProfile, RosterProfile rosterProfile, ResourceIdentifier labPlanId, string title, string description, ProvisioningState? provisioningState, LabNetworkProfile networkProfile, LabState? state) : base(id, name, resourceType, systemData, tags, location)
+        internal LabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutoShutdownProfile autoShutdownProfile, LabVirtualMachineConnectionProfile connectionProfile, VirtualMachineProfile virtualMachineProfile, SecurityProfile securityProfile, RosterProfile rosterProfile, ResourceIdentifier labPlanId, string title, string description, ProvisioningState? provisioningState, LabNetworkProfile networkProfile, LabState? state) : base(id, name, resourceType, systemData, tags, location)
         {
             AutoShutdownProfile = autoShutdownProfile;
             ConnectionProfile = connectionProfile;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.LabServices
         /// The connection profile for the lab. This controls settings such as web access to lab resources or whether RDP or SSH ports are open.
         /// Serialized Name: Lab.properties.connectionProfile
         /// </summary>
-        public ConnectionProfile ConnectionProfile { get; set; }
+        public LabVirtualMachineConnectionProfile ConnectionProfile { get; set; }
         /// <summary>
         /// The profile used for creating lab virtual machines.
         /// Serialized Name: Lab.properties.virtualMachineProfile

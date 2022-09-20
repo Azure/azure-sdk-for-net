@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.LabServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ConnectionProfile> defaultConnectionProfile = default;
+            Optional<LabVirtualMachineConnectionProfile> defaultConnectionProfile = default;
             Optional<AutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
             Optional<IList<AzureLocation>> allowedRegions = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultConnectionProfile = ConnectionProfile.DeserializeConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"))

@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.LabServices.Models
         internal static VirtualMachineProfile DeserializeVirtualMachineProfile(JsonElement element)
         {
             CreateOption createOption = default;
-            ImageReference imageReference = default;
+            LabVirtualMachineImageReference imageReference = default;
             Optional<OSType> osType = default;
             LabServicesSku sku = default;
             Optional<VirtualMachineAdditionalCapabilities> additionalCapabilities = default;
             TimeSpan usageQuota = default;
             Optional<EnableState> useSharedPassword = default;
-            Credentials adminUser = default;
-            Optional<Credentials> nonAdminUser = default;
+            LabVirtualMachineCredential adminUser = default;
+            Optional<LabVirtualMachineCredential> nonAdminUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("imageReference"))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value);
+                    imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osType"))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("adminUser"))
                 {
-                    adminUser = Credentials.DeserializeCredentials(property.Value);
+                    adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nonAdminUser"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nonAdminUser = Credentials.DeserializeCredentials(property.Value);
+                    nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
                     continue;
                 }
             }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableLabServicesSkus>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableLabServicesSkuList>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        AvailableLabServicesSkus value = default;
+                        AvailableLabServicesSkuList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailableLabServicesSkus.DeserializeAvailableLabServicesSkus(document.RootElement);
+                        value = AvailableLabServicesSkuList.DeserializeAvailableLabServicesSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableLabServicesSkus> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AvailableLabServicesSkuList> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        AvailableLabServicesSkus value = default;
+                        AvailableLabServicesSkuList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailableLabServicesSkus.DeserializeAvailableLabServicesSkus(document.RootElement);
+                        value = AvailableLabServicesSkuList.DeserializeAvailableLabServicesSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableLabServicesSkus>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableLabServicesSkuList>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        AvailableLabServicesSkus value = default;
+                        AvailableLabServicesSkuList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AvailableLabServicesSkus.DeserializeAvailableLabServicesSkus(document.RootElement);
+                        value = AvailableLabServicesSkuList.DeserializeAvailableLabServicesSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableLabServicesSkus> ListNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AvailableLabServicesSkuList> ListNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        AvailableLabServicesSkus value = default;
+                        AvailableLabServicesSkuList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AvailableLabServicesSkus.DeserializeAvailableLabServicesSkus(document.RootElement);
+                        value = AvailableLabServicesSkuList.DeserializeAvailableLabServicesSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

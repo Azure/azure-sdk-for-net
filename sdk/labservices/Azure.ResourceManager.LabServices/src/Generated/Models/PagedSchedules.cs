@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedSchedules. </summary>
         internal PagedSchedules()
         {
-            Value = new ChangeTrackingList<ScheduleData>();
+            Value = new ChangeTrackingList<LabServicesScheduleData>();
         }
 
         /// <summary> Initializes a new instance of PagedSchedules. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The link to get the next page of schedule results.
         /// Serialized Name: PagedSchedules.nextLink
         /// </param>
-        internal PagedSchedules(IReadOnlyList<ScheduleData> value, string nextLink)
+        internal PagedSchedules(IReadOnlyList<LabServicesScheduleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The array page of schedule results.
         /// Serialized Name: PagedSchedules.value
         /// </summary>
-        public IReadOnlyList<ScheduleData> Value { get; }
+        public IReadOnlyList<LabServicesScheduleData> Value { get; }
         /// <summary>
         /// The link to get the next page of schedule results.
         /// Serialized Name: PagedSchedules.nextLink

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The default lab connection profile. This can be changed on a lab resource and only provides a default profile.
         /// Serialized Name: LabPlanUpdate.properties.defaultConnectionProfile
         /// </summary>
-        public ConnectionProfile DefaultConnectionProfile { get; set; }
+        public LabVirtualMachineConnectionProfile DefaultConnectionProfile { get; set; }
         /// <summary>
         /// The default lab shutdown profile. This can be changed on a lab resource and only provides a default profile.
         /// Serialized Name: LabPlanUpdate.properties.defaultAutoShutdownProfile

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static PagedVirtualMachines DeserializePagedVirtualMachines(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualMachineData>> value = default;
+            Optional<IReadOnlyList<LabVirtualMachineData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineData> array = new List<VirtualMachineData>();
+                    List<LabVirtualMachineData> array = new List<LabVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineData.DeserializeVirtualMachineData(item));
+                        array.Add(LabVirtualMachineData.DeserializeLabVirtualMachineData(item));
                     }
                     value = array;
                     continue;

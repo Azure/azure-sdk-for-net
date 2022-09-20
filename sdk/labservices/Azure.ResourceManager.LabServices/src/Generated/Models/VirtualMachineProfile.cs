@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// Serialized Name: VirtualMachineProfile.adminUser
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/>, <paramref name="sku"/> or <paramref name="adminUser"/> is null. </exception>
-        public VirtualMachineProfile(CreateOption createOption, ImageReference imageReference, LabServicesSku sku, TimeSpan usageQuota, Credentials adminUser)
+        public VirtualMachineProfile(CreateOption createOption, LabVirtualMachineImageReference imageReference, LabServicesSku sku, TimeSpan usageQuota, LabVirtualMachineCredential adminUser)
         {
             if (imageReference == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// Credentials for the non-admin user on the VM, if one exists.
         /// Serialized Name: VirtualMachineProfile.nonAdminUser
         /// </param>
-        internal VirtualMachineProfile(CreateOption createOption, ImageReference imageReference, OSType? osType, LabServicesSku sku, VirtualMachineAdditionalCapabilities additionalCapabilities, TimeSpan usageQuota, EnableState? useSharedPassword, Credentials adminUser, Credentials nonAdminUser)
+        internal VirtualMachineProfile(CreateOption createOption, LabVirtualMachineImageReference imageReference, OSType? osType, LabServicesSku sku, VirtualMachineAdditionalCapabilities additionalCapabilities, TimeSpan usageQuota, EnableState? useSharedPassword, LabVirtualMachineCredential adminUser, LabVirtualMachineCredential nonAdminUser)
         {
             CreateOption = createOption;
             ImageReference = imageReference;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The image configuration for lab virtual machines.
         /// Serialized Name: VirtualMachineProfile.imageReference
         /// </summary>
-        public ImageReference ImageReference { get; set; }
+        public LabVirtualMachineImageReference ImageReference { get; set; }
         /// <summary>
         /// The OS type of the image
         /// Serialized Name: VirtualMachineProfile.osType
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.LabServices.Models
         /// Credentials for the admin user on the VM.
         /// Serialized Name: VirtualMachineProfile.adminUser
         /// </summary>
-        public Credentials AdminUser { get; set; }
+        public LabVirtualMachineCredential AdminUser { get; set; }
         /// <summary>
         /// Credentials for the non-admin user on the VM, if one exists.
         /// Serialized Name: VirtualMachineProfile.nonAdminUser
         /// </summary>
-        public Credentials NonAdminUser { get; set; }
+        public LabVirtualMachineCredential NonAdminUser { get; set; }
     }
 }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.LabServices
         /// Current provisioning state of the lab plan.
         /// Serialized Name: LabPlan.properties.provisioningState
         /// </param>
-        internal LabPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ConnectionProfile defaultConnectionProfile, AutoShutdownProfile defaultAutoShutdownProfile, LabPlanNetworkProfile defaultNetworkProfile, IList<AzureLocation> allowedRegions, ResourceIdentifier sharedGalleryId, SupportInfo supportInfo, Uri linkedLmsInstance, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal LabPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, LabVirtualMachineConnectionProfile defaultConnectionProfile, AutoShutdownProfile defaultAutoShutdownProfile, LabPlanNetworkProfile defaultNetworkProfile, IList<AzureLocation> allowedRegions, ResourceIdentifier sharedGalleryId, SupportInfo supportInfo, Uri linkedLmsInstance, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DefaultConnectionProfile = defaultConnectionProfile;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LabServices
         /// The default lab connection profile. This can be changed on a lab resource and only provides a default profile.
         /// Serialized Name: LabPlan.properties.defaultConnectionProfile
         /// </summary>
-        public ConnectionProfile DefaultConnectionProfile { get; set; }
+        public LabVirtualMachineConnectionProfile DefaultConnectionProfile { get; set; }
         /// <summary>
         /// The default lab shutdown profile. This can be changed on a lab resource and only provides a default profile.
         /// Serialized Name: LabPlan.properties.defaultAutoShutdownProfile

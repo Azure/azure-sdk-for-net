@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The fully qualified arm resource id.
         /// Serialized Name: Usage.id
         /// </param>
-        internal LabServicesUsage(long? currentValue, long? limit, UsageUnit? unit, UsageName name, string id)
+        internal LabServicesUsage(long? currentValue, long? limit, UsageUnit? unit, UsageName name, ResourceIdentifier id)
         {
             CurrentValue = currentValue;
             Limit = limit;
@@ -72,6 +74,6 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The fully qualified arm resource id.
         /// Serialized Name: Usage.id
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

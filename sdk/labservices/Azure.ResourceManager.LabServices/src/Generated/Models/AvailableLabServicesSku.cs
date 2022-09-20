@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LabServices.Models
         internal AvailableLabServicesSku()
         {
             Capabilities = new ChangeTrackingList<AvailableLabServicesSkuCapabilities>();
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             Costs = new ChangeTrackingList<AvailableLabServicesSkuCost>();
             Restrictions = new ChangeTrackingList<AvailableLabServicesSkuRestrictions>();
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// Restrictions of a lab services SKUs.
         /// Serialized Name: AvailableLabServicesSku.restrictions
         /// </param>
-        internal AvailableLabServicesSku(string resourceType, string name, AvailableLabServicesSkuTier? tier, string size, string family, AvailableLabServicesSkuCapacity capacity, IReadOnlyList<AvailableLabServicesSkuCapabilities> capabilities, IReadOnlyList<string> locations, IReadOnlyList<AvailableLabServicesSkuCost> costs, IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions)
+        internal AvailableLabServicesSku(string resourceType, string name, AvailableLabServicesSkuTier? tier, string size, string family, AvailableLabServicesSkuCapacity capacity, IReadOnlyList<AvailableLabServicesSkuCapabilities> capabilities, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AvailableLabServicesSkuCost> costs, IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// List of locations that are available for a size.
         /// Serialized Name: AvailableLabServicesSku.locations
         /// </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary>
         /// Metadata for retrieving price info of a lab services SKUs.
         /// Serialized Name: AvailableLabServicesSku.costs

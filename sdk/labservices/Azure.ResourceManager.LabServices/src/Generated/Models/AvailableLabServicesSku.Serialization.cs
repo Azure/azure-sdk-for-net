@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<string> family = default;
             Optional<AvailableLabServicesSkuCapacity> capacity = default;
             Optional<IReadOnlyList<AvailableLabServicesSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<AvailableLabServicesSkuCost>> costs = default;
             Optional<IReadOnlyList<AvailableLabServicesSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

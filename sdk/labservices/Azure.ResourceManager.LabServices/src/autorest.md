@@ -20,17 +20,33 @@ mgmt-debug:
   show-serialized-names: true
 
 rename-mapping:
+  AvailableLabServicesSku.locations: -|azure-location
+  Image.properties.availableRegions: -|azure-location
+  InviteBody.text: -|any
+  LabPlan.properties.allowedRegions: -|azure-location
+  LabPlanUpdate.properties.allowedRegions: -|azure-location
+  Usage.id: -|arm-id
+  User.properties.invitationSent: InvitationSentOn
+  ConnectionProfile: LabVirtualMachineConnectionProfile
+  Credentials: LabVirtualMachineCredential
+  Image: LabVirtualMachineImage
+  ImageReference: LabVirtualMachineImageReference
+  InviteBody: LabUserInviteRequestContent
   LabServicesSkuCapacity: AvailableLabServicesSkuCapacity
   LabServicesSkuCapabilities: AvailableLabServicesSkuCapabilities
   LabServicesSkuCost: AvailableLabServicesSkuCost
   LabServicesSkuRestrictions: AvailableLabServicesSkuRestrictions
-  PagedLabServicesSkus: AvailableLabServicesSkus
-  ScaleType: SkuCapacityScaleType
-  Image: LabServicesImage
-  PagedImages: LabServicesImageListResult
-  Image.properties.availableRegions: -|azure-location
-  LabPlan.properties.allowedRegions: -|azure-location
-  LabPlanUpdate.properties.allowedRegions: -|azure-location
+  PagedLabServicesSkus: AvailableLabServicesSkuList
+  ScaleType: LabServicesSkuCapacityScaleType
+  PagedImages: LabVirtualMachineListResult
+  User: LabUser
+  VirtualMachine: LabVirtualMachine
+  WeekDay: LabServicesDayOfWeek
+
+prepend-rp-prefix:
+  - Image
+  - Schedule
+  - RecurrencePattern
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -63,6 +79,7 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  - remove-operation: OperationResults_Get
   - from: LabServices.json
     where: $.definitions
     transform: >

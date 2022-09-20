@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.LabServices
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<AutoShutdownProfile> autoShutdownProfile = default;
-            Optional<ConnectionProfile> connectionProfile = default;
+            Optional<LabVirtualMachineConnectionProfile> connectionProfile = default;
             Optional<VirtualMachineProfile> virtualMachineProfile = default;
             Optional<SecurityProfile> securityProfile = default;
             Optional<RosterProfile> rosterProfile = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionProfile = ConnectionProfile.DeserializeConnectionProfile(property0.Value);
+                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"))

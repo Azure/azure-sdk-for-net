@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The localized name of the resource.
         /// Serialized Name: LabServicesSkuCapacity.scaleType
         /// </param>
-        internal AvailableLabServicesSkuCapacity(long? @default, long? minimum, long? maximum, SkuCapacityScaleType? scaleType)
+        internal AvailableLabServicesSkuCapacity(long? @default, long? minimum, long? maximum, LabServicesSkuCapacityScaleType? scaleType)
         {
             Default = @default;
             Minimum = minimum;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The localized name of the resource.
         /// Serialized Name: LabServicesSkuCapacity.scaleType
         /// </summary>
-        public SkuCapacityScaleType? ScaleType { get; }
+        public LabServicesSkuCapacityScaleType? ScaleType { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedVirtualMachines. </summary>
         internal PagedVirtualMachines()
         {
-            Value = new ChangeTrackingList<VirtualMachineData>();
+            Value = new ChangeTrackingList<LabVirtualMachineData>();
         }
 
         /// <summary> Initializes a new instance of PagedVirtualMachines. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The link to get the next page of virtual machine results.
         /// Serialized Name: PagedVirtualMachines.nextLink
         /// </param>
-        internal PagedVirtualMachines(IReadOnlyList<VirtualMachineData> value, string nextLink)
+        internal PagedVirtualMachines(IReadOnlyList<LabVirtualMachineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The array page of virtual machine results.
         /// Serialized Name: PagedVirtualMachines.value
         /// </summary>
-        public IReadOnlyList<VirtualMachineData> Value { get; }
+        public IReadOnlyList<LabVirtualMachineData> Value { get; }
         /// <summary>
         /// The link to get the next page of virtual machine results.
         /// Serialized Name: PagedVirtualMachines.nextLink

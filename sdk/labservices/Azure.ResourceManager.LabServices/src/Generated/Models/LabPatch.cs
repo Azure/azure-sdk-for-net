@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The connection profile for the lab. This controls settings such as web access to lab resources or whether RDP or SSH ports are open.
         /// Serialized Name: LabUpdate.properties.connectionProfile
         /// </summary>
-        public ConnectionProfile ConnectionProfile { get; set; }
+        public LabVirtualMachineConnectionProfile ConnectionProfile { get; set; }
         /// <summary>
         /// The profile used for creating lab virtual machines.
         /// Serialized Name: LabUpdate.properties.virtualMachineProfile

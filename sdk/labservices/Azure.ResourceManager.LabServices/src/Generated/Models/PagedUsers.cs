@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedUsers. </summary>
         internal PagedUsers()
         {
-            Value = new ChangeTrackingList<UserData>();
+            Value = new ChangeTrackingList<LabUserData>();
         }
 
         /// <summary> Initializes a new instance of PagedUsers. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The link to get the next page of image results.
         /// Serialized Name: PagedUsers.nextLink
         /// </param>
-        internal PagedUsers(IReadOnlyList<UserData> value, string nextLink)
+        internal PagedUsers(IReadOnlyList<LabUserData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The array page of user results.
         /// Serialized Name: PagedUsers.value
         /// </summary>
-        public IReadOnlyList<UserData> Value { get; }
+        public IReadOnlyList<LabUserData> Value { get; }
         /// <summary>
         /// The link to get the next page of image results.
         /// Serialized Name: PagedUsers.nextLink
