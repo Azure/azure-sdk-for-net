@@ -95,14 +95,13 @@ namespace Microsoft.Extensions.Azure
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
             var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
-            List<string> additionallyAllowedTenantsList = null;
+            IEnumerable<string> additionallyAllowedTenantsList = null;
             if (!string.IsNullOrWhiteSpace(additionallyAllowedTenants))
             {
                 // not relying on StringSplitOptions.RemoveEmptyEntries as we want to remove leading/trailing whitespace between entries
                 additionallyAllowedTenantsList = additionallyAllowedTenants.Split(TenantDelimiter)
                     .Select(t => t.Trim())
-                    .Where(t => !string.IsNullOrWhiteSpace(t))
-                    .ToList();
+                    .Where(t => !string.IsNullOrWhiteSpace(t));
             }
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
