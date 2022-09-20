@@ -41,7 +41,7 @@ function Invoke-Block([scriptblock]$cmd) {
     if ((-not $?) -or ($lastexitcode -ne 0)) {
         if ($error -ne $null)
         {
-            Write-Warning $error[0]
+            LogError $error[0]
         }
         throw "Command failed to execute: $cmd"
     }
