@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         private readonly ClientDiagnostics _managedClusterClientDiagnostics;
         private readonly ManagedClustersRestOperations _managedClusterRestClient;
-        private readonly ClientDiagnostics _managedAzResiliencyStatusClientDiagnostics;
-        private readonly ManagedAzResiliencyStatusRestOperations _managedAzResiliencyStatusRestClient;
         private readonly ManagedClusterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedClusterResource"/> class for mocking. </summary>
@@ -62,8 +60,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             _managedClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedClusterApiVersion);
             _managedClusterRestClient = new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterApiVersion);
-            _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -348,50 +344,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 var response = _managedClusterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ManagedClusterResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus
-        /// Operation Id: managedAzResiliencyStatus_get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ManagedClusterResource.GetManagedAzResiliencyStatus");
-            scope.Start();
-            try
-            {
-                var response = await _managedAzResiliencyStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus
-        /// Operation Id: managedAzResiliencyStatus_get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ManagedClusterResource.GetManagedAzResiliencyStatus");
-            scope.Start();
-            try
-            {
-                var response = _managedAzResiliencyStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

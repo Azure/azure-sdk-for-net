@@ -208,41 +208,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableOverProvisioning");
                 writer.WriteBooleanValue(EnableOverProvisioning.Value);
             }
-            if (Optional.IsCollectionDefined(Zones))
-            {
-                writer.WritePropertyName("zones");
-                writer.WriteStartArray();
-                foreach (var item in Zones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsSpotVm))
-            {
-                writer.WritePropertyName("isSpotVM");
-                writer.WriteBooleanValue(IsSpotVm.Value);
-            }
-            if (Optional.IsDefined(HostGroupId))
-            {
-                writer.WritePropertyName("hostGroupId");
-                writer.WriteStringValue(HostGroupId);
-            }
-            if (Optional.IsDefined(UseEphemeralOSDisk))
-            {
-                writer.WritePropertyName("useEphemeralOSDisk");
-                writer.WriteBooleanValue(UseEphemeralOSDisk.Value);
-            }
-            if (Optional.IsDefined(SpotRestoreTimeout))
-            {
-                writer.WritePropertyName("spotRestoreTimeout");
-                writer.WriteStringValue(SpotRestoreTimeout);
-            }
-            if (Optional.IsDefined(EvictionPolicy))
-            {
-                writer.WritePropertyName("evictionPolicy");
-                writer.WriteStringValue(EvictionPolicy.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -283,12 +248,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<bool> useDefaultPublicLoadBalancer = default;
             Optional<bool> useTempDataDisk = default;
             Optional<bool> enableOverProvisioning = default;
-            Optional<IList<string>> zones = default;
-            Optional<bool> isSpotVm = default;
-            Optional<string> hostGroupId = default;
-            Optional<bool> useEphemeralOSDisk = default;
-            Optional<string> spotRestoreTimeout = default;
-            Optional<EvictionPolicyType> evictionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -635,66 +594,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             enableOverProvisioning = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("zones"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            zones = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("isSpotVM"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            isSpotVm = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("hostGroupId"))
-                        {
-                            hostGroupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("useEphemeralOSDisk"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            useEphemeralOSDisk = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("spotRestoreTimeout"))
-                        {
-                            spotRestoreTimeout = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("evictionPolicy"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            evictionPolicy = new EvictionPolicyType(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new NodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), Optional.ToDictionary(tags));
+            return new NodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToDictionary(tags));
         }
     }
 }

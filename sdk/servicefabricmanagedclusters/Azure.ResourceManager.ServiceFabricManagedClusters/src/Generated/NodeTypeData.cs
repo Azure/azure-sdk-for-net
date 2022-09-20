@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             FrontendConfigurations = new ChangeTrackingList<FrontendConfiguration>();
             NetworkSecurityRules = new ChangeTrackingList<NetworkSecurityRule>();
             AdditionalDataDisks = new ChangeTrackingList<VmssDataDisk>();
-            Zones = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -63,14 +62,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn&apos;t have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
         /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
         /// <param name="enableOverProvisioning"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
-        /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
-        /// <param name="isSpotVm"> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </param>
-        /// <param name="hostGroupId"> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </param>
-        /// <param name="useEphemeralOSDisk"> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </param>
-        /// <param name="spotRestoreTimeout"> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </param>
-        /// <param name="evictionPolicy"> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </param>
         /// <param name="tags"> Azure resource tags. </param>
-        internal NodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeGB, DiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<VaultSecretGroup> vmSecrets, IList<VmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? multiplePlacementGroups, IList<FrontendConfiguration> frontendConfigurations, IList<NetworkSecurityRule> networkSecurityRules, IList<VmssDataDisk> additionalDataDisks, bool? enableEncryptionAtHost, ManagedResourceProvisioningState? provisioningState, bool? enableAcceleratedNetworking, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? enableOverProvisioning, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, EvictionPolicyType? evictionPolicy, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal NodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeGB, DiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<VaultSecretGroup> vmSecrets, IList<VmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? multiplePlacementGroups, IList<FrontendConfiguration> frontendConfigurations, IList<NetworkSecurityRule> networkSecurityRules, IList<VmssDataDisk> additionalDataDisks, bool? enableEncryptionAtHost, ManagedResourceProvisioningState? provisioningState, bool? enableAcceleratedNetworking, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? enableOverProvisioning, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             IsPrimary = isPrimary;
@@ -101,12 +94,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             UseDefaultPublicLoadBalancer = useDefaultPublicLoadBalancer;
             UseTempDataDisk = useTempDataDisk;
             EnableOverProvisioning = enableOverProvisioning;
-            Zones = zones;
-            IsSpotVm = isSpotVm;
-            HostGroupId = hostGroupId;
-            UseEphemeralOSDisk = useEphemeralOSDisk;
-            SpotRestoreTimeout = spotRestoreTimeout;
-            EvictionPolicy = evictionPolicy;
             Tags = tags;
         }
 
@@ -179,18 +166,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public bool? UseTempDataDisk { get; set; }
         /// <summary> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </summary>
         public bool? EnableOverProvisioning { get; set; }
-        /// <summary> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </summary>
-        public IList<string> Zones { get; }
-        /// <summary> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </summary>
-        public bool? IsSpotVm { get; set; }
-        /// <summary> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </summary>
-        public string HostGroupId { get; set; }
-        /// <summary> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </summary>
-        public bool? UseEphemeralOSDisk { get; set; }
-        /// <summary> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </summary>
-        public string SpotRestoreTimeout { get; set; }
-        /// <summary> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </summary>
-        public EvictionPolicyType? EvictionPolicy { get; set; }
         /// <summary> Azure resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
