@@ -42,14 +42,16 @@ namespace Azure.Monitor.Ingestion
 
         internal readonly struct RunningTask<T>
         {
-            public RunningTask(Response response, List<UploadLogsError> errorList)
+            public RunningTask(Response response, UploadLogsError error)
             {
                 Response = response;
-                ErrorList = errorList;
+                Error = error;
             }
 
+            // The response from the upload
             public Response Response { get; }
-            public List<UploadLogsError> ErrorList { get; }
+            // Contains the error and the associated logs
+            public UploadLogsError Error { get; }
         }
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
@@ -211,11 +213,9 @@ namespace Azure.Monitor.Ingestion
                         false,
                         cancellationToken).EnsureCompleted();
 
-                    // Add errors from response into errors list which represents the errors from all the batches
-                    foreach (UploadLogsError error in task.ErrorList)
-                    {
-                        errors.Add(error);
-                    }
+                    // If we have an error, add error from response into errors list which represents the errors from all the batches
+                    if (task.Error != null)
+                        errors.Add(task.Error);
                 }
             }
             catch (Exception ex)
@@ -318,11 +318,9 @@ namespace Azure.Monitor.Ingestion
                 // Will run on a single thread
                 foreach (Task<RunningTask<T>> task in runningTasks)
                 {
-                    // go through errors from each task and add to error list the response will be generated from
-                    foreach (UploadLogsError logsError in task.Result.ErrorList)
-                    {
-                        errors.Add(logsError);
-                    }
+                    // Go through errors from each task and if we have an error, add error from response into errors list which represents the errors from all the batches
+                    if (task.Result.Error != null)
+                        errors.Add(task.Result.Error);
                 }
             }
             catch (Exception ex)
@@ -338,7 +336,7 @@ namespace Azure.Monitor.Ingestion
 
         private async Task<RunningTask<T>> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
-            List<UploadLogsError> errors = new();
+            UploadLogsError error;
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
 
@@ -358,9 +356,9 @@ namespace Azure.Monitor.Ingestion
                 RequestFailedException requestFailedException = new RequestFailedException(response);
                 ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
                 List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogsList);
-                errors.Add(new UploadLogsError(responseError, objectLogs));
+                error = new UploadLogsError(responseError, objectLogs);
             }
-            return new RunningTask<T>(response, errors);
+            return new RunningTask<T>(response, null);
         }
 
         private static RequestContext GenerateRequestContext(CancellationToken cancellationToken)

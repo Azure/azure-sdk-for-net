@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
             CompareBodies = false; //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30865
         }
