@@ -56,8 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
             Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
 
-            var userAgent = telemetryItem.Tags["ai.user.userAgent"];
-            if (userAgent != null)
+            if (telemetryItem.Tags.TryGetValue("ai.user.userAgent", out string userAgent))
             {
                 // todo: update swagger to include this key.
                 Tags["ai.user.userAgent"] = userAgent;
