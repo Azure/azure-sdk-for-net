@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var policy = new MockServiceBusRetryPolicy();
 
             Assert.That(policy.IsServerBusy, Is.False);
-            Assert.That(policy.ServerBusyBaseSleepTime, Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(policy.ServerBusyBaseSleepTime, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(policy.ServerBusyExceptionMessage, Is.Null);
         }
 
