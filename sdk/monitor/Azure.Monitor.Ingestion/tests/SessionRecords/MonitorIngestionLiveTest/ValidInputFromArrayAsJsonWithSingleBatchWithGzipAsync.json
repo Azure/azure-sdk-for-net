@@ -7,24 +7,24 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Encoding": "gzip",
-        "Content-Length": "275",
+        "Content-Length": "256",
         "Content-Type": "application/json",
-        "traceparent": "00-e73be2d732d82c4c9848771d2bbd73ad-368c7cf3e2c5994b-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20220916.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3ba28a17e9dceef5c903601de675d14a",
+        "traceparent": "00-670e5e64a3de8546a932f7f555e32091-f19398ac4e68984e-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20220920.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "81e6453e73aa0b44362a1d33a8910789",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": [
         "\u001F\uFFFD\b\u0000\u0000\u0000\u0000\u0000\u0000\n",
-        "\uFFFD\u033B\n",
-        "\uFFFD0\u0010\uFFFD\uFFFDw\uFFFDZ%3\uFFFD\uFFFD\uFFFD[|\u0005;I\uFFFD\u0060\uFFFD\uFFFDj\uFFFD%\uFFFD\uFFFD\u2EEF\uFFFD\uFFFDt\uFFFD\u001D~\u000E\u07F2\uFFFD\u0060.[\uFFFD\b\uFFFD\uFFFDz\u0015z\f3b\uFFFD:\u001A;X\uFFFD\t\uFFFD\uFFFD\u000E\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD?\uFFFD\uFFFD\uFFFD\u028Fu-\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDATg\uFFFD\u0004*\uFFFD*\uFFFDT\uFFFDU\uFFFD\uFFFD\uFFFDW\uFFFDL5\uFFFDjd\uFFFD\uFFFDU\u002BS\u001D\uFFFD:\uFFFD:\uFFFD\uFFFD(S=\uFFFDz\uFFFD\u001Ax5\uFFFD)\uFFFD\u0001\u0000\u0000\uFFFD\uFFFD"
+        "\uFFFD\uFFFD;\n",
+        "\uFFFD0\u0010E\u047DLm\uFFFD\uFFFD\uFFFD.x\u000B\uE30A\uFFFDU\bb\u002B\u0004\u0019\u0002\uFFFD{\uFFFD\uFFFDt\uFFFDM\uFFFD\uFFFD\u003C\u03B2|a\uFFFD[\uFFFD\u0004\uFFFDD#\u0191pV:Y\uFFFDT\uFFFD9\uFFFD\uFFFD\uFFFD\u0004\u0003Lm{\u001D\uFFFD\uFFFD\uFFFD\uFFFD\u007F\uFFFD\uFFFD\uFFFDZ{m\uFFFD\uFFFD9\uFFFD\uFFFD\uFFFDO\uFFFD\uFFFDg\u001E\u0004\uFFFD\uFFFDU%S\uFFFDWI\uFFFDj^\uFFFD2\uFFFD\uD869\uDC69\uFFFDW\uFFFDLu\uFFFD\uFFFDd\uFFFD\uFFFDU/S\u0003\uFFFD\u0006\uFFFD\u001Ay5\uFFFD9\uFFFD\u0000\u0000\u0000\uFFFD\uFFFD"
       ],
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Date": "Mon, 19 Sep 2022 18:53:49 GMT",
+        "Date": "Tue, 20 Sep 2022 20:57:18 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "3ba28a17-e9dc-eef5-c903-601de675d14a",
-        "x-ms-request-id": "249cd475-84c0-4757-8eff-ebbb9454ba49"
+        "x-ms-client-request-id": "81e6453e-73aa-0b44-362a-1d33a8910789",
+        "x-ms-request-id": "aba098c0-2bde-4ad0-b3e2-781a6c8671c1"
       },
       "ResponseBody": null
     }
@@ -34,7 +34,7 @@
     "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "https://nibhati-dce-final-vhac.westus2-1.ingest.monitor.azure.com",
     "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "dcr-981bcfe0506f41f5b5168f3368499cfa",
     "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Custom-MyTableRawData",
-    "DateTimeOffsetNow": "2022-09-19T11:53:45.5482164-07:00",
-    "RandomSeed": "1883622081"
+    "DateTimeOffsetNow": "2022-09-20T13:57:18.6534532-07:00",
+    "RandomSeed": "281673280"
   }
 }
