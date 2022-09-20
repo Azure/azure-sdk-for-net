@@ -57,7 +57,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     }
                     var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
                     exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                    
                 }
 
                 _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
