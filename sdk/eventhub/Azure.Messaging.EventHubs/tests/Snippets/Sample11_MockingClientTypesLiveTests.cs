@@ -365,6 +365,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // This creates a mock of PartitionContext using the model factory.
 
             PartitionContext partitionContext = EventHubsModelFactory.PartitionContext(
+                fullyQualifiedNamespace: "sample-hub.servicebus.windows.net",
+                eventHubName: "sample-event-hub",
+                consumerGroup: "$Default",
                 partitionId : "0",
                 lastEnqueuedEventProperties : lastEnqueueEventProperties);
 
