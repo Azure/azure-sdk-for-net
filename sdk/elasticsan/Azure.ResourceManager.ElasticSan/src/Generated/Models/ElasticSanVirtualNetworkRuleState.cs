@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Gets the state of virtual network rule. </summary>
-    public enum VirtualNetworkRuleState
+    public enum ElasticSanVirtualNetworkRuleState
     {
         /// <summary> provisioning. </summary>
         Provisioning,

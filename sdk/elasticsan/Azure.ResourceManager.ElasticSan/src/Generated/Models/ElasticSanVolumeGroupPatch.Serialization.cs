@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanElasticSanVolumeGroupPatch : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeGroupPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

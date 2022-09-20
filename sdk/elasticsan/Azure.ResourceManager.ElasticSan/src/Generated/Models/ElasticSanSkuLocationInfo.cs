@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> The location info. </summary>
-    public partial class SkuLocationInfo
+    public partial class ElasticSanSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of SkuLocationInfo. </summary>
-        internal SkuLocationInfo()
+        /// <summary> Initializes a new instance of ElasticSanSkuLocationInfo. </summary>
+        internal ElasticSanSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of ElasticSanSkuLocationInfo. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
-        internal SkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones)
+        internal ElasticSanSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones)
         {
             Location = location;
             Zones = zones;

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Volume Group request. </summary>
-    public partial class ElasticSanElasticSanVolumeGroupPatch
+    public partial class ElasticSanVolumeGroupPatch
     {
-        /// <summary> Initializes a new instance of ElasticSanElasticSanVolumeGroupPatch. </summary>
-        public ElasticSanElasticSanVolumeGroupPatch()
+        /// <summary> Initializes a new instance of ElasticSanVolumeGroupPatch. </summary>
+        public ElasticSanVolumeGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>
-        public IList<VirtualNetworkRule> VirtualNetworkRules
+        public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules
         {
             get
             {

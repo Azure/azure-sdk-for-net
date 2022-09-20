@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class SkuInformationList
+    internal partial class ElasticSanSkuInformationList
     {
-        internal static SkuInformationList DeserializeSkuInformationList(JsonElement element)
+        internal static ElasticSanSkuInformationList DeserializeElasticSanSkuInformationList(JsonElement element)
         {
             Optional<IReadOnlyList<ElasticSanSkuInformation>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SkuInformationList(Optional.ToList(value));
+            return new ElasticSanSkuInformationList(Optional.ToList(value));
         }
     }
 }

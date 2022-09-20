@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Response for Volume request. </summary>
-    public partial class ElasticSanElasticSanVolumePatch
+    public partial class ElasticSanVolumePatch
     {
-        /// <summary> Initializes a new instance of ElasticSanElasticSanVolumePatch. </summary>
-        public ElasticSanElasticSanVolumePatch()
+        /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
+        public ElasticSanVolumePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

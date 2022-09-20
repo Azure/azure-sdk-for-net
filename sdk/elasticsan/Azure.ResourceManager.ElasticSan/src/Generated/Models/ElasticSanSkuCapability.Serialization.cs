@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class SKUCapability
+    public partial class ElasticSanSkuCapability
     {
-        internal static SKUCapability DeserializeSKUCapability(JsonElement element)
+        internal static ElasticSanSkuCapability DeserializeElasticSanSkuCapability(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> value = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SKUCapability(name.Value, value.Value);
+            return new ElasticSanSkuCapability(name.Value, value.Value);
         }
     }
 }

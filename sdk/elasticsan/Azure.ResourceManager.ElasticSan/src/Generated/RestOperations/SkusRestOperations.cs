@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuInformationList>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticSanSkuInformationList>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 case 200:
                     {
-                        SkuInformationList value = default;
+                        ElasticSanSkuInformationList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuInformationList.DeserializeSkuInformationList(document.RootElement);
+                        value = ElasticSanSkuInformationList.DeserializeElasticSanSkuInformationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuInformationList> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ElasticSanSkuInformationList> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 case 200:
                     {
-                        SkuInformationList value = default;
+                        ElasticSanSkuInformationList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuInformationList.DeserializeSkuInformationList(document.RootElement);
+                        value = ElasticSanSkuInformationList.DeserializeElasticSanSkuInformationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

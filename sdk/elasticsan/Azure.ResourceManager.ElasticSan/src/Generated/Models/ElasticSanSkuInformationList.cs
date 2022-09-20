@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> List of SKU Information objects. </summary>
-    internal partial class SkuInformationList
+    internal partial class ElasticSanSkuInformationList
     {
-        /// <summary> Initializes a new instance of SkuInformationList. </summary>
-        internal SkuInformationList()
+        /// <summary> Initializes a new instance of ElasticSanSkuInformationList. </summary>
+        internal ElasticSanSkuInformationList()
         {
             Value = new ChangeTrackingList<ElasticSanSkuInformation>();
         }
 
-        /// <summary> Initializes a new instance of SkuInformationList. </summary>
+        /// <summary> Initializes a new instance of ElasticSanSkuInformationList. </summary>
         /// <param name="value"> List of ResourceType Sku. </param>
-        internal SkuInformationList(IReadOnlyList<ElasticSanSkuInformation> value)
+        internal ElasticSanSkuInformationList(IReadOnlyList<ElasticSanSkuInformation> value)
         {
             Value = value;
         }

@@ -6,16 +6,17 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Virtual Network rule. </summary>
-    public partial class VirtualNetworkRule
+    public partial class ElasticSanVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVirtualNetworkRule. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> is null. </exception>
-        public VirtualNetworkRule(string virtualNetworkResourceId)
+        public ElasticSanVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId)
         {
             if (virtualNetworkResourceId == null)
             {
@@ -25,11 +26,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             VirtualNetworkResourceId = virtualNetworkResourceId;
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVirtualNetworkRule. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
-        internal VirtualNetworkRule(string virtualNetworkResourceId, VirtualNetworkRuleAction? action, VirtualNetworkRuleState? state)
+        internal ElasticSanVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId, ElasticSanVirtualNetworkRuleAction? action, ElasticSanVirtualNetworkRuleState? state)
         {
             VirtualNetworkResourceId = virtualNetworkResourceId;
             Action = action;
@@ -37,10 +38,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </summary>
-        public string VirtualNetworkResourceId { get; set; }
+        public ResourceIdentifier VirtualNetworkResourceId { get; set; }
         /// <summary> The action of virtual network rule. </summary>
-        public VirtualNetworkRuleAction? Action { get; set; }
+        public ElasticSanVirtualNetworkRuleAction? Action { get; set; }
         /// <summary> Gets the state of virtual network rule. </summary>
-        public VirtualNetworkRuleState? State { get; }
+        public ElasticSanVirtualNetworkRuleState? State { get; }
     }
 }

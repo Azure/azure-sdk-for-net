@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<ElasticSanSkuTier> tier = default;
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<SkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<SKUCapability>> capabilities = default;
+            Optional<IReadOnlyList<ElasticSanSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<ElasticSanSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuLocationInfo> array = new List<SkuLocationInfo>();
+                    List<ElasticSanSkuLocationInfo> array = new List<ElasticSanSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuLocationInfo.DeserializeSkuLocationInfo(item));
+                        array.Add(ElasticSanSkuLocationInfo.DeserializeElasticSanSkuLocationInfo(item));
                     }
                     locationInfo = array;
                     continue;
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SKUCapability> array = new List<SKUCapability>();
+                    List<ElasticSanSkuCapability> array = new List<ElasticSanSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SKUCapability.DeserializeSKUCapability(item));
+                        array.Add(ElasticSanSkuCapability.DeserializeElasticSanSkuCapability(item));
                     }
                     capabilities = array;
                     continue;

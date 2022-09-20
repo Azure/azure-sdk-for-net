@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class VirtualNetworkRule : IUtf8JsonSerializable
+    public partial class ElasticSanVirtualNetworkRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
+        internal static ElasticSanVirtualNetworkRule DeserializeElasticSanVirtualNetworkRule(JsonElement element)
         {
-            string id = default;
-            Optional<VirtualNetworkRuleAction> action = default;
-            Optional<VirtualNetworkRuleState> state = default;
+            ResourceIdentifier id = default;
+            Optional<ElasticSanVirtualNetworkRuleAction> action = default;
+            Optional<ElasticSanVirtualNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("action"))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new VirtualNetworkRuleAction(property.Value.GetString());
+                    action = new ElasticSanVirtualNetworkRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"))
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString().ToVirtualNetworkRuleState();
+                    state = property.Value.GetString().ToElasticSanVirtualNetworkRuleState();
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state));
+            return new ElasticSanVirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state));
         }
     }
 }

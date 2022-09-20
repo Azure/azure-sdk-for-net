@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Data source used when creating the volume. </summary>
-    public partial class SourceCreationData
+    public partial class ElasticSanVolumeDataSourceInfo
     {
-        /// <summary> Initializes a new instance of SourceCreationData. </summary>
-        public SourceCreationData()
+        /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
+        public ElasticSanVolumeDataSourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceCreationData. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
         /// <param name="sourceUri"> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </param>
-        internal SourceCreationData(ElasticSanVolumeCreateOption? createSource, Uri sourceUri)
+        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, Uri sourceUri)
         {
             CreateSource = createSource;
             SourceUri = sourceUri;

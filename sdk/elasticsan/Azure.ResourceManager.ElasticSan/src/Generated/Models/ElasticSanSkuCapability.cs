@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> The capability information in the specified SKU. </summary>
-    public partial class SKUCapability
+    public partial class ElasticSanSkuCapability
     {
-        /// <summary> Initializes a new instance of SKUCapability. </summary>
-        internal SKUCapability()
+        /// <summary> Initializes a new instance of ElasticSanSkuCapability. </summary>
+        internal ElasticSanSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of SKUCapability. </summary>
+        /// <summary> Initializes a new instance of ElasticSanSkuCapability. </summary>
         /// <param name="name"> The name of capability. </param>
         /// <param name="value"> A string value to indicate states of given capability. </param>
-        internal SKUCapability(string name, string value)
+        internal ElasticSanSkuCapability(string name, string value)
         {
             Name = name;
             Value = value;

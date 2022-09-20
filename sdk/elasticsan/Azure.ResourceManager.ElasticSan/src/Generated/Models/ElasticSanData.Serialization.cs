@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<SystemData> systemData = default;
             ElasticSanSku sku = default;
             Optional<IList<string>> availabilityZones = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ElasticSanProvisioningState> provisioningState = default;
             long baseSizeTiB = default;
             long extendedCapacitySizeTiB = default;
-            Optional<long> totalElasticSanVolumeSizeGiB = default;
-            Optional<long> elasticSanVolumeGroupCount = default;
+            Optional<long> totalVolumeSizeGiB = default;
+            Optional<long> volumeGroupCount = default;
             Optional<long> totalIops = default;
             Optional<long> totalMbps = default;
             Optional<long> totalSizeTiB = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ElasticSanProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("baseSizeTiB"))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            totalElasticSanVolumeSizeGiB = property0.Value.GetInt64();
+                            totalVolumeSizeGiB = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("volumeGroupCount"))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            elasticSanVolumeGroupCount = property0.Value.GetInt64();
+                            volumeGroupCount = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("totalIops"))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalElasticSanVolumeSizeGiB), Optional.ToNullable(elasticSanVolumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB));
+            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB));
         }
     }
 }

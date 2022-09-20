@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class SourceCreationData : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeDataSourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteEndObject();
         }
 
-        internal static SourceCreationData DeserializeSourceCreationData(JsonElement element)
+        internal static ElasticSanVolumeDataSourceInfo DeserializeElasticSanVolumeDataSourceInfo(JsonElement element)
         {
             Optional<ElasticSanVolumeCreateOption> createSource = default;
             Optional<Uri> sourceUri = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SourceCreationData(Optional.ToNullable(createSource), sourceUri.Value);
+            return new ElasticSanVolumeDataSourceInfo(Optional.ToNullable(createSource), sourceUri.Value);
         }
     }
 }

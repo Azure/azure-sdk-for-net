@@ -48,15 +48,28 @@ rename-rules:
   MBps: Mbps
   LRS: Lrs
   ZRS: Zrs
-  Volume: ElasticSanVolume
 
 prepend-rp-prefix:
-- EncryptionType
-- ProvisioningState
+  - EncryptionType
+  - Name
+  - Tier
+  - Volume
+  - VolumeCreateOption
+  - VolumeGroup
+  - VolumeGroupList
+  - VolumeList
+  - SkuInformationList
+  - SkuLocationInfo
 
 rename-mapping:
-  Name: ElasticSanSkuName
-  Tier: ElasticSanTier
-  Action: VirtualNetworkRuleAction
-  State: VirtualNetworkRuleState
+  Volume.properties.volumeId: -|uuid
+  VirtualNetworkRule.id: -|arm-id
+  Action: ElasticSanVirtualNetworkRuleAction
+  OperationalStatus: ResourceOperationalStatus
+  ProvisioningStates: ElasticSanProvisioningState
+  State: ElasticSanVirtualNetworkRuleState
+  SKUCapability: ElasticSanSkuCapability
+  SourceCreationData: ElasticSanVolumeDataSourceInfo
+  VirtualNetworkRule: ElasticSanVirtualNetworkRule
+
 ```
