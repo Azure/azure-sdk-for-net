@@ -9,5 +9,5 @@ extends:
   parameters:
     ServiceDirectory: healthbot
     Artifacts:
-    - name: Azure.ResourceManager.Healthbot
-      safeName: AzureResourceManagerHealthbot
+    - name: Azure.ResourceManager.HealthBot
+      safeName: AzureResourceManagerHealthBot
