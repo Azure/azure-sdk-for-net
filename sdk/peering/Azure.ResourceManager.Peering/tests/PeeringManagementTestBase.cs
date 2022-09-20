@@ -8,6 +8,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Peering.Tests
@@ -58,7 +59,6 @@ namespace Azure.ResourceManager.Peering.Tests
         {
             PeeringServiceData data = new PeeringServiceData(resourceGroup.Data.Location)
             {
-                Location = resourceGroup.Data.Location,
                 PeeringServiceLocation = "South Australia",
                 PeeringServiceProvider = "Atman",
                 ProviderPrimaryPeeringLocation = "Warsaw",
@@ -76,13 +76,16 @@ namespace Azure.ResourceManager.Peering.Tests
             {
                 PeerName = peerAsnName,
                 PeerAsn = Recording.Random.Next(1, 94967295), // The value must be at most 4294967295.
+                PeerContactDetail =
+                {
+                    new PeerAsnContactDetail()
+                    {
+                        Role = "Noc",
+                        Email = "noc65003@contoso.com",
+                        Phone = "8888988888"
+                    }
+                }
             };
-            data.PeerContactDetail.Add(new PeerAsnContactDetail()
-            {
-                Role = "Noc",
-                Email = "noc65003@contoso.com",
-                Phone = "8888988888"
-            });
             var peerAsn = await peerAsnCollection.CreateOrUpdateAsync(WaitUntil.Completed, peerAsnName, data);
             return peerAsn.Value;
         }

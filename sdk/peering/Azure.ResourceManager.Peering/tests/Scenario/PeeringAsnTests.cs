@@ -46,9 +46,7 @@ namespace Azure.ResourceManager.Peering.Tests
         {
             string peerAsnName = Recording.GenerateAssetName("peerAsn");
             var peerAsn = await CreatePeerAsn(peerAsnName);
-            ValidatePeeringService(peerAsn);
-            Assert.AreEqual(peerAsnName, peerAsn.Data.Name);
-            Assert.AreEqual(peerAsnName, peerAsn.Data.PeerName);
+            ValidatePeeringService(peerAsn, peerAsnName);
         }
 
         [RecordedTest]
@@ -66,9 +64,7 @@ namespace Azure.ResourceManager.Peering.Tests
             string peerAsnName = Recording.GenerateAssetName("peerAsn");
             await CreatePeerAsn(peerAsnName);
             var peerAsn = await _peerAsnCollection.GetAsync(peerAsnName);
-            ValidatePeeringService(peerAsn);
-            Assert.AreEqual(peerAsnName, peerAsn.Value.Data.Name);
-            Assert.AreEqual(peerAsnName, peerAsn.Value.Data.PeerName);
+            ValidatePeeringService(peerAsn, peerAsnName);
         }
 
         [RecordedTest]
@@ -78,7 +74,7 @@ namespace Azure.ResourceManager.Peering.Tests
             await CreatePeerAsn(peerAsnName);
             var list = await _peerAsnCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidatePeeringService(list.First(item => item.Data.Name == peerAsnName));
+            ValidatePeeringService(list.First(item => item.Data.Name == peerAsnName), peerAsnName);
         }
 
         [RecordedTest]
@@ -94,9 +90,11 @@ namespace Azure.ResourceManager.Peering.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidatePeeringService(PeerAsnResource peerAsn)
+        private void ValidatePeeringService(PeerAsnResource peerAsn, string peerAsnName)
         {
             Assert.IsNotNull(peerAsn);
+            Assert.AreEqual(peerAsnName, peerAsn.Data.Name);
+            Assert.AreEqual(peerAsnName, peerAsn.Data.PeerName);
             Assert.IsTrue(peerAsn.Data.PeerAsn >= 1);
             Assert.AreEqual("Microsoft.Peering/peerAsns", peerAsn.Data.ResourceType.ToString());
             Assert.AreEqual("Pending", peerAsn.Data.ValidationState.ToString());

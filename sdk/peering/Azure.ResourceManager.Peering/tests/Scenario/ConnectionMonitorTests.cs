@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Peering.Tests
         }
 
         [RecordedTest]
-        [Ignore("500. A null value was returned where an instance of IHttpActionResult was expected.")]
+        [Ignore("No actual ISP provider to create a connection")]
         public async Task ConnectionMonitorE2EOperation()
         {
             // Create
             string connectionMonitorTestName = Recording.GenerateAssetName("connect");
             var data = new ConnectionMonitorTestData();
-            var connect  = await _connectionMonitorTestCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorTestName, data);
+            var connect = await _connectionMonitorTestCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorTestName, data);
             Assert.IsNotNull(connect);
             Assert.AreEqual(connectionMonitorTestName, connect.Value.Data.Name);
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Peering.Tests
             // GetAll
             var list = await _connectionMonitorTestCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
-            Assert.IsNotNull(list.First(item=>item.Data.Name==connectionMonitorTestName));
+            Assert.IsNotNull(list.First(item => item.Data.Name == connectionMonitorTestName));
 
             // Delete
             await connect.Value.DeleteAsync(WaitUntil.Completed);

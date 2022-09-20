@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.Peering.Tests
         {
             string peeringServiceName = Recording.GenerateAssetName("peeringService");
             var peeringService = await CreateAtmanPeeringService(_resourceGroup, peeringServiceName);
-            ValidatePeeringService(peeringService);
-            Assert.AreEqual(peeringServiceName, peeringService.Data.Name);
+            ValidatePeeringService(peeringService, peeringServiceName);
         }
 
         [RecordedTest]
@@ -55,8 +54,7 @@ namespace Azure.ResourceManager.Peering.Tests
             string peeringServiceName = Recording.GenerateAssetName("peeringService");
             await CreateAtmanPeeringService(_resourceGroup, peeringServiceName);
             var peeringService = await _peeringServiceCollection.GetAsync(peeringServiceName);
-            ValidatePeeringService(peeringService);
-            Assert.AreEqual(peeringServiceName, peeringService.Value.Data.Name);
+            ValidatePeeringService(peeringService, peeringServiceName);
         }
 
         [RecordedTest]
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Peering.Tests
             await CreateAtmanPeeringService(_resourceGroup, peeringServiceName);
             var list = await _peeringServiceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidatePeeringService(list.First(item => item.Data.Name == peeringServiceName));
+            ValidatePeeringService(list.First(item => item.Data.Name == peeringServiceName), peeringServiceName);
         }
 
         [RecordedTest]
@@ -82,17 +80,26 @@ namespace Azure.ResourceManager.Peering.Tests
             Assert.IsFalse(flag);
         }
 
-        [RecordedTest]
-        public async Task AddTag()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
         {
             string peeringServiceName = Recording.GenerateAssetName("peeringService");
             var peeringService = await CreateAtmanPeeringService(_resourceGroup, peeringServiceName);
-            await peeringService.AddTagAsync("addtagkey", "addtagvalue");
 
+            // AddTag
+            await peeringService.AddTagAsync("addtagkey", "addtagvalue");
             peeringService = await _peeringServiceCollection.GetAsync(peeringServiceName);
+            Assert.AreEqual(1, peeringService.Data.Tags.Count);
             KeyValuePair<string, string> tag = peeringService.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
             Assert.AreEqual("addtagkey", tag.Key);
             Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await peeringService.RemoveTagAsync("addtagkey");
+            peeringService = await _peeringServiceCollection.GetAsync(peeringServiceName);
+            Assert.AreEqual(0, peeringService.Data.Tags.Count);
         }
 
         [RecordedTest]
@@ -107,9 +114,10 @@ namespace Azure.ResourceManager.Peering.Tests
             Assert.IsNotNull(list.First(item => item.Name == "westus"));
         }
 
-        private void ValidatePeeringService(PeeringServiceResource peeringService)
+        private void ValidatePeeringService(PeeringServiceResource peeringService,string peeringServiceName)
         {
             Assert.IsNotNull(peeringService);
+            Assert.AreEqual(peeringServiceName, peeringService.Data.Name);
             Assert.AreEqual("South Australia", peeringService.Data.PeeringServiceLocation);
             Assert.AreEqual("Atman", peeringService.Data.PeeringServiceProvider);
             Assert.AreEqual("Warsaw", peeringService.Data.ProviderPrimaryPeeringLocation);
