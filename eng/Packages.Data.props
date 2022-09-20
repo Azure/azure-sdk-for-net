@@ -93,7 +93,7 @@
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.10.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.6.0" />
+    <PackageReference Update="Azure.Identity" Version="1.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
