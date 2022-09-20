@@ -6,7 +6,7 @@ For a more detailed description of mocking the set of Event Hubs client types se
 
 ## Application-defined handlers
 
-Interacting with an `EventHubProcessorClient` in an application is done through various handler methods. The Event Hubs library guarantees that each of these handlers will be called at the appropriate times. Therefore, when validating correctness of an application dependent on an `EventHubProcessorClient`, each handler can just be called and tested directly.
+Interacting with an `EventHubProcessorClient` in an application is done through various handler methods. The Event Hubs library guarantees that each of these handlers will be called at the appropriate times while the processor is running. Therefore, it is recommended that handers be tested by calling them directly, rather than attempting to simulate having the processor producer invoke them.
 
 The most common of these handlers are the process event and process error handlers. The necessary inputs to these handlers can be mocked using the `EventHubsModelFactory` and passed into their respective handler definitions, this is demonstrated below.
 
