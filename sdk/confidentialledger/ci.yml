@@ -19,7 +19,6 @@ pr:
   paths:
     include:
     - sdk/confidentialledger/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -29,5 +28,3 @@ extends:
     Artifacts:
     - name: Azure.Security.ConfidentialLedger
       safeName: AzureConfidentialLedger
-    - name: Azure.ResourceManager.ConfidentialLedger
-      safeName: AzureResourceManagerConfidentialLedger

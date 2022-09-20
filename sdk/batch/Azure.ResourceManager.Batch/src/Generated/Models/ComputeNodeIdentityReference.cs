@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The reference to a user assigned identity associated with the Batch pool which a compute node will use. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of ComputeNodeIdentityReference. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. </param>
-        internal ComputeNodeIdentityReference(string resourceId)
+        internal ComputeNodeIdentityReference(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
         }
 
         /// <summary> The ARM resource id of the user assigned identity. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The cluster monitoring status response.
-    /// Serialized Name: ClusterMonitoringResponse
-    /// </summary>
+    /// <summary> The cluster monitoring status response. </summary>
     public partial class HDInsightClusterExtensionStatus
     {
         /// <summary> Initializes a new instance of HDInsightClusterExtensionStatus. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterExtensionStatus. </summary>
-        /// <param name="isClusterMonitoringEnabled">
-        /// The status of the monitor on the HDInsight cluster.
-        /// Serialized Name: ClusterMonitoringResponse.clusterMonitoringEnabled
-        /// </param>
-        /// <param name="workspaceId">
-        /// The workspace ID of the monitor on the HDInsight cluster.
-        /// Serialized Name: ClusterMonitoringResponse.workspaceId
-        /// </param>
+        /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
+        /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
         internal HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled, string workspaceId)
         {
             IsClusterMonitoringEnabled = isClusterMonitoringEnabled;
             WorkspaceId = workspaceId;
         }
 
-        /// <summary>
-        /// The status of the monitor on the HDInsight cluster.
-        /// Serialized Name: ClusterMonitoringResponse.clusterMonitoringEnabled
-        /// </summary>
+        /// <summary> The status of the monitor on the HDInsight cluster. </summary>
         public bool? IsClusterMonitoringEnabled { get; }
-        /// <summary>
-        /// The workspace ID of the monitor on the HDInsight cluster.
-        /// Serialized Name: ClusterMonitoringResponse.workspaceId
-        /// </summary>
+        /// <summary> The workspace ID of the monitor on the HDInsight cluster. </summary>
         public string WorkspaceId { get; }
     }
 }

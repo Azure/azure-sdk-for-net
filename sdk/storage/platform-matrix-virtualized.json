@@ -15,6 +15,11 @@
     ],
     "BuildConfiguration": [
         "Debug"
-    ]
+    ],
+    "TestFilterConfig": {
+        "ExcludeNonVirtualized": {
+            "AdditionalTestFilters": "FullyQualifiedName!~WebJobs&TestCategory!=NonVirtualized"
+        }
+      }
   }
 }

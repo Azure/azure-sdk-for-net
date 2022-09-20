@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupDiagnostics DeserializeContainerGroupDiagnostics(JsonElement element)
         {
-            Optional<LogAnalytics> logAnalytics = default;
+            Optional<ContainerGroupLogAnalytics> logAnalytics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logAnalytics = LogAnalytics.DeserializeLogAnalytics(property.Value);
+                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(property.Value);
                     continue;
                 }
             }

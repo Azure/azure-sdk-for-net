@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.16 (Unreleased)
+## 1.0.0-preview.17 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.16 (2022-09-13)
+- Updated LinkConnection for Synapse Link
+- Added TargetSparkConfiguration property for SparkJobDefinition and Notebook
+- Added GoogleSheets connector
+- Added SAP ODP connector
+- Added support OAuth2ClientCredential auth in RestSevice
+- Added support rejected data linked service in dataflow sink
+- Added Dataworld, AppFigures, Asana, Twilio connectors
+- Added Fail Activity
 
 ## 1.0.0-preview.15 (2022-04-07)
 - Added LinkConnectionOperations.

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The configuration object for the specified cluster.
-    /// Serialized Name: ClusterConfigurations
-    /// </summary>
+    /// <summary> The configuration object for the specified cluster. </summary>
     public partial class HDInsightClusterConfigurations
     {
         /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>
-        /// <param name="configurations">
-        /// The configuration object for the specified configuration for the specified cluster.
-        /// Serialized Name: ClusterConfigurations.configurations
-        /// </param>
+        /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
         internal HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations)
         {
             Configurations = configurations;
         }
 
-        /// <summary>
-        /// The configuration object for the specified configuration for the specified cluster.
-        /// Serialized Name: ClusterConfigurations.configurations
-        /// </summary>
+        /// <summary> The configuration object for the specified configuration for the specified cluster. </summary>
         public IReadOnlyDictionary<string, IDictionary<string, string>> Configurations { get; }
     }
 }

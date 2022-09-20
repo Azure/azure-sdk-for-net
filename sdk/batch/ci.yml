@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/batch/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -34,5 +33,3 @@ extends:
       safeName: MicrosoftAzureBatchFileStaging
     - name: Microsoft.Azure.Batch.Conventions.Files
       safeName: MicrosoftAzureBatchConventionsFiles
-    - name: Azure.ResourceManager.Batch
-      safeName: AzureResourceManagerBatch

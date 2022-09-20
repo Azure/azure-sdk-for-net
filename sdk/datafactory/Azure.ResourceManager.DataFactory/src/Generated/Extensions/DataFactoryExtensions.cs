@@ -63,10 +63,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this SubscriptionResource subscriptionResource, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryRepoUpdate"/> is null. </exception>
+        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
             return await GetExtensionClient(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
@@ -81,10 +80,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static Response<DataFactoryResource> ConfigureFactoryRepoInformation(this SubscriptionResource subscriptionResource, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryRepoUpdate"/> is null. </exception>
+        public static Response<DataFactoryResource> ConfigureFactoryRepoInformation(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
             return GetExtensionClient(subscriptionResource).ConfigureFactoryRepoInformation(locationId, factoryRepoUpdate, cancellationToken);
@@ -99,10 +97,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, ResourceIdentifier locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, content, cancellationToken).ConfigureAwait(false);
@@ -117,10 +114,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="content"/> is null. </exception>
-        public static Response<ExposureControlResult> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, ResourceIdentifier locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ExposureControlResult> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).GetFeatureValueExposureControl(locationId, content, cancellationToken);

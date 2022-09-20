@@ -122,7 +122,7 @@ namespace Azure.Identity.Tests
             var result = await PublicClientApplicationBuilder.Create(clientId)
                 .WithTenantId(tenantId)
                 .Build()
-                .AcquireTokenByUsernamePassword(new[] { testEnvironment.KeyvaultScope }, username, password.ToSecureString())
+                .AcquireTokenByUsernamePassword(new[] { testEnvironment.KeyvaultScope }, username, password)
                 .ExecuteAsync();
 
             return new AuthenticationRecord(result, clientId);
@@ -145,7 +145,7 @@ namespace Azure.Identity.Tests
                 .Build();
 
             var retriever = new RefreshTokenRetriever(client.UserTokenCache);
-            await client.AcquireTokenByUsernamePassword(new[] { testEnvironment.KeyvaultScope }, username, password.ToSecureString()).ExecuteAsync();
+            await client.AcquireTokenByUsernamePassword(new[] { testEnvironment.KeyvaultScope }, username, password).ExecuteAsync();
 
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
             return retriever.RefreshToken;

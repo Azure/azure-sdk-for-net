@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            IReadOnlyList<OSOptionProperty> osOptionPropertyList = default;
+            IReadOnlyList<ContainerServiceOSOptionProperty> osOptionPropertyList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         if (property0.NameEquals("osOptionPropertyList"))
                         {
-                            List<OSOptionProperty> array = new List<OSOptionProperty>();
+                            List<ContainerServiceOSOptionProperty> array = new List<ContainerServiceOSOptionProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OSOptionProperty.DeserializeOSOptionProperty(item));
+                                array.Add(ContainerServiceOSOptionProperty.DeserializeContainerServiceOSOptionProperty(item));
                             }
                             osOptionPropertyList = array;
                             continue;

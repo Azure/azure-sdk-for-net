@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The quota properties for the cluster.
-    /// Serialized Name: QuotaInfo
-    /// </summary>
+    /// <summary> The quota properties for the cluster. </summary>
     internal partial class QuotaInfo
     {
         /// <summary> Initializes a new instance of QuotaInfo. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of QuotaInfo. </summary>
-        /// <param name="coresUsed">
-        /// The cores used by the cluster.
-        /// Serialized Name: QuotaInfo.coresUsed
-        /// </param>
+        /// <param name="coresUsed"> The cores used by the cluster. </param>
         internal QuotaInfo(int? coresUsed)
         {
             CoresUsed = coresUsed;
         }
 
-        /// <summary>
-        /// The cores used by the cluster.
-        /// Serialized Name: QuotaInfo.coresUsed
-        /// </summary>
+        /// <summary> The cores used by the cluster. </summary>
         public int? CoresUsed { get; set; }
     }
 }

@@ -176,6 +176,24 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
+        ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify,
+            string deadLetterReason,
+            string deadLetterErrorDescription = default,
+            CancellationToken cancellationToken = default)
+        {
+            await _receiver.DeadLetterMessageAsync(
+                message,
+                propertiesToModify,
+                deadLetterReason: deadLetterReason,
+                deadLetterErrorDescription: deadLetterErrorDescription,
+                cancellationToken)
+            .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
+
         ///<inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,

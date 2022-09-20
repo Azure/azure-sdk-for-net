@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static DiffDiskSettings DeserializeDiffDiskSettings(JsonElement element)
         {
-            Optional<DiffDiskPlacement> placement = default;
+            Optional<BatchDiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("placement"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    placement = new DiffDiskPlacement(property.Value.GetString());
+                    placement = new BatchDiffDiskPlacement(property.Value.GetString());
                     continue;
                 }
             }

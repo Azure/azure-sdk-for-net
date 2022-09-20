@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static OrderResourceList DeserializeOrderResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<OrderResourceData>> value = default;
+            Optional<IReadOnlyList<EdgeOrderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OrderResourceData> array = new List<OrderResourceData>();
+                    List<EdgeOrderData> array = new List<EdgeOrderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrderResourceData.DeserializeOrderResourceData(item));
+                        array.Add(EdgeOrderData.DeserializeEdgeOrderData(item));
                     }
                     value = array;
                     continue;

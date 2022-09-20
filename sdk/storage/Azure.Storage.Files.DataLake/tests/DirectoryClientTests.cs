@@ -14,6 +14,7 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Files.DataLake.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
@@ -5755,6 +5756,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetPathsAsync_NonHns()
         {
             // Arrange

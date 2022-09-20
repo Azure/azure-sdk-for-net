@@ -3,7 +3,7 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.ServiceBus.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 </Project>

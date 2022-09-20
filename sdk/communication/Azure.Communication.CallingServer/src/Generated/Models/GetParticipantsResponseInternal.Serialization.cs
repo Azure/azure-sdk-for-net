@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         internal static GetParticipantsResponseInternal DeserializeGetParticipantsResponseInternal(JsonElement element)
         {
-            Optional<IReadOnlyList<AcsCallParticipantDtoInternal>> values = default;
+            Optional<IReadOnlyList<AcsCallParticipantInternal>> values = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AcsCallParticipantDtoInternal> array = new List<AcsCallParticipantDtoInternal>();
+                    List<AcsCallParticipantInternal> array = new List<AcsCallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsCallParticipantDtoInternal.DeserializeAcsCallParticipantDtoInternal(item));
+                        array.Add(AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(item));
                     }
                     values = array;
                     continue;

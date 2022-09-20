@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes all the settings to be used when encoding the input video with the Standard Encoder. </summary>
-    public partial class StandardEncoderPreset : MediaPreset
+    public partial class StandardEncoderPreset : MediaTransformPreset
     {
         /// <summary> Initializes a new instance of StandardEncoderPreset. </summary>
         /// <param name="codecs">
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="formats">
         /// The list of outputs to be produced by the encoder.
         /// Please note <see cref="FormatBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ImageFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
+        /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="codecs"/> or <paramref name="formats"/> is null. </exception>
         public StandardEncoderPreset(IEnumerable<CodecBasicProperties> codecs, IEnumerable<FormatBasicProperties> formats)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="formats">
         /// The list of outputs to be produced by the encoder.
         /// Please note <see cref="FormatBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ImageFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
+        /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
         /// </param>
         internal StandardEncoderPreset(string odataType, FilteringOperations filters, IList<CodecBasicProperties> codecs, IList<FormatBasicProperties> formats) : base(odataType)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary>
         /// The list of outputs to be produced by the encoder.
         /// Please note <see cref="FormatBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ImageFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
+        /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
         /// </summary>
         public IList<FormatBasicProperties> Formats { get; }
     }

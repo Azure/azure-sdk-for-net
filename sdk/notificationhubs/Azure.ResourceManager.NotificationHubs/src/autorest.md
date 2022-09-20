@@ -16,7 +16,52 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: NotificationHubNamespaceAuthorizationRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}: NotificationHubAuthorizationRule
+
+rename-mapping:
+  NamespaceResource.properties.serviceBusEndpoint: -|uri
+  NamespaceCreateOrUpdateParameters.properties.serviceBusEndpoint: -|uri
+  ApnsCredential.properties.endpoint: -|uri
+  BaiduCredential.properties.baiduEndPoint: BaiduEndpoint|uri
+  GcmCredential.properties.gcmEndpoint: -|uri
+  GcmCredential.properties.googleApiKey: gcmApiKey
+  WnsCredential.properties.windowsLiveEndpoint: -|uri
+  NotificationHubResource.properties.registrationTtl: -|duration-constant
+  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|datetime
+  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|datetime
+  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|datetime
+  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|datetime
+  NamespaceResource.properties.enabled: IsEnabled
+  NamespaceResource.properties.critical: IsCritical
+  NamespaceCreateOrUpdateParameters.properties.enabled: IsEnabled
+  NamespaceCreateOrUpdateParameters.properties.critical: IsCritical
+  ApnsCredential: NotificationHubApnsCredential
+  WnsCredential: NotificationHubWnsCredential
+  GcmCredential: NotificationHubGcmCredential
+  MpnsCredential: NotificationHubMpnsCredential
+  AdmCredential: NotificationHubAdmCredential
+  BaiduCredential: NotificationHubBaiduCredential
+  AccessRights: AuthorizationRuleAccessRight
+  NamespaceResource: NotificationHubNamespace
+  NotificationHubResource: NotificationHub
+  SharedAccessAuthorizationRuleResource: NotificationHubAuthorizationRule
+  CheckAvailabilityParameters: NotificationHubAvailabilityContent
+  CheckAvailabilityResult: NotificationHubAvailabilityResult
+  DebugSendResponse: NotificationHubTestSendResult
+  NamespaceListResult: NotificationHubNamespaceListResult
+  NamespaceType: NotificationHubNamespaceType
+  PnsCredentialsResource: NotificationHubPnsCredentials
+  PolicykeyResource: NotificationHubPolicyKey
+  ResourceListKeys: NotificationHubResourceKeys
+  Sku: NotificationHubSku
+  SkuName: NotificationHubSkuName
+  SharedAccessAuthorizationRuleCreateOrUpdateParameters: SharedAccessAuthorizationRuleCreateOrUpdateContent
+
+override-operation-name:
+  NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability
+  Namespaces_CheckAvailability: CheckNotificationHubNamespaceAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -24,6 +69,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'Thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -48,4 +94,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+- from: notificationhubs.json
+  where: $.definitions
+  transform: >
+    $.NotificationHubProperties.properties.name['x-ms-client-name'] = 'NotificationHubName';
+    $.NamespaceProperties.properties.name['x-ms-client-name'] = 'NamespaceName';
+    $.DebugSendResult.properties.success['type'] = 'integer';
+    $.DebugSendResult.properties.failure['type'] = 'integer';
 ```
