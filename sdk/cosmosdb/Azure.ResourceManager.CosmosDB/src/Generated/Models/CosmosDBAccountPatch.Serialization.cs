@@ -190,6 +190,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("capacity");
                 writer.WriteObjectValue(Capacity);
             }
+            if (Optional.IsDefined(EnablePartitionMerge))
+            {
+                writer.WritePropertyName("enablePartitionMerge");
+                writer.WriteBooleanValue(EnablePartitionMerge.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
