@@ -15,26 +15,26 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
     /// <summary> TODO. </summary>
-    public abstract partial class AgreementTermResource : ArmResource
+    public abstract partial class BaseMarketplaceAgreementTermResource : ArmResource
     {
-        internal static AgreementTermResource GetResource(ArmClient client, AgreementTermData data)
+        internal static BaseMarketplaceAgreementTermResource GetResource(ArmClient client, MarketplaceAgreementTermData data)
         {
-            if (IsOfferTypePublisherOfferPlanAgreementResource(data.Id))
+            if (IsMarketplaceAgreementTermResource(data.Id))
             {
-                return new OfferTypePublisherOfferPlanAgreementResource(client, data);
+                return new MarketplaceAgreementTermResource(client, data);
             }
-            if (IsAgreementOfferPlanResource(data.Id))
+            if (IsMarketplaceAgreementResource(data.Id))
             {
-                return new AgreementOfferPlanResource(client, data);
+                return new MarketplaceAgreementResource(client, data);
             }
             // TODO -- should we throw or return an UnknownResource?
             throw new InvalidOperationException();
         }
 
-        internal static bool IsOfferTypePublisherOfferPlanAgreementResource(ResourceIdentifier id)
+        internal static bool IsMarketplaceAgreementTermResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != OfferTypePublisherOfferPlanAgreementResource.ResourceType)
+            if (id.ResourceType != MarketplaceAgreementTermResource.ResourceType)
             {
                 return false;
             }
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             return true;
         }
 
-        internal static bool IsAgreementOfferPlanResource(ResourceIdentifier id)
+        internal static bool IsMarketplaceAgreementResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != AgreementOfferPlanResource.ResourceType)
+            if (id.ResourceType != MarketplaceAgreementResource.ResourceType)
             {
                 return false;
             }
@@ -66,26 +66,26 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             return true;
         }
 
-        private readonly AgreementTermData _data;
+        private readonly MarketplaceAgreementTermData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AgreementTermResource"/> class for mocking. </summary>
-        protected AgreementTermResource()
+        /// <summary> Initializes a new instance of the <see cref="BaseMarketplaceAgreementTermResource"/> class for mocking. </summary>
+        protected BaseMarketplaceAgreementTermResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AgreementTermResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "BaseMarketplaceAgreementTermResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AgreementTermResource(ArmClient client, AgreementTermData data) : this(client, data.Id)
+        internal BaseMarketplaceAgreementTermResource(ArmClient client, MarketplaceAgreementTermData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgreementTermResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BaseMarketplaceAgreementTermResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AgreementTermResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BaseMarketplaceAgreementTermResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AgreementTermData Data
+        public virtual MarketplaceAgreementTermData Data
         {
             get
             {
@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<AgreementTermResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<BaseMarketplaceAgreementTermResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<AgreementTermResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<BaseMarketplaceAgreementTermResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<AgreementTermResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<BaseMarketplaceAgreementTermResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<AgreementTermResource> Get(CancellationToken cancellationToken = default)
+        public Response<BaseMarketplaceAgreementTermResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }
