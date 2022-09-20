@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
             location ??= DefaultLocationString;
             var vnetName = Recording.GenerateAssetName("vnet-");
-            Delegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
+            ServiceDelegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
             var vnet = new VirtualNetworkData()
             {
                 Location = location,

@@ -4,13 +4,13 @@
 
 ### Features Added
     - Added QueryRegionInfoNetAppResourceAsync
-    - NetAppAccount has new EncryptionKeySource
-
-    - Added AccountEncrhyption KeySource changed to Enum
+    - NetAppAccount has new EncryptionKeySource    
+    - Added AccountEncryption KeySource changed to Enum
+    - Added RenewCredentialsAsync to NetAppAccountResource
     - Added DisableShowmount and EncryptionKeySource to NetAppAccount
     - Added CoolnessPeriod, CoolAccess to NetAppVolume and NetAppVolumePatch
     - Added optional RelocateVolumeContent to NetAppVolume.RelocateAsync
-    - Added SmbAccessBasedEnumeration, keyVaultPrivateEndpointResourceId to NetAppVolumeData
+    - Added SmbAccessBasedEnumeration, smbNonBrowsable, keyVaultPrivateEndpointResourceId, deleteBaseSnapshot to NetAppVolumeData
 
 ### Breaking Changes
     - NetAppAccount has new AccountEncryption properties, KeySource, KeyVaultProperties and Identity
