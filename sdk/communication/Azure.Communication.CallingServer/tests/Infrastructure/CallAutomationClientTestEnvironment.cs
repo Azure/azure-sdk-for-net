@@ -68,7 +68,5 @@ namespace Azure.Communication.CallingServer
         /// The callback url of the application where notification would be received.
         /// </summary>
         public string AppCallbackUrl => $"{AppBaseUrl}/api/incident/callback?SecretKey={WebUtility.UrlEncode(IncomingRequestSecret)}";
-
-        public string WebsocketUrl => $"wss://testwebsocket.webpubsub.azure.com/client/hubs/media?access_token=helloworld";
     }
 }
