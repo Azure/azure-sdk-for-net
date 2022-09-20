@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// topic.</param>
         /// <param name="systemTopic">System topic resource id which is mapped
         /// to the source.</param>
-        /// <param name="systemData">The system metadata relating to the
-        /// Extension Topic resource.</param>
+        /// <param name="systemData">The system metadata relating to Extension
+        /// Topic resource.</param>
         public ExtensionTopic(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string systemTopic = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string SystemTopic { get; set; }
 
         /// <summary>
-        /// Gets the system metadata relating to the Extension Topic resource.
+        /// Gets the system metadata relating to Extension Topic resource.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }

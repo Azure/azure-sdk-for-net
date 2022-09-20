@@ -1,5 +1,15 @@
 # Release History
 
+## 4.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.2.0 (2022-09-20)
 
 ### Breaking Changes
@@ -86,7 +96,7 @@ Changes from both the last release and the last beta include:
 - Refactor `RestoreOperation` to return `RestoreResult`
 - Renamed `KeyVaultPermissions` Not\* properties to Deny\*
 - Renamed `KeyVaultRoleAssignment` `Type` property to `RoleAssignmentType`
-- Made `KeyVaultRoleAssignmentProperties` internal and moved its properties to method parameters for `CreateRoleAssignment` 
+- Made `KeyVaultRoleAssignmentProperties` internal and moved its properties to method parameters for `CreateRoleAssignment`
 
 ## 4.0.0-beta.2 (2020-10-06)
 

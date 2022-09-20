@@ -94,13 +94,13 @@ CdnOriginGroupCollection originGroupCollection = endpoint.GetCdnOriginGroups();
 // Now we can get the origin group with GetAsync()
 CdnOriginGroupResource originGroup = await originGroupCollection.GetAsync("myOriginGroup");
 // With UpdateAsync(), we can update the origin group
-PatchableCdnOriginGroupData input = new PatchableCdnOriginGroupData()
+CdnOriginGroupPatch input = new CdnOriginGroupPatch()
 {
-    HealthProbeSettings = new HealthProbeParameters
+    HealthProbeSettings = new HealthProbeSettings
     {
         ProbePath = "/healthz",
         ProbeRequestType = HealthProbeRequestType.Head,
-        ProbeProtocol = ProbeProtocol.Https,
+        ProbeProtocol = HealthProbeProtocol.Https,
         ProbeIntervalInSeconds = 60
     }
 };
@@ -123,4 +123,4 @@ await originGroup.DeleteAsync(WaitUntil.Completed);
 
 
 ## Next steps
-Take a look at the [Managing Cdn Web Application Firewall Policies](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingCdnWebApplicationFirewallPolicies.md) samples.
+Take a look at the [Managing Azure Front Door Rules](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingFrontDoorRules.md) samples.

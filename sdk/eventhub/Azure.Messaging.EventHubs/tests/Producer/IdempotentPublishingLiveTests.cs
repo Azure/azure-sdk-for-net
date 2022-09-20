@@ -556,7 +556,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var partition = default(string);
-                var partitionProperties = default(PartitionPublishingPropertiesInternal);
+                var partitionProperties = default(PartitionPublishingProperties);
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
@@ -570,7 +570,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Create a new producer using the previously read properties to set options for the partition.
 
-                options.PartitionOptions.Add(partition, new PartitionPublishingOptionsInternal
+                options.PartitionOptions.Add(partition, new PartitionPublishingOptions
                 {
                     ProducerGroupId = partitionProperties.ProducerGroupId,
                     OwnerLevel = partitionProperties.OwnerLevel,
@@ -599,7 +599,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var partition = default(string);
-                var partitionProperties = default(PartitionPublishingPropertiesInternal);
+                var partitionProperties = default(PartitionPublishingProperties);
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
@@ -613,7 +613,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Create a new producer using the previously read properties to set options for the partition.
 
-                options.PartitionOptions.Add(partition, new PartitionPublishingOptionsInternal
+                options.PartitionOptions.Add(partition, new PartitionPublishingOptions
                 {
                     ProducerGroupId = partitionProperties.ProducerGroupId,
                     OwnerLevel = partitionProperties.OwnerLevel
@@ -654,7 +654,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var partition = default(string);
-                var partitionProperties = default(PartitionPublishingPropertiesInternal);
+                var partitionProperties = default(PartitionPublishingProperties);
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
@@ -668,7 +668,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Create a new producer using the previously read properties to set options for the partition.
 
-                options.PartitionOptions.Add(partition, new PartitionPublishingOptionsInternal
+                options.PartitionOptions.Add(partition, new PartitionPublishingOptions
                 {
                     ProducerGroupId = partitionProperties.ProducerGroupId,
                     OwnerLevel = partitionProperties.OwnerLevel,

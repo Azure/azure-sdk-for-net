@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static WebApplicationFirewallCustomRule DeserializeWebApplicationFirewallCustomRule(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             int priority = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
@@ -54,7 +55,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"))
@@ -83,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new WebApplicationFirewallCustomRule(name.Value, etag.Value, priority, ruleType, matchConditions, action);
+            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, ruleType, matchConditions, action);
         }
     }
 }

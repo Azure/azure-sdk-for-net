@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about feature. </summary>
-    public partial class FeatureProperties
+    internal partial class FeatureProperties
     {
         /// <summary> Initializes a new instance of FeatureProperties. </summary>
         internal FeatureProperties()

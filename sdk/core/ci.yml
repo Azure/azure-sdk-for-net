@@ -32,10 +32,9 @@ pr:
     - eng/common/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: core
-    ServiceToTest: '*'
     ArtifactName: packages
     Artifacts:
     - name: Azure.Core
@@ -56,3 +55,4 @@ extends:
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     TestTimeoutInMinutes: 100
+    TestDependsOnDependency: Azure.Core

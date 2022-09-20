@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         internal static PrivateLinkServiceProxy DeserializePrivateLinkServiceProxy(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<PrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
+            Optional<DeviceUpdatePrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
             Optional<SubResource> remotePrivateEndpointConnection = default;
             Optional<IList<GroupConnectivityInformation>> groupConnectivityInformation = default;
             foreach (var property in element.EnumerateObject())
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    remotePrivateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property.Value);
+                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("remotePrivateEndpointConnection"))

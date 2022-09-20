@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivitySource. </summary>
         /// <param name="resourceId"> The ID of the resource from which a connectivity check will be initiated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public ConnectivitySource(string resourceId)
+        public ConnectivitySource(ResourceIdentifier resourceId)
         {
             if (resourceId == null)
             {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the resource from which a connectivity check will be initiated. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> The source port from which a connectivity check will be performed. </summary>
         public int? Port { get; set; }
     }

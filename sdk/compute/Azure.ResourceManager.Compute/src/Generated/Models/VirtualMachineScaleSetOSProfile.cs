@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="windowsConfiguration"> Specifies Windows operating system settings on the virtual machine. </param>
         /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machines in the scale set. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
-        internal VirtualMachineScaleSetOSProfile(string computerNamePrefix, string adminUsername, string adminPassword, string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets)
+        /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine scale set. &lt;br&gt;&lt;br&gt;This may only be set to False when no extensions are present on the virtual machine scale set. </param>
+        internal VirtualMachineScaleSetOSProfile(string computerNamePrefix, string adminUsername, string adminPassword, string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, bool? allowExtensionOperations)
         {
             ComputerNamePrefix = computerNamePrefix;
             AdminUsername = adminUsername;
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             WindowsConfiguration = windowsConfiguration;
             LinuxConfiguration = linuxConfiguration;
             Secrets = secrets;
+            AllowExtensionOperations = allowExtensionOperations;
         }
 
         /// <summary> Specifies the computer name prefix for all of the virtual machines in the scale set. Computer name prefixes must be 1 to 15 characters long. </summary>
@@ -52,5 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         public LinuxConfiguration LinuxConfiguration { get; set; }
         /// <summary> Specifies set of certificates that should be installed onto the virtual machines in the scale set. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </summary>
         public IList<VaultSecretGroup> Secrets { get; }
+        /// <summary> Specifies whether extension operations should be allowed on the virtual machine scale set. &lt;br&gt;&lt;br&gt;This may only be set to False when no extensions are present on the virtual machine scale set. </summary>
+        public bool? AllowExtensionOperations { get; set; }
     }
 }

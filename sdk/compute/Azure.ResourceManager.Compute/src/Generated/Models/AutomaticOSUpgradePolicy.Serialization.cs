@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("disableAutomaticRollback");
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
+            if (Optional.IsDefined(UseRollingUpgradePolicy))
+            {
+                writer.WritePropertyName("useRollingUpgradePolicy");
+                writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<bool> enableAutomaticOSUpgrade = default;
             Optional<bool> disableAutomaticRollback = default;
+            Optional<bool> useRollingUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAutomaticOSUpgrade"))
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.Compute.Models
                     disableAutomaticRollback = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("useRollingUpgradePolicy"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    useRollingUpgradePolicy = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback));
+            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback), Optional.ToNullable(useRollingUpgradePolicy));
         }
     }
 }

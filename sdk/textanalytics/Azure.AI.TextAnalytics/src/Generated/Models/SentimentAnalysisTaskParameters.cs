@@ -7,21 +7,28 @@
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The SentimentAnalysisTaskParameters. </summary>
-    internal partial class SentimentAnalysisTaskParameters
+    /// <summary> Supported parameters for a Sentiment Analysis task. </summary>
+    internal partial class SentimentAnalysisTaskParameters : PreBuiltTaskParameters
     {
         /// <summary> Initializes a new instance of SentimentAnalysisTaskParameters. </summary>
         public SentimentAnalysisTaskParameters()
         {
         }
 
-        /// <summary> Gets or sets the model version. </summary>
-        public string ModelVersion { get; set; }
-        /// <summary> Gets or sets the logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
+        /// <summary> Initializes a new instance of SentimentAnalysisTaskParameters. </summary>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="opinionMining"></param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        internal SentimentAnalysisTaskParameters(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        {
+            OpinionMining = opinionMining;
+            StringIndexType = stringIndexType;
+        }
+
         /// <summary> Gets or sets the opinion mining. </summary>
         public bool? OpinionMining { get; set; }
-        /// <summary> Gets or sets the string index type. </summary>
+        /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }
 }

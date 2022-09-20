@@ -1,0 +1,877 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.IoTCentral/appTemplates?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-74fb9741d7ada843b8126737056c4e58-c0f5903ead3aad49-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9de3afac6a9527501109b94cfed4e331",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "12680",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 May 2022 14:45:13 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodeastus01",
+        "x-iot-correlation": "44ax4a4l.0",
+        "X-IoT-Version": "050222.0001-release",
+        "x-ms-client-request-id": "9de3afac6a9527501109b94cfed4e331",
+        "x-ms-correlation-request-id": "d34cae49-238e-4970-a347-c9c710c88651",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "126174ce-ffee-465e-b0fd-c2f4e2964cde",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220505T144514Z:d34cae49-238e-4970-a347-c9c710c88651",
+        "X-MSEdge-Ref": "Ref A: 2AFE280DBF34443A9345FFE8F1C4B65C Ref B: EWR311000101021 Ref C: 2022-05-05T14:45:13Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "manifestId": "iotc-condition",
+            "manifestVersion": "1.0.0",
+            "name": "Store Analytics \u2013 Condition Monitoring",
+            "title": "In-store Analytics \u2013 Condition Monitoring",
+            "order": 99,
+            "description": "Digitally connect and monitor your store environment to reduce operating costs and create experiences that customers love.",
+            "industry": "Retail",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-consumption",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Water Consumption application template",
+            "title": "Water Consumption Monitoring",
+            "order": 99,
+            "description": "Enable remote tracking of water consumption to reduce field operations, detect leaks in time, while empowering cities to conserve water.",
+            "industry": "Government",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-distribution",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Digital Distribution Center application template",
+            "title": "Digital Distribution Center",
+            "order": 99,
+            "description": "Digitally manage warehouse conveyor belt system efficiency using object detection and tracking.",
+            "industry": "Retail",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-inventory",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Smart Inventory Management application template",
+            "title": "Smart Inventory Management",
+            "order": 99,
+            "description": "Enable accurate inventory tracking and ensure shelves are always stocked.",
+            "industry": "Retail",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-logistics",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Connected Logistics application template",
+            "title": "Connected Logistics",
+            "order": 99,
+            "description": "Track your shipment in real-time across air, water and land with location and condition monitoring.",
+            "industry": "Retail",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-meter",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Smart Meter Analytics application template",
+            "title": "Smart Meter Analytics",
+            "order": 99,
+            "description": "Connect utility meters to gain insights into billing, forecast consumption, and proactively detect outages.",
+            "industry": "Energy",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-mfc",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Micro-fulfillment Center",
+            "title": "Micro-fulfillment Center",
+            "order": 99,
+            "description": "Digitally connect, monitor and manage all aspects of a fully automated fulfillment center to reduce costs by eliminating downtime while increasing security and overall efficiency.",
+            "industry": "Retail",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-patient",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Continuous Patient Monitoring application template",
+            "title": "Continuous Patient Monitoring",
+            "order": 99,
+            "description": "Connect and manage devices for in-patient and remote monitoring to improve patient outcomes, reduce re-admissions, and manage chronic diseases.",
+            "industry": "Health",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-pnp-preview",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central PnP template (preview)",
+            "title": "Custom application",
+            "order": 1,
+            "description": "Create an application with Azure IoT Plug and Play.",
+            "industry": "",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-power",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Solar Power Monitoring application template",
+            "title": "Solar Power Monitoring",
+            "order": 99,
+            "description": "Connect, monitor, and manage your solar panels and energy generation.",
+            "industry": "Energy",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-quality",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Water Quality Monitoring application template",
+            "title": "Water Quality Monitoring",
+            "order": 99,
+            "description": "Improve water quality and detect issues earlier by analyzing real-time measurements across your environment.",
+            "industry": "Government",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-store",
+            "manifestVersion": "1.0.0",
+            "name": "Store Analytics \u2013 Checkout",
+            "title": "In-store Analytics \u2013 Checkout",
+            "order": 99,
+            "description": "Monitor and manage the checkout flow inside your store to improve efficiency and reduce wait times.",
+            "industry": "Retail",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-video-analytics-om",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Video analytics - object and motion detection application template",
+            "title": "Video analytics - object and motion detection",
+            "order": 99,
+            "description": "Use cameras as a sensor in intelligent video analytics solutions powered by Azure IoT Edge, AI, and Azure Media Services.",
+            "industry": "Retail",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          },
+          {
+            "manifestId": "iotc-waste",
+            "manifestVersion": "1.0.0",
+            "name": "IoT Central Connected Waste Management application template",
+            "title": "Connected Waste Management",
+            "order": 99,
+            "description": "Maximize efficiency in the collection of solid wastes by dispatching field operators at the right time along an optimized collection route.",
+            "industry": "Government",
+            "locations": [
+              {
+                "id": "australiaeast",
+                "displayName": "Australia East"
+              },
+              {
+                "id": "canadacentral",
+                "displayName": "Canada Central"
+              },
+              {
+                "id": "centralus",
+                "displayName": "Central US"
+              },
+              {
+                "id": "eastus",
+                "displayName": "East US"
+              },
+              {
+                "id": "eastus2",
+                "displayName": "East US 2"
+              },
+              {
+                "id": "japaneast",
+                "displayName": "Japan East"
+              },
+              {
+                "id": "northeurope",
+                "displayName": "North Europe"
+              },
+              {
+                "id": "southcentralus",
+                "displayName": "South Central US"
+              },
+              {
+                "id": "southeastasia",
+                "displayName": "Southeast Asia"
+              },
+              {
+                "id": "uksouth",
+                "displayName": "UK South"
+              },
+              {
+                "id": "westeurope",
+                "displayName": "West Europe"
+              },
+              {
+                "id": "westus",
+                "displayName": "West US"
+              }
+            ]
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1524697628",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

@@ -85,7 +85,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Canceled', 'InProgress', 'Deleting'</param>
         /// <param name="kubeEnvironmentProfile">Specification for the
         /// Kubernetes Environment to use for the App Service plan.</param>
-        public AppServicePlanPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), bool? elasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), KubeEnvironmentProfile kubeEnvironmentProfile = default(KubeEnvironmentProfile))
+        /// <param name="zoneRedundant">If &lt;code&gt;true&lt;/code&gt;, this
+        /// App Service Plan will perform availability zone balancing.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not
+        /// perform availability zone balancing.</param>
+        public AppServicePlanPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), bool? elasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), KubeEnvironmentProfile kubeEnvironmentProfile = default(KubeEnvironmentProfile), bool? zoneRedundant = default(bool?))
             : base(id, name, kind, type)
         {
             WorkerTierName = workerTierName;
@@ -109,6 +113,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             TargetWorkerSizeId = targetWorkerSizeId;
             ProvisioningState = provisioningState;
             KubeEnvironmentProfile = kubeEnvironmentProfile;
+            ZoneRedundant = zoneRedundant;
             CustomInit();
         }
 
@@ -261,6 +266,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.kubeEnvironmentProfile")]
         public KubeEnvironmentProfile KubeEnvironmentProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets if &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;, this
+        /// App Service Plan will perform availability zone balancing.
+        /// If &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;, this App Service
+        /// Plan will not perform availability zone balancing.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
 
     }
 }

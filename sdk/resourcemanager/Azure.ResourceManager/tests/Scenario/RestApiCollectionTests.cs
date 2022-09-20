@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Tests
         {
             bool foundVirtualMachine = false;
             SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
-            var restApiCollection = sub.GetRestApis("Microsoft.Compute");
+            var restApiCollection = sub.GetArmRestApis("Microsoft.Compute");
             await foreach (var restApi in restApiCollection.GetAllAsync())
             {
                 if (restApi.Resource == "Virtual Machines")
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Tests
         {
             bool foundPrivateEndpoint = false;
             SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
-            var restApiCollection = sub.GetRestApis("Microsoft.Network");
+            var restApiCollection = sub.GetArmRestApis("Microsoft.Network");
             await foreach (var restApi in restApiCollection.GetAllAsync())
             {
                 if (restApi.Resource == "Private Endpoint")

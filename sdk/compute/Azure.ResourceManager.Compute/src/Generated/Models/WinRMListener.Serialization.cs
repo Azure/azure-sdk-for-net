@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,18 +21,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CertificateUrl))
+            if (Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl");
-                writer.WriteStringValue(CertificateUrl);
+                writer.WriteStringValue(CertificateUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
         internal static WinRMListener DeserializeWinRMListener(JsonElement element)
         {
-            Optional<ProtocolTypes> protocol = default;
-            Optional<string> certificateUrl = default;
+            Optional<WinRMListenerProtocolType> protocol = default;
+            Optional<Uri> certificateUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"))
@@ -41,12 +42,17 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protocol = property.Value.GetString().ToProtocolTypes();
+                    protocol = property.Value.GetString().ToWinRMListenerProtocolType();
                     continue;
                 }
                 if (property.NameEquals("certificateUrl"))
                 {
-                    certificateUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        certificateUrl = null;
+                        continue;
+                    }
+                    certificateUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

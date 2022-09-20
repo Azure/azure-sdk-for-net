@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -43,7 +42,23 @@ namespace Azure.Core
     /// </summary>
     internal class OperationInternal : OperationInternalBase
     {
-        private readonly IOperation _operation;
+        // To minimize code duplication and avoid introduction of another type,
+        // OperationInternal delegates implementation to the OperationInternal<VoidValue>.
+        // VoidValue is a private empty struct which only purpose is to be used as generic parameter.
+        private readonly OperationInternal<VoidValue> _internalOperation;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
+        /// </summary>
+        /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
+        public static OperationInternal Succeeded(Response rawResponse) => new(OperationState.Success(rawResponse));
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
+        /// </summary>
+        /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
+        /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
+        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException) => new(OperationState.Failure(rawResponse, operationFailedException));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.
@@ -75,24 +90,51 @@ namespace Azure.Core
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null)
-            :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
-            _operation = operation;
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
-        /// <summary>
-        /// Sets the <see cref="OperationInternal"/> state immediately.
-        /// </summary>
-        /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
-        public void SetState(OperationState state)
+        private OperationInternal(OperationState finalState)
+            :base(finalState.RawResponse)
         {
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
+            _internalOperation = finalState.HasSucceeded
+                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default)
+                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!);
         }
 
-        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        public override Response RawResponse => _internalOperation.RawResponse;
+
+        public override bool HasCompleted => _internalOperation.HasCompleted;
+
+        protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken) =>
+            async ? await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : _internalOperation.UpdateStatus(cancellationToken);
+
+        // Wrapper type that converts OperationState to OperationState<T> and can be passed to `OperationInternal<T>` constructor.
+        private class OperationToOperationOfTProxy : IOperation<VoidValue>
         {
-            OperationState state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
+            private readonly IOperation _operation;
+
+            public OperationToOperationOfTProxy(IOperation operation)
+            {
+                _operation = operation;
+            }
+
+            public async ValueTask<OperationState<VoidValue>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+            {
+                var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
+                if (!state.HasCompleted)
+                {
+                    return OperationState<VoidValue>.Pending(state.RawResponse);
+                }
+
+                if (state.HasSucceeded)
+                {
+                    return OperationState<VoidValue>.Success(state.RawResponse, new VoidValue());
+                }
+
+                return OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException);
+            }
         }
     }
 
@@ -169,7 +211,6 @@ namespace Azure.Core
         public static OperationState Success(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-
             return new OperationState(rawResponse, true, true, default);
         }
 

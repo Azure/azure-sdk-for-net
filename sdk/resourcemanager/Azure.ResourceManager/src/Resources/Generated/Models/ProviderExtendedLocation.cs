@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The azure location. </param>
         /// <param name="providerExtendedLocationType"> The extended location type. </param>
         /// <param name="extendedLocations"> The extended locations for the azure location. </param>
-        internal ProviderExtendedLocation(string location, string providerExtendedLocationType, IReadOnlyList<string> extendedLocations)
+        internal ProviderExtendedLocation(AzureLocation? location, string providerExtendedLocationType, IReadOnlyList<string> extendedLocations)
         {
             Location = location;
             ProviderExtendedLocationType = providerExtendedLocationType;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The azure location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The extended location type. </summary>
         public string ProviderExtendedLocationType { get; }
         /// <summary> The extended locations for the azure location. </summary>

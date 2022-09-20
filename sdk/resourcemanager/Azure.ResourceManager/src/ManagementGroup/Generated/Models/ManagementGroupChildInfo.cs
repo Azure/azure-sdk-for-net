@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The child information of a management group. </summary>
     public partial class ManagementGroupChildInfo
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Management.Models
         }
 
         /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
-        /// <param name="managementGroupChildType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
+        /// <param name="childType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
         /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
         /// <param name="name"> The name of the child entity. </param>
         /// <param name="displayName"> The friendly name of the child resource. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupChildInfo(ManagementGroupChildType? managementGroupChildType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildInfo> children)
+        internal ManagementGroupChildInfo(ManagementGroupChildType? childType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildInfo> children)
         {
-            ManagementGroupChildType = managementGroupChildType;
+            ChildType = childType;
             Id = id;
             Name = name;
             DisplayName = displayName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Management.Models
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>
-        public ManagementGroupChildType? ManagementGroupChildType { get; }
+        public ManagementGroupChildType? ChildType { get; }
         /// <summary> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         public string Id { get; }
         /// <summary> The name of the child entity. </summary>

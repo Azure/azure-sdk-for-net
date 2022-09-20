@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of BackupPolicyMigrationState. </summary>
         /// <param name="status"> Describes the status of migration between backup policy types. </param>
         /// <param name="targetType"> Describes the target backup policy type of the backup policy migration. </param>
-        /// <param name="startTime"> Time at which the backup policy migration started (ISO-8601 format). </param>
-        internal BackupPolicyMigrationState(BackupPolicyMigrationStatus? status, BackupPolicyType? targetType, DateTimeOffset? startTime)
+        /// <param name="startOn"> Time at which the backup policy migration started (ISO-8601 format). </param>
+        internal BackupPolicyMigrationState(BackupPolicyMigrationStatus? status, BackupPolicyType? targetType, DateTimeOffset? startOn)
         {
             Status = status;
             TargetType = targetType;
-            StartTime = startTime;
+            StartOn = startOn;
         }
 
         /// <summary> Describes the status of migration between backup policy types. </summary>
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Describes the target backup policy type of the backup policy migration. </summary>
         public BackupPolicyType? TargetType { get; set; }
         /// <summary> Time at which the backup policy migration started (ISO-8601 format). </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
     }
 }

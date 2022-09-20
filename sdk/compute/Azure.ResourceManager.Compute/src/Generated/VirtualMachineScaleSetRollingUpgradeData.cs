@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
         /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
         /// <param name="error"> Error details for this upgrade, if there are any. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ApiError error) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error) : base(id, name, resourceType, systemData, tags, location)
         {
             Policy = policy;
             RunningStatus = runningStatus;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Information about the number of virtual machine instances in each upgrade state. </summary>
         public RollingUpgradeProgressInfo Progress { get; }
         /// <summary> Error details for this upgrade, if there are any. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

@@ -37,14 +37,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// id.</param>
         /// <param name="userAssignedIdentities">The resource ids of the user
         /// assigned identities to use</param>
-        /// <param name="delegatedResources">Resources delegated to the
-        /// database - Internal Use Only</param>
-        public DatabaseIdentity(string type = default(string), System.Guid? tenantId = default(System.Guid?), IDictionary<string, DatabaseUserIdentity> userAssignedIdentities = default(IDictionary<string, DatabaseUserIdentity>), IDictionary<string, Delegation> delegatedResources = default(IDictionary<string, Delegation>))
+        public DatabaseIdentity(string type = default(string), System.Guid? tenantId = default(System.Guid?), IDictionary<string, DatabaseUserIdentity> userAssignedIdentities = default(IDictionary<string, DatabaseUserIdentity>))
         {
             Type = type;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
-            DelegatedResources = delegatedResources;
             CustomInit();
         }
 
@@ -72,13 +69,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
         public IDictionary<string, DatabaseUserIdentity> UserAssignedIdentities { get; set; }
-
-        /// <summary>
-        /// Gets or sets resources delegated to the database - Internal Use
-        /// Only
-        /// </summary>
-        [JsonProperty(PropertyName = "delegatedResources")]
-        public IDictionary<string, Delegation> DelegatedResources { get; set; }
 
     }
 }

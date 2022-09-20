@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var setName = Recording.GenerateAssetName("testAS-");
             var set = await CreateAvailabilitySetAsync(setName);
             var updatedPlatformFaultDomainCount = 3;
-            var update = new PatchableAvailabilitySetData()
+            var update = new AvailabilitySetPatch()
             {
                 PlatformFaultDomainCount = updatedPlatformFaultDomainCount
             };
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var proxGrpName = Recording.GenerateAssetName("proxGrp-");
             ProximityPlacementGroupResource proxGrp = (await rg.GetProximityPlacementGroups().CreateOrUpdateAsync(WaitUntil.Completed, proxGrpName, new ProximityPlacementGroupData(DefaultLocation))).Value;
 
-            PatchableAvailabilitySetData updateOptions = new PatchableAvailabilitySetData();
+            AvailabilitySetPatch updateOptions = new AvailabilitySetPatch();
             updateOptions.ProximityPlacementGroupId = proxGrp.Id;
             aset = await aset.UpdateAsync(updateOptions);
             var addIdResult = aset.Data.ProximityPlacementGroupId;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Tests
             AvailabilitySetResource aset2 = await CreateAvailabilitySetAsync(asetName2);
             var newBeforeAdd = aset2.Data.ProximityPlacementGroup?.Id;
 
-            PatchableAvailabilitySetData updateOptions2 = new PatchableAvailabilitySetData();
+            AvailabilitySetPatch updateOptions2 = new AvailabilitySetPatch();
             updateOptions2.ProximityPlacementGroup = new Resources.Models.WritableSubResource();
             updateOptions2.ProximityPlacementGroup.Id = proxGrp.Id;
             aset2 = await aset2.UpdateAsync(updateOptions2);

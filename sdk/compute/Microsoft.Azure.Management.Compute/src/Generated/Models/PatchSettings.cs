@@ -57,11 +57,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// trigger periodic patch assessments. The property provisionVMAgent
         /// must be true. Possible values include: 'ImageDefault',
         /// 'AutomaticByPlatform'</param>
-        public PatchSettings(string patchMode = default(string), bool? enableHotpatching = default(bool?), string assessmentMode = default(string))
+        /// <param name="automaticByPlatformSettings">Specifies additional
+        /// settings for patch mode AutomaticByPlatform in VM Guest Patching on
+        /// Windows.</param>
+        public PatchSettings(string patchMode = default(string), bool? enableHotpatching = default(bool?), string assessmentMode = default(string), WindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default(WindowsVMGuestPatchAutomaticByPlatformSettings))
         {
             PatchMode = patchMode;
             EnableHotpatching = enableHotpatching;
             AssessmentMode = assessmentMode;
+            AutomaticByPlatformSettings = automaticByPlatformSettings;
             CustomInit();
         }
 
@@ -113,6 +117,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "assessmentMode")]
         public string AssessmentMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies additional settings for patch mode
+        /// AutomaticByPlatform in VM Guest Patching on Windows.
+        /// </summary>
+        [JsonProperty(PropertyName = "automaticByPlatformSettings")]
+        public WindowsVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
 
     }
 }

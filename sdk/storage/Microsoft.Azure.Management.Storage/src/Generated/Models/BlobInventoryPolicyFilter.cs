@@ -34,8 +34,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the BlobInventoryPolicyFilter class.
         /// </summary>
-        /// <param name="prefixMatch">An array of strings for blob prefixes to
-        /// be matched.</param>
+        /// <param name="prefixMatch">An array of strings with maximum 10 blob
+        /// prefixes to be included in the inventory.</param>
+        /// <param name="excludePrefix">An array of strings with maximum 10
+        /// blob prefixes to be excluded from the inventory.</param>
         /// <param name="blobTypes">An array of predefined enum values. Valid
         /// values include blockBlob, appendBlob, pageBlob. Hns accounts does
         /// not support pageBlobs. This field is required when
@@ -48,12 +50,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// inventory when value is set to true. The definition.schemaFields
         /// value 'Snapshot' is required if this property is set to true, else
         /// it must be excluded.</param>
-        public BlobInventoryPolicyFilter(IList<string> prefixMatch = default(IList<string>), IList<string> blobTypes = default(IList<string>), bool? includeBlobVersions = default(bool?), bool? includeSnapshots = default(bool?))
+        /// <param name="includeDeleted">For 'Container' definition.objectType
+        /// the definition.schemaFields must include 'Deleted, Version,
+        /// DeletedTime and RemainingRetentionDays'. For 'Blob'
+        /// definition.objectType and HNS enabled storage accounts the
+        /// definition.schemaFields must include 'DeletionId, Deleted,
+        /// DeletedTime and RemainingRetentionDays' and for Hns disabled
+        /// accounts the definition.schemaFields must include 'Deleted and
+        /// RemainingRetentionDays', else it must be excluded.</param>
+        public BlobInventoryPolicyFilter(IList<string> prefixMatch = default(IList<string>), IList<string> excludePrefix = default(IList<string>), IList<string> blobTypes = default(IList<string>), bool? includeBlobVersions = default(bool?), bool? includeSnapshots = default(bool?), bool? includeDeleted = default(bool?))
         {
             PrefixMatch = prefixMatch;
+            ExcludePrefix = excludePrefix;
             BlobTypes = blobTypes;
             IncludeBlobVersions = includeBlobVersions;
             IncludeSnapshots = includeSnapshots;
+            IncludeDeleted = includeDeleted;
             CustomInit();
         }
 
@@ -63,10 +75,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an array of strings for blob prefixes to be matched.
+        /// Gets or sets an array of strings with maximum 10 blob prefixes to
+        /// be included in the inventory.
         /// </summary>
         [JsonProperty(PropertyName = "prefixMatch")]
         public IList<string> PrefixMatch { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of strings with maximum 10 blob prefixes to
+        /// be excluded from the inventory.
+        /// </summary>
+        [JsonProperty(PropertyName = "excludePrefix")]
+        public IList<string> ExcludePrefix { get; set; }
 
         /// <summary>
         /// Gets or sets an array of predefined enum values. Valid values
@@ -93,6 +113,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "includeSnapshots")]
         public bool? IncludeSnapshots { get; set; }
+
+        /// <summary>
+        /// Gets or sets for 'Container' definition.objectType the
+        /// definition.schemaFields must include 'Deleted, Version, DeletedTime
+        /// and RemainingRetentionDays'. For 'Blob' definition.objectType and
+        /// HNS enabled storage accounts the definition.schemaFields must
+        /// include 'DeletionId, Deleted, DeletedTime and
+        /// RemainingRetentionDays' and for Hns disabled accounts the
+        /// definition.schemaFields must include 'Deleted and
+        /// RemainingRetentionDays', else it must be excluded.
+        /// </summary>
+        [JsonProperty(PropertyName = "includeDeleted")]
+        public bool? IncludeDeleted { get; set; }
 
     }
 }

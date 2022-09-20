@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Process Thread Information. </summary>
-    public partial class ProcessThreadInfo : ProxyOnlyResource
+    public partial class ProcessThreadInfo : ResourceData
     {
         /// <summary> Initializes a new instance of ProcessThreadInfo. </summary>
         public ProcessThreadInfo()
@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="identifier"> Site extension ID. </param>
         /// <param name="href"> HRef URI. </param>
         /// <param name="process"> Process URI. </param>
@@ -32,12 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="currentPriority"> Current thread priority. </param>
         /// <param name="priorityLevel"> Thread priority level. </param>
         /// <param name="basePriority"> Base priority. </param>
-        /// <param name="startTime"> Start time. </param>
+        /// <param name="startOn"> Start time. </param>
         /// <param name="totalProcessorTime"> Total processor time. </param>
         /// <param name="userProcessorTime"> User processor time. </param>
         /// <param name="state"> Thread state. </param>
         /// <param name="waitReason"> Wait reason. </param>
-        internal ProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startTime, string totalProcessorTime, string userProcessorTime, string state, string waitReason) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startOn, string totalProcessorTime, string userProcessorTime, string state, string waitReason, string kind) : base(id, name, resourceType, systemData)
         {
             Identifier = identifier;
             Href = href;
@@ -46,11 +46,12 @@ namespace Azure.ResourceManager.AppService.Models
             CurrentPriority = currentPriority;
             PriorityLevel = priorityLevel;
             BasePriority = basePriority;
-            StartTime = startTime;
+            StartOn = startOn;
             TotalProcessorTime = totalProcessorTime;
             UserProcessorTime = userProcessorTime;
             State = state;
             WaitReason = waitReason;
+            Kind = kind;
         }
 
         /// <summary> Site extension ID. </summary>
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Base priority. </summary>
         public int? BasePriority { get; set; }
         /// <summary> Start time. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> Total processor time. </summary>
         public string TotalProcessorTime { get; set; }
         /// <summary> User processor time. </summary>
@@ -77,5 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string State { get; set; }
         /// <summary> Wait reason. </summary>
         public string WaitReason { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

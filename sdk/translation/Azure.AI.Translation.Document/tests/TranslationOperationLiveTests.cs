@@ -428,8 +428,8 @@ namespace Azure.AI.Translation.Document.Tests
             //Constructing and uploading glossary on the fly
             string glossaryName = "validGlossary.csv";
 
-            //changing the word First --> glossaryFirst and test --> glossaryTest
-            string glossaryContent = "First, glossaryFirst\ntest, glossaryTest\n";
+            //changing the word test --> glossaryTest
+            string glossaryContent = "test, glossaryTest";
 
             var glossarySasUri = await CreateGlossaryAsync(new TestDocument (glossaryName, glossaryContent));
 
@@ -447,7 +447,6 @@ namespace Azure.AI.Translation.Document.Tests
 
             //Assert glossary has taken effect
             var translatedTextSplitBySpaces = translatedText.Split(' ');
-            CollectionAssert.Contains(translatedTextSplitBySpaces, "glossaryFirst");
             CollectionAssert.Contains(translatedTextSplitBySpaces, "glossaryTest");
         }
 

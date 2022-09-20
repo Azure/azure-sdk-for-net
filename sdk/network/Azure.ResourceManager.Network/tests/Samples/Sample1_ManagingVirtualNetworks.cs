@@ -30,14 +30,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             VirtualNetworkData input = new VirtualNetworkData()
             {
                 Location = resourceGroup.Data.Location,
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.0.0.0/16", }
-                },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                AddressPrefixes = { "10.0.0.0/16", },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
             };
 
@@ -69,26 +63,6 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 
             VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
             Console.WriteLine(virtualNetwork.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Networks_GetAVirtualNetworkIfExists
-            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-
-            VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.GetIfExistsAsync("foo");
-            if (virtualNetwork != null)
-            {
-                Console.WriteLine(virtualNetwork.Data.Name);
-            }
-
-            if (await virtualNetworkCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Virtual network 'bar' exists.");
-            }
             #endregion
         }
 

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkConfigurationDiagnosticProfile DeserializeNetworkConfigurationDiagnosticProfile(JsonElement element)
         {
-            Direction direction = default;
+            NetworkTrafficDirection direction = default;
             string protocol = default;
             string source = default;
             string destination = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("direction"))
                 {
-                    direction = new Direction(property.Value.GetString());
+                    direction = new NetworkTrafficDirection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protocol"))

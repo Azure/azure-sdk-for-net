@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="roleDefinition"> Role definition properties. </param>
         /// <param name="managedByRoleDefinition"> Role definition properties. </param>
         /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
-        internal ProviderPermission(string applicationId, RoleDefinition roleDefinition, RoleDefinition managedByRoleDefinition, ProviderAuthorizationConsentState? providerAuthorizationConsentState)
+        internal ProviderPermission(string applicationId, AzureRoleDefinition roleDefinition, AzureRoleDefinition managedByRoleDefinition, ProviderAuthorizationConsentState? providerAuthorizationConsentState)
         {
             ApplicationId = applicationId;
             RoleDefinition = roleDefinition;
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The application id. </summary>
         public string ApplicationId { get; }
         /// <summary> Role definition properties. </summary>
-        public RoleDefinition RoleDefinition { get; }
+        public AzureRoleDefinition RoleDefinition { get; }
         /// <summary> Role definition properties. </summary>
-        public RoleDefinition ManagedByRoleDefinition { get; }
+        public AzureRoleDefinition ManagedByRoleDefinition { get; }
         /// <summary> The provider authorization consent state. </summary>
         public ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get; }
     }

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Models;
+using Azure;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -21,15 +21,44 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
         /// <param name="template"> The template content. </param>
         /// <param name="error"> The template export error. </param>
-        internal ResourceGroupExportResult(BinaryData template, ErrorDetail error)
+        internal ResourceGroupExportResult(BinaryData template, ResponseError error)
         {
             Template = template;
             Error = error;
         }
 
-        /// <summary> The template content. </summary>
+        /// <summary>
+        /// The template content.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Template { get; }
         /// <summary> The template export error. </summary>
-        public ErrorDetail Error { get; }
+        public ResponseError Error { get; }
     }
 }

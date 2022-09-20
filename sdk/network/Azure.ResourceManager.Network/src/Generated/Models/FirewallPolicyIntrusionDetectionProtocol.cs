@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
         private const string IcmpValue = "ICMP";
-        private const string ANYValue = "ANY";
+        private const string AnyValue = "ANY";
 
         /// <summary> TCP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol TCP { get; } = new FirewallPolicyIntrusionDetectionProtocol(TCPValue);
+        public static FirewallPolicyIntrusionDetectionProtocol Tcp { get; } = new FirewallPolicyIntrusionDetectionProtocol(TcpValue);
         /// <summary> UDP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol UDP { get; } = new FirewallPolicyIntrusionDetectionProtocol(UDPValue);
+        public static FirewallPolicyIntrusionDetectionProtocol Udp { get; } = new FirewallPolicyIntrusionDetectionProtocol(UdpValue);
         /// <summary> ICMP. </summary>
         public static FirewallPolicyIntrusionDetectionProtocol Icmp { get; } = new FirewallPolicyIntrusionDetectionProtocol(IcmpValue);
         /// <summary> ANY. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol ANY { get; } = new FirewallPolicyIntrusionDetectionProtocol(ANYValue);
+        public static FirewallPolicyIntrusionDetectionProtocol Any { get; } = new FirewallPolicyIntrusionDetectionProtocol(AnyValue);
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProtocol"/> values are the same. </summary>
         public static bool operator ==(FirewallPolicyIntrusionDetectionProtocol left, FirewallPolicyIntrusionDetectionProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProtocol"/> values are not the same. </summary>

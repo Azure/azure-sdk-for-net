@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Description of Rule Resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Rule : Resource
+    public partial class Rule : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Rule class.
@@ -32,9 +32,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the Rule class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="action">Represents the filter actions which are
         /// allowed for the transformation of a message that have been matched
         /// by a filter expression.</param>
@@ -46,8 +51,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// correlationFilter</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public Rule(string id = default(string), string name = default(string), string type = default(string), Action action = default(Action), FilterType? filterType = default(FilterType?), SqlFilter sqlFilter = default(SqlFilter), CorrelationFilter correlationFilter = default(CorrelationFilter), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public Rule(string id = default(string), string name = default(string), string type = default(string), string location = default(string), Action action = default(Action), string filterType = default(string), SqlFilter sqlFilter = default(SqlFilter), CorrelationFilter correlationFilter = default(CorrelationFilter), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             Action = action;
             FilterType = filterType;
@@ -76,7 +81,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'CorrelationFilter'
         /// </summary>
         [JsonProperty(PropertyName = "properties.filterType")]
-        public FilterType? FilterType { get; set; }
+        public string FilterType { get; set; }
 
         /// <summary>
         /// Gets or sets properties of sqlFilter

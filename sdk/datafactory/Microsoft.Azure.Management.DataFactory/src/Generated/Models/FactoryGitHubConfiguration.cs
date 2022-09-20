@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="rootFolder">Root folder.</param>
         /// <param name="lastCommitId">Last commit id.</param>
         /// <param name="hostName">GitHub Enterprise host name. For example:
-        /// https://github.mydomain.com</param>
+        /// `https://github.mydomain.com`</param>
         /// <param name="clientId">GitHub bring your own app client id.</param>
         /// <param name="clientSecret">GitHub bring your own app client secret
         /// information.</param>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets gitHub Enterprise host name. For example:
-        /// https://github.mydomain.com
+        /// `https://github.mydomain.com`
         /// </summary>
         [JsonProperty(PropertyName = "hostName")]
         public string HostName { get; set; }

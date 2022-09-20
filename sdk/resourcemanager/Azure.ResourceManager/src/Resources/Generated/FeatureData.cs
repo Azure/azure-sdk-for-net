@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The registration state of the feature for the subscription. </summary>
         public string FeatureState
         {
-            get => Properties.State;
+            get => Properties?.State;
         }
     }
 }

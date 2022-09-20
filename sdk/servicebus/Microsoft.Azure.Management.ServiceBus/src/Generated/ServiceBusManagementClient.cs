@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             Rules = new RulesOperations(this);
             Subscriptions = new SubscriptionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-06-01-preview";
+            ApiVersion = "2022-01-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -87,14 +87,14 @@
 </table>
 {{/syntax.typeParameters.0}}
 
-{{#remarks}}
-<h5 id="{{id}}_remarks"><strong>{{__global.remarks}}</strong></h5>
-<div class="markdown level0 remarks">{{{remarks}}}</div>
-{{/remarks}}
-
 {{#example.0}}
-<h5 id="{{id}}_examples"><strong>{{__global.examples}}</strong></h5>
+<h5 id="{{id}}_examples">{{__global.examples}}</h5>
 {{/example.0}}
 {{#example}}
 {{{.}}}
 {{/example}}
+
+{{#remarks}}
+<h5 id="{{id}}_remarks">{{__global.remarks}}</h5>
+<div class="markdown level0 remarks">{{{remarks}}}</div>
+{{/remarks}}

@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </remarks>
         ///
         internal BlobCheckpointStoreInternal(BlobContainerClient blobContainerClient,
-                                     bool initializeWithLegacyCheckpoints = false)
+                                             bool initializeWithLegacyCheckpoints = false)
         {
             Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
 
@@ -204,6 +204,30 @@ namespace Azure.Messaging.EventHubs.Primitives
                     // Even though documentation states otherwise, we cannot use UploadAsync when the blob already exists in
                     // the current storage SDK.  For this reason, we are using the specified ETag as an indication of what
                     // method to use.
+                    //
+                    // If an ETag is associated with ownership, assume the blob exists and attempt to update it.
+
+                    if (ownership.Version != null)
+                    {
+                        try
+                        {
+                            blobRequestConditions.IfMatch = new ETag(ownership.Version);
+                            infoResponse = await blobClient.SetMetadataAsync(metadata, blobRequestConditions, cancellationToken).ConfigureAwait(false);
+
+                            ownership.LastModifiedTime = infoResponse.Value.LastModified;
+                            ownership.Version = infoResponse.Value.ETag.ToString();
+                        }
+                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                        {
+                            // This is an unlikely corner case that indicates that the blob was unexpectedly deleted while the
+                            // processor is running.  Attempt to recover by resetting the ETag and considering it an upload scenario
+                            // to be handled by the next block.
+
+                            ownership.Version = null;
+                        }
+                    }
+
+                    // If no ETag is associated with ownership, attempt to upload a new blob with the needed metadata.
 
                     if (ownership.Version == null)
                     {
@@ -227,16 +251,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                         ownership.LastModifiedTime = contentInfoResponse.Value.LastModified;
                         ownership.Version = contentInfoResponse.Value.ETag.ToString();
                     }
-                    else
-                    {
-                        blobRequestConditions.IfMatch = new ETag(ownership.Version);
-                        infoResponse = await blobClient.SetMetadataAsync(metadata, blobRequestConditions, cancellationToken).ConfigureAwait(false);
 
-                        ownership.LastModifiedTime = infoResponse.Value.LastModified;
-                        ownership.Version = infoResponse.Value.ETag.ToString();
-                    }
-
-                    // Small workaround to retrieve the eTag.  The current storage SDK returns it enclosed in
+                    // Small workaround to retrieve the ETag.  The current storage SDK returns it enclosed in
                     // double quotes ("ETAG_VALUE" instead of ETAG_VALUE).
 
                     ownership.Version = ownership.Version?.Trim('"');
@@ -302,7 +318,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     var checkpoint = CreateCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, blob.Value.Metadata);
                     return checkpoint;
                 }
-                catch (RequestFailedException e) when (e.Status == 404)
+                catch (RequestFailedException e) when (e.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     // ignore
                 }
@@ -315,7 +331,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                         return await CreateLegacyCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, legacyPrefix, partitionId, cancellationToken).ConfigureAwait(false);
                     }
                 }
-                catch (RequestFailedException e) when (e.Status == 404)
+                catch (RequestFailedException e) when (e.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     // ignore
                 }
@@ -425,10 +441,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                 offset = result;
                 startingPosition = EventPosition.FromOffset(result, false);
             }
-            else if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
+            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
             {
                 sequenceNumber = result;
-                startingPosition = EventPosition.FromSequenceNumber(result, false);
+                startingPosition ??= EventPosition.FromSequenceNumber(result, false);
             }
 
             // If either the offset or the sequence number was not populated,

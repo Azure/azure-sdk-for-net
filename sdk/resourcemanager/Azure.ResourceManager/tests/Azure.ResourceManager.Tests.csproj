@@ -4,15 +4,15 @@
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
     <NoWarn>SA1649;SA1633;SA1000;SA1028;SA1400;SA1508</NoWarn>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.csproj" />
-    <ProjectReference Include="..\..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
-    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Compute" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Unit\TestAssets\Identity\*.json">
@@ -29,7 +29,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\CollectionTryGetTest\" />
     <Folder Include="SessionRecords\FeatureCollectionTests\" />
     <Folder Include="SessionRecords\LocationExpandedTests\" />
     <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />

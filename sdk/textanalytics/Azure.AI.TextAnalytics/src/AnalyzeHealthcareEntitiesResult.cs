@@ -18,11 +18,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
         /// </summary>
-        /// <param name="id">Analyze operation id.</param>
-        /// <param name="statistics">Info about text document statistics. <see cref="TextDocumentStatistics"/>.</param>
-        /// <param name="healthcareEntities">Extracted health care entities.</param>
-        /// <param name="entityRelations">Relations between the entities. <see cref="HealthcareEntityRelation"/>.</param>
-        /// <param name="warnings">Returned warnings from the operation.</param>
         internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,

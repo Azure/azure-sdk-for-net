@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of PerfMonSet. </summary>
         /// <param name="name"> Unique key name of the counter. </param>
-        /// <param name="startTime"> Start time of the period. </param>
-        /// <param name="endTime"> End time of the period. </param>
+        /// <param name="startOn"> Start time of the period. </param>
+        /// <param name="endOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. </param>
         /// <param name="values"> Collection of workers that are active during this time. </param>
-        internal PerfMonSet(string name, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, IReadOnlyList<PerfMonSample> values)
+        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values)
         {
             Name = name;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             TimeGrain = timeGrain;
             Values = values;
         }
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Unique key name of the counter. </summary>
         public string Name { get; }
         /// <summary> Start time of the period. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the period. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> Presented time grain. </summary>
         public string TimeGrain { get; }
         /// <summary> Collection of workers that are active during this time. </summary>

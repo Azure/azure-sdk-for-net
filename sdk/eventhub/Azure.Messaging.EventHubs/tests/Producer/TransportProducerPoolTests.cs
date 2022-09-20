@@ -419,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Tests
             internal override TransportProducer CreateTransportProducer(string partitionId,
                                                                         string producerIdentifier,
                                                                         TransportProducerFeatures requestedFeatures,
-                                                                        PartitionPublishingOptionsInternal partitionOptions,
+                                                                        PartitionPublishingOptions partitionOptions,
                                                                         EventHubsRetryPolicy retryPolicy) => TransportProducerFactory();
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
@@ -478,7 +478,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
             }
 
-            public override ValueTask<PartitionPublishingPropertiesInternal> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            public override ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
 
             public override Task CloseAsync(CancellationToken cancellationToken)
             {
@@ -499,14 +499,14 @@ namespace Azure.Messaging.EventHubs.Tests
             public override long MaximumSizeInBytes { get; }
             public override long SizeInBytes { get; }
             public override int Count { get; }
+            public override int? StartingSequenceNumber => throw new NotImplementedException();
             public override TransportProducerFeatures ActiveFeatures { get; }
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
             public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();
-
-            public override void Clear()
-            {
-            }
+            public override void Clear() => throw new NotImplementedException();
+            public override int ApplyBatchSequencing(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => throw new NotImplementedException();
+            public override void ResetBatchSequencing() => throw new NotImplementedException();
         }
     }
 }

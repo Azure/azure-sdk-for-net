@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("excludeKbsRequiringReboot");
                 writer.WriteBooleanValue(ExcludeKbsRequiringReboot.Value);
             }
-            if (Optional.IsDefined(MaxPatchPublishDate))
+            if (Optional.IsDefined(MaxPatchPublishOn))
             {
                 writer.WritePropertyName("maxPatchPublishDate");
-                writer.WriteStringValue(MaxPatchPublishDate.Value, "O");
+                writer.WriteStringValue(MaxPatchPublishOn.Value, "O");
             }
             writer.WriteEndObject();
         }

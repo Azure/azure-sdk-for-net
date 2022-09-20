@@ -725,7 +725,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubProducerClientOptions { Identifier = "test-id", EnableIdempotentPartitions = true, RetryOptions = new EventHubsRetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
             var expectedIdentifier = options.Identifier;
             var expectedFeatures = options.CreateFeatureFlags();
-            var expectedPartitionOptions = new PartitionPublishingOptionsInternal { ProducerGroupId = 123 };
+            var expectedPartitionOptions = new PartitionPublishingOptions { ProducerGroupId = 123 };
             var expectedRetry = options.RetryOptions.ToRetryPolicy();
 
             connection.CreateTransportProducer(null, expectedIdentifier, expectedFeatures, expectedPartitionOptions, expectedRetry);
@@ -1039,7 +1039,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ObservableTransportClientMock : TransportClient
         {
             public (string ConsumerGroup, string Partition, string Identifier, EventPosition Position, EventHubsRetryPolicy RetryPolicy, bool TrackLastEnqueued, bool InvalidateOnSteal, long? OwnerLevel, uint? Prefetch) CreateConsumerCalledWith;
-            public (string PartitionId, string Identifier, TransportProducerFeatures Features, PartitionPublishingOptionsInternal PartitionOptions, EventHubsRetryPolicy RetryPolicy) CreateProducerCalledWith;
+            public (string PartitionId, string Identifier, TransportProducerFeatures Features, PartitionPublishingOptions PartitionOptions, EventHubsRetryPolicy RetryPolicy) CreateProducerCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
@@ -1062,7 +1062,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override TransportProducer CreateProducer(string partitionId,
                                                              string producerIdentifier,
                                                              TransportProducerFeatures requestedFeatures,
-                                                             PartitionPublishingOptionsInternal partitionOptions,
+                                                             PartitionPublishingOptions partitionOptions,
                                                              EventHubsRetryPolicy retryPolicy)
             {
                 CreateProducerCalledWith = (partitionId, producerIdentifier, requestedFeatures, partitionOptions, retryPolicy);

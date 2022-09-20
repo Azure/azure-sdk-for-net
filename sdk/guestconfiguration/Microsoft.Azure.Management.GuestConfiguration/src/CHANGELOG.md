@@ -1,4 +1,20 @@
 # Microsoft.Azure.Management.GuestConfiguration release notes
+## Changes in 3.0.0
+### Features
+Supports readonly Assignment Source in ARG as well as ConfigurationSetting object has been made as readonly
+
+### Bug fixes
+None  
+
+## Changes in 2.0.0
+### Features
+Supports Assignment Type in ARG
+
+### Bug fixes
+None  
+
+### REST API version
+This version of the GuestConfiguration .NET client library targets version 2021-01-25 of the Azure GuestConfiguration REST API.
 
 ## Changes in 1.2.0
 ### Features

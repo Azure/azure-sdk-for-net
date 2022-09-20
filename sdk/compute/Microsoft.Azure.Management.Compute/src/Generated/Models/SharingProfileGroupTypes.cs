@@ -18,6 +18,5 @@ namespace Microsoft.Azure.Management.Compute.Models
     {
         public const string Subscriptions = "Subscriptions";
         public const string AADTenants = "AADTenants";
-        public const string Community = "Community";
     }
 }

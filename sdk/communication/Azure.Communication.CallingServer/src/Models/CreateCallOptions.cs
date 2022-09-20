@@ -1,45 +1,53 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
+using System.Text;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The options for creating a call. </summary>
+    /// <summary>
+    /// Options for the Create Call Request.
+    /// </summary>
     public class CreateCallOptions
     {
-        /// <summary> The alternate caller id of the source. </summary>
-        public PhoneNumberIdentifier AlternateCallerId { get; set; }
+        /// <summary>
+        /// Creates a new CreateCallOptions object.
+        /// </summary>
+        /// <param name="targets"></param>
+        /// <param name="callSource"></param>
+        /// <param name="callbackUri"></param>
+        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        {
+            Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
+            CallSource = callSource;
+            CallbackUri = callbackUri;
+        }
 
-        /// <summary> The subject. </summary>
-        public string Subject { get; set; }
+        /// <summary>
+        /// The targets of the call.
+        /// </summary>
+        public IReadOnlyList<CommunicationIdentifier> Targets { get; }
 
-        /// <summary> The callback URI. </summary>
+        /// <summary>
+        /// The source of the call.
+        /// </summary>
+        public CallSource CallSource { get; }
+
+        /// <summary>
+        /// The callback Uri.
+        /// </summary>
         public Uri CallbackUri { get; }
 
-        /// <summary> The requested media types. </summary>
-        public IList<MediaType> RequestedMediaTypes { get; }
+        /// <summary>
+        /// The subject.
+        /// </summary>
+        public string Subject { get; set; }
 
-        /// <summary> The requested call events to subscribe to. </summary>
-        public IList<EventSubscriptionType> RequestedCallEvents { get; }
-
-        /// <summary> Initializes a new instance of CreateCallOptions. </summary>
-        /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="requestedMediaTypes"> The requested media types. </param>
-        /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/>, <paramref name="requestedMediaTypes"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public CreateCallOptions(Uri callbackUri, IEnumerable<MediaType> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
-        {
-            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
-            Argument.AssertNotNull(requestedMediaTypes, nameof(requestedMediaTypes));
-            Argument.AssertNotNull(requestedCallEvents, nameof(requestedCallEvents));
-
-            CallbackUri = callbackUri;
-            RequestedMediaTypes = requestedMediaTypes.ToList();
-            RequestedCallEvents = requestedCallEvents.ToList();
-        }
+        /// <summary>
+        /// Media Streaming Configuration.
+        /// </summary>
+        public MediaStreamingOptions MediaStreamingOptions { get; set; }
     }
 }

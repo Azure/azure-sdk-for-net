@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,12 +38,14 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// operation.</param>
         /// <param name="isDataAction">If the operation is a data action (for
         /// data plane rbac).</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), bool? isDataAction = default(bool?))
+        /// <param name="properties">Operation properties.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), bool? isDataAction = default(bool?), IDictionary<string, object> properties = default(IDictionary<string, object>))
         {
             Name = name;
             Display = display;
             Origin = origin;
             IsDataAction = isDataAction;
+            Properties = properties;
             CustomInit();
         }
 
@@ -74,6 +78,12 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         [JsonProperty(PropertyName = "isDataAction")]
         public bool? IsDataAction { get; private set; }
+
+        /// <summary>
+        /// Gets operation properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public IDictionary<string, object> Properties { get; private set; }
 
     }
 }

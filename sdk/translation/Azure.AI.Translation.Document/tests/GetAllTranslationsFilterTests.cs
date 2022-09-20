@@ -204,7 +204,7 @@ namespace Azure.AI.Translation.Document.Tests
             // list translations with filter
             var options = new GetTranslationStatusesOptions
             {
-                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) },
+                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, ascending: false) },
                 CreatedAfter = recentTimestamp
             };
 

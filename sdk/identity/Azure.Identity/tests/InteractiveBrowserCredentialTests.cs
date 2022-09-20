@@ -18,6 +18,9 @@ namespace Azure.Identity.Tests
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new InteractiveBrowserCredential(TenantId, ClientId, options, null, mockPublicMsalClient));
+
         [Test]
         public async Task InteractiveBrowserAcquireTokenInteractiveException()
         {
@@ -221,9 +224,9 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new InteractiveBrowserCredentialOptions();
+            var options = new InteractiveBrowserCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint }};
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
             var credential = InstrumentClient(
                 new InteractiveBrowserCredential(
@@ -239,22 +242,49 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
         }
 
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new InteractiveBrowserCredentialOptions { TenantId = parameters.TenantId };
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+            var mockMsalClient = new MockMsalPublicClient(AuthenticationResultFactory.Create());
+            var cred = InstrumentClient(
+                new InteractiveBrowserCredential(parameters.TenantId, Constants.DeveloperSignOnClientId, options, null, mockMsalClient));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
+        }
+
+        public class ExtendedInteractiveBrowserCredentialOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
+        {
+            private Action<PublicClientApplicationBuilder> _beforeBuildClient;
+
+            public ExtendedInteractiveBrowserCredentialOptions(Action<PublicClientApplicationBuilder> beforeBuildClient)
+            {
+                _beforeBuildClient = beforeBuildClient;
+            }
+
+            Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient { get { return _beforeBuildClient; } }
+        }
+
         [Test]
-        public async Task InvokesBeforeBuildClient()
+        public async Task InvokesBeforeBuildClientOnExtendedOptions()
         {
             bool beforeBuildClientInvoked = false;
 
             var cancelSource = new CancellationTokenSource(2000);
 
-            var options = new InteractiveBrowserCredentialOptions
+            var options = new ExtendedInteractiveBrowserCredentialOptions(builder =>
             {
-                BeforeBuildClient = builder =>
-                {
-                    Assert.NotNull(builder);
-                    beforeBuildClientInvoked = true;
-                    cancelSource.Cancel();
-                }
-            };
+                Assert.NotNull(builder);
+                beforeBuildClientInvoked = true;
+                cancelSource.Cancel();
+            }
+            );
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(options));
 

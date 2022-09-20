@@ -7,11 +7,15 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> An action for the delivery rule. </summary>
-    public partial class DeliveryRuleAction
+    /// <summary>
+    /// An action for the delivery rule.
+    /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
+    /// </summary>
+    public abstract partial class DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of DeliveryRuleAction. </summary>
-        public DeliveryRuleAction()
+        protected DeliveryRuleAction()
         {
         }
 

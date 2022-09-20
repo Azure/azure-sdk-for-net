@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "32",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "traceparent": "00-11051bedd110f04a95f98d61a5c58025-212ed4f38911534b-00",
         "User-Agent": [
@@ -17,8 +17,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "West US",
-        "tags": {}
+        "location": "West US"
       },
       "StatusCode": 201,
       "ResponseHeaders": {

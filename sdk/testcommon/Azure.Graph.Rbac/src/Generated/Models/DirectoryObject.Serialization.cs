@@ -20,6 +20,7 @@ namespace Azure.Graph.Rbac.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AppRoleAssignment": return AppRoleAssignment.DeserializeAppRoleAssignment(element);
                     case "Application": return Application.DeserializeApplication(element);
                     case "Group": return ADGroup.DeserializeADGroup(element);
                     case "ServicePrincipal": return ServicePrincipal.DeserializeServicePrincipal(element);
@@ -27,8 +28,8 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             Optional<string> objectId = default;
-            Optional<string> objectType = default;
-            Optional<DateTimeOffset> deletionTimestamp = default;
+            string objectType = default;
+            Optional<DateTimeOffset?> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -47,7 +48,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        deletionTimestamp = null;
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
@@ -56,7 +57,7 @@ namespace Azure.Graph.Rbac.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DirectoryObject(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties);
+            return new DirectoryObject(objectId.Value, objectType, Optional.ToNullable(deletionTimestamp), additionalProperties);
         }
     }
 }

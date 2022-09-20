@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderPermissionListResult
+    internal partial class ProviderPermissionListResult
     {
         internal static ProviderPermissionListResult DeserializeProviderPermissionListResult(JsonElement element)
         {

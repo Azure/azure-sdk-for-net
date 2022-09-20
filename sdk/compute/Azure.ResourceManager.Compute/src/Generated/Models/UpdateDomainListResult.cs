@@ -11,13 +11,13 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The UpdateDomainListResult. </summary>
+    /// <summary> The list operation result. </summary>
     internal partial class UpdateDomainListResult
     {
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> The list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal UpdateDomainListResult(IEnumerable<UpdateDomain> value)
+        internal UpdateDomainListResult(IEnumerable<UpdateDomainIdentifier> value)
         {
             if (value == null)
             {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
-        internal UpdateDomainListResult(IReadOnlyList<UpdateDomain> value, string nextLink)
+        /// <param name="value"> The list of resources. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </param>
+        internal UpdateDomainListResult(IReadOnlyList<UpdateDomainIdentifier> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<UpdateDomain> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> The list of resources. </summary>
+        public IReadOnlyList<UpdateDomainIdentifier> Value { get; }
+        /// <summary> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </summary>
         public string NextLink { get; }
     }
 }

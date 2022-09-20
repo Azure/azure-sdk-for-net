@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains encryption settings for a data disk image. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DataDiskImageEncryption. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
-        internal DataDiskImageEncryption(string diskEncryptionSetId, int lun) : base(diskEncryptionSetId)
+        internal DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, int lun) : base(diskEncryptionSetId)
         {
             Lun = lun;
         }

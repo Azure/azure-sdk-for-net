@@ -14,21 +14,22 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static SentimentTaskResult DeserializeSentimentTaskResult(JsonElement element)
         {
-            Optional<SentimentResponse> results = default;
+            SentimentResponse results = default;
+            AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = SentimentResponse.DeserializeSentimentResponse(property.Value);
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SentimentTaskResult(results.Value);
+            return new SentimentTaskResult(kind, results);
         }
     }
 }

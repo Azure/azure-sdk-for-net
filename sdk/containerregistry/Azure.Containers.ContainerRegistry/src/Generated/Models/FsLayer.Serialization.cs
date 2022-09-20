@@ -10,19 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class FsLayer : IUtf8JsonSerializable
+    internal partial class FsLayer
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(BlobSum))
-            {
-                writer.WritePropertyName("blobSum");
-                writer.WriteStringValue(BlobSum);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static FsLayer DeserializeFsLayer(JsonElement element)
         {
             Optional<string> blobSum = default;

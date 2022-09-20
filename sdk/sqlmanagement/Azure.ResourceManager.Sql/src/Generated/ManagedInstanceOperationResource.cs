@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceOperationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceOperationResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string operationId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}";
             return new ResourceIdentifier(resourceId);

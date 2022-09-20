@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         protected bool UseCosmos { get; }
 
-        protected TablesLiveTestBase(bool isAsync, bool useCosmos, bool createTable = true): base(isAsync: isAsync)
+        protected TablesLiveTestBase(bool isAsync, bool useCosmos, bool createTable = true) : base(isAsync: isAsync)
         {
             UseCosmos = useCosmos;
             _createTable = createTable;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         protected async Task<object> CallAsync(Type funcType, string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
         {
             var instance = Activator.CreateInstance(funcType);
-            var (host, jobHost) = CreateHost(funcType, configure, instance);
+            using var host = CreateHost(funcType, configure, instance);
 
             MethodInfo methodInfo;
             if (methodName != null)
@@ -113,12 +113,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     .Single(mi => !mi.IsSpecialName);
             }
 
-            await jobHost.CallAsync(methodInfo, arguments);
+            await host.GetJobHost().CallAsync(methodInfo, arguments);
 
             return instance;
         }
 
-        protected (IHost Host, JobHost JobHost) CreateHost(Type programType, Action<HostBuilder> configure = null, object instance = null)
+        private IHost CreateHost(Type programType, Action<HostBuilder> configure = null, object instance = null)
         {
             var hostBuilder = new HostBuilder();
             hostBuilder.ConfigureDefaultTestHost(builder =>
@@ -133,15 +133,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     }
                 }
 
-                builder.AddAzureTables();
+                builder.AddTables();
             }, programType);
 
             (configure ?? DefaultConfigure).Invoke(hostBuilder);
-            var host = hostBuilder
-                .Build();
-            var jobHost = host.Services.GetService<IJobHost>() as JobHost;
-
-            return (host, jobHost);
+            return hostBuilder.Build();
         }
 
         private class FakeActivator : IJobActivator

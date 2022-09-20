@@ -63,20 +63,6 @@ await foreach (ServiceBusQueueResource serviceBusQueue in serviceBusQueueCollect
 ServiceBusQueueResource serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
 ```
 
-***Try to get a queue if it exists***
-
-```C# Snippet:Managing_ServiceBusQueues_GetQueueIfExists
-ServiceBusQueueResource serviceBusQueue = await serviceBusQueueCollection.GetIfExistsAsync("foo");
-if (serviceBusQueue != null)
-{
-    Console.WriteLine("queue 'foo' exists");
-}
-if (await serviceBusQueueCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("queue 'bar' exists");
-}
-```
-
 ***Delete a queue***
 
 ```C# Snippet:Managing_ServiceBusQueues_DeleteQueue

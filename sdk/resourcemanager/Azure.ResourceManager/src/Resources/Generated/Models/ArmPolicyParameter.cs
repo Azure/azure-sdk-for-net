@@ -21,23 +21,52 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
-        /// <param name="armPolicyParameterType"> The data type of the parameter. </param>
+        /// <param name="parameterType"> The data type of the parameter. </param>
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
         /// <param name="metadata"> General metadata for the parameter. </param>
-        internal ArmPolicyParameter(ArmPolicyParameterType? armPolicyParameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
+        internal ArmPolicyParameter(ArmPolicyParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
         {
-            ArmPolicyParameterType = armPolicyParameterType;
+            ParameterType = parameterType;
             AllowedValues = allowedValues;
             DefaultValue = defaultValue;
             Metadata = metadata;
         }
 
         /// <summary> The data type of the parameter. </summary>
-        public ArmPolicyParameterType? ArmPolicyParameterType { get; set; }
+        public ArmPolicyParameterType? ParameterType { get; set; }
         /// <summary> The allowed values for the parameter. </summary>
         public IList<BinaryData> AllowedValues { get; }
-        /// <summary> The default value for the parameter if no value is provided. </summary>
+        /// <summary>
+        /// The default value for the parameter if no value is provided.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData DefaultValue { get; set; }
         /// <summary> General metadata for the parameter. </summary>
         public ParameterDefinitionsValueMetadata Metadata { get; set; }

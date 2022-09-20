@@ -11,7 +11,7 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.Identity --version 1.0.0
+dotnet add package Azure.Communication.Identity
 ```
 
 ### Prerequisites
@@ -114,10 +114,16 @@ Response revokeResponse = await client.RevokeTokensAsync(user);
 Response deleteResponse = await client.DeleteUserAsync(user);
 ```
 
-### Exchanging AAD access token of a Teams User for a Communication Identity access token
+### Exchanging Azure AD access token of a Teams User for a Communication Identity access token
+The `CommunicationIdentityClient` can be used to exchange an Azure AD access token of a Teams user for a new Communication Identity access token with a matching expiration time.
+
+The `GetTokenForTeamsUser` function accepts the following parameters wrapped into the `GetTokenForTeamsUserOptions` option bag:
+- `teamsUserAadToken` Azure Active Directory access token of a Teams user
+- `clientId` Client ID of an Azure AD application to be verified against the appId claim in the Azure AD access token
+- `userObjectId` Object ID of an Azure AD user (Teams User) to be verified against the OID claim in the Azure AD access token
 
 ```C# Snippet:GetTokenForTeamsUserAsync
-Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
+Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(new GetTokenForTeamsUserOptions(teamsUserAadToken, clientId, userObjectId));
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```

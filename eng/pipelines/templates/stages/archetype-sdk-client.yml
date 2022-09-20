@@ -21,9 +21,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: TargetDocRepoOwner
   type: string
   default: Azure
@@ -55,6 +52,9 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
+- name: TestDependsOnDependency
+  type: string
+  default: not-specified
 
 variables:
   - template: ../variables/globals.yml
@@ -65,7 +65,6 @@ stages:
     - template: /eng/pipelines/templates/jobs/ci.yml
       parameters:
         SDKType: ${{ parameters.SDKType }}
-        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Artifacts: ${{ parameters.Artifacts }}
         ${{ if eq(parameters.ServiceDirectory, 'template') }}:
@@ -85,6 +84,7 @@ stages:
           - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
             - BuildConfiguration=Debug/Release
           - ${{ parameters.MatrixReplace }}
+        TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:

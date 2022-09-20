@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static PrivateLinkResourcesWrapper DeserializePrivateLinkResourcesWrapper(JsonElement element)
         {
-            IReadOnlyList<PrivateLinkResource> value = default;
+            IReadOnlyList<AppServicePrivateLinkResourceData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PrivateLinkResource> array = new List<PrivateLinkResource>();
+                    List<AppServicePrivateLinkResourceData> array = new List<AppServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
+                        array.Add(AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

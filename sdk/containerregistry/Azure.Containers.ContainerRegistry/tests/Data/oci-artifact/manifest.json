@@ -1,0 +1,18 @@
+{
+    "schemaVersion": 2,
+    "config": {
+        "mediaType": "application/vnd.acme.rocket.config",
+        "digest": "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
+        "size": 171
+    },
+    "layers": [
+        {
+            "mediaType": "application/vnd.oci.image.layer.v1.tar",
+            "digest": "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
+            "size": 28,
+            "annotations": {
+                "org.opencontainers.image.title": "artifact.txt"
+            }
+        }
+    ]
+}

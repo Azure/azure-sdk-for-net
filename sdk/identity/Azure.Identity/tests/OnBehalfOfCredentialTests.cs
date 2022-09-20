@@ -24,6 +24,23 @@ namespace Azure.Identity.Tests
         private static readonly X509Certificate2 _mockCertificate = new();
 #pragma warning restore // X509Certificate2 is immutable
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var oboOptions = new OnBehalfOfCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }
+            };
+            return InstrumentClient(
+                new OnBehalfOfCredential(
+                    TenantId,
+                    ClientId,
+                    "secret",
+                    expectedUserAssertion,
+                    oboOptions,
+                    null,
+                    mockConfidentialMsalClient));
+        }
+
         [Test]
         public void CtorValidation()
         {
@@ -55,17 +72,12 @@ namespace Azure.Identity.Tests
             // Assert
             Assert.NotNull(cred._client._certificateProvider);
 
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate,
-                userAssertion, new OnBehalfOfCredentialOptions()));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate,
-                userAssertion, new OnBehalfOfCredentialOptions()));
-            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId,
-                default(X509Certificate2), userAssertion, new OnBehalfOfCredentialOptions()));
-            Assert.Throws<ArgumentNullException>(() =>
-                new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null,
-                    new OnBehalfOfCredentialOptions()));
-            cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion,
-                new OnBehalfOfCredentialOptions());
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, null, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(
+                () => new OnBehalfOfCredential(TenantId, ClientId, default(X509Certificate2), userAssertion, new OnBehalfOfCredentialOptions()));
+            Assert.Throws<ArgumentNullException>(() => new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, null, new OnBehalfOfCredentialOptions()));
+            cred = new OnBehalfOfCredential(TenantId, ClientId, _mockCertificate, userAssertion, new OnBehalfOfCredentialOptions());
             // Assert
             Assert.NotNull(cred._client._certificateProvider);
         }
@@ -77,9 +89,9 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             TestSetup();
-            options = new OnBehalfOfCredentialOptions();
+            options = new OnBehalfOfCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] {Scope}, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
                     TenantId,
@@ -92,6 +104,30 @@ namespace Azure.Identity.Tests
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            // no need to test with null TenantId since we can't construct this credential without it
+            if (parameters.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new OnBehalfOfCredentialOptions();
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
+
+            var cred = InstrumentClient(new OnBehalfOfCredential(parameters.TenantId, ClientId, "secret", "userAssertion", options, null, msalClientMock));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         [Test]

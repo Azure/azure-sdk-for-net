@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destination"> Traffic destination. Accepted values are: &apos;*&apos;, IP Address/CIDR, Service Tag. </param>
         /// <param name="destinationPort"> Traffic destination port. Accepted values are &apos;*&apos; and a single port in the range (0 - 65535). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="protocol"/>, <paramref name="source"/>, <paramref name="destination"/> or <paramref name="destinationPort"/> is null. </exception>
-        public NetworkConfigurationDiagnosticProfile(Direction direction, string protocol, string source, string destination, string destinationPort)
+        public NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection direction, string protocol, string source, string destination, string destinationPort)
         {
             if (protocol == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The direction of the traffic. </summary>
-        public Direction Direction { get; set; }
+        public NetworkTrafficDirection Direction { get; set; }
         /// <summary> Protocol to be verified on. Accepted values are &apos;*&apos;, TCP, UDP. </summary>
         public string Protocol { get; set; }
         /// <summary> Traffic source. Accepted values are &apos;*&apos;, IP Address/CIDR, Service Tag. </summary>

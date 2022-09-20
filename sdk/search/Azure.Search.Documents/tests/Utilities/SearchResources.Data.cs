@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Tests
                         Fields =
                         {
                             new SearchableField("streetAddress"),
-                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true, NormalizerName = LexicalNormalizerName.Lowercase },
                             new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -177,6 +177,14 @@ namespace Azure.Search.Documents.Tests
                     Rating = 4,
                     Location = TestExtensions.CreatePoint(-122.131577, 48.678581),
                     GeoLocation = TestExtensions.CreateGeoPoint(-122.131577, 48.678581),
+                    Address = new HotelAddress()
+                    {
+                        StreetAddress = "677 5th Ave",
+                        City = "NEW YORK",
+                        StateProvince = "NY",
+                        Country = "USA",
+                        PostalCode = "10022"
+                    },
                 },
                 new Hotel()
                 {

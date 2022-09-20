@@ -7,11 +7,15 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of a rule. </summary>
-    public partial class FirewallPolicyRule
+    /// <summary>
+    /// Properties of a rule.
+    /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
+    /// </summary>
+    public abstract partial class FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
-        public FirewallPolicyRule()
+        protected FirewallPolicyRule()
         {
         }
 

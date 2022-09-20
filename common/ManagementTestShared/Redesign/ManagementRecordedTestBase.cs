@@ -3,11 +3,13 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -31,14 +33,30 @@ namespace Azure.ResourceManager.TestFramework
 
         private ArmClient _cleanupClient;
         private WaitUntil _waitForCleanup;
+        private ResourceType _resourceType;
+        protected string ApiVersion { get; }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
+            : base(isAsync, mode)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
 
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
+        }
+
+        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
+            : this(isAsync, mode)
+        {
+            _resourceType = resourceType;
+            ApiVersion = apiVersion;
+        }
+
+        protected void SetTagResourceUsage(ArmClient client, bool? useTagResource)
+        {
+            var target = client.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(client);
+            target.GetType().GetField("_canUseTagResource", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(target, useTagResource);
         }
 
         private void Initialize()
@@ -66,6 +84,8 @@ namespace Azure.ResourceManager.TestFramework
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            if (ApiVersion is not null)
+                options.SetApiVersion(_resourceType, ApiVersion);
 
             return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,
@@ -112,8 +132,10 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
-                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
+                        SubscriptionResource sub = _cleanupClient.GetSubscriptions().Exists(TestEnvironment.SubscriptionId)
+                            ? _cleanupClient.GetSubscriptions().Get(TestEnvironment.SubscriptionId)
+                            : null;
+                        sub?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
@@ -213,8 +235,10 @@ namespace Azure.ResourceManager.TestFramework
             {
                 Parallel.ForEach(OneTimeResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
-                    var sub = _cleanupClient.GetSubscriptions().GetIfExists(SessionEnvironment.SubscriptionId);
-                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
+                    SubscriptionResource sub = _cleanupClient.GetSubscriptions().Exists(SessionEnvironment.SubscriptionId)
+                        ? _cleanupClient.GetSubscriptions().Get(SessionEnvironment.SubscriptionId)
+                        : null;
+                    sub?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {

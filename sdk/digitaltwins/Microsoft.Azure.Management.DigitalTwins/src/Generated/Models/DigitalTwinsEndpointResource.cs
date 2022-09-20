@@ -36,8 +36,10 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">Extension resource name.</param>
         /// <param name="type">The resource type.</param>
-        public DigitalTwinsEndpointResource(DigitalTwinsEndpointResourceProperties properties, string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public DigitalTwinsEndpointResource(DigitalTwinsEndpointResourceProperties properties, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             CustomInit();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceExtensionProfile DeserializeCloudServiceExtensionProfile(JsonElement element)
         {
-            Optional<IList<Extension>> extensions = default;
+            Optional<IList<CloudServiceExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensions"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Extension> array = new List<Extension>();
+                    List<CloudServiceExtension> array = new List<CloudServiceExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Extension.DeserializeExtension(item));
+                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item));
                     }
                     extensions = array;
                     continue;

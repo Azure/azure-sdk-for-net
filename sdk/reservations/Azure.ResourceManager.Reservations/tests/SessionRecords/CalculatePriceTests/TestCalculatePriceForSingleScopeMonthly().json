@@ -1,0 +1,263 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a84b53553259a54e92c207c4dd9ee98c-a37ffcb556682e50-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "b092c990d3b7d68967459fc100c015e9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "400",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 18 May 2022 00:40:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b5ca368a-64f7-4b31-8b9e-10cfca558830",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "b5ca368a-64f7-4b31-8b9e-10cfca558830",
+        "x-ms-routing-request-id": "WESTUS:20220518T004003Z:b5ca368a-64f7-4b31-8b9e-10cfca558830"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
+        "displayName": "Azure subscription 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6e587d6acca0b7fa071a607e730ba880-5f83fc60fae5dc69-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "b2283f4e89a8b6c639aa1ba0514e8a9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 18 May 2022 00:40:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "277713ad-6db9-4651-9d02-ef14fcf74d0a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "277713ad-6db9-4651-9d02-ef14fcf74d0a",
+        "x-ms-routing-request-id": "WESTUS:20220518T004003Z:277713ad-6db9-4651-9d02-ef14fcf74d0a"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/2fc06c85-616c-4845-9d37-2faa8091e955",
+            "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/calculatePrice?api-version=2022-03-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "424",
+        "Content-Type": "application/json",
+        "traceparent": "00-f722982b86d761c4af8ab09e61d1d45c-e0f41bed2f8a691b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220517.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "c5974d6d3ff3bc177abbf843668fae11",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard_B1ls"
+        },
+        "location": "westus",
+        "properties": {
+          "reservedResourceType": "VirtualMachines",
+          "billingScopeId": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+          "term": "P1Y",
+          "billingPlan": "Monthly",
+          "quantity": 1,
+          "displayName": "testVM",
+          "appliedScopeType": "Single",
+          "appliedScopes": [
+            "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+          ],
+          "renew": false,
+          "reservedResourceProperties": {
+            "instanceFlexibility": "On"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1696",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 18 May 2022 00:40:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5965697d-a0a6-426d-9c86-c3938fce9e18",
+        "x-ms-ratelimit-remaining-tenant-writes": "1197",
+        "x-ms-request-id": "westus:06d5fd0a-7459-4abd-b81a-039230f8b4f9",
+        "x-ms-routing-request-id": "WESTUS:20220518T004006Z:5965697d-a0a6-426d-9c86-c3938fce9e18",
+        "x-ms-test": "{\u0022contact\u0022:\u0022yunga\u0022,\u0022scenarios\u0022:\u0022test,CSZ,Inv-v7,crs-vnext,GtmRiPurchase\u0022,\u0022retention\u0022:\u00228/16/2022 12:40:03 AM\u0022}"
+      },
+      "ResponseBody": {
+        "properties": {
+          "billingCurrencyTotal": {
+            "currencyCode": "USD",
+            "amount": 31.92
+          },
+          "netTotal": 0.0,
+          "taxTotal": 0.0,
+          "grandTotal": 0.0,
+          "paymentSchedule": [
+            {
+              "dueDate": "2022-05-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "billingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2022-06-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2022-07-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2022-08-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2022-09-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2022-10-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2022-11-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2022-12-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2023-01-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2023-02-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2023-03-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            },
+            {
+              "dueDate": "2023-04-18",
+              "pricingCurrencyTotal": {
+                "currencyCode": "USD",
+                "amount": 2.66
+              },
+              "status": "Scheduled"
+            }
+          ],
+          "reservationOrderId": "4121a6ce-cff8-49e1-a773-12f0ce0de200",
+          "skuTitle": "Reserved VM Instance, Standard_B1ls, US West, 1 Year",
+          "skuDescription": "Standard_B1ls",
+          "pricingCurrencyTotal": {
+            "currencyCode": "USD",
+            "amount": 31.92
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2087886271",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+  }
+}

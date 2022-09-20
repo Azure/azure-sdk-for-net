@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
             //allow.Add(new WebPubSubRequestType("ClientConnectionValue"));
             deny.Add(new WebPubSubRequestType("RESTAPI"));
-            NetworkAcl publicNetwork = new NetworkAcl(allow, deny);
+            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny);
             IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
             List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
-                Sku = new WebPubSubSku("Standard_S1"),
+                Sku = new BillingInfoSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
                 //EventHandler = new EventHandlerSettings(items),
                 NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints),
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             return webPubSub.Value;
         }
 
-        public async Task<SharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
+        public async Task<WebPubSubSharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
         {
             //1. create vnet
             var vnetData = new VirtualNetworkData()
@@ -110,65 +110,22 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
+                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
                 },
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
             var vnet = await vnetContainer.CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
 
-            //2.1 Create AppServicePlan
-            //string appServicePlanName = "appServicePlan5952";
-            //string location = "westus2";
-            //string appServicePlanId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/serverfarms/{appServicePlanName}";
-            //var armClient = GetArmClient();
-            //await armClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(appServicePlanId, new GenericResourceData(location)
-            //{
-            //    Properties = new Dictionary<string, object>
-            //    {
-            //        { "resources", new Dictionary<string, object>
-            //            {
-            //                { "type", "Microsoft.Web/serverfarms" },
-            //                { "apiVersion", "2021-01-15" },
-            //                { "name", appServicePlanName },
-            //                { "location", location },
-            //                { "kind", "app" },
-            //                { "sku", new Dictionary<string,object>
-            //                    {
-            //                        { "name", "P1v2" },
-            //                        { "tier", "PremiumV2" },
-            //                        { "size", "P1v2" },
-            //                        { "family", "P1v2" },
-            //                        { "capacity", 1 },
-            //                    }
-            //                },
-            //                { "properties", new Dictionary<string,object>
-            //                    {
-            //                        { "perSiteScaling", false },
-            //                        { "elasticScaleEnabled", false },
-            //                        { "maximumElasticWorkerCount", 1 },
-            //                        { "isSpot", false },
-            //                        { "reserved", false },
-            //                        { "isXenon", false },
-            //                        { "hyperV", false },
-            //                        { "targetWorkerCount", 0 },
-            //                        { "targetWorkerSizeId", 0 },
-            //                    }
-            //                },
-            //            }
-            //        }
-            //    }
-            //});
-
-            //TODO: 2.2 Create Appservice(Microsoft.Web/sites)
+            //TODO: 2 Create Appservice(Microsoft.Web/sites)
             string WebAppName = SessionRecording.GenerateAssetName("site-");
 
             //3 create SharedPrivateLink
             //TODO: Creating a SharedPrivateLink inevitably requires manual approval on the portal.
-            var container = _webPubSub.GetSharedPrivateLinks();
-            SharedPrivateLinkData data = new SharedPrivateLinkData()
+            var container = _webPubSub.GetWebPubSubSharedPrivateLinks();
+            WebPubSubSharedPrivateLinkData data = new WebPubSubSharedPrivateLinkData()
             {
-                PrivateLinkResourceId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}",
+                PrivateLinkResourceId =new ResourceIdentifier($"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}") ,
                 GroupId = "webPubSub",
                 RequestMessage = "please approve",
             };
@@ -191,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GetAll()
         {
             _webPubSub = await CreateWebPubSub();
-            var list = await _webPubSub.GetSharedPrivateLinks().GetAllAsync().ToEnumerableAsync();
+            var list = await _webPubSub.GetWebPubSubSharedPrivateLinks().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }
     }

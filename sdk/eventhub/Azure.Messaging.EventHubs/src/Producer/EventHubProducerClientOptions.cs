@@ -29,31 +29,6 @@ namespace Azure.Messaging.EventHubs.Producer
         public string Identifier { get; set; }
 
         /// <summary>
-        ///   Indicates whether or not the producer should enable idempotent publishing to the Event Hub partitions.  If
-        ///   enabled, the producer will only be able to publish directly to partitions; it will not be able to publish to
-        ///   the Event Hubs gateway for automatic partition routing nor using a partition key.
-        /// </summary>
-        ///
-        /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
-        ///
-        internal bool EnableIdempotentPartitions { get; set; }
-
-        /// <summary>
-        ///   The set of options that can be specified to influence publishing behavior specific to the configured Event Hub partition.  These
-        ///   options are not necessary in the majority of scenarios and are intended for use with specialized scenarios, such as when
-        ///   recovering the state used for idempotent publishing.
-        ///
-        ///   <para>It is highly recommended that these options only be specified if there is a proven need to do so; Incorrectly configuring these
-        ///   values may result in an <see cref="EventHubProducerClient" /> instance that is unable to publish to the Event Hubs.</para>
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
-        /// </remarks>
-        ///
-        internal Dictionary<string, PartitionPublishingOptionsInternal> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptionsInternal>();
-
-        /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
         /// </summary>
         ///
@@ -82,6 +57,33 @@ namespace Azure.Messaging.EventHubs.Producer
                 _retryOptions = value;
             }
         }
+
+        /// <summary>
+        ///   Indicates whether or not the producer should enable idempotent publishing to the Event Hub partitions.  If
+        ///   enabled, the producer will only be able to publish directly to partitions; it will not be able to publish to
+        ///   the Event Hubs gateway for automatic partition routing nor using a partition key.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal bool EnableIdempotentPartitions { get; set; }
+
+        /// <summary>
+        ///   The set of options that can be specified to influence publishing behavior specific to the configured Event Hub partition.  These
+        ///   options are not necessary in the majority of scenarios and are intended for use with specialized scenarios, such as when
+        ///   recovering the state used for idempotent publishing.
+        ///
+        ///   <para>It is highly recommended that these options only be specified if there is a proven need to do so; Incorrectly configuring these
+        ///   values may result in an <see cref="EventHubProducerClient" /> instance that is unable to publish to the Event Hubs.</para>
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -164,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns><c>null</c> in the event that there was no partition specified or no options for the partition; otherwise, the publishing options.</returns>
         ///
-        internal PartitionPublishingOptionsInternal GetPublishingOptionsOrDefaultForPartition(string partitionId)
+        internal PartitionPublishingOptions GetPublishingOptionsOrDefaultForPartition(string partitionId)
         {
             if (string.IsNullOrEmpty(partitionId))
             {

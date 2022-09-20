@@ -7,7 +7,7 @@
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    /// <summary> The Quaternion. </summary>
+    /// <summary> Represents a vector that is used to encode three-dimensional physical rotations. </summary>
     internal partial class Quaternion
     {
     }

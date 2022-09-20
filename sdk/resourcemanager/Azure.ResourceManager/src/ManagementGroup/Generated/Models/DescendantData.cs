@@ -8,7 +8,7 @@
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The descendant. </summary>
     public partial class DescendantData : ResourceData
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         public ResourceIdentifier ParentId
         {
-            get => Parent.Id;
+            get => Parent?.Id;
         }
     }
 }

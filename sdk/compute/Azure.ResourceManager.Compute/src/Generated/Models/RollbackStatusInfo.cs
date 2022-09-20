@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="successfullyRolledbackInstanceCount"> The number of instances which have been successfully rolled back. </param>
         /// <param name="failedRolledbackInstanceCount"> The number of instances which failed to rollback. </param>
         /// <param name="rollbackError"> Error details if OS rollback failed. </param>
-        internal RollbackStatusInfo(int? successfullyRolledbackInstanceCount, int? failedRolledbackInstanceCount, ApiError rollbackError)
+        internal RollbackStatusInfo(int? successfullyRolledbackInstanceCount, int? failedRolledbackInstanceCount, ComputeApiError rollbackError)
         {
             SuccessfullyRolledbackInstanceCount = successfullyRolledbackInstanceCount;
             FailedRolledbackInstanceCount = failedRolledbackInstanceCount;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The number of instances which failed to rollback. </summary>
         public int? FailedRolledbackInstanceCount { get; }
         /// <summary> Error details if OS rollback failed. </summary>
-        public ApiError RollbackError { get; }
+        public ComputeApiError RollbackError { get; }
     }
 }

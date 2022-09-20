@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0-beta.1 (Unreleased)
+## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.1.2 (2022-08-10)
+
+### Bugs Fixed
+
+- Fixed a bug in the runtime scale controller that could result in a null reference exception when encountering a null checkpoint. Also, correct the assumption that the beginning sequence number for a partition is always 0.
+
+## 5.1.1 (2022-06-20)
+
+### Bugs Fixed
+
+- Fixed a bug in the runtime scale controller that prevented function apps from scaling in.
+
+## 5.1.0 (2022-04-21)
+
+### Features Added
+
+- Adding support for retry policy (SupportsRetryAttribute)
 
 ## 5.0.1 (2022-03-09)
 

@@ -63,20 +63,6 @@ await foreach (ServiceBusTopicResource serviceBusTopic in serviceBusTopicCollect
 ServiceBusTopicResource serviceBusTopic = await serviceBusTopicCollection.GetAsync("myTopic");
 ```
 
-***Try to get a topic if it exists***
-
-```C# Snippet:Managing_ServiceBusTopics_GetTopicIfExists
-ServiceBusTopicResource serviceBusTopic = await serviceBusTopicCollection.GetIfExistsAsync("foo");
-if (serviceBusTopic != null)
-{
-    Console.WriteLine("topic 'foo' exists");
-}
-if (await serviceBusTopicCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("topic 'bar' exists");
-}
-```
-
 ***Delete a blob container***
 
 ```C# Snippet:Managing_ServiceBusTopics_DeleteTopic

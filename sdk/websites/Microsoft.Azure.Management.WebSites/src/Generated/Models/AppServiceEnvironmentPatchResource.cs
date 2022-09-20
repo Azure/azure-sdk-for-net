@@ -75,7 +75,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="hasLinuxWorkers">Flag that displays whether an ASE has
         /// linux workers or not</param>
         /// <param name="dedicatedHostCount">Dedicated Host Count</param>
-        public AppServiceEnvironmentPatchResource(VirtualNetworkProfile virtualNetwork, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string internalLoadBalancingMode = default(string), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string dnsSuffix = default(string), int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? suspended = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>), IList<string> userWhitelistedIpRanges = default(IList<string>), bool? hasLinuxWorkers = default(bool?), int? dedicatedHostCount = default(int?))
+        /// <param name="zoneRedundant">Whether or not this App Service
+        /// Environment is zone-redundant.</param>
+        public AppServiceEnvironmentPatchResource(VirtualNetworkProfile virtualNetwork, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string internalLoadBalancingMode = default(string), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string dnsSuffix = default(string), int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? suspended = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>), IList<string> userWhitelistedIpRanges = default(IList<string>), bool? hasLinuxWorkers = default(bool?), int? dedicatedHostCount = default(int?), bool? zoneRedundant = default(bool?))
             : base(id, name, kind, type)
         {
             ProvisioningState = provisioningState;
@@ -93,6 +95,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             UserWhitelistedIpRanges = userWhitelistedIpRanges;
             HasLinuxWorkers = hasLinuxWorkers;
             DedicatedHostCount = dedicatedHostCount;
+            ZoneRedundant = zoneRedundant;
             CustomInit();
         }
 
@@ -198,10 +201,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? HasLinuxWorkers { get; private set; }
 
         /// <summary>
-        /// Gets dedicated Host Count
+        /// Gets or sets dedicated Host Count
         /// </summary>
         [JsonProperty(PropertyName = "properties.dedicatedHostCount")]
-        public int? DedicatedHostCount { get; private set; }
+        public int? DedicatedHostCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not this App Service Environment is
+        /// zone-redundant.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
 
         /// <summary>
         /// Validate the object.

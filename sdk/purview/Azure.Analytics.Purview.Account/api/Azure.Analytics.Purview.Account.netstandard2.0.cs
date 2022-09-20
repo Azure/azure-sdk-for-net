@@ -3,7 +3,8 @@ namespace Azure.Analytics.Purview.Account
     public partial class PurviewAccountClient
     {
         protected PurviewAccountClient() { }
-        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
+        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetAccessKeys(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestContext context = null) { throw null; }
@@ -22,10 +23,10 @@ namespace Azure.Analytics.Purview.Account
     }
     public partial class PurviewAccountClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewAccountClientOptions(Azure.Analytics.Purview.Account.PurviewAccountClientOptions.ServiceVersion version = Azure.Analytics.Purview.Account.PurviewAccountClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public PurviewAccountClientOptions(Azure.Analytics.Purview.Account.PurviewAccountClientOptions.ServiceVersion version = Azure.Analytics.Purview.Account.PurviewAccountClientOptions.ServiceVersion.V2019_11_01_Preview) { }
         public enum ServiceVersion
         {
-            V2019_11_01_preview = 1,
+            V2019_11_01_Preview = 1,
         }
     }
     public partial class PurviewCollection

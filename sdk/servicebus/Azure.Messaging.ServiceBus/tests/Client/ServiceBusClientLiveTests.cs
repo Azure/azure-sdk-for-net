@@ -112,6 +112,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             }
         }
 
+        /// <summary>
+        ///   Verifies that the <see cref="ServiceBusClient" /> is able to
+        ///   connect to the Service Bus service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectWithConnectionStringAndCustomIdentifier()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions
+                {
+                    Identifier = "MyServiceBusClient<3"
+                };
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
+
+                await using (var client = new ServiceBusClient(connectionString, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+                    }, Throws.Nothing);
+                }
+            }
+        }
+
         [Test]
         [TestCase(true)]
         [TestCase(false)]
@@ -245,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
-                Assert.Greater(firstOpen, firstHeartBeat);
+                Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());
@@ -265,7 +301,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 await client.DisposeAsync();
                 // The close frame does not come back from the service before the DisposeAsync
                 // call is returned.
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 metrics = client.GetTransportMetrics();
                 Assert.Greater(metrics.LastConnectionClose, thirdOpen);
                 Assert.Greater(metrics.LastHeartBeat, firstHeartBeat);
@@ -285,7 +321,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
-                Assert.Greater(firstOpen, firstHeartBeat);
+                Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());

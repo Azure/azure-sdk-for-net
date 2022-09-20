@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
         internal ConsumerGroupListResult()
         {
-            Value = new ChangeTrackingList<ConsumerGroupData>();
+            Value = new ChangeTrackingList<EventHubsConsumerGroupData>();
         }
 
         /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
         /// <param name="value"> Result of the List Consumer Group operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Consumer Group. </param>
-        internal ConsumerGroupListResult(IReadOnlyList<ConsumerGroupData> value, string nextLink)
+        internal ConsumerGroupListResult(IReadOnlyList<EventHubsConsumerGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List Consumer Group operation. </summary>
-        public IReadOnlyList<ConsumerGroupData> Value { get; }
+        public IReadOnlyList<EventHubsConsumerGroupData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Consumer Group. </summary>
         public string NextLink { get; }
     }

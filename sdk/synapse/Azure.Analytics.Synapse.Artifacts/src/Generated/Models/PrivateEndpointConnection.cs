@@ -20,19 +20,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal PrivateEndpointConnection(string id, string name, string type, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState) : base(id, name, type)
+        internal PrivateEndpointConnection(string id, string name, string type, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, type)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> The private endpoint which the connection belongs to. </summary>
         public PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> Connection state of the private endpoint connection. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public PrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public string ProvisioningState { get; }
     }

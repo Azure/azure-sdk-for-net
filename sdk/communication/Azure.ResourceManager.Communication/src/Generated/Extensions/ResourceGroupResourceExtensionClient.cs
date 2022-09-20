@@ -33,9 +33,16 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
-        public virtual CommunicationServiceCollection GetCommunicationServices()
+        public virtual CommunicationServiceResourceCollection GetCommunicationServiceResources()
         {
-            return GetCachedClient(Client => new CommunicationServiceCollection(Client, Id));
+            return GetCachedClient(Client => new CommunicationServiceResourceCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of EmailServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
+        public virtual EmailServiceResourceCollection GetEmailServiceResources()
+        {
+            return GetCachedClient(Client => new EmailServiceResourceCollection(Client, Id));
         }
     }
 }

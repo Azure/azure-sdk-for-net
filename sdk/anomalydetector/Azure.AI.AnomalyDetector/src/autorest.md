@@ -7,6 +7,7 @@ tag: release_1_1_preview.1
 require:
     -  https://github.com/Azure/azure-rest-api-specs/blob/725b20c866d7f4a6512adff8d0647f0fe3baa069/specification/cognitiveservices/data-plane/AnomalyDetector/readme.md
 namespace: Azure.AI.AnomalyDetector
+generation1-convenience-client: true
 public-clients: true
 security:
   - AADToken

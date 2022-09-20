@@ -263,11 +263,14 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
-                "AzureActivity | summarize count()",
+                @"AzureActivity
+                    | summarize Count = count() by ResourceGroup
+                    | top 10 by Count
+                    | project ResourceGroup",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
-                options: new LogsQueryOptions
+                new LogsQueryOptions
                 {
                     ServerTimeout = TimeSpan.FromMinutes(10)
                 });
@@ -296,11 +299,14 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
-                "AzureActivity | summarize count()",
+                @"AzureActivity
+                    | summarize Count = count() by ResourceGroup
+                    | top 10 by Count
+                    | project ResourceGroup",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
-                options: new LogsQueryOptions
+                new LogsQueryOptions
                 {
                     AdditionalWorkspaces = { additionalWorkspaceId }
                 });
@@ -346,5 +352,32 @@ namespace Azure.Monitor.Query.Tests
             public int Count { get; set; }
         }
         #endregion
+
+        [Test]
+        [Explicit]
+        public async Task QueryLogsWithPartialSuccess()
+        {
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            #region Snippet:QueryLogsWithPartialSuccess
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+                TestEnvironment.WorkspaceId,
+                "My Not So Valid Query",
+                new QueryTimeRange(TimeSpan.FromDays(1)),
+                new LogsQueryOptions
+                {
+                    AllowPartialErrors = true
+                });
+            LogsQueryResult result = response.Value;
+
+            if (result.Status == LogsQueryResultStatus.PartialFailure)
+            {
+                var errorCode = result.Error.Code;
+                var errorMessage = result.Error.Message;
+
+                // code omitted for brevity
+            }
+            #endregion
+        }
     }
 }

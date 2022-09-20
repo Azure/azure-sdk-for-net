@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// CMD is used if this is not provided.</param>
         /// <param name="imageRegistryCredential">Credential of the image
         /// registry</param>
-        public CustomContainer(string server = default(string), string containerImage = default(string), IList<string> command = default(IList<string>), IList<string> args = default(IList<string>), ImageRegistryCredential imageRegistryCredential = default(ImageRegistryCredential))
+        /// <param name="languageFramework">Language framework of the container
+        /// image uploaded</param>
+        public CustomContainer(string server = default(string), string containerImage = default(string), IList<string> command = default(IList<string>), IList<string> args = default(IList<string>), ImageRegistryCredential imageRegistryCredential = default(ImageRegistryCredential), string languageFramework = default(string))
         {
             Server = server;
             ContainerImage = containerImage;
             Command = command;
             Args = args;
             ImageRegistryCredential = imageRegistryCredential;
+            LanguageFramework = languageFramework;
             CustomInit();
         }
 
@@ -93,6 +96,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "imageRegistryCredential")]
         public ImageRegistryCredential ImageRegistryCredential { get; set; }
+
+        /// <summary>
+        /// Gets or sets language framework of the container image uploaded
+        /// </summary>
+        [JsonProperty(PropertyName = "languageFramework")]
+        public string LanguageFramework { get; set; }
 
     }
 }

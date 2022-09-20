@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                  IListener listener = new EventHubListener(
                                                 factoryContext.Descriptor.Id,
                                                 factoryContext.Executor,
-                                                _clientFactory.GetEventProcessorHost(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
+                                                _clientFactory.GetEventProcessorHost(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup, singleDispatch),
                                                 singleDispatch,
                                                 _clientFactory.GetEventHubConsumerClient(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
                                                 checkpointStore,
@@ -70,11 +70,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                                                 _loggerFactory);
                  return Task.FromResult(listener);
              };
-
 #pragma warning disable 618
             ITriggerBinding binding = BindingFactory.GetTriggerBinding(new EventHubTriggerBindingStrategy(), parameter, _converterManager, createListener);
 #pragma warning restore 618
-            return Task.FromResult(binding);
+            ITriggerBinding eventHubTriggerBindingWrapper = new EventHubTriggerBindingWrapper(binding);
+            return Task.FromResult(eventHubTriggerBindingWrapper);
         }
     } // end class
 }

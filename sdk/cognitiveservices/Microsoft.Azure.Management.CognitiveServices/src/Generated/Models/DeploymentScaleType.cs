@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// </summary>
     public static class DeploymentScaleType
     {
+        public const string Standard = "Standard";
         public const string Manual = "Manual";
     }
 }

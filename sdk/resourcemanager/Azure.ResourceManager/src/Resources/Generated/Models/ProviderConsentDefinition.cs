@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The provider consent. </summary>
-    public partial class ProviderConsentDefinition
+    internal partial class ProviderConsentDefinition
     {
         /// <summary> Initializes a new instance of ProviderConsentDefinition. </summary>
         public ProviderConsentDefinition()

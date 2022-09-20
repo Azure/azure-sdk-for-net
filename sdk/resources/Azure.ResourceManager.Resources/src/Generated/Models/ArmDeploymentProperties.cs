@@ -19,14 +19,72 @@ namespace Azure.ResourceManager.Resources.Models
             Mode = mode;
         }
 
-        /// <summary> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </summary>
+        /// <summary>
+        /// The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Template { get; set; }
         /// <summary> The URI of the template. Use either the templateLink property or the template property, but not both. </summary>
-        public TemplateLink TemplateLink { get; set; }
-        /// <summary> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </summary>
+        public ArmDeploymentTemplateLink TemplateLink { get; set; }
+        /// <summary>
+        /// Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Parameters { get; set; }
         /// <summary> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </summary>
-        public ParametersLink ParametersLink { get; set; }
+        public ArmDeploymentParametersLink ParametersLink { get; set; }
         /// <summary> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </summary>
         public ArmDeploymentMode Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
@@ -44,18 +102,18 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deployment on error behavior. </summary>
-        public OnErrorDeployment OnErrorDeployment { get; set; }
+        public ErrorDeployment ErrorDeployment { get; set; }
         /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </summary>
-        internal ExpressionEvaluationOptions ExpressionEvaluationOptions { get; set; }
+        internal ExpressionEvaluationOptions ExpressionEvaluation { get; set; }
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
-        public ExpressionEvaluationOptionsScopeType? ExpressionEvaluationOptionsScope
+        public ExpressionEvaluationScope? ExpressionEvaluationScope
         {
-            get => ExpressionEvaluationOptions is null ? default : ExpressionEvaluationOptions.Scope;
+            get => ExpressionEvaluation is null ? default : ExpressionEvaluation.Scope;
             set
             {
-                if (ExpressionEvaluationOptions is null)
-                    ExpressionEvaluationOptions = new ExpressionEvaluationOptions();
-                ExpressionEvaluationOptions.Scope = value;
+                if (ExpressionEvaluation is null)
+                    ExpressionEvaluation = new ExpressionEvaluationOptions();
+                ExpressionEvaluation.Scope = value;
             }
         }
     }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             // 1.CreateOrUpdate
             ManagedInstanceAzureADOnlyAuthenticationData data = new ManagedInstanceAzureADOnlyAuthenticationData()
             {
-                AzureADOnlyAuthentication = true,
+                IsAzureADOnlyAuthenticationEnabled = true,
             };
             var adoAuth = await collection.CreateOrUpdateAsync(WaitUntil.Completed, AuthenticationName.Default, data);
 
@@ -71,8 +71,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsNotEmpty(list);
 
             // 5.GetIfExist
-            var getIfExistADOAuth = await collection.GetIfExistsAsync(adoAuthName);
-            Assert.IsNotNull(getIfExistADOAuth.Value.Data);
+            Assert.IsTrue(await collection.ExistsAsync(adoAuthName));
         }
     }
 }

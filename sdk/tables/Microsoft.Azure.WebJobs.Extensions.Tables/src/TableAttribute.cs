@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs
     [Binding]
     public class TableAttribute : Attribute, IConnectionProvider
     {
-        // Table Name Rules are summerized in this page https://msdn.microsoft.com/en-us/library/azure/dd179338.aspx
+        // Table Name Rules are summarized in this page https://msdn.microsoft.com/en-us/library/azure/dd179338.aspx
         // Table names may contain only alphanumeric characters, can not start with a numeric character and must be
         // 3 to 63 characters long
         private const string TableNameRegex = "^[A-Za-z][A-Za-z0-9]{2,62}$";
@@ -90,13 +90,19 @@ namespace Microsoft.Azure.WebJobs
         public string RowKey => _rowKey;
 
         /// <summary>
-        /// Allow arbitrary table filter. RowKey should be null.
+        /// Gets or sets an OData table filter. <see cref="RowKey"/> should be null when setting this property.
+        /// For example, to filter on a LastName and FirstName property within an entity, you might set the Filter as follows:
+        /// <code>Filter = "LastName%20eq%20'Smith'%20and%20FirstName%20eq%20'John'"</code>
+        ///
+        /// To learn more about constructing OData filter strings,
+        /// see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings"/>.
         /// </summary>
         [AutoResolve(ResolutionPolicyType = typeof(ODataFilterResolutionPolicy))]
         public string Filter { get; set; }
 
         /// <summary>
-        /// Used with filter. RowKey should be null.
+        /// Gets or sets the number of elements to include when using the <see cref="Filter"/> property. <see cref="RowKey"/> should be null
+        /// when setting this property.
         /// </summary>
         public int Take { get; set; }
 
@@ -118,7 +124,7 @@ namespace Microsoft.Azure.WebJobs
         }
 
         /// <summary>
-        /// Gets or sets the app setting name that contains the Azure Storage connection string.
+        /// Gets or sets the app setting name that contains the Azure Storage or Azure Cosmos connection string.
         /// </summary>
         public string Connection { get; set; }
     }

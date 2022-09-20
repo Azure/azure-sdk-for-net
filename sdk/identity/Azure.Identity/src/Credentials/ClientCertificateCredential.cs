@@ -5,8 +5,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +18,8 @@ namespace Azure.Identity
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {
+        internal const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/clientcertificatecredential/troubleshoot";
+
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
         /// </summary>
@@ -35,6 +35,8 @@ namespace Azure.Identity
         internal MsalConfidentialClient Client { get; }
 
         private readonly CredentialPipeline _pipeline;
+
+        private readonly string[] _additionallyAllowedTenantIds;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -160,10 +162,14 @@ namespace Azure.Identity
                          certificateProvider,
                          certCredOptions?.SendCertificateChain ?? false,
                          options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. Acquired tokens are
+        /// cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
+        /// instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -174,19 +180,21 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _additionallyAllowedTenantIds);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. Acquired tokens are
+        /// cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
+        /// instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -197,7 +205,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _additionallyAllowedTenantIds);
                 AuthenticationResult result = await Client
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken)
                     .ConfigureAwait(false);

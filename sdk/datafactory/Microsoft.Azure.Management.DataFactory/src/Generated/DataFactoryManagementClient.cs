@@ -176,6 +176,11 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IGlobalParametersOperations.
+        /// </summary>
+        public virtual IGlobalParametersOperations GlobalParameters { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -436,6 +441,7 @@ namespace Microsoft.Azure.Management.DataFactory
             PrivateEndPointConnections = new PrivateEndPointConnectionsOperations(this);
             PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            GlobalParameters = new GlobalParametersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";

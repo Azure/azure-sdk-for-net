@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServiceRoleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,66 +239,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(roleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}
-        /// Operation Id: CloudServiceRoles_Get
-        /// </summary>
-        /// <param name="roleName"> Name of the role. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
-        public virtual async Task<Response<CloudServiceRoleResource>> GetIfExistsAsync(string roleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
-
-            using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _cloudServiceRoleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<CloudServiceRoleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new CloudServiceRoleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}
-        /// Operation Id: CloudServiceRoles_Get
-        /// </summary>
-        /// <param name="roleName"> Name of the role. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
-        public virtual Response<CloudServiceRoleResource> GetIfExists(string roleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
-
-            using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _cloudServiceRoleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<CloudServiceRoleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new CloudServiceRoleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

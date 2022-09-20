@@ -23,8 +23,6 @@ namespace: Azure.ResourceManager.Resources
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-modelerfour:
-    lenient-model-deduplication: true
 skip-csproj: true
 payload-flattening-threshold: 2
 operation-group-to-resource-type:

@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> type = default;
             Optional<IReadOnlyList<string>> extendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -46,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderExtendedLocation(location.Value, type.Value, Optional.ToList(extendedLocations));
+            return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, Optional.ToList(extendedLocations));
         }
     }
 }

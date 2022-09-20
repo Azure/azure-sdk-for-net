@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> ACL for a private endpoint. </summary>
-    public partial class PrivateEndpointAcl : NetworkAcl
+    public partial class PrivateEndpointAcl : PublicNetworkAcls
     {
         /// <summary> Initializes a new instance of PrivateEndpointAcl. </summary>
         /// <param name="name"> Name of the private endpoint connection. </param>

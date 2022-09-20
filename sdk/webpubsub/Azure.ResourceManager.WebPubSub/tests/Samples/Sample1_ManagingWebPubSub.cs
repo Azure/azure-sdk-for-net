@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
             deny.Add(new WebPubSubRequestType("RESTAPI"));
-            NetworkAcl publicNetwork = new NetworkAcl(allow, deny);
+            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny);
             IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
             List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             };
             WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
-                Sku = new WebPubSubSku("Standard_S1"),
+                Sku = new BillingInfoSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
                 NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints),
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
@@ -98,26 +98,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
 
             WebPubSubResource webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
             Console.WriteLine(webPubSub.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_WebPubSub_GetWebPubSubIfExists
-            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
-
-            WebPubSubResource webPubSub = await WebPubSubColletion.GetIfExistsAsync("foo");
-            if (webPubSub != null)
-            {
-                Console.WriteLine(webPubSub.Data.Name);
-            }
-
-            if (await WebPubSubColletion.ExistsAsync("bar"))
-            {
-                Console.WriteLine("WebPubSub 'bar' exists.");
-            }
             #endregion
         }
 

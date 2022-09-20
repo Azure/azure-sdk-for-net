@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - &apos;Microsoft.KeyVault/vaults&apos;. </param>
         /// <param name="defaultProperties"> The top-level properties that can be selected on the function&apos;s output. eg - [ &quot;name&quot;, &quot;location&quot; ] if vault().name and vault().location are supported. </param>
         /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault(&apos;2019-06-01&apos;). </param>
-        internal DataManifestCustomResourceFunctionDefinition(string name, string fullyQualifiedResourceType, IReadOnlyList<string> defaultProperties, bool? allowCustomProperties)
+        internal DataManifestCustomResourceFunctionDefinition(string name, ResourceType? fullyQualifiedResourceType, IReadOnlyList<string> defaultProperties, bool? allowCustomProperties)
         {
             Name = name;
             FullyQualifiedResourceType = fullyQualifiedResourceType;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The function name as it will appear in the policy rule. eg - &apos;vault&apos;. </summary>
         public string Name { get; }
         /// <summary> The fully qualified control plane resource type that this function represents. eg - &apos;Microsoft.KeyVault/vaults&apos;. </summary>
-        public string FullyQualifiedResourceType { get; }
+        public ResourceType? FullyQualifiedResourceType { get; }
         /// <summary> The top-level properties that can be selected on the function&apos;s output. eg - [ &quot;name&quot;, &quot;location&quot; ] if vault().name and vault().location are supported. </summary>
         public IReadOnlyList<string> DefaultProperties { get; }
         /// <summary> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault(&apos;2019-06-01&apos;). </summary>

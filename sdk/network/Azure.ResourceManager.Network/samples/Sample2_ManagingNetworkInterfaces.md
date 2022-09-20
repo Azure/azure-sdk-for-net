@@ -42,7 +42,7 @@ string publicIPAddressName = "myIPAddress";
 PublicIPAddressData publicIPInput = new PublicIPAddressData()
 {
     Location = resourceGroup.Data.Location,
-    PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+    PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
     DnsSettings = new PublicIPAddressDnsSettings()
     {
         DomainNameLabel = "myDomain"
@@ -59,7 +59,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
         new NetworkInterfaceIPConfigurationData()
         {
             Name = "ipConfig",
-            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+            PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
             PublicIPAddress = new PublicIPAddressData()
             {
                 Id = publicIPAddress.Id
@@ -94,23 +94,6 @@ NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetwork
 
 NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
 Console.WriteLine(virtualNetwork.Data.Name);
-```
-
-***Try to get a network interface if it exists***
-
-```C# Snippet:Managing_Networks_GetANetworkInterfaceIfExists
-NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-
-NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetIfExistsAsync("foo");
-if (virtualNetwork != null)
-{
-    Console.WriteLine(virtualNetwork.Data.Name);
-}
-
-if (await networkInterfaceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Network interface 'bar' exists.");
-}
 ```
 
 ***Delete a network interface***

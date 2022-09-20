@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
@@ -278,7 +281,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(
                 token.StartsWith(
-                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
+                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}={sas.Version}&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
         }
 
         /// <summary>
@@ -423,12 +426,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void CreateIfNotExistsThrowsWhenTableBeingDeleted()
         {
-            _transport = new MockTransport(
-                request => throw new RequestFailedException(
-                    (int)HttpStatusCode.Conflict,
-                    null,
-                    TableErrorCode.TableBeingDeleted.ToString(),
-                    null));
+            _transport = TableAlreadyExistsTransport(TableErrorCode.TableBeingDeleted);
             var service_Instrumented = InstrumentClient(
                 new TableServiceClient(
                     new Uri($"https://example.com?{signature}"),
@@ -441,11 +439,11 @@ namespace Azure.Data.Tables.Tests
 
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()
         {
-            var tokenTransport = TableAlreadyExistsTransport();
-            var tokenTransport2 = TableAlreadyExistsTransport();
-            var sharedKeyTransport = TableAlreadyExistsTransport();
-            var connStrTransport = TableAlreadyExistsTransport();
-            var devTransport = TableAlreadyExistsTransport();
+            var tokenTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var tokenTransport2 = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var sharedKeyTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var connStrTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var devTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
 
             var sharedKeyClient = new TableClient(_urlWithTableName, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
             var connStringClient = new TableClient(
@@ -464,11 +462,11 @@ namespace Azure.Data.Tables.Tests
         }
 
         [TestCaseSource(nameof(TableClientsWithTableNameInUri))]
-        public void CreateIfNotExistsDoesNotThrowWhenClientConstructedWithUriContainingTableName(TableClient tableClient, MockTransport transport)
+        public async Task CreateIfNotExistsDoesNotThrowWhenClientConstructedWithUriContainingTableName(TableClient tableClient, MockTransport transport)
         {
             client = InstrumentClient(tableClient);
 
-            client.CreateIfNotExistsAsync();
+            await client.CreateIfNotExistsAsync();
 
             Assert.That(transport.SingleRequest.Uri.Path, Does.Not.Contain(TableName), "Path should not contain the table name");
         }
@@ -559,13 +557,50 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        private static MockTransport TableAlreadyExistsTransport() =>
-            new(
-                _ => throw new RequestFailedException(
-                    (int)HttpStatusCode.Conflict,
-                    null,
-                    TableErrorCode.TableAlreadyExists.ToString(),
-                    null));
+        [Test]
+        public async Task LoggedQueryParameters()
+        {
+            _transport = new MockTransport(request => new MockResponse(200));
+            var options = TableClientOptions.DefaultOptions;
+            options.Transport = _transport;
+            var service_Instrumented = InstrumentClient(
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    options));
+            client = service_Instrumented.GetTableClient(TableName);
+
+            var messages = new List<string>();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (args, message) => messages.Add(string.Format(message, args)),
+                level: EventLevel.Verbose);
+
+            try
+            {
+                await client.QueryAsync<TableEntity>(filter: "myFilter", maxPerPage: 987, select: new[] { "mySelect" }).ToEnumerableAsync().ConfigureAwait(false);
+            }
+            catch {/* don't throw */}
+
+            var message = messages.First(m => m.StartsWith("Request"));
+            Assert.That(message, Does.Contain("myFilter"), "Path should not redact 'filter");
+            Assert.That(message, Does.Contain("987"), "Path should not redact 'top");
+            Assert.That(message, Does.Contain("mySelect"), "Path should not redact 'select");
+        }
+
+        private static MockTransport TableAlreadyExistsTransport(TableErrorCode errorCode)
+        {
+            MockResponse conflictResponse = new((int)HttpStatusCode.Conflict);
+            conflictResponse.SetContent(@$"{{
+  ""odata.error"": {{
+    ""code"": ""{errorCode}"",
+    ""message"": {{
+      ""lang"": ""en-US"",
+      ""value"": ""Table is being deleted.\nRequestId:7c2a1319-5002-0065-0b0e-502b52000000\nTime:2022-04-14T14:44:00.1021472Z""
+    }}
+  }}
+}}");
+            return new(_ => conflictResponse);
+        }
 
         public class EnumEntity : ITableEntity
         {

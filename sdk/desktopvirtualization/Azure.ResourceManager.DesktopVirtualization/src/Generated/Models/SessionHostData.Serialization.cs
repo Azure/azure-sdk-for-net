@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastHeartBeat))
+            if (Optional.IsDefined(LastHeartBeatOn))
             {
                 writer.WritePropertyName("lastHeartBeat");
-                writer.WriteStringValue(LastHeartBeat.Value, "O");
+                writer.WriteStringValue(LastHeartBeatOn.Value, "O");
             }
             if (Optional.IsDefined(Sessions))
             {
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("osVersion");
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(SxSStackVersion))
+            if (Optional.IsDefined(SxsStackVersion))
             {
                 writer.WritePropertyName("sxSStackVersion");
-                writer.WriteStringValue(SxSStackVersion);
+                writer.WriteStringValue(SxsStackVersion);
             }
             if (Optional.IsDefined(UpdateState))
             {
@@ -80,20 +80,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> objectId = default;
             Optional<DateTimeOffset> lastHeartBeat = default;
             Optional<int> sessions = default;
             Optional<string> agentVersion = default;
             Optional<bool> allowNewSession = default;
             Optional<string> virtualMachineId = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> assignedUser = default;
             Optional<SessionHostStatus> status = default;
             Optional<DateTimeOffset> statusTimestamp = default;
             Optional<string> osVersion = default;
-            Optional<string> sxSStackVersion = default;
-            Optional<UpdateState> updateState = default;
+            Optional<string> sxsStackVersion = default;
+            Optional<SessionHostUpdateState> updateState = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<string> updateErrorMessage = default;
             Optional<IReadOnlyList<SessionHostHealthCheckReport>> sessionHostHealthCheckResults = default;
@@ -111,11 +111,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -175,7 +180,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("assignedUser"))
@@ -210,7 +220,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("sxSStackVersion"))
                         {
-                            sxSStackVersion = property0.Value.GetString();
+                            sxsStackVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("updateState"))
@@ -220,7 +230,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updateState = new UpdateState(property0.Value.GetString());
+                            updateState = new SessionHostUpdateState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastUpdateTime"))
@@ -257,7 +267,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new SessionHostData(id, name, type, systemData, objectId.Value, Optional.ToNullable(lastHeartBeat), Optional.ToNullable(sessions), agentVersion.Value, Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, Optional.ToNullable(status), Optional.ToNullable(statusTimestamp), osVersion.Value, sxSStackVersion.Value, Optional.ToNullable(updateState), Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, Optional.ToList(sessionHostHealthCheckResults));
+            return new SessionHostData(id, name, type, systemData.Value, objectId.Value, Optional.ToNullable(lastHeartBeat), Optional.ToNullable(sessions), agentVersion.Value, Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, Optional.ToNullable(status), Optional.ToNullable(statusTimestamp), osVersion.Value, sxsStackVersion.Value, Optional.ToNullable(updateState), Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, Optional.ToList(sessionHostHealthCheckResults));
         }
     }
 }

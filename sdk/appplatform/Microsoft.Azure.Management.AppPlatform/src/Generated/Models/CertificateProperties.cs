@@ -40,7 +40,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// certificate.</param>
         /// <param name="subjectName">The subject name of certificate.</param>
         /// <param name="dnsNames">The domain list of certificate.</param>
-        public CertificateProperties(string thumbprint = default(string), string issuer = default(string), string issuedDate = default(string), string expirationDate = default(string), string activateDate = default(string), string subjectName = default(string), IList<string> dnsNames = default(IList<string>))
+        /// <param name="provisioningState">Provisioning state of the
+        /// Certificate. Possible values include: 'Creating', 'Updating',
+        /// 'Succeeded', 'Failed', 'Deleting'</param>
+        public CertificateProperties(string thumbprint = default(string), string issuer = default(string), string issuedDate = default(string), string expirationDate = default(string), string activateDate = default(string), string subjectName = default(string), IList<string> dnsNames = default(IList<string>), string provisioningState = default(string))
         {
             Thumbprint = thumbprint;
             Issuer = issuer;
@@ -49,6 +52,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
             ActivateDate = activateDate;
             SubjectName = subjectName;
             DnsNames = dnsNames;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -98,6 +102,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "dnsNames")]
         public IList<string> DnsNames { get; private set; }
+
+        /// <summary>
+        /// Gets provisioning state of the Certificate. Possible values
+        /// include: 'Creating', 'Updating', 'Succeeded', 'Failed', 'Deleting'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; private set; }
 
     }
 }

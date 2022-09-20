@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Network.Tests
             var properties = new NetworkWatcherData { Location = location };
             var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);
-            Assert.AreEqual(location, createResponse.Value.Data.Location);
+            Assert.AreEqual(location, createResponse.Value.Data.Location.ToString());
             Assert.IsEmpty(createResponse.Value.Data.Tags);
 
             //Get Network Watcher by name in the resource group
             Response<NetworkWatcherResource> getResponse = await networkWatcherCollection.GetAsync(networkWatcherName);
-            Assert.AreEqual(location, getResponse.Value.Data.Location);
+            Assert.AreEqual(location, getResponse.Value.Data.Location.ToString());
             Assert.AreEqual(networkWatcherName, getResponse.Value.Data.Name);
             Assert.AreEqual("Succeeded", getResponse.Value.Data.ProvisioningState.ToString());
             Assert.IsEmpty(getResponse.Value.Data.Tags);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests
             properties.Tags.Add("test", "test");
             var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, updateResponse.Value.Data.Name);
-            Assert.AreEqual(location, updateResponse.Value.Data.Location);
+            Assert.AreEqual(location, updateResponse.Value.Data.Location.ToString());
             Has.One.Equals(updateResponse.Value.Data.Tags);
             Assert.That(updateResponse.Value.Data.Tags, Does.ContainKey("test").WithValue("test"));
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests
             List<NetworkWatcherResource> listResponse = await networkWatcherCollection.GetAllAsync().ToEnumerableAsync();
             Has.One.EqualTo(listResponse);
             Assert.AreEqual(networkWatcherName, listResponse[0].Data.Name);
-            Assert.AreEqual(location, listResponse[0].Data.Location);
+            Assert.AreEqual(location, listResponse[0].Data.Location.ToString());
             Has.One.Equals(listResponse[0].Data.Tags);
             Assert.That(listResponse[0].Data.Tags, Does.ContainKey("test").WithValue("test"));
 

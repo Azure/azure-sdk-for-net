@@ -29,6 +29,8 @@ namespace Azure.Messaging.EventHubs
         ///   The approach to use for calculating retry delays.
         /// </summary>
         ///
+        /// <value>The default retry mode is <see cref="EventHubsRetryMode.Exponential"/>.</value>
+        ///
         public EventHubsRetryMode Mode { get; set; } = EventHubsRetryMode.Exponential;
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>The default retry limit is 3.</value>
         ///
-        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested retries is not between 0 and 100 (inclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested number of retries is not between 0 and 100 (inclusive).</exception>
         ///
         public int MaximumRetries
         {
@@ -97,8 +99,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>The default timeout is 60 seconds.</value>
         ///
-        /// <exception cref="ArgumentException">Occurs when the requested delay is negative.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested delay is not between <see cref="TimeSpan.Zero" /> and 1 hour (inclusive).</exception>
+        /// <exception cref="ArgumentException">Occurs when the requested timeout is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is not between <see cref="TimeSpan.Zero" /> and 1 hour (inclusive).</exception>
         ///
         public TimeSpan TryTimeout
         {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData body)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,13 +55,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -71,18 +68,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, <paramref name="metadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridIdentityMetadataData>> CreateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridIdentityMetadataData>> CreateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, virtualMachineName, metadataName, body);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, virtualMachineName, metadataName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -103,18 +101,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, <paramref name="metadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridIdentityMetadataData> Create(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
+        public Response<HybridIdentityMetadataData> Create(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, virtualMachineName, metadataName, body);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, virtualMachineName, metadataName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

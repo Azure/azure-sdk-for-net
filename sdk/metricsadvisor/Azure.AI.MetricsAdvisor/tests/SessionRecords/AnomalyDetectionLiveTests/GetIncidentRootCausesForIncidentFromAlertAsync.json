@@ -1,136 +1,93 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/alert/anomaly/configurations/1c1575d8-b09e-40c3-a3c0-d459c64d8382/alerts/17bbd8dec00/incidents",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/alert/anomaly/configurations/126d1470-b500-4ef0-b5c0-47f9ca914a75/alerts/17f9f794800/incidents",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-21670044af88ee4399bba099407e51f0-69b9d23e4fccbd48-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-11d9aba04c59a9b3c23d6385223478a4-7455cba5e8331b3c-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "142b0ddc47594b61061f66e3c6553a6a",
+        "x-ms-client-request-id": "7431d5b0f733ccecfb1738b9ffb33447",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3ad88bfb-298e-4b8a-9849-c4f218f159e0",
-        "Content-Length": "1541",
+        "apim-request-id": "3a5b2d89-e166-40a7-9838-ec6d905b061f",
+        "Content-Length": "498",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:32 GMT",
+        "Date": "Tue, 19 Apr 2022 04:03:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "325",
-        "X-Request-ID": "3ad88bfb-298e-4b8a-9849-c4f218f159e0"
+        "x-envoy-upstream-service-time": "517",
+        "X-Request-ID": "3a5b2d89-e166-40a7-9838-ec6d905b061f"
       },
       "ResponseBody": {
         "value": [
           {
-            "dataFeedId": "151e5444-449f-441e-8b64-988f21c5d054",
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
-            "incidentId": "30612c95b4c216ef418956c5c6162691-17bbd8dec00",
-            "startTime": "2021-09-07T00:00:00.0000000Z",
-            "lastTime": "2021-09-07T00:00:00.0000000Z",
+            "dataFeedId": "6e48e476-33e6-4113-a299-a5740bc0db47",
+            "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
+            "anomalyDetectionConfigurationId": "78f3a4e7-fe53-4a05-9f4d-d724ab6c23a7",
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-17f9f794800",
+            "startTime": "2022-03-19T00:00:00Z",
+            "lastTime": "2022-03-19T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "region": "Tianjin",
-                "category": "Home \u0026 Garden"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 18544.0,
-              "expectedValueOfRootNode": 18573.49119556344
-            }
-          },
-          {
-            "dataFeedId": "151e5444-449f-441e-8b64-988f21c5d054",
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
-            "incidentId": "4ec127166abf8387b2874bae49734ab1-17bbd8dec00",
-            "startTime": "2021-09-06T00:00:00.0000000Z",
-            "lastTime": "2021-09-07T00:00:00.0000000Z",
-            "rootNode": {
-              "dimension": {
-                "region": "__SUM__",
-                "category": "__SUM__"
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
               }
             },
             "property": {
               "maxSeverity": "High",
               "incidentStatus": "Active",
-              "valueOfRootNode": 65120708.60000002,
-              "expectedValueOfRootNode": 60928226.58873364
-            }
-          },
-          {
-            "dataFeedId": "151e5444-449f-441e-8b64-988f21c5d054",
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
-            "incidentId": "efe6bdf61f01a37d8ddbb133afde0756-17bbd8dec00",
-            "startTime": "2021-09-07T00:00:00.0000000Z",
-            "lastTime": "2021-09-07T00:00:00.0000000Z",
-            "rootNode": {
-              "dimension": {
-                "region": "Istanbul",
-                "category": "Home \u0026 Garden"
-              }
-            },
-            "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 10715.2,
-              "expectedValueOfRootNode": 9806.569582296583
+              "valueOfRootNode": 97249.0,
+              "expectedValueOfRootNode": 80000.0
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/incidents/30612c95b4c216ef418956c5c6162691-17bbd8dec00/rootCause",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/78f3a4e7-fe53-4a05-9f4d-d724ab6c23a7/incidents/88ecf25a0e6bd330ef9e7b49b7c5b92b-17f9f794800/rootCause",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-fb72db3b734b5f4cbf5d069b5b286fd4-2ff606b39e3e334b-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-26de8135211e7b7a262d382b53984f61-9076b5f31f3fc3ef-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "782c242e5ae34173bb5ba2bdb112b9a1",
+        "x-ms-client-request-id": "16c9f3ba91deb56be2439cf5e54a1de9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bbc16a35-2bd8-4f5e-ac86-0efd17a514b2",
-        "Content-Length": "148",
+        "apim-request-id": "c1746ffa-9828-4b72-8e12-c2c5c9115c78",
+        "Content-Length": "208",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:32 GMT",
+        "Date": "Tue, 19 Apr 2022 04:03:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "326",
-        "X-Request-ID": "bbc16a35-2bd8-4f5e-ac86-0efd17a514b2"
+        "x-envoy-upstream-service-time": "458",
+        "X-Request-ID": "c1746ffa-9828-4b72-8e12-c2c5c9115c78"
       },
       "ResponseBody": {
         "value": [
           {
             "rootCause": {
               "dimension": {
-                "region": "Tianjin",
-                "category": "Home \u0026 Garden"
+                "Dim1": "JPN",
+                "Dim2": "JP"
               }
             },
-            "path": [],
-            "score": 1.0,
-            "description": "No root cause insight."
+            "path": [
+              "Dim1",
+              "Dim2"
+            ],
+            "score": 0.250100702854159,
+            "description": "Increase on Dim1 = JPN | Dim2 = JP contributes the most to current incident."
           }
         ]
       }
@@ -141,6 +98,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "2083524157"
+    "RandomSeed": "136640571"
   }
 }

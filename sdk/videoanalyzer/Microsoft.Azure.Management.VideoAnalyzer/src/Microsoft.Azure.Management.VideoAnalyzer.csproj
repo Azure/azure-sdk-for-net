@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.VideoAnalyzer</PackageId>
     <Description>Provides developers with libraries for managing Azure Video Analyzer using the Azure Resource Manager API.</Description>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <AssemblyName>Microsoft.Azure.Management.VideoAnalyzer</AssemblyName>
     <PackageTags>management;media;VideoAnalyzer;Video Analyzer</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/videoanalyzer/Microsoft.Azure.Management.VideoAnalyzer/CHANGELOG.md
+        We're retiring the Azure Video Analyzer preview service, you're advised to transition your applications off of Video Analyzer by 01 December 2022. This SDK is no longer maintained and won’t work after the service is retired. To learn how to transition off, please refer to https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/transition-from-video-analyzer.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

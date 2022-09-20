@@ -8,6 +8,7 @@ namespace Azure.Core.Extensions.Tests
     internal class TestClient
     {
         public Uri Uri { get; }
+        public Guid Guid { get; }
         public string ConnectionString { get; }
         public CompositeObject Composite { get; }
         public TestClientOptions Options { get; }
@@ -31,6 +32,12 @@ namespace Azure.Core.Extensions.Tests
         public TestClient(Uri uri, TestClientOptions options)
         {
             Uri = uri;
+            Options = options;
+        }
+
+        public TestClient(Guid guid, TestClientOptions options)
+        {
+            Guid = guid;
             Options = options;
         }
 

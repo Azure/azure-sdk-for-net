@@ -359,7 +359,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             GuestConfigurationAssignmentReportsVMSS = new GuestConfigurationAssignmentReportsVMSSOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-01-25";
+            ApiVersion = "2022-01-25";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

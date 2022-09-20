@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlDatabaseCreateAndUpdateTest()
         {
             SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters1 = new SqlDatabaseCreateUpdateParameters(
-                new SqlDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()));
-            SqlDatabaseResource sqlDatabase1 = await WaitForCompletionAsync(
+                new CosmosDBSqlDatabaseResource(databaseName), new CosmosDBCreateUpdateConfig(sampleThroughput1, new AutoscaleSettings()));
+            CosmosDBSqlDatabaseResource sqlDatabase1 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlDatabaseAsync(
                     resourceGroupName, databaseAccountName, databaseName, sqlDatabaseCreateUpdateParameters1));
             Assert.NotNull(sqlDatabase1);
-            SqlDatabaseResource sqlDatabase2 = await CosmosDBManagementClient.SqlResources.GetSqlDatabaseAsync(
+            CosmosDBSqlDatabaseResource sqlDatabase2 = await CosmosDBManagementClient.SqlResources.GetSqlDatabaseAsync(
                 resourceGroupName, databaseAccountName, databaseName);
             Assert.NotNull(sqlDatabase2);
             VerifySqlDatabases(sqlDatabase1, sqlDatabase2);
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     type: default(string),
                     location: location,
                     tags: tags,
-                    resource: new SqlDatabaseResource(databaseName),
-                    options: new CreateUpdateOptions { Throughput = sampleThroughput2 });
-            SqlDatabaseResource sqlDatabase3 = await WaitForCompletionAsync(
+                    resource: new CosmosDBSqlDatabaseResource(databaseName),
+                    options: new CosmosDBCreateUpdateConfig { Throughput = sampleThroughput2 });
+            CosmosDBSqlDatabaseResource sqlDatabase3 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlDatabaseAsync(
                     resourceGroupName, databaseAccountName, databaseName, sqlDatabaseCreateUpdateParameters2));
             Assert.NotNull(sqlDatabase3);
-            SqlDatabaseResource sqlDatabase4 = await CosmosDBManagementClient.SqlResources.GetSqlDatabaseAsync(
+            CosmosDBSqlDatabaseResource sqlDatabase4 = await CosmosDBManagementClient.SqlResources.GetSqlDatabaseAsync(
                 resourceGroupName, databaseAccountName, databaseName);
             Assert.NotNull(sqlDatabase4);
             VerifySqlDatabases(sqlDatabase3, sqlDatabase4);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(2)]
         public async Task SqlDatabaseListTest()
         {
-            List<SqlDatabaseResource> sqlDatabases = await CosmosDBManagementClient.SqlResources.ListSqlDatabasesAsync(
+            List<CosmosDBSqlDatabaseResource> sqlDatabases = await CosmosDBManagementClient.SqlResources.ListSqlDatabasesAsync(
                 resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.NotNull(sqlDatabases);
             Assert.AreEqual(1, sqlDatabases.Count);
-            SqlDatabaseResource sqlDatabase = await CosmosDBManagementClient.SqlResources.GetSqlDatabaseAsync(
+            CosmosDBSqlDatabaseResource sqlDatabase = await CosmosDBManagementClient.SqlResources.GetSqlDatabaseAsync(
                 resourceGroupName, databaseAccountName, databaseName);
             Assert.NotNull(sqlDatabase);
             Assert.AreEqual(sqlDatabase.Name, sqlDatabases[0].Name);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlContainerCreateAndUpdateTest()
         {
             SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters(
-                resource: new SqlContainerResource(containerName)
+                resource: new CosmosDBSqlContainerResource(containerName)
                 {
                     PartitionKeyResource = new ContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null)
                     {
@@ -220,16 +220,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         }
                     )
                 },
-                options: new CreateUpdateOptions
+                options: new CosmosDBCreateUpdateConfig
                 {
                     Throughput = sampleThroughput1
                 }
             );
-            SqlContainerResource sqlContainer1 = await WaitForCompletionAsync(
+            CosmosDBSqlContainerResource sqlContainer1 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlContainerAsync(
                     resourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters));
             Assert.NotNull(sqlContainer1);
-            SqlContainerResource sqlContainer2 = await CosmosDBManagementClient.SqlResources.GetSqlContainerAsync(
+            CosmosDBSqlContainerResource sqlContainer2 = await CosmosDBManagementClient.SqlResources.GetSqlContainerAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName);
             Assert.NotNull(sqlContainer2);
             VerifySqlContainers(sqlContainer1, sqlContainer2);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(sampleThroughput1, throughputSettings1.Resource.Throughput);
 
             sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters(
-                resource: new SqlContainerResource(containerName)
+                resource: new CosmosDBSqlContainerResource(containerName)
                 {
                     PartitionKeyResource = new ContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null)
                     {
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         }
                     )
                 },
-                options: new CreateUpdateOptions
+                options: new CosmosDBCreateUpdateConfig
                 {
                     Throughput = sampleThroughput2
                 }
             );
-            SqlContainerResource sqlContainer3 = await WaitForCompletionAsync(
+            CosmosDBSqlContainerResource sqlContainer3 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlContainerAsync(
                     resourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters));
             Assert.NotNull(sqlContainer3);
-            SqlContainerResource sqlContainer4 = await CosmosDBManagementClient.SqlResources.GetSqlContainerAsync(
+            CosmosDBSqlContainerResource sqlContainer4 = await CosmosDBManagementClient.SqlResources.GetSqlContainerAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName);
             Assert.NotNull(sqlContainer4);
             VerifySqlContainers(sqlContainer3, sqlContainer4);
@@ -303,11 +303,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(3)]
         public async Task SqlContainerListTest()
         {
-            List<SqlContainerResource> sqlContainers = await CosmosDBManagementClient.SqlResources.ListSqlContainersAsync(
+            List<CosmosDBSqlContainerResource> sqlContainers = await CosmosDBManagementClient.SqlResources.ListSqlContainersAsync(
                 resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
             Assert.NotNull(sqlContainers);
             Assert.AreEqual(1, sqlContainers.Count);
-            SqlContainerResource sqlContainer = await CosmosDBManagementClient.SqlResources.GetSqlContainerAsync(
+            CosmosDBSqlContainerResource sqlContainer = await CosmosDBManagementClient.SqlResources.GetSqlContainerAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName);
             Assert.NotNull(sqlContainer);
             VerifySqlContainers(sqlContainer, sqlContainers[0]);
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                             "response.setBody('First Hello World');" +
                             "}"
                 },
-                new CreateUpdateOptions()
+                new CosmosDBCreateUpdateConfig()
             );
             ;
             SqlStoredProcedureResource sqlStoredProcedure1 = await WaitForCompletionAsync(
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                             "response.setBody('Second Hello World');" +
                             "}"
                 },
-                new CreateUpdateOptions()
+                new CosmosDBCreateUpdateConfig()
             );
             SqlStoredProcedureResource sqlStoredProcedure3 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlStoredProcedureAsync(
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                             "response.setBody('First Hello World');" +
                             "}"
                 },
-                options: new CreateUpdateOptions()
+                options: new CosmosDBCreateUpdateConfig()
             );
             SqlUserDefinedFunctionResource sqlUserDefinedFunction1 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlUserDefinedFunctionAsync(
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                             "response.setBody('Second Hello World');" +
                             "}"
                 },
-                options: new CreateUpdateOptions()
+                options: new CosmosDBCreateUpdateConfig()
             );
             SqlUserDefinedFunctionResource sqlUserDefinedFunction3 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlUserDefinedFunctionAsync(
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlTriggerCreateAndUpdateTest()
         {
             SqlTriggerCreateUpdateParameters sqlTriggerCreateUpdateParameters = new SqlTriggerCreateUpdateParameters(
-                resource: new SqlTriggerResource(triggerName)
+                resource: new CosmosDBSqlTriggerResource(triggerName)
                 {
                     TriggerOperation = "All",
                     TriggerType = "Pre",
@@ -475,19 +475,19 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                             "response.setBody('First Hello World');" +
                             "}"
                 },
-                options: new CreateUpdateOptions()
+                options: new CosmosDBCreateUpdateConfig()
             );
-            SqlTriggerResource sqlTrigger1 = await WaitForCompletionAsync(
+            CosmosDBSqlTriggerResource sqlTrigger1 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlTriggerAsync(
                     resourceGroupName, databaseAccountName, databaseName, containerName, triggerName, sqlTriggerCreateUpdateParameters));
             Assert.NotNull(sqlTrigger1);
-            SqlTriggerResource sqlTrigger2 = await CosmosDBManagementClient.SqlResources.GetSqlTriggerAsync(
+            CosmosDBSqlTriggerResource sqlTrigger2 = await CosmosDBManagementClient.SqlResources.GetSqlTriggerAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName, triggerName);
             Assert.NotNull(sqlTrigger2);
             VerifySqlTriggers(sqlTrigger1, sqlTrigger2);
 
             sqlTriggerCreateUpdateParameters = new SqlTriggerCreateUpdateParameters(
-                resource: new SqlTriggerResource(triggerName)
+                resource: new CosmosDBSqlTriggerResource(triggerName)
                 {
                     TriggerOperation = "All",
                     TriggerType = "Post",
@@ -496,13 +496,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                             "response.setBody('Second Hello World');" +
                             "}"
                 },
-                options: new CreateUpdateOptions()
+                options: new CosmosDBCreateUpdateConfig()
             );
-            SqlTriggerResource sqlTrigger3 = await WaitForCompletionAsync(
+            CosmosDBSqlTriggerResource sqlTrigger3 = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartCreateUpdateSqlTriggerAsync(
                     resourceGroupName, databaseAccountName, databaseName, containerName, triggerName, sqlTriggerCreateUpdateParameters));
             Assert.NotNull(sqlTrigger3);
-            SqlTriggerResource sqlTrigger4 = await CosmosDBManagementClient.SqlResources.GetSqlTriggerAsync(
+            CosmosDBSqlTriggerResource sqlTrigger4 = await CosmosDBManagementClient.SqlResources.GetSqlTriggerAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName, triggerName);
             Assert.NotNull(sqlTrigger4);
             VerifySqlTriggers(sqlTrigger3, sqlTrigger4);
@@ -511,11 +511,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(4)]
         public async Task SqlTriggerListTest()
         {
-            List<SqlTriggerResource> sqlTriggers = await CosmosDBManagementClient.SqlResources.ListSqlTriggersAsync(
+            List<CosmosDBSqlTriggerResource> sqlTriggers = await CosmosDBManagementClient.SqlResources.ListSqlTriggersAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName).ToEnumerableAsync();
             Assert.NotNull(sqlTriggers);
             Assert.AreEqual(1, sqlTriggers.Count);
-            SqlTriggerResource sqlTrigger = await CosmosDBManagementClient.SqlResources.GetSqlTriggerAsync(
+            CosmosDBSqlTriggerResource sqlTrigger = await CosmosDBManagementClient.SqlResources.GetSqlTriggerAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName, triggerName);
             VerifySqlTriggers(sqlTrigger, sqlTriggers[0]);
         }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartDeleteSqlTriggerAsync(resourceGroupName, databaseAccountName, databaseName, containerName, triggerName));
-            List<SqlTriggerResource> sqlTriggers = await CosmosDBManagementClient.SqlResources.ListSqlTriggersAsync(
+            List<CosmosDBSqlTriggerResource> sqlTriggers = await CosmosDBManagementClient.SqlResources.ListSqlTriggersAsync(
                 resourceGroupName, databaseAccountName, databaseName, containerName).ToEnumerableAsync();
             Assert.NotNull(sqlTriggers);
             Assert.AreEqual(0, sqlTriggers.Count);
@@ -548,14 +548,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartDeleteSqlContainerAsync(resourceGroupName, databaseAccountName, databaseName, containerName));
-            List<SqlContainerResource> sqlContainers = await CosmosDBManagementClient.SqlResources.ListSqlContainersAsync(
+            List<CosmosDBSqlContainerResource> sqlContainers = await CosmosDBManagementClient.SqlResources.ListSqlContainersAsync(
                 resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
             Assert.NotNull(sqlContainers);
             Assert.AreEqual(0, sqlContainers.Count);
 
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.SqlResources.StartDeleteSqlDatabaseAsync(resourceGroupName, databaseAccountName, databaseName));
-            List<SqlDatabaseResource> sqlDatabases = await CosmosDBManagementClient.SqlResources.ListSqlDatabasesAsync(
+            List<CosmosDBSqlDatabaseResource> sqlDatabases = await CosmosDBManagementClient.SqlResources.ListSqlDatabasesAsync(
                 resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.NotNull(sqlDatabases);
             Assert.AreEqual(0, sqlDatabases.Count);
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Location = location,
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
             };
-            DatabaseAccountResource databaseAccount = await WaitForCompletionAsync(
+            CosmosDBAccountResource databaseAccount = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
             Assert.AreEqual(databaseAccount.Name, databaseAccountName);
             var isDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(200, isDatabaseNameExists.GetRawResponse().Status);
         }
 
-        private void VerifySqlContainers(SqlContainerResource expectedValue, SqlContainerResource actualValue)
+        private void VerifySqlContainers(CosmosDBSqlContainerResource expectedValue, CosmosDBSqlContainerResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
@@ -599,14 +599,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Resource.DefaultTtl, actualValue.Resource.DefaultTtl);
         }
 
-        private void VerifySqlDatabases(SqlDatabaseResource expectedValue, SqlDatabaseResource actualValue)
+        private void VerifySqlDatabases(CosmosDBSqlDatabaseResource expectedValue, CosmosDBSqlDatabaseResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
             Assert.AreEqual(expectedValue.Resource.Colls, actualValue.Resource.Colls);
             Assert.AreEqual(expectedValue.Resource.Users, actualValue.Resource.Users);
         }
@@ -617,19 +617,19 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
             Assert.AreEqual(expectedValue.Resource.Body, actualValue.Resource.Body);
         }
 
-        private void VerifySqlTriggers(SqlTriggerResource expectedValue, SqlTriggerResource actualValue)
+        private void VerifySqlTriggers(CosmosDBSqlTriggerResource expectedValue, CosmosDBSqlTriggerResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
             Assert.AreEqual(expectedValue.Resource.Body, actualValue.Resource.Body);
             Assert.AreEqual(expectedValue.Resource.TriggerType, actualValue.Resource.TriggerType);
             Assert.AreEqual(expectedValue.Resource.TriggerOperation, actualValue.Resource.TriggerOperation);
@@ -641,8 +641,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
             Assert.AreEqual(expectedValue.Resource.Body, actualValue.Resource.Body);
         }
     }

@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,8 +17,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// The configuration settings of the endpoints used for the custom Open ID
     /// Connect provider.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class OpenIdConnectConfig : ProxyOnlyResource
+    public partial class OpenIdConnectConfig
     {
         /// <summary>
         /// Initializes a new instance of the OpenIdConnectConfig class.
@@ -33,10 +30,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the OpenIdConnectConfig class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="authorizationEndpoint">The endpoint to be used to make
         /// an authorization request.</param>
         /// <param name="tokenEndpoint">The endpoint to be used to request a
@@ -46,8 +39,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// necessary to validate the token.</param>
         /// <param name="wellKnownOpenIdConfiguration">The endpoint that
         /// contains all the configuration endpoints for the provider.</param>
-        public OpenIdConnectConfig(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string authorizationEndpoint = default(string), string tokenEndpoint = default(string), string issuer = default(string), string certificationUri = default(string), string wellKnownOpenIdConfiguration = default(string))
-            : base(id, name, kind, type)
+        public OpenIdConnectConfig(string authorizationEndpoint = default(string), string tokenEndpoint = default(string), string issuer = default(string), string certificationUri = default(string), string wellKnownOpenIdConfiguration = default(string))
         {
             AuthorizationEndpoint = authorizationEndpoint;
             TokenEndpoint = tokenEndpoint;
@@ -66,33 +58,33 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets the endpoint to be used to make an authorization
         /// request.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.authorizationEndpoint")]
+        [JsonProperty(PropertyName = "authorizationEndpoint")]
         public string AuthorizationEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint to be used to request a token.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tokenEndpoint")]
+        [JsonProperty(PropertyName = "tokenEndpoint")]
         public string TokenEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint that issues the token.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.issuer")]
+        [JsonProperty(PropertyName = "issuer")]
         public string Issuer { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint that provides the keys necessary to
         /// validate the token.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.certificationUri")]
+        [JsonProperty(PropertyName = "certificationUri")]
         public string CertificationUri { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint that contains all the configuration
         /// endpoints for the provider.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.wellKnownOpenIdConfiguration")]
+        [JsonProperty(PropertyName = "wellKnownOpenIdConfiguration")]
         public string WellKnownOpenIdConfiguration { get; set; }
 
     }

@@ -31,15 +31,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public ServiceTransportType ServiceTransportType { get; set; } = ServiceTransportType.Transient;
 
         /// <summary>
-        /// Customize the JSON serialization for sending messages.
+        /// Gets or sets the JSON object serializer.
         /// </summary>
-        /// <param name="objectSerializer">The JSON object serializer to serialize parameters in messages.</param>
-        public void UseJsonObjectSerializer(ObjectSerializer objectSerializer)
-        {
-            JsonObjectSerializer = objectSerializer;
-        }
-
-        internal ObjectSerializer JsonObjectSerializer { get; set; }
+        public ObjectSerializer JsonObjectSerializer { get; set; }
 
         /// <summary>
         /// Returns a string representation of this <see cref="SignalROptions"/> instance.

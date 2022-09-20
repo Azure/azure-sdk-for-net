@@ -31,18 +31,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
 
             Content = content;
-            BoundingBoxPrivate = new ChangeTrackingList<float>();
+            Polygon = new ChangeTrackingList<float>();
             Spans = spans.ToList();
         }
 
         /// <summary> Initializes a new instance of DocumentLine. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
-        /// <param name="boundingBoxPrivate"> Bounding box of the line. </param>
+        /// <param name="polygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
-        internal DocumentLine(string content, IReadOnlyList<float> boundingBoxPrivate, IReadOnlyList<DocumentSpan> spans)
+        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans)
         {
             Content = content;
-            BoundingBoxPrivate = boundingBoxPrivate;
+            Polygon = polygon;
             Spans = spans;
         }
 

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Returns link related to the product. </summary>
@@ -17,16 +19,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Initializes a new instance of ProductLink. </summary>
         /// <param name="linkType"> Type of link. </param>
-        /// <param name="linkUrl"> Url of the link. </param>
-        internal ProductLink(LinkType? linkType, string linkUrl)
+        /// <param name="linkUri"> Url of the link. </param>
+        internal ProductLink(LinkType? linkType, Uri linkUri)
         {
             LinkType = linkType;
-            LinkUrl = linkUrl;
+            LinkUri = linkUri;
         }
 
         /// <summary> Type of link. </summary>
         public LinkType? LinkType { get; }
         /// <summary> Url of the link. </summary>
-        public string LinkUrl { get; }
+        public Uri LinkUri { get; }
     }
 }

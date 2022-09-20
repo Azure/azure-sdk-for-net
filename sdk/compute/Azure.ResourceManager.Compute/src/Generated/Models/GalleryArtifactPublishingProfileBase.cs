@@ -18,25 +18,28 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryArtifactPublishingProfileBase()
         {
             TargetRegions = new ChangeTrackingList<TargetRegion>();
+            TargetExtendedLocations = new ChangeTrackingList<GalleryTargetExtendedLocation>();
         }
 
         /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
         /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version. </param>
-        /// <param name="publishedDate"> The timestamp for when the gallery image version is published. </param>
-        /// <param name="endOfLifeDate"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="publishedOn"> The timestamp for when the gallery image version is published. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
-        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate, StorageAccountType? storageAccountType, ReplicationMode? replicationMode)
+        /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
+        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations)
         {
             TargetRegions = targetRegions;
             ReplicaCount = replicaCount;
             ExcludeFromLatest = excludeFromLatest;
-            PublishedDate = publishedDate;
-            EndOfLifeDate = endOfLifeDate;
+            PublishedOn = publishedOn;
+            EndOfLifeOn = endOfLifeOn;
             StorageAccountType = storageAccountType;
             ReplicationMode = replicationMode;
+            TargetExtendedLocations = targetExtendedLocations;
         }
 
         /// <summary> The target regions where the Image Version is going to be replicated to. This property is updatable. </summary>
@@ -46,12 +49,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version. </summary>
         public bool? ExcludeFromLatest { get; set; }
         /// <summary> The timestamp for when the gallery image version is published. </summary>
-        public DateTimeOffset? PublishedDate { get; }
+        public DateTimeOffset? PublishedOn { get; }
         /// <summary> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeDate { get; set; }
+        public DateTimeOffset? EndOfLifeOn { get; set; }
         /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public ImageStorageAccountType? StorageAccountType { get; set; }
         /// <summary> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </summary>
-        public ReplicationMode? ReplicationMode { get; set; }
+        public GalleryReplicationMode? ReplicationMode { get; set; }
+        /// <summary> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </summary>
+        public IList<GalleryTargetExtendedLocation> TargetExtendedLocations { get; }
     }
 }

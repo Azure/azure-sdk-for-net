@@ -40,10 +40,12 @@ namespace Azure.ResourceManager.Network.Tests
             return resourceGroup.GetApplicationSecurityGroups();
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task ApplicationSecurityGroupApiTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ApplicationSecurityGroupApiTest(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             var collection = await GetCollection();
             var name = Recording.GenerateAssetName("test_application_security_group_");
 
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.Network.Tests
         private void ValidateCommon(ApplicationSecurityGroupData data, string name)
         {
             Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(TestEnvironment.Location, data.Location);
+            Assert.AreEqual(TestEnvironment.Location, data.Location.ToString());
         }
     }
 }

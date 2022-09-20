@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of DisallowedConfiguration. </summary>
         /// <param name="vmDiskType"> VM disk types which are disallowed. </param>
-        internal DisallowedConfiguration(VmDiskTypes? vmDiskType)
+        internal DisallowedConfiguration(VirtualMachineDiskType? vmDiskType)
         {
             VmDiskType = vmDiskType;
         }
 
         /// <summary> VM disk types which are disallowed. </summary>
-        public VmDiskTypes? VmDiskType { get; set; }
+        public VirtualMachineDiskType? VmDiskType { get; set; }
     }
 }

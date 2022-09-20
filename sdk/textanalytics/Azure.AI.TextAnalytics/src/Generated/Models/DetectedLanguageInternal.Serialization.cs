@@ -10,8 +10,34 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial struct DetectedLanguageInternal
+    internal partial struct DetectedLanguageInternal : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Name != null)
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            else
+            {
+                writer.WriteNull("name");
+            }
+            if (Iso6391Name != null)
+            {
+                writer.WritePropertyName("iso6391Name");
+                writer.WriteStringValue(Iso6391Name);
+            }
+            else
+            {
+                writer.WriteNull("iso6391Name");
+            }
+            writer.WritePropertyName("confidenceScore");
+            writer.WriteNumberValue(ConfidenceScore);
+            writer.WriteEndObject();
+        }
+
         internal static DetectedLanguageInternal DeserializeDetectedLanguageInternal(JsonElement element)
         {
             string name = default;

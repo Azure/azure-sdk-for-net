@@ -86,7 +86,7 @@ namespace SignalRServiceExtension.Tests
                         o.ServiceEndpoints.Add(endpoint);
                     }
                     o.ServiceTransportType = ServiceTransportType.Persistent;
-                    o.UseJsonObjectSerializer(new NewtonsoftJsonObjectSerializer());
+                    o.JsonObjectSerializer = new NewtonsoftJsonObjectSerializer();
                 })).Build();
             var hubContext = await host.Services.GetRequiredService<IServiceManagerStore>().GetOrAddByConnectionStringKey("key").GetAsync("hubName") as ServiceHubContext;
             var resultOptions = (hubContext as ServiceHubContextImpl).ServiceProvider.GetRequiredService<IOptions<ServiceManagerOptions>>().Value;

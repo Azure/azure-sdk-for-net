@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckEventHubNameAvailabilityAsync(new CheckNameAvailabilityOptions(namespaceName));
+                EventHubsNameAvailabilityResult res = await DefaultSubscription.CheckEventHubsNamespaceNameAvailabilityAsync(new EventHubsNameAvailabilityContent(namespaceName));
                 if (res.NameAvailable==true)
                 {
                     return namespaceName;
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             return namespaceName;
         }
 
-        public static void VerifyNamespaceProperties(EventHubNamespaceResource eventHubNamespace, bool useDefaults)
+        public static void VerifyNamespaceProperties(EventHubsNamespaceResource eventHubNamespace, bool useDefaults)
         {
             Assert.NotNull(eventHubNamespace);
             Assert.NotNull(eventHubNamespace.Id);
             Assert.NotNull(eventHubNamespace.Id.Name);
             Assert.NotNull(eventHubNamespace.Data);
             Assert.NotNull(eventHubNamespace.Data.Location);
-            Assert.NotNull(eventHubNamespace.Data.CreatedAt);
+            Assert.NotNull(eventHubNamespace.Data.CreatedOn);
             Assert.NotNull(eventHubNamespace.Data.Sku);
             if (useDefaults)
             {

@@ -67,5 +67,79 @@ namespace Microsoft.Azure.Management.Compute
                 }
             }
 
+            /// <summary>
+            /// List community gallery images inside a gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='publicGalleryName'>
+            /// The public name of the community gallery.
+            /// </param>
+            public static IPage<CommunityGalleryImage> List(this ICommunityGalleryImagesOperations operations, string location, string publicGalleryName)
+            {
+                return operations.ListAsync(location, publicGalleryName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List community gallery images inside a gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='publicGalleryName'>
+            /// The public name of the community gallery.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommunityGalleryImage>> ListAsync(this ICommunityGalleryImagesOperations operations, string location, string publicGalleryName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, publicGalleryName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List community gallery images inside a gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CommunityGalleryImage> ListNext(this ICommunityGalleryImagesOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List community gallery images inside a gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommunityGalleryImage>> ListNextAsync(this ICommunityGalleryImagesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

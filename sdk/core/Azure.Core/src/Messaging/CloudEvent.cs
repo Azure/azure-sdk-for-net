@@ -199,7 +199,7 @@ namespace Azure.Messaging
         {
             Argument.AssertNotNull(json, nameof(json));
 
-            JsonDocument requestDocument = JsonDocument.Parse(json);
+            using JsonDocument requestDocument = JsonDocument.Parse(json);
             CloudEvent? cloudEvent = null;
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static FunctionSecrets DeserializeFunctionSecrets(JsonElement element)
         {
             Optional<string> key = default;
-            Optional<string> triggerUrl = default;
+            Optional<Uri> triggerUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -25,7 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("trigger_url"))
                 {
-                    triggerUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        triggerUrl = null;
+                        continue;
+                    }
+                    triggerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

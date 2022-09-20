@@ -11,20 +11,20 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class PrivateLinkResourceTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
-        private DatabaseAccountResource _databaseAccount;
+        private CosmosDBAccountResource _databaseAccount;
 
         public PrivateLinkResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
-        protected PrivateLinkResourceCollection PrivateLinkResourceCollection => _databaseAccount.GetPrivateLinkResources();
+        protected CosmosDBPrivateLinkResourceCollection CosmosDBPrivateLinkResourceCollection => _databaseAccount.GetCosmosDBPrivateLinkResources();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB)).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -33,29 +33,29 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
+                ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _databaseAccount = await ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).GetAsync();
+            _databaseAccount = await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).GetAsync();
         }
 
         [Test]
         [RecordedTest]
         public async Task PrivateLinkResourceListAndGet()
         {
-            var privateLinkResources = await PrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
+            var privateLinkResources = await CosmosDBPrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(privateLinkResources);
 
-            var privateLinkResource = await PrivateLinkResourceCollection.GetAsync(privateLinkResources[0].Data.Name);
+            var privateLinkResource = await CosmosDBPrivateLinkResourceCollection.GetAsync(privateLinkResources[0].Data.Name);
 
             VerifyPrivateLinkResources(privateLinkResources[0], privateLinkResource);
         }
 
-        private void VerifyPrivateLinkResources(PrivateLinkResource expectedValue, PrivateLinkResource actualValue)
+        private void VerifyPrivateLinkResources(CosmosDBPrivateLinkResource expectedValue, CosmosDBPrivateLinkResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);

@@ -1,6 +1,6 @@
 # Release History
 
-## 7.8.0-beta.2 (Unreleased)
+## 7.11.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,112 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.11.0-beta.1 (2022-09-06)
+
+### Features Added
+
+- Added `DeadletterMessageAsync` overload that allows passing the properties dictionary in addition to the deadletter error reason and description.
+- Added `PeekMessagesAsync` method to `ProcessorReceiveActions`.
+
+### Breaking Changes
+
+- Improved performance of sending messages by using the `ServiceBusMessageBatch` type, by caching the underlying AMQP message as opposed to recalculating it when sending. Because of this change, any changes to a `ServiceBusMessage` after it has already been added to the batch will no longer be reflected in the batch and what is ultimately sent to the service. To avoid any issues from this change, ensure that yo are not modifying the `ServiceBusMessage` after adding it to a batch.
+
+### Bugs Fixed
+
+- Fixed performance issues in the `ServiceBusSessionProcessor` that could lead to thread starvation when using a high number of concurrent sessions.
+- Fixed diagnostic tracing of the `ServiceBusReceiver.Receive` operation to correctly include links to the `Message` operation for the received messages.
+- Fixed issue where the TryTimeout was not respected for times over 1 minute and 5 seconds when attempting to accept the next available session.
+
+### Other Changes
+
+- Improved performance of sending messages by using the `ServiceBusMessageBatch` type, by caching the underlying AMQP message as opposed to recalculating it when sending.
+
+## 7.10.0 (2022-08-11)
+
+### Features Added
+
+- Added the ability to set the a custom Identifier on the various client options types.
+- The processor Identifier will now be included in the underlying receiver logs when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
+- Added the ability to set a custom endpoint that will be used when connecting to the service, via the `ServiceBusClientOptions.CustomEndpointAddress` property.
+- Added the `ReleaseSession` and `RenewSessionLockAsync` methods to the `ProcessSessionEventArgs` class to allow the user to manage the session in the `SessionInitializingAsync` and the `SessionClosingAsync` event handlers.
+
+### Bugs Fixed
+
+- Fixed issue where the AMQP footer would not be populated on received messages.
+- Fixed issue where the client timeout was not respected when establishing the AMQP connection and the AMQP session.
+- Fixed issue where closing the rule manager link could result in the AMQP session being closed even when `EnableCrossEntityTransactions` is set to `true` in the `ServiceBusClientOptions`.
+
+### Other Changes
+
+- Reduced memory allocations when converting messages into the underlying AMQP primitives. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 7.9.0 (2022-07-11)
+
+### Features Added
+
+- Stable release of `ServiceBusRuleManager`.
+- `EntityPath` and `FullyQualifiedNamespace` are now included on the various processor event args.
+
+## 7.9.0-beta.1 (2022-06-06)
+
+### Features Added
+
+- Added `ServiceBusRuleManager` for managing rules.
+
+### Bugs Fixed
+
+- Updated behavior of `ServiceBusSessionReceiver.IsClosed` to return `true` if the underlying link was closed.
+
+### Other Changes
+
+- Include lock token in additional event source logs.
+
+## 7.8.1 (2022-05-16)
+
+### Bugs Fixed
+
+- Fixed issue that could result in the message lock renewal not being cancelled if the user message handler threw an exception.
+- Abandon messages that are received from the `ProcessorReceiveActions` in the event of the user message handler throwing an exception.
+
+## 7.8.0 (2022-05-09)
+
+### Features Added
+
+- Added the `GetReceiveActions` method to `ProcessMessageEventArgs` and `ProcessSessionMessageEventArgs` to allow for receiving additional messages from the processor callback.
+
+### Breaking Changes
+
+- `ServiceBusTransportMetrics` and `ServiceBusRuleManager` have been removed from the prior beta versions. These will be evaluated for inclusion in a future GA release.
+
+### Bugs Fixed
+
+- Prevent exception when stopping processor that can occur if custom registrations were added to the `CancellationToken` that is exposed via the event args.
+- Don't close entire AMQP session when closing individual AMQP links when `EnableCrossEntityTransactions` is set to `true`, since with this configuration, all links will share the same session.
+
+### Other Changes
+
+- Retries related to accepting sessions when using the `ServiceBusSessionProcessor` are now logged as `Verbose` rather than `Warning`.
+
+## 7.8.0-beta.2 (2022-04-07)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Added `ServiceBusTransportMetrics` that can be used to get transport metric information. 
+
+### Bugs Fixed
+
+- Relaxed `ServiceBusMessage` validation to allow the `SessionId` property to be changed after the `PartitionKey` property is already set.
+
+### Other Changes
+
+- Removed allocations and boxing from `EventSource` logging. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 7.8.0-beta.1 (2022-03-10)
 
@@ -176,7 +282,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
-- Mikael Kolkinn _([GitHub](https://github.com/mikaelkolkinn))_
+- Mikael Kolkinn
 
 ### Added
 - Updated dependency on Azure.Core.Amqp to support Value/Sequence AMQP message bodies.
@@ -187,7 +293,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Fixed
 - Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
-- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of _[mikaelkolkinn](https://github.com/mikaelkolkinn))_
+- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of Mikael Kolkinn
 
 ## 7.1.1 (2021-03-10)
 

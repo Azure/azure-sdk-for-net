@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.IsNotNull(resourcePool1);
             Assert.AreEqual(resourcePool1.Id.Name, resourcePoolName);
             // check for exists resource pool
-            resourcePool1 = await _resourcePoolCollection.GetIfExistsAsync(resourcePoolName);
-            Assert.AreEqual(resourcePool1.Id.Name, resourcePoolName);
+            bool exists = await _resourcePoolCollection.ExistsAsync(resourcePoolName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]

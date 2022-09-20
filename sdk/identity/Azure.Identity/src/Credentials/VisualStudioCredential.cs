@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -26,10 +27,14 @@ namespace Azure.Identity
         private const string TenantArgumentName = "--tenant";
 
         private readonly CredentialPipeline _pipeline;
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
         private readonly bool _logPII;
+        private readonly bool _logAccountDetails;
+
+        internal TimeSpan VisualStudioProcessTimeout { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -40,17 +45,20 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default, options)
         {
         }
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
             _logPII = options?.IsLoggingPIIEnabled ?? false;
-            _tenantId = tenantId;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
+            TenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            VisualStudioProcessTimeout = options?.VisualStudioProcessTimeout ?? TimeSpan.FromSeconds(30);
         }
 
         /// <inheritdoc />
@@ -67,7 +75,7 @@ namespace Azure.Identity
 
             try
             {
-                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                if (string.Equals(TenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
                     throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
                 }
@@ -84,6 +92,13 @@ namespace Azure.Identity
                 }
 
                 var accessToken = await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
+
+                if (_logAccountDetails)
+                {
+                    var accountDetails = TokenHelper.ParseAccountInfoFromToken(accessToken.Token);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
+                }
+
                 return scope.Succeeded(accessToken);
             }
             catch (Exception e)
@@ -110,7 +125,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), _logPII, cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), VisualStudioProcessTimeout, _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
@@ -122,7 +137,7 @@ namespace Azure.Identity
                 }
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in 30 seconds."));
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in {VisualStudioProcessTimeout.TotalSeconds} seconds."));
                 }
                 catch (JsonException exception)
                 {
@@ -134,7 +149,8 @@ namespace Azure.Identity
                 }
             }
 
-            switch (exceptions.Count) {
+            switch (exceptions.Count)
+            {
                 case 0:
                     throw new CredentialUnavailableException("No installed instance of Visual Studio was able to get credentials.");
                 case 1:
@@ -163,7 +179,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);

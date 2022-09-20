@@ -126,6 +126,8 @@ namespace Azure.Graph.Rbac
     public partial class ServicePrincipalsOperations
     {
         protected ServicePrincipalsOperations() { }
+        public virtual Azure.Response AddOwner(string objectId, Azure.Graph.Rbac.Models.AddOwnerParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddOwnerAsync(string objectId, Azure.Graph.Rbac.Models.AddOwnerParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Graph.Rbac.Models.ServicePrincipal> Create(Azure.Graph.Rbac.Models.ServicePrincipalCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.ServicePrincipal>> CreateAsync(Azure.Graph.Rbac.Models.ServicePrincipalCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -133,6 +135,10 @@ namespace Azure.Graph.Rbac
         public virtual Azure.Response<Azure.Graph.Rbac.Models.ServicePrincipal> Get(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.ServicePrincipal>> GetAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.ServicePrincipal> List(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Graph.Rbac.Models.AppRoleAssignment> ListAppRoleAssignedTo(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.AppRoleAssignment> ListAppRoleAssignedToAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Graph.Rbac.Models.AppRoleAssignment> ListAppRoleAssignments(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.AppRoleAssignment> ListAppRoleAssignmentsAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.ServicePrincipal> ListAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.KeyCredential> ListKeyCredentials(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.KeyCredential> ListKeyCredentialsAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -142,6 +148,8 @@ namespace Azure.Graph.Rbac
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.DirectoryObject> ListOwnersAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.PasswordCredential> ListPasswordCredentials(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.PasswordCredential> ListPasswordCredentialsAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RemoveOwner(string objectId, string ownerObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveOwnerAsync(string objectId, string ownerObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Update(string objectId, Azure.Graph.Rbac.Models.ServicePrincipalUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string objectId, Azure.Graph.Rbac.Models.ServicePrincipalUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateKeyCredentials(string objectId, Azure.Graph.Rbac.Models.KeyCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -170,8 +178,8 @@ namespace Azure.Graph.Rbac
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.User>> GetAsync(string upnOrObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> GetMemberGroups(string objectId, Azure.Graph.Rbac.Models.UserGetMemberGroupsParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetMemberGroupsAsync(string objectId, Azure.Graph.Rbac.Models.UserGetMemberGroupsParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Graph.Rbac.Models.User> List(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.User> ListAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Graph.Rbac.Models.User> List(string filter = null, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.User> ListAsync(string filter = null, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.User> ListNext(string nextLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.User> ListNextAsync(string nextLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Update(string upnOrObjectId, Azure.Graph.Rbac.Models.UserUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -300,6 +308,16 @@ namespace Azure.Graph.Rbac.Models
         public string Id { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+    }
+    public partial class AppRoleAssignment : Azure.Graph.Rbac.Models.DirectoryObject
+    {
+        internal AppRoleAssignment() { }
+        public string Id { get { throw null; } }
+        public string PrincipalDisplayName { get { throw null; } }
+        public string PrincipalId { get { throw null; } }
+        public string PrincipalType { get { throw null; } }
+        public string ResourceDisplayName { get { throw null; } }
+        public string ResourceId { get { throw null; } }
     }
     public partial class CheckGroupMembershipParameters : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
@@ -844,6 +862,7 @@ namespace Azure.Graph.Rbac.Models
         public UserUpdateParameters() { }
         public bool? AccountEnabled { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public string Mail { get { throw null; } set { } }
         public string MailNickname { get { throw null; } set { } }
         public Azure.Graph.Rbac.Models.PasswordProfile PasswordProfile { get { throw null; } set { } }
         public string UserPrincipalName { get { throw null; } set { } }

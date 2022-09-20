@@ -13,20 +13,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of OpenIdConnectClientCredential. </summary>
         public OpenIdConnectClientCredential()
         {
-            Method = "ClientSecretPost";
         }
 
         /// <summary> Initializes a new instance of OpenIdConnectClientCredential. </summary>
         /// <param name="method"> The method that should be used to authenticate the user. </param>
         /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
-        internal OpenIdConnectClientCredential(string method, string clientSecretSettingName)
+        internal OpenIdConnectClientCredential(ClientCredentialMethod? method, string clientSecretSettingName)
         {
             Method = method;
             ClientSecretSettingName = clientSecretSettingName;
         }
 
         /// <summary> The method that should be used to authenticate the user. </summary>
-        public string Method { get; set; }
+        public ClientCredentialMethod? Method { get; set; }
         /// <summary> The app setting that contains the client secret for the custom Open ID Connect provider. </summary>
         public string ClientSecretSettingName { get; set; }
     }

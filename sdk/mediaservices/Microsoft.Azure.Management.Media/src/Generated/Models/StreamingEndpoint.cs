@@ -73,7 +73,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// was last modified.</param>
         /// <param name="systemData">The system metadata relating to this
         /// resource.</param>
-        public StreamingEndpoint(string location, int scaleUnits, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), SystemData systemData = default(SystemData))
+        /// <param name="sku">The streaming endpoint sku.</param>
+        public StreamingEndpoint(string location, int scaleUnits, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), SystemData systemData = default(SystemData), ArmStreamingEndpointCurrentSku sku = default(ArmStreamingEndpointCurrentSku))
             : base(location, id, name, type, tags)
         {
             Description = description;
@@ -93,6 +94,7 @@ namespace Microsoft.Azure.Management.Media.Models
             Created = created;
             LastModified = lastModified;
             SystemData = systemData;
+            Sku = sku;
             CustomInit();
         }
 
@@ -207,6 +209,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the streaming endpoint sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public ArmStreamingEndpointCurrentSku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.

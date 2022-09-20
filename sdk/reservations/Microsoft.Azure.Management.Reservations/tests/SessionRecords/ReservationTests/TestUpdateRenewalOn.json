@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/0a47417c-cd30-4f67-add6-d631583e09f3/reservations?api-version=2019-04-01-preview",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/0a47417c-cd30-4f67-add6-d631583e09f3/reservations?api-version=2022-03-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMGE0NzQxN2MtY2QzMC00ZjY3LWFkZDYtZDYzMTU4M2UwOWYzL3Jlc2VydmF0aW9ucz9hcGktdmVyc2lvbj0yMDE5LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -67,7 +67,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/0a47417c-cd30-4f67-add6-d631583e09f3/reservations/598d44b3-e543-4888-bddc-4a98e6cd7686?api-version=2019-04-01-preview",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/0a47417c-cd30-4f67-add6-d631583e09f3/reservations/598d44b3-e543-4888-bddc-4a98e6cd7686?api-version=2022-03-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMGE0NzQxN2MtY2QzMC00ZjY3LWFkZDYtZDYzMTU4M2UwOWYzL3Jlc2VydmF0aW9ucy81OThkNDRiMy1lNTQzLTQ4ODgtYmRkYy00YTk4ZTZjZDc2ODY/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"renew\": true\r\n  }\r\n}",

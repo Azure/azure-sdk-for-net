@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class CassandraKeyspaceTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _keyspaceAccountIdentifier;
-        private DatabaseAccountResource _keyspaceAccount;
+        private CosmosDBAccountResource _keyspaceAccount;
 
         private string _keyspaceName;
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _keyspaceAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB, new DatabaseAccountCapability("EnableCassandra"))).Id;
+            _keyspaceAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, new CosmosDBAccountCapability("EnableCassandra"))).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -37,22 +37,24 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_keyspaceAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccountResource(_keyspaceAccountIdentifier).Delete(WaitUntil.Completed);
+                ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _keyspaceAccount = await ArmClient.GetDatabaseAccountResource(_keyspaceAccountIdentifier).GetAsync();
+            _keyspaceAccount = await ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).GetAsync();
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            CassandraKeyspaceResource keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
-            if (keyspace != null)
+            if (await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName))
             {
+                var id = CassandraKeyspaceCollection.Id;
+                id = CassandraKeyspaceResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _keyspaceName);
+                CassandraKeyspaceResource keyspace = this.ArmClient.GetCassandraKeyspaceResource(id);
                 await keyspace.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraKeyspaceCreateAndUpdate()
         {
             var keyspace = await CreateCassandraKeyspace(null);
-            Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.Id);
+            Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.KeyspaceName);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, keyspace.Data.Options.Throughput);
 
@@ -70,21 +72,21 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettingsData throughtput = await keyspace.GetMongoDBCollectionThroughputAsync();
+            //ThroughputSettingData throughtput = await keyspace.GetMongoDBCollectionThroughputAsync();
             CassandraKeyspaceResource keyspace2 = await CassandraKeyspaceCollection.GetAsync(_keyspaceName);
-            Assert.AreEqual(_keyspaceName, keyspace2.Data.Resource.Id);
+            Assert.AreEqual(_keyspaceName, keyspace2.Data.Resource.KeyspaceName);
             //Assert.AreEqual(TestThroughput1, keyspace2.Data.Options.Throughput);
 
             VerifyCassandraKeyspaces(keyspace, keyspace2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            CassandraKeyspaceCreateUpdateData updateOptions = new CassandraKeyspaceCreateUpdateData(AzureLocation.WestUS, keyspace.Data.Resource)
+            var updateOptions = new CassandraKeyspaceCreateOrUpdateContent(AzureLocation.WestUS, keyspace.Data.Resource)
             {
-                Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
+                Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }
             };
 
             keyspace = (await CassandraKeyspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _keyspaceName, updateOptions)).Value;
-            Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.Id);
+            Assert.AreEqual(_keyspaceName, keyspace.Data.Resource.KeyspaceName);
             keyspace2 = await CassandraKeyspaceCollection.GetAsync(_keyspaceName);
             VerifyCassandraKeyspaces(keyspace, keyspace2);
         }
@@ -107,12 +109,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraKeyspaceThroughput()
         {
             var keyspace = await CreateCassandraKeyspace(null);
-            DatabaseAccountCassandraKeyspaceThroughputSettingResource throughput = await keyspace.GetDatabaseAccountCassandraKeyspaceThroughputSetting().GetAsync();
+            CassandraKeyspaceThroughputSettingResource throughput = await keyspace.GetCassandraKeyspaceThroughputSetting().GetAsync();
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
+            CassandraKeyspaceThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -124,10 +126,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var keyspace = await CreateCassandraKeyspace(null);
 
-            DatabaseAccountCassandraKeyspaceThroughputSettingResource throughput = await keyspace.GetDatabaseAccountCassandraKeyspaceThroughputSetting().GetAsync();
+            CassandraKeyspaceThroughputSettingResource throughput = await keyspace.GetCassandraKeyspaceThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraKeyspaceToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateCassandraKeyspaceToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -141,10 +143,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 MaxThroughput = DefaultMaxThroughput,
             });
 
-            DatabaseAccountCassandraKeyspaceThroughputSettingResource throughput = await keyspace.GetDatabaseAccountCassandraKeyspaceThroughputSetting().GetAsync();
+            CassandraKeyspaceThroughputSettingResource throughput = await keyspace.GetCassandraKeyspaceThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraKeyspaceToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateCassandraKeyspaceToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -155,8 +157,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var keyspace = await CreateCassandraKeyspace(null);
             await keyspace.DeleteAsync(WaitUntil.Completed);
 
-            keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
-            Assert.Null(keyspace);
+            bool exists = await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(AutoscaleSettings autoscale)
@@ -167,8 +169,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(string name, AutoscaleSettings autoscale, CassandraKeyspaceCollection collection)
         {
-            CassandraKeyspaceCreateUpdateData cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateUpdateData(AzureLocation.WestUS,
-                new Models.CassandraKeyspaceResource(name))
+            var cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateOrUpdateContent(AzureLocation.WestUS,
+                new Models.CassandraKeyspaceResourceInfo(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
@@ -186,10 +188,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
 
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.KeyspaceName, actualValue.Data.Resource.KeyspaceName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
         }
     }
 }

@@ -57,10 +57,12 @@ namespace Azure.ResourceManager.TestFramework
                     TestEnvironment.Credential,
                     TestEnvironment.SubscriptionId,
                     new ArmClientOptions());
-                var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
+                SubscriptionResource subscription = _cleanupClient.GetSubscriptions().Exists(TestEnvironment.SubscriptionId)
+                    ? _cleanupClient.GetSubscriptions().Get(TestEnvironment.SubscriptionId)
+                    : null;
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync(WaitUntil.Completed);
+                    await subscription?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync(WaitUntil.Completed);
                 }
             }
         }

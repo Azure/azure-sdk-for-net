@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="targetResource"> The target resource. </param>
         /// <param name="request"> The HTTP request message. </param>
         /// <param name="response"> The HTTP response message. </param>
-        internal ArmDeploymentOperationProperties(ProvisioningOperation? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response)
+        internal ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response)
         {
             ProvisioningOperation = provisioningOperation;
             ProvisioningState = provisioningState;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the current provisioning operation. </summary>
-        public ProvisioningOperation? ProvisioningOperation { get; }
+        public ProvisioningOperationKind? ProvisioningOperation { get; }
         /// <summary> The state of the provisioning. </summary>
         public string ProvisioningState { get; }
         /// <summary> The date and time of the operation. </summary>
@@ -60,18 +60,76 @@ namespace Azure.ResourceManager.Resources.Models
         public TargetResource TargetResource { get; }
         /// <summary> The HTTP request message. </summary>
         internal HttpMessage Request { get; }
-        /// <summary> HTTP message content. </summary>
+        /// <summary>
+        /// HTTP message content.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData RequestContent
         {
-            get => Request.Content;
+            get => Request?.Content;
         }
 
         /// <summary> The HTTP response message. </summary>
         internal HttpMessage Response { get; }
-        /// <summary> HTTP message content. </summary>
+        /// <summary>
+        /// HTTP message content.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData ResponseContent
         {
-            get => Response.Content;
+            get => Response?.Content;
         }
     }
 }

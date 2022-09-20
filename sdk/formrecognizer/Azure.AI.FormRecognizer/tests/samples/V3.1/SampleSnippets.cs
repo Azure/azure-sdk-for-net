@@ -7,16 +7,16 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
+    [LiveOnly]
     public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public void CreateFormRecognizerClient()
         {
             #region Snippet:CreateFormRecognizerClient
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public void CreateFormRecognizerClientTokenCredential()
         {
             #region Snippet:CreateFormRecognizerClientTokenCredential
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public void CreateFormTrainingClient()
         {
             #region Snippet:CreateFormTrainingClient
@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public void CreateFormRecognizerClients()
         {
             #region Snippet:CreateFormRecognizerClients
@@ -97,6 +97,30 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var formRecognizerClient = new FormRecognizerClient(new Uri(endpoint), credential);
             var formTrainingClient = new FormTrainingClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [RecordedTest]
+        public async Task StartLongRunningOperation()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new FormTrainingClient(new Uri(endpoint), credential);
+
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
+            TrainingOperation trainingOperation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false);
+            Response<CustomFormModel> operationResponse = await trainingOperation.WaitForCompletionAsync();
+            CustomFormModel model = operationResponse.Value;
+
+            string resourceId = TestEnvironment.TargetResourceId;
+            string resourceRegion = TestEnvironment.TargetResourceRegion;
+            string modelId = model.ModelId;
+            CopyAuthorization authorization = await client.GetCopyAuthorizationAsync(resourceId, resourceRegion);
+
+            #region Snippet:WaitForLongRunningOperationV2
+            CopyModelOperation operation = await client.StartCopyModelAsync(modelId, authorization);
+            await operation.WaitForCompletionAsync();
             #endregion
         }
     }

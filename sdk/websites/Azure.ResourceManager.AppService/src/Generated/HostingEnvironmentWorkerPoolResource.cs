@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics;
         private readonly AppServiceEnvironmentsRestOperations _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient;
-        private readonly WorkerPoolResourceData _data;
+        private readonly WorkerPoolData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentWorkerPoolResource"/> class for mocking. </summary>
         protected HostingEnvironmentWorkerPoolResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentWorkerPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HostingEnvironmentWorkerPoolResource(ArmClient client, WorkerPoolResourceData data) : this(client, data.Id)
+        internal HostingEnvironmentWorkerPoolResource(ArmClient client, WorkerPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WorkerPoolResourceData Data
+        public virtual WorkerPoolData Data
         {
             get
             {
@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
         /// </summary>
-        /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
+        /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolEnvelope"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workerPoolEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -166,18 +166,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
         /// </summary>
-        /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
+        /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolEnvelope"/> is null. </exception>
-        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workerPoolEnvelope, cancellationToken);
+                var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,10 +371,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuInfo> GetWorkerPoolSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePoolSkuInfo> GetWorkerPoolSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServicePoolSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServicePoolSkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();
@@ -413,10 +413,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuInfo> GetWorkerPoolSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePoolSkuInfo> GetWorkerPoolSkus(CancellationToken cancellationToken = default)
         {
-            Page<SkuInfo> FirstPageFunc(int? pageSizeHint)
+            Page<AppServicePoolSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServicePoolSkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();

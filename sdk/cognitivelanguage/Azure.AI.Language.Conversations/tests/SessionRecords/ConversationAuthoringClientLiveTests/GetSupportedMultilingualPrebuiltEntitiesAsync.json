@@ -1,0 +1,119 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?multilingual=true\u0026api-version=2022-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b7ee98bdeabd6bc6b15239648386deca-62e78131ae159511-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220616.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "30d21f01ab3bcb2fba618a98d7eda574",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "a0e17537-5cbe-46c5-9e8c-b3c20db5f6be",
+        "Content-Length": "1959",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Jun 2022 00:17:26 GMT",
+        "request-id": "a0e17537-5cbe-46c5-9e8c-b3c20db5f6be",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "category": "Person.Name",
+            "description": "Name of an individual",
+            "examples": "john, Sam, Lisa"
+          },
+          {
+            "category": "General.Event",
+            "description": "Important events",
+            "examples": "World War two, Covid 19"
+          },
+          {
+            "category": "General.Organization",
+            "description": "Companies and corporations",
+            "examples": "Microsoft, Amazon"
+          },
+          {
+            "category": "Choice.Boolean",
+            "description": "boolean choice",
+            "examples": "yes, no, agreed"
+          },
+          {
+            "category": "Quantity.Age",
+            "description": "Age of a person or thing",
+            "examples": "10-month-old, 19 years old, 58 year-old"
+          },
+          {
+            "category": "Quantity.NumberRange",
+            "description": "a numeric interval",
+            "examples": "between 25 and 35, 25-35"
+          },
+          {
+            "category": "Quantity.Number",
+            "description": "A cardinal number in numeric or text form",
+            "examples": "ten, forty two, 3.141, 10K"
+          },
+          {
+            "category": "Quantity.Percentage",
+            "description": "A percentage, using the symbol % or the word \u0022percent\u0022",
+            "examples": "10%, 5.6 percent"
+          },
+          {
+            "category": "Quantity.Ordinal",
+            "description": "An ordinal number in numeric or text form",
+            "examples": "first, second, tenth, 1st, 2nd, 10th"
+          },
+          {
+            "category": "Quantity.Dimension",
+            "description": "Spacial dimensions, including length, distance, area, and volume",
+            "examples": "2 miles, 650 square kilometres, 9,350 feet"
+          },
+          {
+            "category": "Quantity.Temperature",
+            "description": "A temperature in celsius or fahrenheit",
+            "examples": "32F, 34 degrees celsius, 2 deg C"
+          },
+          {
+            "category": "Quantity.Currency",
+            "description": "Monetary amounts, including currency",
+            "examples": "1000.00 US dollars, \u00A320.00, $ 67.5 B"
+          },
+          {
+            "category": "DateTime",
+            "description": "exact date values",
+            "examples": "May 11th"
+          },
+          {
+            "category": "Email",
+            "description": "Email addresses",
+            "examples": "user@example.net, user_name@example.com, user.Name12@example.net"
+          },
+          {
+            "category": "Phone Number",
+            "description": "US phone numbers",
+            "examples": "123-456-7890, \u002B1 123 456 789, (123)456-789"
+          },
+          {
+            "category": "URL",
+            "description": "Websites URLs and links",
+            "examples": "www.example.com, http://example.net?name=my_name\u0026age=10"
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "532900978"
+  }
+}

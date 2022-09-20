@@ -245,9 +245,9 @@ namespace Azure.Data.Tables
                 {
                     return new DateTimeOffset((DateTime)value);
                 }
-                if (type == typeof(BinaryData) && valueType == typeof(byte[]))
+                if (type == typeof(BinaryData) && value is byte[] byteArray)
                 {
-                     return new BinaryData(value);
+                     return new BinaryData(byteArray);
                 }
                 EnforceType(type, valueType);
             }

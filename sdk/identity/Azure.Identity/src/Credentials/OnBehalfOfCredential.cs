@@ -22,6 +22,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
+        private readonly string[] _additionallyAllowedTenantIds;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -30,7 +31,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the OnBehalfOfCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Azure Active Directory with the specified certificate.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -41,7 +42,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the OnBehalfOfCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Azure Active Directory with the specified certificate.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -124,8 +125,9 @@ namespace Azure.Identity
                           clientId,
                           certificateProvider,
                           options.SendCertificateChain,
-                          options,
-                          options.RegionalAuthority);
+                          options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         internal OnBehalfOfCredential(
@@ -147,13 +149,31 @@ namespace Azure.Identity
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
             _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Authenticates with Azure Active Directory and returns an access token if successful.
+        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is
+        /// handled automatically. Where possible, reuse credential instances to optimize cache
+        /// effectiveness.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
             GetTokenInternalAsync(requestContext, false, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Authenticates with Azure Active Directory and returns an access token if successful.
+        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is
+        /// handled automatically. Where possible, reuse credential instances to optimize cache
+        /// effectiveness.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
             GetTokenInternalAsync(requestContext, true, cancellationToken);
 
@@ -163,10 +183,10 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
 
                 AuthenticationResult result = await _client
-                    .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
+                    .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);

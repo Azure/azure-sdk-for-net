@@ -8,6 +8,11 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.Rest;
+using Microsoft.Rest.Azure.Authentication;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -45,6 +50,7 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void SqlCRUDTests()
         {
+           
             using (var context = MockContext.Start(this.GetType()))
             {
                 fixture.Init(context);
@@ -151,7 +157,13 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                
                 Assert.NotNull(sqlContainerGetResults);
 
                 IEnumerable<SqlContainerGetResults> sqlContainers = client.ListSqlContainersWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
@@ -253,7 +265,241 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         [Fact]
-        public void SqlClientEncryptionKeyTest()
+        public void SqlPartitionMergeTests()
+        {
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
+                this.fixture.ResourceGroupName = "canary-sdk-test";
+                var databaseAccountName = "canary-sdk-test-account";
+
+                var databaseName = TestUtilities.GenerateName("database");
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
+                {
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                SqlDatabaseGetResults sqlDatabaseGetResults = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
+
+                SqlDatabaseGetResults sqlDatabaseGetResults2 = client.GetSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults2);
+                Assert.Equal(databaseName, sqlDatabaseGetResults2.Name);
+
+                VerifyEqualSqlDatabases(sqlDatabaseGetResults, sqlDatabaseGetResults2);               
+
+                var containerName = TestUtilities.GenerateName("container");
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerName,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode" }
+                        }                      
+                    },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = 14000
+                    }
+                };
+
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(sqlContainerGetResults);
+
+                MergeParameters mergeParameters = new MergeParameters(isDryRun: true);
+                PhysicalPartitionStorageInfoCollection physicalPartitionStorageInfoCollection = client.ListSqlContainerPartitionMerge(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, mergeParameters);
+                Assert.Equal(2, physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count);
+
+                client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).Wait();
+                client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).Wait();
+            }
+        }
+
+        [Fact]
+        public void SqlPartitionRedistributionTests()
+        {
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
+                this.fixture.ResourceGroupName = "cosmosTest";
+                var databaseAccountName = "adrutest2";
+
+                var databaseName = TestUtilities.GenerateName("database");
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
+                {
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                SqlDatabaseGetResults sqlDatabaseGetResults = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
+
+                var containerName = TestUtilities.GenerateName("container");
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerName,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode" }
+                        }
+                    },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = 15000
+                    }
+                };
+
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(sqlContainerGetResults);
+
+                RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters();
+                var retrieveThroughputPropertiesResource = new RetrieveThroughputPropertiesResource();
+                retrieveThroughputPropertiesResource.PhysicalPartitionIds = new List<PhysicalPartitionId>();
+                for (int j = 0; j < 3; j++)
+                {
+                    PhysicalPartitionId physicalPartitionId = new PhysicalPartitionId()
+                    {
+                        Id = j.ToString()
+                    };
+                    retrieveThroughputPropertiesResource.PhysicalPartitionIds.Add(physicalPartitionId);
+                }
+                retrieveThroughputParameters.Resource = retrieveThroughputPropertiesResource;
+                PhysicalPartitionThroughputInfoResult physicalPartitionThroughputInfoResult = client.SqlContainerRetrieveThroughputDistribution(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    retrieveThroughputParameters);
+
+                Assert.Equal(3, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "2")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters();
+                redistributeThroughputParameters.Resource = new RedistributeThroughputPropertiesResource();
+                redistributeThroughputParameters.Resource.ThroughputPolicy = ThroughputPolicyType.Custom;
+
+                redistributeThroughputParameters.Resource.SourcePhysicalPartitionThroughputInfo = new List<PhysicalPartitionThroughputInfoResource>();
+                redistributeThroughputParameters.Resource.SourcePhysicalPartitionThroughputInfo.Add(new PhysicalPartitionThroughputInfoResource("0", 0));
+
+                redistributeThroughputParameters.Resource.TargetPhysicalPartitionThroughputInfo = new List<PhysicalPartitionThroughputInfoResource>();
+                redistributeThroughputParameters.Resource.TargetPhysicalPartitionThroughputInfo.Add(new PhysicalPartitionThroughputInfoResource("1", 7000));
+
+                physicalPartitionThroughputInfoResult = client.SqlContainerRedistributeThroughput(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    redistributeThroughputParameters);
+                Assert.Equal(2, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+
+                for (int j = 0; j < 2; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(3000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(7000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                physicalPartitionThroughputInfoResult = client.SqlContainerRetrieveThroughputDistribution(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    retrieveThroughputParameters);
+
+                Assert.Equal(3, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(3000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(7000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "2")
+                    {
+                        Assert.Equal(5000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).Wait();
+                client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).Wait();
+            }
+        }
+
+        [Fact]
+        public void SqlClientEncryptionTests()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
@@ -278,10 +524,10 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(sqlDatabaseGetResults);
                 Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
 
-                var clientEncryptionKeyName = TestUtilities.GenerateName("clientEncryptionKey");
+                var clientEncryptionKeyName1 = TestUtilities.GenerateName("clientEncryptionKey");
                 ClientEncryptionKeyResource clientEncryptionKeyResource = new ClientEncryptionKeyResource()
                 {
-                    Id = clientEncryptionKeyName,
+                    Id = clientEncryptionKeyName1,
                     EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
                     KeyWrapMetadata = new KeyWrapMetadata
                     {
@@ -302,7 +548,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName,
+                    clientEncryptionKeyName1,
                     clientEncryptionKeyCreateUpdateParameters);
 
                 Thread.Sleep(10000);
@@ -311,7 +557,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName).GetAwaiter().GetResult().Body;
+                    clientEncryptionKeyName1).GetAwaiter().GetResult().Body;
                 Assert.NotNull(clientEncryptionKeyRetrieved);
                 Assert.Equal(clientEncryptionKeyResource.Id, clientEncryptionKeyRetrieved.Resource.Id);
                 Assert.Equal(clientEncryptionKeyResource.EncryptionAlgorithm, clientEncryptionKeyRetrieved.Resource.EncryptionAlgorithm);
@@ -328,7 +574,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName,
+                    clientEncryptionKeyName1,
                     clientEncryptionKeyCreateUpdateParameters);
 
                 Thread.Sleep(10000);
@@ -336,10 +582,10 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName).GetAwaiter().GetResult().Body;
+                    clientEncryptionKeyName1).GetAwaiter().GetResult().Body;
                 Assert.NotNull(clientEncryptionKeyRetrieved);
                 Assert.Equal(clientEncryptionKeyResource.Id, clientEncryptionKeyRetrieved.Resource.Id);
-                Assert.Equal(clientEncryptionKeyName, clientEncryptionKeyRetrieved.Name);
+                Assert.Equal(clientEncryptionKeyName1, clientEncryptionKeyRetrieved.Name);
                 Assert.Equal(clientEncryptionKeyResource.WrappedDataEncryptionKey.Length, clientEncryptionKeyRetrieved.Resource.WrappedDataEncryptionKey.Length);
 
                 var clientEncryptionKeyName2 = TestUtilities.GenerateName("clientEncryptionKey");
@@ -380,10 +626,68 @@ namespace CosmosDB.Tests.ScenarioTests
                 foreach (ClientEncryptionKeyGetResults clientEncryptionKeyListElement in clientEncryptionKeyList)
                 {
                     count++;
-                    Assert.True(clientEncryptionKeyListElement.Name == clientEncryptionKeyName || clientEncryptionKeyListElement.Name == clientEncryptionKeyName2);
+                    Assert.True(clientEncryptionKeyListElement.Name == clientEncryptionKeyName1 || clientEncryptionKeyListElement.Name == clientEncryptionKeyName2);
                 }
 
                 Assert.Equal(2, count);
+
+                var containerWithClientEncryptionPolicy = TestUtilities.GenerateName("containerWithClientEncryptionPolicy");
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerWithClientEncryptionPolicy,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode" }
+                        },
+                        ClientEncryptionPolicy = new ClientEncryptionPolicy
+                        {
+                            PolicyFormatVersion = 1,
+                            IncludedPaths = new List<ClientEncryptionIncludedPath>
+                            {
+                                 new ClientEncryptionIncludedPath()
+                                 {
+                                     Path = "/path1",
+                                     ClientEncryptionKeyId = clientEncryptionKeyName1,
+                                     EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
+                                     EncryptionType = "Randomized"
+                                 },
+                                 new ClientEncryptionIncludedPath()
+                                 {
+                                     Path = "/path2",
+                                     ClientEncryptionKeyId = clientEncryptionKeyName2,
+                                     EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
+                                     EncryptionType = "Deterministic"
+                                 }
+                            }
+                        }
+                    }
+                };
+
+                Thread.Sleep(10000);
+                SqlContainerGetResults sqlContainerGetResults =  client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerWithClientEncryptionPolicy,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(sqlContainerGetResults);
+
+                Assert.Equal(2, sqlContainerGetResults.Resource.ClientEncryptionPolicy.IncludedPaths.Count);
+                ClientEncryptionIncludedPath includedPath = sqlContainerGetResults.Resource.ClientEncryptionPolicy.IncludedPaths.ElementAt(0);
+                Assert.Equal("/path1", includedPath.Path);
+                Assert.Equal(clientEncryptionKeyName1, includedPath.ClientEncryptionKeyId);
+                Assert.Equal("AEAD_AES_256_CBC_HMAC_SHA256", includedPath.EncryptionAlgorithm);
+                Assert.Equal("Randomized", includedPath.EncryptionType);
+
+                includedPath = sqlContainerGetResults.Resource.ClientEncryptionPolicy.IncludedPaths.ElementAt(1);
+                Assert.Equal("/path2", includedPath.Path);
+                Assert.Equal(clientEncryptionKeyName2, includedPath.ClientEncryptionKeyId);
+                Assert.Equal("AEAD_AES_256_CBC_HMAC_SHA256", includedPath.EncryptionAlgorithm);
+                Assert.Equal("Deterministic", includedPath.EncryptionType);
 
                 client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, sqlDatabaseGetResults.Name);
             }
@@ -395,7 +699,7 @@ namespace CosmosDB.Tests.ScenarioTests
             using (var context = MockContext.Start(this.GetType()))
             {
                 fixture.Init(context);
-                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
                 var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
                 var databaseName = TestUtilities.GenerateName("database");

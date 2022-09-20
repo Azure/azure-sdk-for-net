@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    [NonParallelizable]
     public abstract class BackupRestoreTestBase : AdministrationTestBase
     {
         public KeyVaultBackupClient Client { get; private set; }

@@ -17,7 +17,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics monitoring client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Monitoring/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.Synapse.Monitoring --version 1.0.0-preview.1
+dotnet add package Azure.Analytics.Synapse.Monitoring --prerelease
 ```
 
 ### Prerequisites
@@ -46,8 +46,8 @@ and **client secret credentials (client id, client secret, tenant id)** to insta
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 ## Key concepts

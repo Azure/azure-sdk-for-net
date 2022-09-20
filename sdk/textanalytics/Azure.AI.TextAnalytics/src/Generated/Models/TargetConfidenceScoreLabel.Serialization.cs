@@ -10,8 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TargetConfidenceScoreLabel
+    internal partial class TargetConfidenceScoreLabel : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("positive");
+            writer.WriteNumberValue(Positive);
+            writer.WritePropertyName("negative");
+            writer.WriteNumberValue(Negative);
+            writer.WriteEndObject();
+        }
+
         internal static TargetConfidenceScoreLabel DeserializeTargetConfidenceScoreLabel(JsonElement element)
         {
             double positive = default;

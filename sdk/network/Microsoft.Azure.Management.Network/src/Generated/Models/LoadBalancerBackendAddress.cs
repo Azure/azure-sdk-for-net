@@ -46,8 +46,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// loadbalancer.</param>
         /// <param name="inboundNatRulesPortMapping">Collection of inbound NAT
         /// rule port mappings.</param>
+        /// <param name="adminState">A list of administrative states which once
+        /// set can override health probe so that Load Balancer will always
+        /// forward new connections to backend, or deny new connections and
+        /// reset existing connections. Possible values include: 'None', 'Up',
+        /// 'Down', 'Drain'</param>
         /// <param name="name">Name of the backend address.</param>
-        public LoadBalancerBackendAddress(SubResource virtualNetwork = default(SubResource), SubResource subnet = default(SubResource), string ipAddress = default(string), SubResource networkInterfaceIPConfiguration = default(SubResource), SubResource loadBalancerFrontendIPConfiguration = default(SubResource), IList<NatRulePortMapping> inboundNatRulesPortMapping = default(IList<NatRulePortMapping>), string name = default(string))
+        public LoadBalancerBackendAddress(SubResource virtualNetwork = default(SubResource), SubResource subnet = default(SubResource), string ipAddress = default(string), SubResource networkInterfaceIPConfiguration = default(SubResource), SubResource loadBalancerFrontendIPConfiguration = default(SubResource), IList<NatRulePortMapping> inboundNatRulesPortMapping = default(IList<NatRulePortMapping>), string adminState = default(string), string name = default(string))
         {
             VirtualNetwork = virtualNetwork;
             Subnet = subnet;
@@ -55,6 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
             InboundNatRulesPortMapping = inboundNatRulesPortMapping;
+            AdminState = adminState;
             Name = name;
             CustomInit();
         }
@@ -101,6 +107,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatRulesPortMapping")]
         public IList<NatRulePortMapping> InboundNatRulesPortMapping { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a list of administrative states which once set can
+        /// override health probe so that Load Balancer will always forward new
+        /// connections to backend, or deny new connections and reset existing
+        /// connections. Possible values include: 'None', 'Up', 'Down', 'Drain'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.adminState")]
+        public string AdminState { get; set; }
 
         /// <summary>
         /// Gets or sets name of the backend address.

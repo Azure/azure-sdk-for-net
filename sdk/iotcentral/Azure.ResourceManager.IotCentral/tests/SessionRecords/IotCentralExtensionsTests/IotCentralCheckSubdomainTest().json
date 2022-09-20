@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.IoTCentral/checkSubdomainAvailability?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "20",
+        "Content-Type": "application/json",
+        "traceparent": "00-ea3704a57b3708449542c0dca04e0868-452d299b9ad5bb4a-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0a0d5fb44d8f91108f9be5ea622e1107",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "test-3823"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 May 2022 14:42:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodeastus04",
+        "x-iot-correlation": "348ye3f8.0",
+        "X-IoT-Version": "050222.0001-release",
+        "x-ms-client-request-id": "0a0d5fb44d8f91108f9be5ea622e1107",
+        "x-ms-correlation-request-id": "4e382613-882c-44f5-a140-e83389992854",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "c3b88aa2-4210-4079-8dcb-dbae99e2a9c7",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220505T144253Z:4e382613-882c-44f5-a140-e83389992854",
+        "X-MSEdge-Ref": "Ref A: 969E16DCED824AAAA78A6D0E42261857 Ref B: EWR311000101021 Ref C: 2022-05-05T14:42:53Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "nameAvailable": true
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1590623942",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

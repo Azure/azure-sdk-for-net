@@ -77,8 +77,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// server-side encryption for the storage account.</param>
         /// <param name="networkRuleSet">Network rule set</param>
         /// <param name="accessTier">Required for storage accounts where kind =
-        /// BlobStorage. The access tier used for billing. Possible values
-        /// include: 'Hot', 'Cool'</param>
+        /// BlobStorage. The access tier is used for billing. The 'Premium'
+        /// access tier is the default value for premium block blobs storage
+        /// account type and it cannot be changed for the premium block blobs
+        /// storage account type. Possible values include: 'Hot', 'Cool',
+        /// 'Premium'</param>
         /// <param name="azureFilesIdentityBasedAuthentication">Provides the
         /// identity based authentication settings for Azure Files.</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
@@ -120,7 +123,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// immutable and can only be set to true at the account creation time.
         /// When set to true, it enables object level immutability for all the
         /// new containers in the account by default.</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), string allowedCopyScope = default(string), string publicNetworkAccess = default(string), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount))
+        /// <param name="dnsEndpointType">Allows you to specify the type of
+        /// endpoint. Set this to AzureDNSZone to create a large number of
+        /// accounts in a single subscription, which creates accounts in an
+        /// Azure DNS Zone and the endpoint URL will have an alphanumeric DNS
+        /// Zone identifier. Possible values include: 'Standard',
+        /// 'AzureDnsZone'</param>
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), string allowedCopyScope = default(string), string publicNetworkAccess = default(string), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount), string dnsEndpointType = default(string))
         {
             Sku = sku;
             Kind = kind;
@@ -150,6 +159,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             AllowCrossTenantReplication = allowCrossTenantReplication;
             DefaultToOAuthAuthentication = defaultToOAuthAuthentication;
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
+            DnsEndpointType = dnsEndpointType;
             CustomInit();
         }
 
@@ -260,8 +270,11 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets required for storage accounts where kind =
-        /// BlobStorage. The access tier used for billing. Possible values
-        /// include: 'Hot', 'Cool'
+        /// BlobStorage. The access tier is used for billing. The 'Premium'
+        /// access tier is the default value for premium block blobs storage
+        /// account type and it cannot be changed for the premium block blobs
+        /// storage account type. Possible values include: 'Hot', 'Cool',
+        /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; set; }
@@ -370,6 +383,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
 
         /// <summary>
+        /// Gets or sets allows you to specify the type of endpoint. Set this
+        /// to AzureDNSZone to create a large number of accounts in a single
+        /// subscription, which creates accounts in an Azure DNS Zone and the
+        /// endpoint URL will have an alphanumeric DNS Zone identifier.
+        /// Possible values include: 'Standard', 'AzureDnsZone'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsEndpointType")]
+        public string DnsEndpointType { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -408,10 +431,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (CustomDomain != null)
             {
                 CustomDomain.Validate();
-            }
-            if (Encryption != null)
-            {
-                Encryption.Validate();
             }
             if (NetworkRuleSet != null)
             {

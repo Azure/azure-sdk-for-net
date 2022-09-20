@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static GeoFilter DeserializeGeoFilter(JsonElement element)
         {
             string relativePath = default;
-            GeoFilterActions action = default;
+            GeoFilterAction action = default;
             IList<string> countryCodes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("action"))
                 {
-                    action = property.Value.GetString().ToGeoFilterActions();
+                    action = property.Value.GetString().ToGeoFilterAction();
                     continue;
                 }
                 if (property.NameEquals("countryCodes"))

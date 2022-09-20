@@ -17,12 +17,15 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -62,9 +65,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteConnectionData DeserializeExpressRouteConnectionData(JsonElement element)
         {
-            string name = default;
-            Optional<string> id = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<WritableSubResource> expressRouteCircuitPeering = default;
             Optional<string> authorizationKey = default;
             Optional<int> routingWeight = default;
@@ -73,14 +77,29 @@ namespace Azure.ResourceManager.Network
             Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("type"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -99,7 +118,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("expressRouteCircuitPeering"))
@@ -161,7 +180,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteConnectionData(id.Value, name, Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), routingConfiguration.Value);
+            return new ExpressRouteConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), routingConfiguration.Value);
         }
     }
 }

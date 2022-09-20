@@ -26,6 +26,6 @@ namespace Microsoft.Extensions.Hosting
 {
     public static partial class TablesWebJobsBuilderExtensions
     {
-        public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddAzureTables(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { throw null; }
+        public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddTables(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { throw null; }
     }
 }

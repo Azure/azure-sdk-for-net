@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> vmId = default;
             Optional<string> publicKey = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,11 +56,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property0.Value.ToString());
+                            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new HybridIdentityMetadataData(id, name, type, systemData, vmId.Value, publicKey.Value, identity, provisioningState.Value);
+            return new HybridIdentityMetadataData(id, name, type, systemData.Value, vmId.Value, publicKey.Value, identity, provisioningState.Value);
         }
     }
 }

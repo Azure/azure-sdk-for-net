@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="appliedTo"> Resource ID of nic or subnet to which network security group is applied. </param>
         /// <param name="matchedRule"> Matched network security rule. </param>
         /// <param name="rulesEvaluationResult"> List of network security rules evaluation results. </param>
-        internal EvaluatedNetworkSecurityGroup(string networkSecurityGroupId, string appliedTo, MatchedRule matchedRule, IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult)
+        internal EvaluatedNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId, string appliedTo, MatchedRule matchedRule, IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult)
         {
             NetworkSecurityGroupId = networkSecurityGroupId;
             AppliedTo = appliedTo;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network security group ID. </summary>
-        public string NetworkSecurityGroupId { get; }
+        public ResourceIdentifier NetworkSecurityGroupId { get; }
         /// <summary> Resource ID of nic or subnet to which network security group is applied. </summary>
         public string AppliedTo { get; }
         /// <summary> Matched network security rule. </summary>

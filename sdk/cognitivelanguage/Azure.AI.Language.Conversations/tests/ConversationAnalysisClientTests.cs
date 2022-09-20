@@ -2,53 +2,47 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
     public class ConversationAnalysisClientTests
     {
-        public Uri Endpoint => new("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
-
-        public ConversationAnalysisClient Client => new(Endpoint, new AzureKeyCredential("test"));
-
         [Test]
         public void ConversationAnalysisClientEndpointNull()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAnalysisClient(null, null));
+                () => new ConversationAnalysisClient(null, (AzureKeyCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
         [Test]
         public void ConversationAnalysisClientCredentialNull()
         {
-            Uri endpoint = new Uri("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
+            Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAnalysisClient(endpoint, null));
+                () => new ConversationAnalysisClient(endpoint, (AzureKeyCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
+
         [Test]
-        public void ValidateConversationsProject()
+        public void ConversationAnalysisClientEndpointNullUsingTokenCredential()
         {
-            // Validate query parameter first given the order the constructors get called.
-            Assert.That<ConversationsProject>(() => new ConversationsProject(null, "test"), Throws.ArgumentNullException.WithParamName("projectName"));
-            Assert.That<ConversationsProject>(() => new ConversationsProject("test", null), Throws.ArgumentNullException.WithParamName("deploymentName"));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => new ConversationAnalysisClient(null, (TokenCredential)null));
+            Assert.AreEqual("endpoint", ex.ParamName);
         }
 
         [Test]
-        public void ValidateAnalyzeConversation()
+        public void ConversationAnalysisClientCredentialNullUsingTokenCredential()
         {
-            ConversationsProject conversationsProject = new ConversationsProject("project","deployment");
+            Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
-            // Validate query parameter first given the order the constructors get called.
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
-
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null), Throws.ArgumentNullException.WithParamName("project"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null), Throws.ArgumentNullException.WithParamName("project"));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => new ConversationAnalysisClient(endpoint, (TokenCredential)null));
+            Assert.AreEqual("credential", ex.ParamName);
         }
     }
 }

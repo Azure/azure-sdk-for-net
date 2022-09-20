@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A setting difference between two deployment slots of an app. </summary>
-    public partial class SlotDifference : ProxyOnlyResource
+    public partial class SlotDifference : ResourceData
     {
         /// <summary> Initializes a new instance of SlotDifference. </summary>
         public SlotDifference()
@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="level"> Level of the difference: Information, Warning or Error. </param>
         /// <param name="settingType"> The type of the setting: General, AppSetting or ConnectionString. </param>
         /// <param name="diffRule"> Rule that describes how to process the setting difference during a slot swap. </param>
@@ -31,7 +30,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="valueInCurrentSlot"> Value of the setting in the current slot. </param>
         /// <param name="valueInTargetSlot"> Value of the setting in the target slot. </param>
         /// <param name="description"> Description of the setting difference. </param>
-        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind) : base(id, name, resourceType, systemData)
         {
             Level = level;
             SettingType = settingType;
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             ValueInCurrentSlot = valueInCurrentSlot;
             ValueInTargetSlot = valueInTargetSlot;
             Description = description;
+            Kind = kind;
         }
 
         /// <summary> Level of the difference: Information, Warning or Error. </summary>
@@ -56,5 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string ValueInTargetSlot { get; }
         /// <summary> Description of the setting difference. </summary>
         public string Description { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -12,8 +12,14 @@ namespace Azure.Core
     /// <summary>
     /// Reads PEM streams to parse PEM fields or load certificates.
     /// </summary>
+    /// <remarks>
+    /// This class provides a downlevel PEM decoder since <c>PemEncoding</c> wasn't added until net5.0.
+    /// The <c>PemEncoding</c> class takes advantage of other implementation changes in net5.0 and,
+    /// based on conversations with the .NET team, runtime changes.
+    /// </remarks>
     internal static partial class PemReader
     {
+        // The following implementation was based on PemEncoding and reviewed by @bartonjs on the .NET / cryptography team.
         private delegate void ImportPrivateKeyDelegate(ReadOnlySpan<byte> blob, out int bytesRead);
 
         private const string Prolog = "-----BEGIN ";

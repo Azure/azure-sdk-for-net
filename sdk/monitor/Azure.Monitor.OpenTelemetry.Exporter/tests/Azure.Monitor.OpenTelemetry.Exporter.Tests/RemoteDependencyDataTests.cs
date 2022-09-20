@@ -4,8 +4,12 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry.Trace;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests

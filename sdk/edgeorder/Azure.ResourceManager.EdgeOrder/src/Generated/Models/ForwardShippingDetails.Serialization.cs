@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<string> carrierName = default;
             Optional<string> carrierDisplayName = default;
             Optional<string> trackingId = default;
-            Optional<string> trackingUrl = default;
+            Optional<Uri> trackingUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("carrierName"))
@@ -37,7 +38,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("trackingUrl"))
                 {
-                    trackingUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        trackingUrl = null;
+                        continue;
+                    }
+                    trackingUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

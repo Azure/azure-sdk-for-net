@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string StandardAkamaiValue = "Standard_Akamai";
         private const string StandardChinaCdnValue = "Standard_ChinaCdn";
         private const string StandardMicrosoftValue = "Standard_Microsoft";
-        private const string PremiumChinaCdnValue = "Premium_ChinaCdn";
         private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
         private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
         private const string Standard955BandWidthChinaCdnValue = "Standard_955BandWidth_ChinaCdn";
@@ -49,8 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnSkuName StandardChinaCdn { get; } = new CdnSkuName(StandardChinaCdnValue);
         /// <summary> Standard_Microsoft. </summary>
         public static CdnSkuName StandardMicrosoft { get; } = new CdnSkuName(StandardMicrosoftValue);
-        /// <summary> Premium_ChinaCdn. </summary>
-        public static CdnSkuName PremiumChinaCdn { get; } = new CdnSkuName(PremiumChinaCdnValue);
         /// <summary> Standard_AzureFrontDoor. </summary>
         public static CdnSkuName StandardAzureFrontDoor { get; } = new CdnSkuName(StandardAzureFrontDoorValue);
         /// <summary> Premium_AzureFrontDoor. </summary>

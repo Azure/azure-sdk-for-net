@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -23,7 +24,9 @@ namespace Azure.Identity
         internal const string MsiUnavailableError = "No managed identity endpoint found.";
 
         private readonly CredentialPipeline _pipeline;
-        private readonly ManagedIdentityClient _client;
+        internal ManagedIdentityClient Client { get; }
+        private readonly string _clientId;
+        private readonly bool _logAccountDetails;
 
         private const string Troubleshooting =
             "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot";
@@ -44,7 +47,9 @@ namespace Azure.Identity
         /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
             : this(clientId, CredentialPipeline.GetInstance(options))
-        { }
+        {
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
+        }
 
         /// <summary>
         /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
@@ -57,24 +62,33 @@ namespace Azure.Identity
         public ManagedIdentityCredential(ResourceIdentifier resourceId, TokenCredentialOptions options = null)
             : this(
                 new ManagedIdentityClient(new ManagedIdentityClientOptions { ResourceIdentifier = resourceId, Pipeline = CredentialPipeline.GetInstance(options) }))
-        { }
+        {
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
+            _clientId = resourceId.ToString();
+        }
 
-        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
-            : this(new ManagedIdentityClient(pipeline, clientId))
-        { }
+        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, bool preserveTransport = false)
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = preserveTransport }))
+        {
+            _clientId = clientId;
+        }
 
         internal ManagedIdentityCredential(ResourceIdentifier resourceId, CredentialPipeline pipeline, bool preserveTransport = false)
             : this(new ManagedIdentityClient(new ManagedIdentityClientOptions{Pipeline = pipeline, ResourceIdentifier = resourceId, PreserveTransport = preserveTransport}))
-        { }
+        {
+            _clientId = resourceId.ToString();
+        }
 
         internal ManagedIdentityCredential(ManagedIdentityClient client)
         {
             _pipeline = client.Pipeline;
-            _client = client;
+            Client = client;
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service, if available. Acquired tokens are cached by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache
+        /// effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -85,7 +99,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service, if available. Acquired tokens are cached by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache
+        /// effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -101,7 +117,12 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken result = await _client.AuthenticateAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
+                AccessToken result = await Client.AuthenticateAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
+                if (_logAccountDetails)
+                {
+                    var accountDetails = TokenHelper.ParseAccountInfoFromToken(result.Token);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId ?? _clientId, accountDetails.TenantId, accountDetails.Upn, accountDetails.ObjectId);
+                }
                 return scope.Succeeded(result);
             }
             catch (Exception e)

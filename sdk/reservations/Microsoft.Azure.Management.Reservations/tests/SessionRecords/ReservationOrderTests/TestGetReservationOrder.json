@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2019-04-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2022-03-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -62,7 +62,7 @@
         "Expires": [
           "-1"
         ]
-      }
+      },
       "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"086641e5-3de5-41a3-acdd-1ca40b1e88f1\",\r\n  \"etag\": 9,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-10-28T04:19:58.8463652Z\",\r\n    \"createdDateTime\": \"2019-10-28T04:22:58.3271351Z\",\r\n    \"expiryDate\": \"2020-10-28\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"reservations\": [\r\n      {\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1/reservations/f1041f4f-7cef-4903-811e-4a83bb290476\"\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3,\r\n    \"billingPlan\": \"Upfront\"\r\n  }\r\n}",
       "StatusCode": 200
     }

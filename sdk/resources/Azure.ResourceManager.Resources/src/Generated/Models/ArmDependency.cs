@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDependency. </summary>
         internal ArmDependency()
         {
-            DependsOn = new ChangeTrackingList<BasicDependency>();
+            DependsOn = new ChangeTrackingList<BasicArmDependency>();
         }
 
         /// <summary> Initializes a new instance of ArmDependency. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal ArmDependency(IReadOnlyList<BasicDependency> dependsOn, string id, string resourceType, string resourceName)
+        internal ArmDependency(IReadOnlyList<BasicArmDependency> dependsOn, string id, ResourceType? resourceType, string resourceName)
         {
             DependsOn = dependsOn;
             Id = id;
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The list of dependencies. </summary>
-        public IReadOnlyList<BasicDependency> DependsOn { get; }
+        public IReadOnlyList<BasicArmDependency> DependsOn { get; }
         /// <summary> The ID of the dependency. </summary>
         public string Id { get; }
         /// <summary> The dependency resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The dependency resource name. </summary>
         public string ResourceName { get; }
     }

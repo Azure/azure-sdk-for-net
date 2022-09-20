@@ -80,3 +80,70 @@ function GetPrimaryCodeOwner ([string]$TargetDirectory)
     Write-Warning "No code owner found in $TargetDirectory."
     return $null
 }
+
+function GetDocsMsService($packageInfo, $serviceName) 
+{
+  $service = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
+  if ($packageInfo.MSDocService) {
+    # Use MSDocService in csv metadata to override the service directory    
+    # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
+    $service = $packageInfo.MSDocService
+  }
+  Write-Host "The service of package: $service"
+  return $service
+}
+
+function compare-and-merge-metadata ($original, $updated) {
+  $updateMetdata = ($updated.GetEnumerator() | ForEach-Object { "$($_.Key): $($_.Value)" }) -join "`r`n"
+  $updateMetdata += "`r`n"
+  if (!$original) {
+    return $updateMetdata 
+  }
+  $originalTable = ConvertFrom-StringData -StringData $original -Delimiter ":"
+  foreach ($key in $originalTable.Keys) {
+    if (!($updated.ContainsKey($key))) {
+      Write-Warning "New metadata missed the entry: $key. Adding back."
+      $updateMetdata += "$key`: $($originalTable[$key])`r`n"
+    }
+  }
+  return $updateMetdata
+}
+
+function GenerateDocsMsMetadata($originalMetadata, $language, $languageDisplayName, $serviceName, $tenantId, $clientId, $clientSecret, $msService) 
+{
+  $langTitle = "Azure $serviceName SDK for $languageDisplayName"
+  $langDescription = "Reference for Azure $serviceName SDK for $languageDisplayName"
+  # Github url for source code: e.g. https://github.com/Azure/azure-sdk-for-js
+  $serviceBaseName = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
+  $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
+  $msauthor = ""
+  if (!$author) {
+    LogError "Cannot fetch the author from CODEOWNER file."
+  }
+  elseif ($TenantId -and $ClientId -and $ClientSecret) {
+    $msauthor = GetMsAliasFromGithub -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret -GithubUser $author
+  }
+  # Default value
+  if (!$msauthor) {
+    LogError "No ms.author found for $author. "
+    $msauthor = $author
+  }
+  $date = Get-Date -Format "MM/dd/yyyy"
+
+  $metadataTable = @{
+    "title"= $langTitle
+    "description"= $langDescription
+    "author"= $author
+    "ms.author"= $msauthor
+    "ms.data"= $date
+    "ms.topic"= "reference"
+    "ms.devlang"= $language
+    "ms.service"= $msService
+  }
+  $updatedMetadata = compare-and-merge-metadata -original $originalMetadata -updated $metadataTable
+  return "---`r`n$updatedMetadata---`r`n"
+}
+
+function ServiceLevelReadmeNameStyle($serviceName) {
+  return $serviceName.ToLower().Replace(' ', '-').Replace('/', '-')
+}

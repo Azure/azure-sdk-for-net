@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Deleting', 'Succeeded', 'Creating', 'Accepted',
-        /// 'Verifying', 'Updating', 'Failed', 'Canceled',
-        /// 'Deprovisioned'</param>
+        /// 'Verifying', 'Updating', 'Failed', 'Canceled', 'Deprovisioned',
+        /// 'Moving', 'Suspended', 'Warned', 'SystemMaintenance'</param>
         /// <param name="accessPolicies">The access policies of the service
         /// instance.</param>
         /// <param name="cosmosDbConfiguration">The settings for the Cosmos DB
@@ -50,7 +50,10 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <param name="publicNetworkAccess">Control permission for data plane
         /// traffic coming from public networks while private endpoint is
         /// enabled. Possible values include: 'Enabled', 'Disabled'</param>
-        public ServicesProperties(string provisioningState = default(string), IList<ServiceAccessPolicyEntry> accessPolicies = default(IList<ServiceAccessPolicyEntry>), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo), ServiceExportConfigurationInfo exportConfiguration = default(ServiceExportConfigurationInfo), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string))
+        /// <param name="acrConfiguration">The azure container registry
+        /// settings used for convert data operation of the service
+        /// instance.</param>
+        public ServicesProperties(string provisioningState = default(string), IList<ServiceAccessPolicyEntry> accessPolicies = default(IList<ServiceAccessPolicyEntry>), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo), ServiceExportConfigurationInfo exportConfiguration = default(ServiceExportConfigurationInfo), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string), ServiceAcrConfigurationInfo acrConfiguration = default(ServiceAcrConfigurationInfo))
         {
             ProvisioningState = provisioningState;
             AccessPolicies = accessPolicies;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
             ExportConfiguration = exportConfiguration;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            AcrConfiguration = acrConfiguration;
             CustomInit();
         }
 
@@ -69,12 +73,13 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the provisioning state. Possible values include: 'Deleting',
-        /// 'Succeeded', 'Creating', 'Accepted', 'Verifying', 'Updating',
-        /// 'Failed', 'Canceled', 'Deprovisioned'
+        /// Gets or sets the provisioning state. Possible values include:
+        /// 'Deleting', 'Succeeded', 'Creating', 'Accepted', 'Verifying',
+        /// 'Updating', 'Failed', 'Canceled', 'Deprovisioned', 'Moving',
+        /// 'Suspended', 'Warned', 'SystemMaintenance'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the access policies of the service instance.
@@ -124,6 +129,13 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets the azure container registry settings used for convert
+        /// data operation of the service instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "acrConfiguration")]
+        public ServiceAcrConfigurationInfo AcrConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.

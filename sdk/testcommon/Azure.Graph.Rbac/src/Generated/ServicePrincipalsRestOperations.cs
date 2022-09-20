@@ -393,6 +393,150 @@ namespace Azure.Graph.Rbac
             }
         }
 
+        internal HttpMessage CreateListAppRoleAssignedToRequest(string objectId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tenantID, true);
+            uri.AppendPath("/servicePrincipals/", false);
+            uri.AppendPath(objectId, true);
+            uri.AppendPath("/appRoleAssignedTo", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Principals (users, groups, and service principals) that are assigned to this service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public async Task<Response<AppRoleAssignmentListResult>> ListAppRoleAssignedToAsync(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignedToRequest(objectId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Principals (users, groups, and service principals) that are assigned to this service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public Response<AppRoleAssignmentListResult> ListAppRoleAssignedTo(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignedToRequest(objectId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListAppRoleAssignmentsRequest(string objectId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tenantID, true);
+            uri.AppendPath("/servicePrincipals/", false);
+            uri.AppendPath(objectId, true);
+            uri.AppendPath("/appRoleAssignments", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Applications that the service principal is assigned to. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public async Task<Response<AppRoleAssignmentListResult>> ListAppRoleAssignmentsAsync(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignmentsRequest(objectId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Applications that the service principal is assigned to. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public Response<AppRoleAssignmentListResult> ListAppRoleAssignments(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignmentsRequest(objectId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListOwnersRequest(string objectId)
         {
             var message = _pipeline.CreateMessage();
@@ -460,6 +604,155 @@ namespace Azure.Graph.Rbac
                         value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAddOwnerRequest(string objectId, AddOwnerParameters parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tenantID, true);
+            uri.AppendPath("/servicePrincipals/", false);
+            uri.AppendPath(objectId, true);
+            uri.AppendPath("/$links/owners", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Add an owner to a service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal to which to add the owner. </param>
+        /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> AddOwnerAsync(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateAddOwnerRequest(objectId, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Add an owner to a service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal to which to add the owner. </param>
+        /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
+        public Response AddOwner(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateAddOwnerRequest(objectId, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateRemoveOwnerRequest(string objectId, string ownerObjectId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tenantID, true);
+            uri.AppendPath("/servicePrincipals/", false);
+            uri.AppendPath(objectId, true);
+            uri.AppendPath("/$links/owners/", false);
+            uri.AppendPath(ownerObjectId, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Remove a member from owners. </summary>
+        /// <param name="objectId"> The object ID of the service principal from which to remove the owner. </param>
+        /// <param name="ownerObjectId"> Owner object id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="ownerObjectId"/> is null. </exception>
+        public async Task<Response> RemoveOwnerAsync(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+            if (ownerObjectId == null)
+            {
+                throw new ArgumentNullException(nameof(ownerObjectId));
+            }
+
+            using var message = CreateRemoveOwnerRequest(objectId, ownerObjectId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Remove a member from owners. </summary>
+        /// <param name="objectId"> The object ID of the service principal from which to remove the owner. </param>
+        /// <param name="ownerObjectId"> Owner object id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="ownerObjectId"/> is null. </exception>
+        public Response RemoveOwner(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+            if (ownerObjectId == null)
+            {
+                throw new ArgumentNullException(nameof(ownerObjectId));
+            }
+
+            using var message = CreateRemoveOwnerRequest(objectId, ownerObjectId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -825,6 +1118,160 @@ namespace Azure.Graph.Rbac
                         ServicePrincipalListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ServicePrincipalListResult.DeserializeServicePrincipalListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListAppRoleAssignedToNextPageRequest(string nextLink, string objectId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Principals (users, groups, and service principals) that are assigned to this service principal. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="objectId"/> is null. </exception>
+        public async Task<Response<AppRoleAssignmentListResult>> ListAppRoleAssignedToNextPageAsync(string nextLink, string objectId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignedToNextPageRequest(nextLink, objectId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Principals (users, groups, and service principals) that are assigned to this service principal. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="objectId"/> is null. </exception>
+        public Response<AppRoleAssignmentListResult> ListAppRoleAssignedToNextPage(string nextLink, string objectId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignedToNextPageRequest(nextLink, objectId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListAppRoleAssignmentsNextPageRequest(string nextLink, string objectId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Applications that the service principal is assigned to. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="objectId"/> is null. </exception>
+        public async Task<Response<AppRoleAssignmentListResult>> ListAppRoleAssignmentsNextPageAsync(string nextLink, string objectId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignmentsNextPageRequest(nextLink, objectId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Applications that the service principal is assigned to. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="objectId"/> is null. </exception>
+        public Response<AppRoleAssignmentListResult> ListAppRoleAssignmentsNextPage(string nextLink, string objectId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            using var message = CreateListAppRoleAssignmentsNextPageRequest(nextLink, objectId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AppRoleAssignmentListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AppRoleAssignmentListResult.DeserializeAppRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("debugSetting");
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (Optional.IsDefined(OnErrorDeployment))
+            if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment");
-                writer.WriteObjectValue(OnErrorDeployment);
+                writer.WriteObjectValue(ErrorDeployment);
             }
-            if (Optional.IsDefined(ExpressionEvaluationOptions))
+            if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions");
-                writer.WriteObjectValue(ExpressionEvaluationOptions);
+                writer.WriteObjectValue(ExpressionEvaluation);
             }
             writer.WriteEndObject();
         }

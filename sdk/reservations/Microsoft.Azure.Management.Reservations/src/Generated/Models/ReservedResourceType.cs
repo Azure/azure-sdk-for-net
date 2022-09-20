@@ -36,5 +36,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public const string DedicatedHost = "DedicatedHost";
         public const string SapHana = "SapHana";
         public const string SqlAzureHybridBenefit = "SqlAzureHybridBenefit";
+        public const string AVS = "AVS";
+        public const string DataFactory = "DataFactory";
+        public const string NetAppStorage = "NetAppStorage";
+        public const string AzureFiles = "AzureFiles";
+        public const string SqlEdge = "SqlEdge";
+        public const string VirtualMachineSoftware = "VirtualMachineSoftware";
     }
 }

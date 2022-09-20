@@ -4,13 +4,36 @@
 
 ### Features Added
 
+* [Add histogram metric type support](https://github.com/Azure/azure-sdk-for-net/pull/27544)
+* [Update OTel package dependencies to 1.2.0](https://github.com/Azure/azure-sdk-for-net/pull/28507)
+* [Add default storage initialization for logs and metrics](https://github.com/Azure/azure-sdk-for-net/pull/28506)
+* [Add disable storage switch](https://github.com/Azure/azure-sdk-for-net/pull/28446)
+* [Transmit from storage](https://github.com/Azure/azure-sdk-for-net/pull/26762)
+* [Add exception telemetry](https://github.com/Azure/azure-sdk-for-net/pull/26670)
+* [Storage transmission evaluator](https://github.com/Azure/azure-sdk-for-net/pull/26976)
+* [Add metrics exporter](https://github.com/Azure/azure-sdk-for-net/pull/26651)
+* [Add default storage location and initialization for traces](https://github.com/Azure/azure-sdk-for-net/pull/26494)
+* [Change AzureMonitorExporterLoggingExtensions from internal to public](https://github.com/Azure/azure-sdk-for-net/pull/26355)
+* [Support for exporting Activity exception
+  event](https://github.com/Azure/azure-sdk-for-net/pull/29676)
+* [Update SampleRate in Request/Dependency telemetry](https://github.com/Azure/azure-sdk-for-net/pull/31118)
+
 ### Breaking Changes
+
+* [Request and Dependency Success criteria will now be decided based on
+  `Activity.Status`](https://github.com/Azure/azure-sdk-for-net/pull/31024)
+* [Changed `AzureMonitorTraceExporter` to internal](https://github.com/Azure/azure-sdk-for-net/pull/31067)
+* [Changed default offline storage directory from "Microsoft\ApplicationInsights" to "Microsoft\AzureMonitor"](https://github.com/Azure/azure-sdk-for-net/pull/31073).
+  Users may override the default location by setting `AzureMonitorExporterOptions.StorageDirectory`.
 
 ### Bugs Fixed
 
+* [Remove populating _MS.AggregationIntervalMs to all metrics](https://github.com/Azure/azure-sdk-for-net/pull/29473)
 * [Fix shared RoleName/RoleInstance between Trace and Log Exporter](https://github.com/Azure/azure-sdk-for-net/pull/26438)
 
 ### Other Changes
+
+* [Update persistent storage package dependency](https://github.com/Azure/azure-sdk-for-net/pull/29530)
 
 ## 1.0.0-beta.3 (2021-10-04)
 

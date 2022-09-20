@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of SyncFullSchemaProperties. </summary>
         /// <param name="tables"> List of tables in the database full schema. </param>
-        /// <param name="lastUpdateTime"> Last update time of the database schema. </param>
-        internal SyncFullSchemaProperties(IReadOnlyList<SyncFullSchemaTable> tables, DateTimeOffset? lastUpdateTime)
+        /// <param name="lastUpdateOn"> Last update time of the database schema. </param>
+        internal SyncFullSchemaProperties(IReadOnlyList<SyncFullSchemaTable> tables, DateTimeOffset? lastUpdateOn)
         {
             Tables = tables;
-            LastUpdateTime = lastUpdateTime;
+            LastUpdateOn = lastUpdateOn;
         }
 
         /// <summary> List of tables in the database full schema. </summary>
         public IReadOnlyList<SyncFullSchemaTable> Tables { get; }
         /// <summary> Last update time of the database schema. </summary>
-        public DateTimeOffset? LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdateOn { get; }
     }
 }

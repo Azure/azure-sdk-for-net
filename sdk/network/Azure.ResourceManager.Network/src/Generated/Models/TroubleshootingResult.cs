@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of TroubleshootingResult. </summary>
-        /// <param name="startTime"> The start time of the troubleshooting. </param>
-        /// <param name="endTime"> The end time of the troubleshooting. </param>
+        /// <param name="startOn"> The start time of the troubleshooting. </param>
+        /// <param name="endOn"> The end time of the troubleshooting. </param>
         /// <param name="code"> The result code of the troubleshooting. </param>
         /// <param name="results"> Information from troubleshooting. </param>
-        internal TroubleshootingResult(DateTimeOffset? startTime, DateTimeOffset? endTime, string code, IReadOnlyList<TroubleshootingDetails> results)
+        internal TroubleshootingResult(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, IReadOnlyList<TroubleshootingDetails> results)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Code = code;
             Results = results;
         }
 
         /// <summary> The start time of the troubleshooting. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the troubleshooting. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The result code of the troubleshooting. </summary>
         public string Code { get; }
         /// <summary> Information from troubleshooting. </summary>

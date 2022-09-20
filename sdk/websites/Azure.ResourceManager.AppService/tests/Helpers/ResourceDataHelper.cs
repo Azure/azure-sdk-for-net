@@ -7,6 +7,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.Core;
+using System;
 
 namespace Azure.ResourceManager.AppService.Tests.Helpers
 {
@@ -46,14 +47,13 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new AppServicePlanData(location)
             {
-                //Location = "AZURE_LOCATION",
-                Sku = new SkuDescription
+                Sku = new AppServiceSkuDescription
                 {
-                Name = "S1",
-                Tier = "STANDARD",
-                Capacity =  1
+                    Name = "S1",
+                    Tier = "STANDARD",
+                    Capacity =  1
                 },
-                PerSiteScaling = false,
+                IsPerSiteScaling = false,
                 IsXenon = false
             };
             return data;
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new WebSiteData(location)
             {
-                Reserved = false,
+                IsReserved = false,
                 IsXenon = false,
-                HyperV = false,
+                IsHyperV = false,
                 SiteConfig = new SiteConfigProperties
                 {
                     NetFrameworkVersion = "v4.6",
-                    LocalMySqlEnabled = false,
-                    Http20Enabled = true
+                    IsLocalMySqlEnabled = false,
+                    IsHttp20Enabled = true
                 },
                 ScmSiteAlsoStopped = false,
             };
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                     {
                         VirtualPath =  "/",
                         PhysicalPath =  "site\\wwwroot",
-                        PreloadEnabled =  true
+                        IsPreloadEnabled =  true
                     }
                 }
             };
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new SiteSourceControlData()
             {
-                RepoUrl = "https://github.com/00Kai0/azure-site-test",
+                RepoUri = new Uri("https://github.com/00Kai0/azure-site-test"),
                 Branch = "staging",
                 IsManualIntegration = true,
                 IsMercurial = false,
@@ -219,24 +219,24 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #endregion
 
         #region StaticSiteARMResourceData(StaticSiteRestOperation)
-        public static void AssertStaticSiteARMResourceData(StaticSiteARMResourceData ssrd1, StaticSiteARMResourceData ssrd2)
+        public static void AssertStaticSiteARMResourceData(StaticSiteData ssrd1, StaticSiteData ssrd2)
         {
             AssertTrackedResource(ssrd1, ssrd2);
             Assert.AreEqual(ssrd1.Branch, ssrd2.Branch);
-            Assert.AreEqual(ssrd1.RepositoryUrl, ssrd2.RepositoryUrl);
+            Assert.AreEqual(ssrd1.RepositoryUri, ssrd2.RepositoryUri);
             Assert.AreEqual(ssrd1.Kind, ssrd2.Kind);
         }
 
-        public static StaticSiteARMResourceData GetBasicStaticSiteARMResourceData(AzureLocation location)
+        public static StaticSiteData GetBasicStaticSiteARMResourceData(AzureLocation location)
         {
-            var data = new StaticSiteARMResourceData(location)
+            var data = new StaticSiteData(location)
             {
-                Sku = new SkuDescription()
+                Sku = new AppServiceSkuDescription()
                 {
                     Name = "Free",
                     //Tier = "Basic"
                 },
-                RepositoryUrl = "https://github.com/00Kai0/html-docs-hello-world",
+                RepositoryUri = new Uri("https://github.com/00Kai0/html-docs-hello-world"),
                 Branch = "master",
                 RepositoryToken = "xxx",
                 BuildProperties = new StaticSiteBuildProperties()
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #endregion
 
         #region Certificate
-        public static void AssertCertificate(CertificateData certificate1, CertificateData certificate2)
+        public static void AssertCertificate(AppCertificateData certificate1, AppCertificateData certificate2)
         {
             AssertTrackedResource(certificate1, certificate2);
             Assert.AreEqual(certificate1.CanonicalName, certificate2.CanonicalName);
         }
 
-        public static CertificateData GetBasicCertificateData(AzureLocation location)
+        public static AppCertificateData GetBasicCertificateData(AzureLocation location)
         {
-            var data = new CertificateData(location)
+            var data = new AppCertificateData(location)
             {
                 Location = location,
                 HostNames =

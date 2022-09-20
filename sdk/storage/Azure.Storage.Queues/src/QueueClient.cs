@@ -1961,7 +1961,15 @@ namespace Azure.Storage.Queues
 
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
+                        IClientSideEncryptor encryptor = ClientConfiguration.ClientSideEncryption.EncryptionVersion switch
+                        {
+#pragma warning disable CS0618 // obsolete
+                            ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption),
+#pragma warning restore CS0618 // obsolete
+                            ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientConfiguration.ClientSideEncryption),
+                            _ => throw new InvalidOperationException()
+                        };
+                        message = await new QueueClientSideEncryptor(encryptor)
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
 
@@ -2364,7 +2372,7 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>. Returns null if there are no messages in the queue.
         /// </returns>
         public virtual Response<PeekedMessage> PeekMessage(
             CancellationToken cancellationToken = default) =>
@@ -2384,7 +2392,7 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>. Returns null if there are no messages in the queue.
         /// </returns>
         public virtual async Task<Response<PeekedMessage>> PeekMessageAsync(
             CancellationToken cancellationToken = default) =>
@@ -3001,7 +3009,15 @@ namespace Azure.Storage.Queues
                     scope.Start();
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
+                        IClientSideEncryptor encryptor = ClientConfiguration.ClientSideEncryption.EncryptionVersion switch
+                        {
+#pragma warning disable CS0618 // obsolete
+                            ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption),
+#pragma warning restore CS0618 // obsolete
+                            ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientConfiguration.ClientSideEncryption),
+                            _ => throw new InvalidOperationException()
+                        };
+                        message = await new QueueClientSideEncryptor(encryptor)
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
                     QueueMessage queueSendMessage = null;

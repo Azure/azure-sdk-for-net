@@ -21,8 +21,8 @@ namespace HealthcareApis.Tests.Helpers
         private static Uri testUri = null;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "westus";
-        public static Kind DefaultKind = Kind.Fhir;
+        public static string DefaultLocation = IsTestTenant ? null : "westus2";
+        public static Kind DefaultKind = Kind.FhirR4;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
             {
                 {"key1","value1"},
@@ -37,7 +37,7 @@ namespace HealthcareApis.Tests.Helpers
             };
 
         public static string objectId = "7df19f2f-6169-40f0-ac1e-9a9b4e65a898";
-        public static string authority = "https://login.microsoftonline.com/common";
+        public static string authority = "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47";
         public static string audience = "https://azurehealthcareapis.com";
         public static bool smartOnFhirEnabled = false;
         public static int offerThroughput = 400;
@@ -63,6 +63,26 @@ namespace HealthcareApis.Tests.Helpers
                 healthcareApisManagementClient = context.GetServiceClient<HealthcareApisManagementClient>(handlers: handler);
             }
             return healthcareApisManagementClient;
+        }
+
+        public static Workspace GetWorkspace()
+        {
+            var workspace = new Workspace(location: DefaultLocation);
+            return workspace;
+        }
+
+        public static FhirService GetFhirService(bool withUpdatedTags)
+        {
+            var authenticationConfiguration = new FhirServiceAuthenticationConfiguration(
+                authority: authority,
+                audience: audience,
+                smartProxyEnabled: smartOnFhirEnabled);
+            var workspace = new FhirService(
+                tags: withUpdatedTags ? UpdateTags : DefaultTags,
+                kind: "fhir-R4",
+                location: DefaultLocation,
+                authenticationConfiguration: authenticationConfiguration);
+            return workspace;
         }
 
         public static ServicesDescription GetServiceDescription()
@@ -95,12 +115,13 @@ namespace HealthcareApis.Tests.Helpers
             IList<ServiceAccessPolicyEntry> accessPolicies = new List<ServiceAccessPolicyEntry>();
             accessPolicies.Add(new ServiceAccessPolicyEntry(objectId));
 
-            string provisioningState = "Succeeded";
-
             ServiceCosmosDbConfigurationInfo cosmosDbConfigurationInfo = new ServiceCosmosDbConfigurationInfo(offerThroughput, keyVaultKeyUri);
             ServiceAuthenticationConfigurationInfo authenticationConfigurationInfo = new ServiceAuthenticationConfigurationInfo(authority, audience, smartOnFhirEnabled);
 
-            var serviceProperties = new ServicesProperties(provisioningState, accessPolicies, cosmosDbConfigurationInfo, authenticationConfigurationInfo);
+            var serviceProperties = new ServicesProperties(
+                accessPolicies: accessPolicies,
+                cosmosDbConfiguration: cosmosDbConfigurationInfo,
+                authenticationConfiguration: authenticationConfigurationInfo);
 
             return serviceProperties;
         }
@@ -111,9 +132,17 @@ namespace HealthcareApis.Tests.Helpers
             string accountName = TestUtilities.GenerateName("hca");
 
             // Create healthcareApis account
-            var createdAccount = healthcareApisManagementClient.Services.CreateOrUpdate(rgname, accountName, GetServiceDescriptionWithProperties());
+            var createdAccount = healthcareApisManagementClient.Workspaces.BeginCreateOrUpdate(rgname, accountName, GetWorkspace());
 
             return accountName;
+        }
+
+        public static void VerifyWorkspaceProperties(Workspace workspace)
+        {
+            // verifies that the workspace is actually created
+            Assert.NotNull(workspace);
+            Assert.NotNull(workspace.Location);
+            Assert.Equal(ProvisioningState.Succeeded, workspace.Properties.ProvisioningState);
         }
 
         public static void VerifyAccountProperties(ServicesDescription account, bool useDefaults, string location = "westus")

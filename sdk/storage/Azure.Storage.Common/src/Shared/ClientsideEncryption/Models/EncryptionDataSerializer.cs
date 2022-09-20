@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Storage.Cryptography.Models
 {
@@ -59,11 +60,26 @@ namespace Azure.Storage.Cryptography.Models
             WriteEncryptionAgent(json, data.EncryptionAgent);
             json.WriteEndObject();
 
-            json.WriteString(nameof(data.ContentEncryptionIV), Convert.ToBase64String(data.ContentEncryptionIV));
+            if (data.ContentEncryptionIV != null)
+            {
+                json.WriteString(nameof(data.ContentEncryptionIV), Convert.ToBase64String(data.ContentEncryptionIV));
+            }
+            if (data.EncryptedRegionInfo != null)
+            {
+                json.WriteStartObject(nameof(data.EncryptedRegionInfo));
+                WriteEncryptedRegionInfo(json, data.EncryptedRegionInfo);
+                json.WriteEndObject();
+            }
 
             json.WriteStartObject(nameof(data.KeyWrappingMetadata));
             WriteDictionary(json, data.KeyWrappingMetadata);
             json.WriteEndObject();
+        }
+
+        private static void WriteEncryptedRegionInfo(Utf8JsonWriter json, EncryptedRegionInfo encryptedRegionInfo)
+        {
+            json.WriteNumber(nameof(encryptedRegionInfo.DataLength), encryptedRegionInfo.DataLength);
+            json.WriteNumber(nameof(encryptedRegionInfo.NonceLength), encryptedRegionInfo.NonceLength);
         }
 
         private static void WriteWrappedKey(Utf8JsonWriter json, KeyEnvelope key)
@@ -129,11 +145,11 @@ namespace Azure.Storage.Cryptography.Models
 
         private static void ReadPropertyValue(EncryptionData data, JsonProperty property)
         {
-            if (property.NameEquals(nameof(data.EncryptionMode)))
+            if (property.Name.Equals(nameof(data.EncryptionMode), StringComparison.InvariantCultureIgnoreCase))
             {
                 data.EncryptionMode = property.Value.GetString();
             }
-            else if (property.NameEquals(nameof(data.WrappedContentKey)))
+            else if (property.Name.Equals(nameof(data.WrappedContentKey), StringComparison.InvariantCultureIgnoreCase))
             {
                 var key = new KeyEnvelope();
                 foreach (var subProperty in property.Value.EnumerateObject())
@@ -142,7 +158,7 @@ namespace Azure.Storage.Cryptography.Models
                 }
                 data.WrappedContentKey = key;
             }
-            else if (property.NameEquals(nameof(data.EncryptionAgent)))
+            else if (property.Name.Equals(nameof(data.EncryptionAgent), StringComparison.InvariantCultureIgnoreCase))
             {
                 var agent = new EncryptionAgent();
                 foreach (var subProperty in property.Value.EnumerateObject())
@@ -151,11 +167,11 @@ namespace Azure.Storage.Cryptography.Models
                 }
                 data.EncryptionAgent = agent;
             }
-            else if (property.NameEquals(nameof(data.ContentEncryptionIV)))
+            else if (property.Name.Equals(nameof(data.ContentEncryptionIV), StringComparison.InvariantCultureIgnoreCase))
             {
                 data.ContentEncryptionIV = Convert.FromBase64String(property.Value.GetString());
             }
-            else if (property.NameEquals(nameof(data.KeyWrappingMetadata)))
+            else if (property.Name.Equals(nameof(data.KeyWrappingMetadata), StringComparison.InvariantCultureIgnoreCase))
             {
                 var metadata = new Dictionary<string, string>();
                 foreach (var entry in property.Value.EnumerateObject())
@@ -164,19 +180,28 @@ namespace Azure.Storage.Cryptography.Models
                 }
                 data.KeyWrappingMetadata = metadata;
             }
+            else if (property.Name.Equals(nameof(data.EncryptedRegionInfo), StringComparison.InvariantCultureIgnoreCase))
+            {
+                var info = new EncryptedRegionInfo();
+                foreach (var subProperty in property.Value.EnumerateObject())
+                {
+                    ReadPropertyValue(info, subProperty);
+                }
+                data.EncryptedRegionInfo = info;
+            }
         }
 
         private static void ReadPropertyValue(KeyEnvelope key, JsonProperty property)
         {
-            if (property.NameEquals(nameof(key.Algorithm)))
+            if (property.Name.Equals(nameof(key.Algorithm), StringComparison.InvariantCultureIgnoreCase))
             {
                 key.Algorithm = property.Value.GetString();
             }
-            else if (property.NameEquals(nameof(key.EncryptedKey)))
+            else if (property.Name.Equals(nameof(key.EncryptedKey), StringComparison.InvariantCultureIgnoreCase))
             {
                 key.EncryptedKey = Convert.FromBase64String(property.Value.GetString());
             }
-            else if (property.NameEquals(nameof(key.KeyId)))
+            else if (property.Name.Equals(nameof(key.KeyId), StringComparison.InvariantCultureIgnoreCase))
             {
                 key.KeyId = property.Value.GetString();
             }
@@ -184,13 +209,25 @@ namespace Azure.Storage.Cryptography.Models
 
         private static void ReadPropertyValue(EncryptionAgent agent, JsonProperty property)
         {
-            if (property.NameEquals(nameof(agent.EncryptionAlgorithm)))
+            if (property.Name.Equals(nameof(agent.EncryptionAlgorithm), StringComparison.InvariantCultureIgnoreCase))
             {
                 agent.EncryptionAlgorithm = new ClientSideEncryptionAlgorithm(property.Value.GetString());
             }
-            else if (property.NameEquals(EncryptionAgent_EncryptionVersionName))
+            else if (property.Name.Equals(EncryptionAgent_EncryptionVersionName, StringComparison.InvariantCultureIgnoreCase))
             {
                 agent.EncryptionVersion = property.Value.GetString().ToClientSideEncryptionVersion();
+            }
+        }
+
+        private static void ReadPropertyValue(EncryptedRegionInfo info, JsonProperty property)
+        {
+            if (property.Name.Equals(nameof(info.NonceLength), StringComparison.InvariantCultureIgnoreCase))
+            {
+                info.NonceLength = property.Value.GetInt32();
+            }
+            else if (property.Name.Equals(nameof(info.DataLength), StringComparison.InvariantCultureIgnoreCase))
+            {
+                info.DataLength = property.Value.GetInt32();
             }
         }
         #endregion

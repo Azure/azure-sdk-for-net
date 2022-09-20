@@ -15,14 +15,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {
-            string languageCode = default;
+            string locale = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("languageCode"))
+                if (property.NameEquals("locale"))
                 {
-                    languageCode = property.Value.GetString();
+                    locale = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("spans"))
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentLanguage(languageCode, spans, confidence);
+            return new DocumentLanguage(locale, spans, confidence);
         }
     }
 }

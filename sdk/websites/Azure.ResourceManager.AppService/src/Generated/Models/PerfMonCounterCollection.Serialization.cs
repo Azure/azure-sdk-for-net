@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static PerfMonCounterCollection DeserializePerfMonCounterCollection(JsonElement element)
         {
-            IReadOnlyList<PerfMonResponse> value = default;
+            IReadOnlyList<PerfMonResponseInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PerfMonResponse> array = new List<PerfMonResponse>();
+                    List<PerfMonResponseInfo> array = new List<PerfMonResponseInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PerfMonResponse.DeserializePerfMonResponse(item));
+                        array.Add(PerfMonResponseInfo.DeserializePerfMonResponseInfo(item));
                     }
                     value = array;
                     continue;

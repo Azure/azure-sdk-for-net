@@ -10,16 +10,13 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The configuration settings of the token store.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class TokenStore : ProxyOnlyResource
+    public partial class TokenStore
     {
         /// <summary>
         /// Initializes a new instance of the TokenStore class.
@@ -32,10 +29,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the TokenStore class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="enabled">&lt;code&gt;true&lt;/code&gt; to durably
         /// store platform-specific security tokens that are obtained during
         /// login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
@@ -47,8 +40,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// of the tokens if a file system is used.</param>
         /// <param name="azureBlobStorage">The configuration settings of the
         /// storage of the tokens if blob storage is used.</param>
-        public TokenStore(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), double? tokenRefreshExtensionHours = default(double?), FileSystemTokenStore fileSystem = default(FileSystemTokenStore), BlobStorageTokenStore azureBlobStorage = default(BlobStorageTokenStore))
-            : base(id, name, kind, type)
+        public TokenStore(bool? enabled = default(bool?), double? tokenRefreshExtensionHours = default(double?), FileSystemTokenStore fileSystem = default(FileSystemTokenStore), BlobStorageTokenStore azureBlobStorage = default(BlobStorageTokenStore))
         {
             Enabled = enabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
@@ -69,7 +61,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
         /// The default is &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
+        [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
@@ -77,21 +69,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tokenRefreshExtensionHours")]
+        [JsonProperty(PropertyName = "tokenRefreshExtensionHours")]
         public double? TokenRefreshExtensionHours { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the storage of the
         /// tokens if a file system is used.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.fileSystem")]
+        [JsonProperty(PropertyName = "fileSystem")]
         public FileSystemTokenStore FileSystem { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the storage of the
         /// tokens if blob storage is used.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.azureBlobStorage")]
+        [JsonProperty(PropertyName = "azureBlobStorage")]
         public BlobStorageTokenStore AzureBlobStorage { get; set; }
 
     }

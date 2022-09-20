@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eventTime"> The time when the security event occurred. </param>
+        /// <param name="eventOn"> The time when the security event occurred. </param>
         /// <param name="securityEventType"> The type of the security event. </param>
         /// <param name="subscription"> The subscription name. </param>
         /// <param name="server"> The server name. </param>
@@ -33,9 +34,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="applicationName"> The application used to execute the statement. </param>
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
-        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? eventTime, SecurityEventType? securityEventType, string subscription, string server, string database, string clientIP, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties) : base(id, name, resourceType, systemData)
+        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIP, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties) : base(id, name, resourceType, systemData)
         {
-            EventTime = eventTime;
+            EventOn = eventOn;
             SecurityEventType = securityEventType;
             Subscription = subscription;
             Server = server;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The time when the security event occurred. </summary>
-        public DateTimeOffset? EventTime { get; }
+        public DateTimeOffset? EventOn { get; }
         /// <summary> The type of the security event. </summary>
         public SecurityEventType? SecurityEventType { get; }
         /// <summary> The subscription name. </summary>
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The database name. </summary>
         public string Database { get; }
         /// <summary> The IP address of the client who executed the statement. </summary>
-        public string ClientIP { get; }
+        public IPAddress ClientIP { get; }
         /// <summary> The application used to execute the statement. </summary>
         public string ApplicationName { get; }
         /// <summary> The principal user who executed the statement. </summary>

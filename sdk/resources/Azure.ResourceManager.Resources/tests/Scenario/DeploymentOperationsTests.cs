@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroupResource rg = lro.Value;
             ResourceIdentifier deploymentResourceIdentifier = ArmDeploymentResource.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
             ArmDeploymentResource deployment = Client.GetArmDeploymentResource(deploymentResourceIdentifier);
-            var deploymentWhatIf = new ArmDeploymentWhatIf(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
+            var deploymentWhatIf = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
                 Template = CreateDeploymentPropertiesUsingString().Template,
                 Parameters = CreateDeploymentPropertiesUsingJsonElement().Parameters
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Tests
             WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf)).Value;
             Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
             Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
-            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, ChangeType.Create);
+            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, WhatIfChangeType.Create);
         }
     }
 }

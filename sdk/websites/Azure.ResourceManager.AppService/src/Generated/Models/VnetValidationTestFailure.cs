@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A class that describes a test that failed during NSG and UDR validation. </summary>
-    public partial class VnetValidationTestFailure : ProxyOnlyResource
+    public partial class VnetValidationTestFailure : ResourceData
     {
         /// <summary> Initializes a new instance of VnetValidationTestFailure. </summary>
         public VnetValidationTestFailure()
@@ -23,18 +23,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="testName"> The name of the test that failed. </param>
         /// <param name="details"> The details of what caused the failure, e.g. the blocking rule name, etc. </param>
-        internal VnetValidationTestFailure(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string testName, string details) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal VnetValidationTestFailure(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string testName, string details, string kind) : base(id, name, resourceType, systemData)
         {
             TestName = testName;
             Details = details;
+            Kind = kind;
         }
 
         /// <summary> The name of the test that failed. </summary>
         public string TestName { get; set; }
         /// <summary> The details of what caused the failure, e.g. the blocking rule name, etc. </summary>
         public string Details { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

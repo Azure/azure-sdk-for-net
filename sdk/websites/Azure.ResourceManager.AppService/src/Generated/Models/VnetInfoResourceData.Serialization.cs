@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<string> vnetResourceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<string> certThumbprint = default;
             Optional<string> certBlob = default;
             Optional<IReadOnlyList<VnetRoute>> routes = default;
@@ -82,11 +82,16 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -101,7 +106,12 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("vnetResourceId"))
                         {
-                            vnetResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            vnetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("certThumbprint"))
@@ -158,7 +168,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new VnetInfoResourceData(id, name, type, systemData, kind.Value, vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift));
+            return new VnetInfoResourceData(id, name, type, systemData.Value, vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), kind.Value);
         }
     }
 }

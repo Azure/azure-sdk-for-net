@@ -19,11 +19,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="TenantResource" /> and their operations.
-    /// Each <see cref="TenantResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantCollection" /> instance call the GetTenants method from an instance of <see cref="TenantResource" />.
-    /// </summary>
+    /// <summary> A class representing a collection of <see cref="TenantResource" /> and their operations. </summary>
     public partial class TenantCollection : ArmCollection, IEnumerable<TenantResource>, IAsyncEnumerable<TenantResource>
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionMonitorEndpointFilterItemType))
+            if (Optional.IsDefined(ItemType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ConnectionMonitorEndpointFilterItemType.Value.ToString());
+                writer.WriteStringValue(ItemType.Value.ToString());
             }
             if (Optional.IsDefined(Address))
             {

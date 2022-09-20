@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         internal static HardwareProfile DeserializeHardwareProfile(JsonElement element)
         {
             Optional<int> memorySizeMB = default;
-            Optional<int> numCPUs = default;
+            Optional<int> numCpus = default;
             Optional<int> numCoresPerSocket = default;
             Optional<bool> cpuHotAddEnabled = default;
             Optional<bool> cpuHotRemoveEnabled = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    numCPUs = property.Value.GetInt32();
+                    numCpus = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("numCoresPerSocket"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new HardwareProfile(Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCPUs), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(cpuHotAddEnabled), Optional.ToNullable(cpuHotRemoveEnabled), Optional.ToNullable(memoryHotAddEnabled));
+            return new HardwareProfile(Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(cpuHotAddEnabled), Optional.ToNullable(cpuHotRemoveEnabled), Optional.ToNullable(memoryHotAddEnabled));
         }
     }
 }

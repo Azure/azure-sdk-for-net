@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
         /// <param name="keepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
         /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
-        /// <param name="startTime"> When the schedule should start working. </param>
-        /// <param name="lastExecutionTime"> Last time when this schedule was triggered. </param>
-        internal BackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool keepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startTime, DateTimeOffset? lastExecutionTime)
+        /// <param name="startOn"> When the schedule should start working. </param>
+        /// <param name="lastExecutionOn"> Last time when this schedule was triggered. </param>
+        internal BackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool keepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutionOn)
         {
             FrequencyInterval = frequencyInterval;
             FrequencyUnit = frequencyUnit;
             KeepAtLeastOneBackup = keepAtLeastOneBackup;
             RetentionPeriodInDays = retentionPeriodInDays;
-            StartTime = startTime;
-            LastExecutionTime = lastExecutionTime;
+            StartOn = startOn;
+            LastExecutionOn = lastExecutionOn;
         }
 
         /// <summary> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </summary>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> After how many days backups should be deleted. </summary>
         public int RetentionPeriodInDays { get; set; }
         /// <summary> When the schedule should start working. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> Last time when this schedule was triggered. </summary>
-        public DateTimeOffset? LastExecutionTime { get; }
+        public DateTimeOffset? LastExecutionOn { get; }
     }
 }

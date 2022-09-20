@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -30,7 +29,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             StoredProcedureName = storedProcedureName;
-            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlServerStoredProcedure";
         }
 
@@ -45,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </param>
-        internal SqlServerStoredProcedureActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object storedProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SqlServerStoredProcedureActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object storedProcedureName, object storedProcedureParameters) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StoredProcedureName = storedProcedureName;
             StoredProcedureParameters = storedProcedureParameters;
@@ -55,6 +53,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
+        public object StoredProcedureParameters { get; set; }
     }
 }

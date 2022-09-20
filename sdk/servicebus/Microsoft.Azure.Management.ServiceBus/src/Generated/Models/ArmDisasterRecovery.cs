@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// operation
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ArmDisasterRecovery : Resource
+    public partial class ArmDisasterRecovery : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ArmDisasterRecovery class.
@@ -33,9 +33,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the ArmDisasterRecovery class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Alias(Disaster Recovery configuration) - possible values 'Accepted'
         /// or 'Succeeded' or 'Failed'. Possible values include: 'Accepted',
@@ -52,8 +57,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Secondary'</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = default(string), string alternateName = default(string), string role = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
@@ -76,7 +81,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningStateDR? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets number of entities pending to be replicated.
@@ -104,7 +109,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Primary', 'PrimaryNotReplicating', 'Secondary'
         /// </summary>
         [JsonProperty(PropertyName = "properties.role")]
-        public RoleDisasterRecovery? Role { get; private set; }
+        public string Role { get; private set; }
 
         /// <summary>
         /// Gets the system meta data relating to this resource.

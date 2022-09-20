@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Stop packet capture parameters. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> SAS url for packet capture on virtual network gateway. </summary>
-        public string SasUrl { get; set; }
+        public Uri SasUri { get; set; }
     }
 }

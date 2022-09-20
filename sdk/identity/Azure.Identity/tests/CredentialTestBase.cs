@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -16,7 +19,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class CredentialTestBase : ClientTestBase
+    public abstract class CredentialTestBase : ClientTestBase
     {
         protected const string Scope = "https://vault.azure.net/.default";
         protected const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
@@ -45,13 +48,111 @@ namespace Azure.Identity.Tests
         {
         }
 
-        public void TestSetup()
+        public abstract TokenCredential GetTokenCredential(TokenCredentialOptions options);
+
+        [Test]
+        public async Task IsAccountIdentifierLoggingEnabled([Values(true, false)] bool isOptionSet)
+        {
+            var options = new TokenCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = isOptionSet } };
+            TestSetup(options);
+            expectedTenantId = TenantId;
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
+            var credential = GetTokenCredential(options);
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
+            await credential.GetTokenAsync(context, default);
+
+            var loggedEvents = _listener.EventsById(AzureIdentityEventSource.AuthenticatedAccountDetailsEvent);
+            if (isOptionSet)
+            {
+                CollectionAssert.IsNotEmpty(loggedEvents);
+            }
+            else
+            {
+                CollectionAssert.IsEmpty(loggedEvents);
+            }
+        }
+
+        public class AllowedTenantsTestParameters
+        {
+            public string TenantId { get; set; }
+            public List<string> AdditionallyAllowedTenants { get; set; }
+            public TokenRequestContext TokenRequestContext { get; set; }
+            public string ToDebugString()
+            {
+                return $"TenantId:{TenantId??"null"}, AddlTenants:[{string.Join(",", AdditionallyAllowedTenants)}], RequestedTenantId:{TokenRequestContext.TenantId??"null"}";
+            }
+        }
+
+        public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCases()
+        {
+            string tenant = Guid.NewGuid().ToString();
+            string addlTenantA = Guid.NewGuid().ToString();
+            string addlTenantB = Guid.NewGuid().ToString();
+
+            List<string> tenantValues = new List<string>() { tenant, null };
+
+            List<List<string>> additionalAllowedTenantsValues = new List<List<string>>()
+            {
+                new List<string>(),
+                new List<string> { addlTenantA, addlTenantB },
+                new List<string> { "*" },
+                new List<string> { addlTenantA, "*", addlTenantB }
+            };
+
+            List<TokenRequestContext> tokenRequestContextValues = new List<TokenRequestContext>()
+            {
+                new TokenRequestContext(MockScopes.Default),
+                new TokenRequestContext(MockScopes.Default, tenantId: tenant),
+                new TokenRequestContext(MockScopes.Default, tenantId: addlTenantA),
+                new TokenRequestContext(MockScopes.Default, tenantId: addlTenantB),
+                new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()),
+            };
+
+            foreach (var mainTenant in tenantValues)
+            {
+                foreach (var additoinallyAllowedTenants in additionalAllowedTenantsValues)
+                {
+                    foreach (var tokenRequestContext in tokenRequestContextValues)
+                    {
+                        yield return new AllowedTenantsTestParameters { TenantId = mainTenant, AdditionallyAllowedTenants = additoinallyAllowedTenants, TokenRequestContext = tokenRequestContext };
+                    }
+                }
+            }
+        }
+
+        [TestCaseSource(nameof(GetAllowedTenantsTestCases))]
+        public abstract Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters);
+
+        public static async Task AssertAllowedTenantIdsEnforcedAsync(AllowedTenantsTestParameters parameters, TokenCredential credential)
+        {
+            bool expAllowed = parameters.TenantId == null
+                || parameters.TokenRequestContext.TenantId == null
+                || parameters.TenantId == parameters.TokenRequestContext.TenantId
+                || parameters.AdditionallyAllowedTenants.Contains(parameters.TokenRequestContext.TenantId)
+                || parameters.AdditionallyAllowedTenants.Contains("*");
+
+            if (expAllowed)
+            {
+                var accessToken = await credential.GetTokenAsync(parameters.TokenRequestContext, default);
+
+                Assert.IsNotNull(accessToken.Token);
+            }
+            else
+            {
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => { await credential.GetTokenAsync(parameters.TokenRequestContext, default); });
+
+                StringAssert.Contains($"The current credential is not configured to acquire tokens for tenant {parameters.TokenRequestContext.TenantId}", ex.Message);
+            }
+        }
+
+        public void TestSetup(TokenCredentialOptions options = null)
         {
             expectedTenantId = null;
             expectedReplyUri = null;
             authCode = Guid.NewGuid().ToString();
-            options = new TokenCredentialOptions();
-            expectedToken = Guid.NewGuid().ToString();
+            options = options ?? new TokenCredentialOptions();
+            expectedToken = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.UtcNow.AddHours(1));
             expectedUserAssertion = Guid.NewGuid().ToString();
             expiresOn = DateTimeOffset.Now.AddHours(1);
             result = new AuthenticationResult(
@@ -68,7 +169,7 @@ namespace Azure.Identity.Tests
                 null,
                 "Bearer");
 
-            mockConfidentialMsalClient = new MockMsalConfidentialClient()
+            mockConfidentialMsalClient = new MockMsalConfidentialClient(null, null, null, null, null, options)
                 .WithSilentFactory(
                     (_, _tenantId, _replyUri, _) =>
                     {
@@ -97,7 +198,7 @@ namespace Azure.Identity.Tests
                     });
 
             expectedCode = Guid.NewGuid().ToString();
-            mockPublicMsalClient = new MockMsalPublicClient();
+            mockPublicMsalClient = new MockMsalPublicClient(null, null, null, null, options);
             deviceCodeResult = MockMsalPublicClient.GetDeviceCodeResult(deviceCode: expectedCode);
             mockPublicMsalClient.DeviceCodeResult = deviceCodeResult;
             var publicResult = new AuthenticationResult(

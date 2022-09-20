@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// The connection state.
+    /// </summary>
     public partial class ConnectionPropertiesPrivateLinkServiceConnectionState : ConnectionState
     {
         /// <summary>

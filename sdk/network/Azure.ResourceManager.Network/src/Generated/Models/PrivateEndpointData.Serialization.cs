@@ -7,8 +7,10 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Id))
             {
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -87,18 +89,18 @@ namespace Azure.ResourceManager.Network
         internal static PrivateEndpointData DeserializePrivateEndpointData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> etag = default;
-            Optional<string> id = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<SubnetData> subnet = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<PrivateLinkServiceConnection>> privateLinkServiceConnections = default;
-            Optional<IList<PrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
-            Optional<IList<CustomDnsConfigPropertiesFormat>> customDnsConfigs = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<IList<NetworkPrivateLinkServiceConnection>> privateLinkServiceConnections = default;
+            Optional<IList<NetworkPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
+            Optional<IList<CustomDnsConfigProperties>> customDnsConfigs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"))
@@ -108,17 +110,27 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -128,12 +140,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -192,7 +214,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnections"))
@@ -202,10 +224,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                            List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
                             }
                             privateLinkServiceConnections = array;
                             continue;
@@ -217,10 +239,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                            List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
                             }
                             manualPrivateLinkServiceConnections = array;
                             continue;
@@ -232,10 +254,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CustomDnsConfigPropertiesFormat> array = new List<CustomDnsConfigPropertiesFormat>();
+                            List<CustomDnsConfigProperties> array = new List<CustomDnsConfigProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CustomDnsConfigPropertiesFormat.DeserializeCustomDnsConfigPropertiesFormat(item));
+                                array.Add(CustomDnsConfigProperties.DeserializeCustomDnsConfigProperties(item));
                             }
                             customDnsConfigs = array;
                             continue;
@@ -244,7 +266,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateEndpointData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs));
+            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs));
         }
     }
 }

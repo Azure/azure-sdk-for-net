@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="protocol">The protocol used for the probe. Possible
-        /// values include: 'Http', 'Https'</param>
+        /// values include: 'Http', 'Https', 'Tcp', 'Tls'</param>
         /// <param name="host">Host name to send the probe to.</param>
         /// <param name="path">Relative path of probe. Valid path starts from
         /// '/'. Probe is sent to
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the protocol used for the probe. Possible values
-        /// include: 'Http', 'Https'
+        /// include: 'Http', 'Https', 'Tcp', 'Tls'
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
         public string Protocol { get; set; }

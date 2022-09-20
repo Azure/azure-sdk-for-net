@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="createdTime"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="changedTime"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
         {
             Plan = plan;
             Properties = properties;
@@ -47,14 +47,43 @@ namespace Azure.ResourceManager.Resources
             ManagedBy = managedBy;
             Sku = sku;
             Identity = identity;
-            CreatedTime = createdTime;
-            ChangedTime = changedTime;
+            CreatedOn = createdOn;
+            ChangedOn = changedOn;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> The plan of the resource. </summary>
         public ArmPlan Plan { get; set; }
-        /// <summary> The resource properties. </summary>
+        /// <summary>
+        /// The resource properties.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Properties { get; set; }
         /// <summary> The kind of the resource. </summary>
         public string Kind { get; set; }
@@ -65,9 +94,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The created time of the resource. This is only present if requested via the $expand query parameter. </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The changed time of the resource. This is only present if requested via the $expand query parameter. </summary>
-        public DateTimeOffset? ChangedTime { get; }
+        public DateTimeOffset? ChangedOn { get; }
         /// <summary> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </summary>
         public string ProvisioningState { get; }
     }

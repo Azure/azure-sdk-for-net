@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Optional<string> id = default;
             Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -31,11 +31,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new TargetResource(id.Value, resourceName.Value, resourceType.Value);
+            return new TargetResource(id.Value, resourceName.Value, Optional.ToNullable(resourceType));
         }
     }
 }

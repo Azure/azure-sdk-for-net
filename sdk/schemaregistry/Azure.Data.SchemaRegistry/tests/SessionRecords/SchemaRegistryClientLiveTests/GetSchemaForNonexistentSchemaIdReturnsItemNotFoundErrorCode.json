@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/$schemas/9338b35f-cd09-8137-5bdc-31810e068087?api-version=2021-10",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; serialization=Avro",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.2.0-alpha.20220419.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "24ff1a02d7e7d03f7d158947592e7701",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 20 Apr 2022 00:01:32 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked",
+        "x-ms-error-code": "ItemNotFound"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ItemNotFound",
+          "message": "Schema id 9338b35f-cd09-8137-5bdc-31810e068087 does not exist. TrackingId:09906393-a678-49a3-a130-c736ec577fb7_G29, SystemTracker:jolovschemaregistry.servicebus.windows.net:$schemaGroups/$schemas/9338b35f-cd09-8137-5bdc-31810e068087, Timestamp:2022-04-20T00:01:33"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "698300445",
+    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net"
+  }
+}

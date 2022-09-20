@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     public class PrivateEndpointConnectionOperationTests : AppConfigurationClientBase
     {
         private ResourceGroupResource ResGroup { get; set; }
-        private ConfigurationStoreResource ConfigStore { get; set; }
+        private AppConfigurationStoreResource ConfigStore { get; set; }
         private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
-        private PrivateEndpointConnectionResource Connection { get; set; }
+        private AppConfigurationPrivateEndpointConnectionResource Connection { get; set; }
 
         public PrivateEndpointConnectionOperationTests(bool isAsync)
             : base(isAsync)
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
                 ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
+                AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    PublicNetworkAccess = PublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
-                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
+                ConfigStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 // Prepare VNet and Private Endpoint
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {
                     Location = "eastus",
-                    Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
+                    Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicy = "Disabled" } }
                 };
                 vnetData.AddressPrefixes.Add("10.0.0.0/16");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection()
+                    PrivateLinkServiceConnections = { new NetworkPrivateLinkServiceConnection()
                         {
                             Name ="myconnection",
                             PrivateLinkServiceId = ConfigStore.Data.Id,
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                             RequestMessage = "Please approve my connection",
                         }
                         },
-                    Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
+                    Subnet = new SubnetData() { Id = new ResourceIdentifier("/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName) }
                 };
                 PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
-                List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+                List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
             }
         }
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task DeleteTest()
         {
             await Connection.DeleteAsync(WaitUntil.Completed);
-            PrivateEndpointConnectionResource connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { AppConfigurationPrivateEndpointConnectionResource connection = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAsync(Connection.Data.Name); });
 
-            Assert.IsNull(connection);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
         public async Task GetTest()
         {
-            PrivateEndpointConnectionResource connection = await Connection.GetAsync();
+            AppConfigurationPrivateEndpointConnectionResource connection = await Connection.GetAsync();
             Assert.IsTrue(Connection.Data.Name.Equals(connection.Data.Name));
         }
 

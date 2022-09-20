@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class BoundingRegion
+    public partial struct BoundingRegion
     {
         internal static BoundingRegion DeserializeBoundingRegion(JsonElement element)
         {
             int pageNumber = default;
-            IReadOnlyList<float> boundingBox = default;
+            IReadOnlyList<float> polygon = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pageNumber"))
@@ -24,18 +24,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     pageNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("boundingBox"))
+                if (property.NameEquals("polygon"))
                 {
                     List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetSingle());
                     }
-                    boundingBox = array;
+                    polygon = array;
                     continue;
                 }
             }
-            return new BoundingRegion(pageNumber, boundingBox);
+            return new BoundingRegion(pageNumber, polygon);
         }
     }
 }

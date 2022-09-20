@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("activeDirectoryUserName");
                 writer.WriteStringValue(ActiveDirectoryUserName);
             }
-            if (Optional.IsDefined(CreateTime))
+            if (Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime");
-                writer.WriteStringValue(CreateTime.Value, "O");
+                writer.WriteStringValue(CreateOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> objectId = default;
             Optional<string> userPrincipalName = default;
-            Optional<ApplicationType> applicationType = default;
-            Optional<SessionState> sessionState = default;
+            Optional<VirtualApplicationType> applicationType = default;
+            Optional<UserSessionState> sessionState = default;
             Optional<string> activeDirectoryUserName = default;
             Optional<DateTimeOffset> createTime = default;
             foreach (var property in element.EnumerateObject())
@@ -75,11 +75,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -109,7 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            applicationType = new ApplicationType(property0.Value.GetString());
+                            applicationType = new VirtualApplicationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sessionState"))
@@ -119,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sessionState = new SessionState(property0.Value.GetString());
+                            sessionState = new UserSessionState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("activeDirectoryUserName"))
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new UserSessionData(id, name, type, systemData, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime));
+            return new UserSessionData(id, name, type, systemData.Value, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime));
         }
     }
 }

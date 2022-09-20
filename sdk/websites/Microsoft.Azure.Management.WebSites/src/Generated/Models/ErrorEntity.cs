@@ -35,14 +35,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="messageTemplate">Message template.</param>
         /// <param name="parameters">Parameters for the template.</param>
         /// <param name="innerErrors">Inner errors.</param>
+        /// <param name="details">Error Details.</param>
+        /// <param name="target">The error target.</param>
         /// <param name="code">Basic error code.</param>
         /// <param name="message">Any details of the error.</param>
-        public ErrorEntity(string extendedCode = default(string), string messageTemplate = default(string), IList<string> parameters = default(IList<string>), IList<ErrorEntity> innerErrors = default(IList<ErrorEntity>), string code = default(string), string message = default(string))
+        public ErrorEntity(string extendedCode = default(string), string messageTemplate = default(string), IList<string> parameters = default(IList<string>), IList<ErrorEntity> innerErrors = default(IList<ErrorEntity>), IList<ErrorEntity> details = default(IList<ErrorEntity>), string target = default(string), string code = default(string), string message = default(string))
         {
             ExtendedCode = extendedCode;
             MessageTemplate = messageTemplate;
             Parameters = parameters;
             InnerErrors = innerErrors;
+            Details = details;
+            Target = target;
             Code = code;
             Message = message;
             CustomInit();
@@ -76,6 +80,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "innerErrors")]
         public IList<ErrorEntity> InnerErrors { get; set; }
+
+        /// <summary>
+        /// Gets or sets error Details.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public IList<ErrorEntity> Details { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error target.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; set; }
 
         /// <summary>
         /// Gets or sets basic error code.

@@ -115,29 +115,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void TryAddClonesTheEvent()
-        {
-            var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
-            var eventData = new EventData(new byte[] { 0x21 });
-
-            Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
-            Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
-            Assert.That(mockBatch.TryAddCalledWith, Is.Not.SameAs(eventData), "The event data should have been cloned.");
-        }
-
-        /// <summary>
         ///   Verifies property accessors for the <see cref="EventDataBatch.AsReadOnlyCollection" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableIsDelegatedToTheTransportClient()
+        public void AsReadOnlyCollectionIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
@@ -279,6 +262,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override int Count { get; } = 400;
 
+            public override int? StartingSequenceNumber => 0;
+
             public override void Clear() => ClearInvoked = true;
 
             public override void Dispose() => DisposeInvoked = true;
@@ -293,6 +278,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 AsReadOnlyCollectionCalledWith = typeof(T);
                 return default;
+            }
+
+            public override int ApplyBatchSequencing(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => (lastSequenceNumber + 1);
+
+            public override void ResetBatchSequencing()
+            {
             }
         }
     }

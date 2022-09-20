@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, <paramref name="description"/> or <paramref name="script"/> is null. </exception>
-        internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IEnumerable<string> script) : base(schema, id, osType, label, description)
+        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IEnumerable<string> script) : base(schema, id, osType, label, description)
         {
             if (schema == null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/> or <paramref name="description"/> is null. </exception>
-        internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description)
+        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description)
         {
             if (schema == null)
             {

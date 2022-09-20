@@ -55,8 +55,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(name, metricData.Metrics.First().Name);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
             Assert.Equal(dataPointType, metricData.Metrics.First().DataPointType);
-            // Properties will contain _MS.AggregationIntervalMs
-            Assert.Equal(1, metricData.Properties.Count);
         }
 
         [InlineData(MetricType.DoubleSum)]

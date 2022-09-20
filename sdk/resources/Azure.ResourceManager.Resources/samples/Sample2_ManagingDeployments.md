@@ -43,9 +43,9 @@ Now that we have the resource group created, we can manage the deployments insid
 ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Use the same location as the resource group
 string deploymentName = "myDeployment";
-var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+var input = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
-    TemplateLink = new TemplateLink()
+    TemplateLink = new ArmDeploymentTemplateLink()
     {
         Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
@@ -70,7 +70,7 @@ ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployment
 // Use the same location as the resource group
 string deploymentName = "myDeployment";
 // Passing string to template and parameters
-var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+var input = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
     Template = BinaryData.FromString(File.ReadAllText("storage-template.json")),
     Parameters = BinaryData.FromString(File.ReadAllText("storage-parameters.json"))
@@ -91,9 +91,9 @@ var parametersObject = new { storageAccountType = new { value = "Standard_GRS" }
 //convert this object to JsonElement
 var parametersString = JsonSerializer.Serialize(parametersObject);
 var parameters = JsonDocument.Parse(parametersString).RootElement;
-var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+var input = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
-    TemplateLink = new TemplateLink()
+    TemplateLink = new ArmDeploymentTemplateLink()
     {
         Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },

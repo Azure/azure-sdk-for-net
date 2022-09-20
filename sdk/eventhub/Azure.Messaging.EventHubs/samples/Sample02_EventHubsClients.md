@@ -4,6 +4,20 @@ The Event Hubs client library has the goal of providing an approachable onboardi
 
 This sample details the client types available for the Event Hubs client library and demonstrates some of the options for customizing their configuration.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Hierarchy](#hierarchy)
+- [Lifetime](#lifetime)
+- [Configuration](#configuration)
+    - [Using web sockets](#using-web-sockets)
+    - [Setting a custom proxy](#setting-a-custom-proxy)
+    - [Using the default system proxy](#using-the-default-system-proxy)
+    - [Specifying a custom endpoint address](#specifying-a-custom-endpoint-address)
+    - [Influencing SSL certificate validation](#influencing-ssl-certificate-validation)
+    - [Configuring the client retry thresholds](#configuring-the-client-retry-thresholds)
+    - [Configuring the timeout used for Event Hubs service operations](#configuring-the-timeout-used-for-event-hubs-service-operations)
+    - [Using a custom retry policy](#using-a-custom-retry-policy)
+
 ## Hierarchy
 
 Because each client provides the developer experience for an area of Event Hubs functionality, to provide the best experience, it is important that it offers an API focused on a concrete set of scenarios.  Because applications have different needs, we wanted to offer support for more specialized scenarios without introducing additional complexity to the more common scenarios.  To achieve this, the client hierarchy was designed to align with two general categories, mainstream and specialized.  

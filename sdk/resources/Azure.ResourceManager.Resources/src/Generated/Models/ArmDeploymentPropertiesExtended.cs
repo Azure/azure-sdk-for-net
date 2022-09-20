@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="parametersLink"> The URI referencing the parameters. </param>
         /// <param name="mode"> The deployment mode. Possible values are Incremental and Complete. </param>
         /// <param name="debugSetting"> The debug setting of the deployment. </param>
-        /// <param name="onErrorDeployment"> The deployment on error behavior. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="templateHash"> The hash produced for the template. </param>
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, TemplateLink templateLink, BinaryData parameters, ParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ResponseError error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
             ParametersLink = parametersLink;
             Mode = mode;
             DebugSetting = debugSetting;
-            OnErrorDeployment = onErrorDeployment;
+            ErrorDeployment = errorDeployment;
             TemplateHash = templateHash;
             OutputResources = outputResources;
             ValidatedResources = validatedResources;
@@ -72,31 +72,83 @@ namespace Azure.ResourceManager.Resources.Models
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The duration of the template deployment. </summary>
         public TimeSpan? Duration { get; }
-        /// <summary> Key/value pairs that represent deployment output. </summary>
+        /// <summary>
+        /// Key/value pairs that represent deployment output.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Outputs { get; }
         /// <summary> The list of resource providers needed for the deployment. </summary>
         public IReadOnlyList<ResourceProviderData> Providers { get; }
         /// <summary> The list of deployment dependencies. </summary>
         public IReadOnlyList<ArmDependency> Dependencies { get; }
         /// <summary> The URI referencing the template. </summary>
-        public TemplateLink TemplateLink { get; }
-        /// <summary> Deployment parameters. </summary>
+        public ArmDeploymentTemplateLink TemplateLink { get; }
+        /// <summary>
+        /// Deployment parameters. 
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Parameters { get; }
         /// <summary> The URI referencing the parameters. </summary>
-        public ParametersLink ParametersLink { get; }
+        public ArmDeploymentParametersLink ParametersLink { get; }
         /// <summary> The deployment mode. Possible values are Incremental and Complete. </summary>
         public ArmDeploymentMode? Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
         internal DebugSetting DebugSetting { get; }
-        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
-        public string DebugSettingDetailLevel
-        {
-            get => DebugSetting.DetailLevel;
-            set => DebugSetting.DetailLevel = value;
-        }
 
         /// <summary> The deployment on error behavior. </summary>
-        public OnErrorDeploymentExtended OnErrorDeployment { get; }
+        public ErrorDeploymentExtended ErrorDeployment { get; }
         /// <summary> The hash produced for the template. </summary>
         public string TemplateHash { get; }
         /// <summary> Array of provisioned resources. </summary>
@@ -104,6 +156,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Array of validated resources. </summary>
         public IReadOnlyList<SubResource> ValidatedResources { get; }
         /// <summary> The deployment error. </summary>
-        public ErrorDetail Error { get; }
+        public ResponseError Error { get; }
     }
 }

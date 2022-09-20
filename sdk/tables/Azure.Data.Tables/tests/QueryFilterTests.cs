@@ -23,11 +23,11 @@ namespace Azure.Data.Tables.Tests
         private static readonly Guid s_someGuid = new Guid("66cf3753-1cc9-44c4-b857-4546f744901b");
         private static readonly string s_someGuidString = "66cf3753-1cc9-44c4-b857-4546f744901b";
 
-        private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04 };
+        private static readonly byte[] s_someBinary = new byte[] { 0xFF, 0x02, 0x03, 0x04 };
 
         private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[]
         {
-            0x01, 0x02, 0x03, 0x04,
+            0xFF, 0x02, 0x03, 0x04,
         });
 
         public static object[] QueryFilterTestCases =
@@ -42,8 +42,8 @@ namespace Azure.Data.Tables.Tests
             new object[] { TableOdataFilter.Create($"DateTime lt {s_someDateTime}"), $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'" },
             new object[] { TableOdataFilter.Create($"Bool eq {SomeTrueBool}"), "Bool eq true" },
             new object[] { TableOdataFilter.Create($"Bool eq {SomeFalseBool}"), "Bool eq false" },
-            new object[] { TableOdataFilter.Create($"Binary eq { s_someBinary}"), $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'" },
-            new object[] { TableOdataFilter.Create($"Binary eq {s_someBinaryData}"), $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'" }
+            new object[] { TableOdataFilter.Create($"Binary eq { s_someBinary}"), $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'" },
+            new object[] { TableOdataFilter.Create($"Binary eq {s_someBinaryData}"), $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("X2")))}'" }
         };
 
         [Test]

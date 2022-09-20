@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/29190")]
         public void CanUseAllAnalysisComponentOptions()
         {
             Run(() =>

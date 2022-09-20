@@ -1,112 +1,215 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/incidents/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/78f3a4e7-fe53-4a05-9f4d-d724ab6c23a7/incidents/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "171",
+        "Content-Length": "97",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8df718bab1e64f4191f0b3a7595f369b-e2d1b14b23110f47-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-53c90b3f0ba344e8b157bf600ee26fab-931ef431fa33d7ee-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "565e58f2f76341b57d6d19474cf5d419",
+        "x-ms-client-request-id": "20c262fddd57a7be107452d63361bf6b",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022startTime\u0022:\u00222021-10-01T00:00:00.0000000Z\u0022,\u0022endTime\u0022:\u00222021-10-31T00:00:00.0000000Z\u0022,\u0022filter\u0022:{\u0022dimensionFilter\u0022:[{\u0022dimension\u0022:{\u0022region\u0022:\u0022__SUM__\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}}]}}",
+      "RequestBody": {
+        "startTime": "2022-01-01T00:00:00.0000000Z",
+        "endTime": "2022-04-15T00:00:00.0000000Z",
+        "filter": {}
+      },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e6ac851b-382a-46f6-ab5d-529461b027ce",
-        "Content-Length": "717",
+        "apim-request-id": "1616801e-2445-473f-b6d9-1087e434ed93",
+        "Content-Length": "2507",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:29 GMT",
+        "Date": "Tue, 19 Apr 2022 04:02:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "257",
-        "X-Request-ID": "e6ac851b-382a-46f6-ab5d-529461b027ce"
+        "x-envoy-upstream-service-time": "382",
+        "X-Request-ID": "1616801e-2445-473f-b6d9-1087e434ed93"
       },
       "ResponseBody": {
         "value": [
           {
-            "incidentId": "aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c76f2dc00",
-            "startTime": "2021-10-13T00:00:00.0000000Z",
-            "lastTime": "2021-10-13T00:00:00.0000000Z",
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-180255ea000",
+            "startTime": "2022-04-12T00:00:00Z",
+            "lastTime": "2022-04-14T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "region": "__SUM__",
-                "category": "Grocery \u0026 Gourmet Food"
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
               }
             },
             "property": {
-              "maxSeverity": "Low",
+              "maxSeverity": "High",
               "incidentStatus": "Active",
-              "valueOfRootNode": 57.199999999999996,
-              "expectedValueOfRootNode": 36.86452522588014
+              "valueOfRootNode": 93058.0,
+              "expectedValueOfRootNode": 80000.0
             }
           },
           {
-            "incidentId": "aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c52e65800",
-            "startTime": "2021-10-06T00:00:00.0000000Z",
-            "lastTime": "2021-10-06T00:00:00.0000000Z",
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-1800b9ed400",
+            "startTime": "2022-04-07T00:00:00Z",
+            "lastTime": "2022-04-09T00:00:00Z",
             "rootNode": {
               "dimension": {
-                "region": "__SUM__",
-                "category": "Grocery \u0026 Gourmet Food"
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
               }
             },
             "property": {
-              "maxSeverity": "Low",
+              "maxSeverity": "High",
               "incidentStatus": "Active",
-              "valueOfRootNode": 63.600000000000016,
-              "expectedValueOfRootNode": 38.92879742764329
+              "valueOfRootNode": 89492.0,
+              "expectedValueOfRootNode": 80000.0
+            }
+          },
+          {
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-17ff7056400",
+            "startTime": "2022-04-05T00:00:00Z",
+            "lastTime": "2022-04-05T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
+              }
+            },
+            "property": {
+              "maxSeverity": "High",
+              "incidentStatus": "Active",
+              "valueOfRootNode": 92183.0,
+              "expectedValueOfRootNode": 80000.0
+            }
+          },
+          {
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-17fe26bf400",
+            "startTime": "2022-04-01T00:00:00Z",
+            "lastTime": "2022-04-01T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
+              }
+            },
+            "property": {
+              "maxSeverity": "High",
+              "incidentStatus": "Active",
+              "valueOfRootNode": 91353.0,
+              "expectedValueOfRootNode": 80000.0
+            }
+          },
+          {
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-17fc385cc00",
+            "startTime": "2022-03-23T00:00:00Z",
+            "lastTime": "2022-03-26T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
+              }
+            },
+            "property": {
+              "maxSeverity": "High",
+              "incidentStatus": "Active",
+              "valueOfRootNode": 87017.0,
+              "expectedValueOfRootNode": 80000.0
+            }
+          },
+          {
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-17f9f794800",
+            "startTime": "2022-03-19T00:00:00Z",
+            "lastTime": "2022-03-19T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
+              }
+            },
+            "property": {
+              "maxSeverity": "High",
+              "incidentStatus": "Active",
+              "valueOfRootNode": 97249.0,
+              "expectedValueOfRootNode": 80000.0
+            }
+          },
+          {
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-17f8adfd800",
+            "startTime": "2022-03-14T00:00:00Z",
+            "lastTime": "2022-03-15T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
+              }
+            },
+            "property": {
+              "maxSeverity": "High",
+              "incidentStatus": "Active",
+              "valueOfRootNode": 83298.0,
+              "expectedValueOfRootNode": 80000.0
+            }
+          },
+          {
+            "incidentId": "88ecf25a0e6bd330ef9e7b49b7c5b92b-17f71200c00",
+            "startTime": "2022-03-10T00:00:00Z",
+            "lastTime": "2022-03-10T00:00:00Z",
+            "rootNode": {
+              "dimension": {
+                "Dim1": "__SUM__",
+                "Dim2": "__SUM__"
+              }
+            },
+            "property": {
+              "maxSeverity": "High",
+              "incidentStatus": "Active",
+              "valueOfRootNode": 80214.0,
+              "expectedValueOfRootNode": 80000.0
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/incidents/aaa0ff1cfe41d89ed481f9ac19dbcd8e-17c76f2dc00/rootCause",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/78f3a4e7-fe53-4a05-9f4d-d724ab6c23a7/incidents/88ecf25a0e6bd330ef9e7b49b7c5b92b-17fc385cc00/rootCause",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9f00db2036e7534f98df3f68f5aaf64e-390e7bfd4510b44c-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-9ea1a1fa0c15ac333c5e8a149eb85ba7-d34391ec03014005-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "adb2b9b9bbbd45ff2f59a195c53047de",
+        "x-ms-client-request-id": "43d3fe9bc38d40236743fc0206fd830b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ff23f180-2c6c-4b35-8852-a88d6dd9a7a2",
-        "Content-Length": "220",
+        "apim-request-id": "9e8545e9-d96c-4f27-95d2-d6dec8d12702",
+        "Content-Length": "210",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:29 GMT",
+        "Date": "Tue, 19 Apr 2022 04:02:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "247",
-        "X-Request-ID": "ff23f180-2c6c-4b35-8852-a88d6dd9a7a2"
+        "x-envoy-upstream-service-time": "726",
+        "X-Request-ID": "9e8545e9-d96c-4f27-95d2-d6dec8d12702"
       },
       "ResponseBody": {
         "value": [
           {
             "rootCause": {
               "dimension": {
-                "region": "__SUM__",
-                "category": "Grocery \u0026 Gourmet Food"
+                "Dim1": "JPN",
+                "Dim2": "JP"
               }
             },
-            "path": [],
-            "score": 1.0,
-            "description": "All sub series contribute to current incident under category = Grocery \u0026 Gourmet Food"
+            "path": [
+              "Dim1",
+              "Dim2"
+            ],
+            "score": 0.24902853634082778,
+            "description": "Increase on Dim1 = JPN | Dim2 = JP contributes the most to current incident."
           }
         ]
       }
@@ -117,6 +220,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "308348974"
+    "RandomSeed": "2039288023"
   }
 }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetNetworkConfiguration DeserializeVirtualMachineScaleSetNetworkConfiguration(JsonElement element)
         {
             string name = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<bool> primary = default;
             Optional<bool> enableAcceleratedNetworking = default;
             Optional<bool> enableFpga = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineScaleSetNetworkConfigurationDnsSettings> dnsSettings = default;
             Optional<IList<VirtualMachineScaleSetIPConfiguration>> ipConfigurations = default;
             Optional<bool> enableIPForwarding = default;
-            Optional<DeleteOptions> deleteOption = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -96,7 +96,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -190,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOptions(property0.Value.GetString());
+                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
                             continue;
                         }
                     }

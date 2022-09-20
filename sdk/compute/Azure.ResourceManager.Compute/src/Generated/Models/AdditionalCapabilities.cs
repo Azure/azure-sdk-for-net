@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of AdditionalCapabilities. </summary>
-        /// <param name="ultraSSDEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
+        /// <param name="ultraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
         /// <param name="hibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
-        internal AdditionalCapabilities(bool? ultraSSDEnabled, bool? hibernationEnabled)
+        internal AdditionalCapabilities(bool? ultraSsdEnabled, bool? hibernationEnabled)
         {
-            UltraSSDEnabled = ultraSSDEnabled;
+            UltraSsdEnabled = ultraSsdEnabled;
             HibernationEnabled = hibernationEnabled;
         }
 
         /// <summary> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </summary>
-        public bool? UltraSSDEnabled { get; set; }
+        public bool? UltraSsdEnabled { get; set; }
         /// <summary> The flag that enables or disables hibernation capability on the VM. </summary>
         public bool? HibernationEnabled { get; set; }
     }

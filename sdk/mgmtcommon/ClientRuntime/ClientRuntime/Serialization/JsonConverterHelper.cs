@@ -19,6 +19,8 @@ namespace Microsoft.Rest.Serialization
     /// </summary>
     public static class JsonConverterHelper
     {
+        private static readonly Regex splitCompiledRegex = new Regex(@"(?<!\\)\.", RegexOptions.Compiled);
+
         /// <summary>
         /// Serializes properties of the value object into JsonWriter.
         /// </summary>
@@ -113,16 +115,21 @@ namespace Microsoft.Rest.Serialization
 
             if (!string.IsNullOrEmpty(propertyName))
             {
-                string[] hierarchy = Regex.Split(propertyName, @"(?<!\\)\.")
-                    .Select(p => p?.Replace("\\.", ".")).ToArray();
+                string[] hierarchy = splitCompiledRegex.Split(propertyName);
+                for (int i = 0; i < hierarchy.Length; i++)
+                {
+                    hierarchy[i] = hierarchy[i]?.Replace("\\.", ".");
+                }
+
                 if (hierarchy.Length > 1)
                 {
-                    propertyName = hierarchy.Last();
-                    parentPath = hierarchy.Take(hierarchy.Length - 1).ToArray();
+                    propertyName = hierarchy[hierarchy.Length - 1];
+                    Array.Resize(ref hierarchy, hierarchy.Length - 1);
+                    parentPath = hierarchy;
                 }
             }
 
-            return propertyName;            
+            return propertyName;       
         }
 
         public static bool IsJsonExtensionData(this JsonProperty property)

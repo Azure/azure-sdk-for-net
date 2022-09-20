@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<SourceControlResource>> GetSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
             return await tenantResource.GetSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<SourceControlResource> GetSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetSourceControls().Get(sourceControlType, cancellationToken);
@@ -191,13 +193,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
 
@@ -210,13 +208,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
 
@@ -229,14 +223,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetWebAppStacksByLocationAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -248,14 +238,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProviders(location, stackOSType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetWebAppStacksByLocation(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -339,6 +325,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<TopLevelDomainResource>> GetTopLevelDomainAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetTopLevelDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -354,6 +341,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<TopLevelDomainResource> GetTopLevelDomain(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetTopLevelDomains().Get(name, cancellationToken);
@@ -377,6 +365,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DeletedSiteResource>> GetDeletedSiteAsync(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetDeletedSites().GetAsync(deletedSiteId, cancellationToken).ConfigureAwait(false);
@@ -392,6 +381,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DeletedSiteResource> GetDeletedSite(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetDeletedSites().Get(deletedSiteId, cancellationToken);
@@ -429,14 +419,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServiceCertificateOrder"/> is null. </exception>
-        public static async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public static async Task<Response> ValidateAppServiceCertificateOrderPurchaseInformationAsync(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(appServiceCertificateOrder, nameof(appServiceCertificateOrder));
+            Argument.AssertNotNull(data, nameof(data));
 
-            return await GetExtensionClient(subscriptionResource).ValidatePurchaseInformationAppServiceCertificateOrderAsync(appServiceCertificateOrder, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformationAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -445,14 +435,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServiceCertificateOrder"/> is null. </exception>
-        public static Response ValidatePurchaseInformationAppServiceCertificateOrder(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public static Response ValidateAppServiceCertificateOrderPurchaseInformation(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(appServiceCertificateOrder, nameof(appServiceCertificateOrder));
+            Argument.AssertNotNull(data, nameof(data));
 
-            return GetExtensionClient(subscriptionResource).ValidatePurchaseInformationAppServiceCertificateOrder(appServiceCertificateOrder, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformation(data, cancellationToken);
         }
 
         /// <summary>
@@ -464,11 +454,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public static async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(this SubscriptionResource subscriptionResource, NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public static async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
-            return await GetExtensionClient(subscriptionResource).CheckAvailabilityDomainAsync(identifier, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAppServiceDomainRegistrationAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -480,11 +470,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public static Response<DomainAvailabilityCheckResult> CheckAvailabilityDomain(this SubscriptionResource subscriptionResource, NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public static Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
-            return GetExtensionClient(subscriptionResource).CheckAvailabilityDomain(identifier, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAppServiceDomainRegistrationAvailability(identifier, cancellationToken);
         }
 
         /// <summary>
@@ -520,7 +510,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -532,7 +522,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<DomainControlCenterSsoRequest> GetControlCenterSsoRequestDomain(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetControlCenterSsoRequestDomain(cancellationToken);
         }
@@ -543,15 +533,15 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_ListRecommendations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Search parameters for domain name recommendations. </param>
+        /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NameIdentifier> GetRecommendationsDomainsAsync(this SubscriptionResource subscriptionResource, DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppServiceDomainNameIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendationsAsync(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetRecommendationsDomainsAsync(parameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppServiceDomainRecommendationsAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -560,15 +550,15 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_ListRecommendations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Search parameters for domain name recommendations. </param>
+        /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        /// <returns> A collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NameIdentifier> GetRecommendationsDomains(this SubscriptionResource subscriptionResource, DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppServiceDomainNameIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendations(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetRecommendationsDomains(parameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppServiceDomainRecommendations(content, cancellationToken);
         }
 
         /// <summary>
@@ -639,10 +629,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CertificateResource> GetCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCertificatesAsync(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppCertificatesAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -653,10 +643,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CertificateResource> GetCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppCertificateResource> GetAppCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCertificates(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppCertificates(filter, cancellationToken);
         }
 
         /// <summary>
@@ -667,13 +657,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetDeletedSitesByLocationAsync(location, cancellationToken);
         }
 
@@ -685,13 +671,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedSiteResource> GetDeletedSitesByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<DeletedSiteResource> GetDeletedSitesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetDeletedSitesByLocation(location, cancellationToken);
         }
 
@@ -704,11 +686,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is null. </exception>
-        public static async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(this SubscriptionResource subscriptionResource, string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        public static async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             return await GetExtensionClient(subscriptionResource).GetDeletedWebAppByLocationDeletedWebAppAsync(location, deletedSiteId, cancellationToken).ConfigureAwait(false);
@@ -723,52 +704,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is null. </exception>
-        public static Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(this SubscriptionResource subscriptionResource, string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        public static Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             return GetExtensionClient(subscriptionResource).GetDeletedWebAppByLocationDeletedWebApp(location, deletedSiteId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Gets an operation in a subscription and given region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
-        /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetSubscriptionOperationWithAsyncResponseGlobalAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Gets an operation in a subscription and given region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
-        /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
-        public static Response GetSubscriptionOperationWithAsyncResponseGlobal(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetSubscriptionOperationWithAsyncResponseGlobal(location, operationId, cancellationToken);
         }
 
         /// <summary>
@@ -862,9 +804,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> ResetAllFiltersRecommendationAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response> ResetAllRecommendationFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).ResetAllFiltersRecommendationAsync(cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -874,9 +816,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response ResetAllFiltersRecommendation(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response ResetAllRecommendationFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).ResetAllFiltersRecommendation(cancellationToken);
+            return GetExtensionClient(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
         }
 
         /// <summary>
@@ -889,11 +831,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response> DisableAppServiceRecommendationAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetExtensionClient(subscriptionResource).DisableRecommendationForSubscriptionRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).DisableAppServiceRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -906,11 +848,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response DisableRecommendationForSubscriptionRecommendation(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        public static Response DisableAppServiceRecommendation(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetExtensionClient(subscriptionResource).DisableRecommendationForSubscriptionRecommendation(name, cancellationToken);
+            return GetExtensionClient(subscriptionResource).DisableAppServiceRecommendation(name, cancellationToken);
         }
 
         /// <summary>
@@ -920,8 +862,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
         }
@@ -933,8 +875,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
         }
@@ -975,16 +917,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
-        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckAppServiceNameAvailabilityAsync(name, type, isFqdn, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAppServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -993,16 +933,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
-        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckAppServiceNameAvailability(name, type, isFqdn, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAppServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -1012,9 +950,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeploymentLocations>> GetAppServiceDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).GetSubscriptionDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1024,9 +962,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<DeploymentLocations> GetSubscriptionDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<DeploymentLocations> GetAppServiceDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionDeploymentLocations(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
         }
 
         /// <summary>
@@ -1072,8 +1010,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostNameAsync(this SubscriptionResource subscriptionResource, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -1089,8 +1027,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostName(this SubscriptionResource subscriptionResource, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IdentifierData> GetSiteIdentifiersAssignedToHostName(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -1130,7 +1068,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<SkuInfos>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceSkuResult>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -1142,7 +1080,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<SkuInfos> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<AppServiceSkuResult> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkus(cancellationToken);
         }
@@ -1153,14 +1091,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: VerifyHostingEnvironmentVnet
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> VNET information. </param>
+        /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, VnetParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).VerifyHostingEnvironmentVnetAsync(parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).VerifyHostingEnvironmentVnetAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1169,14 +1107,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: VerifyHostingEnvironmentVnet
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> VNET information. </param>
+        /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, VnetParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).VerifyHostingEnvironmentVnet(parameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).VerifyHostingEnvironmentVnet(content, cancellationToken);
         }
 
         /// <summary>
@@ -1186,16 +1124,14 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location where you plan to create the static site. </param>
-        /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="staticSitesWorkflowPreviewRequest"/> is null. </exception>
-        public static async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(staticSitesWorkflowPreviewRequest, nameof(staticSitesWorkflowPreviewRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).PreviewWorkflowStaticSiteAsync(location, staticSitesWorkflowPreviewRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).PreviewStaticSiteWorkflowAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1205,16 +1141,14 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location where you plan to create the static site. </param>
-        /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="staticSitesWorkflowPreviewRequest"/> is null. </exception>
-        public static Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(staticSitesWorkflowPreviewRequest, nameof(staticSitesWorkflowPreviewRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).PreviewWorkflowStaticSite(location, staticSitesWorkflowPreviewRequest, cancellationToken);
+            return GetExtensionClient(subscriptionResource).PreviewStaticSiteWorkflow(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -1224,10 +1158,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StaticSiteARMResource> GetStaticSiteARMResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<StaticSiteResource> GetStaticSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetStaticSiteARMResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStaticSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1237,10 +1171,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StaticSiteARMResource> GetStaticSiteARMResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<StaticSiteResource> GetStaticSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetStaticSiteARMResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStaticSites(cancellationToken);
         }
 
         /// <summary>
@@ -1296,6 +1230,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServiceCertificateOrders().GetAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
@@ -1311,6 +1246,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServiceCertificateOrders().Get(certificateOrderName, cancellationToken);
@@ -1334,6 +1270,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServiceDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
@@ -1349,6 +1286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServiceDomainResource> GetAppServiceDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServiceDomains().Get(domainName, cancellationToken);
@@ -1372,6 +1310,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServiceEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1387,6 +1326,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServiceEnvironments().Get(name, cancellationToken);
@@ -1410,6 +1350,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServicePlans().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1425,17 +1366,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServicePlans().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AppCertificateResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public static CertificateCollection GetCertificates(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
+        public static AppCertificateCollection GetAppCertificates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetCertificates();
+            return GetExtensionClient(resourceGroupResource).GetAppCertificates();
         }
 
         /// <summary>
@@ -1448,9 +1390,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<AppCertificateResource>> GetAppCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAppCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1463,9 +1406,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<CertificateResource> GetCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<AppCertificateResource> GetAppCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCertificates().Get(name, cancellationToken);
+            return resourceGroupResource.GetAppCertificates().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
@@ -1486,6 +1430,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1501,17 +1446,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<KubeEnvironmentResource> GetKubeEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetKubeEnvironments().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteARMResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of StaticSiteResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
-        public static StaticSiteARMResourceCollection GetStaticSiteARMResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
+        public static StaticSiteCollection GetStaticSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetStaticSiteARMResources();
+            return GetExtensionClient(resourceGroupResource).GetStaticSites();
         }
 
         /// <summary>
@@ -1524,9 +1470,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<StaticSiteARMResource>> GetStaticSiteARMResourceAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<StaticSiteResource>> GetStaticSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStaticSiteARMResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetStaticSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1539,9 +1486,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<StaticSiteARMResource> GetStaticSiteARMResource(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<StaticSiteResource> GetStaticSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStaticSiteARMResources().Get(name, cancellationToken);
+            return resourceGroupResource.GetStaticSites().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>
@@ -1562,6 +1510,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<WebSiteResource>> GetWebSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetWebSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1577,6 +1526,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<WebSiteResource> GetWebSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetWebSites().Get(name, cancellationToken);
@@ -1589,10 +1539,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataByResourceGroupAsync(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1602,42 +1552,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataByResourceGroup(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Move resources between resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// Operation Id: Move
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static async Task<Response> MoveAsync(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
-
-            return await GetExtensionClient(resourceGroupResource).MoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Move resources between resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// Operation Id: Move
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static Response Move(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
-
-            return GetExtensionClient(resourceGroupResource).Move(moveResourceEnvelope, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadata(cancellationToken);
         }
 
         /// <summary>
@@ -1646,14 +1564,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Validate
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="validateRequest"> Request with the resources to validate. </param>
+        /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroupResource resourceGroupResource, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<AppServiceValidateResult>> ValidateAsync(this ResourceGroupResource resourceGroupResource, AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).ValidateAsync(validateRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).ValidateAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1662,46 +1580,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Validate
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="validateRequest"> Request with the resources to validate. </param>
+        /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public static Response<ValidateResponse> Validate(this ResourceGroupResource resourceGroupResource, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<AppServiceValidateResult> Validate(this ResourceGroupResource resourceGroupResource, AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).Validate(validateRequest, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Validate whether a resource can be moved.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// Operation Id: ValidateMove
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static async Task<Response> ValidateMoveAsync(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
-
-            return await GetExtensionClient(resourceGroupResource).ValidateMoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Validate whether a resource can be moved.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// Operation Id: ValidateMove
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static Response ValidateMove(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
-
-            return GetExtensionClient(resourceGroupResource).ValidateMove(moveResourceEnvelope, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).Validate(content, cancellationToken);
         }
 
         #region AppServiceCertificateOrderResource
@@ -2046,20 +1932,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ServerfarmHybridConnectionNamespaceRelayResource
+        #region AppServicePlanHybridConnectionNamespaceRelayResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerfarmHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicePlanHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> object. </returns>
-        public static ServerfarmHybridConnectionNamespaceRelayResource GetServerfarmHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> object. </returns>
+        public static AppServicePlanHybridConnectionNamespaceRelayResource GetAppServicePlanHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerfarmHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
-                return new ServerfarmHybridConnectionNamespaceRelayResource(client, id);
+                AppServicePlanHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+                return new AppServicePlanHybridConnectionNamespaceRelayResource(client, id);
             }
             );
         }
@@ -2103,39 +1989,39 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region HybridConnectionLimitsResource
+        #region HybridConnectionLimitResource
         /// <summary>
-        /// Gets an object representing a <see cref="HybridConnectionLimitsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridConnectionLimitsResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionLimitsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridConnectionLimitResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectionLimitResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionLimitResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridConnectionLimitsResource" /> object. </returns>
-        public static HybridConnectionLimitsResource GetHybridConnectionLimitsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectionLimitResource" /> object. </returns>
+        public static HybridConnectionLimitResource GetHybridConnectionLimitResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                HybridConnectionLimitsResource.ValidateResourceId(id);
-                return new HybridConnectionLimitsResource(client, id);
+                HybridConnectionLimitResource.ValidateResourceId(id);
+                return new HybridConnectionLimitResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerfarmVirtualNetworkConnectionResource
+        #region AppServicePlanVirtualNetworkConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerfarmVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerfarmVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServicePlanVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicePlanVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionResource" /> object. </returns>
-        public static ServerfarmVirtualNetworkConnectionResource GetServerfarmVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionResource" /> object. </returns>
+        public static AppServicePlanVirtualNetworkConnectionResource GetAppServicePlanVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerfarmVirtualNetworkConnectionResource.ValidateResourceId(id);
-                return new ServerfarmVirtualNetworkConnectionResource(client, id);
+                AppServicePlanVirtualNetworkConnectionResource.ValidateResourceId(id);
+                return new AppServicePlanVirtualNetworkConnectionResource(client, id);
             }
             );
         }
@@ -2179,20 +2065,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ServerfarmVirtualNetworkConnectionGatewayResource
+        #region AppServicePlanVirtualNetworkConnectionGatewayResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerfarmVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> object. </returns>
-        public static ServerfarmVirtualNetworkConnectionGatewayResource GetServerfarmVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> object. </returns>
+        public static AppServicePlanVirtualNetworkConnectionGatewayResource GetAppServicePlanVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerfarmVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
-                return new ServerfarmVirtualNetworkConnectionGatewayResource(client, id);
+                AppServicePlanVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+                return new AppServicePlanVirtualNetworkConnectionGatewayResource(client, id);
             }
             );
         }
@@ -2236,20 +2122,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region CertificateResource
+        #region AppCertificateResource
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateResource.CreateResourceIdentifier" /> to create a <see cref="CertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateResource" /> object. </returns>
-        public static CertificateResource GetCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppCertificateResource" /> object. </returns>
+        public static AppCertificateResource GetAppCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CertificateResource.ValidateResourceId(id);
-                return new CertificateResource(client, id);
+                AppCertificateResource.ValidateResourceId(id);
+                return new AppCertificateResource(client, id);
             }
             );
         }
@@ -2445,39 +2331,39 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteResourceHealthMetadataResource
+        #region WebSiteResourceHealthMetadataResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="SiteResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResourceHealthMetadataResource" /> object. </returns>
-        public static SiteResourceHealthMetadataResource GetSiteResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource" /> object. </returns>
+        public static WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteResourceHealthMetadataResource.ValidateResourceId(id);
-                return new SiteResourceHealthMetadataResource(client, id);
+                WebSiteResourceHealthMetadataResource.ValidateResourceId(id);
+                return new WebSiteResourceHealthMetadataResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotResourceHealthMetadataResource
+        #region WebSiteSlotResourceHealthMetadataResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadataResource" /> object. </returns>
-        public static SiteSlotResourceHealthMetadataResource GetSiteSlotResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource" /> object. </returns>
+        public static WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
-                return new SiteSlotResourceHealthMetadataResource(client, id);
+                WebSiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
+                return new WebSiteSlotResourceHealthMetadataResource(client, id);
             }
             );
         }
@@ -2521,39 +2407,39 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region StaticSiteARMResource
+        #region StaticSiteResource
         /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteARMResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StaticSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteARMResource" /> object. </returns>
-        public static StaticSiteARMResource GetStaticSiteARMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteResource" /> object. </returns>
+        public static StaticSiteResource GetStaticSiteResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StaticSiteARMResource.ValidateResourceId(id);
-                return new StaticSiteARMResource(client, id);
+                StaticSiteResource.ValidateResourceId(id);
+                return new StaticSiteResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StaticSiteBuildARMResource
+        #region StaticSiteBuildResource
         /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildARMResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StaticSiteBuildResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildARMResource" /> object. </returns>
-        public static StaticSiteBuildARMResource GetStaticSiteBuildARMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteBuildResource" /> object. </returns>
+        public static StaticSiteBuildResource GetStaticSiteBuildResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StaticSiteBuildARMResource.ValidateResourceId(id);
-                return new StaticSiteBuildARMResource(client, id);
+                StaticSiteBuildResource.ValidateResourceId(id);
+                return new StaticSiteBuildResource(client, id);
             }
             );
         }
@@ -2597,20 +2483,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region StaticSiteCustomDomainOverviewARMResource
+        #region StaticSiteCustomDomainOverviewResource
         /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewARMResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteCustomDomainOverviewARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteCustomDomainOverviewResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewARMResource" /> object. </returns>
-        public static StaticSiteCustomDomainOverviewARMResource GetStaticSiteCustomDomainOverviewARMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource" /> object. </returns>
+        public static StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StaticSiteCustomDomainOverviewARMResource.ValidateResourceId(id);
-                return new StaticSiteCustomDomainOverviewARMResource(client, id);
+                StaticSiteCustomDomainOverviewResource.ValidateResourceId(id);
+                return new StaticSiteCustomDomainOverviewResource(client, id);
             }
             );
         }
@@ -2635,20 +2521,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteSlotResource
+        #region WebSiteSlotResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotResource" /> object. </returns>
-        public static SiteSlotResource GetSiteSlotResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotResource" /> object. </returns>
+        public static WebSiteSlotResource GetWebSiteSlotResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotResource.ValidateResourceId(id);
-                return new SiteSlotResource(client, id);
+                WebSiteSlotResource.ValidateResourceId(id);
+                return new WebSiteSlotResource(client, id);
             }
             );
         }
@@ -2692,20 +2578,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region BasicPublishingCredentialsPolicyFtpResource
+        #region WebSiteFtpPublishingCredentialsPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="BasicPublishingCredentialsPolicyFtpResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BasicPublishingCredentialsPolicyFtpResource.CreateResourceIdentifier" /> to create a <see cref="BasicPublishingCredentialsPolicyFtpResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteFtpPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteFtpPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteFtpPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BasicPublishingCredentialsPolicyFtpResource" /> object. </returns>
-        public static BasicPublishingCredentialsPolicyFtpResource GetBasicPublishingCredentialsPolicyFtpResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteFtpPublishingCredentialsPolicyResource" /> object. </returns>
+        public static WebSiteFtpPublishingCredentialsPolicyResource GetWebSiteFtpPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BasicPublishingCredentialsPolicyFtpResource.ValidateResourceId(id);
-                return new BasicPublishingCredentialsPolicyFtpResource(client, id);
+                WebSiteFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new WebSiteFtpPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
@@ -2730,20 +2616,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region FtpSiteSlotBasicPublishingCredentialsPolicyResource
+        #region WebSiteSlotFtpPublishingCredentialsPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public static FtpSiteSlotBasicPublishingCredentialsPolicyResource GetFtpSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> object. </returns>
+        public static WebSiteSlotFtpPublishingCredentialsPolicyResource GetWebSiteSlotFtpPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FtpSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
-                return new FtpSiteSlotBasicPublishingCredentialsPolicyResource(client, id);
+                WebSiteSlotFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new WebSiteSlotFtpPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
@@ -2787,58 +2673,58 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteConfigConnectionStringResource
+        #region WebSiteConfigConnectionStringResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteConfigConnectionStringResource" /> object. </returns>
-        public static SiteConfigConnectionStringResource GetSiteConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteConfigConnectionStringResource" /> object. </returns>
+        public static WebSiteConfigConnectionStringResource GetWebSiteConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteConfigConnectionStringResource.ValidateResourceId(id);
-                return new SiteConfigConnectionStringResource(client, id);
+                WebSiteConfigConnectionStringResource.ValidateResourceId(id);
+                return new WebSiteConfigConnectionStringResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotConfigAppSettingResource
+        #region WebSiteSlotConfigAppSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotConfigAppSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotConfigAppSettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotConfigAppSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotConfigAppSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotConfigAppSettingResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigAppSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotConfigAppSettingResource" /> object. </returns>
-        public static SiteSlotConfigAppSettingResource GetSiteSlotConfigAppSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotConfigAppSettingResource" /> object. </returns>
+        public static WebSiteSlotConfigAppSettingResource GetWebSiteSlotConfigAppSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotConfigAppSettingResource.ValidateResourceId(id);
-                return new SiteSlotConfigAppSettingResource(client, id);
+                WebSiteSlotConfigAppSettingResource.ValidateResourceId(id);
+                return new WebSiteSlotConfigAppSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotConfigConnectionStringResource
+        #region WebSiteSlotConfigConnectionStringResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotConfigConnectionStringResource" /> object. </returns>
-        public static SiteSlotConfigConnectionStringResource GetSiteSlotConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotConfigConnectionStringResource" /> object. </returns>
+        public static WebSiteSlotConfigConnectionStringResource GetWebSiteSlotConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotConfigConnectionStringResource.ValidateResourceId(id);
-                return new SiteSlotConfigConnectionStringResource(client, id);
+                WebSiteSlotConfigConnectionStringResource.ValidateResourceId(id);
+                return new WebSiteSlotConfigConnectionStringResource(client, id);
             }
             );
         }
@@ -2977,39 +2863,39 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteContinuousWebJobResource
+        #region WebSiteContinuousWebJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteContinuousWebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteContinuousWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteContinuousWebJobResource" /> object. </returns>
-        public static SiteContinuousWebJobResource GetSiteContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteContinuousWebJobResource" /> object. </returns>
+        public static WebSiteContinuousWebJobResource GetWebSiteContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteContinuousWebJobResource.ValidateResourceId(id);
-                return new SiteContinuousWebJobResource(client, id);
+                WebSiteContinuousWebJobResource.ValidateResourceId(id);
+                return new WebSiteContinuousWebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotContinuousWebJobResource
+        #region WebSiteSlotContinuousWebJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotContinuousWebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotContinuousWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotContinuousWebJobResource" /> object. </returns>
-        public static SiteSlotContinuousWebJobResource GetSiteSlotContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotContinuousWebJobResource" /> object. </returns>
+        public static WebSiteSlotContinuousWebJobResource GetWebSiteSlotContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotContinuousWebJobResource.ValidateResourceId(id);
-                return new SiteSlotContinuousWebJobResource(client, id);
+                WebSiteSlotContinuousWebJobResource.ValidateResourceId(id);
+                return new WebSiteSlotContinuousWebJobResource(client, id);
             }
             );
         }
@@ -3243,39 +3129,39 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteHybridConnectionResource
+        #region WebSiteHybridConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteHybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteHybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteHybridConnectionResource" /> object. </returns>
-        public static SiteHybridConnectionResource GetSiteHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteHybridConnectionResource" /> object. </returns>
+        public static WebSiteHybridConnectionResource GetWebSiteHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteHybridConnectionResource.ValidateResourceId(id);
-                return new SiteHybridConnectionResource(client, id);
+                WebSiteHybridConnectionResource.ValidateResourceId(id);
+                return new WebSiteHybridConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotHybridconnectionResource
+        #region WebSiteSlotHybridConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotHybridconnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotHybridconnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHybridconnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotHybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotHybridconnectionResource" /> object. </returns>
-        public static SiteSlotHybridconnectionResource GetSiteSlotHybridconnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotHybridConnectionResource" /> object. </returns>
+        public static WebSiteSlotHybridConnectionResource GetWebSiteSlotHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotHybridconnectionResource.ValidateResourceId(id);
-                return new SiteSlotHybridconnectionResource(client, id);
+                WebSiteSlotHybridConnectionResource.ValidateResourceId(id);
+                return new WebSiteSlotHybridConnectionResource(client, id);
             }
             );
         }
@@ -3509,77 +3395,77 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SitePremierAddonResource
+        #region WebSitePremierAddonResource
         /// <summary>
-        /// Gets an object representing a <see cref="SitePremierAddonResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SitePremierAddonResource.CreateResourceIdentifier" /> to create a <see cref="SitePremierAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSitePremierAddonResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSitePremierAddonResource.CreateResourceIdentifier" /> to create a <see cref="WebSitePremierAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitePremierAddonResource" /> object. </returns>
-        public static SitePremierAddonResource GetSitePremierAddonResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSitePremierAddonResource" /> object. </returns>
+        public static WebSitePremierAddonResource GetWebSitePremierAddonResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SitePremierAddonResource.ValidateResourceId(id);
-                return new SitePremierAddonResource(client, id);
+                WebSitePremierAddonResource.ValidateResourceId(id);
+                return new WebSitePremierAddonResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotPremierAddOnResource
+        #region WebSiteSlotPremierAddOnResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotPremierAddOnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotPremierAddOnResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPremierAddOnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotPremierAddOnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotPremierAddOnResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotPremierAddOnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotPremierAddOnResource" /> object. </returns>
-        public static SiteSlotPremierAddOnResource GetSiteSlotPremierAddOnResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotPremierAddOnResource" /> object. </returns>
+        public static WebSiteSlotPremierAddOnResource GetWebSiteSlotPremierAddOnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotPremierAddOnResource.ValidateResourceId(id);
-                return new SiteSlotPremierAddOnResource(client, id);
+                WebSiteSlotPremierAddOnResource.ValidateResourceId(id);
+                return new WebSiteSlotPremierAddOnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SitePrivateAccessResource
+        #region WebSitePrivateAccessResource
         /// <summary>
-        /// Gets an object representing a <see cref="SitePrivateAccessResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SitePrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="SitePrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSitePrivateAccessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSitePrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="WebSitePrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitePrivateAccessResource" /> object. </returns>
-        public static SitePrivateAccessResource GetSitePrivateAccessResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSitePrivateAccessResource" /> object. </returns>
+        public static WebSitePrivateAccessResource GetWebSitePrivateAccessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SitePrivateAccessResource.ValidateResourceId(id);
-                return new SitePrivateAccessResource(client, id);
+                WebSitePrivateAccessResource.ValidateResourceId(id);
+                return new WebSitePrivateAccessResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotPrivateAccessResource
+        #region WebSiteSlotPrivateAccessResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotPrivateAccessResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotPrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotPrivateAccessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotPrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotPrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotPrivateAccessResource" /> object. </returns>
-        public static SiteSlotPrivateAccessResource GetSiteSlotPrivateAccessResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource" /> object. </returns>
+        public static WebSiteSlotPrivateAccessResource GetWebSiteSlotPrivateAccessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotPrivateAccessResource.ValidateResourceId(id);
-                return new SiteSlotPrivateAccessResource(client, id);
+                WebSiteSlotPrivateAccessResource.ValidateResourceId(id);
+                return new WebSiteSlotPrivateAccessResource(client, id);
             }
             );
         }
@@ -3604,58 +3490,58 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteSlotPublicCertificateResource
+        #region WebSiteSlotPublicCertificateResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotPublicCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotPublicCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPublicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotPublicCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotPublicCertificateResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotPublicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotPublicCertificateResource" /> object. </returns>
-        public static SiteSlotPublicCertificateResource GetSiteSlotPublicCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotPublicCertificateResource" /> object. </returns>
+        public static WebSiteSlotPublicCertificateResource GetWebSiteSlotPublicCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotPublicCertificateResource.ValidateResourceId(id);
-                return new SiteSlotPublicCertificateResource(client, id);
+                WebSiteSlotPublicCertificateResource.ValidateResourceId(id);
+                return new WebSiteSlotPublicCertificateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSiteextensionResource
+        #region WebSiteExtensionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSiteextensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSiteextensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSiteextensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteExtensionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSiteextensionResource" /> object. </returns>
-        public static SiteSiteextensionResource GetSiteSiteextensionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteExtensionResource" /> object. </returns>
+        public static WebSiteExtensionResource GetWebSiteExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSiteextensionResource.ValidateResourceId(id);
-                return new SiteSiteextensionResource(client, id);
+                WebSiteExtensionResource.ValidateResourceId(id);
+                return new WebSiteExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotSiteextensionResource
+        #region WebSiteSlotExtensionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotSiteextensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotSiteextensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotSiteextensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotExtensionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotSiteextensionResource" /> object. </returns>
-        public static SiteSlotSiteextensionResource GetSiteSlotSiteextensionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotExtensionResource" /> object. </returns>
+        public static WebSiteSlotExtensionResource GetWebSiteSlotExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotSiteextensionResource.ValidateResourceId(id);
-                return new SiteSlotSiteextensionResource(client, id);
+                WebSiteSlotExtensionResource.ValidateResourceId(id);
+                return new WebSiteSlotExtensionResource(client, id);
             }
             );
         }
@@ -3680,172 +3566,172 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region NetworkFeaturesResource
+        #region NetworkFeatureResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFeaturesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFeaturesResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFeaturesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFeatureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFeatureResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFeaturesResource" /> object. </returns>
-        public static NetworkFeaturesResource GetNetworkFeaturesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFeatureResource" /> object. </returns>
+        public static NetworkFeatureResource GetNetworkFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkFeaturesResource.ValidateResourceId(id);
-                return new NetworkFeaturesResource(client, id);
+                NetworkFeatureResource.ValidateResourceId(id);
+                return new NetworkFeatureResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotSourcecontrolResource
+        #region WebSiteSlotSourceControlResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotSourcecontrolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotSourcecontrolResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotSourcecontrolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotSourcecontrolResource" /> object. </returns>
-        public static SiteSlotSourcecontrolResource GetSiteSlotSourcecontrolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource" /> object. </returns>
+        public static WebSiteSlotSourceControlResource GetWebSiteSlotSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotSourcecontrolResource.ValidateResourceId(id);
-                return new SiteSlotSourcecontrolResource(client, id);
+                WebSiteSlotSourceControlResource.ValidateResourceId(id);
+                return new WebSiteSlotSourceControlResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSourceControlResource
+        #region WebSiteSourceControlResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SiteSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSourceControlResource" /> object. </returns>
-        public static SiteSourceControlResource GetSiteSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSourceControlResource" /> object. </returns>
+        public static WebSiteSourceControlResource GetWebSiteSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSourceControlResource.ValidateResourceId(id);
-                return new SiteSourceControlResource(client, id);
+                WebSiteSourceControlResource.ValidateResourceId(id);
+                return new WebSiteSourceControlResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteTriggeredwebJobResource
+        #region WebSiteTriggeredwebJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteTriggeredwebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteTriggeredwebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteTriggeredwebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteTriggeredwebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteTriggeredwebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteTriggeredwebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteTriggeredwebJobResource" /> object. </returns>
-        public static SiteTriggeredwebJobResource GetSiteTriggeredwebJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteTriggeredwebJobResource" /> object. </returns>
+        public static WebSiteTriggeredwebJobResource GetWebSiteTriggeredwebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteTriggeredwebJobResource.ValidateResourceId(id);
-                return new SiteTriggeredwebJobResource(client, id);
+                WebSiteTriggeredwebJobResource.ValidateResourceId(id);
+                return new WebSiteTriggeredwebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotTriggeredWebJobResource
+        #region WebSiteSlotTriggeredWebJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotTriggeredWebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotTriggeredWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotTriggeredWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotTriggeredWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotTriggeredWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotTriggeredWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobResource" /> object. </returns>
-        public static SiteSlotTriggeredWebJobResource GetSiteSlotTriggeredWebJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotTriggeredWebJobResource" /> object. </returns>
+        public static WebSiteSlotTriggeredWebJobResource GetWebSiteSlotTriggeredWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotTriggeredWebJobResource.ValidateResourceId(id);
-                return new SiteSlotTriggeredWebJobResource(client, id);
+                WebSiteSlotTriggeredWebJobResource.ValidateResourceId(id);
+                return new WebSiteSlotTriggeredWebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteTriggeredWebJobHistoryResource
+        #region WebSiteTriggeredWebJobHistoryResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="SiteTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteTriggeredWebJobHistoryResource" /> object. </returns>
-        public static SiteTriggeredWebJobHistoryResource GetSiteTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteTriggeredWebJobHistoryResource" /> object. </returns>
+        public static WebSiteTriggeredWebJobHistoryResource GetWebSiteTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteTriggeredWebJobHistoryResource.ValidateResourceId(id);
-                return new SiteTriggeredWebJobHistoryResource(client, id);
+                WebSiteTriggeredWebJobHistoryResource.ValidateResourceId(id);
+                return new WebSiteTriggeredWebJobHistoryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotTriggeredWebJobHistoryResource
+        #region WebSiteSlotTriggeredWebJobHistoryResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobHistoryResource" /> object. </returns>
-        public static SiteSlotTriggeredWebJobHistoryResource GetSiteSlotTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> object. </returns>
+        public static WebSiteSlotTriggeredWebJobHistoryResource GetWebSiteSlotTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotTriggeredWebJobHistoryResource.ValidateResourceId(id);
-                return new SiteSlotTriggeredWebJobHistoryResource(client, id);
+                WebSiteSlotTriggeredWebJobHistoryResource.ValidateResourceId(id);
+                return new WebSiteSlotTriggeredWebJobHistoryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotWebJobResource
+        #region WebSiteSlotWebJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotWebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotWebJobResource" /> object. </returns>
-        public static SiteSlotWebJobResource GetSiteSlotWebJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotWebJobResource" /> object. </returns>
+        public static WebSiteSlotWebJobResource GetWebSiteSlotWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotWebJobResource.ValidateResourceId(id);
-                return new SiteSlotWebJobResource(client, id);
+                WebSiteSlotWebJobResource.ValidateResourceId(id);
+                return new WebSiteSlotWebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteWebJobResource
+        #region WebSiteWebJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteWebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteWebJobResource" /> object. </returns>
-        public static SiteWebJobResource GetSiteWebJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteWebJobResource" /> object. </returns>
+        public static WebSiteWebJobResource GetWebSiteWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteWebJobResource.ValidateResourceId(id);
-                return new SiteWebJobResource(client, id);
+                WebSiteWebJobResource.ValidateResourceId(id);
+                return new WebSiteWebJobResource(client, id);
             }
             );
         }

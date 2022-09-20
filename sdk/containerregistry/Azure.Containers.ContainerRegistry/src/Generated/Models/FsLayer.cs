@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class FsLayer
     {
         /// <summary> Initializes a new instance of FsLayer. </summary>
-        public FsLayer()
+        internal FsLayer()
         {
         }
 
@@ -23,6 +23,6 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> SHA of an image layer. </summary>
-        public string BlobSum { get; set; }
+        public string BlobSum { get; }
     }
 }

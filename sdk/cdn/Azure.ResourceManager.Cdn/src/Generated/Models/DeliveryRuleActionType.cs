@@ -26,10 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CacheKeyQueryStringValue = "CacheKeyQueryString";
         private const string ModifyRequestHeaderValue = "ModifyRequestHeader";
         private const string ModifyResponseHeaderValue = "ModifyResponseHeader";
-        private const string UrlRedirectValue = "UrlRedirect";
-        private const string UrlRewriteValue = "UrlRewrite";
-        private const string UrlSigningValue = "UrlSigning";
+        private const string UriRedirectValue = "UrlRedirect";
+        private const string UriRewriteValue = "UrlRewrite";
+        private const string UriSigningValue = "UrlSigning";
         private const string OriginGroupOverrideValue = "OriginGroupOverride";
+        private const string RouteConfigurationOverrideValue = "RouteConfigurationOverride";
 
         /// <summary> CacheExpiration. </summary>
         public static DeliveryRuleActionType CacheExpiration { get; } = new DeliveryRuleActionType(CacheExpirationValue);
@@ -40,13 +41,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> ModifyResponseHeader. </summary>
         public static DeliveryRuleActionType ModifyResponseHeader { get; } = new DeliveryRuleActionType(ModifyResponseHeaderValue);
         /// <summary> UrlRedirect. </summary>
-        public static DeliveryRuleActionType UrlRedirect { get; } = new DeliveryRuleActionType(UrlRedirectValue);
+        public static DeliveryRuleActionType UriRedirect { get; } = new DeliveryRuleActionType(UriRedirectValue);
         /// <summary> UrlRewrite. </summary>
-        public static DeliveryRuleActionType UrlRewrite { get; } = new DeliveryRuleActionType(UrlRewriteValue);
+        public static DeliveryRuleActionType UriRewrite { get; } = new DeliveryRuleActionType(UriRewriteValue);
         /// <summary> UrlSigning. </summary>
-        public static DeliveryRuleActionType UrlSigning { get; } = new DeliveryRuleActionType(UrlSigningValue);
+        public static DeliveryRuleActionType UriSigning { get; } = new DeliveryRuleActionType(UriSigningValue);
         /// <summary> OriginGroupOverride. </summary>
         public static DeliveryRuleActionType OriginGroupOverride { get; } = new DeliveryRuleActionType(OriginGroupOverrideValue);
+        /// <summary> RouteConfigurationOverride. </summary>
+        public static DeliveryRuleActionType RouteConfigurationOverride { get; } = new DeliveryRuleActionType(RouteConfigurationOverrideValue);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleActionType left, DeliveryRuleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are not the same. </summary>

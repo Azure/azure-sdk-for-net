@@ -1185,7 +1185,7 @@ namespace Microsoft.Azure.Management.WebSites
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200)
             {
                 var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1224,24 +1224,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
             // Deserialize Response
             if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppServiceCertificateOrder>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -2092,7 +2074,7 @@ namespace Microsoft.Azure.Management.WebSites
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200)
             {
                 var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2131,24 +2113,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
             // Deserialize Response
             if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppServiceCertificateResource>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -2765,10 +2729,11 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Verify domain ownership for this certificate order.
+        /// Resend domain verification email to customer for this certificate order
         /// </summary>
         /// <remarks>
-        /// Description for Verify domain ownership for this certificate order.
+        /// Resend domain verification ownership email containing steps on how to
+        /// verify a domain for a given certificate order
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2967,10 +2932,20 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Verify domain ownership for this certificate order.
+        /// This method is used to obtain the site seal information for an issued
+        /// certificate.
         /// </summary>
         /// <remarks>
-        /// Description for Verify domain ownership for this certificate order.
+        /// This method is used to obtain the site seal information for an issued
+        /// certificate. A site seal is a graphic that the certificate purchaser can
+        /// embed on their web site to show their visitors information about their SSL
+        /// certificate. If a web site visitor clicks on the site seal image, a pop-up
+        /// page is displayed that contains detailed information about the SSL
+        /// certificate. The site seal token is used to link the site seal graphic
+        /// image to the appropriate certificate details pop-up page display when a
+        /// user clicks on the site seal. The site seal images are expected to be
+        /// static images and hosted by the reseller, to minimize delays for customer
+        /// page load times.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.

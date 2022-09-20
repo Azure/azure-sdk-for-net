@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A web application firewall rule set. </summary>
-    public partial class ApplicationGatewayFirewallRuleSet : NetworkResourceData
+    public partial class ApplicationGatewayFirewallRuleSet : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
         public ApplicationGatewayFirewallRuleSet()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
-        internal ApplicationGatewayFirewallRuleSet(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups) : base(id, name, resourceType, location, tags)
+        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups) : base(id, name, resourceType, location, tags)
         {
             ProvisioningState = provisioningState;
             RuleSetType = ruleSetType;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the web application firewall rule set. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The type of the web application firewall rule set. </summary>
         public string RuleSetType { get; set; }
         /// <summary> The version of the web application firewall rule set type. </summary>

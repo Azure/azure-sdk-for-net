@@ -7954,7 +7954,6 @@
       },
       "RequestBody": {
         "location": "West US",
-        "tags": {}
       },
       "StatusCode": 201,
       "ResponseHeaders": {

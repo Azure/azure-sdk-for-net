@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// </return>
         public async Task<AzureOperationResponse<IPage<OperationResponse>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2020-10-01-preview";
+            string apiVersion = "2022-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

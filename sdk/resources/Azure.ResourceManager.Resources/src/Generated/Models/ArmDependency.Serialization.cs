@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDependency DeserializeArmDependency(JsonElement element)
         {
-            Optional<IReadOnlyList<BasicDependency>> dependsOn = default;
+            Optional<IReadOnlyList<BasicArmDependency>> dependsOn = default;
             Optional<string> id = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<string> resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BasicDependency> array = new List<BasicDependency>();
+                    List<BasicArmDependency> array = new List<BasicArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BasicDependency.DeserializeBasicDependency(item));
+                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -43,7 +43,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceName"))
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmDependency(Optional.ToList(dependsOn), id.Value, resourceType.Value, resourceName.Value);
+            return new ArmDependency(Optional.ToList(dependsOn), id.Value, Optional.ToNullable(resourceType), resourceName.Value);
         }
     }
 }

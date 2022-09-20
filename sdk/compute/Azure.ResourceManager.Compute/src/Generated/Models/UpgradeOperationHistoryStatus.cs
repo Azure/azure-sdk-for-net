@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of UpgradeOperationHistoryStatus. </summary>
         /// <param name="code"> Code indicating the current status of the upgrade. </param>
-        /// <param name="startTime"> Start time of the upgrade. </param>
-        /// <param name="endTime"> End time of the upgrade. </param>
-        internal UpgradeOperationHistoryStatus(UpgradeState? code, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        /// <param name="startOn"> Start time of the upgrade. </param>
+        /// <param name="endOn"> End time of the upgrade. </param>
+        internal UpgradeOperationHistoryStatus(UpgradeState? code, DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
             Code = code;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> Code indicating the current status of the upgrade. </summary>
         public UpgradeState? Code { get; }
         /// <summary> Start time of the upgrade. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the upgrade. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
     }
 }

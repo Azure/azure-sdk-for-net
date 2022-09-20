@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -45,10 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("maxReroutePercentage");
                 writer.WriteNumberValue(MaxReroutePercentage.Value);
             }
-            if (Optional.IsDefined(ChangeDecisionCallbackUrl))
+            if (Optional.IsDefined(ChangeDecisionCallbackUri))
             {
                 writer.WritePropertyName("changeDecisionCallbackUrl");
-                writer.WriteStringValue(ChangeDecisionCallbackUrl);
+                writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Name))
             {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int> changeIntervalInMinutes = default;
             Optional<double> minReroutePercentage = default;
             Optional<double> maxReroutePercentage = default;
-            Optional<string> changeDecisionCallbackUrl = default;
+            Optional<Uri> changeDecisionCallbackUrl = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -127,7 +128,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("changeDecisionCallbackUrl"))
                 {
-                    changeDecisionCallbackUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        changeDecisionCallbackUrl = null;
+                        continue;
+                    }
+                    changeDecisionCallbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

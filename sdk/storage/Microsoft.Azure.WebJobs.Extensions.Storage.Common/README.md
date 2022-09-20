@@ -9,7 +9,7 @@ This package provides infrastruture shared by the other Azure WebJobs Storage li
 Install the common library with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.WebJobs.Extensions.Storage.Common
+dotnet add package Azure.WebJobs.Extensions.Storage.Common --prerelease
 ```
 
 ### Prerequisites

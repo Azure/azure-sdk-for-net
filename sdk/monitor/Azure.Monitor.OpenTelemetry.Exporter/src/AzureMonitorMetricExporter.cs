@@ -5,13 +5,13 @@ using System;
 using System.Threading;
 
 using Azure.Core.Pipeline;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    [AggregationTemporality(AggregationTemporality.Delta)]
     internal class AzureMonitorMetricExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
 
-            if (transmitter is AzureMonitorTransmitter _azureMonitorTransmitter && _azureMonitorTransmitter._storage != null)
+            if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
             {
                 _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
             }
@@ -45,21 +45,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                var exportResult = ExportResult.Success;
+                // In case of metrics, export is called
+                // even if there are no items in batch
+                if (batch.Count > 0)
                 {
-                    var resource = ParentProvider.GetResource();
-                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                    if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                    {
+                        var resource = ParentProvider.GetResource();
+                        _resourceParser.UpdateRoleNameAndInstance(resource);
+                    }
+                    var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
+                    exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 }
 
-                var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
-                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
 
                 return exportResult;
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
                 return ExportResult.Failure;
             }
         }

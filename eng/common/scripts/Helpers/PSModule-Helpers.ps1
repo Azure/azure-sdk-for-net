@@ -1,7 +1,7 @@
 $DefaultPSRepositoryUrl = "https://www.powershellgallery.com/api/v2"
 $global:CurrentUserModulePath = ""
 
-function Update-PSModulePath()
+function Update-PSModulePathForCI()
 {
   # Information on PSModulePath taken from docs
   # https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath
@@ -48,8 +48,15 @@ function Update-PSModulePath()
 }
 
 # If we want to use another default repository other then PSGallery we can update the default parameters
-function Install-ModuleIfNotInstalled($moduleName, $version, $repositoryUrl = $DefaultPSRepositoryUrl)
+function Install-ModuleIfNotInstalled()
 {
+  [CmdletBinding(SupportsShouldProcess = $true)]
+  param(
+    [string]$moduleName,
+    [string]$version,
+    [string]$repositoryUrl = $DefaultPSRepositoryUrl
+  )
+
   # Check installed modules
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {
@@ -94,4 +101,6 @@ function Install-ModuleIfNotInstalled($moduleName, $version, $repositoryUrl = $D
   return $modules[0]
 }
 
-Update-PSModulePath
+if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
+    Update-PSModulePathForCI
+}

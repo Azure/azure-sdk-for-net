@@ -122,6 +122,223 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         [Fact]
+        public void MongoPartitionMergeTests()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                this.fixture.ResourceGroupName = "canary-sdk-test";
+                var databaseAccountName = "canary-sdk-test-mongo-account";
+
+                var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
+
+                string databaseName = TestUtilities.GenerateName(prefix: "mongoDb");                
+                string collectionName = TestUtilities.GenerateName(prefix: "mongoCollection");
+
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBDatabaseGetResults mongoDBDatabaseGetResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.Equal(databaseName, mongoDBDatabaseGetResults.Name);
+                Assert.NotNull(mongoDBDatabaseGetResults);
+
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                        ShardKey = dict
+                    },
+                    Options = new CreateUpdateOptions()
+                    {
+                        Throughput = 14000
+                    }
+                };
+
+                MongoDBCollectionGetResults mongoDBCollectionGetResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollectionGetResults);
+                VerfiyMongoCollectionCreation(mongoDBCollectionGetResults, mongoDBCollectionCreateUpdateParameters);
+
+                IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = mongoClient.ListMongoDBCollectionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollections);
+
+                PhysicalPartitionStorageInfoCollection physicalPartitionStorageInfoCollection =
+                    mongoClient.ListMongoDBCollectionPartitionMerge(fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, new MergeParameters(isDryRun: true));
+
+                Assert.Equal(2, physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count);
+
+                mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName);                
+                mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName);
+                
+            }
+        }
+
+        [Fact]
+        public void MongoPartitionRedistributionTests()
+        {
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
+                this.fixture.ResourceGroupName = "cosmosTest";
+                var databaseAccountName = "adrutest3";
+
+                string databaseName = TestUtilities.GenerateName(prefix: "mongoDb");
+                string collectionName = TestUtilities.GenerateName(prefix: "mongoCollection");
+
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBDatabaseGetResults mongoDBDatabaseGetResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    mongoDBDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabaseGetResults);
+                Assert.Equal(databaseName, mongoDBDatabaseGetResults.Name);
+
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                        ShardKey = dict
+                    },
+                    Options = new CreateUpdateOptions()
+                    {
+                        Throughput = 15000
+                    }
+                };
+
+                MongoDBCollectionGetResults mongoDBCollectionGetResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollectionGetResults);
+                VerfiyMongoCollectionCreation(mongoDBCollectionGetResults, mongoDBCollectionCreateUpdateParameters);
+
+                IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = mongoClient.ListMongoDBCollectionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollections);
+
+                RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters();
+                var retrieveThroughputPropertiesResource = new RetrieveThroughputPropertiesResource();
+                retrieveThroughputPropertiesResource.PhysicalPartitionIds = new List<PhysicalPartitionId>();
+                for (int j = 0; j < 3; j++)
+                {
+                    PhysicalPartitionId physicalPartitionId = new PhysicalPartitionId()
+                    {
+                        Id = j.ToString()
+                    };
+                    retrieveThroughputPropertiesResource.PhysicalPartitionIds.Add(physicalPartitionId);
+                }
+                retrieveThroughputParameters.Resource = retrieveThroughputPropertiesResource;
+                PhysicalPartitionThroughputInfoResult physicalPartitionThroughputInfoResult = mongoClient.MongoDBContainerRetrieveThroughputDistribution(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    collectionName,
+                    retrieveThroughputParameters);
+
+                Assert.Equal(3, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "2")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters();
+                redistributeThroughputParameters.Resource = new RedistributeThroughputPropertiesResource();
+                redistributeThroughputParameters.Resource.ThroughputPolicy = ThroughputPolicyType.Custom;
+
+                redistributeThroughputParameters.Resource.SourcePhysicalPartitionThroughputInfo = new List<PhysicalPartitionThroughputInfoResource>();
+                redistributeThroughputParameters.Resource.SourcePhysicalPartitionThroughputInfo.Add(new PhysicalPartitionThroughputInfoResource("0", 0));
+
+                redistributeThroughputParameters.Resource.TargetPhysicalPartitionThroughputInfo = new List<PhysicalPartitionThroughputInfoResource>();
+                redistributeThroughputParameters.Resource.TargetPhysicalPartitionThroughputInfo.Add(new PhysicalPartitionThroughputInfoResource("1", 7000));
+
+                physicalPartitionThroughputInfoResult = mongoClient.MongoDBContainerRedistributeThroughput(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    collectionName,
+                    redistributeThroughputParameters);
+                Assert.Equal(2, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+
+                for (int j = 0; j < 2; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(3000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(7000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[0].Throughput));
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                physicalPartitionThroughputInfoResult = mongoClient.MongoDBContainerRetrieveThroughputDistribution(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    collectionName,
+                    retrieveThroughputParameters);
+
+                Assert.Equal(3, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(3000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(7000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "2")
+                    {
+                        Assert.Equal(5000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName).Wait();
+                mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).Wait();
+            }
+        }
+
+        [Fact]
         public void MongoUsersAndRolesTests()
         {
             using (var context = MockContext.Start(this.GetType()))

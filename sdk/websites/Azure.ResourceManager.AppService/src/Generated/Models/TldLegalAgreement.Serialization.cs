@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             string agreementKey = default;
             string title = default;
             string content = default;
-            Optional<string> url = default;
+            Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agreementKey"))
@@ -37,7 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
             }

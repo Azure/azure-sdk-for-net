@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The storage location for a packet capture session. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </param>
         /// <param name="storagePath"> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </param>
         /// <param name="filePath"> A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>
-        internal PacketCaptureStorageLocation(string storageId, string storagePath, string filePath)
+        internal PacketCaptureStorageLocation(ResourceIdentifier storageId, string storagePath, string filePath)
         {
             StorageId = storageId;
             StoragePath = storagePath;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </summary>
-        public string StorageId { get; set; }
+        public ResourceIdentifier StorageId { get; set; }
         /// <summary> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </summary>
         public string StoragePath { get; set; }
         /// <summary> A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </summary>

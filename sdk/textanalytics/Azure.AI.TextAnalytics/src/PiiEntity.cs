@@ -8,19 +8,24 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A word or phrase identified as a Personally Identifiable Information
     /// that can be categorized as known type in a given taxonomy.
-    /// The set of categories recognized by the Text Analytics service is described at
+    /// The set of categories recognized by the Language service is described at
     /// <see href="https://aka.ms/tanerpii"/>.
     /// </summary>
     public readonly struct PiiEntity
     {
         internal PiiEntity(Entity entity)
+            : this(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length)
         {
-            Category = entity.Category;
-            Text = entity.Text;
-            SubCategory = entity.Subcategory;
-            ConfidenceScore = entity.ConfidenceScore;
-            Offset = entity.Offset;
-            Length = entity.Length;
+        }
+
+        internal PiiEntity(string text, string category, string subcategory, double confidenceScore, int offset, int length)
+        {
+            Text = text;
+            Category = category;
+            SubCategory = subcategory;
+            ConfidenceScore = confidenceScore;
+            Offset = offset;
+            Length = length;
         }
 
         /// <summary>
@@ -38,9 +43,9 @@ namespace Azure.AI.TextAnalytics
         public PiiEntityCategory Category { get; }
 
         /// <summary>
-        /// Gets the sub category of the entity inferred by the Text Analytics service's
+        /// Gets the subcategory of the entity inferred by the Language service's
         /// named entity recognition model.  This property may not have a value if
-        /// a sub category doesn't exist for this entity.  The list of available categories and
+        /// a subcategory doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
         public string SubCategory { get; }

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static OSVersionListResult DeserializeOSVersionListResult(JsonElement element)
         {
-            IReadOnlyList<OSVersionData> value = default;
+            IReadOnlyList<CloudServiceOSVersionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<OSVersionData> array = new List<OSVersionData>();
+                    List<CloudServiceOSVersionData> array = new List<CloudServiceOSVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OSVersionData.DeserializeOSVersionData(item));
+                        array.Add(CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(item));
                     }
                     value = array;
                     continue;

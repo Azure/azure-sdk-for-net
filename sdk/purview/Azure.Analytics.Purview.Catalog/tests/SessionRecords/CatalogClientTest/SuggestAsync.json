@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/catalog/api/search/suggest?api-version=2021-05-01-preview",
+      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/catalog/api/search/suggest?api-version=2022-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",

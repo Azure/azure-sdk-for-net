@@ -10,6 +10,7 @@ using Azure.Core.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
@@ -1581,6 +1582,82 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateDeletedEventData).PolicyDefinitionId);
         }
         #endregion
+
+        #region Communication events
+        [Test]
+        public void ConsumeAcsRecordingFileStatusUpdatedEventData()
+        {
+            string requestContent = "[   {      \"subject\":\"/recording/call/{call-id}/recordingId/{recording-id}\",    \"eventType\":\"Microsoft.Communication.RecordingFileStatusUpdated\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"recordingStorageInfo\": { \"recordingChunks\": [ { \"documentId\": \"0-eus-d12-801b3f3fc462fe8a01e6810cbff729b8\", \"index\": 0, \"endReason\": \"SessionEnded\", \"contentLocation\": \"https://storage.asm.skype.com/v1/objects/0-eus-d12-801b3f3fc462fe8a01e6810cbff729b8/content/video\", \"metadataLocation\": \"https://storage.asm.skype.com/v1/objects/0-eus-d12-801b3f3fc462fe8a01e6810cbff729b8/content/acsmetadata\" }]}, \"recordingChannelType\": \"Mixed\", \"recordingContentType\": \"Audio\", \"recordingFormatType\": \"Mp3\"},   \"dataVersion\": \"1.0\"  }]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var recordingEvent = eventData as AcsRecordingFileStatusUpdatedEventData;
+            Assert.IsNotNull(recordingEvent);
+            Assert.AreEqual(AcsRecordingChannelType.Mixed, recordingEvent.ChannelType);
+            Assert.AreEqual(AcsRecordingContentType.Audio, recordingEvent.ContentType);
+            Assert.AreEqual(AcsRecordingFormatType.Mp3, recordingEvent.FormatType);
+
+            // back compat
+            Assert.AreEqual(RecordingChannelType.Mixed, recordingEvent.RecordingChannelType);
+            Assert.AreEqual(RecordingContentType.Audio, recordingEvent.RecordingContentType);
+            Assert.AreEqual(RecordingFormatType.Mp3, recordingEvent.RecordingFormatType);
+        }
+        #endregion
+
+        #region Health Data Services events
+        [Test]
+        public void ConsumeFhirResourceCreatedEvent()
+        {
+            string requestContent = "[   {  \"subject\":\"{fhir-account}.fhir.azurehealthcareapis.com/Patient/e0a1f743-1a70-451f-830e-e96477163902\",    \"eventType\":\"Microsoft.HealthcareApis.FhirResourceCreated\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"resourceType\": \"Patient\",  \"resourceFhirAccount\": \"{fhir-account}.fhir.azurehealthcareapis.com\", \"resourceFhirId\": \"e0a1f743-1a70-451f-830e-e96477163902\", \"resourceVersionId\": 1 },   \"dataVersion\": \"1.0\"  }]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareFhirResourceCreatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
+        }
+
+        [Test]
+        public void ConsumeFhirResourceUpdatedEvent()
+        {
+            string requestContent = "[   {  \"subject\":\"{fhir-account}.fhir.azurehealthcareapis.com/Patient/e0a1f743-1a70-451f-830e-e96477163902\",    \"eventType\":\"Microsoft.HealthcareApis.FhirResourceUpdated\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"resourceType\": \"Patient\",  \"resourceFhirAccount\": \"{fhir-account}.fhir.azurehealthcareapis.com\", \"resourceFhirId\": \"e0a1f743-1a70-451f-830e-e96477163902\", \"resourceVersionId\": 1 },   \"dataVersion\": \"1.0\"  }]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareFhirResourceUpdatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
+        }
+
+        [Test]
+        public void ConsumeFhirResourceDeletedEvent()
+        {
+            string requestContent = "[   {  \"subject\":\"{fhir-account}.fhir.azurehealthcareapis.com/Patient/e0a1f743-1a70-451f-830e-e96477163902\",    \"eventType\":\"Microsoft.HealthcareApis.FhirResourceDeleted\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"resourceType\": \"Patient\",  \"resourceFhirAccount\": \"{fhir-account}.fhir.azurehealthcareapis.com\", \"resourceFhirId\": \"e0a1f743-1a70-451f-830e-e96477163902\", \"resourceVersionId\": 1 },   \"dataVersion\": \"1.0\"  }]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareFhirResourceDeletedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
+        }
+        #endregion
         #endregion
 
         #region CloudEvent tests
@@ -2981,6 +3058,82 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("4c2359fe-001e-00ba-0e04-585868000000", (eventData as PolicyInsightsPolicyStateDeletedEventData).PolicyDefinitionId);
+        }
+        #endregion
+
+        #region Communication events
+        [Test]
+        public void ConsumeCloudEventAcsRecordingFileStatusUpdatedEventData()
+        {
+            string requestContent = "[   {     \"source\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/recording/call/{call-id}/recordingId/{recording-id}\",    \"type\":\"Microsoft.Communication.RecordingFileStatusUpdated\",    \"time\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"recordingStorageInfo\": { \"recordingChunks\": [ { \"documentId\": \"0-eus-d12-801b3f3fc462fe8a01e6810cbff729b8\", \"index\": 0, \"endReason\": \"SessionEnded\", \"contentLocation\": \"https://storage.asm.skype.com/v1/objects/0-eus-d12-801b3f3fc462fe8a01e6810cbff729b8/content/video\", \"metadataLocation\": \"https://storage.asm.skype.com/v1/objects/0-eus-d12-801b3f3fc462fe8a01e6810cbff729b8/content/acsmetadata\" }]}, \"recordingChannelType\": \"Mixed\", \"recordingContentType\": \"Audio\", \"recordingFormatType\": \"Mp3\"},   \"specversion\": \"1.0\"  }]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var recordingEvent = eventData as AcsRecordingFileStatusUpdatedEventData;
+            Assert.IsNotNull(recordingEvent);
+            Assert.AreEqual(AcsRecordingChannelType.Mixed, recordingEvent.ChannelType);
+            Assert.AreEqual(AcsRecordingContentType.Audio, recordingEvent.ContentType);
+            Assert.AreEqual(AcsRecordingFormatType.Mp3, recordingEvent.FormatType);
+
+            // back compat
+            Assert.AreEqual(RecordingChannelType.Mixed, recordingEvent.RecordingChannelType);
+            Assert.AreEqual(RecordingContentType.Audio, recordingEvent.RecordingContentType);
+            Assert.AreEqual(RecordingFormatType.Mp3, recordingEvent.RecordingFormatType);
+        }
+        #endregion
+
+        #region Health Data Services events
+        [Test]
+        public void ConsumeCloudEventFhirResourceCreatedEvent()
+        {
+            string requestContent = "[   { \"source\": \"/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}\", \"subject\":\"{fhir-account}.fhir.azurehealthcareapis.com/Patient/e0a1f743-1a70-451f-830e-e96477163902\",    \"type\":\"Microsoft.HealthcareApis.FhirResourceCreated\",    \"time\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"resourceType\": \"Patient\",  \"resourceFhirAccount\": \"{fhir-account}.fhir.azurehealthcareapis.com\", \"resourceFhirId\": \"e0a1f743-1a70-451f-830e-e96477163902\", \"resourceVersionId\": 1 },   \"specversion\": \"1.0\"  }]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareFhirResourceCreatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
+        }
+
+        [Test]
+        public void ConsumeCloudEventFhirResourceUpdatedEvent()
+        {
+            string requestContent = "[   { \"source\": \"/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}\", \"subject\":\"{fhir-account}.fhir.azurehealthcareapis.com/Patient/e0a1f743-1a70-451f-830e-e96477163902\",    \"type\":\"Microsoft.HealthcareApis.FhirResourceUpdated\",    \"time\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"resourceType\": \"Patient\",  \"resourceFhirAccount\": \"{fhir-account}.fhir.azurehealthcareapis.com\", \"resourceFhirId\": \"e0a1f743-1a70-451f-830e-e96477163902\", \"resourceVersionId\": 1 },   \"specversion\": \"1.0\"  }]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareFhirResourceUpdatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
+        }
+
+        [Test]
+        public void ConsumeCloudEventFhirResourceDeletedEvent()
+        {
+            string requestContent = "[   { \"source\": \"/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}\", \"subject\":\"{fhir-account}.fhir.azurehealthcareapis.com/Patient/e0a1f743-1a70-451f-830e-e96477163902\",    \"type\":\"Microsoft.HealthcareApis.FhirResourceDeleted\",    \"time\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": { \"resourceType\": \"Patient\",  \"resourceFhirAccount\": \"{fhir-account}.fhir.azurehealthcareapis.com\", \"resourceFhirId\": \"e0a1f743-1a70-451f-830e-e96477163902\", \"resourceVersionId\": 1 },   \"specversion\": \"1.0\"  }]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareFhirResourceDeletedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
         #endregion
         #endregion

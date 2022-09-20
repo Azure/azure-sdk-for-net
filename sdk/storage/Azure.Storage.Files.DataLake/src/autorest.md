@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/6bacb496a7c84297e72747c52f82e4a0e6c8930d/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2021-06-08/DataLakeStorage.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f6fab392bec9dbb3ceeb01c4604eba6d929e0074/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2021-06-08/DataLakeStorage.json
+generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
 ```
@@ -78,6 +79,10 @@ directive:
     };
     delete $.Path.properties.isDirectory;
     $.Path.properties.isDirectory = {
+        "type": "string"
+    };
+    delete $.Path.properties.eTag;
+    $.Path.properties.etag = {
         "type": "string"
     };
 ```

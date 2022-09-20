@@ -24,7 +24,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         [EnumMember(Value = "Hot")]
         Hot,
         [EnumMember(Value = "Cool")]
-        Cool
+        Cool,
+        [EnumMember(Value = "Premium")]
+        Premium
     }
     internal static class AccessTierEnumExtension
     {
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return "Hot";
                 case AccessTier.Cool:
                     return "Cool";
+                case AccessTier.Premium:
+                    return "Premium";
             }
             return null;
         }
@@ -53,6 +57,8 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return AccessTier.Hot;
                 case "Cool":
                     return AccessTier.Cool;
+                case "Premium":
+                    return AccessTier.Premium;
             }
             return null;
         }

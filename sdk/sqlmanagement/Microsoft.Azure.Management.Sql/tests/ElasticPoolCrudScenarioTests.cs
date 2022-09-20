@@ -70,7 +70,32 @@ namespace Sql.Tests
                 }
             }
         }
-        
+
+        [Fact]
+        public void TestCreateDropHyperscaleElasticPool()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup(TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                Server server = context.CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Create a Hyperscale elasticPool with specified replica count of 2
+                // 
+                string epName = SqlManagementTestUtilities.GenerateName();
+                var epInput = new ElasticPool()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4"),
+                    HighAvailabilityReplicaCount = 2
+                };
+                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                Assert.Equal(2, returnedEp.HighAvailabilityReplicaCount);
+
+                sqlClient.ElasticPools.Delete(resourceGroup.Name, server.Name, epName);               
+            }
+        }
+
         [Fact]
         public void TestUpdateElasticPoolWithCreateOrUpdateAndListActivity()
         {
@@ -83,6 +108,21 @@ namespace Sql.Tests
                 Func<string, string, string, ElasticPool, ElasticPool> updateFunc = sqlClient.ElasticPools.CreateOrUpdate;
                 Func<ElasticPool> createModelFunc = () => new ElasticPool(server.Location);
                 TestUpdateElasticPool(sqlClient, resourceGroup, server, createModelFunc, updateFunc);
+            };
+        }
+
+        [Fact]
+        public void TestUpdateHyperscaleElasticPoolWithCreateOrUpdateAndListActivity()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup(TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                Server server = context.CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                Func<string, string, string, ElasticPool, ElasticPool> updateFunc = sqlClient.ElasticPools.CreateOrUpdate;
+                Func<ElasticPool> createModelFunc = () => new ElasticPool(server.Location, sku: new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4"));
+                TestUpdateHyperscaleElasticPool(sqlClient, resourceGroup, server, createModelFunc, updateFunc);
             };
         }
 
@@ -100,7 +140,22 @@ namespace Sql.Tests
                 TestUpdateElasticPool(sqlClient, resourceGroup, server, createModelFunc, updateFunc);
             };
         }
-        
+
+        [Fact]
+        public void TestUpdateHyperscaleElasticPoolWithUpdateAndListActivity()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup(TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                Server server = context.CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                Func<string, string, string, ElasticPoolUpdate, ElasticPool> updateFunc = sqlClient.ElasticPools.Update;
+                Func<ElasticPoolUpdate> createModelFunc = () => new ElasticPoolUpdate(sku: new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4"));
+                TestUpdateHyperscaleElasticPool(sqlClient, resourceGroup, server, createModelFunc, updateFunc);
+            };
+        }
+
         [Fact]
         public async Task TestCancelUpdateElasticPoolOperation()
         {
@@ -248,6 +303,73 @@ namespace Sql.Tests
             Assert.Equal(5, epa.Count());
             Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
             Assert.Equal(4, epa.Where(a => a.Operation == "UPDATE").Count());
+        }
+
+        private void TestUpdateHyperscaleElasticPool<TUpdateModel>(
+           SqlManagementClient sqlClient,
+           ResourceGroup resourceGroup,
+           Server server,
+           Func<TUpdateModel> createModelFunc,
+           Func<string, string, string, TUpdateModel, ElasticPool> updateFunc)
+        {
+            // Create a Hyperscale elasticPool 
+            // 
+            string epName = SqlManagementTestUtilities.GenerateName();
+            var epInput = new ElasticPool()
+            {
+                Location = server.Location,
+                Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4")
+            };
+            var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+            var epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(1, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+
+            // Verify pool has default HighAvailabilityReplicaCount
+            Assert.Equal(1, returnedEp.HighAvailabilityReplicaCount);
+
+            // Update HighAvailabilityReplicaCount
+            // 
+            dynamic epInput2 = createModelFunc();
+            epInput2.HighAvailabilityReplicaCount = 2;
+
+            updateFunc(resourceGroup.Name, server.Name, epName, epInput2);
+
+            returnedEp = sqlClient.ElasticPools.Get(resourceGroup.Name, server.Name, epName);
+
+            SqlManagementTestUtilities.ValidateElasticPool(epInput2, returnedEp, epName);
+            epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(2, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "UPDATE").Count());
+
+            // Verify pool has updated HighAvailabilityReplicaCount
+            // 
+            Assert.Equal(2, returnedEp.HighAvailabilityReplicaCount);
+
+            // Update Hyperscale pool SLO
+            // 
+            dynamic epInput3 = createModelFunc();
+            epInput3.Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_8");
+
+            returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput3);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput2, returnedEp, epName);
+            epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(3, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(2, epa.Where(a => a.Operation == "UPDATE").Count());
+
+            // Verify pool has same HighAvailabilityReplicaCount
+            // 
+            Assert.Equal(2, returnedEp.HighAvailabilityReplicaCount);
+
+            // Verify pool has updated SLO
+            // 
+            Assert.Equal(8, returnedEp.Sku.Capacity);
         }
 
         [Fact]

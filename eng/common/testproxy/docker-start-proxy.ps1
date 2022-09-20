@@ -38,8 +38,7 @@ catch {
 
 $SELECTED_IMAGE_TAG = $(Get-Content "$PSScriptRoot/target_version.txt" -Raw).Trim()
 $CONTAINER_NAME = "ambitious_azsdk_test_proxy"
-$LINUX_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-lin:${SELECTED_IMAGE_TAG}"
-$WINDOWS_IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy-win:${SELECTED_IMAGE_TAG}"
+$IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/test-proxy:${SELECTED_IMAGE_TAG}"
 
 if($VersionOverride) { 
     Write-Host "Overriding default target proxy version of '$SELECTED_IMAGE_TAG' with override $VersionOverride."
@@ -58,8 +57,6 @@ function Get-Proxy-Container(){
                 | Select-Object -First 1)
 }
 
-
-$SelectedImage = $LINUX_IMAGE_SOURCE
 $Initial = ""
 $AdditionalContainerArgs = "--add-host=host.docker.internal:host-gateway"
 
@@ -67,7 +64,6 @@ $AdditionalContainerArgs = "--add-host=host.docker.internal:host-gateway"
 # however, in CI, windows images default to _windows_ containers. We cannot swap them. We can tell if we're in a CI build by
 # checking for the environment variable TF_BUILD.
 if ($IsWindows -and $env:TF_BUILD){
-    $SelectedImage = $WINDOWS_IMAGE_SOURCE
     $Initial = "C:"
     $AdditionalContainerArgs = ""
 }
@@ -93,9 +89,9 @@ if ($Mode -eq "start"){
     else {
         $attempts = 0
         Write-Host "Attempting creation of Docker host $CONTAINER_NAME"
-        Write-Host "docker container create -v `"${root}:${Initial}/srv/testproxy`" $AdditionalContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage"
+        Write-Host "docker container create -v `"${root}:${Initial}/srv/testproxy`" $AdditionalContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $IMAGE_SOURCE"
         while($attempts -lt 3){
-            docker container create -v "${root}:${Initial}/srv/testproxy" $AdditionalContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage
+            docker container create -v "${root}:${Initial}/srv/testproxy" $AdditionalContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $IMAGE_SOURCE
 
             if($LASTEXITCODE -ne 0){
                 $attempts += 1

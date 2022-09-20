@@ -16,6 +16,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ContentType1.ApplicationOctetStream => "application/octet-stream",
             ContentType1.ApplicationPdf => "application/pdf",
             ContentType1.ImageBmp => "image/bmp",
+            ContentType1.ImageHeif => "image/heif",
             ContentType1.ImageJpeg => "image/jpeg",
             ContentType1.ImagePng => "image/png",
             ContentType1.ImageTiff => "image/tiff",
@@ -27,6 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (string.Equals(value, "application/octet-stream", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationOctetStream;
             if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationPdf;
             if (string.Equals(value, "image/bmp", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageBmp;
+            if (string.Equals(value, "image/heif", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageHeif;
             if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageJpeg;
             if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImagePng;
             if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageTiff;

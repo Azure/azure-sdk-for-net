@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of HopLink. </summary>
         internal HopLink()
         {
-            Issues = new ChangeTrackingList<ConnectivityIssue>();
+            Issues = new ChangeTrackingList<ConnectivityIssueInfo>();
             Context = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="roundTripTimeMin"> Minimum roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeAvg"> Average roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeMax"> Maximum roundtrip time in milliseconds. </param>
-        internal HopLink(string nextHopId, string linkType, IReadOnlyList<ConnectivityIssue> issues, IReadOnlyDictionary<string, string> context, string resourceId, long? roundTripTimeMin, long? roundTripTimeAvg, long? roundTripTimeMax)
+        internal HopLink(string nextHopId, string linkType, IReadOnlyList<ConnectivityIssueInfo> issues, IReadOnlyDictionary<string, string> context, ResourceIdentifier resourceId, long? roundTripTimeMin, long? roundTripTimeAvg, long? roundTripTimeMax)
         {
             NextHopId = nextHopId;
             LinkType = linkType;
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Link type. </summary>
         public string LinkType { get; }
         /// <summary> List of issues. </summary>
-        public IReadOnlyList<ConnectivityIssue> Issues { get; }
+        public IReadOnlyList<ConnectivityIssueInfo> Issues { get; }
         /// <summary> Provides additional context on links. </summary>
         public IReadOnlyDictionary<string, string> Context { get; }
         /// <summary> Resource ID. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Minimum roundtrip time in milliseconds. </summary>
         public long? RoundTripTimeMin { get; }
         /// <summary> Average roundtrip time in milliseconds. </summary>

@@ -68,6 +68,9 @@ namespace Microsoft.Azure.Management.Storage
         /// and 63 characters.The name must comprise of only alphanumeric characters
         /// and it cannot begin with a numeric character.
         /// </param>
+        /// <param name='signedIdentifiers'>
+        /// List of stored access policies specified on the table.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -89,7 +92,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Table>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Table>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -166,6 +169,22 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.Pattern, "tableName", "^[A-Za-z][A-Za-z0-9]{2,62}$");
                 }
             }
+            if (signedIdentifiers != null)
+            {
+                foreach (var element in signedIdentifiers)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            Table parameters = default(Table);
+            if (signedIdentifiers != null)
+            {
+                parameters = new Table();
+                parameters.SignedIdentifiers = signedIdentifiers;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -176,6 +195,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("tableName", tableName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -229,6 +249,12 @@ namespace Microsoft.Azure.Management.Storage
 
             // Serialize Request
             string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -334,6 +360,9 @@ namespace Microsoft.Azure.Management.Storage
         /// and 63 characters.The name must comprise of only alphanumeric characters
         /// and it cannot begin with a numeric character.
         /// </param>
+        /// <param name='signedIdentifiers'>
+        /// List of stored access policies specified on the table.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -355,7 +384,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -432,6 +461,22 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.Pattern, "tableName", "^[A-Za-z][A-Za-z0-9]{2,62}$");
                 }
             }
+            if (signedIdentifiers != null)
+            {
+                foreach (var element in signedIdentifiers)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            Table parameters = default(Table);
+            if (signedIdentifiers != null)
+            {
+                parameters = new Table();
+                parameters.SignedIdentifiers = signedIdentifiers;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -442,6 +487,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("tableName", tableName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -495,6 +541,12 @@ namespace Microsoft.Azure.Management.Storage
 
             // Serialize Request
             string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

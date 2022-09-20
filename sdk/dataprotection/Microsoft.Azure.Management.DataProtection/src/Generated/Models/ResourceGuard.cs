@@ -76,11 +76,11 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         public IList<ResourceGuardOperation> ResourceGuardOperations { get; private set; }
 
         /// <summary>
-        /// Gets list of critical operations which are not protected by this
-        /// resourceGuard
+        /// Gets or sets list of critical operations which are not protected by
+        /// this resourceGuard
         /// </summary>
         [JsonProperty(PropertyName = "vaultCriticalOperationExclusionList")]
-        public IList<string> VaultCriticalOperationExclusionList { get; private set; }
+        public IList<string> VaultCriticalOperationExclusionList { get; set; }
 
         /// <summary>
         /// Gets description about the pre-req steps to perform all the

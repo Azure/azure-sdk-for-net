@@ -52,7 +52,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "31",
+        "Content-Length": "20",
         "Content-Type": "application/json",
         "traceparent": "00-7707a6bd19f7b48f44fbcdd7741c5d43-0b6ce6c7d7134cbf-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220203.1 (.NET 6.0.1; Microsoft Windows 10.0.22000) azsdk-net-ResourceManager/1.0.0-alpha.20220203.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
@@ -60,7 +60,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "tags": {},
         "location": "westus"
       },
       "StatusCode": 201,

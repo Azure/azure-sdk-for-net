@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // view operation results
             await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
             {
-                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Results of \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
 
                 foreach (AnalyzeHealthcareEntitiesResult entitiesInDoc in documentsInPage)

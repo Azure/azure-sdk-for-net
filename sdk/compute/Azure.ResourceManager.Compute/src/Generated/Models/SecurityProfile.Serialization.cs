@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<UefiSettings> uefiSettings = default;
             Optional<bool> encryptionAtHost = default;
-            Optional<SecurityTypes> securityType = default;
+            Optional<SecurityType> securityType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uefiSettings"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    securityType = new SecurityTypes(property.Value.GetString());
+                    securityType = new SecurityType(property.Value.GetString());
                     continue;
                 }
             }

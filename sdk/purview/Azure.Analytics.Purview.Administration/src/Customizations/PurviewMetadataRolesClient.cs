@@ -18,14 +18,23 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewMetadataRoles service client. </summary>
     [CodeGenClient("PurviewMetadataRolesClient")]
     [CodeGenSuppress("PurviewMetadataRolesClient", new Type[] { typeof(Uri), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
+    [CodeGenSuppress("PurviewMetadataRolesClient", new Type[] { typeof(Uri), typeof(TokenCredential)})]
     public partial class PurviewMetadataRolesClient
     {
         /// <summary> Initializes a new instance of PurviewMetadataRolesClient. </summary>
         /// <param name="endpoint"> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewMetadataRolesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewMetadataClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewMetadataRolesClient. </summary>
+        /// <param name="endpoint"> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewMetadataRolesClient(Uri endpoint, TokenCredential credential, PurviewMetadataClientOptions options = null)
+        public PurviewMetadataRolesClient(Uri endpoint, TokenCredential credential, PurviewMetadataClientOptions options)
         {
             if (endpoint == null)
             {
@@ -38,7 +47,7 @@ namespace Azure.Analytics.Purview.Administration
 
             options ??= new PurviewMetadataClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;

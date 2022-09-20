@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
 
         public SourceControlConfiguration SourceControlConfiguration { get; set; }
 
-        public const string ApiVersion = "2019-11-01-preview";
+        public const string ApiVersion = "2022-03-01";
         public const string ConfigurationType = "SourceControlConfiguration";
         public const string OperatorTypeFlux = "Flux";
 

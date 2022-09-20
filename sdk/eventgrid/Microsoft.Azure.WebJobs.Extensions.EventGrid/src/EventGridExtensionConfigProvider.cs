@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = converter;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
-            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true);
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
         }
 
         // default constructor
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = (attr => new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting))));
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
-            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true);
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -85,6 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 .AddConverter<JToken, string>(jtoken => jtoken.ToString(Formatting.Indented))
                 .AddConverter<JToken, string[]>(jarray => jarray.Select(ar => ar.ToString(Formatting.Indented)).ToArray())
                 .AddConverter<JToken, DirectInvokeString>(jtoken => new DirectInvokeString(null))
+                .AddConverter<DirectInvokeString, JToken>(directInvokeString => JToken.Parse(directInvokeString.Value))
                 .AddConverter<JToken, EventGridEvent>(jobject => EventGridEvent.Parse(new BinaryData(jobject.ToString()))) // surface the type to function runtime
                 .AddConverter<JToken, EventGridEvent[]>(jobject => EventGridEvent.ParseMany(new BinaryData(jobject.ToString())))
                 .AddConverter<JToken, CloudEvent>(jobject => CloudEvent.Parse(new BinaryData(jobject.ToString())))

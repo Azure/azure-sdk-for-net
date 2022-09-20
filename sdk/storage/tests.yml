@@ -23,8 +23,12 @@ extends:
           Path: sdk/storage/platform-matrix-all-versions.json
           Selection: sparse
           GenerateVMJobs: true
-    ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
-      EnvVars:
+    EnvVars:
+      DYLD_LIBRARY_PATH: /usr/local/opt/openssl@3/lib
+      ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
         AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    - bash: brew install openssl@3
+      displayName: (MacOS) Install OpenSSL
+      condition: contains(variables['OSVmImage'], 'mac')

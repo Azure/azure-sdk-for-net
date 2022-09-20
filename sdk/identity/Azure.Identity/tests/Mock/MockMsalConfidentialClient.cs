@@ -18,6 +18,10 @@ namespace Azure.Identity.Tests.Mock
         public MockMsalConfidentialClient()
         { }
 
+        public MockMsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options)
+            :base(pipeline, tenantId, clientId, clientSecret, redirectUrl, options)
+        { }
+
         public MockMsalConfidentialClient(AuthenticationResult result)
         {
             ClientFactory = (_, _) => result;
@@ -59,12 +63,12 @@ namespace Azure.Identity.Tests.Mock
             return this;
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, string tenantId, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenForClientCoreAsync(string[] scopes, string tenantId, bool async, CancellationToken cancellationToken)
         {
             return new(ClientFactory(scopes, tenantId));
         }
 
-        public override async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(
+        public override async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(
             string[] scopes,
             AuthenticationAccount account,
             string tenantId,
@@ -75,7 +79,7 @@ namespace Azure.Identity.Tests.Mock
             return await SilentFactory(scopes, tenantId, replyUri, account);
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenByAuthorizationCodeAsync(
+        public override ValueTask<AuthenticationResult> AcquireTokenByAuthorizationCodeCoreAsync(
             string[] scopes,
             string code,
             string tenantId,
@@ -86,7 +90,7 @@ namespace Azure.Identity.Tests.Mock
             return new(AuthcodeFactory(scopes, tenantId, replyUri, code));
         }
 
-        public override async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOf(
+        public override async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOfCoreAsync(
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,

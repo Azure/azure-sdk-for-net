@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
             Location = new LocationOperations(this);
             Containers = new ContainersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-09-01";
+            ApiVersion = "2021-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -47,15 +47,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The Azure subscription ID. This is a GUID-formatted string (e.g.
-        /// 00000000-0000-0000-0000-000000000000)
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -74,6 +73,26 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IExtensionsOperations.
+        /// </summary>
+        public virtual IExtensionsOperations Extensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationStatusOperations.
+        /// </summary>
+        public virtual IOperationStatusOperations OperationStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the IFluxConfigurationsOperations.
+        /// </summary>
+        public virtual IFluxConfigurationsOperations FluxConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IFluxConfigOperationStatusOperations.
+        /// </summary>
+        public virtual IFluxConfigOperationStatusOperations FluxConfigOperationStatus { get; private set; }
 
         /// <summary>
         /// Gets the ISourceControlConfigurationsOperations.
@@ -326,10 +345,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// </summary>
         private void Initialize()
         {
+            Extensions = new ExtensionsOperations(this);
+            OperationStatus = new OperationStatusOperations(this);
+            FluxConfigurations = new FluxConfigurationsOperations(this);
+            FluxConfigOperationStatus = new FluxConfigOperationStatusOperations(this);
             SourceControlConfigurations = new SourceControlConfigurationsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-03-01";
+            ApiVersion = "2022-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

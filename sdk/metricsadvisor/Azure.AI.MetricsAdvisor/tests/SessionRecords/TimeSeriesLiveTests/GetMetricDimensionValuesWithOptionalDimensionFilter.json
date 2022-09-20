@@ -1,40 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/390d1139-98fb-45af-b831-8d5ad61b150a/dimension/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/b6c0649c-0c51-4aa6-82b6-3c3b0aa55066/dimension/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "54",
+        "Content-Length": "52",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-70187fe60c666d45aba897fa2f34377a-92321e3a9e49764c-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-ffe318fd60ecf362e3f7c4ee2166bd0d-cc8a61b45460f091-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "c49ee0c41724a883443268e80db0a895",
+        "x-ms-client-request-id": "870fa3f12741dd11bcca8c1234eba968",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "dimensionName": "region",
-        "dimensionValueFilter": "ba"
+        "dimensionName": "Dim1",
+        "dimensionValueFilter": "JP"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f985ba05-dc27-4cff-8c16-ff9666e2e5ba",
-        "Content-Length": "20",
+        "apim-request-id": "50e13689-c81d-47bc-aeba-4ec8d2f100da",
+        "Content-Length": "17",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:51 GMT",
+        "Date": "Tue, 19 Apr 2022 04:03:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "98",
-        "X-Request-ID": "f985ba05-dc27-4cff-8c16-ff9666e2e5ba"
+        "x-envoy-upstream-service-time": "126",
+        "X-Request-ID": "50e13689-c81d-47bc-aeba-4ec8d2f100da"
       },
       "ResponseBody": {
         "value": [
-          "Mumbai"
+          "JPN"
         ]
       }
     }
@@ -44,6 +41,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1624314030"
+    "RandomSeed": "745538757"
   }
 }

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="protocol">The protocol used for the probe. Possible
-        /// values include: 'Http', 'Https'</param>
+        /// values include: 'Http', 'Https', 'Tcp', 'Tls'</param>
         /// <param name="host">Host name to send the probe to.</param>
         /// <param name="path">Relative path of probe. Valid path starts from
         /// '/'. Probe is sent to
@@ -52,6 +52,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="pickHostNameFromBackendHttpSettings">Whether the host
         /// header should be picked from the backend http settings. Default
         /// value is false.</param>
+        /// <param name="pickHostNameFromBackendSettings">Whether the server
+        /// name indication should be picked from the backend settings for Tls
+        /// protocol. Default value is false.</param>
         /// <param name="minServers">Minimum number of servers that are always
         /// marked healthy. Default value is 0.</param>
         /// <param name="match">Criterion for classifying a healthy probe
@@ -68,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayProbe(string id = default(string), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), int? minServers = default(int?), ApplicationGatewayProbeHealthResponseMatch match = default(ApplicationGatewayProbeHealthResponseMatch), string provisioningState = default(string), int? port = default(int?), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayProbe(string id = default(string), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), bool? pickHostNameFromBackendSettings = default(bool?), int? minServers = default(int?), ApplicationGatewayProbeHealthResponseMatch match = default(ApplicationGatewayProbeHealthResponseMatch), string provisioningState = default(string), int? port = default(int?), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Protocol = protocol;
@@ -78,6 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Timeout = timeout;
             UnhealthyThreshold = unhealthyThreshold;
             PickHostNameFromBackendHttpSettings = pickHostNameFromBackendHttpSettings;
+            PickHostNameFromBackendSettings = pickHostNameFromBackendSettings;
             MinServers = minServers;
             Match = match;
             ProvisioningState = provisioningState;
@@ -95,7 +99,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the protocol used for the probe. Possible values
-        /// include: 'Http', 'Https'
+        /// include: 'Http', 'Https', 'Tcp', 'Tls'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
@@ -144,6 +148,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.pickHostNameFromBackendHttpSettings")]
         public bool? PickHostNameFromBackendHttpSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the server name indication should be picked
+        /// from the backend settings for Tls protocol. Default value is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pickHostNameFromBackendSettings")]
+        public bool? PickHostNameFromBackendSettings { get; set; }
 
         /// <summary>
         /// Gets or sets minimum number of servers that are always marked
