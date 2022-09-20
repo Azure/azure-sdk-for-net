@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Text.Json;
 using Azure.Communication.CallingServer.Models.MediaStreaming;
-using Azure.Core;
-using Azure.Messaging;
 
 namespace Azure.Communication.CallingServer
 {
@@ -26,33 +25,13 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Parsing Audio packages from BinaryData.
+        /// Parsing a MediaStreaming package from a byte array.
         /// </summary>
-        /// <param name="json"></param>
+        /// <param name="receivedBytes">a UTF8 byte array.</param>
         /// <returns></returns>
-        public static MediaStreamingPackageBase[] ParseMany(BinaryData json)
+        public static MediaStreamingPackageBase Parse(byte[] receivedBytes)
         {
-            Argument.AssertNotNull(json, nameof(json));
-
-            MediaStreamingPackageBase[] packages = null;
-            JsonDocument requestDocument = JsonDocument.Parse(json);
-
-            // Parse JsonElement into separate events, deserialize event envelope properties
-            if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
-            {
-                packages = new MediaStreamingPackageBase[1];
-                packages[0] = Parse(requestDocument.RootElement.ToString());
-            }
-            else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
-            {
-                packages = new MediaStreamingPackageBase[requestDocument.RootElement.GetArrayLength()];
-                int i = 0;
-                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
-                {
-                    packages[i++] = Parse(property.ToString());
-                }
-            }
-            return packages ?? Array.Empty<MediaStreamingPackageBase>();
+            return Parse(Encoding.UTF8.GetString(receivedBytes));
         }
 
         /// <summary>

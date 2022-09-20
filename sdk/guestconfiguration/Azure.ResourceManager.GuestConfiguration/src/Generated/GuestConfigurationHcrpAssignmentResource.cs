@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.GuestConfiguration
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics;
-        private readonly GuestConfigurationHcrpAssignmentsRestOperations _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient;
-        private readonly ClientDiagnostics _guestConfigurationHCRPAssignmentReportsClientDiagnostics;
-        private readonly GuestConfigurationHcrpAssignmentReportsRestOperations _guestConfigurationHCRPAssignmentReportsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics;
+        private readonly GuestConfigurationHcrpAssignmentsRestOperations _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationHcrpAssignmentReportsClientDiagnostics;
+        private readonly GuestConfigurationHcrpAssignmentReportsRestOperations _guestConfigurationHcrpAssignmentReportsRestClient;
         private readonly GuestConfigurationAssignmentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationHcrpAssignmentResource"/> class for mocking. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Initializes a new instance of the <see cref = "GuestConfigurationHcrpAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GuestConfigurationHcrpAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, new ResourceIdentifier(data.Id))
+        internal GuestConfigurationHcrpAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GuestConfigurationHcrpAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsApiVersion);
-            _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHcrpAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsApiVersion);
-            _guestConfigurationHCRPAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _guestConfigurationHCRPAssignmentReportsRestClient = new GuestConfigurationHcrpAssignmentReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsApiVersion);
+            _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient = new GuestConfigurationHcrpAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsApiVersion);
+            _guestConfigurationHcrpAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _guestConfigurationHcrpAssignmentReportsRestClient = new GuestConfigurationHcrpAssignmentReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GuestConfigurationHcrpAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Get");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GuestConfigurationHcrpAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Get");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Delete");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new GuestConfigurationArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Delete");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new GuestConfigurationArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
+            using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHCRPAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -259,15 +259,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetGuestConfigurationHCRPAssignmentReportsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<GuestConfigurationAssignmentReport>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationHCRPAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetGuestConfigurationHCRPAssignmentReports");
+                using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReports");
                 scope.Start();
                 try
                 {
-                    var response = await _guestConfigurationHCRPAssignmentReportsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _guestConfigurationHcrpAssignmentReportsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -286,15 +286,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentReport> GetGuestConfigurationHCRPAssignmentReports(CancellationToken cancellationToken = default)
+        public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
             Page<GuestConfigurationAssignmentReport> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationHCRPAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetGuestConfigurationHCRPAssignmentReports");
+                using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReports");
                 scope.Start();
                 try
                 {
-                    var response = _guestConfigurationHCRPAssignmentReportsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _guestConfigurationHcrpAssignmentReportsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetGuestConfigurationHCRPAssignmentReportAsync(string reportId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
-            using var scope = _guestConfigurationHCRPAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetGuestConfigurationHCRPAssignmentReport");
+            using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReport");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationHCRPAssignmentReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationHcrpAssignmentReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -342,15 +342,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        public virtual Response<GuestConfigurationAssignmentReport> GetGuestConfigurationHCRPAssignmentReport(string reportId, CancellationToken cancellationToken = default)
+        public virtual Response<GuestConfigurationAssignmentReport> GetReport(string reportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
-            using var scope = _guestConfigurationHCRPAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetGuestConfigurationHCRPAssignmentReport");
+            using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReport");
             scope.Start();
             try
             {
-                var response = _guestConfigurationHCRPAssignmentReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken);
+                var response = _guestConfigurationHcrpAssignmentReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Billing type PAV2 meter details. </summary>
@@ -21,13 +23,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <param name="meterGuid"> Validation status of requested data center and transport. </param>
-        internal Pav2MeterDetails(BillingType billingType, double? multiplier, ChargingType? chargingType, string meterGuid) : base(billingType, multiplier, chargingType)
+        internal Pav2MeterDetails(BillingType billingType, double? multiplier, ChargingType? chargingType, Guid? meterGuid) : base(billingType, multiplier, chargingType)
         {
             MeterGuid = meterGuid;
             BillingType = billingType;
         }
 
         /// <summary> Validation status of requested data center and transport. </summary>
-        public string MeterGuid { get; }
+        public Guid? MeterGuid { get; }
     }
 }

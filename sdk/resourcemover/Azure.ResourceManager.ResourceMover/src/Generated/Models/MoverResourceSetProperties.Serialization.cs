@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceSetProperties DeserializeMoverResourceSetProperties(JsonElement element)
         {
-            string sourceRegion = default;
-            string targetRegion = default;
+            AzureLocation sourceRegion = default;
+            AzureLocation targetRegion = default;
             Optional<MoverProvisioningState> provisioningState = default;
             Optional<MoveCollectionPropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceRegion"))
                 {
-                    sourceRegion = property.Value.GetString();
+                    sourceRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetRegion"))
                 {
-                    targetRegion = property.Value.GetString();
+                    targetRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        errors = null;
                         continue;
                     }
                     errors = MoveCollectionPropertiesErrors.DeserializeMoveCollectionPropertiesErrors(property.Value);

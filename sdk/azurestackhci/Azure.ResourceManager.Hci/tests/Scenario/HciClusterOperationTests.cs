@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Tests
         private HciClusterResource _cluster;
 
         public HciClusterOperationTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -59,10 +59,12 @@ namespace Azure.ResourceManager.Hci.Tests
             await clusterFromGet.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var clusterName = Recording.GenerateAssetName("hci-cluster");
             var cluster = await CreateHciClusterAsync(clusterName);
             var tags = new Dictionary<string, string>()

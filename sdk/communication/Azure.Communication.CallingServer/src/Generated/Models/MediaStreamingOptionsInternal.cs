@@ -14,7 +14,7 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of MediaStreamingOptionsInternal. </summary>
         /// <param name="transportUrl"> Transport URL for media streaming. </param>
-        /// <param name="transportType"> The type of tranport to be used for media streaming, eg. Websocket. </param>
+        /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
         /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
         /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Transport URL for media streaming. </summary>
         public string TransportUrl { get; }
-        /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
+        /// <summary> The type of transport to be used for media streaming, eg. Websocket. </summary>
         public MediaStreamingTransport TransportType { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
         public MediaStreamingContent ContentType { get; }

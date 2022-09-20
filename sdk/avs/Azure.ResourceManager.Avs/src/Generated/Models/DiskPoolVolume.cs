@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="targetId"> Azure resource ID of the iSCSI target. </param>
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> or <paramref name="lunName"/> is null. </exception>
-        public DiskPoolVolume(string targetId, string lunName)
+        public DiskPoolVolume(ResourceIdentifier targetId, string lunName)
         {
             if (targetId == null)
             {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <param name="mountOption"> Mode that describes whether the LUN has to be mounted as a datastore or attached as a LUN. </param>
         /// <param name="path"> Device path. </param>
-        internal DiskPoolVolume(string targetId, string lunName, MountOptionEnum? mountOption, string path)
+        internal DiskPoolVolume(ResourceIdentifier targetId, string lunName, LunMountMode? mountOption, string path)
         {
             TargetId = targetId;
             LunName = lunName;
@@ -45,11 +46,11 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Azure resource ID of the iSCSI target. </summary>
-        public string TargetId { get; set; }
+        public ResourceIdentifier TargetId { get; set; }
         /// <summary> Name of the LUN to be used for datastore. </summary>
         public string LunName { get; set; }
         /// <summary> Mode that describes whether the LUN has to be mounted as a datastore or attached as a LUN. </summary>
-        public MountOptionEnum? MountOption { get; set; }
+        public LunMountMode? MountOption { get; set; }
         /// <summary> Device path. </summary>
         public string Path { get; }
     }

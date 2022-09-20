@@ -1,0 +1,16 @@
+name: GitHub Event Handler
+
+on:
+  check_suite:
+    types: [completed]
+  issue_comment:
+    types: [created]
+
+jobs:
+  event-handler:
+    name: Handle ${{ github.event_name }} ${{ github.event.action }} event
+    runs-on: ubuntu-latest
+    steps:
+      - uses: azure/azure-sdk-actions@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

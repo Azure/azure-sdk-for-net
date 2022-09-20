@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<string> message = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<string> status = default;
-            string synchronizationId = default;
+            Guid synchronizationId = default;
             Optional<SynchronizationMode> synchronizationMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (property.NameEquals("synchronizationId"))
                 {
-                    synchronizationId = property.Value.GetString();
+                    synchronizationId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("synchronizationMode"))

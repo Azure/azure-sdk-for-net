@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>
         internal WorkloadNetworkPortMirroringList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkPortMirroringData>();
+            Value = new ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringData> value, string nextLink)
+        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringProfileData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on the page. </summary>
-        public IReadOnlyList<WorkloadNetworkPortMirroringData> Value { get; }
+        public IReadOnlyList<WorkloadNetworkPortMirroringProfileData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

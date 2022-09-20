@@ -6,28 +6,32 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The Call Media Recognize Configurations.
+    /// The Call Media Recognize Options.
     /// </summary>
     public abstract class CallMediaRecognizeOptions
     {
+        private static readonly TimeSpan _defaultInitialSilenceTimeout = TimeSpan.FromSeconds(5);
+
         /// <summary>
         /// Creates a new instance of the CallMediaRecognizeOptions.
         /// </summary>
-        /// <param name="recognizeInputType"></param>
-        protected CallMediaRecognizeOptions(RecognizeInputType recognizeInputType)
+        /// <param name="inputType"></param>
+        /// <param name="targetParticipant"></param>
+        protected CallMediaRecognizeOptions(RecognizeInputType inputType, CommunicationIdentifier targetParticipant)
         {
-            RecognizeInputType = recognizeInputType;
+            InputType = inputType;
+            TargetParticipant = targetParticipant;
         }
 
         /// <summary>
         /// Recognize Input Type.
         /// </summary>
-        public RecognizeInputType RecognizeInputType { get; }
+        public RecognizeInputType InputType { get; }
 
         /// <summary>
-        /// Should stop current Operations?.
+        /// Interrupt current call media operation.
         /// </summary>
-        public bool StopCurrentOperations { get; set; }
+        public bool InterruptCallMediaOperation { get; set; }
 
         /// <summary>
         /// Operation Context.
@@ -39,11 +43,20 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         public PlaySource Prompt { get; set; }
 
-        /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
-        public bool InterruptPromptAndStartRecognition { get; set; }
-        /// <summary> Time to wait for first input after prompt (if any). </summary>
-        public TimeSpan InitialSilenceTimeout { get; set; }
-        /// <summary> Target participant of DTFM tone recognition. </summary>
-        public CommunicationIdentifier TargetParticipant { get; set; }
+        /// <summary>
+        /// Determines if we interrupt the prompt and start recognizing.
+        /// </summary>
+        public bool InterruptPrompt { get; set; }
+
+        /// <summary>
+        /// Time to wait for first input after prompt (if any).
+        /// If not provided, a default of 5 seconds is set.
+        /// </summary>
+        public TimeSpan InitialSilenceTimeout { get; set; } = _defaultInitialSilenceTimeout;
+
+        /// <summary>
+        /// Target participant of DTFM tone recognition.
+        /// </summary>
+        public CommunicationIdentifier TargetParticipant { get; }
     }
 }

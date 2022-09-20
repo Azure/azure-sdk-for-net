@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             string odataType = default;
             Optional<MediaTransformJobError> error = default;
-            Optional<MediaPreset> presetOverride = default;
+            Optional<MediaTransformPreset> presetOverride = default;
             Optional<JobState> state = default;
             Optional<int> progress = default;
             Optional<string> label = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    presetOverride = MediaPreset.DeserializeMediaPreset(property.Value);
+                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"))

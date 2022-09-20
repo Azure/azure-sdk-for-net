@@ -56,34 +56,19 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
         }
 
         [Test]
-        public void ParseAudioEventsWithBinaryData()
+        public void ParseAudioEventsWithBynaryArray()
         {
-            JObject jsonMetadata = new JObject();
-            jsonMetadata["subscriptionId"] = "subscriptionId";
-            jsonMetadata["format"] = new JObject();
-            jsonMetadata["format"]["encoding"] = "encodingType";
-            jsonMetadata["format"]["sampleRate"] = 8;
-            jsonMetadata["format"]["channels"] = 2;
-            jsonMetadata["format"]["length"] = 100.1;
-
             JObject jsonAudio = new JObject();
             jsonAudio["data"] = "AQIDBAU=";
             jsonAudio["timestamp"] = "2022-08-23T11:48:05Z";
             jsonAudio["participantId"] = "participantId";
             jsonAudio["isSilence"] = false;
 
-            JArray data = new JArray();
-            data.Add(jsonMetadata);
-            data.Add(jsonAudio);
+            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonAudio.ToString());
+            MediaStreamingAudio parsedPackage = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(receivedBytes);
 
-            BinaryData json = new BinaryData(data.ToString());
-            MediaStreamingPackageBase[] parsedPackages = MediaStreamingPackageParser.ParseMany(json);
-            Assert.NotNull(parsedPackages);
-            Assert.AreEqual(2, parsedPackages.Length);
-            Assert.IsTrue(parsedPackages[0] is MediaStreamingMetadata);
-            Assert.IsTrue(parsedPackages[1] is MediaStreamingAudio);
-            ValidateMetadata((MediaStreamingMetadata)parsedPackages[0]);
-            ValidateAudioData((MediaStreamingAudio)parsedPackages[1]);
+            Assert.NotNull(parsedPackage);
+            ValidateAudioData(parsedPackage);
         }
 
         private static void ValidateMetadata(MediaStreamingMetadata streamingMetadata)
@@ -106,7 +91,7 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
         private static void ValidateAudioData(MediaStreamingAudio streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(5, streamingAudio.Data.ToArray().Length);
+            Assert.AreEqual(5, streamingAudio.Data.Length);
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);

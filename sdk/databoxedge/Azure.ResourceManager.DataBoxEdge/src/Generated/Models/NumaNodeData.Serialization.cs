@@ -21,20 +21,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("numaNodeIndex");
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
-            if (Optional.IsDefined(TotalMemoryInMb))
+            if (Optional.IsDefined(TotalMemoryInMB))
             {
                 writer.WritePropertyName("totalMemoryInMb");
-                writer.WriteNumberValue(TotalMemoryInMb.Value);
+                writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
             if (Optional.IsDefined(LogicalCoreCountPerCore))
             {
                 writer.WritePropertyName("logicalCoreCountPerCore");
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryInMb))
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryInMb");
-                writer.WriteNumberValue(EffectiveAvailableMemoryInMb.Value);
+                writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
             if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {

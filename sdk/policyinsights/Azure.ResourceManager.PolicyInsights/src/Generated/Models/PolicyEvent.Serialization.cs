@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> odataId = default;
             Optional<string> odataContext = default;
             Optional<DateTimeOffset> timestamp = default;
-            Optional<string> resourceId = default;
-            Optional<string> policyAssignmentId = default;
-            Optional<string> policyDefinitionId = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<ResourceIdentifier> policyAssignmentId = default;
+            Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> effectiveParameters = default;
             Optional<bool> isCompliant = default;
             Optional<string> subscriptionId = default;
             Optional<string> resourceType = default;
-            Optional<string> resourceLocation = default;
+            Optional<AzureLocation> resourceLocation = default;
             Optional<string> resourceGroup = default;
             Optional<string> resourceTags = default;
             Optional<string> policyAssignmentName = default;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> policyDefinitionName = default;
             Optional<string> policyDefinitionAction = default;
             Optional<string> policyDefinitionCategory = default;
-            Optional<string> policySetDefinitionId = default;
+            Optional<ResourceIdentifier> policySetDefinitionId = default;
             Optional<string> policySetDefinitionName = default;
             Optional<string> policySetDefinitionOwner = default;
             Optional<string> policySetDefinitionCategory = default;
@@ -73,17 +73,32 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyAssignmentId"))
                 {
-                    policyAssignmentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionId"))
                 {
-                    policyDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("effectiveParameters"))
@@ -113,7 +128,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("resourceLocation"))
                 {
-                    resourceLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGroup"))
@@ -163,7 +183,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("policySetDefinitionId"))
                 {
-                    policySetDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policySetDefinitionName"))
@@ -234,7 +259,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolicyEvent(odataId.Value, odataContext.Value, Optional.ToNullable(timestamp), resourceId.Value, policyAssignmentId.Value, policyDefinitionId.Value, effectiveParameters.Value, Optional.ToNullable(isCompliant), subscriptionId.Value, resourceType.Value, resourceLocation.Value, resourceGroup.Value, resourceTags.Value, policyAssignmentName.Value, policyAssignmentOwner.Value, policyAssignmentParameters.Value, policyAssignmentScope.Value, policyDefinitionName.Value, policyDefinitionAction.Value, policyDefinitionCategory.Value, policySetDefinitionId.Value, policySetDefinitionName.Value, policySetDefinitionOwner.Value, policySetDefinitionCategory.Value, policySetDefinitionParameters.Value, managementGroupIds.Value, policyDefinitionReferenceId.Value, complianceState.Value, Optional.ToNullable(tenantId), principalOid.Value, Optional.ToList(components), additionalProperties);
+            return new PolicyEvent(odataId.Value, odataContext.Value, Optional.ToNullable(timestamp), resourceId.Value, policyAssignmentId.Value, policyDefinitionId.Value, effectiveParameters.Value, Optional.ToNullable(isCompliant), subscriptionId.Value, resourceType.Value, Optional.ToNullable(resourceLocation), resourceGroup.Value, resourceTags.Value, policyAssignmentName.Value, policyAssignmentOwner.Value, policyAssignmentParameters.Value, policyAssignmentScope.Value, policyDefinitionName.Value, policyDefinitionAction.Value, policyDefinitionCategory.Value, policySetDefinitionId.Value, policySetDefinitionName.Value, policySetDefinitionOwner.Value, policySetDefinitionCategory.Value, policySetDefinitionParameters.Value, managementGroupIds.Value, policyDefinitionReferenceId.Value, complianceState.Value, Optional.ToNullable(tenantId), principalOid.Value, Optional.ToList(components), additionalProperties);
         }
     }
 }

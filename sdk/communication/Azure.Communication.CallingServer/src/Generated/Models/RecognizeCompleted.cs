@@ -16,31 +16,40 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
-        /// <param name="operationContext"> Operation context. </param>
-        /// <param name="recognitionType"> Determines the sub-type pf the recognize operation. </param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
+        /// <param name="recognitionType">
+        /// Determines the sub-type of the recognize operation.
+        /// In case of cancel operation the this field is not set and is returned empty
+        /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="resultInfo"> Defines the code, sub-code and message for the operation. </param>
-        /// <param name="eventType"></param>
+        /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal RecognizeCompleted(string operationContext, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
+        internal RecognizeCompleted(string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             OperationContext = operationContext;
+            ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             CollectTonesResult = collectTonesResult;
-            ResultInfo = resultInfo;
-            EventType = eventType;
+            Version = version;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            PublicEventType = publicEventType;
         }
 
-        /// <summary> Operation context. </summary>
+        /// <summary> Gets the operation context. </summary>
         public string OperationContext { get; }
+        /// <summary> Result information defines the code, subcode and message. </summary>
+        public ResultInformation ResultInformation { get; }
         /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
         public CollectTonesResult CollectTonesResult { get; }
-        /// <summary> Defines the code, sub-code and message for the operation. </summary>
-        public ResultInformation ResultInfo { get; }
+        /// <summary> Used to determine the version of the event. </summary>
+        public string Version { get; }
+        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
+        public string PublicEventType { get; }
     }
 }

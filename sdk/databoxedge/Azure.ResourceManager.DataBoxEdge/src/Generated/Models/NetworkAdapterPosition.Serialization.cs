@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static NetworkAdapterPosition DeserializeNetworkAdapterPosition(JsonElement element)
         {
-            Optional<NetworkGroup> networkGroup = default;
+            Optional<DataBoxEdgeNetworkGroup> networkGroup = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkGroup = new NetworkGroup(property.Value.GetString());
+                    networkGroup = new DataBoxEdgeNetworkGroup(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))

@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 6.4.0
+###  Feature Additions
+- Added GoogleSheets connector in ADF
+- Added Synapse Spark activities in ADF
+
 ## Version 6.3.0
 ###  Feature Additions
 - Changed FactoryGitHubConfiguration url format for hostName description

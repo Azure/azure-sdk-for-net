@@ -29,6 +29,8 @@ extends:
     Artifacts:
     - name: Azure.Communication.JobRouter
       safeName: AzureCommunicationJobRouter
+    - name: Azure.Communication.CallAutomation
+      safeName: AzureCommunicationCallAutomation
     - name: Azure.Communication.CallingServer
       safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
@@ -50,8 +52,9 @@ extends:
       safeName: AzureCommunicationNetworkTraversal
     - name: Azure.Communication.PhoneNumbers
       safeName: AzureCommunicationPhoneNumbers
-    - name: Azure.ResourceManager.Communication
-      safeName: AzureResourceManagerCommunication
     - name: Azure.Communication.ShortCodes
       safeName: AzureCommunicationShortCodes
+      skipReleaseStage: true
+    - name: Azure.Communication.AlphaIds
+      safeName: AzureCommunicationAlphaIds
       skipReleaseStage: true

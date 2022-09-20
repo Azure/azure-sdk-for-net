@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion");
-                writer.WriteStringValue(AzureRegion);
+                writer.WriteStringValue(AzureRegion.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<SystemData> systemData = default;
             Optional<string> country = default;
             Optional<string> state = default;
-            Optional<string> azureRegion = default;
+            Optional<AzureLocation> azureRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -94,14 +94,19 @@ namespace Azure.ResourceManager.Peering.Models
                         }
                         if (property0.NameEquals("azureRegion"))
                         {
-                            azureRegion = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            azureRegion = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, azureRegion.Value);
+            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion));
         }
     }
 }

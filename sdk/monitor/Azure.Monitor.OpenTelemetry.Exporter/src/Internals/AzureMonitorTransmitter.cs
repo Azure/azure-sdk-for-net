@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -42,7 +43,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 try
                 {
-                    _fileBlobProvider = new FileBlobProvider(options.StorageDirectory);
+                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory();
+
+                    // TODO: Fallback to default location if location provided via options does not work.
+                    _fileBlobProvider = new FileBlobProvider(storageDirectory);
+
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
                 }
                 catch (Exception ex)
                 {

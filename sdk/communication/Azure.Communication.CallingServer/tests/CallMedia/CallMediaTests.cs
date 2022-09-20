@@ -21,15 +21,17 @@ namespace Azure.Communication.CallingServer
             Loop = false,
             OperationContext = "context"
         };
-        private static readonly CallMediaRecognizeOptions _recognizeConfigurations = new CallMediaRecognizeDtmfOptions()
+        private static readonly CallMediaRecognizeOptions _fullRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
         {
-            InterruptPromptAndStartRecognition = true,
+            InterruptCallMediaOperation = true,
             InterToneTimeout = TimeSpan.FromSeconds(10),
-            MaxTonesToCollect = 5,
-            StopTones = new StopTones[] { StopTones.Pound },
+            StopTones = new DtmfTone[] { DtmfTone.Pound },
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
-            TargetParticipant = new CommunicationUserIdentifier("targetUserId")
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new FileSource(new Uri("https://localhost"))
         };
+        private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
         private static CallMedia? _callMedia;
 
@@ -95,11 +97,11 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartPlayingAsync(_fileSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartPlayingToAllAsync(_fileSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_fileSource, _options)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
@@ -107,7 +109,11 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartRecognizingAsync(_recognizeConfigurations)
+                   callMedia => callMedia.StartRecognizingAsync(_fullRecognizeOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_emptyRecognizeOptions)
                 }
             };
         }
@@ -118,11 +124,11 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartPlaying(_fileSource, _target, _options)
+                   callMedia => callMedia.Play(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartPlayingToAll(_fileSource, _options)
+                   callMedia => callMedia.PlayToAll(_fileSource, _options)
                 },
                 new Func<CallMedia, Response>?[]
                 {
@@ -130,7 +136,11 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartRecognizing(_recognizeConfigurations)
+                   callMedia => callMedia.StartRecognizing(_fullRecognizeOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
                 }
             };
         }

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element)
         {
-            Optional<string> registrationId = default;
+            Optional<Guid> registrationId = default;
             Optional<string> id = default;
-            Optional<SubscriptionState> state = default;
+            Optional<DataBoxEdgeSubscriptionState> state = default;
             Optional<string> registrationDate = default;
             Optional<string> subscriptionId = default;
             Optional<Guid> tenantId = default;
@@ -30,7 +30,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("registrationId"))
                 {
-                    registrationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    registrationId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new SubscriptionState(property.Value.GetString());
+                    state = new DataBoxEdgeSubscriptionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("registrationDate"))
@@ -111,7 +116,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeProfileSubscription(registrationId.Value, id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, Optional.ToNullable(tenantId), locationPlacementId.Value, quotaId.Value, serializedDetails.Value, Optional.ToList(registeredFeatures));
+            return new EdgeProfileSubscription(Optional.ToNullable(registrationId), id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, Optional.ToNullable(tenantId), locationPlacementId.Value, quotaId.Value, serializedDetails.Value, Optional.ToList(registeredFeatures));
         }
     }
 }

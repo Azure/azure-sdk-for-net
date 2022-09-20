@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Trigger details. </summary>
-    public partial class PeriodicTimerEventTrigger : TriggerData
+    public partial class PeriodicTimerEventTrigger : DataBoxEdgeTriggerData
     {
         /// <summary> Initializes a new instance of PeriodicTimerEventTrigger. </summary>
         /// <param name="sourceInfo"> Periodic timer details. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Role Sink information. </summary>
         internal RoleSinkInfo SinkInfo { get; set; }
         /// <summary> Compute role ID. </summary>
-        public string SinkInfoRoleId
+        public ResourceIdentifier SinkInfoRoleId
         {
             get => SinkInfo is null ? default : SinkInfo.RoleId;
             set => SinkInfo = new RoleSinkInfo(value);

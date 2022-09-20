@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         internal static CollectTonesResult DeserializeCollectTonesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> tones = default;
+            Optional<IReadOnlyList<DtmfTone>> tones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tones"))
@@ -25,10 +25,10 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<DtmfTone> array = new List<DtmfTone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new DtmfTone(item.GetString()));
                     }
                     tones = array;
                     continue;

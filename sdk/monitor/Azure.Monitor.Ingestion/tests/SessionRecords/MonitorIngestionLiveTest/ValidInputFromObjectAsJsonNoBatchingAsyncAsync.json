@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://nibhati-dce-final-vhac.westus2-1.ingest.monitor.azure.com/dataCollectionRules/dcr-981bcfe0506f41f5b5168f3368499cfa/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "169",
+        "Content-Type": "application/json",
+        "traceparent": "00-764ffcd90b48a94ebea5a6f50f1713be-016616516f606544-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20220829.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f31d755bc8e36cf078144cd49dd4d580",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u001F\uFFFD\b\u0000\u0000\u0000\u0000\u0000\u0000\n",
+        "\uFFFD\uFFFDV\n",
+        "\uFFFD\uFFFDMU\uFFFDR2202\uFFFD5\uFFFD\uFFFD56\f14\uFFFD20\uFFFD20\uFFFD3\uFFFD4\uFFFD07S\uFFFDQr\uFFFD\uFFFD-(-I-\u0002\uFFFD\uFFFD1\r",
+        "\uFFFD\u008E))\uFFFD%\uFFFD\uFFFDy\uFFFD9\uFFFD\uFFFDy%\uFFFD\u0015%JVF\uFFFD:d\u001Bi\uFFFD\uFFFDH\uFFFD\uFFFDX\u0000\u0000\u0000\u0000\uFFFD\uFFFD"
+      ],
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Wed, 31 Aug 2022 22:04:00 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "f31d755b-c8e3-6cf0-7814-4cd49dd4d580",
+        "x-ms-request-id": "719067d3-89fc-452e-aed6-0f95c89f53f6"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "https://nibhati-dce-final-vhac.westus2-1.ingest.monitor.azure.com",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "dcr-981bcfe0506f41f5b5168f3368499cfa",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Custom-MyTableRawData",
+    "DateTimeOffsetNow": "2022-08-31T15:04:01.0958760-07:00",
+    "RandomSeed": "1028301772"
+  }
+}

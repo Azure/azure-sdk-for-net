@@ -103,7 +103,8 @@
         },
         {
             "file":[
-                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
+                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs",
+                "sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/Models/RestServiceAuthenticationType.cs"
             ],
             "_justification": "File contains a string value that ends with credential, not a true credential."
         },
