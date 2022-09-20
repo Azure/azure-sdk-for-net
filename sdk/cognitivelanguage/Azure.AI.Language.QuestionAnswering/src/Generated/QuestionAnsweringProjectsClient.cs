@@ -1445,7 +1445,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1505,12 +1505,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("QuestionAnsweringProjectsClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementationAsync("QuestionAnsweringProjectsClient.GetProjects", top, skip, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1518,8 +1518,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
+                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1528,7 +1528,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1588,12 +1588,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetProjects(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetProjectsImplementation("QuestionAnsweringProjectsClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementation("QuestionAnsweringProjectsClient.GetProjects", top, skip, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1601,8 +1601,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
+                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1612,7 +1612,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1660,14 +1660,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementationAsync("QuestionAnsweringProjectsClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementationAsync("QuestionAnsweringProjectsClient.GetDeployments", projectName, top, skip, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1675,8 +1675,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1686,7 +1686,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1734,14 +1734,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementation("QuestionAnsweringProjectsClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementation("QuestionAnsweringProjectsClient.GetDeployments", projectName, top, skip, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1749,8 +1749,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1760,7 +1760,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1806,14 +1806,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementationAsync("QuestionAnsweringProjectsClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementationAsync("QuestionAnsweringProjectsClient.GetSynonyms", projectName, top, skip, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1821,8 +1821,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1832,7 +1832,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1878,14 +1878,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementation("QuestionAnsweringProjectsClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementation("QuestionAnsweringProjectsClient.GetSynonyms", projectName, top, skip, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1893,8 +1893,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSynonymsRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1904,7 +1904,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1959,14 +1959,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementationAsync("QuestionAnsweringProjectsClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementationAsync("QuestionAnsweringProjectsClient.GetSources", projectName, top, skip, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1974,8 +1974,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1985,7 +1985,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2040,14 +2040,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetSources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSources(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementation("QuestionAnsweringProjectsClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementation("QuestionAnsweringProjectsClient.GetSources", projectName, top, skip, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2055,8 +2055,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSourcesRequest(projectName, top, skip, maxpagesize, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2067,7 +2067,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2169,14 +2169,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementationAsync("QuestionAnsweringProjectsClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementationAsync("QuestionAnsweringProjectsClient.GetQnas", projectName, source, top, skip, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2184,8 +2184,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, maxCount, skip, maxpagesize, context)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, maxCount, skip, maxpagesize, context);
+                        ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2196,7 +2196,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2298,14 +2298,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementation("QuestionAnsweringProjectsClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementation("QuestionAnsweringProjectsClient.GetQnas", projectName, source, top, skip, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2313,8 +2313,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, maxCount, skip, maxpagesize, context)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, maxCount, skip, maxpagesize, context);
+                        ? CreateGetQnasRequest(projectName, source, top, skip, maxpagesize, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, top, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -3632,7 +3632,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
         }
 
-        internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3642,9 +3642,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", maxCount.Value, true);
+                uri.AppendQuery("top", top.Value, true);
             }
             if (skip != null)
             {
@@ -3851,7 +3851,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3863,9 +3863,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", maxCount.Value, true);
+                uri.AppendQuery("top", top.Value, true);
             }
             if (skip != null)
             {
@@ -3880,7 +3880,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSynonymsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3892,9 +3892,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", maxCount.Value, true);
+                uri.AppendQuery("top", top.Value, true);
             }
             if (skip != null)
             {
@@ -3928,7 +3928,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSourcesRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3940,9 +3940,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", maxCount.Value, true);
+                uri.AppendQuery("top", top.Value, true);
             }
             if (skip != null)
             {
@@ -3994,7 +3994,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetQnasRequest(string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQnasRequest(string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4010,9 +4010,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             {
                 uri.AppendQuery("source", source, true);
             }
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", maxCount.Value, true);
+                uri.AppendQuery("top", top.Value, true);
             }
             if (skip != null)
             {
@@ -4083,7 +4083,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4097,7 +4097,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4111,7 +4111,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4125,7 +4125,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4139,7 +4139,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
